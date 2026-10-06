@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>סדרה הנדסית · דף לימוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a worksheet-style single column on graph-paper ground; each sequence type is a "chapter" with meaning, formulas, worked example, exercises with folding solutions */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.num{font-family:var(--f-math);color:var(--muted);font-size:.85rem}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag,.ex-head{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<style>
+.level{display:flex;flex-direction:column;gap:14px}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+.method{display:flex;flex-direction:column;gap:6px}
+ol.exercises li{break-inside:avoid}
+</style>
+<style>.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}.back:hover,.back:focus-visible{text-decoration:underline}</style>
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="he">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header><span class="eyebrow">מתמטיקה · 5 יחידות · פרק 2 מתוך 7</span><h1>סדרה הנדסית</h1><p class="lead">הסבר מלא של הסדרה ההנדסית ו־30 שאלות מדורגות, כולל בעיות גדילה ודעיכה.</p></header>
+<nav aria-label="תוכן"><strong>תוכן</strong><ol><li><a href="#explain">הסבר ונוסחאות</a></li>
+<li><a href="#lvl1">רמה א׳: בסיס</a></li>
+<li><a href="#lvl2">רמה ב׳: ביסוס</a></li>
+<li><a href="#lvl3">רמה ג׳: רמת בגרות</a></li>
+</ol></nav>
+<section class="ch" id="explain"><h2>הסבר ונוסחאות</h2>
+<div class="meaning">
+<p><strong>מה זו סדרה הנדסית?</strong> סדרה שבה כל איבר מתקבל מהאיבר הקודם על ידי כפל באותו מספר קבוע. המספר הזה נקרא <strong>מנת הסדרה</strong> ומסומן <span class="m">q</span>. למשל ב־<span class="m">3, 6, 12, 24, …</span> כופלים ב־2 בכל צעד, ולכן <span class="m">q = 2</span>. בסדרה הנדסית אין איבר שווה ל־0, ולכן גם <span class="m">q ≠ 0</span>.</p>
+<p><strong>המשמעות:</strong> סדרה הנדסית מתארת שינוי <em>יחסי</em> קבוע: בכל צעד גדלים (או קטנים) באותו אחוז. זה המודל של ריבית דריבית, גידול אוכלוסייה, התרבות חיידקים, ירידת ערך של רכב ודעיכה רדיואקטיבית. גדילה כזו נקראת <strong>מעריכית</strong>, והיא מהירה הרבה יותר מגדילה לינארית: בסדרה חשבונית מוסיפים, בסדרה הנדסית כופלים.</p>
+<p><strong>אחוזים ומנה:</strong> עלייה של p% בכל תקופה פירושה <span class="m">q = 1 + p/100</span>. ירידה של p% פירושה <span class="m">q = 1 − p/100</span>. למשל עלייה של 5% היא <span class="m">q = 1.05</span>, וירידה של 15% היא <span class="m">q = 0.85</span>.</p>
+<p><strong>התנהגות לפי q</strong> (עבור <span class="m">a₁ &gt; 0</span>): <span class="m">q &gt; 1</span> עולה; <span class="m">0 &lt; q &lt; 1</span> יורדת ומתקרבת ל־0; <span class="m">q = 1</span> קבועה; <span class="m">q &lt; 0</span> הסימנים מתחלפים.</p>
+</div>
+<div class="formulas">
+<div class="f"><b>הגדרה (כלל נסיגה)</b><span class="m">aₙ₊₁ = q·aₙ</span></div>
+<div class="f"><b>האיבר הכללי</b><span class="m">aₙ = a₁·qⁿ⁻¹</span></div>
+<div class="f"><b>יחס בין שני איברים</b><span class="m">aₘ/aₖ = qᵐ⁻ᵏ</span></div>
+<div class="f"><b>סכום n איברים (q ≠ 1)</b><span class="m">Sₙ = a₁(qⁿ − 1)/(q − 1)</span></div>
+<div class="f"><b>כאשר q = 1</b><span class="m">Sₙ = n·a₁</span></div>
+<div class="f"><b>תכונת האמצע</b><span class="m">aₙ² = aₙ₋₁·aₙ₊₁</span></div>
+</div>
+<div class="meaning">
+<p><strong>מאיפה באה נוסחת הסכום?</strong> כותבים <span class="m">Sₙ = a₁ + a₁q + … + a₁qⁿ⁻¹</span>, וכופלים ב־<span class="m">q</span>: <span class="m">qSₙ = a₁q + … + a₁qⁿ</span>. מחסרים: כמעט הכול מתבטל, ונשאר <span class="m">qSₙ − Sₙ = a₁qⁿ − a₁</span>.</p>
+<p><strong>תכונת האמצע:</strong> שלושה מספרים <span class="m">x, y, z</span> (שונים מ־0) הם סדרה הנדסית אם ורק אם <span class="m">y² = xz</span>. כשנתונה מכפלת שלושה איברים עוקבים, נוח לסמן אותם <span class="m">a/q, a, aq</span>, כי אז המכפלה היא <span class="m">a³</span>.</p>
+<p><strong>חילוק במקום חיסור:</strong> בסדרה חשבונית מחסרים שני איברים כדי לבודד את <span class="m">d</span>. בסדרה הנדסית <em>מחלקים</em> שני איברים כדי לבודד את <span class="m">q</span>.</p>
+<p><strong>מציאת n:</strong> כשהנעלם נמצא במעריך (<span class="m">2ⁿ &gt; 1000</span>), פותרים בעזרת לוגריתם או בניסוי וטעייה מושכל, ותמיד בודקים את שני המספרים השלמים הסמוכים.</p>
+</div>
+<div class="note"><strong>טעויות נפוצות:</strong> מ־<span class="m">q² = 9</span> יש שני פתרונות, <span class="m">q = ±3</span>; מ־<span class="m">q³ = 8</span> יש רק אחד. לבלבל בין <span class="m">a₁qⁿ</span> לבין <span class="m">a₁qⁿ⁻¹</span>; בבעיות זמן לבדוק אם "אחרי n שנים" הוא האיבר ה־n או ה־<span class="m">(n+1)</span>.</div>
+</section>
+<section class="ch level" id="lvl1"><h2>רמה א׳: בסיס <small>שאלות 1–10</small></h2><p class="lead">שימוש ישיר בנוסחאות.</p><ol class="exercises" start="1">
+<li>מצאו את המנה ואת האיבר השמיני בסדרה <span class="m">3, 6, 12, …</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">q = 2</span></p><p><span class="m">a₈ = 3·2⁷ = 384</span></p></div></details></li>
+<li>מצאו את האיבר השישי בסדרה <span class="m">81, 27, 9, …</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">q = 1/3</span></p><p><span class="m">a₆ = 81·(1/3)⁵ = 81/243 = 1/3</span></p></div></details></li>
+<li>מצאו את המנה ואת האיבר החמישי בסדרה <span class="m">2, −6, 18, …</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">q = −3</span></p><p><span class="m">a₅ = 2·(−3)⁴ = 162</span></p></div></details></li>
+<li>בסדרה הנדסית <span class="m">a₁ = 5</span>, <span class="m">q = 2</span>. חשבו את <span class="m">S₆</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">S₆ = 5(2⁶ − 1)/(2 − 1) = 315</span></p></div></details></li>
+<li>חשבו את <span class="m">1 + 3 + 9 + 27 + 81</span> בעזרת נוסחת הסכום.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">S₅ = 1·(3⁵ − 1)/(3 − 1) = 242/2 = 121</span></p></div></details></li>
+<li>האם 1536 הוא איבר בסדרה <span class="m">3, 6, 12, …</span>?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">3·2ⁿ⁻¹ = 1536 ⇒ 2ⁿ⁻¹ = 512 = 2⁹ ⇒ n = 10</span>. כן, <span class="m">a₁₀ = 1536</span>.</p></div></details></li>
+<li>בסדרה הנדסית <span class="m">a₃ = 12</span> ו־<span class="m">a₆ = 96</span>. מצאו את <span class="m">q</span> ואת <span class="m">a₁</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₆/a₃ = q³ = 8 ⇒ q = 2</span></p><p><span class="m">a₁ = 12/q² = 3</span></p></div></details></li>
+<li>בסדרה הנדסית <span class="m">a₂ = 6</span> ו־<span class="m">a₄ = 54</span>. מצאו את כל האפשרויות ל־<span class="m">q</span> ול־<span class="m">a₁</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">q² = 9 ⇒ q = ±3</span></p><p><span class="m">q = 3</span>: <span class="m">a₁ = 2</span>. <span class="m">q = −3</span>: <span class="m">a₁ = −2</span>.</p></div></details></li>
+<li>כמה איברים יש בסדרה <span class="m">2, 4, 8, …, 1024</span>?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">2·2ⁿ⁻¹ = 2ⁿ = 1024 ⇒ n = 10</span></p></div></details></li>
+<li>חשבו את סכום 7 האיברים הראשונים בסדרה <span class="m">64, 32, 16, …</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">S₇ = 64(1 − (1/2)⁷)/(1 − 1/2) = 128·(127/128) = 127</span></p></div></details></li>
+</ol></section>
+<section class="ch level" id="lvl2"><h2>רמה ב׳: ביסוס <small>שאלות 11–22</small></h2><p class="lead">תכונת האמצע, שני נעלמים ובעיות גדילה ודעיכה.</p><ol class="exercises" start="11">
+<li>המספרים <span class="m">x, 6, x+5</span> הם סדרה הנדסית. מצאו את x ואת המנה.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">36 = x(x+5) ⇒ x² + 5x − 36 = 0 ⇒ x = 4</span> או <span class="m">x = −9</span></p><p><span class="m">x = 4</span>: <span class="m">4, 6, 9</span>, <span class="m">q = 3/2</span></p><p><span class="m">x = −9</span>: <span class="m">−9, 6, −4</span>, <span class="m">q = −2/3</span></p></div></details></li>
+<li>שלושה מספרים יוצרים סדרה הנדסית. מכפלתם 216 וסכומם 19. מצאו אותם.<details><summary>הצג פתרון</summary><div class="sol steps"><p>נסמן <span class="m">6/q, 6, 6q</span> (כי <span class="m">a³ = 216 ⇒ a = 6</span>).</p><p><span class="m">6/q + 6 + 6q = 19 ⇒ 6q² − 13q + 6 = 0 ⇒ q = 3/2</span> או <span class="m">q = 2/3</span></p><p>המספרים: <span class="m">4, 6, 9</span></p></div></details></li>
+<li>שבצו 3 מספרים בין 2 ל־162 כך שיתקבלו 5 איברים של סדרה הנדסית.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">2q⁴ = 162 ⇒ q⁴ = 81 ⇒ q = ±3</span></p><p><span class="m">6, 18, 54</span> או <span class="m">−6, 18, −54</span></p></div></details></li>
+<li>כמה איברים מהסדרה <span class="m">1, 2, 4, …</span> יש לחבר כדי שהסכום יעלה על מיליון?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">Sₙ = 2ⁿ − 1 &gt; 1,000,000</span></p><p><span class="m">2¹⁹ = 524,288</span> לא מספיק; <span class="m">2²⁰ = 1,048,576</span> מספיק. התשובה: 20.</p></div></details></li>
+<li>הפקידו 10,000 ₪ בריבית דריבית של 5% לשנה. כמה כסף יהיה בחשבון אחרי 8 שנים?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">10000·1.05⁸ ≈ 10000·1.4775 ≈ 14,775</span> ₪</p></div></details></li>
+<li>רכב שווה 120,000 ₪ ומאבד 15% מערכו בכל שנה. אחרי כמה שנים ערכו יירד לראשונה מתחת ל־50,000 ₪?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">120000·0.85ⁿ &lt; 50000 ⇒ 0.85ⁿ &lt; 0.4167</span></p><p>אחרי 5 שנים: <span class="m">≈ 53,244</span>. אחרי 6 שנים: <span class="m">≈ 45,257</span>. התשובה: 6 שנים.</p></div></details></li>
+<li>בסדרה הנדסית <span class="m">q = 3</span> ו־<span class="m">S₃ = 26</span>. מצאו את <span class="m">a₁</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₁(1 + 3 + 9) = 26 ⇒ a₁ = 2</span></p></div></details></li>
+<li>חשבו את סכום האיברים מ־<span class="m">a₆</span> עד <span class="m">a₁₀</span> בסדרה <span class="m">1, 2, 4, …</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">S₁₀ − S₅ = (2¹⁰ − 1) − (2⁵ − 1) = 1023 − 31 = 992</span></p></div></details></li>
+<li>בסדרה הנדסית חיובית <span class="m">a₁·a₅ = 36</span>. מצאו את <span class="m">a₃</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₁·a₅ = a₁²q⁴ = (a₁q²)² = a₃²</span></p><p><span class="m">a₃ = 6</span></p></div></details></li>
+<li>בסדרה הנדסית <span class="m">a₁ + a₂ = 12</span> ו־<span class="m">a₃ + a₄ = 108</span>. מצאו את <span class="m">a₁</span> ואת <span class="m">q</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">(a₃ + a₄)/(a₁ + a₂) = q² = 9 ⇒ q = ±3</span></p><p><span class="m">q = 3</span>: <span class="m">4a₁ = 12 ⇒ a₁ = 3</span></p><p><span class="m">q = −3</span>: <span class="m">−2a₁ = 12 ⇒ a₁ = −6</span></p></div></details></li>
+<li>מושבת חיידקים מכפילה את עצמה כל 20 דקות. בהתחלה יש 50 חיידקים. כמה יהיו אחרי 3 שעות?<details><summary>הצג פתרון</summary><div class="sol steps"><p>3 שעות = 9 הכפלות.</p><p><span class="m">50·2⁹ = 25,600</span> חיידקים</p></div></details></li>
+<li>כדור נופל מגובה 10 מ׳, ואחרי כל פגיעה בקרקע הוא קופץ ל־60% מהגובה הקודם. לאיזה גובה יגיע אחרי הקפיצה הרביעית?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">10·0.6⁴ = 1.296</span> מ׳</p></div></details></li>
+</ol></section>
+<section class="ch level" id="lvl3"><h2>רמה ג׳: רמת בגרות <small>שאלות 23–30</small></h2><p class="lead">שאלות רב־שלביות, הוכחות ושילובים.</p><ol class="exercises" start="23">
+<li>בסדרה הנדסית בת 10 איברים, סכום כל האיברים גדול פי 4 מסכום האיברים במקומות האי־זוגיים. מצאו את <span class="m">q</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p>נסמן ב־A את סכום האיברים במקומות האי־זוגיים. כל איבר זוגי שווה לאי־זוגי שלפניו כפול q, לכן סכום הזוגיים הוא <span class="m">qA</span>.</p><p><span class="m">A + qA = 4A ⇒ 1 + q = 4 ⇒ q = 3</span></p></div></details></li>
+<li>בסדרה הנדסית <span class="m">S₃ = 7</span> ו־<span class="m">S₆ = 63</span>. מצאו את <span class="m">a₁</span> ואת <span class="m">q</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">S₆ = S₃ + q³S₃ ⇒ 63 = 7(1 + q³) ⇒ q³ = 8 ⇒ q = 2</span></p><p><span class="m">a₁(1 + 2 + 4) = 7 ⇒ a₁ = 1</span></p></div></details></li>
+<li>הוכיחו שמכפלת n האיברים הראשונים בסדרה הנדסית היא <span class="m">a₁ⁿ·q^(n(n−1)/2)</span>. חשבו את המכפלה עבור <span class="m">a₁ = 2</span>, <span class="m">q = 2</span>, <span class="m">n = 5</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₁·a₁q·…·a₁qⁿ⁻¹ = a₁ⁿ·q^(0+1+…+(n−1)) = a₁ⁿ·q^(n(n−1)/2)</span></p><p><span class="m">2⁵·2¹⁰ = 2¹⁵ = 32,768</span></p></div></details></li>
+<li>נתון <span class="m">aₙ = 3·2ⁿ</span>. מצאו נוסחה ל־<span class="m">Sₙ</span> ואת n שעבורו <span class="m">Sₙ = 3066</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₁ = 6</span>, <span class="m">q = 2</span> ⇒ <span class="m">Sₙ = 6(2ⁿ − 1)</span></p><p><span class="m">6(2ⁿ − 1) = 3066 ⇒ 2ⁿ = 512 ⇒ n = 9</span></p></div></details></li>
+<li>המספרים <span class="m">a, b, c</span> הם סדרה הנדסית עם <span class="m">q ≠ 1</span>, והמספרים <span class="m">a, 2b, 3c</span> הם סדרה חשבונית. מצאו את <span class="m">q</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">4b = a + 3c ⇒ 4aq = a + 3aq²</span></p><p><span class="m">3q² − 4q + 1 = 0 ⇒ q = 1/3</span> (הפתרון <span class="m">q = 1</span> נפסל)</p></div></details></li>
+<li>בתחילת כל שנה, במשך 5 שנים, מפקידים 1000 ₪ בתוכנית חיסכון עם ריבית דריבית של 4% לשנה. כמה כסף יהיה בתוכנית בסוף השנה החמישית?<details><summary>הצג פתרון</summary><div class="sol steps"><p>ההפקדה הראשונה צוברת ריבית 5 שנים, האחרונה שנה אחת:</p><p><span class="m">1000(1.04 + 1.04² + … + 1.04⁵) = 1000·1.04·(1.04⁵ − 1)/0.04 ≈ 5,633</span> ₪</p></div></details></li>
+<li><span class="m">aₙ</span> סדרה הנדסית. הוכיחו ש־<span class="m">bₙ = aₙ·aₙ₊₁</span> היא סדרה הנדסית ומצאו את מנתה. עבור <span class="m">a₁ = 1</span>, <span class="m">q = 2</span> חשבו את סכום חמשת האיברים הראשונים של <span class="m">bₙ</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">bₙ₊₁/bₙ = aₙ₊₂/aₙ = q²</span></p><p><span class="m">b₁ = 1·2 = 2</span>, מנה 4: <span class="m">S₅ = 2(4⁵ − 1)/3 = 682</span></p></div></details></li>
+<li>שלושה איברים עוקבים בסדרה הנדסית: סכומם 14 וסכום ריבועיהם 84. מצאו אותם.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a(1 + q + q²) = 14</span>, <span class="m">a²(1 + q² + q⁴) = 84</span></p><p>משתמשים ב־<span class="m">1 + q² + q⁴ = (1 + q + q²)(1 − q + q²)</span> ומחלקים: <span class="m">a(1 − q + q²) = 6</span></p><p>מחסרים: <span class="m">2aq = 8 ⇒ aq = 4</span> (האיבר האמצעי)</p><p><span class="m">a + aq² = 10</span> ו־<span class="m">a·aq² = 16</span> ⇒ האיברים הקיצוניים 2 ו־8</p><p>התשובה: <span class="m">2, 4, 8</span> (או <span class="m">8, 4, 2</span>)</p></div></details></li>
+</ol></section>
+<footer>הפתרונות מוסתרים כדי לאפשר תרגול עצמי. לחצו על "הצג פתרון" כדי לבדוק.</footer></div>
+</body>
+</html>

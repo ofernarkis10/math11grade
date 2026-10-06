@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>סדרות מעורבות · דף לימוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a worksheet-style single column on graph-paper ground; each sequence type is a "chapter" with meaning, formulas, worked example, exercises with folding solutions */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.num{font-family:var(--f-math);color:var(--muted);font-size:.85rem}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag,.ex-head{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<style>
+.level{display:flex;flex-direction:column;gap:14px}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+.method{display:flex;flex-direction:column;gap:6px}
+ol.exercises li{break-inside:avoid}
+</style>
+<style>.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}.back:hover,.back:focus-visible{text-decoration:underline}</style>
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="he">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header><span class="eyebrow">מתמטיקה · 5 יחידות · פרק 6 מתוך 7</span><h1>סדרות מעורבות ומשולבות</h1><p class="lead">שאלות שבהן כמה סדרות פועלות יחד: שזורות, נגזרות, וחשבוניות־הנדסיות. הסבר ו־30 שאלות מדורגות.</p></header>
+<nav aria-label="תוכן"><strong>תוכן</strong><ol><li><a href="#explain">הסבר ונוסחאות</a></li>
+<li><a href="#lvl1">רמה א׳: בסיס</a></li>
+<li><a href="#lvl2">רמה ב׳: ביסוס</a></li>
+<li><a href="#lvl3">רמה ג׳: רמת בגרות</a></li>
+</ol></nav>
+<section class="ch" id="explain"><h2>הסבר ונוסחאות</h2>
+<div class="meaning">
+<p><strong>מה הכוונה ב"סדרה מעורבת"?</strong> סדרה או בעיה שבה פועל יותר ממבנה אחד. בבגרות אלה בדרך כלל השאלות הקשות בפרק, אבל הרעיון פשוט: <strong>לפרק את המסובך לסדרות פשוטות</strong> שאנחנו כבר יודעים לטפל בהן.</p>
+<p><strong>המשמעות:</strong> סדרות חשבוניות והנדסיות הן אבני בניין. כמו שמספר מורכב בנוי מגורמים ראשוניים, סדרה מורכבת בנויה משילוב שלהן: חיבור, שזירה, הפעלת פונקציה על האיברים או מעבר בין סוגים.</p>
+</div>
+<div class="formulas">
+<div class="f"><b>שזורה</b>מקומות אי־זוגיים: סדרה אחת. מקומות זוגיים: סדרה אחרת.</div>
+<div class="f"><b>חשבונית ⇒ הנדסית</b><span class="m">aₙ</span> חשבונית ⇒ <span class="m">cᵃⁿ</span> הנדסית עם מנה <span class="m">cᵈ</span></div>
+<div class="f"><b>הנדסית ⇒ חשבונית</b><span class="m">aₙ</span> הנדסית חיובית ⇒ <span class="m">log aₙ</span> חשבונית עם הפרש <span class="m">log q</span></div>
+<div class="f"><b>סכום של שתי סדרות</b><span class="m">Σ(aₙ + bₙ) = Σaₙ + Σbₙ</span></div>
+</div>
+<div class="meaning">
+<p><strong>סדרה שזורה:</strong> כותבים את האיברים במקומות האי־זוגיים <span class="m">a₁, a₃, a₅, …</span> כסדרה בפני עצמה, ואת הזוגיים <span class="m">a₂, a₄, …</span> כסדרה שנייה. ב־2n איברים יש n מכל סוג. ב־<span class="m">2n+1</span> איברים יש <span class="m">n+1</span> אי־זוגיים ו־n זוגיים.</p>
+<p><strong>סדרה נגזרת:</strong> לוגריתם הופך כפל לחיבור, וחזקה הופכת חיבור לכפל. לכן הם מעבירים בין סדרה הנדסית לחשבונית. גם תת־סדרה "כל איבר שלישי" של סדרה חשבונית (הנדסית) היא חשבונית (הנדסית), עם הפרש <span class="m">3d</span> (מנה <span class="m">q³</span>).</p>
+<p><strong>חשבונית ־ הנדסית באותה שאלה:</strong> מתרגמים כל תנאי למשוואה. תנאי חשבוני הוא <span class="m">2y = x + z</span>; תנאי הנדסי הוא <span class="m">y² = xz</span>. בחירה חכמה של משתנים חוסכת עבודה: לשלושה איברים חשבוניים <span class="m">a−d, a, a+d</span>; להנדסיים <span class="m">a/q, a, aq</span>.</p>
+<p><strong>סכומים של קבוצות איברים:</strong> בסדרה חשבונית, <span class="m">S₃, S₆ − S₃, S₉ − S₆</span> יוצרים סדרה חשבונית. בסדרה הנדסית הם יוצרים סדרה הנדסית עם מנה <span class="m">q³</span>.</p>
+</div>
+<div class="note"><strong>טעויות נפוצות:</strong> לספור לא נכון כמה איברים יש מכל סוג בסדרה שזורה; לשכוח ש־log מוגדר רק לסדרה חיובית; לפתור משוואה ריבועית ולהשאיר פתרון שנותן סדרה קבועה כשהשאלה דורשת <span class="m">d ≠ 0</span> או <span class="m">q ≠ 1</span>.</div>
+</section>
+<section class="ch level" id="lvl1"><h2>רמה א׳: בסיס <small>שאלות 1–10</small></h2><p class="lead">תכונות האמצע והמעבר בין סוגי סדרות.</p><ol class="exercises" start="1">
+<li>הוכיחו שאם שלושה מספרים הם גם סדרה חשבונית וגם סדרה הנדסית, הם שווים זה לזה.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">2y = x + z</span> ו־<span class="m">y² = xz</span></p><p><span class="m">(x + z)²/4 = xz ⇒ (x − z)² = 0 ⇒ x = z</span>, ולכן גם <span class="m">y = x</span>.</p></div></details></li>
+<li>מצאו את x אם <span class="m">2, x, 18</span> הם (א) סדרה חשבונית (ב) סדרה הנדסית.<details><summary>הצג פתרון</summary><div class="sol steps"><p>א. <span class="m">2x = 20 ⇒ x = 10</span></p><p>ב. <span class="m">x² = 36 ⇒ x = ±6</span></p></div></details></li>
+<li><span class="m">aₙ</span> חשבונית עם <span class="m">a₁ = 1</span>, <span class="m">d = 2</span>, ו־<span class="m">bₙ = 3ᵃⁿ</span>. הראו ש־<span class="m">bₙ</span> הנדסית וחשבו את סכום חמשת האיברים הראשונים שלה.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">bₙ₊₁/bₙ = 3^(aₙ₊₁ − aₙ) = 3² = 9</span></p><p><span class="m">b₁ = 3 ⇒ S₅ = 3(9⁵ − 1)/8 = 22,143</span></p></div></details></li>
+<li><span class="m">aₙ</span> הנדסית עם <span class="m">a₁ = 2</span>, <span class="m">q = 4</span>, ו־<span class="m">cₙ = log₂aₙ</span>. הראו ש־<span class="m">cₙ</span> חשבונית וחשבו <span class="m">c₁ + … + c₁₀</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">cₙ = log₂(2·4ⁿ⁻¹) = 2n − 1</span>, חשבונית עם <span class="m">d = 2</span></p><p><span class="m">S₁₀ = 10(1 + 19)/2 = 100</span></p></div></details></li>
+<li><span class="m">bₙ</span> הנדסית עם <span class="m">b₁ = 81</span>, <span class="m">q = ⅓</span>, ו־<span class="m">cₙ = log₃bₙ</span>. מצאו את <span class="m">cₙ</span> ואת סכום עשרת איבריה הראשונים.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">cₙ = 4 − (n − 1) = 5 − n</span>, חשבונית עם <span class="m">d = −1</span></p><p><span class="m">S₁₀ = 10(4 + (−5))/2 = −5</span></p></div></details></li>
+<li>נתון <span class="m">aₙ = 2n + 2ⁿ</span>. חשבו את <span class="m">S₁₀</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">Σ2n = 2·55 = 110</span>, <span class="m">Σ2ⁿ = 2¹¹ − 2 = 2046</span></p><p><span class="m">S₁₀ = 2156</span></p></div></details></li>
+<li>חשבו: <span class="m">2 − 4 + 6 − 8 + … − 100</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p>25 זוגות, כל זוג שווה <span class="m">−2</span>: <span class="m">S = −50</span></p></div></details></li>
+<li>חשבו: <span class="m">Σ_(n=1)^∞ (1/2ⁿ + 1/3ⁿ)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">Σ1/2ⁿ = 1</span>, <span class="m">Σ1/3ⁿ = ½</span></p><p>הסכום: <span class="m">3/2</span></p></div></details></li>
+<li>נתון <span class="m">aₙ = n + (−1)ⁿ</span>. כתבו את האיברים הראשונים וחשבו את <span class="m">S₂₀</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">0, 3, 2, 5, 4, 7, …</span></p><p><span class="m">S₂₀ = (1 + … + 20) + 0 = 210</span> (סכום ה־<span class="m">(−1)ⁿ</span> מתאפס).</p></div></details></li>
+<li>חשבו את סכום מאה האיברים הראשונים בסדרה <span class="m">aₙ = (−1)ⁿ·n</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">(−1 + 2) + (−3 + 4) + …</span>: 50 זוגות ששווים 1 כל אחד.</p><p><span class="m">S₁₀₀ = 50</span></p></div></details></li>
+</ol></section>
+<section class="ch level" id="lvl2"><h2>רמה ב׳: ביסוס <small>שאלות 11–22</small></h2><p class="lead">סדרות שזורות ובעיות של שלושה מספרים.</p><ol class="exercises" start="11">
+<li>בסדרה <span class="m">1, 2, 4, 4, 7, 8, 10, 16, …</span> המקומות האי־זוגיים יוצרים סדרה חשבונית והזוגיים סדרה הנדסית. חשבו את <span class="m">S₂₀</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p>אי־זוגיים: 10 איברים, <span class="m">1, 4, 7, …</span>: <span class="m">S = 10(1 + 28)/2 = 145</span></p><p>זוגיים: 10 איברים, <span class="m">2, 4, 8, …</span>: <span class="m">S = 2(2¹⁰ − 1) = 2046</span></p><p><span class="m">S₂₀ = 2191</span></p></div></details></li>
+<li>בסדרה <span class="m">a₂ₖ₋₁ = 3k</span>, <span class="m">a₂ₖ = 2ᵏ</span>. כתבו את האיברים הראשונים וחשבו <span class="m">S₁₂</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">3, 2, 6, 4, 9, 8, …</span></p><p>אי־זוגיים: <span class="m">3(1 + … + 6) = 63</span>. זוגיים: <span class="m">2 + … + 64 = 126</span></p><p><span class="m">S₁₂ = 189</span></p></div></details></li>
+<li>בסדרה שזורה, המקומות האי־זוגיים הם סדרה חשבונית עם איבר ראשון 10 והפרש <span class="m">−2</span>, והזוגיים הם סדרה הנדסית <span class="m">1, −2, 4, …</span>. חשבו את <span class="m">S₁₆</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p>אי־זוגיים (8): <span class="m">8(20 + 7·(−2))/2 = 24</span></p><p>זוגיים (8): <span class="m">(1 − (−2)⁸)/(1 − (−2)) = −255/3 = −85</span></p><p><span class="m">S₁₆ = −61</span></p></div></details></li>
+<li>המספרים <span class="m">4, x, y</span> הם סדרה חשבונית, והמספרים <span class="m">x, y, 18</span> הם סדרה הנדסית. מצאו את x ו־y.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">x = (4 + y)/2</span>, <span class="m">y² = 18x = 9(4 + y) ⇒ y² − 9y − 36 = 0</span></p><p><span class="m">y = 12, x = 8</span> או <span class="m">y = −3, x = ½</span></p></div></details></li>
+<li>שלושה מספרים יוצרים סדרה חשבונית שסכומה 15. אם מוסיפים להם 1, 4 ו־19 בהתאמה, מתקבלת סדרה הנדסית. מצאו אותם.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">5−d, 5, 5+d</span> → <span class="m">6−d, 9, 24+d</span></p><p><span class="m">(6−d)(24+d) = 81 ⇒ d² + 18d − 63 = 0 ⇒ d = 3</span> או <span class="m">−21</span></p><p><span class="m">2, 5, 8</span> או <span class="m">26, 5, −16</span></p></div></details></li>
+<li>שלושה מספרים יוצרים סדרה הנדסית שסכומה 26. אם מוסיפים להם 1, 6 ו־3 בהתאמה, מתקבלת סדרה חשבונית. מצאו אותם.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">2(aq + 6) = (a + 1) + (aq² + 3) ⇒ a + aq² = 2aq + 8</span></p><p>מהסכום: <span class="m">3aq + 8 = 26 ⇒ aq = 6</span>, ולכן <span class="m">a + 36/a = 20 ⇒ a = 2</span> או <span class="m">18</span></p><p><span class="m">2, 6, 18</span> או <span class="m">18, 6, 2</span></p></div></details></li>
+<li>בסדרה חשבונית חיובית <span class="m">a₁ = 2</span>, <span class="m">d = 3</span>. חשבו <span class="m">1/(a₁a₂) + 1/(a₂a₃) + … + 1/(a₁₀a₁₁)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">1/(aₙaₙ₊₁) = (1/d)(1/aₙ − 1/aₙ₊₁)</span>, סכום טלסקופי.</p><p><span class="m">(1/3)(1/2 − 1/32) = 5/32</span></p></div></details></li>
+<li>בסדרה חשבונית לא קבועה, <span class="m">a₂, a₅, a₁₄</span> יוצרים סדרה הנדסית. מצאו את מנתה.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">(a₁ + 4d)² = (a₁ + d)(a₁ + 13d) ⇒ 3d² = 6a₁d ⇒ d = 2a₁</span></p><p><span class="m">q = a₅/a₂ = 9a₁/3a₁ = 3</span></p></div></details></li>
+<li>בסדרה הנדסית עם <span class="m">q ≠ 1</span>, האיברים <span class="m">a₁, a₃, a₂</span> (בסדר הזה) יוצרים סדרה חשבונית. מצאו את <span class="m">q</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">2a₁q² = a₁ + a₁q ⇒ 2q² − q − 1 = 0</span></p><p><span class="m">q = −½</span> (הפתרון <span class="m">q = 1</span> נפסל)</p></div></details></li>
+<li>נתונות הסדרות <span class="m">aₙ = 4n − 1</span> ו־<span class="m">bₙ = 5n + 2</span>, כל אחת עם 100 איברים. כמה איברים משותפים יש להן ומה סכומם?<details><summary>הצג פתרון</summary><div class="sol steps"><p>האיבר המשותף הראשון: 7. המשותפים חשבוניים עם הפרש 20.</p><p>הגבול: <span class="m">a₁₀₀ = 399</span>. <span class="m">7 + 20(k−1) ≤ 399 ⇒ k = 20</span></p><p>סכום: <span class="m">20(7 + 387)/2 = 3940</span></p></div></details></li>
+<li>סדרה חשבונית וסדרה הנדסית מתחילות שתיהן ב־3, האיבר השני שלהן שווה, והאיבר הרביעי של החשבונית שווה לאיבר השלישי של ההנדסית. מצאו את שתי הסדרות (לא קבועות).<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">3 + d = 3q</span>, <span class="m">3 + 3d = 3q² ⇒ q² − 3q + 2 = 0 ⇒ q = 2</span></p><p>חשבונית: <span class="m">3, 6, 9, 12, …</span> הנדסית: <span class="m">3, 6, 12, …</span></p></div></details></li>
+<li><span class="m">aₙ = 3n + 1</span> ו־<span class="m">bₙ = a₂ₙ</span>. הוכיחו ש־<span class="m">bₙ</span> חשבונית וחשבו את סכום עשרת איבריה הראשונים.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">bₙ = 6n + 1</span>, חשבונית עם הפרש 6 (פעמיים ההפרש המקורי)</p><p><span class="m">S₁₀ = 6·55 + 10 = 340</span></p></div></details></li>
+</ol></section>
+<section class="ch level" id="lvl3"><h2>רמה ג׳: רמת בגרות <small>שאלות 23–30</small></h2><p class="lead">בעיות מילוליות ושאלות מורכבות.</p><ol class="exercises" start="23">
+<li><span class="m">aₙ</span> הנדסית עם <span class="m">a₁ = 1</span>, <span class="m">q = 2</span>, ו־<span class="m">bₙ = a₃ₙ₋₂</span>. הוכיחו ש־<span class="m">bₙ</span> הנדסית וחשבו את סכום ארבעת איבריה הראשונים.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">bₙ₊₁/bₙ = a₃ₙ₊₁/a₃ₙ₋₂ = q³ = 8</span></p><p><span class="m">1 + 8 + 64 + 512 = 585</span></p></div></details></li>
+<li>רון חוסך 100 ₪ בחודש הראשון ומוסיף 50 ₪ בכל חודש. טל חוסך 10 ₪ בחודש הראשון ומכפיל את הסכום בכל חודש. מאיזה חודש החיסכון הכולל של טל גדול מזה של רון?<details><summary>הצג פתרון</summary><div class="sol steps"><p>רון: <span class="m">Sₙ = 25n² + 75n</span>. טל: <span class="m">Tₙ = 10(2ⁿ − 1)</span></p><p><span class="m">n = 7</span>: רון 1750, טל 1270. <span class="m">n = 8</span>: רון 2200, טל 2550.</p><p>מהחודש השמיני.</p></div></details></li>
+<li>הוכיחו שבסדרה חשבונית <span class="m">S₃, S₆ − S₃, S₉ − S₆</span> יוצרים סדרה חשבונית, ומצאו את הפרשה.<details><summary>הצג פתרון</summary><div class="sol steps"><p>כל קבוצה של שלושה איברים עוקבים גדולה מהקודמת ב־<span class="m">3·3d</span>:</p><p><span class="m">(S₆ − S₃) − S₃ = (a₄ − a₁) + (a₅ − a₂) + (a₆ − a₃) = 9d</span>, וכן הלאה.</p><p>ההפרש: <span class="m">9d</span></p></div></details></li>
+<li>בסדרה הנדסית <span class="m">S₃ = 7</span> ו־<span class="m">S₆ = 63</span>. חשבו את <span class="m">S₉</span> בלי למצוא את <span class="m">a₁</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">S₃, S₆ − S₃, S₉ − S₆</span> הנדסית עם מנה <span class="m">q³</span>: <span class="m">q³ = 56/7 = 8</span></p><p><span class="m">S₉ − S₆ = 56·8 = 448 ⇒ S₉ = 511</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 0</span> ו־<span class="m">aₙ₊₁ = aₙ + bₙ</span>, כאשר <span class="m">bₙ = 2ⁿ⁻¹</span>. מצאו את <span class="m">aₙ</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">aₙ = b₁ + … + bₙ₋₁ = 1 + 2 + … + 2ⁿ⁻² = 2ⁿ⁻¹ − 1</span></p></div></details></li>
+<li>חשבו את <span class="m">1 + 11 + 111 + … </span> (n איברים) ובדקו עבור <span class="m">n = 5</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p>האיבר ה־k: <span class="m">(10ᵏ − 1)/9</span></p><p><span class="m">Sₙ = (1/9)[(10 + … + 10ⁿ) − n] = (10ⁿ⁺¹ − 10 − 9n)/81</span></p><p><span class="m">n = 5</span>: <span class="m">(10⁶ − 55)/81 = 12,345</span> ✓</p></div></details></li>
+<li>שלושה מספרים שונים הם האיבר הראשון, הרביעי והשישה־עשר של סדרה חשבונית, והם גם שלושה איברים עוקבים בסדרה הנדסית. סכומם 42. מצאו אותם.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">(a₁ + 3d)² = a₁(a₁ + 15d) ⇒ 9d² = 9a₁d ⇒ d = a₁</span></p><p><span class="m">q = a₄/a₁ = 4</span>, ולכן <span class="m">a₁(1 + 4 + 16) = 42 ⇒ a₁ = 2</span></p><p><span class="m">2, 8, 32</span></p></div></details></li>
+<li>חשבו את <span class="m">0.5 + 0.55 + 0.555 + …</span> (n איברים).<details><summary>הצג פתרון</summary><div class="sol steps"><p>האיבר ה־k: <span class="m">(5/9)(1 − 10⁻ᵏ)</span></p><p><span class="m">Sₙ = (5/9)[n − (1 − 10⁻ⁿ)/9]</span></p></div></details></li>
+</ol></section>
+<footer>הפתרונות מוסתרים כדי לאפשר תרגול עצמי. לחצו על "הצג פתרון" כדי לבדוק.</footer></div>
+</body>
+</html>

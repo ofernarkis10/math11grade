@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>סדרות בכלל נסיגה · דף לימוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a worksheet-style single column on graph-paper ground; each sequence type is a "chapter" with meaning, formulas, worked example, exercises with folding solutions */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.num{font-family:var(--f-math);color:var(--muted);font-size:.85rem}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag,.ex-head{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<style>
+.level{display:flex;flex-direction:column;gap:14px}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+.method{display:flex;flex-direction:column;gap:6px}
+ol.exercises li{break-inside:avoid}
+</style>
+<style>.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}.back:hover,.back:focus-visible{text-decoration:underline}</style>
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="he">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header><span class="eyebrow">מתמטיקה · 5 יחידות · פרק 4 מתוך 7</span><h1>סדרות המוגדרות בכלל נסיגה</h1><p class="lead">איך סדרה מוגדרת "צעד אחר צעד", איך מוצאים לה נוסחה מפורשת, ו־30 שאלות מדורגות.</p></header>
+<nav aria-label="תוכן"><strong>תוכן</strong><ol><li><a href="#explain">הסבר ונוסחאות</a></li>
+<li><a href="#lvl1">רמה א׳: בסיס</a></li>
+<li><a href="#lvl2">רמה ב׳: ביסוס</a></li>
+<li><a href="#lvl3">רמה ג׳: רמת בגרות</a></li>
+</ol></nav>
+<section class="ch" id="explain"><h2>הסבר ונוסחאות</h2>
+<div class="meaning">
+<p><strong>מה זה כלל נסיגה?</strong> דרך להגדיר סדרה בלי לתת נוסחה ישירה ל־<span class="m">aₙ</span>. במקום זה נותנים את <strong>האיבר הראשון</strong> ואת <strong>הכלל</strong> שאומר איך מקבלים כל איבר מהאיבר שלפניו. למשל: <span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = 2aₙ + 1</span> נותן <span class="m">1, 3, 7, 15, 31, …</span></p>
+<p><strong>המשמעות:</strong> כלל נסיגה מתאר תהליך: מה קורה בכל שלב בהתבסס על המצב הקודם. כך עובדים הרבה תהליכים אמיתיים: חשבון בנק שבכל חודש מקבל ריבית ומשלמים ממנו עמלה קבועה (<span class="m">aₙ₊₁ = 1.01aₙ − 10</span>), אוכלוסייה שגדלה ומאבדת חלק ממנה, או תוכנית מחשב שמבצעת לולאה.</p>
+<p><strong>מה צריך כדי לקבוע סדרה?</strong> את הכלל וגם את נקודת ההתחלה. אותו כלל עם איבר ראשון אחר נותן סדרה אחרת לגמרי. כלל "מסדר שני" (שתלוי בשני איברים קודמים, כמו פיבונאצ'י <span class="m">aₙ₊₂ = aₙ₊₁ + aₙ</span>) צריך שני איברים התחלתיים.</p>
+</div>
+<div class="formulas">
+<div class="f"><b>סדרה חשבונית</b><span class="m">aₙ₊₁ = aₙ + d</span></div>
+<div class="f"><b>סדרה הנדסית</b><span class="m">aₙ₊₁ = q·aₙ</span></div>
+<div class="f"><b>כלל ליניארי</b><span class="m">aₙ₊₁ = k·aₙ + c</span></div>
+<div class="f"><b>הפרש תלוי ב־n</b><span class="m">aₙ₊₁ = aₙ + f(n)</span></div>
+</div>
+<div class="meaning">
+<p><strong>שיטה 1: סדרת עזר.</strong> בכלל מהצורה <span class="m">aₙ₊₁ = k·aₙ + c</span> מחפשים קבוע t כך ש־<span class="m">bₙ = aₙ + t</span> תהיה הנדסית. מציבים: <span class="m">bₙ₊₁ = k·aₙ + c + t</span>, ורוצים שזה יהיה <span class="m">k(aₙ + t)</span>. לכן <span class="m">c + t = kt</span>, כלומר <span class="m">t = c/(k − 1)</span>. בבגרות בדרך כלל נותנים את סדרת העזר ומבקשים להוכיח שהיא הנדסית.</p>
+<p><strong>שיטה 2: סכימה טלסקופית.</strong> בכלל מהצורה <span class="m">aₙ₊₁ = aₙ + f(n)</span> כותבים <span class="m">aₙ = a₁ + f(1) + f(2) + … + f(n−1)</span>. כל ההפרשים מצטברים.</p>
+<p><strong>שיטה 3: הופכי.</strong> בכללים עם שבר, כמו <span class="m">aₙ₊₁ = aₙ/(1 + aₙ)</span>, לפעמים <span class="m">bₙ = 1/aₙ</span> היא סדרה חשבונית.</p>
+<p><strong>שיטה 4: מחזוריות.</strong> כותבים כמה איברים ראשונים. אם איבר חוזר על ערך קודם (בכלל מסדר ראשון), הסדרה מחזורית מאותו מקום. אז <span class="m">aₙ</span> נקבע לפי השארית של n בחלוקה באורך המחזור.</p>
+<p><strong>תמיד לבדוק:</strong> אחרי שמוצאים נוסחה מפורשת, מציבים <span class="m">n = 1, 2, 3</span> ומשווים לאיברים שחושבו ישירות מהכלל.</p>
+</div>
+<div class="note"><strong>טעויות נפוצות:</strong> לחשב את <span class="m">b₁</span> לפי <span class="m">a₂</span> במקום לפי <span class="m">a₁</span>; להוכיח שסדרה הנדסית בעזרת כמה איברים בלבד (צריך הוכחה כללית: <span class="m">bₙ₊₁/bₙ</span> קבוע לכל n); לשכוח שבמחזוריות השארית 0 מתאימה לאיבר האחרון במחזור.</div>
+</section>
+<section class="ch level" id="lvl1"><h2>רמה א׳: בסיס <small>שאלות 1–10</small></h2><p class="lead">חישוב איברים ומעבר בין תיאור הסדרה לכלל.</p><ol class="exercises" start="1">
+<li>נתון <span class="m">a₁ = 3</span>, <span class="m">aₙ₊₁ = aₙ + 5</span>. כתבו את חמשת האיברים הראשונים. איזו סדרה זו?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">3, 8, 13, 18, 23</span></p><p>סדרה חשבונית עם <span class="m">d = 5</span>.</p></div></details></li>
+<li>נתון <span class="m">a₁ = 2</span>, <span class="m">aₙ₊₁ = 3aₙ</span>. כתבו את חמשת האיברים הראשונים ומצאו את <span class="m">a₁₀</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">2, 6, 18, 54, 162</span>. הנדסית עם <span class="m">q = 3</span>.</p><p><span class="m">a₁₀ = 2·3⁹ = 39,366</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = 2aₙ + 1</span>. כתבו את חמשת האיברים הראשונים.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">1, 3, 7, 15, 31</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 4</span>, <span class="m">aₙ₊₁ = aₙ² − 3aₙ</span>. חשבו את <span class="m">a₂</span> ו־<span class="m">a₃</span>. מה ניתן לומר על הסדרה?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₂ = 16 − 12 = 4</span>, <span class="m">a₃ = 4</span></p><p>הסדרה קבועה: כל האיברים שווים 4.</p></div></details></li>
+<li>נתון <span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = aₙ + n</span>. כתבו את חמשת האיברים הראשונים.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₂ = 1 + 1 = 2</span>, <span class="m">a₃ = 2 + 2 = 4</span>, <span class="m">a₄ = 4 + 3 = 7</span>, <span class="m">a₅ = 7 + 4 = 11</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 1</span>, <span class="m">a₂ = 2</span>, <span class="m">aₙ₊₂ = aₙ₊₁ + 2aₙ</span>. כתבו את חמשת האיברים הראשונים.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₃ = 2 + 2 = 4</span>, <span class="m">a₄ = 4 + 4 = 8</span>, <span class="m">a₅ = 8 + 8 = 16</span></p><p><span class="m">1, 2, 4, 8, 16</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 10</span>, <span class="m">aₙ₊₁ = aₙ/2 + 1</span>. כתבו את חמשת האיברים הראשונים. לאיזה מספר הם מתקרבים?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">10, 6, 4, 3, 2.5</span></p><p>הם מתקרבים ל־2 (המספר שמקיים <span class="m">x = x/2 + 1</span>).</p></div></details></li>
+<li>כתבו כלל נסיגה לסדרה <span class="m">5, 8, 11, 14, …</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₁ = 5</span>, <span class="m">aₙ₊₁ = aₙ + 3</span></p></div></details></li>
+<li>כתבו כלל נסיגה לסדרה <span class="m">2, 6, 18, 54, …</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₁ = 2</span>, <span class="m">aₙ₊₁ = 3aₙ</span></p></div></details></li>
+<li>כתבו כלל נסיגה לסדרת הריבועים <span class="m">1, 4, 9, 16, …</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">(n+1)² − n² = 2n + 1</span></p><p><span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = aₙ + 2n + 1</span></p></div></details></li>
+</ol></section>
+<section class="ch level" id="lvl2"><h2>רמה ב׳: ביסוס <small>שאלות 11–22</small></h2><p class="lead">סדרות עזר, סכימה ומחזוריות.</p><ol class="exercises" start="11">
+<li>נתון <span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = aₙ + 2n</span>. מצאו נוסחה ל־<span class="m">aₙ</span> ואת <span class="m">a₂₀</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">aₙ = 1 + 2(1 + 2 + … + (n−1)) = 1 + n(n−1)</span></p><p><span class="m">a₂₀ = 1 + 380 = 381</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 2</span>, <span class="m">aₙ₊₁ = 3aₙ − 2</span>. הוכיחו ש־<span class="m">bₙ = aₙ − 1</span> סדרה הנדסית ומצאו את <span class="m">aₙ</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">bₙ₊₁ = 3aₙ − 3 = 3bₙ</span>, <span class="m">b₁ = 1</span></p><p><span class="m">bₙ = 3ⁿ⁻¹ ⇒ aₙ = 3ⁿ⁻¹ + 1</span></p><p>בדיקה: <span class="m">a₂ = 4 = 3·2 − 2</span> ✓</p></div></details></li>
+<li>נתון <span class="m">a₁ = 5</span>, <span class="m">aₙ₊₁ = 2aₙ − 3</span>. מצאו קבוע t כך ש־<span class="m">aₙ + t</span> הנדסית, ומצאו את <span class="m">aₙ</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">t = c/(k − 1) = −3</span>, כלומר <span class="m">bₙ = aₙ − 3</span>: <span class="m">bₙ₊₁ = 2aₙ − 6 = 2bₙ</span></p><p><span class="m">b₁ = 2 ⇒ bₙ = 2ⁿ ⇒ aₙ = 2ⁿ + 3</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = aₙ/(1 + aₙ)</span>. הוכיחו ש־<span class="m">bₙ = 1/aₙ</span> חשבונית ומצאו את <span class="m">aₙ</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">bₙ₊₁ = (1 + aₙ)/aₙ = 1/aₙ + 1 = bₙ + 1</span></p><p><span class="m">b₁ = 1 ⇒ bₙ = n ⇒ aₙ = 1/n</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 2</span>, <span class="m">aₙ₊₁ = 2aₙ/(aₙ + 2)</span>. מצאו את <span class="m">aₙ</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">1/aₙ₊₁ = (aₙ + 2)/(2aₙ) = ½ + 1/aₙ</span>. סדרת ההופכיים חשבונית עם <span class="m">d = ½</span>.</p><p><span class="m">1/a₁ = ½ ⇒ 1/aₙ = n/2 ⇒ aₙ = 2/n</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 3</span>, <span class="m">aₙ₊₁ = 1 − 1/aₙ</span>. מצאו את <span class="m">a₂₀₂₆</span> ואת סכום 30 האיברים הראשונים.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">3, ⅔, −½, 3, …</span>: מחזור באורך 3.</p><p><span class="m">2026 = 3·675 + 1 ⇒ a₂₀₂₆ = a₁ = 3</span></p><p><span class="m">S₃₀ = 10(3 + ⅔ − ½) = 10·19/6 = 95/3</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = 4 − aₙ</span>. חשבו את <span class="m">S₅₀</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">1, 3, 1, 3, …</span>: מחזור באורך 2 וסכום 4 בכל מחזור.</p><p><span class="m">S₅₀ = 25·4 = 100</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 1</span>, <span class="m">a₂ = 3</span>, <span class="m">aₙ₊₂ = aₙ₊₁ − aₙ</span>. מצאו את <span class="m">a₁₀₀</span> ואת <span class="m">S₁₀₀</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">1, 3, 2, −1, −3, −2, 1, 3, …</span>: מחזור באורך 6 שסכומו 0.</p><p><span class="m">100 = 6·16 + 4 ⇒ a₁₀₀ = a₄ = −1</span></p><p><span class="m">S₁₀₀ = S₄ = 1 + 3 + 2 − 1 = 5</span></p></div></details></li>
+<li>בסדרת פיבונאצ'י (<span class="m">a₁ = a₂ = 1</span>) מצאו את <span class="m">a₁₂</span>, ובדקו עבור <span class="m">n = 5</span> את הטענה <span class="m">a₁ + … + aₙ = aₙ₊₂ − 1</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144</span>, לכן <span class="m">a₁₂ = 144</span></p><p><span class="m">1 + 1 + 2 + 3 + 5 = 12 = a₇ − 1 = 13 − 1</span> ✓</p></div></details></li>
+<li>נתון <span class="m">a₁ = 3</span>, <span class="m">aₙ₊₁ = aₙ + 4</span>. חשבו את <span class="m">a₂₀</span> ואת <span class="m">S₂₀</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p>חשבונית עם <span class="m">d = 4</span>: <span class="m">a₂₀ = 3 + 76 = 79</span></p><p><span class="m">S₂₀ = 20(3 + 79)/2 = 820</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = aₙ + 3ⁿ</span>. מצאו את <span class="m">aₙ</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">aₙ = 1 + 3 + 9 + … + 3ⁿ⁻¹ = (3ⁿ − 1)/2</span></p><p>בדיקה: <span class="m">a₂ = 4</span> ✓</p></div></details></li>
+<li>נתון <span class="m">a₁ = 64</span>, <span class="m">aₙ₊₁ = √aₙ</span>. הוכיחו ש־<span class="m">bₙ = log₂aₙ</span> הנדסית ומצאו את <span class="m">bₙ</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">bₙ₊₁ = log₂√aₙ = ½·log₂aₙ = ½bₙ</span></p><p><span class="m">b₁ = 6 ⇒ bₙ = 6·(½)ⁿ⁻¹</span></p></div></details></li>
+</ol></section>
+<section class="ch level" id="lvl3"><h2>רמה ג׳: רמת בגרות <small>שאלות 23–30</small></h2><p class="lead">סדרות עזר לא טריוויאליות, פרמטרים ומערכות.</p><ol class="exercises" start="23">
+<li>נתון <span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = 2aₙ + n</span>. הוכיחו ש־<span class="m">bₙ = aₙ + n + 1</span> הנדסית ומצאו את <span class="m">aₙ</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">bₙ₊₁ = aₙ₊₁ + n + 2 = 2aₙ + 2n + 2 = 2bₙ</span></p><p><span class="m">b₁ = 3 ⇒ aₙ = 3·2ⁿ⁻¹ − n − 1</span></p><p>בדיקה: <span class="m">a₂ = 3</span>, <span class="m">a₃ = 8</span> ✓</p></div></details></li>
+<li>נתון <span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = (aₙ + 6)/2</span>. מצאו את <span class="m">aₙ</span> והסבירו לאיזה ערך הסדרה מתקרבת.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">bₙ = aₙ − 6</span>: <span class="m">bₙ₊₁ = (aₙ − 6)/2 = bₙ/2</span></p><p><span class="m">b₁ = −5 ⇒ aₙ = 6 − 5·(½)ⁿ⁻¹</span></p><p>כש־n גדל, <span class="m">(½)ⁿ⁻¹ → 0</span>, והסדרה מתקרבת ל־6 מלמטה.</p></div></details></li>
+<li>נתון <span class="m">aₙ₊₁ = k·aₙ + 6</span>, <span class="m">a₁ = 2</span>, <span class="m">a₃ = 26</span>. מצאו את k. עבור הערך החיובי של k מצאו את <span class="m">aₙ</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₂ = 2k + 6</span>, <span class="m">a₃ = k(2k + 6) + 6 = 26 ⇒ k² + 3k − 10 = 0 ⇒ k = 2</span> או <span class="m">k = −5</span></p><p>עבור <span class="m">k = 2</span>: <span class="m">aₙ + 6</span> הנדסית עם מנה 2, ו־<span class="m">a₁ + 6 = 8</span></p><p><span class="m">aₙ = 2ⁿ⁺² − 6</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = aₙ/(2aₙ + 1)</span>. מצאו את <span class="m">aₙ</span> וחשבו <span class="m">a₁a₂ + a₂a₃ + … + a₁₀a₁₁</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">1/aₙ₊₁ = 2 + 1/aₙ ⇒ 1/aₙ = 2n − 1 ⇒ aₙ = 1/(2n − 1)</span></p><p><span class="m">aₙaₙ₊₁ = ½[1/(2n−1) − 1/(2n+1)]</span> (פירוק טלסקופי)</p><p>הסכום: <span class="m">½(1 − 1/21) = 10/21</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 1</span>. אם n אי־זוגי אז <span class="m">aₙ₊₁ = aₙ + 2</span>, ואם n זוגי אז <span class="m">aₙ₊₁ = 2aₙ</span>. מצאו נוסחה לאיברים במקומות האי־זוגיים ואת <span class="m">a₁₉</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">1, 3, 6, 8, 16, 18, 36, …</span></p><p>נסמן <span class="m">cₖ = a₂ₖ₋₁</span>: <span class="m">cₖ₊₁ = 2(cₖ + 2) = 2cₖ + 4</span></p><p><span class="m">cₖ + 4</span> הנדסית עם מנה 2 ו־<span class="m">c₁ + 4 = 5</span>, לכן <span class="m">cₖ = 5·2ᵏ⁻¹ − 4</span></p><p><span class="m">a₁₉ = c₁₀ = 5·512 − 4 = 2556</span></p></div></details></li>
+<li>בסדרה <span class="m">a₁ = 1</span>, ולכל n מתקיים <span class="m">Sₙ₊₁ = 3Sₙ + 1</span>. מצאו את <span class="m">Sₙ</span> ואת <span class="m">aₙ</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">Sₙ + ½</span> הנדסית עם מנה 3 ו־<span class="m">S₁ + ½ = 3/2</span></p><p><span class="m">Sₙ = (3ⁿ − 1)/2</span></p><p><span class="m">aₙ = Sₙ − Sₙ₋₁ = 3ⁿ⁻¹</span> (ו־<span class="m">a₁ = 1</span> ✓)</p></div></details></li>
+<li>נתונות שתי סדרות: <span class="m">a₁ = 2</span>, <span class="m">b₁ = 1</span>, <span class="m">aₙ₊₁ = 2aₙ + bₙ</span>, <span class="m">bₙ₊₁ = aₙ + 2bₙ</span>. מצאו נוסחאות ל־<span class="m">aₙ</span> ול־<span class="m">bₙ</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">aₙ₊₁ + bₙ₊₁ = 3(aₙ + bₙ)</span>, ולכן <span class="m">aₙ + bₙ = 3ⁿ</span></p><p><span class="m">aₙ₊₁ − bₙ₊₁ = aₙ − bₙ</span>, ולכן <span class="m">aₙ − bₙ = 1</span></p><p><span class="m">aₙ = (3ⁿ + 1)/2</span>, <span class="m">bₙ = (3ⁿ − 1)/2</span></p></div></details></li>
+<li>נתון <span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = aₙ + 2n + 1</span>. מצאו את <span class="m">aₙ</span> ואמתו את הנוסחה בהצבה בכלל.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">aₙ = 1 + (3 + 5 + … + (2n−1)) = n²</span></p><p>אימות: <span class="m">n² + 2n + 1 = (n+1)²</span> ✓</p></div></details></li>
+</ol></section>
+<footer>הפתרונות מוסתרים כדי לאפשר תרגול עצמי. לחצו על "הצג פתרון" כדי לבדוק.</footer></div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>אינדוקציה מתמטית · דף לימוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a worksheet-style single column on graph-paper ground; each sequence type is a "chapter" with meaning, formulas, worked example, exercises with folding solutions */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.num{font-family:var(--f-math);color:var(--muted);font-size:.85rem}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag,.ex-head{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<style>
+.level{display:flex;flex-direction:column;gap:14px}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+.method{display:flex;flex-direction:column;gap:6px}
+ol.exercises li{break-inside:avoid}
+</style>
+<style>.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}.back:hover,.back:focus-visible{text-decoration:underline}</style>
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="he">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header><span class="eyebrow">מתמטיקה · 5 יחידות · פרק 7 מתוך 7</span><h1>אינדוקציה מתמטית</h1><p class="lead">איך מוכיחים טענה עבור כל המספרים הטבעיים, ו־30 שאלות: נוסחאות סכום, התחלקות, אי־שוויונות וסדרות.</p></header>
+<nav aria-label="תוכן"><strong>תוכן</strong><ol><li><a href="#explain">הסבר ונוסחאות</a></li>
+<li><a href="#lvl1">רמה א׳: נוסחאות סכום</a></li>
+<li><a href="#lvl2">רמה ב׳: התחלקות</a></li>
+<li><a href="#lvl3">רמה ג׳: אי־שוויונות וסדרות</a></li>
+</ol></nav>
+<section class="ch" id="explain"><h2>הסבר ונוסחאות</h2>
+<div class="meaning">
+<p><strong>מה זו אינדוקציה?</strong> שיטת הוכחה לטענות שתלויות במספר טבעי n, כמו "<span class="m">1 + 2 + … + n = n(n+1)/2</span> לכל n". אי אפשר לבדוק אינסוף מקרים, אבל אפשר להוכיח שני דברים שיחד מכסים את כולם.</p>
+<p><strong>המשמעות: אפקט הדומינו.</strong> מעמידים שורה אינסופית של אבני דומינו. אם (1) האבן הראשונה נופלת, ו־(2) כל אבן שנופלת מפילה את זו שאחריה, אז כל האבנים נופלות. בהוכחה: (1) הטענה נכונה עבור <span class="m">n = 1</span>; (2) אם היא נכונה עבור מספר כלשהו k, היא נכונה גם עבור <span class="m">k + 1</span>.</p>
+<p><strong>למה זה חשוב בסדרות?</strong> הרבה נוסחאות בסדרות "מנחשים" מכמה איברים ראשונים. אינדוקציה הופכת את הניחוש להוכחה. היא מתאימה במיוחד לסדרות בכלל נסיגה, כי כלל הנסיגה הוא בדיוק "איך עוברים מ־k ל־<span class="m">k+1</span>".</p>
+</div>
+<div class="formulas">
+<div class="f"><b>שלב 1: בסיס</b>בודקים שהטענה נכונה עבור <span class="m">n = 1</span> (או הערך ההתחלתי)</div>
+<div class="f"><b>שלב 2: הנחה</b>מניחים שהטענה נכונה עבור <span class="m">n = k</span></div>
+<div class="f"><b>שלב 3: צעד</b>מוכיחים בעזרת ההנחה שהיא נכונה עבור <span class="m">n = k+1</span></div>
+</div>
+<div class="meaning">
+<p><strong>נוסחאות סכום:</strong> בצעד כותבים <span class="m">S(k+1) = S(k) + aₖ₊₁</span>, מציבים את ההנחה במקום <span class="m">S(k)</span>, ומפשטים עד שמגיעים לנוסחה עם <span class="m">k+1</span>. כדאי לכתוב מראש מה רוצים לקבל, כדי לדעת לאן לכוון את הפישוט (לרוב: להוציא גורם משותף <span class="m">(k+1)</span>).</p>
+<p><strong>התחלקות:</strong> כותבים את הביטוי עבור <span class="m">k+1</span> כך שיופיע בו הביטוי עבור k. למשל <span class="m">7ᵏ⁺¹ − 1 = 7(7ᵏ − 1) + 6</span>. החלק הראשון מתחלק לפי ההנחה, והשני מתחלק בבירור.</p>
+<p><strong>אי־שוויונות:</strong> מתחילים מהאגף של <span class="m">k+1</span>, משתמשים בהנחה כדי להגיע לביטוי ביניים, ואז מראים שביטוי הביניים גדול (או קטן) מהאגף השני. לפעמים הבסיס אינו <span class="m">n = 1</span>, למשל <span class="m">2ⁿ &gt; n²</span> נכון רק מ־<span class="m">n = 5</span>.</p>
+<p><strong>כלל נסיגה:</strong> כדי להוכיח ש־<span class="m">aₙ = f(n)</span>, מציבים בכלל: <span class="m">aₖ₊₁ = g(aₖ) = g(f(k))</span>, ומראים שזה שווה ל־<span class="m">f(k+1)</span>.</p>
+</div>
+<div class="note"><strong>טעויות נפוצות:</strong> לדלג על הבסיס (בלעדיו ה"הוכחה" יכולה "להוכיח" טענות שגויות); להניח את מה שצריך להוכיח, כלומר להתחיל מהשוויון עבור <span class="m">k+1</span> ולהגיע ל־<span class="m">0 = 0</span>; לא להשתמש בהנחה בכלל (אז זו לא הוכחה באינדוקציה).</div>
+</section>
+<section class="ch level" id="lvl1"><h2>רמה א׳: נוסחאות סכום <small>שאלות 1–12</small></h2><p class="lead">הוכיחו באינדוקציה לכל n טבעי. בכל פתרון מוצגים הבסיס והצעד.</p><ol class="exercises" start="1">
+<li><span class="m">1 + 2 + … + n = n(n+1)/2</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">1 = 1·2/2</span> ✓</p><p>צעד: <span class="m">k(k+1)/2 + (k+1) = (k+1)(k+2)/2</span> ✓</p></div></details></li>
+<li><span class="m">1 + 3 + 5 + … + (2n−1) = n²</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">1 = 1²</span> ✓</p><p>צעד: <span class="m">k² + (2k + 1) = (k+1)²</span> ✓</p></div></details></li>
+<li><span class="m">2 + 4 + … + 2n = n(n+1)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">2 = 1·2</span> ✓</p><p>צעד: <span class="m">k(k+1) + 2(k+1) = (k+1)(k+2)</span> ✓</p></div></details></li>
+<li><span class="m">1² + 2² + … + n² = n(n+1)(2n+1)/6</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">1 = 1·2·3/6</span> ✓</p><p>צעד: <span class="m">k(k+1)(2k+1)/6 + (k+1)² = (k+1)(2k² + 7k + 6)/6 = (k+1)(k+2)(2k+3)/6</span> ✓</p></div></details></li>
+<li><span class="m">1³ + 2³ + … + n³ = [n(n+1)/2]²</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">1 = 1²</span> ✓</p><p>צעד: <span class="m">k²(k+1)²/4 + (k+1)³ = (k+1)²(k² + 4k + 4)/4 = [(k+1)(k+2)/2]²</span> ✓</p></div></details></li>
+<li><span class="m">1 + 2 + 4 + … + 2ⁿ⁻¹ = 2ⁿ − 1</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">1 = 2 − 1</span> ✓</p><p>צעד: <span class="m">2ᵏ − 1 + 2ᵏ = 2ᵏ⁺¹ − 1</span> ✓</p></div></details></li>
+<li><span class="m">1 + 3 + 9 + … + 3ⁿ⁻¹ = (3ⁿ − 1)/2</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">1 = (3 − 1)/2</span> ✓</p><p>צעד: <span class="m">(3ᵏ − 1)/2 + 3ᵏ = (3·3ᵏ − 1)/2 = (3ᵏ⁺¹ − 1)/2</span> ✓</p></div></details></li>
+<li><span class="m">1·2 + 2·3 + … + n(n+1) = n(n+1)(n+2)/3</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">2 = 1·2·3/3</span> ✓</p><p>צעד: <span class="m">k(k+1)(k+2)/3 + (k+1)(k+2) = (k+1)(k+2)(k+3)/3</span> ✓</p></div></details></li>
+<li><span class="m">1/(1·2) + 1/(2·3) + … + 1/(n(n+1)) = n/(n+1)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">½ = ½</span> ✓</p><p>צעד: <span class="m">k/(k+1) + 1/((k+1)(k+2)) = (k² + 2k + 1)/((k+1)(k+2)) = (k+1)/(k+2)</span> ✓</p></div></details></li>
+<li><span class="m">1/(1·3) + 1/(3·5) + … + 1/((2n−1)(2n+1)) = n/(2n+1)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">⅓ = ⅓</span> ✓</p><p>צעד: <span class="m">k/(2k+1) + 1/((2k+1)(2k+3)) = (2k² + 3k + 1)/((2k+1)(2k+3)) = (k+1)/(2k+3)</span> ✓</p></div></details></li>
+<li><span class="m">1 + 4 + 7 + … + (3n−2) = n(3n−1)/2</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">1 = 1·2/2</span> ✓</p><p>צעד: <span class="m">k(3k−1)/2 + (3k+1) = (3k² + 5k + 2)/2 = (k+1)(3k+2)/2</span> ✓</p></div></details></li>
+<li><span class="m">1·2⁰ + 2·2¹ + 3·2² + … + n·2ⁿ⁻¹ = (n−1)·2ⁿ + 1</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">1 = 0·2 + 1</span> ✓</p><p>צעד: <span class="m">(k−1)2ᵏ + 1 + (k+1)2ᵏ = 2k·2ᵏ + 1 = k·2ᵏ⁺¹ + 1</span> ✓</p></div></details></li>
+</ol></section>
+<section class="ch level" id="lvl2"><h2>רמה ב׳: התחלקות <small>שאלות 13–20</small></h2><p class="lead">הוכיחו באינדוקציה לכל n טבעי.</p><ol class="exercises" start="13">
+<li><span class="m">7ⁿ − 1</span> מתחלק ב־6.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">6</span> ✓</p><p>צעד: <span class="m">7ᵏ⁺¹ − 1 = 7(7ᵏ − 1) + 6</span> ✓</p></div></details></li>
+<li><span class="m">5ⁿ − 1</span> מתחלק ב־4.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">4</span> ✓</p><p>צעד: <span class="m">5ᵏ⁺¹ − 1 = 5(5ᵏ − 1) + 4</span> ✓</p></div></details></li>
+<li><span class="m">4ⁿ + 5</span> מתחלק ב־3.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">9</span> ✓</p><p>צעד: <span class="m">4ᵏ⁺¹ + 5 = 4(4ᵏ + 5) − 15</span> ✓</p></div></details></li>
+<li><span class="m">3²ⁿ − 1</span> מתחלק ב־8.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">8</span> ✓</p><p>צעד: <span class="m">9ᵏ⁺¹ − 1 = 9(9ᵏ − 1) + 8</span> ✓</p></div></details></li>
+<li><span class="m">11ⁿ − 6</span> מתחלק ב־5.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">5</span> ✓</p><p>צעד: <span class="m">11ᵏ⁺¹ − 6 = 11(11ᵏ − 6) + 60</span> ✓</p></div></details></li>
+<li><span class="m">n³ + 2n</span> מתחלק ב־3.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">3</span> ✓</p><p>צעד: <span class="m">(k+1)³ + 2(k+1) = (k³ + 2k) + 3(k² + k + 1)</span> ✓</p></div></details></li>
+<li><span class="m">n³ − n</span> מתחלק ב־6.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">0</span> ✓</p><p>צעד: <span class="m">(k+1)³ − (k+1) = (k³ − k) + 3k(k+1)</span></p><p><span class="m">k(k+1)</span> זוגי (מכפלת שני מספרים עוקבים), לכן <span class="m">3k(k+1)</span> מתחלק ב־6 ✓</p></div></details></li>
+<li><span class="m">2ⁿ⁺² + 3²ⁿ⁺¹</span> מתחלק ב־7.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">8 + 27 = 35</span> ✓</p><p>צעד: <span class="m">2ᵏ⁺³ + 3²ᵏ⁺³ = 2·2ᵏ⁺² + 9·3²ᵏ⁺¹ = 2(2ᵏ⁺² + 3²ᵏ⁺¹) + 7·3²ᵏ⁺¹</span> ✓</p></div></details></li>
+</ol></section>
+<section class="ch level" id="lvl3"><h2>רמה ג׳: אי־שוויונות וסדרות <small>שאלות 21–30</small></h2><p class="lead">שימו לב לבסיס בכל שאלה.</p><ol class="exercises" start="21">
+<li><span class="m">2ⁿ ≥ n + 1</span> לכל n טבעי.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">2 ≥ 2</span> ✓</p><p>צעד: <span class="m">2ᵏ⁺¹ = 2·2ᵏ ≥ 2(k + 1) = 2k + 2 ≥ k + 2</span> ✓</p></div></details></li>
+<li><span class="m">3ⁿ &gt; n²</span> לכל n טבעי.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">n = 1</span>: <span class="m">3 &gt; 1</span>; <span class="m">n = 2</span>: <span class="m">9 &gt; 4</span> ✓</p><p>צעד (עבור <span class="m">k ≥ 2</span>): <span class="m">3ᵏ⁺¹ &gt; 3k² ≥ (k+1)²</span>, כי <span class="m">2k² − 2k − 1 ≥ 0</span> עבור <span class="m">k ≥ 2</span> ✓</p></div></details></li>
+<li><span class="m">2ⁿ &gt; n²</span> לכל <span class="m">n ≥ 5</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">32 &gt; 25</span> ✓</p><p>צעד: <span class="m">2ᵏ⁺¹ &gt; 2k² ≥ (k+1)²</span>, כי <span class="m">k² − 2k − 1 ≥ 0</span> עבור <span class="m">k ≥ 3</span> ✓</p></div></details></li>
+<li>(אי־שוויון ברנולי) <span class="m">(1 + x)ⁿ ≥ 1 + nx</span> לכל n טבעי ולכל <span class="m">x &gt; −1</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: שוויון ✓</p><p>צעד: <span class="m">(1+x)ᵏ⁺¹ ≥ (1 + kx)(1 + x) = 1 + (k+1)x + kx² ≥ 1 + (k+1)x</span> ✓</p><p>(השתמשנו ב־<span class="m">1 + x &gt; 0</span> כדי לכפול את אי־השוויון.)</p></div></details></li>
+<li>נתון <span class="m">a₁ = 3</span>, <span class="m">aₙ₊₁ = 2aₙ + 1</span>. הוכיחו ש־<span class="m">aₙ = 2ⁿ⁺¹ − 1</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">2² − 1 = 3</span> ✓</p><p>צעד: <span class="m">aₖ₊₁ = 2(2ᵏ⁺¹ − 1) + 1 = 2ᵏ⁺² − 1</span> ✓</p></div></details></li>
+<li>נתון <span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = aₙ + 2n + 1</span>. הוכיחו ש־<span class="m">aₙ = n²</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">1 = 1²</span> ✓</p><p>צעד: <span class="m">aₖ₊₁ = k² + 2k + 1 = (k+1)²</span> ✓</p></div></details></li>
+<li>נתון <span class="m">a₁ = 2</span>, <span class="m">aₙ₊₁ = 2 − 1/aₙ</span>. הוכיחו ש־<span class="m">aₙ = (n+1)/n</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">2/1 = 2</span> ✓</p><p>צעד: <span class="m">aₖ₊₁ = 2 − k/(k+1) = (k+2)/(k+1)</span> ✓</p></div></details></li>
+<li>נתון <span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = (aₙ + 4)/3</span>. הוכיחו ש־<span class="m">aₙ &lt; 2</span> לכל n, ושהסדרה עולה.<details><summary>הצג פתרון</summary><div class="sol steps"><p>חסם: בסיס <span class="m">1 &lt; 2</span> ✓. צעד: אם <span class="m">aₖ &lt; 2</span> אז <span class="m">aₖ₊₁ &lt; (2 + 4)/3 = 2</span> ✓</p><p>עלייה: <span class="m">aₙ₊₁ − aₙ = (4 − 2aₙ)/3 &gt; 0</span>, כי <span class="m">aₙ &lt; 2</span> ✓</p></div></details></li>
+<li>הוכיחו: <span class="m">1·1! + 2·2! + … + n·n! = (n+1)! − 1</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p>בסיס: <span class="m">1 = 2! − 1</span> ✓</p><p>צעד: <span class="m">(k+1)! − 1 + (k+1)(k+1)! = (k+1)!(k+2) − 1 = (k+2)! − 1</span> ✓</p></div></details></li>
+<li>מצאו את השגיאה: "נוכיח ש־<span class="m">n = n + 1</span>. נניח <span class="m">k = k + 1</span>; מוסיפים 1 לשני האגפים ומקבלים <span class="m">k + 1 = k + 2</span>. הוכחנו."<details><summary>הצג פתרון</summary><div class="sol steps"><p>הצעד עצמו נכון, אבל אין בסיס: עבור <span class="m">n = 1</span> מקבלים <span class="m">1 = 2</span>, וזה שקר.</p><p>בלי האבן הראשונה, אף אבן דומינו לא נופלת.</p></div></details></li>
+</ol></section>
+<footer>הפתרונות מוסתרים כדי לאפשר תרגול עצמי. לחצו על "הצג פתרון" כדי לבדוק.</footer></div>
+</body>
+</html>

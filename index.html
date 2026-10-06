@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מתמטיקה יא׳ · 5 יחידות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: library index on graph-paper ground; one section per topic, each document a row with number, title, description, question count */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+.wrap{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:40px 64px;display:flex;flex-direction:column;gap:32px}
+h1,h2{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:2.6rem}
+h2{font-size:1.6rem;color:var(--accent)}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em}
+header{display:flex;flex-direction:column;gap:12px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.lead{max-width:66ch;font-size:1.08rem}
+.about{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.about div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.about h3{margin:0;font-size:1rem;color:var(--mark)}
+.about p{color:var(--muted);font-size:.97rem}
+section.topic{display:flex;flex-direction:column;gap:14px}
+.topic-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--accent);padding-bottom:8px}
+.topic-head span{color:var(--muted);font-size:.92rem}
+ul.docs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+ul.docs li a{display:grid;grid-template-columns:3.2rem 1fr auto;gap:4px 16px;align-items:start;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 18px;color:inherit;text-decoration:none;transition:border-color .15s}
+ul.docs li a:hover,ul.docs li a:focus-visible{border-color:var(--accent);outline:none}
+ul.docs li a:focus-visible{box-shadow:0 0 0 3px var(--accent-soft)}
+.no{font-family:var(--f-math);color:var(--accent);font-size:1.3rem;font-weight:600;grid-row:span 2;line-height:1.4}
+.t{font-family:var(--f-display);font-weight:700;font-size:1.18rem;min-width:0}
+.d{grid-column:2 / 4;color:var(--muted);font-size:.96rem;min-width:0}
+.q{font-size:.82rem;font-weight:700;color:var(--mark);background:var(--accent-soft);border-radius:99px;padding:2px 10px;white-space:nowrap;align-self:center}
+@media (max-width:520px){h1{font-size:2rem} ul.docs li a{grid-template-columns:2.4rem 1fr} .q{grid-column:2;justify-self:start} .d{grid-column:2}}
+footer{color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="eyebrow">אתר לימוד · מתמטיקה · כיתה יא׳ · 5 יחידות לימוד</span>
+  <h1>מתמטיקה לכיתה יא׳</h1>
+  <p class="lead">אוסף דפי לימוד ותרגול במתמטיקה לתלמידי כיתה יא׳ ברמת 5 יחידות, לפי תוכנית הלימודים בישראל. כל דף מסביר נושא אחד לעומק: מה המשמעות שלו, הנוסחאות ומאיפה הן באות, דרכי פתרון וטעויות נפוצות. אחרי ההסבר יש שאלות תרגול מדורגות עם פתרונות מלאים.</p>
+</header>
+
+<div class="about">
+  <div><h3>מבנה כל דף</h3><p>הסבר ונוסחאות, ואחריו שאלות בשלוש רמות: בסיס, ביסוס ורמת בגרות.</p></div>
+  <div><h3>איך לתרגל</h3><p>הפתרונות מוסתרים. פתרו קודם לבד, ואז לחצו על "הצג פתרון" כדי לבדוק את הדרך ואת התשובה.</p></div>
+  <div><h3>סדר מומלץ</h3><p>בכל נושא כדאי ללמוד את הדפים לפי המספור, כי כל דף נשען על הקודמים.</p></div>
+</div>
+
+<!-- TOPIC: sequences. New documents: add an <li> inside the matching ul.docs, or a new section.topic for a new subject -->
+<section class="topic" id="sequences">
+  <div class="topic-head"><h2>סדרות</h2><span>8 דפים · 237 שאלות</span></div>
+  <ul class="docs">
+    <li><a href="sequences-00-overview.html"><span class="no">00</span><span class="t">סדרות: מבט כללי</span><span class="q">27 שאלות</span><span class="d">סקירה של כל סוגי הסדרות בדף אחד: טבלת השוואה, המשמעות של כל סוג, דוגמה פתורה ו־3–4 תרגילים לכל סוג. נקודת פתיחה טובה לנושא ולחזרה לפני מבחן.</span></a></li>
+    <li><a href="sequences-01-arithmetic.html"><span class="no">01</span><span class="t">סדרה חשבונית</span><span class="q">30 שאלות</span><span class="d">הפרש קבוע וגדילה לינארית. האיבר הכללי, נוסחת הסכום של גאוס, תכונת האמצע, ובעיות של שני נעלמים ובעיות מילוליות.</span></a></li>
+    <li><a href="sequences-02-geometric.html"><span class="no">02</span><span class="t">סדרה הנדסית</span><span class="q">30 שאלות</span><span class="d">מנה קבועה וגדילה מעריכית. נוסחת הסכום, הקשר בין אחוזים למנה, ובעיות של ריבית דריבית, גידול אוכלוסייה ודעיכה.</span></a></li>
+    <li><a href="sequences-03-infinite-series.html"><span class="no">03</span><span class="t">טור הנדסי אינסופי מתכנס</span><span class="q">30 שאלות</span><span class="d">סכום של אינסוף איברים ותנאי ההתכנסות <span class="m">|q| &lt; 1</span>. שברים מחזוריים, טורים עם פרמטר, וטורים גאומטריים של שטחים ומרחקים.</span></a></li>
+    <li><a href="sequences-04-recursive.html"><span class="no">04</span><span class="t">סדרות בכלל נסיגה</span><span class="q">30 שאלות</span><span class="d">סדרות שמוגדרות צעד אחר צעד. סדרות עזר חשבוניות והנדסיות, סכימה טלסקופית, הופכיים וסדרות מחזוריות.</span></a></li>
+    <li><a href="sequences-05-general-term.html"><span class="no">05</span><span class="t">סדרה לפי נוסחת איבר כללי</span><span class="q">30 שאלות</span><span class="d">סדרה כפונקציה של n. בדיקה אם מספר הוא איבר, מונוטוניות, איבר מקסימלי ומינימלי, והמעבר מ־<span class="m">Sₙ</span> ל־<span class="m">aₙ</span>.</span></a></li>
+    <li><a href="sequences-06-mixed.html"><span class="no">06</span><span class="t">סדרות מעורבות ומשולבות</span><span class="q">30 שאלות</span><span class="d">סדרות שזורות, סדרות נגזרות (לוגריתם וחזקה), ושאלות שמשלבות סדרה חשבונית והנדסית באותה בעיה.</span></a></li>
+    <li><a href="sequences-07-induction.html"><span class="no">07</span><span class="t">אינדוקציה מתמטית</span><span class="q">30 שאלות</span><span class="d">הוכחה לכל n טבעי בשיטת הדומינו. נוסחאות סכום, התחלקות, אי־שוויונות והוכחת נוסחה מפורשת לכלל נסיגה.</span></a></li>
+  </ul>
+</section>
+
+<footer>האתר נבנה בהדרגה, ודפים חדשים יתווספו לרשימה זו. חלוקת הנושאים בין שאלונים ושנים עשויה להשתנות, ולכן כדאי לוודא מול תוכנית הלימודים העדכנית של משרד החינוך.</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>סדרה חשבונית · דף לימוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a worksheet-style single column on graph-paper ground; each sequence type is a "chapter" with meaning, formulas, worked example, exercises with folding solutions */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.num{font-family:var(--f-math);color:var(--muted);font-size:.85rem}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag,.ex-head{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<style>
+.level{display:flex;flex-direction:column;gap:14px}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+.method{display:flex;flex-direction:column;gap:6px}
+ol.exercises li{break-inside:avoid}
+</style>
+<style>.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}.back:hover,.back:focus-visible{text-decoration:underline}</style>
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="he">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header><span class="eyebrow">מתמטיקה · 5 יחידות · פרק 1 מתוך 7</span><h1>סדרה חשבונית</h1><p class="lead">הסבר מלא של הסדרה החשבונית ו־30 שאלות מדורגות: בסיס, ביסוס ורמת בגרות.</p></header>
+<nav aria-label="תוכן"><strong>תוכן</strong><ol><li><a href="#explain">הסבר ונוסחאות</a></li>
+<li><a href="#lvl1">רמה א׳: בסיס</a></li>
+<li><a href="#lvl2">רמה ב׳: ביסוס</a></li>
+<li><a href="#lvl3">רמה ג׳: רמת בגרות</a></li>
+</ol></nav>
+<section class="ch" id="explain"><h2>הסבר ונוסחאות</h2>
+<div class="meaning">
+<p><strong>מה זו סדרה חשבונית?</strong> סדרה שבה כל איבר מתקבל מהאיבר הקודם על ידי הוספת אותו מספר קבוע. המספר הזה נקרא <strong>הפרש הסדרה</strong> ומסומן <span class="m">d</span>. למשל ב־<span class="m">5, 8, 11, 14, …</span> מוסיפים 3 בכל צעד, ולכן <span class="m">d = 3</span>.</p>
+<p><strong>המשמעות:</strong> סדרה חשבונית מתארת שינוי קבוע: אותה תוספת (או אותה הפחתה) בכל צעד. משכורת שעולה ב־200 ₪ בכל שנה, מושבים בתיאטרון שבכל שורה יש 2 יותר מבשורה הקודמת, מונית שמחייבת סכום קבוע לכל קילומטר. אם משרטטים את הנקודות <span class="m">(n, aₙ)</span>, כולן נמצאות על קו ישר ששיפועו <span class="m">d</span>. לכן סדרה חשבונית היא "הגרסה הבדידה" של פונקציה קווית.</p>
+<p><strong>כיוון הסדרה:</strong> <span class="m">d &gt; 0</span> סדרה עולה, <span class="m">d &lt; 0</span> סדרה יורדת, <span class="m">d = 0</span> סדרה קבועה.</p>
+</div>
+<div class="formulas">
+<div class="f"><b>הגדרה (כלל נסיגה)</b><span class="m">aₙ₊₁ = aₙ + d</span></div>
+<div class="f"><b>האיבר הכללי</b><span class="m">aₙ = a₁ + (n−1)d</span></div>
+<div class="f"><b>מעבר בין שני איברים</b><span class="m">aₘ = aₖ + (m−k)d</span></div>
+<div class="f"><b>סכום n איברים</b><span class="m">Sₙ = n(a₁ + aₙ)/2</span></div>
+<div class="f"><b>סכום בלי האיבר האחרון</b><span class="m">Sₙ = n[2a₁ + (n−1)d]/2</span></div>
+<div class="f"><b>תכונת האמצע</b><span class="m">2aₙ = aₙ₋₁ + aₙ₊₁</span></div>
+</div>
+<div class="meaning">
+<p><strong>מאיפה באה נוסחת האיבר הכללי?</strong> כדי להגיע מ־<span class="m">a₁</span> ל־<span class="m">aₙ</span> עושים <span class="m">n−1</span> צעדים, ובכל צעד מוסיפים <span class="m">d</span>. לכן מוסיפים בסך הכול <span class="m">(n−1)d</span>.</p>
+<p><strong>מאיפה באה נוסחת הסכום?</strong> (הרעיון של גאוס) כותבים את הסכום פעמיים, פעם מההתחלה ופעם מהסוף, ומחברים טור טור. כל זוג נותן את אותו סכום <span class="m">a₁ + aₙ</span>, ויש <span class="m">n</span> זוגות, כלומר <span class="m">2Sₙ = n(a₁ + aₙ)</span>.</p>
+<p><strong>תכונת האמצע:</strong> כל איבר הוא ממוצע שני שכניו. לכן שלושה מספרים <span class="m">x, y, z</span> הם סדרה חשבונית אם ורק אם <span class="m">2y = x + z</span>. באופן כללי יותר, אם <span class="m">m + k = p + r</span> אז <span class="m">aₘ + aₖ = aₚ + aᵣ</span>.</p>
+<p><strong>שני נעלמים, שתי משוואות:</strong> כמעט כל שאלה מסתכמת במציאת <span class="m">a₁</span> ו־<span class="m">d</span>. כל נתון (איבר, סכום, יחס) מתורגם למשוואה בשני הנעלמים האלה.</p>
+<p><strong>טיפ:</strong> כשנתונים שלושה איברים עוקבים עם סכום, נוח לסמן אותם <span class="m">a−d, a, a+d</span>. כך ה־<span class="m">d</span> מתבטל בסכום.</p>
+</div>
+<div class="note"><strong>טעויות נפוצות:</strong> לשכוח שמספר האיברים מ־<span class="m">aₖ</span> עד <span class="m">aₘ</span> הוא <span class="m">m−k+1</span> ולא <span class="m">m−k</span>; לפתור <span class="m">Sₙ</span> ולקבל <span class="m">n</span> שאינו טבעי בלי לעגל ולבדוק; לבלבל בין "האיבר ה־n" לבין "סכום n איברים".</div>
+</section>
+<section class="ch level" id="lvl1"><h2>רמה א׳: בסיס <small>שאלות 1–10</small></h2><p class="lead">שימוש ישיר בנוסחת האיבר הכללי ובנוסחת הסכום.</p><ol class="exercises" start="1">
+<li>מצאו את ההפרש ואת האיבר העשירי בסדרה <span class="m">7, 11, 15, …</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">d = 4</span></p><p><span class="m">a₁₀ = 7 + 9·4 = 43</span></p></div></details></li>
+<li>מצאו את האיבר ה־20 בסדרה <span class="m">50, 46, 42, …</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">d = −4</span></p><p><span class="m">a₂₀ = 50 + 19·(−4) = −26</span></p></div></details></li>
+<li>בסדרה חשבונית <span class="m">a₁ = −3</span> ו־<span class="m">d = 5</span>. מצאו את <span class="m">a₁₅</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₁₅ = −3 + 14·5 = 67</span></p></div></details></li>
+<li>האם 100 הוא איבר בסדרה <span class="m">4, 10, 16, …</span>? אם כן, באיזה מקום?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">aₙ = 4 + 6(n−1) = 6n − 2</span></p><p><span class="m">6n − 2 = 100 ⇒ n = 17</span>. כן, <span class="m">a₁₇ = 100</span>.</p></div></details></li>
+<li>האם 200 הוא איבר בסדרה <span class="m">5, 12, 19, …</span>?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">aₙ = 7n − 2 = 200 ⇒ n = 202/7 ≈ 28.86</span></p><p>n אינו טבעי, לכן 200 אינו איבר בסדרה (<span class="m">a₂₈ = 194</span>, <span class="m">a₂₉ = 201</span>).</p></div></details></li>
+<li>חשבו את סכום 30 האיברים הראשונים בסדרה <span class="m">2, 5, 8, …</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₃₀ = 2 + 29·3 = 89</span></p><p><span class="m">S₃₀ = 30(2 + 89)/2 = 1365</span></p></div></details></li>
+<li>חשבו את הסכום <span class="m">1 + 2 + 3 + … + 100</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">S₁₀₀ = 100(1 + 100)/2 = 5050</span></p></div></details></li>
+<li>כמה איברים יש בסדרה <span class="m">12, 17, 22, …, 247</span>?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">247 = 12 + 5(n−1) ⇒ n − 1 = 47 ⇒ n = 48</span></p></div></details></li>
+<li>בסדרה חשבונית <span class="m">a₃ = 10</span> ו־<span class="m">a₇ = 26</span>. מצאו את <span class="m">d</span> ואת <span class="m">a₁</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₇ − a₃ = 4d = 16 ⇒ d = 4</span></p><p><span class="m">a₁ = a₃ − 2d = 2</span></p></div></details></li>
+<li>בסדרה חשבונית <span class="m">a₁ = 8</span> ו־<span class="m">a₂₀ = 65</span>. מצאו את <span class="m">d</span> ואת <span class="m">S₂₀</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">19d = 57 ⇒ d = 3</span></p><p><span class="m">S₂₀ = 20(8 + 65)/2 = 730</span></p></div></details></li>
+</ol></section>
+<section class="ch level" id="lvl2"><h2>רמה ב׳: ביסוס <small>שאלות 11–22</small></h2><p class="lead">שאלות של שני נעלמים, תכונת האמצע ובעיות מילוליות.</p><ol class="exercises" start="11">
+<li>חשבו את סכום כל המספרים האי־זוגיים מ־1 עד 99.<details><summary>הצג פתרון</summary><div class="sol steps"><p>יש 50 איברים: <span class="m">S = 50(1 + 99)/2 = 2500</span> (וגם <span class="m">= 50²</span>).</p></div></details></li>
+<li>חשבו את סכום כל המספרים התלת־ספרתיים המתחלקים ב־9.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">108, 117, …, 999</span></p><p><span class="m">n = (999 − 108)/9 + 1 = 100</span></p><p><span class="m">S = 100(108 + 999)/2 = 55350</span></p></div></details></li>
+<li>חשבו את סכום כל המספרים הדו־ספרתיים שאינם מתחלקים ב־3.<details><summary>הצג פתרון</summary><div class="sol steps"><p>סכום כל הדו־ספרתיים: <span class="m">90(10 + 99)/2 = 4905</span></p><p>המתחלקים ב־3: <span class="m">12, …, 99</span>, 30 איברים, סכום <span class="m">30(12 + 99)/2 = 1665</span></p><p>התשובה: <span class="m">4905 − 1665 = 3240</span></p></div></details></li>
+<li>המספרים <span class="m">x+2, 3x−1, 4x+2</span> הם איברים עוקבים בסדרה חשבונית. מצאו את x ואת האיברים.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">2(3x−1) = (x+2) + (4x+2)</span></p><p><span class="m">6x − 2 = 5x + 4 ⇒ x = 6</span></p><p>האיברים: <span class="m">8, 17, 26</span></p></div></details></li>
+<li>שלושה מספרים יוצרים סדרה חשבונית. סכומם 21 ומכפלתם 231. מצאו אותם.<details><summary>הצג פתרון</summary><div class="sol steps"><p>נסמן <span class="m">7−d, 7, 7+d</span> (כי <span class="m">3·7 = 21</span>).</p><p><span class="m">7(49 − d²) = 231 ⇒ d² = 16 ⇒ d = ±4</span></p><p>המספרים: <span class="m">3, 7, 11</span> (או בסדר הפוך).</p></div></details></li>
+<li>בסדרה חשבונית <span class="m">a₁ = 1</span> ו־<span class="m">S₁₀ = 145</span>. מצאו את <span class="m">d</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">145 = 10(2 + 9d)/2 = 5(2 + 9d)</span></p><p><span class="m">2 + 9d = 29 ⇒ d = 3</span></p></div></details></li>
+<li>בסדרה חשבונית <span class="m">a₁ = 40</span>, <span class="m">d = −3</span>. מהו הסכום הגדול ביותר של איברים ראשונים, ועבור איזה n מתקבל?<details><summary>הצג פתרון</summary><div class="sol steps"><p>הסכום גדל כל עוד מוסיפים איברים חיוביים.</p><p><span class="m">40 − 3(n−1) &gt; 0 ⇒ n &lt; 14.33</span>, כלומר <span class="m">a₁₄ = 1</span> האחרון החיובי.</p><p><span class="m">S₁₄ = 14(40 + 1)/2 = 287</span></p></div></details></li>
+<li>כמה איברים מהסדרה <span class="m">3, 7, 11, …</span> יש לחבר כדי לקבל סכום 465?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">Sₙ = n[6 + 4(n−1)]/2 = n(2n + 1)</span></p><p><span class="m">2n² + n − 465 = 0 ⇒ n = (−1 + 61)/4 = 15</span></p></div></details></li>
+<li>בסדרה חשבונית <span class="m">a₂ + a₈ = 34</span> ו־<span class="m">a₃ = 11</span>. מצאו את <span class="m">a₅</span> ואת <span class="m">d</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">2 + 8 = 5 + 5</span>, לכן <span class="m">a₂ + a₈ = 2a₅ ⇒ a₅ = 17</span></p><p><span class="m">a₅ − a₃ = 2d = 6 ⇒ d = 3</span></p></div></details></li>
+<li>בסדרה חשבונית בת 20 איברים <span class="m">a₁ + a₂₀ = 50</span>. מצאו את סכום הסדרה ואת <span class="m">a₅ + a₁₆</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">S₂₀ = 20·50/2 = 500</span></p><p><span class="m">5 + 16 = 1 + 20</span>, לכן <span class="m">a₅ + a₁₆ = 50</span></p></div></details></li>
+<li>שבצו 5 מספרים בין 4 ל־40 כך שיתקבלו 7 איברים של סדרה חשבונית.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₇ = 4 + 6d = 40 ⇒ d = 6</span></p><p>המספרים: <span class="m">10, 16, 22, 28, 34</span></p></div></details></li>
+<li>נתון <span class="m">aₙ = 3n + 2</span>. חשבו את סכום האיברים מ־<span class="m">a₁₁</span> עד <span class="m">a₂₀</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">a₁₁ = 35</span>, <span class="m">a₂₀ = 62</span>, ויש 10 איברים.</p><p><span class="m">S = 10(35 + 62)/2 = 485</span></p></div></details></li>
+</ol></section>
+<section class="ch level" id="lvl3"><h2>רמה ג׳: רמת בגרות <small>שאלות 23–30</small></h2><p class="lead">שאלות רב־שלביות, הוכחות ושילובים.</p><ol class="exercises" start="23">
+<li>בסדרה חשבונית <span class="m">S₅ = 40</span> ו־<span class="m">S₁₀ = 155</span>. מצאו את <span class="m">a₁</span> ואת <span class="m">d</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">5(2a₁ + 4d)/2 = 40 ⇒ a₁ + 2d = 8</span></p><p><span class="m">10(2a₁ + 9d)/2 = 155 ⇒ 2a₁ + 9d = 31</span></p><p>מציבים <span class="m">a₁ = 8 − 2d</span>: <span class="m">16 + 5d = 31 ⇒ d = 3</span>, <span class="m">a₁ = 2</span></p></div></details></li>
+<li>בסדרה חשבונית בת 20 איברים, סכום האיברים במקומות האי־זוגיים הוא 210 וסכום האיברים במקומות הזוגיים הוא 240. מצאו את <span class="m">a₁</span> ואת <span class="m">d</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p>כל איבר זוגי גדול ב־d מהאי־זוגי שלפניו, ויש 10 זוגות: <span class="m">10d = 240 − 210 ⇒ d = 3</span></p><p>האיברים האי־זוגיים יוצרים סדרה חשבונית עם הפרש <span class="m">2d = 6</span>: <span class="m">10(2a₁ + 9·6)/2 = 210 ⇒ a₁ = −6</span></p></div></details></li>
+<li>הוכיחו שבכל סדרה חשבונית <span class="m">Sₙ = An² + Bn</span> (A, B קבועים). מצאו את הסדרה שבה <span class="m">Sₙ = 2n² − 5n</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">Sₙ = (d/2)n² + (a₁ − d/2)n</span>, כלומר <span class="m">A = d/2</span>, <span class="m">B = a₁ − d/2</span>.</p><p>כאן <span class="m">d = 4</span>, <span class="m">a₁ = B + d/2 = −5 + 2 = −3</span></p><p><span class="m">aₙ = 4n − 7</span></p></div></details></li>
+<li>דן חוסך 100 ₪ בחודש הראשון, ובכל חודש הוא חוסך 20 ₪ יותר מבחודש הקודם. אחרי כמה חודשים יגיע החיסכון הכולל ל־5000 ₪ לפחות?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">Sₙ = n[200 + 20(n−1)]/2 = 10n² + 90n ≥ 5000</span></p><p><span class="m">n² + 9n − 500 ≥ 0 ⇒ n ≥ 18.31</span></p><p>בדיקה: <span class="m">S₁₈ = 4860</span>, <span class="m">S₁₉ = 5320</span>. התשובה: 19 חודשים.</p></div></details></li>
+<li>אורכי הצלעות של משולש ישר־זווית יוצרים סדרה חשבונית עם הפרש 2. מצאו אותם.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">(a−2)² + a² = (a+2)² ⇒ a² − 8a = 0 ⇒ a = 8</span></p><p>הצלעות: <span class="m">6, 8, 10</span></p></div></details></li>
+<li>נתונות הסדרות <span class="m">5, 9, 13, …</span> ו־<span class="m">3, 10, 17, …</span>, כל אחת עם 100 איברים. כמה איברים משותפים יש להן?<details><summary>הצג פתרון</summary><div class="sol steps"><p>הראשונה: <span class="m">4n + 1</span> עד 401. השנייה: <span class="m">7m − 4</span> עד 696.</p><p>האיבר המשותף הראשון הוא 17, והמשותפים יוצרים סדרה חשבונית עם הפרש <span class="m">4·7 = 28</span>.</p><p><span class="m">17 + 28(k−1) ≤ 401 ⇒ k ≤ 14.7</span>. יש 14 איברים משותפים.</p></div></details></li>
+<li>בסדרה חשבונית בת 15 איברים סכום הסדרה 255. מצאו את האיבר האמצעי. הסבירו מדוע ניתן למצוא אותו בלי לדעת את <span class="m">a₁</span> ו־<span class="m">d</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">S₁₅ = 15(a₁ + a₁₅)/2 = 15·a₈</span>, כי <span class="m">a₁ + a₁₅ = 2a₈</span>.</p><p><span class="m">a₈ = 255/15 = 17</span></p></div></details></li>
+<li>בסדרה חשבונית לא קבועה, האיברים <span class="m">a₁, a₃, a₉</span> יוצרים סדרה הנדסית. מצאו את היחס <span class="m">(a₁ + a₃ + a₉)/(a₂ + a₄ + a₁₀)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">(a₁ + 2d)² = a₁(a₁ + 8d) ⇒ 4d² = 4a₁d ⇒ a₁ = d</span> (כי <span class="m">d ≠ 0</span>)</p><p>לכן <span class="m">aₙ = nd</span>, והיחס: <span class="m">(1 + 3 + 9)/(2 + 4 + 10) = 13/16</span></p></div></details></li>
+</ol></section>
+<footer>הפתרונות מוסתרים כדי לאפשר תרגול עצמי. לחצו על "הצג פתרון" כדי לבדוק.</footer></div>
+</body>
+</html>

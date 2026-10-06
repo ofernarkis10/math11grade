@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>סדרות – מדריך לכיתה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a worksheet-style single column on graph-paper ground; each sequence type is a "chapter" with meaning, formulas, worked example, exercises with folding solutions */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.num{font-family:var(--f-math);color:var(--muted);font-size:.85rem}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag,.ex-head{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<style>.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}.back:hover,.back:focus-visible{text-decoration:underline}</style>
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="he">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · כיתות י׳–יא׳</span>
+  <h1>סדרות: מה הן אומרות ואיך עובדים איתן</h1>
+  <p class="lead">לכל סוג סדרה: מה המשמעות שלה, הנוסחאות המרכזיות, דוגמה פתורה ותרגילים מדורגים. הפתרונות מוסתרים, ונפתחים בלחיצה על "הצג פתרון".</p>
+</header>
+
+<nav aria-label="תוכן עניינים">
+  <strong>תוכן</strong>
+  <ol>
+    <li><a href="#arith">סדרה חשבונית</a></li>
+    <li><a href="#geo">סדרה הנדסית</a></li>
+    <li><a href="#infinite">טור הנדסי אינסופי</a></li>
+    <li><a href="#recursive">סדרות בכלל נסיגה</a></li>
+    <li><a href="#formula">סדרה לפי נוסחת איבר כללי</a></li>
+    <li><a href="#mixed">סדרות מעורבות ומשולבות</a></li>
+    <li><a href="#induction">אינדוקציה מתמטית</a></li>
+  </ol>
+</nav>
+
+<div class="tablebox">
+<table>
+  <thead><tr><th>סוג</th><th>מה קבוע / מה מגדיר אותה</th><th>סוג הגדילה</th><th>נוסחה מרכזית</th></tr></thead>
+  <tbody>
+    <tr><td>חשבונית</td><td>ההפרש d</td><td>לינארית (קו ישר)</td><td><span class="m">aₙ = a₁ + (n−1)d</span></td></tr>
+    <tr><td>הנדסית</td><td>המנה q</td><td>מעריכית (כפל)</td><td><span class="m">aₙ = a₁·qⁿ⁻¹</span></td></tr>
+    <tr><td>טור הנדסי אינסופי</td><td>q עם <span class="m">|q| &lt; 1</span></td><td>סכום שמתקרב לגבול</td><td><span class="m">S = a₁ / (1−q)</span></td></tr>
+    <tr><td>כלל נסיגה</td><td>איבר ראשון + כלל מעבר</td><td>תלוי בכלל</td><td><span class="m">aₙ₊₁ = f(aₙ)</span></td></tr>
+    <tr><td>נוסחת איבר כללי</td><td>פונקציה של n</td><td>תלוי בנוסחה</td><td><span class="m">aₙ = f(n)</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- 1 ARITHMETIC -->
+<section class="ch" id="arith">
+  <span class="num">פרק 1</span>
+  <h2>סדרה חשבונית</h2>
+  <div class="meaning">
+    <p><strong>המשמעות:</strong> בכל צעד מוסיפים אותו מספר. ההפרש בין כל שני איברים עוקבים קבוע, ומסמנים אותו ב־<span class="m">d</span>. אם <span class="m">d &gt; 0</span> הסדרה עולה, אם <span class="m">d &lt; 0</span> היא יורדת, ואם <span class="m">d = 0</span> היא קבועה.</p>
+    <p>זו גדילה <strong>לינארית</strong>: אם משרטטים את הנקודות <span class="m">(n, aₙ)</span>, כולן נמצאות על קו ישר ששיפועו <span class="m">d</span>. דוגמה מהחיים: חיסכון של 200 ₪ קבועים בכל חודש.</p>
+    <p><strong>תכונת האמצע:</strong> כל איבר הוא הממוצע של שכניו. לכן שלושה מספרים <span class="m">x, y, z</span> הם סדרה חשבונית בדיוק כאשר <span class="m">2y = x + z</span>.</p>
+    <p><strong>למה נוסחת הסכום עובדת?</strong> כותבים את הסכום פעמיים, פעם מההתחלה ופעם מהסוף, ומחברים. כל זוג (ראשון+אחרון, שני+לפני אחרון…) נותן אותו סכום <span class="m">a₁ + aₙ</span>, ויש n זוגות כאלה. לכן <span class="m">2Sₙ = n(a₁ + aₙ)</span>.</p>
+  </div>
+  <div class="formulas">
+    <div class="f"><b>איבר כללי</b><span class="m">aₙ = a₁ + (n−1)d</span></div>
+    <div class="f"><b>הפרש בין שני איברים</b><span class="m">aₘ − aₖ = (m−k)d</span></div>
+    <div class="f"><b>סכום n איברים</b><span class="m">Sₙ = n(a₁ + aₙ)/2</span></div>
+    <div class="f"><b>סכום בלי aₙ</b><span class="m">Sₙ = n[2a₁ + (n−1)d]/2</span></div>
+  </div>
+  <div class="example">
+    <span class="tag">דוגמה פתורה</span>
+    <p>בסדרה <span class="m">3, 7, 11, 15, …</span> מצאו את האיבר ה־20 ואת סכום 20 האיברים הראשונים.</p>
+    <div class="steps">
+      <p><span class="m">a₁ = 3</span>, <span class="m">d = 7 − 3 = 4</span></p>
+      <p><span class="m">a₂₀ = 3 + 19·4 = 79</span></p>
+      <p><span class="m">S₂₀ = 20·(3 + 79)/2 = 820</span></p>
+    </div>
+  </div>
+  <h3>תרגילים</h3>
+  <ol class="exercises">
+    <li>בסדרה חשבונית <span class="m">a₅ = 17</span> ו־<span class="m">a₁₂ = 38</span>. מצאו את <span class="m">a₁</span> ואת <span class="m">d</span>.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">a₁₂ − a₅ = 7d = 21</span>, לכן <span class="m">d = 3</span>.</p>
+        <p><span class="m">a₁ = a₅ − 4d = 17 − 12 = 5</span>.</p></div></details></li>
+    <li>חשבו את סכום כל המספרים הדו־ספרתיים המתחלקים ב־7.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p>הסדרה: <span class="m">14, 21, …, 98</span> עם <span class="m">d = 7</span>.</p>
+        <p>מספר האיברים: <span class="m">98 = 14 + (n−1)·7 ⇒ n = 13</span>.</p>
+        <p><span class="m">S₁₃ = 13·(14 + 98)/2 = 728</span>.</p></div></details></li>
+    <li>בסדרה חשבונית <span class="m">a₁ = −20</span>, <span class="m">d = 3</span>.<br>א. מאיזה מקום האיברים חיוביים?<br>ב. מהו ה־n הקטן ביותר שעבורו <span class="m">Sₙ &gt; 0</span>?
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p>א. <span class="m">−20 + 3(n−1) &gt; 0 ⇒ n &gt; 7.67</span>, כלומר מהאיבר השמיני (<span class="m">a₈ = 1</span>).</p>
+        <p>ב. <span class="m">Sₙ = n(3n − 43)/2 &gt; 0 ⇒ n &gt; 14.33</span>, לכן <span class="m">n = 15</span>.</p>
+        <p>בדיקה: <span class="m">S₁₄ = −7</span>, <span class="m">S₁₅ = 15</span>.</p></div></details></li>
+    <li>המספרים <span class="m">x−1, 2x+1, 4x−3</span> הם שלושה איברים עוקבים בסדרה חשבונית. מצאו את x ואת האיברים.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p>לפי תכונת האמצע: <span class="m">2(2x+1) = (x−1) + (4x−3)</span></p>
+        <p><span class="m">4x + 2 = 5x − 4 ⇒ x = 6</span></p>
+        <p>האיברים: <span class="m">5, 13, 21</span> (<span class="m">d = 8</span>).</p></div></details></li>
+  </ol>
+</section>
+
+<!-- 2 GEOMETRIC -->
+<section class="ch" id="geo">
+  <span class="num">פרק 2</span>
+  <h2>סדרה הנדסית</h2>
+  <div class="meaning">
+    <p><strong>המשמעות:</strong> בכל צעד כופלים באותו מספר. המנה בין כל איבר לקודמו קבועה, ומסמנים אותה ב־<span class="m">q</span> (בתנאי שאין איבר 0).</p>
+    <p>זו גדילה <strong>מעריכית</strong>: ריבית דריבית, גידול אוכלוסייה באחוז קבוע, דעיכה רדיואקטיבית. עלייה של p% בכל תקופה פירושה <span class="m">q = 1 + p/100</span>, וירידה של p% פירושה <span class="m">q = 1 − p/100</span>.</p>
+    <p><strong>התנהגות לפי q:</strong> כאשר <span class="m">q &gt; 1</span> (ו־<span class="m">a₁ &gt; 0</span>) הסדרה עולה; כאשר <span class="m">0 &lt; q &lt; 1</span> היא יורדת ומתקרבת ל־0; כאשר <span class="m">q &lt; 0</span> הסימנים מתחלפים (סדרה מתחלפת).</p>
+    <p><strong>תכונת האמצע:</strong> כל איבר הוא הממוצע ההנדסי של שכניו: <span class="m">y² = x·z</span>.</p>
+  </div>
+  <div class="formulas">
+    <div class="f"><b>איבר כללי</b><span class="m">aₙ = a₁·qⁿ⁻¹</span></div>
+    <div class="f"><b>יחס בין שני איברים</b><span class="m">aₘ / aₖ = qᵐ⁻ᵏ</span></div>
+    <div class="f"><b>סכום n איברים (q ≠ 1)</b><span class="m">Sₙ = a₁(qⁿ − 1)/(q − 1)</span></div>
+    <div class="f"><b>כאשר q = 1</b><span class="m">Sₙ = n·a₁</span></div>
+  </div>
+  <div class="example">
+    <span class="tag">דוגמה פתורה</span>
+    <p>בסדרה <span class="m">2, 6, 18, …</span> מצאו את האיבר השמיני ואת סכום 8 האיברים הראשונים.</p>
+    <div class="steps">
+      <p><span class="m">a₁ = 2</span>, <span class="m">q = 6/2 = 3</span></p>
+      <p><span class="m">a₈ = 2·3⁷ = 4374</span></p>
+      <p><span class="m">S₈ = 2(3⁸ − 1)/(3 − 1) = 6560</span></p>
+    </div>
+  </div>
+  <div class="note"><strong>טעות נפוצה:</strong> מהמשוואה <span class="m">q² = 9</span> יש שני פתרונות, <span class="m">q = 3</span> ו־<span class="m">q = −3</span>. יש לבדוק את שניהם מול נתוני השאלה.</div>
+  <h3>תרגילים</h3>
+  <ol class="exercises">
+    <li>בסדרה הנדסית <span class="m">a₂ = 12</span> ו־<span class="m">a₅ = 324</span>. מצאו את <span class="m">q</span> ואת <span class="m">a₁</span>.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">a₅ / a₂ = q³ = 27 ⇒ q = 3</span></p>
+        <p><span class="m">a₁ = 12/3 = 4</span></p></div></details></li>
+    <li>המספרים <span class="m">x, x+6, x+18</span> הם סדרה הנדסית. מצאו את x ואת המנה.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">(x+6)² = x(x+18)</span></p>
+        <p><span class="m">x² + 12x + 36 = x² + 18x ⇒ x = 6</span></p>
+        <p>האיברים <span class="m">6, 12, 24</span>, ו־<span class="m">q = 2</span>.</p></div></details></li>
+    <li>בסדרה <span class="m">3, 6, 12, …</span>, מהו מספר האיברים המינימלי שסכומם עולה על 1000?
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">Sₙ = 3(2ⁿ − 1) &gt; 1000 ⇒ 2ⁿ &gt; 334.3</span></p>
+        <p><span class="m">2⁸ = 256</span> קטן מדי, <span class="m">2⁹ = 512</span> מספיק, לכן <span class="m">n = 9</span> (<span class="m">S₉ = 1533</span>).</p></div></details></li>
+    <li>ביישוב גרים 5000 תושבים, והאוכלוסייה גדלה ב־4% בכל שנה. כמה תושבים יהיו בו כעבור 10 שנים?
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">q = 1.04</span>. אחרי 10 שנים: <span class="m">5000·1.04¹⁰ ≈ 5000·1.4802 ≈ 7401</span> תושבים.</p></div></details></li>
+  </ol>
+</section>
+
+<!-- 3 INFINITE -->
+<section class="ch" id="infinite">
+  <span class="num">פרק 3</span>
+  <h2>טור הנדסי אינסופי מתכנס</h2>
+  <div class="meaning">
+    <p><strong>המשמעות:</strong> מחברים אינסוף איברים של סדרה הנדסית. כאשר <span class="m">|q| &lt; 1</span> האיברים קטנים מהר מאוד, והסכומים החלקיים <span class="m">S₁, S₂, S₃, …</span> מתקרבים למספר סופי. את הגבול הזה מגדירים כסכום הטור.</p>
+    <p><strong>הדגמה:</strong> הולכים חצי מהדרך לקיר, אחר כך חצי מהנותר, וכן הלאה: <span class="m">½ + ¼ + ⅛ + … = 1</span>. לא מגיעים לקיר בשום צעד, אבל סך כל הצעדים הוא בדיוק המרחק.</p>
+    <p>הנוסחה מתקבלת מנוסחת הסכום הרגילה: כאשר <span class="m">|q| &lt; 1</span>, הביטוי <span class="m">qⁿ</span> שואף ל־0, ולכן <span class="m">Sₙ → a₁/(1−q)</span>.</p>
+  </div>
+  <div class="formulas">
+    <div class="f"><b>תנאי התכנסות</b><span class="m">−1 &lt; q &lt; 1, q ≠ 0</span></div>
+    <div class="f"><b>סכום הטור</b><span class="m">S = a₁ / (1 − q)</span></div>
+  </div>
+  <div class="example">
+    <span class="tag">דוגמה פתורה</span>
+    <p>חשבו את סכום הטור <span class="m">8 + 4 + 2 + 1 + …</span></p>
+    <div class="steps">
+      <p><span class="m">q = ½</span>, ו־<span class="m">|q| &lt; 1</span>, כלומר הטור מתכנס.</p>
+      <p><span class="m">S = 8 / (1 − ½) = 16</span></p>
+    </div>
+  </div>
+  <h3>תרגילים</h3>
+  <ol class="exercises">
+    <li>סכום טור הנדסי אינסופי הוא 24, והאיבר הראשון הוא 8. מצאו את המנה.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">8/(1−q) = 24 ⇒ 1 − q = ⅓ ⇒ q = ⅔</span></p></div></details></li>
+    <li>כתבו את השבר העשרוני המחזורי <span class="m">0.454545…</span> כשבר פשוט.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">0.45 + 0.0045 + …</span> הוא טור עם <span class="m">a₁ = 0.45</span>, <span class="m">q = 0.01</span>.</p>
+        <p><span class="m">S = 0.45/0.99 = 45/99 = 5/11</span></p></div></details></li>
+    <li>סכום טור הנדסי אינסופי הוא 12, וסכום ריבועי איבריו (גם הוא טור אינסופי) הוא 48. מצאו את <span class="m">a₁</span> ואת <span class="m">q</span>.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p>ריבועי האיברים יוצרים טור עם <span class="m">a₁²</span> ומנה <span class="m">q²</span>:</p>
+        <p><span class="m">a₁/(1−q) = 12</span> ו־<span class="m">a₁²/(1−q²) = 48</span>.</p>
+        <p>מעלים את הראשונה בריבוע: <span class="m">a₁²/(1−q)² = 144</span>. מחלקים: <span class="m">(1−q)/(1+q) = ⅓</span>.</p>
+        <p><span class="m">3 − 3q = 1 + q ⇒ q = ½</span>, ולכן <span class="m">a₁ = 6</span>.</p></div></details></li>
+    <li>עבור אילו ערכי x הטור <span class="m">1 + (x−1) + (x−1)² + …</span> מתכנס? מהו סכומו?
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">q = x − 1</span>, ונדרש <span class="m">|x − 1| &lt; 1 ⇒ 0 &lt; x &lt; 2</span>.</p>
+        <p><span class="m">S = 1/(1 − (x−1)) = 1/(2 − x)</span></p></div></details></li>
+  </ol>
+</section>
+
+<!-- 4 RECURSIVE -->
+<section class="ch" id="recursive">
+  <span class="num">פרק 4</span>
+  <h2>סדרות המוגדרות בכלל נסיגה</h2>
+  <div class="meaning">
+    <p><strong>המשמעות:</strong> במקום לתת נוסחה ישירה ל־<span class="m">aₙ</span>, נותנים <em>איך עוברים</em> מאיבר לאיבר הבא, ואת נקודת ההתחלה. זה כמו מתכון: "קח את המספר הקודם, הכפל ב־3 והחסר 4".</p>
+    <p>כדי לקבוע סדרה בכלל נסיגה צריך את הכלל וגם את האיבר הראשון (ולפעמים שני איברים ראשונים, כמו בסדרת פיבונאצ'י). אותו כלל עם איבר ראשון אחר נותן סדרה אחרת.</p>
+    <p><strong>הטכניקה המרכזית בבגרות:</strong> מגדירים סדרת עזר, למשל <span class="m">bₙ = aₙ + c</span>, ומוכיחים שהיא חשבונית או הנדסית. מסדרת העזר מוצאים נוסחה מפורשת ל־<span class="m">aₙ</span>.</p>
+  </div>
+  <div class="formulas">
+    <div class="f"><b>כלל מסדר ראשון</b><span class="m">a₁ נתון, aₙ₊₁ = f(aₙ)</span></div>
+    <div class="f"><b>כלל מסדר שני</b><span class="m">aₙ₊₂ = f(aₙ₊₁, aₙ)</span></div>
+    <div class="f"><b>חשבונית בכלל נסיגה</b><span class="m">aₙ₊₁ = aₙ + d</span></div>
+    <div class="f"><b>הנדסית בכלל נסיגה</b><span class="m">aₙ₊₁ = q·aₙ</span></div>
+  </div>
+  <div class="example">
+    <span class="tag">דוגמה פתורה</span>
+    <p>נתון <span class="m">a₁ = 1</span>, <span class="m">aₙ₊₁ = 3aₙ − 4</span>. הוכיחו ש־<span class="m">bₙ = aₙ − 2</span> סדרה הנדסית ומצאו נוסחה ל־<span class="m">aₙ</span>.</p>
+    <div class="steps">
+      <p>חמשת האיברים הראשונים: <span class="m">1, −1, −7, −25, −79</span>.</p>
+      <p><span class="m">bₙ₊₁ = aₙ₊₁ − 2 = 3aₙ − 6 = 3(aₙ − 2) = 3bₙ</span>, לכן <span class="m">bₙ</span> הנדסית עם <span class="m">q = 3</span>.</p>
+      <p><span class="m">b₁ = −1 ⇒ bₙ = −3ⁿ⁻¹ ⇒ aₙ = 2 − 3ⁿ⁻¹</span></p>
+      <p>בדיקה: <span class="m">a₃ = 2 − 9 = −7</span> ✓</p>
+    </div>
+  </div>
+  <h3>תרגילים</h3>
+  <ol class="exercises">
+    <li>נתון <span class="m">a₁ = 5</span>, <span class="m">aₙ₊₁ = aₙ + 2n</span>. מצאו את <span class="m">a₄</span> ונוסחה כללית ל־<span class="m">aₙ</span>.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">a₂ = 7, a₃ = 11, a₄ = 17</span></p>
+        <p>מחברים את כל ההפרשים: <span class="m">aₙ = 5 + 2(1 + 2 + … + (n−1)) = 5 + n(n−1)</span>.</p>
+        <p>בדיקה: <span class="m">a₄ = 5 + 12 = 17</span> ✓</p></div></details></li>
+    <li>נתון <span class="m">a₁ = 3</span>, <span class="m">aₙ₊₁ = 2aₙ + 1</span>. הוכיחו ש־<span class="m">bₙ = aₙ + 1</span> הנדסית ומצאו את <span class="m">aₙ</span>.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">bₙ₊₁ = 2aₙ + 2 = 2(aₙ + 1) = 2bₙ</span></p>
+        <p><span class="m">b₁ = 4 ⇒ bₙ = 4·2ⁿ⁻¹ = 2ⁿ⁺¹ ⇒ aₙ = 2ⁿ⁺¹ − 1</span></p></div></details></li>
+    <li>נתון <span class="m">a₁ = a₂ = 1</span>, <span class="m">aₙ₊₂ = aₙ₊₁ + aₙ</span> (סדרת פיבונאצ'י). מצאו את <span class="m">a₈</span>.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">1, 1, 2, 3, 5, 8, 13, 21</span>, לכן <span class="m">a₈ = 21</span>.</p></div></details></li>
+    <li>נתון <span class="m">a₁ = 2</span>, <span class="m">aₙ₊₁ = 1/(1 − aₙ)</span>. מצאו את <span class="m">a₁₀₀</span> ואת סכום 99 האיברים הראשונים.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">a₂ = −1, a₃ = ½, a₄ = 2</span>: הסדרה מחזורית עם מחזור 3.</p>
+        <p><span class="m">100 = 3·33 + 1</span>, לכן <span class="m">a₁₀₀ = a₁ = 2</span>.</p>
+        <p><span class="m">S₉₉ = 33·(2 − 1 + ½) = 49.5</span></p></div></details></li>
+  </ol>
+</section>
+
+<!-- 5 GENERAL TERM -->
+<section class="ch" id="formula">
+  <span class="num">פרק 5</span>
+  <h2>סדרה לפי נוסחת איבר כללי</h2>
+  <div class="meaning">
+    <p><strong>המשמעות:</strong> הסדרה היא פונקציה שהתחום שלה הוא המספרים הטבעיים: <span class="m">aₙ = f(n)</span>. היתרון: מגיעים לכל איבר ישירות, בלי לחשב את כל הקודמים.</p>
+    <p><strong>שאלות טיפוסיות:</strong></p>
+    <p>• האם מספר נתון הוא איבר בסדרה? פותרים <span class="m">f(n) = k</span> ובודקים אם יש פתרון טבעי.</p>
+    <p>• עולה או יורדת? בודקים את הסימן של <span class="m">aₙ₊₁ − aₙ</span>.</p>
+    <p>• מה הקשר לסכום? אם נתונה נוסחה ל־<span class="m">Sₙ</span>, אז <span class="m">aₙ = Sₙ − Sₙ₋₁</span> (עבור <span class="m">n ≥ 2</span>), ו־<span class="m">a₁ = S₁</span>.</p>
+  </div>
+  <div class="formulas">
+    <div class="f"><b>מונוטוניות</b><span class="m">aₙ₊₁ − aₙ &gt; 0 ⇔ עולה</span></div>
+    <div class="f"><b>איבר מתוך סכומים</b><span class="m">aₙ = Sₙ − Sₙ₋₁, n ≥ 2</span></div>
+  </div>
+  <div class="example">
+    <span class="tag">דוגמה פתורה</span>
+    <p>נתון <span class="m">aₙ = n² − 8n + 20</span>. האם 29 איבר בסדרה? מהו האיבר הקטן ביותר?</p>
+    <div class="steps">
+      <p><span class="m">n² − 8n + 20 = 29 ⇒ n² − 8n − 9 = 0 ⇒ n = 9</span> (הפתרון <span class="m">n = −1</span> נפסל). כן, <span class="m">a₉ = 29</span>.</p>
+      <p>קודקוד הפרבולה ב־<span class="m">n = 4</span>, שהוא מספר טבעי, לכן האיבר הקטן ביותר הוא <span class="m">a₄ = 4</span>.</p>
+    </div>
+  </div>
+  <div class="note"><strong>שימו לב:</strong> אם הקודקוד אינו מספר שלם, בודקים את שני השלמים הקרובים אליו.</div>
+  <h3>תרגילים</h3>
+  <ol class="exercises">
+    <li>נתון <span class="m">aₙ = (2n+1)/(n+3)</span>. הוכיחו שהסדרה עולה. האם יש איבר הגדול מ־2?
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">aₙ₊₁ − aₙ = (2n+3)/(n+4) − (2n+1)/(n+3) = 5/[(n+3)(n+4)] &gt; 0</span>, לכן הסדרה עולה.</p>
+        <p><span class="m">aₙ = 2 − 5/(n+3) &lt; 2</span> תמיד. אין איבר הגדול מ־2, והאיברים מתקרבים ל־2.</p></div></details></li>
+    <li>סכום n האיברים הראשונים בסדרה הוא <span class="m">Sₙ = 3n² + 2n</span>. מצאו את <span class="m">aₙ</span> והראו שהסדרה חשבונית.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">aₙ = Sₙ − Sₙ₋₁ = 3(2n − 1) + 2 = 6n − 1</span></p>
+        <p><span class="m">a₁ = S₁ = 5 = 6·1 − 1</span> ✓. הסדרה חשבונית עם <span class="m">d = 6</span>.</p></div></details></li>
+    <li>נתון <span class="m">Sₙ = 2ⁿ⁺¹ − 2</span>. מצאו את <span class="m">aₙ</span> וקבעו את סוג הסדרה.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">aₙ = (2ⁿ⁺¹ − 2) − (2ⁿ − 2) = 2ⁿ</span>, ו־<span class="m">a₁ = S₁ = 2</span> ✓.</p>
+        <p>סדרה הנדסית עם <span class="m">q = 2</span>.</p></div></details></li>
+    <li>נתון <span class="m">Sₙ = n² + n + 1</span>. האם הסדרה חשבונית?
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p>עבור <span class="m">n ≥ 2</span>: <span class="m">aₙ = 2n</span>. אבל <span class="m">a₁ = S₁ = 3 ≠ 2</span>.</p>
+        <p>הסדרה <span class="m">3, 4, 6, 8, …</span> אינה חשבונית. היא חשבונית רק החל מהאיבר השני.</p></div></details></li>
+  </ol>
+</section>
+
+<!-- 6 MIXED -->
+<section class="ch" id="mixed">
+  <span class="num">פרק 6</span>
+  <h2>סדרות מעורבות ומשולבות</h2>
+  <div class="meaning">
+    <p><strong>המשמעות:</strong> שאלות שבהן יותר ממבנה אחד פועל בו־זמנית. המפתח הוא לזהות את הסדרות הפשוטות שמסתתרות בתוך הסדרה המסובכת.</p>
+    <p>• <strong>סדרה שזורה:</strong> האיברים במקומות האי־זוגיים יוצרים סדרה אחת, והאיברים במקומות הזוגיים סדרה אחרת. מפרקים לשתי סדרות ומטפלים בכל אחת בנפרד.</p>
+    <p>• <strong>סדרה נגזרת:</strong> בונים סדרה חדשה מסדרה קיימת. אם <span class="m">aₙ</span> חשבונית, אז <span class="m">cᵃⁿ</span> הנדסית. אם <span class="m">aₙ</span> הנדסית חיובית, אז <span class="m">log aₙ</span> חשבונית. הלוגריתם הופך כפל לחיבור, והחזקה הופכת חיבור לכפל.</p>
+    <p>• <strong>שילוב חשבונית והנדסית:</strong> אותם מספרים מקיימים תנאי של סדרה חשבונית ותנאי של סדרה הנדסית (לפני ואחרי שינוי).</p>
+  </div>
+  <div class="example">
+    <span class="tag">דוגמה פתורה</span>
+    <p><span class="m">aₙ</span> סדרה הנדסית עם <span class="m">a₁ = 2</span>, <span class="m">q = 4</span>. מגדירים <span class="m">cₙ = log₂aₙ</span>. הראו ש־<span class="m">cₙ</span> חשבונית וחשבו את <span class="m">c₁ + … + c₁₀</span>.</p>
+    <div class="steps">
+      <p><span class="m">cₙ = log₂(2·4ⁿ⁻¹) = 1 + 2(n−1) = 2n − 1</span></p>
+      <p>חשבונית עם <span class="m">c₁ = 1</span>, <span class="m">d = 2</span>.</p>
+      <p><span class="m">S₁₀ = 10·(1 + 19)/2 = 100</span></p>
+    </div>
+  </div>
+  <h3>תרגילים</h3>
+  <ol class="exercises">
+    <li>שלושה מספרים יוצרים סדרה חשבונית שסכומה 15. אם מוסיפים להם 1, 4 ו־19 בהתאמה, מתקבלת סדרה הנדסית. מצאו את המספרים.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p>המספרים: <span class="m">5−d, 5, 5+d</span>. אחרי ההוספה: <span class="m">6−d, 9, 24+d</span>.</p>
+        <p><span class="m">81 = (6−d)(24+d) ⇒ d² + 18d − 63 = 0 ⇒ d = 3</span> או <span class="m">d = −21</span>.</p>
+        <p><span class="m">d = 3</span>: המספרים <span class="m">2, 5, 8</span> (ההנדסית <span class="m">3, 9, 27</span>).</p>
+        <p><span class="m">d = −21</span>: המספרים <span class="m">26, 5, −16</span> (ההנדסית <span class="m">27, 9, 3</span>).</p></div></details></li>
+    <li><span class="m">aₙ</span> סדרה חשבונית עם <span class="m">a₁ = 1</span>, <span class="m">d = 2</span>. מגדירים <span class="m">bₙ = 3ᵃⁿ</span>. הראו ש־<span class="m">bₙ</span> הנדסית וחשבו את סכום חמשת איבריה הראשונים.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p><span class="m">bₙ₊₁/bₙ = 3^(aₙ₊₁ − aₙ) = 3² = 9</span>, כלומר הנדסית עם <span class="m">q = 9</span>.</p>
+        <p><span class="m">b₁ = 3 ⇒ S₅ = 3(9⁵ − 1)/8 = 22143</span></p></div></details></li>
+    <li>בסדרה <span class="m">1, 2, 4, 4, 7, 8, 10, 16, …</span> המקומות האי־זוגיים יוצרים סדרה חשבונית והזוגיים סדרה הנדסית. חשבו את סכום 20 האיברים הראשונים.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p>אי־זוגיים: <span class="m">1, 4, 7, …</span> (10 איברים, <span class="m">d = 3</span>): <span class="m">S = 10(2 + 27)/2 = 145</span>.</p>
+        <p>זוגיים: <span class="m">2, 4, 8, …</span> (10 איברים, <span class="m">q = 2</span>): <span class="m">S = 2(2¹⁰ − 1) = 2046</span>.</p>
+        <p>סה"כ: <span class="m">145 + 2046 = 2191</span>.</p></div></details></li>
+  </ol>
+</section>
+
+<!-- 7 INDUCTION -->
+<section class="ch" id="induction">
+  <span class="num">פרק 7</span>
+  <h2>אינדוקציה מתמטית</h2>
+  <div class="meaning">
+    <p><strong>המשמעות:</strong> שיטה להוכיח טענה עבור <em>כל</em> המספרים הטבעיים. חושבים על שורת אבני דומינו: אם האבן הראשונה נופלת, ואם כל אבן שנופלת מפילה את הבאה, אז כל האבנים נופלות.</p>
+    <p><strong>שלושה שלבים:</strong></p>
+    <p>1. <strong>בסיס:</strong> בודקים שהטענה נכונה עבור <span class="m">n = 1</span>.</p>
+    <p>2. <strong>הנחה:</strong> מניחים שהטענה נכונה עבור <span class="m">n = k</span>.</p>
+    <p>3. <strong>צעד:</strong> מוכיחים, בעזרת ההנחה, שהטענה נכונה גם עבור <span class="m">n = k+1</span>.</p>
+    <p>בסדרות משתמשים באינדוקציה בעיקר כדי להוכיח נוסחאות סכום וכדי להוכיח שנוסחה מפורשת מתאימה לכלל נסיגה.</p>
+  </div>
+  <div class="example">
+    <span class="tag">דוגמה פתורה</span>
+    <p>הוכיחו: <span class="m">1 + 3 + 5 + … + (2n−1) = n²</span></p>
+    <div class="steps">
+      <p>בסיס: <span class="m">n = 1: 1 = 1²</span> ✓</p>
+      <p>הנחה: <span class="m">1 + 3 + … + (2k−1) = k²</span></p>
+      <p>צעד: <span class="m">k² + (2(k+1) − 1) = k² + 2k + 1 = (k+1)²</span> ✓</p>
+    </div>
+  </div>
+  <h3>תרגילים</h3>
+  <ol class="exercises">
+    <li>הוכיחו: <span class="m">1 + 2 + … + n = n(n+1)/2</span>
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p>בסיס: <span class="m">1 = 1·2/2</span> ✓</p>
+        <p>צעד: <span class="m">k(k+1)/2 + (k+1) = (k+1)(k+2)/2</span> ✓</p></div></details></li>
+    <li>הוכיחו: <span class="m">1² + 2² + … + n² = n(n+1)(2n+1)/6</span>
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p>בסיס: <span class="m">1 = 1·2·3/6</span> ✓</p>
+        <p>צעד: <span class="m">k(k+1)(2k+1)/6 + (k+1)² = (k+1)[k(2k+1) + 6(k+1)]/6</span></p>
+        <p><span class="m">= (k+1)(2k² + 7k + 6)/6 = (k+1)(k+2)(2k+3)/6</span> ✓</p></div></details></li>
+    <li>נתון <span class="m">a₁ = 3</span>, <span class="m">aₙ₊₁ = 2aₙ + 1</span>. הוכיחו באינדוקציה ש־<span class="m">aₙ = 2ⁿ⁺¹ − 1</span>.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p>בסיס: <span class="m">2² − 1 = 3 = a₁</span> ✓</p>
+        <p>צעד: <span class="m">aₖ₊₁ = 2(2ᵏ⁺¹ − 1) + 1 = 2ᵏ⁺² − 1</span> ✓</p></div></details></li>
+    <li>הוכיחו ש־<span class="m">7ⁿ − 1</span> מתחלק ב־6 לכל n טבעי.
+      <details><summary>הצג פתרון</summary><div class="sol steps">
+        <p>בסיס: <span class="m">7 − 1 = 6</span> ✓</p>
+        <p>צעד: <span class="m">7ᵏ⁺¹ − 1 = 7(7ᵏ − 1) + 6</span>. שני המחוברים מתחלקים ב־6 (הראשון לפי ההנחה) ✓</p></div></details></li>
+  </ol>
+</section>
+
+<footer>חלוקת הנושאים בין שאלונים ושנים עשויה להשתנות. כדאי לוודא מול תוכנית הלימודים העדכנית.</footer>
+</div>
+
+</body>
+</html>
