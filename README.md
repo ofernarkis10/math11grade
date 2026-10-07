@@ -18,6 +18,7 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | Curriculum | `curriculum-5units-grade10-11.html` | Reference: the 5-unit syllabus for grades 10–11, by subject and hours |
 | Summer work | `summer-work-grade10-5units.pdf` | PDF: summer assignment given at the end of grade 10 (29 questions: polynomials, rational functions, geometry without circles, composite functions), with links to answers |
 | | `summer-work-geometry-solutions.html` | Worked solutions to the 10 geometry questions of the summer work, with the theorems used in each step |
+| | `summer-work-calculus-solutions.html` | Worked solutions to the 14 calculus questions of the summer work (polynomials and rational functions), with sign tables and graphs |
 | Sequences | `sequences-00-overview.html` | Overview of all sequence types |
 | | `sequences-01-arithmetic.html` | Arithmetic sequences |
 | | `sequences-02-geometric.html` | Geometric sequences |
@@ -51,6 +52,8 @@ math11grade/
 ├── summer-work-grade10-5units.pdf    summer assignment from the end of grade 10 (PDF)
 ├── summer-work-geometry-solutions.html  worked solutions to the summer-work geometry questions
 ├── img/summer-geometry/              figures for the geometry solutions page
+├── summer-work-calculus-solutions.html  worked solutions to the summer-work calculus questions
+├── img/summer-calculus/              graphs for the calculus solutions page
 ├── sequences-NN-<name>.html            sequences topic, pages 00–07
 ├── composite-derivatives-NN-<name>.html  derivatives of composite functions (01 rules, 02 exercises)
 ├── geometry-NN-<name>.html              Euclidean geometry (01 loci & triangle centers, 02 circle, 03 similarity)
