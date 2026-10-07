@@ -6,7 +6,7 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 
 ## Viewing the site
 
-- **Locally:** open `index.html` in any browser. No build step, server or installation is needed.
+- **Locally:** open `index.html` in any browser. No build step, server or installation is needed. Formulas are typeset by KaTeX, which loads from a CDN, so an internet connection is needed for them to display.
 - **Online:** the repository is set up for GitHub Pages. When Pages is enabled for the `main` branch, the site is served at `https://ofernarkis10.github.io/math11grade/`.
 
 `index.html` is the home page. It lists every document, grouped by topic, and starts with a table of contents that jumps to each main topic.
@@ -64,7 +64,7 @@ Every page is a single self-contained HTML file: styles are inline, there is no 
 
 1. **Name the file** `<topic>-NN-<short-name>.html`, where `NN` is the page's order within its topic (`00` for an overview page).
 2. **Copy the layout** of an existing study page (for example `composite-derivatives-01-rules.html`) so the design stays consistent: same `:root` color tokens, fonts, `section.ch` blocks, `ol.exercises` with `<details>` solutions, and the back link to `index.html`.
-3. **Write math** inside `<span class="m">…</span>`. This sets the math font and keeps formulas left-to-right inside the Hebrew text. Use Unicode for symbols (`x²`, `aₙ`, `√`, `π`, `≤`, `⇒`).
+3. **Write math** in LaTeX inside `<span class="m">\( … \)</span>`, for example `<span class="m">\(S_{n} = \dfrac{n(a_{1} + a_{n})}{2}\)</span>`. The span keeps the formula left-to-right inside the Hebrew text, and [KaTeX](https://katex.org) typesets it in the browser. Copy the KaTeX block from the `<head>` of an existing page (stylesheet, two scripts and a short `<style>`). Use `\dfrac` for fractions in running text so they stay readable.
 4. **Register the page in `index.html`:**
    - For an existing topic, add an `<li>` to that topic's `ul.docs`, with number, title, question count and a short description, and update the count in the topic's header.
    - For a new topic, add a new `<section class="topic" id="<topic-id>">` before the `<footer>`. The table of contents at the top of `index.html` is built automatically from these sections, so the new topic appears there without further changes.

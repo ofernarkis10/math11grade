@@ -107,6 +107,20 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media print{body{background:#fff} nav.toc,nav.pages,.back{display:none} section.ch{break-inside:avoid-page}}
 </style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -136,21 +150,21 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <section class="ch" id="proportion">
   <h2>1. יחס ופרופורציה</h2>
   <div class="meaning">
-    <p><strong>יחס</strong> בין שני גדלים הוא המנה שלהם: <span class="m">a : b = a/b</span>. <strong>פרופורציה</strong> היא שוויון בין שני יחסים: <span class="m">a/b = c/d</span>.</p>
+    <p><strong>יחס</strong> בין שני גדלים הוא המנה שלהם: <span class="m">\(a : b = \dfrac{a}{b}\)</span>. <strong>פרופורציה</strong> היא שוויון בין שני יחסים: <span class="m">\(\dfrac{a}{b} = \dfrac{c}{d}\)</span>.</p>
   </div>
   <div class="tablebox"><table>
-    <thead><tr><th>אם <span class="m">a/b = c/d</span>, אז…</th><th>שם הכלל</th></tr></thead>
+    <thead><tr><th>אם <span class="m">\(\dfrac{a}{b} = \dfrac{c}{d}\)</span>, אז…</th><th>שם הכלל</th></tr></thead>
     <tbody>
-      <tr><td><span class="m">a·d = b·c</span></td><td>כפל בהצלבה (מכפלת הקצוות = מכפלת האמצעים)</td></tr>
-      <tr><td><span class="m">a/c = b/d</span></td><td>החלפת האמצעים</td></tr>
-      <tr><td><span class="m">b/a = d/c</span></td><td>היפוך שני היחסים</td></tr>
-      <tr><td><span class="m">(a+b)/b = (c+d)/d</span></td><td>הוספת המכנה למונה. מעבר מ"חלק לחלק" ל"חלק לשלם"</td></tr>
-      <tr><td><span class="m">(a−b)/b = (c−d)/d</span></td><td>חיסור המכנה מהמונה</td></tr>
-      <tr><td><span class="m">a/b = (a+c)/(b+d)</span></td><td>סכום המונים חלקי סכום המכנים שווה לאותו יחס</td></tr>
+      <tr><td><span class="m">\(a \cdot d = b \cdot c\)</span></td><td>כפל בהצלבה (מכפלת הקצוות = מכפלת האמצעים)</td></tr>
+      <tr><td><span class="m">\(\dfrac{a}{c} = \dfrac{b}{d}\)</span></td><td>החלפת האמצעים</td></tr>
+      <tr><td><span class="m">\(\dfrac{b}{a} = \dfrac{d}{c}\)</span></td><td>היפוך שני היחסים</td></tr>
+      <tr><td><span class="m">\(\dfrac{a+b}{b} = \dfrac{c+d}{d}\)</span></td><td>הוספת המכנה למונה. מעבר מ"חלק לחלק" ל"חלק לשלם"</td></tr>
+      <tr><td><span class="m">\(\dfrac{a - b}{b} = \dfrac{c - d}{d}\)</span></td><td>חיסור המכנה מהמונה</td></tr>
+      <tr><td><span class="m">\(\dfrac{a}{b} = \dfrac{a+c}{b+d}\)</span></td><td>סכום המונים חלקי סכום המכנים שווה לאותו יחס</td></tr>
     </tbody>
   </table></div>
   <div class="example"><span class="tag">דוגמה: חלוקה פנימית ביחס נתון</span>
-    <p>נקודה <span class="m">D</span> מחלקת את <span class="m">AB = 20</span> ביחס <span class="m">AD : DB = 2 : 3</span>. יש 5 חלקים, ולכן <span class="m">AD = ⅖·20 = 8</span> ו־<span class="m">DB = ⅗·20 = 12</span>.</p>
+    <p>נקודה <span class="m">\(D\)</span> מחלקת את <span class="m">\(AB = 20\)</span> ביחס <span class="m">\(AD : DB = 2 : 3\)</span>. יש 5 חלקים, ולכן <span class="m">\(AD = {\dfrac{2}{5}} \cdot 20 = 8\)</span> ו־<span class="m">\(DB = {\dfrac{3}{5}} \cdot 20 = 12\)</span>.</p>
   </div>
 </section>
 
@@ -162,10 +176,10 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
       <div class="thm"><span class="tag">משפט תאלס</span>
         <p>אם ישרים מקבילים חותכים את שוקי זווית, הקטעים שנוצרים על שוק אחת פרופורציוניים לקטעים המתאימים על השוק השנייה.</p>
       </div>
-      <div class="meaning"><p>במשולש <span class="m">ABC</span>, אם <span class="m">DE ∥ BC</span>:</p></div>
+      <div class="meaning"><p>במשולש <span class="m">\(ABC\)</span>, אם <span class="m">\(DE \parallel BC\)</span>:</p></div>
       <div class="thm" style="text-align:center">
-        <p><span class="m">AD/DB = AE/EC</span></p>
-        <p><span class="m">AD/AB = AE/AC</span></p>
+        <p><span class="m">\(\dfrac{AD}{DB} = \dfrac{AE}{EC}\)</span></p>
+        <p><span class="m">\(\dfrac{AD}{AB} = \dfrac{AE}{AC}\)</span></p>
       </div>
     </div>
     <figure class="fig"><svg viewBox="5 -9 321 248" style="max-width:300px" role="img" aria-label="משולש ABC וקטע DE מקביל ל-BC">
@@ -183,27 +197,27 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <circle class="pt" cx="206.0" cy="102.0" r="3.2"/>
 <text class="lb" x="92.0" y="107.0">D</text>
 <text class="lb" x="220.0" y="107.0">E</text>
-</svg><figcaption><span class="m">DE ∥ BC  ⇒  AD/DB = AE/EC</span></figcaption></figure>
+</svg><figcaption><span class="m">\(DE \parallel BC \Rightarrow \dfrac{AD}{DB} = \dfrac{AE}{EC}\)</span></figcaption></figure>
   </div>
   <div class="thm"><span class="tag">משפט תאלס המורחב</span>
-    <p>בנוסף, היחס בין הקטעים <strong>המקבילים</strong> שווה ליחס בין הקטע הקטן על השוק לשוק כולה: <span class="m">DE/BC = AD/AB = AE/AC</span>.</p>
+    <p>בנוסף, היחס בין הקטעים <strong>המקבילים</strong> שווה ליחס בין הקטע הקטן על השוק לשוק כולה: <span class="m">\(\dfrac{DE}{BC} = \dfrac{AD}{AB} = \dfrac{AE}{AC}\)</span>.</p>
   </div>
-  <p class="note"><strong>שימו לב:</strong> ביחס עם <span class="m">DE/BC</span> משתמשים בשוק <strong>כולה</strong> (<span class="m">AD/AB</span>), לא ב־<span class="m">AD/DB</span>.</p>
+  <p class="note"><strong>שימו לב:</strong> ביחס עם <span class="m">\(\dfrac{DE}{BC}\)</span> משתמשים בשוק <strong>כולה</strong> (<span class="m">\(\dfrac{AD}{AB}\)</span>), לא ב־<span class="m">\(\dfrac{AD}{DB}\)</span>.</p>
   <div class="example"><span class="tag">דוגמה</span>
-    <p>במשולש <span class="m">ABC</span>, <span class="m">DE ∥ BC</span>, <span class="m">AD = 4</span>, <span class="m">DB = 6</span>, <span class="m">AE = 5</span>, <span class="m">BC = 15</span>.</p>
-    <p><span class="m">4/6 = 5/EC</span>, ולכן <span class="m">EC = 7.5</span>.</p>
-    <p><span class="m">DE/15 = 4/10</span>, ולכן <span class="m">DE = 6</span>.</p>
+    <p>במשולש <span class="m">\(ABC\)</span>, <span class="m">\(DE \parallel BC\)</span>, <span class="m">\(AD = 4\)</span>, <span class="m">\(DB = 6\)</span>, <span class="m">\(AE = 5\)</span>, <span class="m">\(BC = 15\)</span>.</p>
+    <p><span class="m">\(\dfrac{4}{6} = \dfrac{5}{EC}\)</span>, ולכן <span class="m">\(EC = 7.5\)</span>.</p>
+    <p><span class="m">\(\dfrac{DE}{15} = \dfrac{4}{10}\)</span>, ולכן <span class="m">\(DE = 6\)</span>.</p>
   </div>
-  <div class="meaning"><p>המשפט נכון גם בצורת "שעון חול": כש־<span class="m">D</span> ו־<span class="m">E</span> נמצאות על ההמשכים של <span class="m">BA</span> ו־<span class="m">CA</span> מעבר ל־<span class="m">A</span>, ו־<span class="m">DE ∥ BC</span>.</p></div>
+  <div class="meaning"><p>המשפט נכון גם בצורת "שעון חול": כש־<span class="m">\(D\)</span> ו־<span class="m">\(E\)</span> נמצאות על ההמשכים של <span class="m">\(BA\)</span> ו־<span class="m">\(CA\)</span> מעבר ל־<span class="m">\(A\)</span>, ו־<span class="m">\(DE \parallel BC\)</span>.</p></div>
 </section>
 
 <!-- 3. CONVERSE + MIDSEGMENT -->
 <section class="ch" id="converse">
   <h2>3. המשפט ההפוך לתאלס וקטע אמצעים</h2>
   <div class="thm conv"><span class="tag">המשפט ההפוך</span>
-    <p>אם <span class="m">D</span> על <span class="m">AB</span>, <span class="m">E</span> על <span class="m">AC</span>, ו־<span class="m">AD/DB = AE/EC</span> (או <span class="m">AD/AB = AE/AC</span>), אז <span class="m">DE ∥ BC</span>.</p>
+    <p>אם <span class="m">\(D\)</span> על <span class="m">\(AB\)</span>, <span class="m">\(E\)</span> על <span class="m">\(AC\)</span>, ו־<span class="m">\(\dfrac{AD}{DB} = \dfrac{AE}{EC}\)</span> (או <span class="m">\(\dfrac{AD}{AB} = \dfrac{AE}{AC}\)</span>), אז <span class="m">\(DE \parallel BC\)</span>.</p>
   </div>
-  <p class="note"><strong>זהירות:</strong> השוויון <span class="m">AD/AB = DE/BC</span> <strong>לא</strong> מבטיח ש־<span class="m">DE ∥ BC</span>. מ־<span class="m">D</span> אפשר למתוח קטע באורך הנדרש עד <span class="m">AC</span> בשני כיוונים, ורק אחד מהם מקביל ל־<span class="m">BC</span>.</p>
+  <p class="note"><strong>זהירות:</strong> השוויון <span class="m">\(\dfrac{AD}{AB} = \dfrac{DE}{BC}\)</span> <strong>לא</strong> מבטיח ש־<span class="m">\(DE \parallel BC\)</span>. מ־<span class="m">\(D\)</span> אפשר למתוח קטע באורך הנדרש עד <span class="m">\(AC\)</span> בשני כיוונים, ורק אחד מהם מקביל ל־<span class="m">\(BC\)</span>.</p>
   <h3>קטע אמצעים: מקרה פרטי של תאלס</h3>
   <div class="thm"><span class="tag">משפט</span>
     <p>קטע אמצעים במשולש (מחבר אמצעי שתי צלעות) <strong>מקביל לצלע השלישית ושווה למחציתה</strong>.</p>
@@ -211,20 +225,20 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
   <div class="thm conv"><span class="tag">משפט הפוך</span>
     <p>ישר שיוצא מאמצע צלע אחת ומקביל לצלע שנייה חוצה את הצלע השלישית.</p>
   </div>
-  <div class="meaning"><p>בטרפז, קטע האמצעים (מחבר את אמצעי השוקיים) מקביל לבסיסים ושווה למחצית סכומם: <span class="m">(a + b)/2</span>.</p></div>
+  <div class="meaning"><p>בטרפז, קטע האמצעים (מחבר את אמצעי השוקיים) מקביל לבסיסים ושווה למחצית סכומם: <span class="m">\(\dfrac{a + b}{2}\)</span>.</p></div>
 </section>
 
 <!-- 4. SIMILARITY DEFINITION -->
 <section class="ch" id="definition">
   <h2>4. דמיון משולשים: ההגדרה</h2>
   <div class="thm"><span class="tag">הגדרה</span>
-    <p>שני משולשים <strong>דומים</strong> אם הזוויות שלהם שוות בהתאמה והצלעות המתאימות פרופורציוניות. כותבים <span class="m">△ABC ∼ △DEF</span>:</p>
-    <p><span class="m">∠A = ∠D, ∠B = ∠E, ∠C = ∠F</span> &nbsp;וגם&nbsp; <span class="m">AB/DE = BC/EF = AC/DF = k</span></p>
+    <p>שני משולשים <strong>דומים</strong> אם הזוויות שלהם שוות בהתאמה והצלעות המתאימות פרופורציוניות. כותבים <span class="m">\({\triangle}ABC \sim {\triangle}DEF\)</span>:</p>
+    <p><span class="m">\({\angle}A = {\angle}D, {\angle}B = {\angle}E, {\angle}C = {\angle}F\)</span> &nbsp;וגם&nbsp; <span class="m">\(\dfrac{AB}{DE} = \dfrac{BC}{EF} = \dfrac{AC}{DF} = k\)</span></p>
   </div>
   <div class="meaning">
-    <p>המספר <span class="m">k</span> הוא <strong>יחס הדמיון</strong>. למשל, אם <span class="m">k = 2</span> המשולש הראשון הוא "הגדלה פי 2" של השני.</p>
-    <p><strong>סדר האותיות קובע את ההתאמה:</strong> <span class="m">A</span> מתאים ל־<span class="m">D</span>, <span class="m">B</span> ל־<span class="m">E</span> ו־<span class="m">C</span> ל־<span class="m">F</span>. צלעות מתאימות הן צלעות שנמצאות מול זוויות שוות.</p>
-    <p>חפיפה היא מקרה פרטי של דמיון, עם <span class="m">k = 1</span>.</p>
+    <p>המספר <span class="m">\(k\)</span> הוא <strong>יחס הדמיון</strong>. למשל, אם <span class="m">\(k = 2\)</span> המשולש הראשון הוא "הגדלה פי 2" של השני.</p>
+    <p><strong>סדר האותיות קובע את ההתאמה:</strong> <span class="m">\(A\)</span> מתאים ל־<span class="m">\(D\)</span>, <span class="m">\(B\)</span> ל־<span class="m">\(E\)</span> ו־<span class="m">\(C\)</span> ל־<span class="m">\(F\)</span>. צלעות מתאימות הן צלעות שנמצאות מול זוויות שוות.</p>
+    <p>חפיפה היא מקרה פרטי של דמיון, עם <span class="m">\(k = 1\)</span>.</p>
   </div>
 </section>
 
@@ -241,8 +255,8 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
     </tbody>
   </table></div>
   <div class="example"><span class="tag">דוגמאות</span>
-    <p><strong>צ.צ.צ:</strong> משולש עם הצלעות 4, 6, 8 ומשולש עם הצלעות 6, 9, 12. כל היחסים שווים: <span class="m">6/4 = 9/6 = 12/8 = 1.5</span>. המשולשים דומים, עם <span class="m">k = 1.5</span>.</p>
-    <p><strong>צ.ז.צ:</strong> במשולש <span class="m">ABC</span>, <span class="m">AB = 12</span>, <span class="m">AC = 9</span>. על <span class="m">AB</span> הנקודה <span class="m">E</span> עם <span class="m">AE = 3</span>, ועל <span class="m">AC</span> הנקודה <span class="m">D</span> עם <span class="m">AD = 4</span>. הזווית <span class="m">A</span> משותפת, ו־<span class="m">AD/AB = 4/12 = 1/3</span>, <span class="m">AE/AC = 3/9 = 1/3</span>. לכן <span class="m">△ADE ∼ △ABC</span>. שימו לב ש־<span class="m">D</span> מתאים ל־<span class="m">B</span>, ולכן <span class="m">DE</span> <strong>אינו</strong> מקביל ל־<span class="m">BC</span>.</p>
+    <p><strong>צ.צ.צ:</strong> משולש עם הצלעות 4, 6, 8 ומשולש עם הצלעות 6, 9, 12. כל היחסים שווים: <span class="m">\(\dfrac{6}{4} = \dfrac{9}{6} = \dfrac{12}{8} = 1.5\)</span>. המשולשים דומים, עם <span class="m">\(k = 1.5\)</span>.</p>
+    <p><strong>צ.ז.צ:</strong> במשולש <span class="m">\(ABC\)</span>, <span class="m">\(AB = 12\)</span>, <span class="m">\(AC = 9\)</span>. על <span class="m">\(AB\)</span> הנקודה <span class="m">\(E\)</span> עם <span class="m">\(AE = 3\)</span>, ועל <span class="m">\(AC\)</span> הנקודה <span class="m">\(D\)</span> עם <span class="m">\(AD = 4\)</span>. הזווית <span class="m">\(A\)</span> משותפת, ו־<span class="m">\(\dfrac{AD}{AB} = \dfrac{4}{12} = \dfrac{1}{3}\)</span>, <span class="m">\(\dfrac{AE}{AC} = \dfrac{3}{9} = \dfrac{1}{3}\)</span>. לכן <span class="m">\({\triangle}ADE \sim {\triangle}ABC\)</span>. שימו לב ש־<span class="m">\(D\)</span> מתאים ל־<span class="m">\(B\)</span>, ולכן <span class="m">\(DE\)</span> <strong>אינו</strong> מקביל ל־<span class="m">\(BC\)</span>.</p>
   </div>
 </section>
 
@@ -252,20 +266,20 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
   <div class="tablebox"><table>
     <thead><tr><th>מה משווים</th><th>היחס</th></tr></thead>
     <tbody>
-      <tr><td>צלעות מתאימות</td><td><span class="m">k</span></td></tr>
-      <tr><td>היקפים</td><td><span class="m">k</span></td></tr>
-      <tr><td>גבהים, תיכונים וחוצי זוויות מתאימים</td><td><span class="m">k</span></td></tr>
-      <tr><td>רדיוסי המעגלים החוסמים, רדיוסי המעגלים החסומים</td><td><span class="m">k</span></td></tr>
-      <tr><td><strong>שטחים</strong></td><td><strong><span class="m">k²</span></strong></td></tr>
+      <tr><td>צלעות מתאימות</td><td><span class="m">\(k\)</span></td></tr>
+      <tr><td>היקפים</td><td><span class="m">\(k\)</span></td></tr>
+      <tr><td>גבהים, תיכונים וחוצי זוויות מתאימים</td><td><span class="m">\(k\)</span></td></tr>
+      <tr><td>רדיוסי המעגלים החוסמים, רדיוסי המעגלים החסומים</td><td><span class="m">\(k\)</span></td></tr>
+      <tr><td><strong>שטחים</strong></td><td><strong><span class="m">\(k^{2}\)</span></strong></td></tr>
     </tbody>
   </table></div>
   <div class="meaning">
-    <p><strong>למה השטח ביחס <span class="m">k²</span>?</strong> שטח משולש הוא <span class="m">½·בסיס·גובה</span>. גם הבסיס וגם הגובה גדלים פי <span class="m">k</span>, ולכן השטח גדל פי <span class="m">k·k = k²</span>.</p>
-    <p>אותם יחסים נכונים לכל שני <strong>מצולעים דומים</strong>: היקפים ביחס <span class="m">k</span>, שטחים ביחס <span class="m">k²</span>.</p>
+    <p><strong>למה השטח ביחס <span class="m">\(k^{2}\)</span>?</strong> שטח משולש הוא <span class="m">\({\dfrac{1}{2}} \cdot \text{בסיס} \cdot \text{גובה}\)</span>. גם הבסיס וגם הגובה גדלים פי <span class="m">\(k\)</span>, ולכן השטח גדל פי <span class="m">\(k \cdot k = k^{2}\)</span>.</p>
+    <p>אותם יחסים נכונים לכל שני <strong>מצולעים דומים</strong>: היקפים ביחס <span class="m">\(k\)</span>, שטחים ביחס <span class="m">\(k^{2}\)</span>.</p>
   </div>
   <div class="example"><span class="tag">דוגמאות</span>
-    <p>יחס הדמיון בין משולש קטן לגדול הוא <span class="m">2 : 3</span>, ושטח הקטן 18. שטח הגדול: <span class="m">18 · (3/2)² = 18 · 9/4 = 40.5</span>.</p>
-    <p>שטחים של שני משולשים דומים הם ביחס <span class="m">16 : 25</span>. יחס הדמיון הוא <span class="m">√16 : √25 = 4 : 5</span>. אם היקף הגדול 40, היקף הקטן <span class="m">40 · 4/5 = 32</span>.</p>
+    <p>יחס הדמיון בין משולש קטן לגדול הוא <span class="m">\(2 : 3\)</span>, ושטח הקטן 18. שטח הגדול: <span class="m">\(18 \cdot \left(\dfrac{3}{2}\right)^{2} = \dfrac{18 \cdot 9}{4} = 40.5\)</span>.</p>
+    <p>שטחים של שני משולשים דומים הם ביחס <span class="m">\(16 : 25\)</span>. יחס הדמיון הוא <span class="m">\(\sqrt{16} : \sqrt{25} = 4 : 5\)</span>. אם היקף הגדול 40, היקף הקטן <span class="m">\(\dfrac{40 \cdot 4}{5} = 32\)</span>.</p>
   </div>
 </section>
 
@@ -276,9 +290,9 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
     <div>
       <div class="thm"><span class="tag">משפט</span>
         <p>חוצה זווית פנימית במשולש מחלק את הצלע שמולו ביחס של שתי הצלעות הסמוכות לזווית:</p>
-        <p style="text-align:center"><span class="m">BD/DC = AB/AC</span></p>
+        <p style="text-align:center"><span class="m">\(\dfrac{BD}{DC} = \dfrac{AB}{AC}\)</span></p>
       </div>
-      <div class="thm conv"><span class="tag">משפט הפוך</span><p>אם <span class="m">BD/DC = AB/AC</span>, אז <span class="m">AD</span> חוצה את זווית <span class="m">A</span>.</p></div>
+      <div class="thm conv"><span class="tag">משפט הפוך</span><p>אם <span class="m">\(\dfrac{BD}{DC} = \dfrac{AB}{AC}\)</span>, אז <span class="m">\(AD\)</span> חוצה את זווית <span class="m">\(A\)</span>.</p></div>
     </div>
     <figure class="fig"><svg viewBox="-6 7 342 233" style="max-width:300px" role="img" aria-label="חוצה הזווית AD מחלק את BC ביחס AB:AC">
 <polygon class="ln" points="105.0,45.0 30.0,200.0 300.0,200.0"/>
@@ -293,16 +307,16 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <text class="lb" x="314.2" y="209.7">C</text>
 <circle class="pt" cx="140.4" cy="200.0" r="3.2"/>
 <text class="lb" x="140.4" y="223.0">D</text>
-</svg><figcaption><span class="m">BD / DC = AB / AC</span></figcaption></figure>
+</svg><figcaption><span class="m">\(\dfrac{BD}{DC} = \dfrac{AB}{AC}\)</span></figcaption></figure>
   </div>
   <div class="proof">
-    <p><b>הוכחה:</b> דרך <span class="m">C</span> מעבירים ישר מקביל ל־<span class="m">AD</span>, שפוגש את המשך <span class="m">BA</span> בנקודה <span class="m">E</span>.</p>
-    <p><span class="m">∠ACE = ∠CAD</span> (מתחלפות) ו־<span class="m">∠AEC = ∠BAD</span> (מתאימות). מכיוון ש־<span class="m">∠BAD = ∠CAD</span>, גם <span class="m">∠ACE = ∠AEC</span>, ולכן משולש <span class="m">ACE</span> שווה שוקיים: <span class="m">AE = AC</span>.</p>
-    <p>לפי תאלס במשולש <span class="m">BCE</span> (<span class="m">AD ∥ EC</span>): <span class="m">BD/DC = BA/AE = AB/AC</span>.</p>
+    <p><b>הוכחה:</b> דרך <span class="m">\(C\)</span> מעבירים ישר מקביל ל־<span class="m">\(AD\)</span>, שפוגש את המשך <span class="m">\(BA\)</span> בנקודה <span class="m">\(E\)</span>.</p>
+    <p><span class="m">\({\angle}ACE = {\angle}CAD\)</span> (מתחלפות) ו־<span class="m">\({\angle}AEC = {\angle}BAD\)</span> (מתאימות). מכיוון ש־<span class="m">\({\angle}BAD = {\angle}CAD\)</span>, גם <span class="m">\({\angle}ACE = {\angle}AEC\)</span>, ולכן משולש <span class="m">\(ACE\)</span> שווה שוקיים: <span class="m">\(AE = AC\)</span>.</p>
+    <p>לפי תאלס במשולש <span class="m">\(BCE\)</span> (<span class="m">\(AD \parallel EC\)</span>): <span class="m">\(\dfrac{BD}{DC} = \dfrac{BA}{AE} = \dfrac{AB}{AC}\)</span>.</p>
   </div>
   <div class="example"><span class="tag">דוגמה</span>
-    <p>במשולש <span class="m">ABC</span>: <span class="m">AB = 6</span>, <span class="m">AC = 9</span>, <span class="m">BC = 10</span>. <span class="m">AD</span> חוצה את זווית <span class="m">A</span>.</p>
-    <p><span class="m">BD : DC = 6 : 9 = 2 : 3</span>, ולכן <span class="m">BD = ⅖·10 = 4</span> ו־<span class="m">DC = 6</span>.</p>
+    <p>במשולש <span class="m">\(ABC\)</span>: <span class="m">\(AB = 6\)</span>, <span class="m">\(AC = 9\)</span>, <span class="m">\(BC = 10\)</span>. <span class="m">\(AD\)</span> חוצה את זווית <span class="m">\(A\)</span>.</p>
+    <p><span class="m">\(BD : DC = 6 : 9 = 2 : 3\)</span>, ולכן <span class="m">\(BD = {\dfrac{2}{5}} \cdot 10 = 4\)</span> ו־<span class="m">\(DC = 6\)</span>.</p>
   </div>
 </section>
 
@@ -311,13 +325,13 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
   <h2>8. דמיון במשולש ישר זווית</h2>
   <div class="figrow">
     <div>
-      <div class="meaning"><p>במשולש <span class="m">ABC</span> עם <span class="m">∠C = 90°</span>, הגובה <span class="m">CH</span> ליתר מחלק אותו לשני משולשים. שלושת המשולשים דומים זה לזה (ז.ז, כי לכל זוג יש זווית ישרה וזווית משותפת):</p></div>
-      <div class="thm" style="text-align:center"><p><span class="m">△ABC ∼ △ACH ∼ △CBH</span></p></div>
-      <div class="meaning"><p>אם <span class="m">AH = p</span>, <span class="m">HB = q</span>, <span class="m">AB = c</span> ו־<span class="m">CH = h</span>, מהדמיון מקבלים:</p></div>
+      <div class="meaning"><p>במשולש <span class="m">\(ABC\)</span> עם <span class="m">\({\angle}C = 90^{\circ}\)</span>, הגובה <span class="m">\(CH\)</span> ליתר מחלק אותו לשני משולשים. שלושת המשולשים דומים זה לזה (ז.ז, כי לכל זוג יש זווית ישרה וזווית משותפת):</p></div>
+      <div class="thm" style="text-align:center"><p><span class="m">\({\triangle}ABC \sim {\triangle}ACH \sim {\triangle}CBH\)</span></p></div>
+      <div class="meaning"><p>אם <span class="m">\(AH = p\)</span>, <span class="m">\(HB = q\)</span>, <span class="m">\(AB = c\)</span> ו־<span class="m">\(CH = h\)</span>, מהדמיון מקבלים:</p></div>
       <div class="thm">
-        <p><span class="m">h² = p · q</span></p>
-        <p><span class="m">AC² = p · c</span>,&nbsp; <span class="m">BC² = q · c</span></p>
-        <p><span class="m">h = AC · BC / c</span></p>
+        <p><span class="m">\(h^{2} = p \cdot q\)</span></p>
+        <p><span class="m">\(AC^{2} = p \cdot c\)</span>,&nbsp; <span class="m">\(BC^{2} = q \cdot c\)</span></p>
+        <p><span class="m">\(h = \dfrac{AC \cdot BC}{c}\)</span></p>
       </div>
     </div>
     <figure class="fig"><svg viewBox="-6 43 353 197" style="max-width:320px" role="img" aria-label="משולש ישר זווית ABC עם הגובה CH ליתר">
@@ -336,11 +350,11 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <text class="k" x="65.0" y="221.0">p</text>
 <text class="k" x="205.0" y="221.0">q</text>
 <text class="a" x="110.0" y="144.4">h</text>
-</svg><figcaption><span class="m">h² = p·q,  AC² = p·c,  BC² = q·c</span></figcaption></figure>
+</svg><figcaption><span class="m">\(h^{2} = p \cdot q, AC^{2} = p \cdot c, BC^{2} = q \cdot c\)</span></figcaption></figure>
   </div>
   <div class="example"><span class="tag">דוגמה</span>
-    <p>הגובה ליתר מחלק אותו לקטעים <span class="m">p = 4</span> ו־<span class="m">q = 9</span>. אז <span class="m">h = √(4·9) = 6</span>, <span class="m">c = 13</span>, <span class="m">AC = √(4·13) = 2√13</span>, <span class="m">BC = √(9·13) = 3√13</span>.</p>
-    <p>בדיקה בפיתגורס: <span class="m">52 + 117 = 169 = 13²</span>.</p>
+    <p>הגובה ליתר מחלק אותו לקטעים <span class="m">\(p = 4\)</span> ו־<span class="m">\(q = 9\)</span>. אז <span class="m">\(h = \sqrt{4 \cdot 9} = 6\)</span>, <span class="m">\(c = 13\)</span>, <span class="m">\(AC = \sqrt{4 \cdot 13} = 2\sqrt{13}\)</span>, <span class="m">\(BC = \sqrt{9 \cdot 13} = 3\sqrt{13}\)</span>.</p>
+    <p>בדיקה בפיתגורס: <span class="m">\(52 + 117 = 169 = 13^{2}\)</span>.</p>
   </div>
 </section>
 
@@ -365,7 +379,7 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <text class="lb" x="69.6" y="202.5">D</text>
 <circle class="pt" cx="133.1" cy="113.5" r="3.2"/>
 <text class="lb" x="147.1" y="110.5">E</text>
-</svg><figcaption><span class="m">AE · EB = CE · ED</span></figcaption></figure>
+</svg><figcaption><span class="m">\(AE \cdot EB = CE \cdot ED\)</span></figcaption></figure>
     <figure class="fig"><svg viewBox="21 28 344 186" style="max-width:320px" role="img" aria-label="משיק PT וחותך PAB מנקודה P מחוץ למעגל">
 <circle class="ln" cx="110.0" cy="130.0" r="70.0"/>
 <line class="ac" x1="330.0" y1="150.0" x2="138.1" y2="65.9"/>
@@ -380,23 +394,23 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <text class="lb" x="138.1" y="56.9">T</text>
 <text class="lb" x="177.5" y="184.5">A</text>
 <text class="lb" x="43.3" y="187.7">B</text>
-</svg><figcaption><span class="m">PT² = PA · PB</span></figcaption></figure>
+</svg><figcaption><span class="m">\(PT^{2} = PA \cdot PB\)</span></figcaption></figure>
   </div>
   <div class="thm"><span class="tag">שני מיתרים נחתכים</span>
-    <p>אם המיתרים <span class="m">AB</span> ו־<span class="m">CD</span> נחתכים ב־<span class="m">E</span>: &nbsp;<span class="m">AE · EB = CE · ED</span></p>
+    <p>אם המיתרים <span class="m">\(AB\)</span> ו־<span class="m">\(CD\)</span> נחתכים ב־<span class="m">\(E\)</span>: &nbsp;<span class="m">\(AE \cdot EB = CE \cdot ED\)</span></p>
   </div>
-  <div class="proof"><p><b>הוכחה:</b> <span class="m">△AEC ∼ △DEB</span> לפי ז.ז: <span class="m">∠AEC = ∠DEB</span> (קודקודיות), ו־<span class="m">∠CAB = ∠CDB</span> (היקפיות על הקשת <span class="m">CB</span>). מכאן <span class="m">AE/DE = CE/BE</span>, ובכפל בהצלבה מקבלים את המשפט.</p></div>
+  <div class="proof"><p><b>הוכחה:</b> <span class="m">\({\triangle}AEC \sim {\triangle}DEB\)</span> לפי ז.ז: <span class="m">\({\angle}AEC = {\angle}DEB\)</span> (קודקודיות), ו־<span class="m">\({\angle}CAB = {\angle}CDB\)</span> (היקפיות על הקשת <span class="m">\(CB\)</span>). מכאן <span class="m">\(\dfrac{AE}{DE} = \dfrac{CE}{BE}\)</span>, ובכפל בהצלבה מקבלים את המשפט.</p></div>
   <div class="thm"><span class="tag">משיק וחותך מאותה נקודה</span>
-    <p>אם <span class="m">PT</span> משיק, והחותך מ־<span class="m">P</span> פוגש את המעגל ב־<span class="m">A</span> (הקרובה) וב־<span class="m">B</span> (הרחוקה): &nbsp;<span class="m">PT² = PA · PB</span></p>
+    <p>אם <span class="m">\(PT\)</span> משיק, והחותך מ־<span class="m">\(P\)</span> פוגש את המעגל ב־<span class="m">\(A\)</span> (הקרובה) וב־<span class="m">\(B\)</span> (הרחוקה): &nbsp;<span class="m">\(PT^{2} = PA \cdot PB\)</span></p>
   </div>
-  <div class="proof"><p><b>הוכחה:</b> <span class="m">△PTA ∼ △PBT</span> לפי ז.ז: הזווית <span class="m">P</span> משותפת, ו־<span class="m">∠PTA = ∠PBT</span> (הזווית בין משיק למיתר שווה להיקפית על הקשת <span class="m">TA</span>). מכאן <span class="m">PT/PB = PA/PT</span>.</p></div>
+  <div class="proof"><p><b>הוכחה:</b> <span class="m">\({\triangle}PTA \sim {\triangle}PBT\)</span> לפי ז.ז: הזווית <span class="m">\(P\)</span> משותפת, ו־<span class="m">\({\angle}PTA = {\angle}PBT\)</span> (הזווית בין משיק למיתר שווה להיקפית על הקשת <span class="m">\(TA\)</span>). מכאן <span class="m">\(\dfrac{PT}{PB} = \dfrac{PA}{PT}\)</span>.</p></div>
   <div class="thm"><span class="tag">שני חותכים מאותה נקודה</span>
-    <p>אם חותך אחד פוגש את המעגל ב־<span class="m">A, B</span> וחותך שני ב־<span class="m">C, D</span>: &nbsp;<span class="m">PA · PB = PC · PD</span></p>
+    <p>אם חותך אחד פוגש את המעגל ב־<span class="m">\(A, B\)</span> וחותך שני ב־<span class="m">\(C, D\)</span>: &nbsp;<span class="m">\(PA \cdot PB = PC \cdot PD\)</span></p>
   </div>
   <div class="example"><span class="tag">דוגמאות</span>
-    <p><strong>מיתרים:</strong> <span class="m">AE = 4</span>, <span class="m">EB = 6</span>, <span class="m">CE = 3</span>. אז <span class="m">4·6 = 3·ED</span>, ולכן <span class="m">ED = 8</span>.</p>
-    <p><strong>משיק וחותך:</strong> <span class="m">PA = 4</span>, <span class="m">PB = 9</span>. אז <span class="m">PT² = 36</span>, ולכן <span class="m">PT = 6</span>.</p>
-    <p><strong>שני חותכים:</strong> <span class="m">PA = 3</span>, <span class="m">AB = 5</span> (ולכן <span class="m">PB = 8</span>), <span class="m">PC = 4</span>. אז <span class="m">3·8 = 4·PD</span>, <span class="m">PD = 6</span> והמיתר <span class="m">CD = 2</span>.</p>
+    <p><strong>מיתרים:</strong> <span class="m">\(AE = 4\)</span>, <span class="m">\(EB = 6\)</span>, <span class="m">\(CE = 3\)</span>. אז <span class="m">\(4 \cdot 6 = 3 \cdot ED\)</span>, ולכן <span class="m">\(ED = 8\)</span>.</p>
+    <p><strong>משיק וחותך:</strong> <span class="m">\(PA = 4\)</span>, <span class="m">\(PB = 9\)</span>. אז <span class="m">\(PT^{2} = 36\)</span>, ולכן <span class="m">\(PT = 6\)</span>.</p>
+    <p><strong>שני חותכים:</strong> <span class="m">\(PA = 3\)</span>, <span class="m">\(AB = 5\)</span> (ולכן <span class="m">\(PB = 8\)</span>), <span class="m">\(PC = 4\)</span>. אז <span class="m">\(3 \cdot 8 = 4 \cdot PD\)</span>, <span class="m">\(PD = 6\)</span> והמיתר <span class="m">\(CD = 2\)</span>.</p>
   </div>
 </section>
 
@@ -415,9 +429,9 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
     <p><strong>איך לכתוב:</strong> כותבים את הדמיון בסדר אותיות מתאים, ואז את שרשרת היחסים. אחר כך בוחרים את היחס שבו ידועים שלושה גדלים מתוך ארבעה.</p>
   </div>
   <div class="example"><span class="tag">דוגמה: אלכסוני טרפז</span>
-    <p>בטרפז <span class="m">ABCD</span> (<span class="m">AB ∥ CD</span>) האלכסונים נחתכים ב־<span class="m">E</span>. נתון <span class="m">AB = 12</span>, <span class="m">CD = 8</span>, <span class="m">AC = 15</span>.</p>
-    <p>צורת שעון חול: <span class="m">△ABE ∼ △CDE</span> (זוויות מתחלפות וקודקודיות), ולכן <span class="m">AE/EC = AB/CD = 12/8 = 3/2</span>.</p>
-    <p>מחלקים את <span class="m">AC = 15</span> ביחס <span class="m">3 : 2</span>: <span class="m">AE = 9</span>, <span class="m">EC = 6</span>.</p>
+    <p>בטרפז <span class="m">\(ABCD\)</span> (<span class="m">\(AB \parallel CD\)</span>) האלכסונים נחתכים ב־<span class="m">\(E\)</span>. נתון <span class="m">\(AB = 12\)</span>, <span class="m">\(CD = 8\)</span>, <span class="m">\(AC = 15\)</span>.</p>
+    <p>צורת שעון חול: <span class="m">\({\triangle}ABE \sim {\triangle}CDE\)</span> (זוויות מתחלפות וקודקודיות), ולכן <span class="m">\(\dfrac{AE}{EC} = \dfrac{AB}{CD} = \dfrac{12}{8} = \dfrac{3}{2}\)</span>.</p>
+    <p>מחלקים את <span class="m">\(AC = 15\)</span> ביחס <span class="m">\(3 : 2\)</span>: <span class="m">\(AE = 9\)</span>, <span class="m">\(EC = 6\)</span>.</p>
   </div>
 </section>
 
@@ -427,8 +441,8 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
   <div class="tablebox"><table>
     <thead><tr><th>הבנייה</th><th>השלבים</th></tr></thead>
     <tbody>
-      <tr><td><strong>חלוקת קטע <span class="m">AB</span> ל־<span class="m">n</span> חלקים שווים</strong></td><td>מ־<span class="m">A</span> מעבירים קרן כלשהי, ומסמנים עליה במחוגה <span class="m">n</span> קטעים שווים. מחברים את הסימון האחרון ל־<span class="m">B</span>, ודרך שאר הסימונים מעבירים ישרים מקבילים לקטע הזה. לפי תאלס הם מחלקים את <span class="m">AB</span> לחלקים שווים.</td></tr>
-      <tr><td><strong>חלוקת קטע ביחס <span class="m">m : n</span></strong></td><td>מסמנים על הקרן <span class="m">m + n</span> קטעים שווים, מחברים את האחרון ל־<span class="m">B</span>, ומעבירים מקביל אחד בלבד, דרך הסימון ה־<span class="m">m</span>.</td></tr>
+      <tr><td><strong>חלוקת קטע <span class="m">\(AB\)</span> ל־<span class="m">\(n\)</span> חלקים שווים</strong></td><td>מ־<span class="m">\(A\)</span> מעבירים קרן כלשהי, ומסמנים עליה במחוגה <span class="m">\(n\)</span> קטעים שווים. מחברים את הסימון האחרון ל־<span class="m">\(B\)</span>, ודרך שאר הסימונים מעבירים ישרים מקבילים לקטע הזה. לפי תאלס הם מחלקים את <span class="m">\(AB\)</span> לחלקים שווים.</td></tr>
+      <tr><td><strong>חלוקת קטע ביחס <span class="m">\(m : n\)</span></strong></td><td>מסמנים על הקרן <span class="m">\(m + n\)</span> קטעים שווים, מחברים את האחרון ל־<span class="m">\(B\)</span>, ומעבירים מקביל אחד בלבד, דרך הסימון ה־<span class="m">\(m\)</span>.</td></tr>
     </tbody>
   </table></div>
 </section>
@@ -437,12 +451,12 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <section class="ch" id="mistakes">
   <h2>12. טעויות נפוצות</h2>
   <ul class="mistakes">
-    <li><strong>יחס השטחים הוא <span class="m">k</span>.</strong> לא נכון: יחס השטחים הוא <span class="m">k²</span>. מהצד השני, אם נתון יחס שטחים, יחס הדמיון הוא השורש שלו.</li>
-    <li><strong>סדר אותיות לא תואם.</strong> ב־<span class="m">△ABC ∼ △DEF</span> הצלע <span class="m">AB</span> מתאימה ל־<span class="m">DE</span>. אם הסדר שגוי, היחסים יוצאים שגויים.</li>
-    <li><strong>לכתוב <span class="m">DE/BC = AD/DB</span>.</strong> הנכון הוא <span class="m">DE/BC = AD/AB</span>, עם השוק כולה.</li>
-    <li><strong>להסיק מקביליות מ־<span class="m">AD/AB = DE/BC</span>.</strong> המשפט ההפוך לתאלס דורש את היחסים על שתי <strong>השוקיים</strong>.</li>
-    <li><strong>במשיק וחותך, להכפיל ב־<span class="m">AB</span> במקום ב־<span class="m">PB</span>.</strong> מכפילים את המרחק מ־<span class="m">P</span> לנקודה הקרובה במרחק מ־<span class="m">P</span> לנקודה הרחוקה.</li>
-    <li><strong>במשפט חוצה הזווית, להשתמש בצלע הלא נכונה.</strong> היחס <span class="m">BD/DC</span> שווה ליחס בין הצלעות <strong>הסמוכות</strong> לזווית, <span class="m">AB/AC</span>, בסדר מתאים: <span class="m">BD</span> צמוד ל־<span class="m">AB</span>.</li>
+    <li><strong>יחס השטחים הוא <span class="m">\(k\)</span>.</strong> לא נכון: יחס השטחים הוא <span class="m">\(k^{2}\)</span>. מהצד השני, אם נתון יחס שטחים, יחס הדמיון הוא השורש שלו.</li>
+    <li><strong>סדר אותיות לא תואם.</strong> ב־<span class="m">\({\triangle}ABC \sim {\triangle}DEF\)</span> הצלע <span class="m">\(AB\)</span> מתאימה ל־<span class="m">\(DE\)</span>. אם הסדר שגוי, היחסים יוצאים שגויים.</li>
+    <li><strong>לכתוב <span class="m">\(\dfrac{DE}{BC} = \dfrac{AD}{DB}\)</span>.</strong> הנכון הוא <span class="m">\(\dfrac{DE}{BC} = \dfrac{AD}{AB}\)</span>, עם השוק כולה.</li>
+    <li><strong>להסיק מקביליות מ־<span class="m">\(\dfrac{AD}{AB} = \dfrac{DE}{BC}\)</span>.</strong> המשפט ההפוך לתאלס דורש את היחסים על שתי <strong>השוקיים</strong>.</li>
+    <li><strong>במשיק וחותך, להכפיל ב־<span class="m">\(AB\)</span> במקום ב־<span class="m">\(PB\)</span>.</strong> מכפילים את המרחק מ־<span class="m">\(P\)</span> לנקודה הקרובה במרחק מ־<span class="m">\(P\)</span> לנקודה הרחוקה.</li>
+    <li><strong>במשפט חוצה הזווית, להשתמש בצלע הלא נכונה.</strong> היחס <span class="m">\(\dfrac{BD}{DC}\)</span> שווה ליחס בין הצלעות <strong>הסמוכות</strong> לזווית, <span class="m">\(\dfrac{AB}{AC}\)</span>, בסדר מתאים: <span class="m">\(BD\)</span> צמוד ל־<span class="m">\(AB\)</span>.</li>
     <li><strong>בצ.ז.צ, זווית שאינה בין שתי הצלעות.</strong> הזווית השווה חייבת להיות כלואה בין שתי הצלעות הפרופורציוניות.</li>
   </ul>
 </section>

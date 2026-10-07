@@ -107,6 +107,20 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media print{body{background:#fff} nav.toc,nav.pages,.back{display:none} section.ch{break-inside:avoid-page}}
 </style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -192,10 +206,10 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
   <div class="tablebox"><table>
     <thead><tr><th>התכונה של הנקודות</th><th>המקום הגאומטרי</th></tr></thead>
     <tbody>
-      <tr><td>במרחק <span class="m">r</span> מנקודה קבועה <span class="m">O</span></td><td><strong>מעגל</strong> שמרכזו <span class="m">O</span> ורדיוסו <span class="m">r</span></td></tr>
-      <tr><td>במרחק שווה משתי נקודות <span class="m">A</span> ו־<span class="m">B</span></td><td><strong>האנך האמצעי</strong> לקטע <span class="m">AB</span></td></tr>
+      <tr><td>במרחק <span class="m">\(r\)</span> מנקודה קבועה <span class="m">\(O\)</span></td><td><strong>מעגל</strong> שמרכזו <span class="m">\(O\)</span> ורדיוסו <span class="m">\(r\)</span></td></tr>
+      <tr><td>במרחק שווה משתי נקודות <span class="m">\(A\)</span> ו־<span class="m">\(B\)</span></td><td><strong>האנך האמצעי</strong> לקטע <span class="m">\(AB\)</span></td></tr>
       <tr><td>במרחק שווה משתי שוקי זווית (בתוך הזווית)</td><td><strong>חוצה הזווית</strong></td></tr>
-      <tr><td>במרחק <span class="m">d</span> מישר נתון</td><td><strong>שני ישרים מקבילים</strong> לישר, אחד מכל צד, במרחק <span class="m">d</span></td></tr>
+      <tr><td>במרחק <span class="m">\(d\)</span> מישר נתון</td><td><strong>שני ישרים מקבילים</strong> לישר, אחד מכל צד, במרחק <span class="m">\(d\)</span></td></tr>
       <tr><td>במרחק שווה משני ישרים מקבילים</td><td>ישר מקביל להם, <strong>באמצע</strong> ביניהם</td></tr>
       <tr><td>במרחק שווה משני ישרים נחתכים</td><td><strong>שני חוצי הזוויות</strong> שנוצרות ביניהם (והם מאונכים זה לזה)</td></tr>
     </tbody>
@@ -205,12 +219,12 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
   <div class="figrow">
     <div>
       <div class="proof">
-        <p><b>כיוון 1:</b> נקודה <span class="m">P</span> על האנך האמצעי ⇐ <span class="m">PA = PB</span>.</p>
-        <p>במשולשים <span class="m">PMA</span> ו־<span class="m">PMB</span>: <span class="m">AM = MB</span> (M אמצע), <span class="m">∠PMA = ∠PMB = 90°</span>, ו־<span class="m">PM</span> צלע משותפת. המשולשים חופפים לפי צ.ז.צ, ולכן <span class="m">PA = PB</span>.</p>
+        <p><b>כיוון 1:</b> נקודה <span class="m">\(P\)</span> על האנך האמצעי ⇐ <span class="m">\(PA = PB\)</span>.</p>
+        <p>במשולשים <span class="m">\(PMA\)</span> ו־<span class="m">\(PMB\)</span>: <span class="m">\(AM = MB\)</span> (M אמצע), <span class="m">\({\angle}PMA = {\angle}PMB = 90^{\circ}\)</span>, ו־<span class="m">\(PM\)</span> צלע משותפת. המשולשים חופפים לפי צ.ז.צ, ולכן <span class="m">\(PA = PB\)</span>.</p>
       </div>
       <div class="proof">
-        <p><b>כיוון 2:</b> <span class="m">PA = PB</span> ⇐ <span class="m">P</span> על האנך האמצעי.</p>
-        <p>משולש <span class="m">PAB</span> שווה שוקיים. התיכון <span class="m">PM</span> לבסיס הוא גם גובה, ולכן <span class="m">PM ⊥ AB</span> ועובר באמצע <span class="m">AB</span>. כלומר <span class="m">P</span> על האנך האמצעי.</p>
+        <p><b>כיוון 2:</b> <span class="m">\(PA = PB\)</span> ⇐ <span class="m">\(P\)</span> על האנך האמצעי.</p>
+        <p>משולש <span class="m">\(PAB\)</span> שווה שוקיים. התיכון <span class="m">\(PM\)</span> לבסיס הוא גם גובה, ולכן <span class="m">\(PM \perp AB\)</span> ועובר באמצע <span class="m">\(AB\)</span>. כלומר <span class="m">\(P\)</span> על האנך האמצעי.</p>
       </div>
     </div>
     <figure class="fig"><svg viewBox="6 11 268 208" style="max-width:300px" role="img" aria-label="אנך אמצעי לקטע AB ונקודה P עליו, במרחק שווה מ-A ומ-B">
@@ -233,7 +247,7 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <text class="lb" x="252.0" y="175.0">B</text>
 <text class="lb" x="150.0" y="191.0">M</text>
 <text class="lb" x="153.0" y="59.0">P</text>
-</svg><figcaption>כל נקודה על האנך האמצעי רחוקה במידה שווה מ־<span class="m">A</span> ומ־<span class="m">B</span></figcaption></figure>
+</svg><figcaption>כל נקודה על האנך האמצעי רחוקה במידה שווה מ־<span class="m">\(A\)</span> ומ־<span class="m">\(B\)</span></figcaption></figure>
   </div>
 </section>
 
@@ -243,11 +257,11 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
   <div class="figrow">
     <div>
       <div class="thm"><span class="tag">משפט</span>
-        <p>שלושת האנכים האמצעיים לצלעות המשולש נפגשים בנקודה אחת, <span class="m">O</span>. היא <strong>מרכז המעגל החוסם</strong> את המשולש (המעגל שעובר דרך שלושת הקדקודים).</p>
+        <p>שלושת האנכים האמצעיים לצלעות המשולש נפגשים בנקודה אחת, <span class="m">\(O\)</span>. היא <strong>מרכז המעגל החוסם</strong> את המשולש (המעגל שעובר דרך שלושת הקדקודים).</p>
       </div>
       <div class="proof">
-        <p><b>למה זה נכון:</b> <span class="m">O</span> על האנך האמצעי ל־<span class="m">AB</span>, ולכן <span class="m">OA = OB</span>. <span class="m">O</span> על האנך האמצעי ל־<span class="m">BC</span>, ולכן <span class="m">OB = OC</span>.</p>
-        <p>מכאן <span class="m">OA = OC</span>, ולפי המקום הגאומטרי <span class="m">O</span> נמצאת גם על האנך האמצעי ל־<span class="m">AC</span>. המרחק השווה <span class="m">OA = OB = OC</span> הוא הרדיוס <span class="m">R</span>.</p>
+        <p><b>למה זה נכון:</b> <span class="m">\(O\)</span> על האנך האמצעי ל־<span class="m">\(AB\)</span>, ולכן <span class="m">\(OA = OB\)</span>. <span class="m">\(O\)</span> על האנך האמצעי ל־<span class="m">\(BC\)</span>, ולכן <span class="m">\(OB = OC\)</span>.</p>
+        <p>מכאן <span class="m">\(OA = OC\)</span>, ולפי המקום הגאומטרי <span class="m">\(O\)</span> נמצאת גם על האנך האמצעי ל־<span class="m">\(AC\)</span>. המרחק השווה <span class="m">\(OA = OB = OC\)</span> הוא הרדיוס <span class="m">\(R\)</span>.</p>
       </div>
     </div>
     <figure class="fig"><svg viewBox="33 10 293 284" style="max-width:360px" role="img" aria-label="משולש חד זווית, שלושת האנכים האמצעיים נפגשים במרכז המעגל החוסם O">
@@ -270,18 +284,18 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <line class="ac dash" x1="180.0" y1="165.0" x2="190.0" y2="50.0"/>
 <circle class="pta" cx="180.0" cy="165.0" r="3.2"/>
 <text class="a" x="193.0" y="166.0">O</text>
-</svg><figcaption>האנכים האמצעיים נפגשים ב־<span class="m">O</span>, ו־<span class="m">OA = OB = OC = R</span></figcaption></figure>
+</svg><figcaption>האנכים האמצעיים נפגשים ב־<span class="m">\(O\)</span>, ו־<span class="m">\(OA = OB = OC = R\)</span></figcaption></figure>
   </div>
   <div class="tablebox"><table>
     <thead><tr><th>סוג המשולש</th><th>מיקום מרכז המעגל החוסם</th></tr></thead>
     <tbody>
       <tr><td>חד זווית</td><td>בתוך המשולש</td></tr>
-      <tr><td>ישר זווית</td><td><strong>באמצע היתר</strong>, ולכן <span class="m">R = c/2</span> (היתר הוא קוטר)</td></tr>
+      <tr><td>ישר זווית</td><td><strong>באמצע היתר</strong>, ולכן <span class="m">\(R = \dfrac{c}{2}\)</span> (היתר הוא קוטר)</td></tr>
       <tr><td>קהה זווית</td><td>מחוץ למשולש, מעבר לצלע הארוכה</td></tr>
     </tbody>
   </table></div>
   <div class="example"><span class="tag">דוגמה</span>
-    <p>במשולש ישר זווית הניצבים הם 6 ו־8. היתר: <span class="m">√(36+64) = 10</span>. מרכז המעגל החוסם הוא אמצע היתר, ו־<span class="m">R = 5</span>.</p>
+    <p>במשולש ישר זווית הניצבים הם 6 ו־8. היתר: <span class="m">\(\sqrt{36+64} = 10\)</span>. מרכז המעגל החוסם הוא אמצע היתר, ו־<span class="m">\(R = 5\)</span>.</p>
     <p>מסקנה שימושית: <strong>התיכון ליתר שווה למחצית היתר</strong>, כי הוא רדיוס של המעגל החוסם. כאן התיכון ליתר הוא 5.</p>
   </div>
 </section>
@@ -292,11 +306,11 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
   <div class="figrow">
     <div>
       <div class="thm"><span class="tag">משפט</span>
-        <p>שלושת חוצי הזוויות של המשולש נפגשים בנקודה אחת, <span class="m">I</span>. היא <strong>מרכז המעגל החסום</strong> במשולש (המעגל שמשיק לשלוש הצלעות). הנקודה תמיד <strong>בתוך</strong> המשולש.</p>
+        <p>שלושת חוצי הזוויות של המשולש נפגשים בנקודה אחת, <span class="m">\(I\)</span>. היא <strong>מרכז המעגל החסום</strong> במשולש (המעגל שמשיק לשלוש הצלעות). הנקודה תמיד <strong>בתוך</strong> המשולש.</p>
       </div>
       <div class="proof">
-        <p><b>למה זה נכון:</b> <span class="m">I</span> על חוצה זווית <span class="m">A</span>, ולכן רחוקה במידה שווה מ־<span class="m">AB</span> ומ־<span class="m">AC</span>. היא גם על חוצה זווית <span class="m">B</span>, ולכן רחוקה במידה שווה מ־<span class="m">AB</span> ומ־<span class="m">BC</span>.</p>
-        <p>לכן היא רחוקה במידה שווה מ־<span class="m">AC</span> ומ־<span class="m">BC</span>, ולפי המקום הגאומטרי היא על חוצה זווית <span class="m">C</span>. המרחק השווה מהצלעות הוא הרדיוס <span class="m">r</span>.</p>
+        <p><b>למה זה נכון:</b> <span class="m">\(I\)</span> על חוצה זווית <span class="m">\(A\)</span>, ולכן רחוקה במידה שווה מ־<span class="m">\(AB\)</span> ומ־<span class="m">\(AC\)</span>. היא גם על חוצה זווית <span class="m">\(B\)</span>, ולכן רחוקה במידה שווה מ־<span class="m">\(AB\)</span> ומ־<span class="m">\(BC\)</span>.</p>
+        <p>לכן היא רחוקה במידה שווה מ־<span class="m">\(AC\)</span> ומ־<span class="m">\(BC\)</span>, ולפי המקום הגאומטרי היא על חוצה זווית <span class="m">\(C\)</span>. המרחק השווה מהצלעות הוא הרדיוס <span class="m">\(r\)</span>.</p>
       </div>
     </div>
     <figure class="fig"><svg viewBox="33 10 293 219" style="max-width:360px" role="img" aria-label="שלושת חוצי הזוויות נפגשים במרכז המעגל החסום I">
@@ -318,11 +332,11 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <circle class="pta" cx="185.9" cy="144.3" r="3.2"/>
 <text class="a" x="181.9" y="135.3">I</text>
 <text class="k" x="195.9" y="177.1">r</text>
-</svg><figcaption>חוצי הזוויות נפגשים ב־<span class="m">I</span>, שמרחקו <span class="m">r</span> מכל שלוש הצלעות</figcaption></figure>
+</svg><figcaption>חוצי הזוויות נפגשים ב־<span class="m">\(I\)</span>, שמרחקו <span class="m">\(r\)</span> מכל שלוש הצלעות</figcaption></figure>
   </div>
-  <div class="note"><strong>שתי תוצאות שימושיות</strong> (משתמשות במשיקים, ראו <a href="geometry-02-circle.html#tangent">המעגל</a>): שטח המשולש הוא <span class="m">S = r·p</span>, כאשר <span class="m">p</span> הוא חצי ההיקף. במשולש ישר זווית: <span class="m">r = (a + b − c)/2</span>.</div>
+  <div class="note"><strong>שתי תוצאות שימושיות</strong> (משתמשות במשיקים, ראו <a href="geometry-02-circle.html#tangent">המעגל</a>): שטח המשולש הוא <span class="m">\(S = r \cdot p\)</span>, כאשר <span class="m">\(p\)</span> הוא חצי ההיקף. במשולש ישר זווית: <span class="m">\(r = \dfrac{a + b - c}{2}\)</span>.</div>
   <div class="example"><span class="tag">דוגמה</span>
-    <p>במשולש עם הצלעות 6, 8, 10: השטח <span class="m">S = 6·8/2 = 24</span>, חצי ההיקף <span class="m">p = 12</span>, ולכן <span class="m">r = 24/12 = 2</span>. בדיקה בנוסחה השנייה: <span class="m">(6+8−10)/2 = 2</span>.</p>
+    <p>במשולש עם הצלעות 6, 8, 10: השטח <span class="m">\(S = \dfrac{6 \cdot 8}{2} = 24\)</span>, חצי ההיקף <span class="m">\(p = 12\)</span>, ולכן <span class="m">\(r = \dfrac{24}{12} = 2\)</span>. בדיקה בנוסחה השנייה: <span class="m">\(\dfrac{6+8 - 10}{2} = 2\)</span>.</p>
   </div>
 </section>
 
@@ -333,7 +347,7 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
     <div>
       <div class="meaning"><p><strong>תיכון</strong> הוא קטע שמחבר קדקוד לאמצע הצלע שמולו.</p></div>
       <div class="thm"><span class="tag">משפט</span>
-        <p>שלושת התיכונים נפגשים בנקודה אחת, <span class="m">G</span>, <strong>מרכז הכובד</strong>. היא מחלקת כל תיכון ביחס <span class="m">2:1</span>, כשהחלק הארוך צמוד לקדקוד: <span class="m">AG : GM = 2 : 1</span>.</p>
+        <p>שלושת התיכונים נפגשים בנקודה אחת, <span class="m">\(G\)</span>, <strong>מרכז הכובד</strong>. היא מחלקת כל תיכון ביחס <span class="m">\(2:1\)</span>, כשהחלק הארוך צמוד לקדקוד: <span class="m">\(AG : GM = 2 : 1\)</span>.</p>
       </div>
     </div>
     <figure class="fig"><svg viewBox="33 10 293 219" style="max-width:360px" role="img" aria-label="שלושת התיכונים נפגשים במרכז הכובד G ומתחלקים ביחס 2:1">
@@ -359,16 +373,16 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <circle class="ptm" cx="183.3" cy="150.0" r="3.2"/>
 <text class="k" x="179.3" y="140.0">G</text>
 <text class="lb" x="252.8" y="124.3">M</text>
-</svg><figcaption><span class="m">AG : GM = 2 : 1</span> בכל אחד מהתיכונים</figcaption></figure>
+</svg><figcaption><span class="m">\(AG : GM = 2 : 1\)</span> בכל אחד מהתיכונים</figcaption></figure>
   </div>
   <div class="proof">
-    <p><b>רעיון ההוכחה:</b> יהיו <span class="m">BE</span> ו־<span class="m">CF</span> שני תיכונים שנפגשים ב־<span class="m">G</span>, ויהיו <span class="m">K</span> ו־<span class="m">L</span> אמצעי <span class="m">BG</span> ו־<span class="m">CG</span>.</p>
-    <p><span class="m">FE</span> הוא קטע אמצעים במשולש <span class="m">ABC</span>: <span class="m">FE ∥ BC</span> ו־<span class="m">FE = BC/2</span>. גם <span class="m">KL</span> הוא קטע אמצעים, במשולש <span class="m">GBC</span>: <span class="m">KL ∥ BC</span> ו־<span class="m">KL = BC/2</span>.</p>
-    <p>לכן <span class="m">FE</span> ו־<span class="m">KL</span> מקבילים ושווים, ו־<span class="m">FELK</span> מקבילית. האלכסונים שלה חוצים זה את זה, ולכן <span class="m">GE = GK = KB</span>, כלומר <span class="m">BG = 2·GE</span>. כל תיכון נחתך על ידי תיכון אחר ביחס 2:1, ולכן שלושתם עוברים באותה נקודה.</p>
+    <p><b>רעיון ההוכחה:</b> יהיו <span class="m">\(BE\)</span> ו־<span class="m">\(CF\)</span> שני תיכונים שנפגשים ב־<span class="m">\(G\)</span>, ויהיו <span class="m">\(K\)</span> ו־<span class="m">\(L\)</span> אמצעי <span class="m">\(BG\)</span> ו־<span class="m">\(CG\)</span>.</p>
+    <p><span class="m">\(FE\)</span> הוא קטע אמצעים במשולש <span class="m">\(ABC\)</span>: <span class="m">\(FE \parallel BC\)</span> ו־<span class="m">\(FE = \dfrac{BC}{2}\)</span>. גם <span class="m">\(KL\)</span> הוא קטע אמצעים, במשולש <span class="m">\(GBC\)</span>: <span class="m">\(KL \parallel BC\)</span> ו־<span class="m">\(KL = \dfrac{BC}{2}\)</span>.</p>
+    <p>לכן <span class="m">\(FE\)</span> ו־<span class="m">\(KL\)</span> מקבילים ושווים, ו־<span class="m">\(FELK\)</span> מקבילית. האלכסונים שלה חוצים זה את זה, ולכן <span class="m">\(GE = GK = KB\)</span>, כלומר <span class="m">\(BG = 2 \cdot GE\)</span>. כל תיכון נחתך על ידי תיכון אחר ביחס 2:1, ולכן שלושתם עוברים באותה נקודה.</p>
   </div>
   <div class="meaning"><p><strong>עוד תכונה:</strong> כל תיכון מחלק את המשולש לשני משולשים שווי שטח (בסיסים שווים וגובה משותף). שלושת התיכונים מחלקים את המשולש לשישה משולשים שווי שטח.</p></div>
   <div class="example"><span class="tag">דוגמה</span>
-    <p>אורך התיכון <span class="m">AM</span> הוא 12. אז <span class="m">AG = ⅔·12 = 8</span> ו־<span class="m">GM = ⅓·12 = 4</span>.</p>
+    <p>אורך התיכון <span class="m">\(AM\)</span> הוא 12. אז <span class="m">\(AG = {\dfrac{2}{3}} \cdot 12 = 8\)</span> ו־<span class="m">\(GM = {\dfrac{1}{3}} \cdot 12 = 4\)</span>.</p>
   </div>
 </section>
 
@@ -378,13 +392,13 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
   <div class="figrow">
     <div>
       <div class="thm"><span class="tag">משפט</span>
-        <p>שלושת הגבהים במשולש (או ההמשכים שלהם) נפגשים בנקודה אחת, <span class="m">H</span>.</p>
+        <p>שלושת הגבהים במשולש (או ההמשכים שלהם) נפגשים בנקודה אחת, <span class="m">\(H\)</span>.</p>
       </div>
       <div class="tablebox"><table style="min-width:0">
         <tbody>
-          <tr><td>חד זווית</td><td><span class="m">H</span> בתוך המשולש</td></tr>
-          <tr><td>ישר זווית</td><td><span class="m">H</span> בקדקוד הזווית הישרה</td></tr>
-          <tr><td>קהה זווית</td><td><span class="m">H</span> מחוץ למשולש (נפגשים ההמשכים)</td></tr>
+          <tr><td>חד זווית</td><td><span class="m">\(H\)</span> בתוך המשולש</td></tr>
+          <tr><td>ישר זווית</td><td><span class="m">\(H\)</span> בקדקוד הזווית הישרה</td></tr>
+          <tr><td>קהה זווית</td><td><span class="m">\(H\)</span> מחוץ למשולש (נפגשים ההמשכים)</td></tr>
         </tbody>
       </table></div>
     </div>
@@ -404,11 +418,11 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <polyline class="ln thin" points="198.0,200.0 198.0,192.0 190.0,192.0"/>
 <circle class="ptm" cx="190.0" cy="120.0" r="3.2"/>
 <text class="k" x="202.0" y="119.0">H</text>
-</svg><figcaption>במשולש חד זווית <span class="m">H</span> נמצאת בתוך המשולש</figcaption></figure>
+</svg><figcaption>במשולש חד זווית <span class="m">\(H\)</span> נמצאת בתוך המשולש</figcaption></figure>
   </div>
   <div class="proof">
-    <p><b>רעיון ההוכחה:</b> דרך כל קדקוד מעבירים ישר מקביל לצלע שמולו. נוצר משולש גדול <span class="m">A′B′C′</span>. בגלל המקביליות שנוצרות, כל קדקוד של המשולש המקורי הוא <strong>אמצע</strong> צלע של המשולש הגדול.</p>
-    <p>הגובה מ־<span class="m">A</span> מאונך ל־<span class="m">BC</span>, ולכן גם לצלע המקבילה במשולש הגדול, ועובר באמצעה. כלומר שלושת הגבהים הם שלושת <strong>האנכים האמצעיים</strong> של המשולש הגדול, ואלה נפגשים בנקודה אחת (סעיף 4).</p>
+    <p><b>רעיון ההוכחה:</b> דרך כל קדקוד מעבירים ישר מקביל לצלע שמולו. נוצר משולש גדול <span class="m">\(A'B'C'\)</span>. בגלל המקביליות שנוצרות, כל קדקוד של המשולש המקורי הוא <strong>אמצע</strong> צלע של המשולש הגדול.</p>
+    <p>הגובה מ־<span class="m">\(A\)</span> מאונך ל־<span class="m">\(BC\)</span>, ולכן גם לצלע המקבילה במשולש הגדול, ועובר באמצעה. כלומר שלושת הגבהים הם שלושת <strong>האנכים האמצעיים</strong> של המשולש הגדול, ואלה נפגשים בנקודה אחת (סעיף 4).</p>
   </div>
 </section>
 
@@ -418,15 +432,15 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
   <div class="tablebox"><table>
     <thead><tr><th>נקודה</th><th>חיתוך של</th><th>תכונה</th><th>מיקום</th></tr></thead>
     <tbody>
-      <tr><td><strong>מרכז המעגל החוסם</strong> <span class="m">O</span></td><td>אנכים אמצעיים</td><td>במרחק שווה מהקדקודים: <span class="m">R</span></td><td>תלוי בסוג המשולש</td></tr>
-      <tr><td><strong>מרכז המעגל החסום</strong> <span class="m">I</span></td><td>חוצי זוויות</td><td>במרחק שווה מהצלעות: <span class="m">r</span></td><td>תמיד בפנים</td></tr>
-      <tr><td><strong>מרכז הכובד</strong> <span class="m">G</span></td><td>תיכונים</td><td>מחלק כל תיכון ביחס 2:1</td><td>תמיד בפנים</td></tr>
-      <tr><td><strong>מפגש הגבהים</strong> <span class="m">H</span></td><td>גבהים</td><td>—</td><td>תלוי בסוג המשולש</td></tr>
+      <tr><td><strong>מרכז המעגל החוסם</strong> <span class="m">\(O\)</span></td><td>אנכים אמצעיים</td><td>במרחק שווה מהקדקודים: <span class="m">\(R\)</span></td><td>תלוי בסוג המשולש</td></tr>
+      <tr><td><strong>מרכז המעגל החסום</strong> <span class="m">\(I\)</span></td><td>חוצי זוויות</td><td>במרחק שווה מהצלעות: <span class="m">\(r\)</span></td><td>תמיד בפנים</td></tr>
+      <tr><td><strong>מרכז הכובד</strong> <span class="m">\(G\)</span></td><td>תיכונים</td><td>מחלק כל תיכון ביחס 2:1</td><td>תמיד בפנים</td></tr>
+      <tr><td><strong>מפגש הגבהים</strong> <span class="m">\(H\)</span></td><td>גבהים</td><td>—</td><td>תלוי בסוג המשולש</td></tr>
     </tbody>
   </table></div>
   <div class="meaning">
     <p><strong>משולש שווה שוקיים:</strong> ארבע הנקודות נמצאות על הגובה לבסיס, שהוא גם התיכון, חוצה הזווית והאנך האמצעי (ציר הסימטריה).</p>
-    <p><strong>משולש שווה צלעות:</strong> ארבע הנקודות מתלכדות. אם הצלע היא <span class="m">a</span>, הגובה הוא <span class="m">a√3/2</span>, ומהיחס 2:1 מקבלים <span class="m">R = a√3/3</span> ו־<span class="m">r = a√3/6</span>, כלומר <span class="m">R = 2r</span>.</p>
+    <p><strong>משולש שווה צלעות:</strong> ארבע הנקודות מתלכדות. אם הצלע היא <span class="m">\(a\)</span>, הגובה הוא <span class="m">\(\dfrac{a\sqrt{3}}{2}\)</span>, ומהיחס 2:1 מקבלים <span class="m">\(R = \dfrac{a\sqrt{3}}{3}\)</span> ו־<span class="m">\(r = \dfrac{a\sqrt{3}}{6}\)</span>, כלומר <span class="m">\(R = 2r\)</span>.</p>
   </div>
 </section>
 
@@ -439,8 +453,8 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
   <div class="figrow">
     <div class="meaning">
       <p><strong>למה התנאי "מול הגדולה" חשוב?</strong> אם הזווית השווה נמצאת מול הצלע <strong>הקטנה</strong>, ייתכנו שני משולשים שונים עם אותם נתונים.</p>
-      <p>בשרטוט: <span class="m">AB = 7</span>, <span class="m">BC = 5</span>, <span class="m">∠A = 30°</span>. הזווית <span class="m">A</span> נמצאת מול <span class="m">BC = 5</span>, הצלע הקטנה. מעגל ברדיוס 5 סביב <span class="m">B</span> חותך את הקרן בשתי נקודות, <span class="m">C₁</span> ו־<span class="m">C₂</span>, ושני המשולשים אינם חופפים.</p>
-      <p>אילו היה <span class="m">BC = 9</span> (גדול מ־<span class="m">AB</span>), המעגל היה חותך את הקרן בנקודה אחת בלבד, והמשולש היה נקבע באופן יחיד.</p>
+      <p>בשרטוט: <span class="m">\(AB = 7\)</span>, <span class="m">\(BC = 5\)</span>, <span class="m">\({\angle}A = 30^{\circ}\)</span>. הזווית <span class="m">\(A\)</span> נמצאת מול <span class="m">\(BC = 5\)</span>, הצלע הקטנה. מעגל ברדיוס 5 סביב <span class="m">\(B\)</span> חותך את הקרן בשתי נקודות, <span class="m">\(C_{1}\)</span> ו־<span class="m">\(C_{2}\)</span>, ושני המשולשים אינם חופפים.</p>
+      <p>אילו היה <span class="m">\(BC = 9\)</span> (גדול מ־<span class="m">\(AB\)</span>), המעגל היה חותך את הקרן בנקודה אחת בלבד, והמשולש היה נקבע באופן יחיד.</p>
     </div>
     <figure class="fig"><svg viewBox="-4 63 348 177" style="max-width:340px" role="img" aria-label="שני משולשים שונים עם אותן שתי צלעות ואותה זווית, כשהזווית מול הצלע הקטנה">
 <line class="ln" x1="30.0" y1="200.0" x2="329.7" y2="200.0"/>
@@ -461,7 +475,7 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <text class="lb" x="106.9" y="146.0">7</text>
 <text class="a" x="139.8" y="156.0">5</text>
 <text class="k" x="259.7" y="156.0">5</text>
-</svg><figcaption><span class="m">AB = 7, BC = 5, ∠A = 30°</span>: הזווית מול הצלע הקטנה, ויש שני משולשים</figcaption></figure>
+</svg><figcaption><span class="m">\(AB = 7, BC = 5, {\angle}A = 30^{\circ}\)</span>: הזווית מול הצלע הקטנה, ויש שני משולשים</figcaption></figure>
   </div>
   <p class="note"><strong>מקרה פרטי:</strong> במשולש ישר זווית הזווית הישרה תמיד מול היתר, הצלע הגדולה. לכן "יתר וניצב שווים" הוא מקרה פרטי של משפט החפיפה הרביעי.</p>
 </section>
@@ -470,16 +484,16 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <section class="ch" id="pythagoras">
   <h2>10. משפט פיתגורס ההפוך</h2>
   <div class="thm conv"><span class="tag">משפט הפוך</span>
-    <p>אם במשולש עם הצלעות <span class="m">a, b, c</span> מתקיים <span class="m">a² + b² = c²</span>, אז הזווית שמול <span class="m">c</span> ישרה.</p>
+    <p>אם במשולש עם הצלעות <span class="m">\(a, b, c\)</span> מתקיים <span class="m">\(a^{2} + b^{2} = c^{2}\)</span>, אז הזווית שמול <span class="m">\(c\)</span> ישרה.</p>
   </div>
   <div class="proof">
-    <p><b>רעיון ההוכחה:</b> בונים משולש ישר זווית עם הניצבים <span class="m">a</span> ו־<span class="m">b</span>. לפי משפט פיתגורס היתר שלו הוא <span class="m">√(a²+b²) = c</span>. שני המשולשים חופפים לפי צ.צ.צ, ולכן גם במשולש המקורי הזווית שמול <span class="m">c</span> ישרה.</p>
+    <p><b>רעיון ההוכחה:</b> בונים משולש ישר זווית עם הניצבים <span class="m">\(a\)</span> ו־<span class="m">\(b\)</span>. לפי משפט פיתגורס היתר שלו הוא <span class="m">\(\sqrt{a^{2}+b^{2}} = c\)</span>. שני המשולשים חופפים לפי צ.צ.צ, ולכן גם במשולש המקורי הזווית שמול <span class="m">\(c\)</span> ישרה.</p>
   </div>
   <div class="example"><span class="tag">דוגמאות</span>
-    <p>צלעות 9, 12, 15: <span class="m">81 + 144 = 225 = 15²</span>, ולכן המשולש ישר זווית. שלשות פיתגוריות נוספות: <span class="m">(5, 12, 13)</span>, <span class="m">(8, 15, 17)</span>, <span class="m">(7, 24, 25)</span> וכל הכפולות שלהן.</p>
-    <p>צלעות 7, 8, 11: <span class="m">49 + 64 = 113 ≠ 121</span>, ולכן המשולש אינו ישר זווית.</p>
+    <p>צלעות 9, 12, 15: <span class="m">\(81 + 144 = 225 = 15^{2}\)</span>, ולכן המשולש ישר זווית. שלשות פיתגוריות נוספות: <span class="m">\((5, 12, 13)\)</span>, <span class="m">\((8, 15, 17)\)</span>, <span class="m">\((7, 24, 25)\)</span> וכל הכפולות שלהן.</p>
+    <p>צלעות 7, 8, 11: <span class="m">\(49 + 64 = 113 \neq 121\)</span>, ולכן המשולש אינו ישר זווית.</p>
   </div>
-  <p class="note"><strong>הרחבה:</strong> אם <span class="m">c</span> היא הצלע הגדולה, אז <span class="m">a² + b² &gt; c²</span> פירושו שהמשולש חד זווית, ו־<span class="m">a² + b² &lt; c²</span> פירושו שהוא קהה זווית. בדוגמה האחרונה <span class="m">113 &lt; 121</span>, ולכן המשולש קהה זווית. ההסבר המלא מגיע עם משפט הקוסינוסים בטריגונומטריה.</p>
+  <p class="note"><strong>הרחבה:</strong> אם <span class="m">\(c\)</span> היא הצלע הגדולה, אז <span class="m">\(a^{2} + b^{2} \gt c^{2}\)</span> פירושו שהמשולש חד זווית, ו־<span class="m">\(a^{2} + b^{2} \lt c^{2}\)</span> פירושו שהוא קהה זווית. בדוגמה האחרונה <span class="m">\(113 \lt 121\)</span>, ולכן המשולש קהה זווית. ההסבר המלא מגיע עם משפט הקוסינוסים בטריגונומטריה.</p>
 </section>
 
 <!-- 11. MISTAKES -->
@@ -493,7 +507,7 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
     <li><strong>לחשוב שהאנך האמצעי עובר בקדקוד שמול הצלע.</strong> זה קורה רק במשולש שווה שוקיים, באנך האמצעי לבסיס.</li>
     <li><strong>להפוך את היחס 2:1.</strong> החלק הארוך של התיכון הוא זה שצמוד לקדקוד.</li>
     <li><strong>להשתמש בצ.צ.ז כשהזווית מול הצלע הקטנה.</strong> במקרה הזה אין משפט חפיפה.</li>
-    <li><strong>בפיתגורס ההפוך, לא לבדוק מול הצלע הגדולה.</strong> את <span class="m">c</span> בוחרים תמיד כצלע הארוכה ביותר.</li>
+    <li><strong>בפיתגורס ההפוך, לא לבדוק מול הצלע הגדולה.</strong> את <span class="m">\(c\)</span> בוחרים תמיד כצלע הארוכה ביותר.</li>
   </ul>
 </section>
 

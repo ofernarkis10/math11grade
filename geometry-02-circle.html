@@ -107,6 +107,20 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media print{body{background:#fff} nav.toc,nav.pages,.back{display:none} section.ch{break-inside:avoid-page}}
 </style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -137,9 +151,9 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
   <div class="figrow">
     <div class="tablebox"><table style="min-width:0">
       <tbody>
-        <tr><td><strong>מעגל</strong></td><td>כל הנקודות במישור שמרחקן מנקודה <span class="m">O</span> (המרכז) הוא <span class="m">r</span> (הרדיוס). זה המקום הגאומטרי מ<a href="geometry-01-loci-triangle-centers.html#basic">הנושא הקודם</a>.</td></tr>
+        <tr><td><strong>מעגל</strong></td><td>כל הנקודות במישור שמרחקן מנקודה <span class="m">\(O\)</span> (המרכז) הוא <span class="m">\(r\)</span> (הרדיוס). זה המקום הגאומטרי מ<a href="geometry-01-loci-triangle-centers.html#basic">הנושא הקודם</a>.</td></tr>
         <tr><td><strong>מיתר</strong></td><td>קטע שמחבר שתי נקודות על המעגל.</td></tr>
-        <tr><td><strong>קוטר</strong></td><td>מיתר שעובר דרך המרכז. <span class="m">d = 2r</span>, והוא המיתר הארוך ביותר.</td></tr>
+        <tr><td><strong>קוטר</strong></td><td>מיתר שעובר דרך המרכז. <span class="m">\(d = 2r\)</span>, והוא המיתר הארוך ביותר.</td></tr>
         <tr><td><strong>קשת</strong></td><td>חלק מהמעגל בין שתי נקודות. מידת הקשת (במעלות) שווה למידת הזווית המרכזית שנשענת עליה.</td></tr>
         <tr><td><strong>משיק</strong></td><td>ישר שיש לו נקודה משותפת <strong>אחת בדיוק</strong> עם המעגל (נקודת ההשקה).</td></tr>
         <tr><td><strong>חותך</strong></td><td>ישר שחותך את המעגל בשתי נקודות.</td></tr>
@@ -188,11 +202,11 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
   <div class="thm conv"><span class="tag">משפטים קרובים</span>
     <p>הקטע מהמרכז לאמצע המיתר מאונך למיתר. האנך האמצעי של כל מיתר עובר דרך מרכז המעגל.</p>
   </div>
-  <div class="proof"><p><b>למה זה נכון:</b> אם <span class="m">AB</span> מיתר, אז <span class="m">OA = OB</span> (רדיוסים), ולכן משולש <span class="m">OAB</span> שווה שוקיים. במשולש שווה שוקיים הגובה לבסיס הוא גם התיכון, ולהפך.</p></div>
-  <div class="meaning"><p>האנך מהמרכז, חצי המיתר והרדיוס יוצרים משולש ישר זווית. אם <span class="m">ℓ</span> אורך המיתר ו־<span class="m">d</span> מרחקו מהמרכז:</p></div>
-  <div class="thm" style="text-align:center"><p><span class="m">(ℓ/2)² + d² = r²</span></p></div>
+  <div class="proof"><p><b>למה זה נכון:</b> אם <span class="m">\(AB\)</span> מיתר, אז <span class="m">\(OA = OB\)</span> (רדיוסים), ולכן משולש <span class="m">\(OAB\)</span> שווה שוקיים. במשולש שווה שוקיים הגובה לבסיס הוא גם התיכון, ולהפך.</p></div>
+  <div class="meaning"><p>האנך מהמרכז, חצי המיתר והרדיוס יוצרים משולש ישר זווית. אם <span class="m">\({\ell}\)</span> אורך המיתר ו־<span class="m">\(d\)</span> מרחקו מהמרכז:</p></div>
+  <div class="thm" style="text-align:center"><p><span class="m">\(\left(\dfrac{{\ell}}{2}\right)^{2} + d^{2} = r^{2}\)</span></p></div>
   <div class="example"><span class="tag">דוגמה</span>
-    <p>במעגל שרדיוסו 13 יש מיתר שאורכו 24. חצי המיתר הוא 12, והמרחק מהמרכז: <span class="m">d = √(169 − 144) = 5</span>.</p>
+    <p>במעגל שרדיוסו 13 יש מיתר שאורכו 24. חצי המיתר הוא 12, והמרחק מהמרכז: <span class="m">\(d = \sqrt{169 - 144} = 5\)</span>.</p>
   </div>
   <div class="thm"><span class="tag">משפט</span>
     <p>באותו מעגל (או במעגלים שווים): מיתרים שווים רחוקים במידה שווה מהמרכז, ולהפך. מיתר ארוך יותר קרוב יותר למרכז.</p>
@@ -206,7 +220,7 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
     <p>באותו מעגל (או במעגלים שווים), ארבעת הדברים הבאים באים יחד. אם אחד מהם מתקיים, כולם מתקיימים:</p>
     <p><strong>זוויות מרכזיות שוות ⇔ קשתות שוות ⇔ מיתרים שווים ⇔ מרחקים שווים מהמרכז</strong></p>
   </div>
-  <div class="proof"><p><b>למה זה נכון:</b> כל מיתר <span class="m">AB</span> יוצר עם המרכז משולש שווה שוקיים <span class="m">OAB</span> שהשוקיים שלו רדיוסים. שני משולשים כאלה חופפים לפי צ.ז.צ (זווית מרכזית שווה) או לפי צ.צ.צ (מיתר שווה), ומהחפיפה נובע כל השאר.</p></div>
+  <div class="proof"><p><b>למה זה נכון:</b> כל מיתר <span class="m">\(AB\)</span> יוצר עם המרכז משולש שווה שוקיים <span class="m">\(OAB\)</span> שהשוקיים שלו רדיוסים. שני משולשים כאלה חופפים לפי צ.ז.צ (זווית מרכזית שווה) או לפי צ.צ.צ (מיתר שווה), ומהחפיפה נובע כל השאר.</p></div>
   <p class="note"><strong>עוד משפט:</strong> הקשתות הכלואות בין שני מיתרים מקבילים שוות זו לזו.</p>
 </section>
 
@@ -219,9 +233,9 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
         <p>זווית היקפית שווה ל<strong>מחצית</strong> הזווית המרכזית הנשענת על אותה קשת.</p>
       </div>
       <div class="proof">
-        <p><b>הוכחה למקרה שהמרכז על אחת השוקיים</b> (<span class="m">CA</span> קוטר):</p>
-        <p><span class="m">OC = OB</span> (רדיוסים), ולכן <span class="m">∠OCB = ∠OBC = α</span>. הזווית <span class="m">∠AOB</span> היא זווית חיצונית למשולש <span class="m">OCB</span>, ולכן היא שווה לסכום שתי הזוויות שאינן צמודות לה: <span class="m">∠AOB = 2α</span>.</p>
-        <p>שאר המקרים (המרכז בתוך הזווית או מחוצה לה) מתקבלים מהמקרה הזה: מעבירים קוטר מ־<span class="m">C</span> ומחברים או מחסרים.</p>
+        <p><b>הוכחה למקרה שהמרכז על אחת השוקיים</b> (<span class="m">\(CA\)</span> קוטר):</p>
+        <p><span class="m">\(OC = OB\)</span> (רדיוסים), ולכן <span class="m">\({\angle}OCB = {\angle}OBC = {\alpha}\)</span>. הזווית <span class="m">\({\angle}AOB\)</span> היא זווית חיצונית למשולש <span class="m">\(OCB\)</span>, ולכן היא שווה לסכום שתי הזוויות שאינן צמודות לה: <span class="m">\({\angle}AOB = 2{\alpha}\)</span>.</p>
+        <p>שאר המקרים (המרכז בתוך הזווית או מחוצה לה) מתקבלים מהמקרה הזה: מעבירים קוטר מ־<span class="m">\(C\)</span> ומחברים או מחסרים.</p>
       </div>
     </div>
     <figure class="fig"><svg viewBox="38 10 224 239" style="max-width:300px" role="img" aria-label="זווית מרכזית AOB וזווית היקפית ACB הנשענות על אותה קשת AB">
@@ -243,7 +257,7 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <text class="lb" x="136.0" y="139.0">O</text>
 <text class="a" x="150.0" y="181.0">2α</text>
 <text class="k" x="129.4" y="99.2">α</text>
-</svg><figcaption><span class="m">∠ACB = ½∠AOB</span>: ההיקפית היא מחצית המרכזית</figcaption></figure>
+</svg><figcaption><span class="m">\({\angle}ACB = {\dfrac{1}{2}}{\angle}AOB\)</span>: ההיקפית היא מחצית המרכזית</figcaption></figure>
   </div>
   <h3>מסקנות</h3>
   <div class="meaning"><ul>
@@ -254,8 +268,8 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
     <li>שתי זוויות היקפיות שנשענות על אותו מיתר אבל נמצאות <strong>משני צדדיו</strong> משלימות זו את זו ל־180°.</li>
   </ul></div>
   <div class="example"><span class="tag">דוגמה</span>
-    <p>משולש <span class="m">ABC</span> חסום במעגל שמרכזו <span class="m">O</span>, ו־<span class="m">∠ACB = 40°</span>. אז הזווית המרכזית <span class="m">∠AOB = 80°</span>.</p>
-    <p>משולש <span class="m">AOB</span> שווה שוקיים (<span class="m">OA = OB</span>), ולכן <span class="m">∠OAB = (180° − 80°)/2 = 50°</span>.</p>
+    <p>משולש <span class="m">\(ABC\)</span> חסום במעגל שמרכזו <span class="m">\(O\)</span>, ו־<span class="m">\({\angle}ACB = 40^{\circ}\)</span>. אז הזווית המרכזית <span class="m">\({\angle}AOB = 80^{\circ}\)</span>.</p>
+    <p>משולש <span class="m">\(AOB\)</span> שווה שוקיים (<span class="m">\(OA = OB\)</span>), ולכן <span class="m">\({\angle}OAB = \dfrac{180^{\circ} - 80^{\circ}}{2} = 50^{\circ}\)</span>.</p>
   </div>
 </section>
 
@@ -267,7 +281,7 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
       <div class="thm"><span class="tag">משפט</span>
         <p>במרובע חסום במעגל, סכום כל שתי זוויות <strong>נגדיות</strong> הוא 180°.</p>
       </div>
-      <div class="proof"><p><b>למה זה נכון:</b> <span class="m">∠A</span> ו־<span class="m">∠C</span> הן זוויות היקפיות שנשענות על שתי הקשתות <span class="m">BD</span>, ושתי הקשתות יחד הן המעגל כולו, 360°. כל זווית היא מחצית הקשת שלה, ולכן הסכום הוא <span class="m">360°/2 = 180°</span>.</p></div>
+      <div class="proof"><p><b>למה זה נכון:</b> <span class="m">\({\angle}A\)</span> ו־<span class="m">\({\angle}C\)</span> הן זוויות היקפיות שנשענות על שתי הקשתות <span class="m">\(BD\)</span>, ושתי הקשתות יחד הן המעגל כולו, 360°. כל זווית היא מחצית הקשת שלה, ולכן הסכום הוא <span class="m">\(\dfrac{360^{\circ}}{2} = 180^{\circ}\)</span>.</p></div>
       <div class="thm conv"><span class="tag">משפט הפוך</span>
         <p>אם במרובע סכום זוג זוויות נגדיות הוא 180°, אפשר לחסום אותו במעגל.</p>
       </div>
@@ -287,10 +301,10 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <text class="lb" x="112.4" y="248.4">D</text>
 <text class="a" x="92.2" y="122.4">α</text>
 <text class="k sm" x="196.6" y="140.7">180°−α</text>
-</svg><figcaption><span class="m">∠A + ∠C = 180°,  ∠B + ∠D = 180°</span></figcaption></figure>
+</svg><figcaption><span class="m">\({\angle}A + {\angle}C = 180^{\circ}, {\angle}B + {\angle}D = 180^{\circ}\)</span></figcaption></figure>
   </div>
   <div class="meaning">
-    <p><strong>עוד דרך להראות שמרובע חסום:</strong> אם שני קדקודים "רואים" צלע מאותו צד שלה בזוויות שוות, למשל <span class="m">∠ADB = ∠ACB</span>, אז ארבע הנקודות על מעגל אחד.</p>
+    <p><strong>עוד דרך להראות שמרובע חסום:</strong> אם שני קדקודים "רואים" צלע מאותו צד שלה בזוויות שוות, למשל <span class="m">\({\angle}ADB = {\angle}ACB\)</span>, אז ארבע הנקודות על מעגל אחד.</p>
     <p><strong>מסקנות:</strong></p>
     <ul>
       <li>הזווית החיצונית של מרובע חסום שווה לזווית הפנימית שמולה.</li>
@@ -299,7 +313,7 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
     </ul>
   </div>
   <div class="example"><span class="tag">דוגמה</span>
-    <p>במרובע חסום <span class="m">ABCD</span>: <span class="m">∠A = 75°</span>, <span class="m">∠B = 100°</span>. אז <span class="m">∠C = 180° − 75° = 105°</span> ו־<span class="m">∠D = 180° − 100° = 80°</span>.</p>
+    <p>במרובע חסום <span class="m">\(ABCD\)</span>: <span class="m">\({\angle}A = 75^{\circ}\)</span>, <span class="m">\({\angle}B = 100^{\circ}\)</span>. אז <span class="m">\({\angle}C = 180^{\circ} - 75^{\circ} = 105^{\circ}\)</span> ו־<span class="m">\({\angle}D = 180^{\circ} - 100^{\circ} = 80^{\circ}\)</span>.</p>
   </div>
 </section>
 
@@ -315,10 +329,10 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
   <div class="figrow">
     <div>
       <div class="thm"><span class="tag">משפט: שני משיקים מנקודה אחת</span>
-        <p>מנקודה <span class="m">P</span> מחוץ למעגל יוצאים שני משיקים, <span class="m">PA</span> ו־<span class="m">PB</span>. אז:</p>
-        <p>• <span class="m">PA = PB</span> (קטעי המשיקים שווים)<br>• <span class="m">PO</span> חוצה את הזווית <span class="m">APB</span><br>• <span class="m">PO</span> הוא האנך האמצעי של <span class="m">AB</span></p>
+        <p>מנקודה <span class="m">\(P\)</span> מחוץ למעגל יוצאים שני משיקים, <span class="m">\(PA\)</span> ו־<span class="m">\(PB\)</span>. אז:</p>
+        <p>• <span class="m">\(PA = PB\)</span> (קטעי המשיקים שווים)<br>• <span class="m">\(PO\)</span> חוצה את הזווית <span class="m">\(APB\)</span><br>• <span class="m">\(PO\)</span> הוא האנך האמצעי של <span class="m">\(AB\)</span></p>
       </div>
-      <div class="proof"><p><b>למה זה נכון:</b> המשולשים <span class="m">OAP</span> ו־<span class="m">OBP</span> ישרי זווית (משיק ⊥ רדיוס), <span class="m">OA = OB</span> ו־<span class="m">OP</span> משותפת. הם חופפים (יתר וניצב), ומכאן כל שלוש התוצאות.</p></div>
+      <div class="proof"><p><b>למה זה נכון:</b> המשולשים <span class="m">\(OAP\)</span> ו־<span class="m">\(OBP\)</span> ישרי זווית (משיק ⊥ רדיוס), <span class="m">\(OA = OB\)</span> ו־<span class="m">\(OP\)</span> משותפת. הם חופפים (יתר וניצב), ומכאן כל שלוש התוצאות.</p></div>
     </div>
     <figure class="fig"><svg viewBox="11 30 324 199" style="max-width:340px" role="img" aria-label="שני משיקים PA ו-PB מנקודה P מחוץ למעגל">
 <circle class="ln" cx="90.0" cy="130.0" r="65.0"/>
@@ -344,18 +358,18 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 <text class="lb" x="313.0" y="135.0">P</text>
 <text class="lb" x="106.1" y="59.2">A</text>
 <text class="lb" x="106.1" y="211.8">B</text>
-</svg><figcaption><span class="m">PA = PB</span>, ו־<span class="m">PO</span> חוצה את זווית <span class="m">P</span></figcaption></figure>
+</svg><figcaption><span class="m">\(PA = PB\)</span>, ו־<span class="m">\(PO\)</span> חוצה את זווית <span class="m">\(P\)</span></figcaption></figure>
   </div>
   <div class="example"><span class="tag">דוגמה</span>
-    <p>רדיוס המעגל 6, ו־<span class="m">OP = 10</span>. במשולש <span class="m">OAP</span> הזווית ב־<span class="m">A</span> ישרה, ולכן <span class="m">PA = √(100 − 36) = 8</span>, וגם <span class="m">PB = 8</span>.</p>
+    <p>רדיוס המעגל 6, ו־<span class="m">\(OP = 10\)</span>. במשולש <span class="m">\(OAP\)</span> הזווית ב־<span class="m">\(A\)</span> ישרה, ולכן <span class="m">\(PA = \sqrt{100 - 36} = 8\)</span>, וגם <span class="m">\(PB = 8\)</span>.</p>
   </div>
   <h3>מרובע חוסם מעגל</h3>
   <div class="thm"><span class="tag">משפט</span>
-    <p>במרובע שחוסם מעגל, סכומי זוגות הצלעות הנגדיות שווים: <span class="m">AB + CD = BC + AD</span>. גם ההפך נכון: מרובע שמקיים את השוויון הזה חוסם מעגל.</p>
+    <p>במרובע שחוסם מעגל, סכומי זוגות הצלעות הנגדיות שווים: <span class="m">\(AB + CD = BC + AD\)</span>. גם ההפך נכון: מרובע שמקיים את השוויון הזה חוסם מעגל.</p>
   </div>
-  <div class="proof"><p><b>למה זה נכון:</b> מכל קדקוד יוצאים שני קטעי משיקים שווים. כל צלע מורכבת משני קטעים כאלה, ובכל אחד מהסכומים <span class="m">AB + CD</span> ו־<span class="m">BC + AD</span> מופיע כל אחד מארבעת הקטעים פעם אחת.</p></div>
+  <div class="proof"><p><b>למה זה נכון:</b> מכל קדקוד יוצאים שני קטעי משיקים שווים. כל צלע מורכבת משני קטעים כאלה, ובכל אחד מהסכומים <span class="m">\(AB + CD\)</span> ו־<span class="m">\(BC + AD\)</span> מופיע כל אחד מארבעת הקטעים פעם אחת.</p></div>
   <div class="example"><span class="tag">דוגמה</span>
-    <p>מרובע <span class="m">ABCD</span> חוסם מעגל, <span class="m">AB = 7</span>, <span class="m">CD = 9</span>, <span class="m">BC = 5</span>. אז <span class="m">AD = 7 + 9 − 5 = 11</span>.</p>
+    <p>מרובע <span class="m">\(ABCD\)</span> חוסם מעגל, <span class="m">\(AB = 7\)</span>, <span class="m">\(CD = 9\)</span>, <span class="m">\(BC = 5\)</span>. אז <span class="m">\(AD = 7 + 9 - 5 = 11\)</span>.</p>
   </div>
 </section>
 
@@ -367,7 +381,7 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
       <div class="thm"><span class="tag">משפט</span>
         <p>הזווית בין משיק למיתר שיוצא מנקודת ההשקה שווה לזווית ההיקפית הנשענת על הקשת <strong>הכלואה</strong> בין המשיק למיתר. כלומר היא שווה למחצית הקשת הזו.</p>
       </div>
-      <div class="proof"><p><b>רעיון ההוכחה:</b> מעבירים מנקודת ההשקה <span class="m">T</span> קוטר <span class="m">TD</span>. הזווית בין המשיק לקוטר היא 90°, וגם <span class="m">∠TAD = 90°</span> (היקפית על קוטר). מחשבים את שתי הזוויות כ־90° פחות אותה זווית, ומקבלים שהן שוות.</p></div>
+      <div class="proof"><p><b>רעיון ההוכחה:</b> מעבירים מנקודת ההשקה <span class="m">\(T\)</span> קוטר <span class="m">\(TD\)</span>. הזווית בין המשיק לקוטר היא 90°, וגם <span class="m">\({\angle}TAD = 90^{\circ}\)</span> (היקפית על קוטר). מחשבים את שתי הזוויות כ־90° פחות אותה זווית, ומקבלים שהן שוות.</p></div>
     </div>
     <figure class="fig"><svg viewBox="36 21 248 222" style="max-width:320px" role="img" aria-label="זווית בין המשיק למיתר TA שווה לזווית ההיקפית TCA">
 <circle class="ln" cx="160.0" cy="120.0" r="85.0"/>
@@ -389,7 +403,7 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 </svg><figcaption>הזווית בין משיק למיתר = ההיקפית על הקשת הכלואה</figcaption></figure>
   </div>
   <div class="example"><span class="tag">דוגמה</span>
-    <p>הזווית בין המשיק למיתר <span class="m">TA</span> היא 40°. אז הזווית המרכזית על הקשת <span class="m">TA</span> היא 80°, וכל זווית היקפית מהצד השני של המיתר, כמו <span class="m">∠TCA</span>, שווה ל־40°.</p>
+    <p>הזווית בין המשיק למיתר <span class="m">\(TA\)</span> היא 40°. אז הזווית המרכזית על הקשת <span class="m">\(TA\)</span> היא 80°, וכל זווית היקפית מהצד השני של המיתר, כמו <span class="m">\({\angle}TCA\)</span>, שווה ל־40°.</p>
   </div>
 </section>
 
@@ -401,8 +415,8 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
     <ul>
       <li><strong>מעגל חוסם:</strong> כל צלע של המשולש היא מיתר, ולכן המרכז נמצא על האנך האמצעי של כל צלע.</li>
       <li><strong>מעגל חסום:</strong> כל צלע היא משיק, ומכל קדקוד יוצאים שני משיקים, ולכן המרכז נמצא על חוצה כל זווית.</li>
-      <li><strong>משולש ישר זווית:</strong> היתר הוא קוטר המעגל החוסם, <span class="m">R = c/2</span>, והתיכון ליתר שווה ל־<span class="m">c/2</span>.</li>
-      <li>קטעי המשיקים מקדקוד <span class="m">A</span> למעגל החסום שווים ל־<span class="m">p − a</span>, כאשר <span class="m">p</span> חצי ההיקף ו־<span class="m">a</span> הצלע שמול <span class="m">A</span>.</li>
+      <li><strong>משולש ישר זווית:</strong> היתר הוא קוטר המעגל החוסם, <span class="m">\(R = \dfrac{c}{2}\)</span>, והתיכון ליתר שווה ל־<span class="m">\(\dfrac{c}{2}\)</span>.</li>
+      <li>קטעי המשיקים מקדקוד <span class="m">\(A\)</span> למעגל החסום שווים ל־<span class="m">\(p - a\)</span>, כאשר <span class="m">\(p\)</span> חצי ההיקף ו־<span class="m">\(a\)</span> הצלע שמול <span class="m">\(A\)</span>.</li>
       <li>כל מצולע משוכלל (כל הצלעות וכל הזוויות שוות) אפשר גם לחסום במעגל וגם לחסום בו מעגל, עם אותו מרכז.</li>
     </ul>
   </div>
@@ -419,8 +433,8 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
     <p>שווה ל<strong>מחצית ההפרש</strong> בין הקשת הגדולה לקשת הקטנה שהשוקיים כולאות.</p>
   </div>
   <div class="example"><span class="tag">דוגמאות</span>
-    <p>שני מיתרים נחתכים בתוך המעגל, והקשתות שמול הזוויות הקודקודיות הן 80° ו־40°. הזווית בין המיתרים: <span class="m">(80° + 40°)/2 = 60°</span>.</p>
-    <p>שני חותכים יוצאים מנקודה <span class="m">P</span> וכולאים קשתות של 100° ושל 30°. הזווית ב־<span class="m">P</span>: <span class="m">(100° − 30°)/2 = 35°</span>.</p>
+    <p>שני מיתרים נחתכים בתוך המעגל, והקשתות שמול הזוויות הקודקודיות הן 80° ו־40°. הזווית בין המיתרים: <span class="m">\(\dfrac{80^{\circ} + 40^{\circ}}{2} = 60^{\circ}\)</span>.</p>
+    <p>שני חותכים יוצאים מנקודה <span class="m">\(P\)</span> וכולאים קשתות של 100° ושל 30°. הזווית ב־<span class="m">\(P\)</span>: <span class="m">\(\dfrac{100^{\circ} - 30^{\circ}}{2} = 35^{\circ}\)</span>.</p>
   </div>
 </section>
 
@@ -431,8 +445,8 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
     <thead><tr><th>הבנייה</th><th>השלבים</th><th>למה זה עובד</th></tr></thead>
     <tbody>
       <tr><td><strong>מציאת מרכז של מעגל נתון</strong></td><td>משרטטים שני מיתרים לא מקבילים ובונים את האנך האמצעי של כל אחד. נקודת החיתוך היא המרכז.</td><td>המרכז נמצא על האנך האמצעי של כל מיתר.</td></tr>
-      <tr><td><strong>משיק בנקודה <span class="m">A</span> על המעגל</strong></td><td>מחברים את הרדיוס <span class="m">OA</span> ובונים ב־<span class="m">A</span> אנך לרדיוס.</td><td>ישר מאונך לרדיוס בקצהו הוא משיק.</td></tr>
-      <tr><td><strong>משיקים מנקודה <span class="m">P</span> מחוץ למעגל</strong></td><td>מוצאים את אמצע <span class="m">OP</span>, משרטטים מעגל ש־<span class="m">OP</span> קוטר שלו. הוא חותך את המעגל הנתון בנקודות ההשקה <span class="m">T₁, T₂</span>. מחברים <span class="m">PT₁</span> ו־<span class="m">PT₂</span>.</td><td><span class="m">∠OTP</span> היא זווית היקפית על הקוטר <span class="m">OP</span>, ולכן ישרה: <span class="m">PT ⊥ OT</span>.</td></tr>
+      <tr><td><strong>משיק בנקודה <span class="m">\(A\)</span> על המעגל</strong></td><td>מחברים את הרדיוס <span class="m">\(OA\)</span> ובונים ב־<span class="m">\(A\)</span> אנך לרדיוס.</td><td>ישר מאונך לרדיוס בקצהו הוא משיק.</td></tr>
+      <tr><td><strong>משיקים מנקודה <span class="m">\(P\)</span> מחוץ למעגל</strong></td><td>מוצאים את אמצע <span class="m">\(OP\)</span>, משרטטים מעגל ש־<span class="m">\(OP\)</span> קוטר שלו. הוא חותך את המעגל הנתון בנקודות ההשקה <span class="m">\(T_{1}, T_{2}\)</span>. מחברים <span class="m">\(PT_{1}\)</span> ו־<span class="m">\(PT_{2}\)</span>.</td><td><span class="m">\({\angle}OTP\)</span> היא זווית היקפית על הקוטר <span class="m">\(OP\)</span>, ולכן ישרה: <span class="m">\(PT \perp OT\)</span>.</td></tr>
     </tbody>
   </table></div>
 </section>

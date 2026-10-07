@@ -6,6 +6,11 @@
 <title>פתרונות גאומטריה · עבודת קיץ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
 <style>
 /* Layout: same worksheet style as the rest of the site. Toolbox of theorems first, then one card per question: figure, given data, and a worked solution for every sub-question with the theorems it uses */
 :root{
@@ -33,7 +38,13 @@ h1{font-size:2.3rem}
 h2{font-size:1.65rem;color:var(--accent)}
 h3{font-size:1.15rem}
 p{margin:0}
-.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.9em;white-space:nowrap}
+.m{direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+.m .katex{font-size:1.08em;position:relative}
+.m:has(.katex){white-space:normal}
+.steps .m,.alt .m{white-space:normal}
+/* room for full-size fractions (\dfrac) between lines */
+.part p,.part h3,.given p,td{line-height:2.15}
+*:has(> .m .mfrac){line-height:2.15}
 .lead{color:var(--muted);max-width:68ch}
 header{display:flex;flex-direction:column;gap:10px}
 .eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
@@ -58,7 +69,7 @@ nav.qnav a:hover,nav.qnav a:focus-visible{border-color:var(--accent);background:
 .tool p{font-size:.93rem;color:var(--ink)}
 
 /* answers table */
-.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.tablebox{position:relative;overflow-x:auto;border:1px solid var(--line);border-radius:10px}
 table{border-collapse:collapse;width:100%;min-width:560px;font-size:.93rem}
 th,td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
 th{background:var(--accent-soft);font-weight:700}
@@ -83,7 +94,7 @@ figure figcaption{font-size:.78rem;color:#5b6878;text-align:center}
 .steps .m{white-space:normal}
 .ans{background:var(--ok-soft);border-radius:6px;padding:6px 12px;width:fit-content;max-width:100%;font-weight:600}
 .ans::before{content:"תשובה: ";color:var(--ok)}
-.ans .m{font-size:1rem}
+.ans .m .katex{font-size:1.15em}
 .uses{font-size:.88rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .uses a{font-size:.82rem;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:1px 10px;text-decoration:none;font-weight:600}
 .uses a:hover,.uses a:focus-visible{text-decoration:underline}
@@ -133,14 +144,14 @@ footer{color:var(--muted);font-size:.9rem}
   <div class="tools">
     <div class="tool" id="t-aa"><b><span class="tag">ז.ז</span>משפט דמיון זווית־זווית</b><p>אם שתי זוויות במשולש אחד שוות לשתי זוויות במשולש אחר, המשולשים דומים.</p></div>
     <div class="tool" id="t-sas"><b><span class="tag">צ.ז.צ</span>משפט דמיון צלע־זווית־צלע</b><p>אם שתי צלעות במשולש אחד פרופורציוניות לשתי צלעות במשולש אחר, והזוויות שביניהן שוות, המשולשים דומים.</p></div>
-    <div class="tool" id="t-ratio"><b><span class="tag">יחס</span>יחסים במשולשים דומים</b><p>היחס בין כל שתי צלעות מתאימות שווה ליחס הדמיון <span class="m">k</span>. היחס בין השטחים הוא <span class="m">k²</span>. זוויות מתאימות שוות.</p></div>
+    <div class="tool" id="t-ratio"><b><span class="tag">יחס</span>יחסים במשולשים דומים</b><p>היחס בין כל שתי צלעות מתאימות שווה ליחס הדמיון <span class="m">\(k\)</span>. היחס בין השטחים הוא <span class="m">\(k^{2}\)</span>. זוויות מתאימות שוות.</p></div>
     <div class="tool" id="t-thales"><b><span class="tag">תאלס</span>משפט תאלס המורחב וההפוך שלו</b><p>ישר המקביל לצלע במשולש יוצר משולש דומה ומחלק את שתי הצלעות האחרות לקטעים פרופורציוניים. ההפך: אם ישר מחלק שתי צלעות באותו יחס, הוא מקביל לצלע השלישית.</p></div>
     <div class="tool" id="t-par"><b><span class="tag">∥</span>זוויות בין ישרים מקבילים</b><p>ישר שחותך שני ישרים מקבילים יוצר זוויות מתחלפות שוות וזוויות מתאימות שוות.</p></div>
     <div class="tool" id="t-angles"><b><span class="tag">180°</span>זוויות בסיסיות</b><p>סכום הזוויות במשולש הוא 180°. זוויות צמודות משלימות ל־180°. זוויות קודקודיות שוות. שני ישרים המאונכים לאותו ישר מקבילים זה לזה.</p></div>
     <div class="tool" id="t-pgram"><b><span class="tag">מקבילית</span>תכונות ומשפטי מקבילית</b><p>במקבילית צלעות נגדיות שוות ומקבילות, זוויות נגדיות שוות, זוויות סמוכות משלימות ל־180°, והאלכסונים חוצים זה את זה. מרובע עם שני זוגות צלעות מקבילות, או עם זוג צלעות נגדיות שוות ומקבילות, הוא מקבילית.</p></div>
     <div class="tool" id="t-rhombus"><b><span class="tag">מעוין</span>תכונות מעוין</b><p>כל הצלעות שוות. האלכסונים מאונכים זה לזה, חוצים זה את זה וחוצים את זוויות המעוין.</p></div>
     <div class="tool" id="t-iso"><b><span class="tag">ש״ש</span>משולש שווה שוקיים</b><p>זוויות הבסיס שוות, ולהפך: אם שתי זוויות שוות, הצלעות שמולן שוות. התיכון לבסיס הוא גם גובה וגם חוצה זווית הראש.</p></div>
-    <div class="tool" id="t-centroid"><b><span class="tag">2:1</span>מפגש התיכונים</b><p>שלושת התיכונים נפגשים בנקודה אחת, שמחלקת כל תיכון ביחס <span class="m">2:1</span> מהקדקוד. לכן נקודה על תיכון שמחלקת אותו ביחס <span class="m">2:1</span> מהקדקוד היא מפגש התיכונים.</p></div>
+    <div class="tool" id="t-centroid"><b><span class="tag">2:1</span>מפגש התיכונים</b><p>שלושת התיכונים נפגשים בנקודה אחת, שמחלקת כל תיכון ביחס <span class="m">\(2:1\)</span> מהקדקוד. לכן נקודה על תיכון שמחלקת אותו ביחס <span class="m">\(2:1\)</span> מהקדקוד היא מפגש התיכונים.</p></div>
     <div class="tool" id="t-bisector"><b><span class="tag">חוצה</span>משפט חוצה הזווית</b><p>חוצה זווית פנימית במשולש מחלק את הצלע שמולו ביחס של שתי הצלעות הכולאות את הזווית.</p></div>
     <div class="tool" id="t-right"><b><span class="tag">90°</span>משולש ישר זווית</b><p>משפט פיתגורס. התיכון ליתר שווה למחצית היתר. ניצב שווה למחצית היתר אם ורק אם הזווית שמולו היא 30°.</p></div>
     <div class="tool" id="t-area"><b><span class="tag">שטח</span>יחסי שטחים</b><p>למשולשים בעלי אותו גובה (קדקוד משותף ובסיסים על אותו ישר), יחס השטחים שווה ליחס הבסיסים. תיכון מחלק משולש לשני משולשים שווי שטח.</p></div>
@@ -154,16 +165,16 @@ footer{color:var(--muted);font-size:.9rem}
   <div class="tablebox"><table>
     <thead><tr><th>שאלה</th><th>תשובות</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td>ב. <span class="m">CD/CE = 4/3</span>, <span class="m">BD/DE = 4/3</span> · ג. <span class="m">BD/BE = 4/5</span> · ד. יחס דמיון <span class="m">5:3</span>, <span class="m">DF:FC = 7:18</span></td></tr>
-      <tr><td>2</td><td>א. <span class="m">DE/BE = 1/2</span> · ב. <span class="m">DF/AD = 1/3</span> · ג. <span class="m">AE/EG = 2</span> · ד. <span class="m">S(ADE) = 3S</span>, <span class="m">S(ADO) = 4.5S</span></td></tr>
-      <tr><td>3</td><td>א. <span class="m">EG/AC = 2/3</span> · ב. <span class="m">GF/FC = 2/3</span>, <span class="m">DF/FC = 4</span></td></tr>
-      <tr><td>4</td><td>א. <span class="m">AE/EC = 1/3</span> · ד. <span class="m">S(AEF) = 2S</span>, <span class="m">S(CED) = 18S</span></td></tr>
-      <tr><td>5</td><td>ב. <span class="m">DE/AC = 6/5</span>, <span class="m">S(ADE):S(ABE) = 18:7</span> · ג. <span class="m">BA:AF = 16:9</span></td></tr>
-      <tr><td>6</td><td>א. <span class="m">ED/AC = 1/3</span> · ב. <span class="m">EF/BD = 2</span> · ד. <span class="m">S(BCH) = 9S</span>, <span class="m">S(ABC) = 18S</span></td></tr>
-      <tr><td>7</td><td>א. <span class="m">∢ABC = 2α</span> · ב. <span class="m">∢ECB = 90° − 2α</span> · ג. <span class="m">α = 30°</span> · ד. <span class="m">S(ABCD) = 12S</span></td></tr>
+      <tr><td>1</td><td>ב. <span class="m">\(\dfrac{CD}{CE} = \dfrac{4}{3}\)</span>, <span class="m">\(\dfrac{BD}{DE} = \dfrac{4}{3}\)</span> · ג. <span class="m">\(\dfrac{BD}{BE} = \dfrac{4}{5}\)</span> · ד. יחס דמיון <span class="m">\(5:3\)</span>, <span class="m">\(DF:FC = 7:18\)</span></td></tr>
+      <tr><td>2</td><td>א. <span class="m">\(\dfrac{DE}{BE} = \dfrac{1}{2}\)</span> · ב. <span class="m">\(\dfrac{DF}{AD} = \dfrac{1}{3}\)</span> · ג. <span class="m">\(\dfrac{AE}{EG} = 2\)</span> · ד. <span class="m">\(S_{ADE} = 3S\)</span>, <span class="m">\(S_{ADO} = 4.5S\)</span></td></tr>
+      <tr><td>3</td><td>א. <span class="m">\(\dfrac{EG}{AC} = \dfrac{2}{3}\)</span> · ב. <span class="m">\(\dfrac{GF}{FC} = \dfrac{2}{3}\)</span>, <span class="m">\(\dfrac{DF}{FC} = 4\)</span></td></tr>
+      <tr><td>4</td><td>א. <span class="m">\(\dfrac{AE}{EC} = \dfrac{1}{3}\)</span> · ד. <span class="m">\(S_{AEF} = 2S\)</span>, <span class="m">\(S_{CED} = 18S\)</span></td></tr>
+      <tr><td>5</td><td>ב. <span class="m">\(\dfrac{DE}{AC} = \dfrac{6}{5}\)</span>, <span class="m">\(S_{ADE}:S_{ABE} = 18:7\)</span> · ג. <span class="m">\(BA:AF = 16:9\)</span></td></tr>
+      <tr><td>6</td><td>א. <span class="m">\(\dfrac{ED}{AC} = \dfrac{1}{3}\)</span> · ב. <span class="m">\(\dfrac{EF}{BD} = 2\)</span> · ד. <span class="m">\(S_{BCH} = 9S\)</span>, <span class="m">\(S_{ABC} = 18S\)</span></td></tr>
+      <tr><td>7</td><td>א. <span class="m">\(\measuredangle ABC = 2\alpha\)</span> · ב. <span class="m">\(\measuredangle ECB = 90^{\circ} - 2\alpha\)</span> · ג. <span class="m">\(\alpha = 30^{\circ}\)</span> · ד. <span class="m">\(S_{ABCD} = 12S\)</span></td></tr>
       <tr><td>8</td><td>כל הסעיפים הם הוכחות</td></tr>
-      <tr><td>9</td><td>ג. <span class="m">DC/AC = 1/3</span>, <span class="m">DC/DB = 1/8</span> · ד. <span class="m">S(ACD) = 8</span>, <span class="m">S(ABC) = 72</span></td></tr>
-      <tr><td>10</td><td>ג. <span class="m">∢ABD = 30°</span></td></tr>
+      <tr><td>9</td><td>ג. <span class="m">\(\dfrac{DC}{AC} = \dfrac{1}{3}\)</span>, <span class="m">\(\dfrac{DC}{DB} = \dfrac{1}{8}\)</span> · ד. <span class="m">\(S_{ACD} = 8\)</span>, <span class="m">\(S_{ABC} = 72\)</span></td></tr>
+      <tr><td>10</td><td>ג. <span class="m">\(\measuredangle ABD = 30^{\circ}\)</span></td></tr>
     </tbody>
   </table></div>
 </section>
@@ -174,61 +185,61 @@ footer{color:var(--muted);font-size:.9rem}
   <div class="setup">
     <div class="given">
       <span class="lbl">נתון</span>
-      <p>הנקודה <span class="m">E</span> נמצאת על הצלע <span class="m">BC</span> במשולש <span class="m">BCD</span>, ו־<span class="m">∢DBE = ∢CDE</span>.</p>
+      <p>הנקודה <span class="m">\(E\)</span> נמצאת על הצלע <span class="m">\(BC\)</span> במשולש <span class="m">\(BCD\)</span>, ו־<span class="m">\(\measuredangle DBE = \measuredangle CDE\)</span>.</p>
     </div>
     <figure><img src="img/summer-geometry/q1.png" alt="משולש BCD, הנקודה E על BC, הקטע DE, והנקודה F על DC עם EF מאונך ל־DC"><figcaption>השרטוט מעבודת הקיץ</figcaption></figure>
   </div>
 
   <div class="part">
-    <h3><span class="lt">א.</span>הוכחה: <span class="m">△BCD ∼ △DCE</span></h3>
+    <h3><span class="lt">א.</span>הוכחה: <span class="m">\(\triangle BCD \sim \triangle DCE\)</span></h3>
     <div class="steps">
-      <p>נשווה את המשולשים <span class="m">BCD</span> ו־<span class="m">DCE</span>:</p>
-      <p>• <span class="m">∢C</span> משותפת לשני המשולשים.</p>
-      <p>• <span class="m">∢DBC = ∢CDE</span>, כי זה הנתון (<span class="m">∢DBE</span> היא בדיוק <span class="m">∢DBC</span>, כי <span class="m">E</span> נמצאת על <span class="m">BC</span>).</p>
-      <p>שתי זוויות שוות, ולכן המשולשים דומים. ההתאמה היא <span class="m">B↔D</span>, <span class="m">C↔C</span>, <span class="m">D↔E</span>, ומכאן:</p>
-      <p><span class="m">BC/DC = CD/CE = BD/DE</span></p>
+      <p>נשווה את המשולשים <span class="m">\(BCD\)</span> ו־<span class="m">\(DCE\)</span>:</p>
+      <p>• <span class="m">\(\measuredangle C\)</span> משותפת לשני המשולשים.</p>
+      <p>• <span class="m">\(\measuredangle DBC = \measuredangle CDE\)</span>, כי זה הנתון (<span class="m">\(\measuredangle DBE\)</span> היא בדיוק <span class="m">\(\measuredangle DBC\)</span>, כי <span class="m">\(E\)</span> נמצאת על <span class="m">\(BC\)</span>).</p>
+      <p>שתי זוויות שוות, ולכן המשולשים דומים. ההתאמה היא <span class="m">\(B\leftrightarrow D\)</span>, <span class="m">\(C\leftrightarrow C\)</span>, <span class="m">\(D\leftrightarrow E\)</span>, ומכאן:</p>
+      <p><span class="m">\(\dfrac{BC}{DC} = \dfrac{CD}{CE} = \dfrac{BD}{DE}\)</span></p>
     </div>
     <p class="uses">שימוש ב: <a href="#t-aa">ז.ז</a><a href="#t-ratio">יחסים במשולשים דומים</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ב.</span>נתון <span class="m">BE/CE = 7/9</span></h3>
-    <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות השנייה במונה. <span class="m">BE/CE</span> היא הקריאה היחידה שמתאימה לשרטוט ונותנת תוצאות שלמות.</p>
+    <h3><span class="lt">ב.</span>נתון <span class="m">\(\dfrac{BE}{CE} = \dfrac{7}{9}\)</span></h3>
+    <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות השנייה במונה. <span class="m">\(\dfrac{BE}{CE}\)</span> היא הקריאה היחידה שמתאימה לשרטוט ונותנת תוצאות שלמות.</p>
     <div class="steps">
-      <p>נסמן <span class="m">BE = 7k</span>, <span class="m">CE = 9k</span>. לכן <span class="m">BC = 16k</span>.</p>
-      <p>מהדמיון בסעיף א: <span class="m">BC/CD = CD/CE</span>, ולכן <span class="m">CD² = BC·CE = 16k·9k = 144k²</span>, כלומר <span class="m">CD = 12k</span>.</p>
-      <p><strong>(1)</strong> <span class="m">CD/CE = 12k/9k = 4/3</span></p>
-      <p><strong>(2)</strong> <span class="m">BD/DE</span> שווה ליחס הדמיון, כלומר ל־<span class="m">BC/DC = 16k/12k = 4/3</span>.</p>
+      <p>נסמן <span class="m">\(BE = 7k\)</span>, <span class="m">\(CE = 9k\)</span>. לכן <span class="m">\(BC = 16k\)</span>.</p>
+      <p>מהדמיון בסעיף א: <span class="m">\(\dfrac{BC}{CD} = \dfrac{CD}{CE}\)</span>, ולכן <span class="m">\(CD^{2} = BC\cdot CE = 16k\cdot 9k = 144k^{2}\)</span>, כלומר <span class="m">\(CD = 12k\)</span>.</p>
+      <p><strong>(1)</strong> <span class="m">\(\dfrac{CD}{CE} = \dfrac{12k}{9k} = \dfrac{4}{3}\)</span></p>
+      <p><strong>(2)</strong> <span class="m">\(\dfrac{BD}{DE}\)</span> שווה ליחס הדמיון, כלומר ל־<span class="m">\(\dfrac{BC}{DC} = \dfrac{16k}{12k} = \dfrac{4}{3}\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">CD/CE = 4/3</span>, <span class="m">BD/DE = 4/3</span></p>
+    <p class="ans"><span class="m">\(\dfrac{CD}{CE} = \dfrac{4}{3}\)</span>, <span class="m">\(\dfrac{BD}{DE} = \dfrac{4}{3}\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-ratio">יחסים במשולשים דומים</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ג.</span>נתון <span class="m">∢BDE = 90°</span>. מצאו את <span class="m">BD/BE</span></h3>
+    <h3><span class="lt">ג.</span>נתון <span class="m">\(\measuredangle BDE = 90^{\circ}\)</span>. מצאו את <span class="m">\(\dfrac{BD}{BE}\)</span></h3>
     <div class="steps">
-      <p>המשולש <span class="m">BDE</span> ישר זווית ב־<span class="m">D</span>, ומסעיף ב(2) ידוע ש־<span class="m">BD/DE = 4/3</span>.</p>
-      <p>נסמן <span class="m">BD = 4m</span>, <span class="m">DE = 3m</span>. לפי פיתגורס: <span class="m">BE = √(16m² + 9m²) = 5m</span>.</p>
-      <p><span class="m">BD/BE = 4m/5m = 4/5</span></p>
+      <p>המשולש <span class="m">\(BDE\)</span> ישר זווית ב־<span class="m">\(D\)</span>, ומסעיף ב(2) ידוע ש־<span class="m">\(\dfrac{BD}{DE} = \dfrac{4}{3}\)</span>.</p>
+      <p>נסמן <span class="m">\(BD = 4m\)</span>, <span class="m">\(DE = 3m\)</span>. לפי פיתגורס: <span class="m">\(BE = \sqrt{16m^{2} + 9m^{2}} = 5m\)</span>.</p>
+      <p><span class="m">\(\dfrac{BD}{BE} = \dfrac{4m}{5m} = \dfrac{4}{5}\)</span></p>
     </div>
-    <p class="ans"><span class="m">BD/BE = 4/5</span></p>
+    <p class="ans"><span class="m">\(\dfrac{BD}{BE} = \dfrac{4}{5}\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-right">פיתגורס</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ד.</span><span class="m">EF ⊥ DC</span>, והנקודה <span class="m">F</span> על <span class="m">DC</span></h3>
+    <h3><span class="lt">ד.</span><span class="m">\(EF \perp DC\)</span>, והנקודה <span class="m">\(F\)</span> על <span class="m">\(DC\)</span></h3>
     <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">△BDE ∼ △DFE</span>.</strong></p>
-      <p>• <span class="m">∢BDE = ∢DFE = 90°</span> (נתון ו־<span class="m">EF ⊥ DC</span>).</p>
-      <p>• <span class="m">∢DBE = ∢FDE</span>, כי <span class="m">∢FDE</span> היא <span class="m">∢CDE</span>, ולפי הנתון היא שווה ל־<span class="m">∢DBE</span>.</p>
-      <p>לכן המשולשים דומים לפי ז.ז, בהתאמה <span class="m">B↔D</span>, <span class="m">D↔F</span>, <span class="m">E↔E</span>.</p>
-      <p><strong>(2) יחס הדמיון.</strong> היתר <span class="m">BE</span> מתאים ליתר <span class="m">DE</span>, ולכן <span class="m">k = BE/DE = 5m/3m = 5/3</span>.</p>
-      <p><strong>(3) היחס <span class="m">DF:FC</span>.</strong> נבטא הכול באמצעות <span class="m">k</span> מסעיף ב: <span class="m">BE = 7k = 5m</span>, ולכן <span class="m">m = 7k/5</span>, <span class="m">BD = 28k/5</span>, <span class="m">DE = 21k/5</span>.</p>
-      <p>הצלע <span class="m">DF</span> מתאימה ל־<span class="m">BD</span>: <span class="m">DF = BD·(3/5) = 84k/25</span>.</p>
-      <p><span class="m">DC = 12k = 300k/25</span>, ולכן <span class="m">FC = 300k/25 − 84k/25 = 216k/25</span>.</p>
-      <p><span class="m">DF:FC = 84:216 = 7:18</span></p>
+      <p><strong>(1) הוכחה: <span class="m">\(\triangle BDE \sim \triangle DFE\)</span>.</strong></p>
+      <p>• <span class="m">\(\measuredangle BDE = \measuredangle DFE = 90^{\circ}\)</span> (נתון ו־<span class="m">\(EF \perp DC\)</span>).</p>
+      <p>• <span class="m">\(\measuredangle DBE = \measuredangle FDE\)</span>, כי <span class="m">\(\measuredangle FDE\)</span> היא <span class="m">\(\measuredangle CDE\)</span>, ולפי הנתון היא שווה ל־<span class="m">\(\measuredangle DBE\)</span>.</p>
+      <p>לכן המשולשים דומים לפי ז.ז, בהתאמה <span class="m">\(B\leftrightarrow D\)</span>, <span class="m">\(D\leftrightarrow F\)</span>, <span class="m">\(E\leftrightarrow E\)</span>.</p>
+      <p><strong>(2) יחס הדמיון.</strong> היתר <span class="m">\(BE\)</span> מתאים ליתר <span class="m">\(DE\)</span>, ולכן <span class="m">\(k = \dfrac{BE}{DE} = \dfrac{5m}{3m} = \dfrac{5}{3}\)</span>.</p>
+      <p><strong>(3) היחס <span class="m">\(DF:FC\)</span>.</strong> נבטא הכול באמצעות <span class="m">\(k\)</span> מסעיף ב: <span class="m">\(BE = 7k = 5m\)</span>, ולכן <span class="m">\(m = \dfrac{7k}{5}\)</span>, <span class="m">\(BD = \dfrac{28k}{5}\)</span>, <span class="m">\(DE = \dfrac{21k}{5}\)</span>.</p>
+      <p>הצלע <span class="m">\(DF\)</span> מתאימה ל־<span class="m">\(BD\)</span>: <span class="m">\(DF = BD\cdot \dfrac{3}{5} = \dfrac{84k}{25}\)</span>.</p>
+      <p><span class="m">\(DC = 12k = \dfrac{300k}{25}\)</span>, ולכן <span class="m">\(FC = \dfrac{300k}{25} - \dfrac{84k}{25} = \dfrac{216k}{25}\)</span>.</p>
+      <p><span class="m">\(DF:FC = 84:216 = 7:18\)</span></p>
     </div>
-    <p class="ans">יחס הדמיון <span class="m">5:3</span>, <span class="m">DF:FC = 7:18</span></p>
+    <p class="ans">יחס הדמיון <span class="m">\(5:3\)</span>, <span class="m">\(DF:FC = 7:18\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-aa">ז.ז</a><a href="#t-ratio">יחסים במשולשים דומים</a></p>
   </div>
 </section>
@@ -239,56 +250,56 @@ footer{color:var(--muted);font-size:.9rem}
   <div class="setup">
     <div class="given">
       <span class="lbl">נתון</span>
-      <p><span class="m">ABCD</span> מקבילית שאלכסוניה נפגשים בנקודה <span class="m">O</span>. הנקודה <span class="m">E</span> על הקטע <span class="m">DO</span>, ו־<span class="m">DE = 2EO</span>.</p>
+      <p><span class="m">\(ABCD\)</span> מקבילית שאלכסוניה נפגשים בנקודה <span class="m">\(O\)</span>. הנקודה <span class="m">\(E\)</span> על הקטע <span class="m">\(DO\)</span>, ו־<span class="m">\(DE = 2EO\)</span>.</p>
     </div>
     <figure><img src="img/summer-geometry/q2.png" alt="מקבילית ABCD עם האלכסונים, E על DO, ו־EF מקביל ל־AB"><figcaption>השרטוט מעבודת הקיץ</figcaption></figure>
   </div>
 
   <div class="part">
-    <h3><span class="lt">א.</span>מצאו את <span class="m">DE/BE</span></h3>
+    <h3><span class="lt">א.</span>מצאו את <span class="m">\(\dfrac{DE}{BE}\)</span></h3>
     <div class="steps">
-      <p>נסמן <span class="m">EO = t</span>, ולכן <span class="m">DE = 2t</span> ו־<span class="m">DO = 3t</span>.</p>
-      <p>האלכסונים במקבילית חוצים זה את זה, ולכן <span class="m">OB = DO = 3t</span>.</p>
-      <p><span class="m">BE = EO + OB = t + 3t = 4t</span>, ולכן <span class="m">DE/BE = 2t/4t = 1/2</span>.</p>
+      <p>נסמן <span class="m">\(EO = t\)</span>, ולכן <span class="m">\(DE = 2t\)</span> ו־<span class="m">\(DO = 3t\)</span>.</p>
+      <p>האלכסונים במקבילית חוצים זה את זה, ולכן <span class="m">\(OB = DO = 3t\)</span>.</p>
+      <p><span class="m">\(BE = EO + OB = t + 3t = 4t\)</span>, ולכן <span class="m">\(\dfrac{DE}{BE} = \dfrac{2t}{4t} = \dfrac{1}{2}\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">DE/BE = 1/2</span></p>
+    <p class="ans"><span class="m">\(\dfrac{DE}{BE} = \dfrac{1}{2}\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-pgram">אלכסוני מקבילית</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ב.</span><span class="m">EF ∥ AB</span>. מצאו את <span class="m">DF/AD</span></h3>
+    <h3><span class="lt">ב.</span><span class="m">\(EF \parallel AB\)</span>. מצאו את <span class="m">\(\dfrac{DF}{AD}\)</span></h3>
     <div class="steps">
-      <p>במשולש <span class="m">DAB</span> הקטע <span class="m">EF</span> מקביל לצלע <span class="m">AB</span>. לפי תאלס המורחב, <span class="m">△DFE ∼ △DAB</span> ו־<span class="m">DF/DA = DE/DB</span>.</p>
-      <p><span class="m">DB = 2·DO = 6t</span>, ולכן <span class="m">DF/DA = 2t/6t = 1/3</span>.</p>
+      <p>במשולש <span class="m">\(DAB\)</span> הקטע <span class="m">\(EF\)</span> מקביל לצלע <span class="m">\(AB\)</span>. לפי תאלס המורחב, <span class="m">\(\triangle DFE \sim \triangle DAB\)</span> ו־<span class="m">\(\dfrac{DF}{DA} = \dfrac{DE}{DB}\)</span>.</p>
+      <p><span class="m">\(DB = 2\cdot DO = 6t\)</span>, ולכן <span class="m">\(\dfrac{DF}{DA} = \dfrac{2t}{6t} = \dfrac{1}{3}\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">DF/AD = 1/3</span></p>
+    <p class="ans"><span class="m">\(\dfrac{DF}{AD} = \dfrac{1}{3}\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-thales">תאלס המורחב</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ג.</span>המשך <span class="m">AE</span> חותך את <span class="m">DC</span> בנקודה <span class="m">G</span></h3>
+    <h3><span class="lt">ג.</span>המשך <span class="m">\(AE\)</span> חותך את <span class="m">\(DC\)</span> בנקודה <span class="m">\(G\)</span></h3>
     <div class="steps">
-      <p><strong>(1) <span class="m">AE/EG</span>.</strong> נשווה את <span class="m">△ABE</span> ו־<span class="m">△GDE</span>:</p>
-      <p>• <span class="m">∢AEB = ∢GED</span> (זוויות קודקודיות).</p>
-      <p>• <span class="m">∢ABE = ∢GDE</span> (זוויות מתחלפות, כי <span class="m">AB ∥ DC</span>).</p>
-      <p>לפי ז.ז המשולשים דומים, ולכן <span class="m">AE/EG = BE/DE = 4t/2t = 2</span>.</p>
-      <p><strong>(2) הוכחה: <span class="m">E</span> היא מפגש התיכונים במשולש <span class="m">ACD</span>.</strong></p>
-      <p>האלכסונים חוצים זה את זה, ולכן <span class="m">O</span> אמצע <span class="m">AC</span> ו־<span class="m">DO</span> הוא תיכון במשולש <span class="m">ACD</span>.</p>
-      <p>הנקודה <span class="m">E</span> נמצאת על התיכון <span class="m">DO</span> ומחלקת אותו ביחס <span class="m">DE:EO = 2:1</span> מהקדקוד. מפגש התיכונים הוא הנקודה היחידה על התיכון שמחלקת אותו כך, ולכן <span class="m">E</span> היא מפגש התיכונים.</p>
-      <p>מכאן גם ש־<span class="m">AG</span> הוא תיכון, כלומר <span class="m">G</span> אמצע <span class="m">DC</span>. זה מתאים לתוצאה <span class="m">AE:EG = 2:1</span> מסעיף (1).</p>
+      <p><strong>(1) <span class="m">\(\dfrac{AE}{EG}\)</span>.</strong> נשווה את <span class="m">\(\triangle ABE\)</span> ו־<span class="m">\(\triangle GDE\)</span>:</p>
+      <p>• <span class="m">\(\measuredangle AEB = \measuredangle GED\)</span> (זוויות קודקודיות).</p>
+      <p>• <span class="m">\(\measuredangle ABE = \measuredangle GDE\)</span> (זוויות מתחלפות, כי <span class="m">\(AB \parallel DC\)</span>).</p>
+      <p>לפי ז.ז המשולשים דומים, ולכן <span class="m">\(\dfrac{AE}{EG} = \dfrac{BE}{DE} = \dfrac{4t}{2t} = 2\)</span>.</p>
+      <p><strong>(2) הוכחה: <span class="m">\(E\)</span> היא מפגש התיכונים במשולש <span class="m">\(ACD\)</span>.</strong></p>
+      <p>האלכסונים חוצים זה את זה, ולכן <span class="m">\(O\)</span> אמצע <span class="m">\(AC\)</span> ו־<span class="m">\(DO\)</span> הוא תיכון במשולש <span class="m">\(ACD\)</span>.</p>
+      <p>הנקודה <span class="m">\(E\)</span> נמצאת על התיכון <span class="m">\(DO\)</span> ומחלקת אותו ביחס <span class="m">\(DE:EO = 2:1\)</span> מהקדקוד. מפגש התיכונים הוא הנקודה היחידה על התיכון שמחלקת אותו כך, ולכן <span class="m">\(E\)</span> היא מפגש התיכונים.</p>
+      <p>מכאן גם ש־<span class="m">\(AG\)</span> הוא תיכון, כלומר <span class="m">\(G\)</span> אמצע <span class="m">\(DC\)</span>. זה מתאים לתוצאה <span class="m">\(AE:EG = 2:1\)</span> מסעיף (1).</p>
     </div>
-    <p class="ans"><span class="m">AE/EG = 2</span></p>
+    <p class="ans"><span class="m">\(\dfrac{AE}{EG} = 2\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-angles">זוויות קודקודיות</a><a href="#t-par">זוויות מתחלפות</a><a href="#t-aa">ז.ז</a><a href="#t-centroid">מפגש התיכונים</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ד.</span><span class="m">S△DEF = S</span></h3>
+    <h3><span class="lt">ד.</span><span class="m">\(S_{\triangle DEF} = S\)</span></h3>
     <div class="steps">
-      <p><strong>(1) <span class="m">S△ADE</span>.</strong> למשולשים <span class="m">DEF</span> ו־<span class="m">ADE</span> יש קדקוד משותף <span class="m">E</span>, והבסיסים <span class="m">DF</span> ו־<span class="m">DA</span> על אותו ישר, ולכן הגובה שלהם שווה. <span class="m">DA = 3DF</span>, ולכן <span class="m">S△ADE = 3S</span>.</p>
-      <p><strong>(2) <span class="m">S△ADO</span>.</strong> למשולשים <span class="m">ADE</span> ו־<span class="m">ADO</span> יש קדקוד משותף <span class="m">A</span>, והבסיסים <span class="m">DE</span> ו־<span class="m">DO</span> על הישר <span class="m">DB</span>. לכן <span class="m">S△ADO/S△ADE = DO/DE = 3t/2t = 3/2</span>.</p>
-      <p><span class="m">S△ADO = (3/2)·3S = 4.5S</span></p>
+      <p><strong>(1) <span class="m">\(S_{\triangle ADE}\)</span>.</strong> למשולשים <span class="m">\(DEF\)</span> ו־<span class="m">\(ADE\)</span> יש קדקוד משותף <span class="m">\(E\)</span>, והבסיסים <span class="m">\(DF\)</span> ו־<span class="m">\(DA\)</span> על אותו ישר, ולכן הגובה שלהם שווה. <span class="m">\(DA = 3DF\)</span>, ולכן <span class="m">\(S_{\triangle ADE} = 3S\)</span>.</p>
+      <p><strong>(2) <span class="m">\(S_{\triangle ADO}\)</span>.</strong> למשולשים <span class="m">\(ADE\)</span> ו־<span class="m">\(ADO\)</span> יש קדקוד משותף <span class="m">\(A\)</span>, והבסיסים <span class="m">\(DE\)</span> ו־<span class="m">\(DO\)</span> על הישר <span class="m">\(DB\)</span>. לכן <span class="m">\(\dfrac{S_{\triangle ADO}}{S_{\triangle ADE}} = \dfrac{DO}{DE} = \dfrac{3t}{2t} = \dfrac{3}{2}\)</span>.</p>
+      <p><span class="m">\(S_{\triangle ADO} = \dfrac{3}{2}\cdot 3S = 4.5S\)</span></p>
     </div>
-    <p class="ans"><span class="m">S△ADE = 3S</span>, <span class="m">S△ADO = 9S/2</span></p>
+    <p class="ans"><span class="m">\(S_{\triangle ADE} = 3S\)</span>, <span class="m">\(S_{\triangle ADO} = \dfrac{9S}{2}\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-area">משולשים בעלי גובה משותף</a></p>
   </div>
 </section>
@@ -299,31 +310,31 @@ footer{color:var(--muted);font-size:.9rem}
   <div class="setup">
     <div class="given">
       <span class="lbl">נתון</span>
-      <p><span class="m">DC</span> תיכון במשולש <span class="m">ABD</span>, כלומר <span class="m">C</span> אמצע <span class="m">AB</span>. הנקודה <span class="m">E</span> על <span class="m">AD</span>, ו־<span class="m">DE = 2AE</span>. דרך <span class="m">E</span> עובר ישר המקביל ל־<span class="m">AB</span> וחותך את <span class="m">DC</span> בנקודה <span class="m">G</span>.</p>
+      <p><span class="m">\(DC\)</span> תיכון במשולש <span class="m">\(ABD\)</span>, כלומר <span class="m">\(C\)</span> אמצע <span class="m">\(AB\)</span>. הנקודה <span class="m">\(E\)</span> על <span class="m">\(AD\)</span>, ו־<span class="m">\(DE = 2AE\)</span>. דרך <span class="m">\(E\)</span> עובר ישר המקביל ל־<span class="m">\(AB\)</span> וחותך את <span class="m">\(DC\)</span> בנקודה <span class="m">\(G\)</span>.</p>
     </div>
     <figure><img src="img/summer-geometry/q3.png" alt="משולש ABD, התיכון DC, הקטע EG מקביל ל־AB, ו־BE חותך את DC ב־F"><figcaption>השרטוט מעבודת הקיץ</figcaption></figure>
   </div>
 
   <div class="part">
-    <h3><span class="lt">א.</span>מצאו את <span class="m">EG/AC</span></h3>
+    <h3><span class="lt">א.</span>מצאו את <span class="m">\(\dfrac{EG}{AC}\)</span></h3>
     <div class="steps">
-      <p><span class="m">DE = 2AE</span>, ולכן <span class="m">DE/DA = 2/3</span>.</p>
-      <p>במשולש <span class="m">DAC</span>: <span class="m">EG ∥ AC</span>, ולכן <span class="m">△DEG ∼ △DAC</span>, ו־<span class="m">EG/AC = DE/DA = 2/3</span>.</p>
+      <p><span class="m">\(DE = 2AE\)</span>, ולכן <span class="m">\(\dfrac{DE}{DA} = \dfrac{2}{3}\)</span>.</p>
+      <p>במשולש <span class="m">\(DAC\)</span>: <span class="m">\(EG \parallel AC\)</span>, ולכן <span class="m">\(\triangle DEG \sim \triangle DAC\)</span>, ו־<span class="m">\(\dfrac{EG}{AC} = \dfrac{DE}{DA} = \dfrac{2}{3}\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">EG/AC = 2/3</span></p>
+    <p class="ans"><span class="m">\(\dfrac{EG}{AC} = \dfrac{2}{3}\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-thales">תאלס המורחב</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ב.</span><span class="m">F</span> נקודת החיתוך של <span class="m">DC</span> ו־<span class="m">BE</span></h3>
+    <h3><span class="lt">ב.</span><span class="m">\(F\)</span> נקודת החיתוך של <span class="m">\(DC\)</span> ו־<span class="m">\(BE\)</span></h3>
     <div class="steps">
-      <p><strong>(1) <span class="m">GF/FC</span>.</strong> נשווה את <span class="m">△FEG</span> ו־<span class="m">△FBC</span>: הזוויות ב־<span class="m">F</span> קודקודיות, ו־<span class="m">∢GEF = ∢CBF</span> מתחלפות (<span class="m">EG ∥ BC</span>). לכן המשולשים דומים לפי ז.ז:</p>
-      <p><span class="m">GF/FC = EG/BC</span>. <span class="m">C</span> אמצע <span class="m">AB</span>, ולכן <span class="m">BC = AC</span>, ומסעיף א: <span class="m">GF/FC = EG/AC = 2/3</span>.</p>
-      <p><strong>(2) <span class="m">DF/FC</span>.</strong> מאותו דמיון בסעיף א: <span class="m">DG/DC = 2/3</span>. נסמן <span class="m">DC = 3a</span>, ולכן <span class="m">DG = 2a</span> ו־<span class="m">GC = a</span>.</p>
-      <p><span class="m">GF:FC = 2:3</span>, ולכן <span class="m">GF = 2a/5</span> ו־<span class="m">FC = 3a/5</span>.</p>
-      <p><span class="m">DF = DG + GF = 2a + 2a/5 = 12a/5</span>, ולכן <span class="m">DF/FC = (12a/5)/(3a/5) = 4</span>.</p>
+      <p><strong>(1) <span class="m">\(\dfrac{GF}{FC}\)</span>.</strong> נשווה את <span class="m">\(\triangle FEG\)</span> ו־<span class="m">\(\triangle FBC\)</span>: הזוויות ב־<span class="m">\(F\)</span> קודקודיות, ו־<span class="m">\(\measuredangle GEF = \measuredangle CBF\)</span> מתחלפות (<span class="m">\(EG \parallel BC\)</span>). לכן המשולשים דומים לפי ז.ז:</p>
+      <p><span class="m">\(\dfrac{GF}{FC} = \dfrac{EG}{BC}\)</span>. <span class="m">\(C\)</span> אמצע <span class="m">\(AB\)</span>, ולכן <span class="m">\(BC = AC\)</span>, ומסעיף א: <span class="m">\(\dfrac{GF}{FC} = \dfrac{EG}{AC} = \dfrac{2}{3}\)</span>.</p>
+      <p><strong>(2) <span class="m">\(\dfrac{DF}{FC}\)</span>.</strong> מאותו דמיון בסעיף א: <span class="m">\(\dfrac{DG}{DC} = \dfrac{2}{3}\)</span>. נסמן <span class="m">\(DC = 3a\)</span>, ולכן <span class="m">\(DG = 2a\)</span> ו־<span class="m">\(GC = a\)</span>.</p>
+      <p><span class="m">\(GF:FC = 2:3\)</span>, ולכן <span class="m">\(GF = \dfrac{2a}{5}\)</span> ו־<span class="m">\(FC = \dfrac{3a}{5}\)</span>.</p>
+      <p><span class="m">\(DF = DG + GF = 2a + \dfrac{2a}{5} = \dfrac{12a}{5}\)</span>, ולכן <span class="m">\(\dfrac{DF}{FC} = \dfrac{\frac{12a}{5}}{\frac{3a}{5}} = 4\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">GF/FC = 2/3</span>, <span class="m">DF/FC = 4</span></p>
+    <p class="ans"><span class="m">\(\dfrac{GF}{FC} = \dfrac{2}{3}\)</span>, <span class="m">\(\dfrac{DF}{FC} = 4\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-angles">זוויות קודקודיות</a><a href="#t-par">זוויות מתחלפות</a><a href="#t-aa">ז.ז</a><a href="#t-thales">תאלס המורחב</a></p>
   </div>
 </section>
@@ -334,58 +345,58 @@ footer{color:var(--muted);font-size:.9rem}
   <div class="setup">
     <div class="given">
       <span class="lbl">נתון</span>
-      <p><span class="m">ABCD</span> מעוין שאלכסוניו נפגשים ב־<span class="m">O</span>. הנקודה <span class="m">E</span> היא אמצע הקטע <span class="m">AO</span>.</p>
+      <p><span class="m">\(ABCD\)</span> מעוין שאלכסוניו נפגשים ב־<span class="m">\(O\)</span>. הנקודה <span class="m">\(E\)</span> היא אמצע הקטע <span class="m">\(AO\)</span>.</p>
     </div>
     <figure><img src="img/summer-geometry/q4.png" alt="מעוין ABCD עם האלכסונים, E אמצע AO, F על AD, והקטעים EF ו־ED"><figcaption>השרטוט מעבודת הקיץ (הנקודה G מסעיף ג לא מסומנת בו)</figcaption></figure>
   </div>
 
   <div class="part">
-    <h3><span class="lt">א.</span>מצאו את <span class="m">AE/EC</span></h3>
+    <h3><span class="lt">א.</span>מצאו את <span class="m">\(\dfrac{AE}{EC}\)</span></h3>
     <div class="steps">
-      <p>האלכסונים חוצים זה את זה: <span class="m">AO = OC</span>. נסמן <span class="m">AO = OC = 2t</span>.</p>
-      <p><span class="m">AE = t</span>, ולכן <span class="m">EC = EO + OC = t + 2t = 3t</span>, ו־<span class="m">AE/EC = 1/3</span>.</p>
+      <p>האלכסונים חוצים זה את זה: <span class="m">\(AO = OC\)</span>. נסמן <span class="m">\(AO = OC = 2t\)</span>.</p>
+      <p><span class="m">\(AE = t\)</span>, ולכן <span class="m">\(EC = EO + OC = t + 2t = 3t\)</span>, ו־<span class="m">\(\dfrac{AE}{EC} = \dfrac{1}{3}\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">AE/EC = 1/3</span></p>
+    <p class="ans"><span class="m">\(\dfrac{AE}{EC} = \dfrac{1}{3}\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-rhombus">אלכסוני מעוין</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ב.</span><span class="m">F</span> על <span class="m">AD</span>, ו־<span class="m">DF = 2AF</span></h3>
+    <h3><span class="lt">ב.</span><span class="m">\(F\)</span> על <span class="m">\(AD\)</span>, ו־<span class="m">\(DF = 2AF\)</span></h3>
     <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">△AEF ∼ △CED</span>.</strong></p>
-      <p>• <span class="m">∢FAE = ∢DCE</span>: האלכסון <span class="m">AC</span> חוצה את זוויות המעוין, והזוויות הנגדיות <span class="m">∢A</span> ו־<span class="m">∢C</span> שוות, ולכן גם החצאים שלהן שווים. דרך נוספת: <span class="m">AD = DC</span>, ולכן במשולש שווה השוקיים <span class="m">ADC</span> זוויות הבסיס שוות.</p>
-      <p>• <span class="m">AF/CD = (AD/3)/AD = 1/3</span> (כי <span class="m">CD = AD</span>), ומסעיף א: <span class="m">AE/CE = 1/3</span>.</p>
-      <p>שתי צלעות פרופורציוניות והזווית שביניהן שווה, ולכן המשולשים דומים לפי צ.ז.צ, בהתאמה <span class="m">A↔C</span>, <span class="m">E↔E</span>, <span class="m">F↔D</span>. יחס הדמיון הוא <span class="m">1:3</span>.</p>
-      <p><strong>(2) הוכחה: <span class="m">∢AEF = ∢CED</span>.</strong> אלה זוויות מתאימות במשולשים הדומים מסעיף (1).</p>
+      <p><strong>(1) הוכחה: <span class="m">\(\triangle AEF \sim \triangle CED\)</span>.</strong></p>
+      <p>• <span class="m">\(\measuredangle FAE = \measuredangle DCE\)</span>: האלכסון <span class="m">\(AC\)</span> חוצה את זוויות המעוין, והזוויות הנגדיות <span class="m">\(\measuredangle A\)</span> ו־<span class="m">\(\measuredangle C\)</span> שוות, ולכן גם החצאים שלהן שווים. דרך נוספת: <span class="m">\(AD = DC\)</span>, ולכן במשולש שווה השוקיים <span class="m">\(ADC\)</span> זוויות הבסיס שוות.</p>
+      <p>• <span class="m">\(\dfrac{AF}{CD} = \dfrac{\frac{AD}{3}}{AD} = \dfrac{1}{3}\)</span> (כי <span class="m">\(CD = AD\)</span>), ומסעיף א: <span class="m">\(\dfrac{AE}{CE} = \dfrac{1}{3}\)</span>.</p>
+      <p>שתי צלעות פרופורציוניות והזווית שביניהן שווה, ולכן המשולשים דומים לפי צ.ז.צ, בהתאמה <span class="m">\(A\leftrightarrow C\)</span>, <span class="m">\(E\leftrightarrow E\)</span>, <span class="m">\(F\leftrightarrow D\)</span>. יחס הדמיון הוא <span class="m">\(1:3\)</span>.</p>
+      <p><strong>(2) הוכחה: <span class="m">\(\measuredangle AEF = \measuredangle CED\)</span>.</strong> אלה זוויות מתאימות במשולשים הדומים מסעיף (1).</p>
     </div>
     <p class="uses">שימוש ב: <a href="#t-rhombus">תכונות מעוין</a><a href="#t-iso">שווה שוקיים</a><a href="#t-sas">צ.ז.צ</a><a href="#t-ratio">זוויות מתאימות</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ג.</span><span class="m">EG</span> חוצה זווית במשולש <span class="m">FED</span></h3>
-    <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות הראשונה בשם המשולש. מדובר במשולש <span class="m">FED</span>, ו־<span class="m">EG</span> חוצה את <span class="m">∢FED</span> כאשר <span class="m">G</span> על <span class="m">FD</span>. רק בקריאה הזו שני חלקי הסעיף נכונים.</p>
+    <h3><span class="lt">ג.</span><span class="m">\(EG\)</span> חוצה זווית במשולש <span class="m">\(FED\)</span></h3>
+    <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות הראשונה בשם המשולש. מדובר במשולש <span class="m">\(FED\)</span>, ו־<span class="m">\(EG\)</span> חוצה את <span class="m">\(\measuredangle FED\)</span> כאשר <span class="m">\(G\)</span> על <span class="m">\(FD\)</span>. רק בקריאה הזו שני חלקי הסעיף נכונים.</p>
     <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">EG ∥ DO</span>.</strong> נסמן <span class="m">∢AEF = ∢CED = β</span> (סעיף ב(2)).</p>
-      <p>הנקודות <span class="m">F</span> ו־<span class="m">D</span> באותו צד של הישר <span class="m">AC</span>, ולכן <span class="m">∢AEF + ∢FED + ∢DEC = 180°</span> (זווית שטוחה), ו־<span class="m">∢FED = 180° − 2β</span>.</p>
-      <p><span class="m">EG</span> חוצה אותה: <span class="m">∢FEG = 90° − β</span>. לכן <span class="m">∢AEG = β + (90° − β) = 90°</span>, כלומר <span class="m">EG ⊥ AC</span>.</p>
-      <p>אלכסוני המעוין מאונכים, ולכן גם <span class="m">DO ⊥ AC</span>. שני ישרים המאונכים לאותו ישר מקבילים זה לזה, ולכן <span class="m">EG ∥ DO</span>.</p>
-      <p><strong>(2) הוכחה: <span class="m">AD = 6FG</span>.</strong> לפי משפט חוצה הזווית במשולש <span class="m">FED</span>: <span class="m">FG/GD = EF/ED</span>. מהדמיון בסעיף ב, <span class="m">EF/ED = 1/3</span>.</p>
-      <p>לכן <span class="m">FG = FD/4</span>. <span class="m">FD = 2AD/3</span>, ולכן <span class="m">FG = (2AD/3)/4 = AD/6</span>, כלומר <span class="m">AD = 6FG</span>.</p>
-      <p class="alt"><strong>בדיקה בדרך נוספת:</strong> במשולש <span class="m">ADO</span> מתקיים <span class="m">EG ∥ DO</span> ו־<span class="m">E</span> אמצע <span class="m">AO</span>, ולכן <span class="m">G</span> אמצע <span class="m">AD</span> ו־<span class="m">AG = AD/2</span>. מאחר ש־<span class="m">AF = AD/3</span>, מקבלים <span class="m">FG = AD/2 − AD/3 = AD/6</span>.</p>
+      <p><strong>(1) הוכחה: <span class="m">\(EG \parallel DO\)</span>.</strong> נסמן <span class="m">\(\measuredangle AEF = \measuredangle CED = \beta\)</span> (סעיף ב(2)).</p>
+      <p>הנקודות <span class="m">\(F\)</span> ו־<span class="m">\(D\)</span> באותו צד של הישר <span class="m">\(AC\)</span>, ולכן <span class="m">\(\measuredangle AEF + \measuredangle FED + \measuredangle DEC = 180^{\circ}\)</span> (זווית שטוחה), ו־<span class="m">\(\measuredangle FED = 180^{\circ} - 2\beta\)</span>.</p>
+      <p><span class="m">\(EG\)</span> חוצה אותה: <span class="m">\(\measuredangle FEG = 90^{\circ} - \beta\)</span>. לכן <span class="m">\(\measuredangle AEG = \beta + (90^{\circ} - \beta ) = 90^{\circ}\)</span>, כלומר <span class="m">\(EG \perp AC\)</span>.</p>
+      <p>אלכסוני המעוין מאונכים, ולכן גם <span class="m">\(DO \perp AC\)</span>. שני ישרים המאונכים לאותו ישר מקבילים זה לזה, ולכן <span class="m">\(EG \parallel DO\)</span>.</p>
+      <p><strong>(2) הוכחה: <span class="m">\(AD = 6FG\)</span>.</strong> לפי משפט חוצה הזווית במשולש <span class="m">\(FED\)</span>: <span class="m">\(\dfrac{FG}{GD} = \dfrac{EF}{ED}\)</span>. מהדמיון בסעיף ב, <span class="m">\(\dfrac{EF}{ED} = \dfrac{1}{3}\)</span>.</p>
+      <p>לכן <span class="m">\(FG = \dfrac{FD}{4}\)</span>. <span class="m">\(FD = \dfrac{2AD}{3}\)</span>, ולכן <span class="m">\(FG = \dfrac{\frac{2AD}{3}}{4} = \dfrac{AD}{6}\)</span>, כלומר <span class="m">\(AD = 6FG\)</span>.</p>
+      <p class="alt"><strong>בדיקה בדרך נוספת:</strong> במשולש <span class="m">\(ADO\)</span> מתקיים <span class="m">\(EG \parallel DO\)</span> ו־<span class="m">\(E\)</span> אמצע <span class="m">\(AO\)</span>, ולכן <span class="m">\(G\)</span> אמצע <span class="m">\(AD\)</span> ו־<span class="m">\(AG = \dfrac{AD}{2}\)</span>. מאחר ש־<span class="m">\(AF = \dfrac{AD}{3}\)</span>, מקבלים <span class="m">\(FG = \dfrac{AD}{2} - \dfrac{AD}{3} = \dfrac{AD}{6}\)</span>.</p>
     </div>
     <p class="uses">שימוש ב: <a href="#t-angles">זווית שטוחה, ישרים מאונכים</a><a href="#t-rhombus">אלכסוני מעוין</a><a href="#t-bisector">חוצה הזווית</a><a href="#t-thales">תאלס</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ד.</span><span class="m">S△EFG = S</span></h3>
-    <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות האחרונה בשמות המשולשים. הקריאה הטבעית היא <span class="m">AEF</span> בסעיף (1) ו־<span class="m">CED</span> בסעיף (2), המשולשים הדומים מסעיף ב.</p>
+    <h3><span class="lt">ד.</span><span class="m">\(S_{\triangle EFG} = S\)</span></h3>
+    <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות האחרונה בשמות המשולשים. הקריאה הטבעית היא <span class="m">\(AEF\)</span> בסעיף (1) ו־<span class="m">\(CED\)</span> בסעיף (2), המשולשים הדומים מסעיף ב.</p>
     <div class="steps">
-      <p>כל המשולשים שקדקודם <span class="m">E</span> ובסיסם על <span class="m">AD</span> הם בעלי אותו גובה. על <span class="m">AD</span>, ביחידות של <span class="m">FG</span>: <span class="m">AF = 2</span>, <span class="m">FG = 1</span>, <span class="m">GD = 3</span>, ו־<span class="m">AD = 6</span>.</p>
-      <p><strong>(1)</strong> <span class="m">S△AEF = 2S</span> (ואם הכוונה היא ל־<span class="m">△AEG</span>: <span class="m">3S</span>).</p>
-      <p><strong>(2)</strong> <span class="m">△AEF ∼ △CED</span> ביחס דמיון <span class="m">1:3</span>, ולכן יחס השטחים הוא <span class="m">1:9</span> ו־<span class="m">S△CED = 9·2S = 18S</span>.</p>
-      <p class="alt"><strong>בדיקה:</strong> <span class="m">S△AED = 6S</span>. למשולשים <span class="m">AED</span> ו־<span class="m">CED</span> יש קדקוד משותף <span class="m">D</span> ובסיסים <span class="m">AE:EC = 1:3</span>, ולכן <span class="m">S△CED = 3·6S = 18S</span>.</p>
+      <p>כל המשולשים שקדקודם <span class="m">\(E\)</span> ובסיסם על <span class="m">\(AD\)</span> הם בעלי אותו גובה. על <span class="m">\(AD\)</span>, ביחידות של <span class="m">\(FG\)</span>: <span class="m">\(AF = 2\)</span>, <span class="m">\(FG = 1\)</span>, <span class="m">\(GD = 3\)</span>, ו־<span class="m">\(AD = 6\)</span>.</p>
+      <p><strong>(1)</strong> <span class="m">\(S_{\triangle AEF} = 2S\)</span> (ואם הכוונה היא ל־<span class="m">\(\triangle AEG\)</span>: <span class="m">\(3S\)</span>).</p>
+      <p><strong>(2)</strong> <span class="m">\(\triangle AEF \sim \triangle CED\)</span> ביחס דמיון <span class="m">\(1:3\)</span>, ולכן יחס השטחים הוא <span class="m">\(1:9\)</span> ו־<span class="m">\(S_{\triangle CED} = 9\cdot 2S = 18S\)</span>.</p>
+      <p class="alt"><strong>בדיקה:</strong> <span class="m">\(S_{\triangle AED} = 6S\)</span>. למשולשים <span class="m">\(AED\)</span> ו־<span class="m">\(CED\)</span> יש קדקוד משותף <span class="m">\(D\)</span> ובסיסים <span class="m">\(AE:EC = 1:3\)</span>, ולכן <span class="m">\(S_{\triangle CED} = 3\cdot 6S = 18S\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">S△AEF = 2S</span>, <span class="m">S△CED = 18S</span></p>
+    <p class="ans"><span class="m">\(S_{\triangle AEF} = 2S\)</span>, <span class="m">\(S_{\triangle CED} = 18S\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-area">משולשים בעלי גובה משותף</a><a href="#t-ratio">יחס שטחים = k²</a></p>
   </div>
 </section>
@@ -396,48 +407,48 @@ footer{color:var(--muted);font-size:.9rem}
   <div class="setup">
     <div class="given">
       <span class="lbl">נתון</span>
-      <p>המשולש <span class="m">BCD</span> שווה שוקיים, <span class="m">BC = BD</span>. הנקודות <span class="m">A</span> ו־<span class="m">E</span> על הצלעות <span class="m">CD</span> ו־<span class="m">BD</span> בהתאמה, ו־<span class="m">AD = AE</span>.</p>
+      <p>המשולש <span class="m">\(BCD\)</span> שווה שוקיים, <span class="m">\(BC = BD\)</span>. הנקודות <span class="m">\(A\)</span> ו־<span class="m">\(E\)</span> על הצלעות <span class="m">\(CD\)</span> ו־<span class="m">\(BD\)</span> בהתאמה, ו־<span class="m">\(AD = AE\)</span>.</p>
     </div>
     <figure><img src="img/summer-geometry/q5.png" alt="משולש BCD, A על CD, E על BD, והקטעים AE ו־AB"><figcaption>השרטוט מעבודת הקיץ</figcaption></figure>
   </div>
 
   <div class="part">
-    <h3><span class="lt">א.</span>הוכחה: <span class="m">△BCD ∼ △ADE</span></h3>
+    <h3><span class="lt">א.</span>הוכחה: <span class="m">\(\triangle BCD \sim \triangle ADE\)</span></h3>
     <div class="steps">
-      <p>ב־<span class="m">△BCD</span> (<span class="m">BC = BD</span>) זוויות הבסיס שוות: <span class="m">∢BCD = ∢BDC</span>.</p>
-      <p>ב־<span class="m">△ADE</span> (<span class="m">AD = AE</span>) זוויות הבסיס שוות: <span class="m">∢ADE = ∢AED</span>.</p>
-      <p><span class="m">∢ADE</span> ו־<span class="m">∢BDC</span> הן אותה זווית, ולכן ארבע הזוויות שוות. לכן <span class="m">∢BCD = ∢ADE</span> ו־<span class="m">∢BDC = ∢AED</span>, והמשולשים דומים לפי ז.ז, בהתאמה <span class="m">B↔A</span>, <span class="m">C↔D</span>, <span class="m">D↔E</span>:</p>
-      <p><span class="m">BC/AD = CD/DE = BD/AE</span></p>
+      <p>ב־<span class="m">\(\triangle BCD\)</span> (<span class="m">\(BC = BD\)</span>) זוויות הבסיס שוות: <span class="m">\(\measuredangle BCD = \measuredangle BDC\)</span>.</p>
+      <p>ב־<span class="m">\(\triangle ADE\)</span> (<span class="m">\(AD = AE\)</span>) זוויות הבסיס שוות: <span class="m">\(\measuredangle ADE = \measuredangle AED\)</span>.</p>
+      <p><span class="m">\(\measuredangle ADE\)</span> ו־<span class="m">\(\measuredangle BDC\)</span> הן אותה זווית, ולכן ארבע הזוויות שוות. לכן <span class="m">\(\measuredangle BCD = \measuredangle ADE\)</span> ו־<span class="m">\(\measuredangle BDC = \measuredangle AED\)</span>, והמשולשים דומים לפי ז.ז, בהתאמה <span class="m">\(B\leftrightarrow A\)</span>, <span class="m">\(C\leftrightarrow D\)</span>, <span class="m">\(D\leftrightarrow E\)</span>:</p>
+      <p><span class="m">\(\dfrac{BC}{AD} = \dfrac{CD}{DE} = \dfrac{BD}{AE}\)</span></p>
     </div>
     <p class="uses">שימוש ב: <a href="#t-iso">זוויות בסיס</a><a href="#t-aa">ז.ז</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ב.</span><span class="m">A</span> אמצע <span class="m">CD</span>, ו־<span class="m">BC/AC = 5/3</span></h3>
-    <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות השנייה במונה. התשובה זהה אם המונה הוא <span class="m">BC</span> או <span class="m">BD</span>, כי <span class="m">BC = BD</span>.</p>
+    <h3><span class="lt">ב.</span><span class="m">\(A\)</span> אמצע <span class="m">\(CD\)</span>, ו־<span class="m">\(\dfrac{BC}{AC} = \dfrac{5}{3}\)</span></h3>
+    <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות השנייה במונה. התשובה זהה אם המונה הוא <span class="m">\(BC\)</span> או <span class="m">\(BD\)</span>, כי <span class="m">\(BC = BD\)</span>.</p>
     <div class="steps">
-      <p>נסמן <span class="m">AC = AD = 3k</span> ו־<span class="m">BC = BD = 5k</span>. לכן <span class="m">CD = 6k</span>.</p>
-      <p><strong>(1) <span class="m">DE/AC</span>.</strong> מהדמיון: <span class="m">CD/DE = BC/AD</span>, ולכן <span class="m">DE = CD·AD/BC = 6k·3k/5k = 18k/5</span>.</p>
-      <p><span class="m">DE/AC = (18k/5)/3k = 6/5</span></p>
-      <p><strong>(2) <span class="m">S△ADE/S△ABE</span>.</strong> לשני המשולשים יש קדקוד משותף <span class="m">A</span>, והבסיסים <span class="m">DE</span> ו־<span class="m">EB</span> על הישר <span class="m">BD</span>.</p>
-      <p><span class="m">EB = BD − DE = 5k − 18k/5 = 7k/5</span>, ולכן היחס הוא <span class="m">DE/EB = 18/7</span>.</p>
+      <p>נסמן <span class="m">\(AC = AD = 3k\)</span> ו־<span class="m">\(BC = BD = 5k\)</span>. לכן <span class="m">\(CD = 6k\)</span>.</p>
+      <p><strong>(1) <span class="m">\(\dfrac{DE}{AC}\)</span>.</strong> מהדמיון: <span class="m">\(\dfrac{CD}{DE} = \dfrac{BC}{AD}\)</span>, ולכן <span class="m">\(DE = CD\cdot \dfrac{AD}{BC} = 6k\cdot \dfrac{3k}{5k} = \dfrac{18k}{5}\)</span>.</p>
+      <p><span class="m">\(\dfrac{DE}{AC} = \dfrac{\frac{18k}{5}}{3k} = \dfrac{6}{5}\)</span></p>
+      <p><strong>(2) <span class="m">\(\dfrac{S_{\triangle ADE}}{S_{\triangle ABE}}\)</span>.</strong> לשני המשולשים יש קדקוד משותף <span class="m">\(A\)</span>, והבסיסים <span class="m">\(DE\)</span> ו־<span class="m">\(EB\)</span> על הישר <span class="m">\(BD\)</span>.</p>
+      <p><span class="m">\(EB = BD - DE = 5k - \dfrac{18k}{5} = \dfrac{7k}{5}\)</span>, ולכן היחס הוא <span class="m">\(\dfrac{DE}{EB} = \dfrac{18}{7}\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">DE/AC = 6/5</span>, <span class="m">S△ADE : S△ABE = 18:7</span></p>
+    <p class="ans"><span class="m">\(\dfrac{DE}{AC} = \dfrac{6}{5}\)</span>, <span class="m">\(S_{\triangle ADE} : S_{\triangle ABE} = 18:7\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-ratio">יחסים במשולשים דומים</a><a href="#t-area">משולשים בעלי גובה משותף</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ג.</span>האנך ל־<span class="m">BC</span> מ־<span class="m">C</span> פוגש את המשך <span class="m">BA</span> בנקודה <span class="m">F</span></h3>
+    <h3><span class="lt">ג.</span>האנך ל־<span class="m">\(BC\)</span> מ־<span class="m">\(C\)</span> פוגש את המשך <span class="m">\(BA\)</span> בנקודה <span class="m">\(F\)</span></h3>
     <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">△ABC ∼ △ACF</span>.</strong></p>
-      <p><span class="m">BA</span> הוא התיכון לבסיס במשולש שווה השוקיים <span class="m">BCD</span>, ולכן הוא גם גובה: <span class="m">∢BAC = 90°</span>. גם <span class="m">∢CAF = 90°</span>, כי היא צמודה לה.</p>
-      <p><span class="m">∢ACF = ∢BCF − ∢BCA = 90° − ∢BCA</span>. במשולש <span class="m">ABC</span>: <span class="m">∢ABC = 90° − ∢BCA</span>. לכן <span class="m">∢ABC = ∢ACF</span>.</p>
-      <p>לפי ז.ז: <span class="m">△ABC ∼ △ACF</span>, בהתאמה <span class="m">A↔A</span>, <span class="m">B↔C</span>, <span class="m">C↔F</span>.</p>
-      <p><strong>(2) היחס <span class="m">BA:AF</span>.</strong> לפי פיתגורס ב־<span class="m">△ABC</span>: <span class="m">AB = √(25k² − 9k²) = 4k</span>.</p>
-      <p>מהדמיון: <span class="m">AB/AC = AC/AF</span>, ולכן <span class="m">AF = AC²/AB = 9k²/4k = 9k/4</span>.</p>
-      <p><span class="m">BA:AF = 4k : 9k/4 = 16:9</span></p>
+      <p><strong>(1) הוכחה: <span class="m">\(\triangle ABC \sim \triangle ACF\)</span>.</strong></p>
+      <p><span class="m">\(BA\)</span> הוא התיכון לבסיס במשולש שווה השוקיים <span class="m">\(BCD\)</span>, ולכן הוא גם גובה: <span class="m">\(\measuredangle BAC = 90^{\circ}\)</span>. גם <span class="m">\(\measuredangle CAF = 90^{\circ}\)</span>, כי היא צמודה לה.</p>
+      <p><span class="m">\(\measuredangle ACF = \measuredangle BCF - \measuredangle BCA = 90^{\circ} - \measuredangle BCA\)</span>. במשולש <span class="m">\(ABC\)</span>: <span class="m">\(\measuredangle ABC = 90^{\circ} - \measuredangle BCA\)</span>. לכן <span class="m">\(\measuredangle ABC = \measuredangle ACF\)</span>.</p>
+      <p>לפי ז.ז: <span class="m">\(\triangle ABC \sim \triangle ACF\)</span>, בהתאמה <span class="m">\(A\leftrightarrow A\)</span>, <span class="m">\(B\leftrightarrow C\)</span>, <span class="m">\(C\leftrightarrow F\)</span>.</p>
+      <p><strong>(2) היחס <span class="m">\(BA:AF\)</span>.</strong> לפי פיתגורס ב־<span class="m">\(\triangle ABC\)</span>: <span class="m">\(AB = \sqrt{25k^{2} - 9k^{2}} = 4k\)</span>.</p>
+      <p>מהדמיון: <span class="m">\(\dfrac{AB}{AC} = \dfrac{AC}{AF}\)</span>, ולכן <span class="m">\(AF = \dfrac{AC^{2}}{AB} = \dfrac{9k^{2}}{4k} = \dfrac{9k}{4}\)</span>.</p>
+      <p><span class="m">\(BA:AF = 4k : \dfrac{9k}{4} = 16:9\)</span></p>
     </div>
-    <p class="ans"><span class="m">BA:AF = 16:9</span></p>
+    <p class="ans"><span class="m">\(BA:AF = 16:9\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-iso">התיכון לבסיס הוא גובה</a><a href="#t-angles">סכום זוויות במשולש</a><a href="#t-aa">ז.ז</a><a href="#t-right">פיתגורס</a></p>
   </div>
 </section>
@@ -448,51 +459,51 @@ footer{color:var(--muted);font-size:.9rem}
   <div class="setup">
     <div class="given">
       <span class="lbl">נתון</span>
-      <p>במשולש <span class="m">ABC</span> הנקודות <span class="m">E</span> ו־<span class="m">D</span> על הצלעות <span class="m">AB</span> ו־<span class="m">BC</span> בהתאמה.</p>
+      <p>במשולש <span class="m">\(ABC\)</span> הנקודות <span class="m">\(E\)</span> ו־<span class="m">\(D\)</span> על הצלעות <span class="m">\(AB\)</span> ו־<span class="m">\(BC\)</span> בהתאמה.</p>
     </div>
     <figure><img src="img/summer-geometry/q6.png" alt="משולש ABC, ED מקביל ל־AC, EF מקביל ל־BC, G אמצע EF ו־BG חותך את AC ב־H"><figcaption>השרטוט מעבודת הקיץ</figcaption></figure>
   </div>
 
   <div class="part">
-    <h3><span class="lt">א.</span>נתון <span class="m">AE = 2BE</span> ו־<span class="m">BC = 3BD</span></h3>
+    <h3><span class="lt">א.</span>נתון <span class="m">\(AE = 2BE\)</span> ו־<span class="m">\(BC = 3BD\)</span></h3>
     <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">ED ∥ AC</span>.</strong> <span class="m">BE/BA = BE/3BE = 1/3</span> ו־<span class="m">BD/BC = 1/3</span>. הישר <span class="m">ED</span> מחלק את <span class="m">BA</span> ואת <span class="m">BC</span> באותו יחס, ולכן לפי משפט תאלס ההפוך <span class="m">ED ∥ AC</span>.</p>
-      <p><strong>(2) <span class="m">ED/AC</span>.</strong> <span class="m">△BED ∼ △BAC</span> ביחס <span class="m">1:3</span>, ולכן <span class="m">ED/AC = 1/3</span>.</p>
+      <p><strong>(1) הוכחה: <span class="m">\(ED \parallel AC\)</span>.</strong> <span class="m">\(\dfrac{BE}{BA} = \dfrac{BE}{3BE} = \dfrac{1}{3}\)</span> ו־<span class="m">\(\dfrac{BD}{BC} = \dfrac{1}{3}\)</span>. הישר <span class="m">\(ED\)</span> מחלק את <span class="m">\(BA\)</span> ואת <span class="m">\(BC\)</span> באותו יחס, ולכן לפי משפט תאלס ההפוך <span class="m">\(ED \parallel AC\)</span>.</p>
+      <p><strong>(2) <span class="m">\(\dfrac{ED}{AC}\)</span>.</strong> <span class="m">\(\triangle BED \sim \triangle BAC\)</span> ביחס <span class="m">\(1:3\)</span>, ולכן <span class="m">\(\dfrac{ED}{AC} = \dfrac{1}{3}\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">ED/AC = 1/3</span></p>
+    <p class="ans"><span class="m">\(\dfrac{ED}{AC} = \dfrac{1}{3}\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-thales">תאלס ההפוך</a><a href="#t-ratio">יחסים במשולשים דומים</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ב.</span><span class="m">EF ∥ BC</span>, והנקודה <span class="m">F</span> על <span class="m">AC</span></h3>
+    <h3><span class="lt">ב.</span><span class="m">\(EF \parallel BC\)</span>, והנקודה <span class="m">\(F\)</span> על <span class="m">\(AC\)</span></h3>
     <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">EDCF</span> מקבילית.</strong> <span class="m">ED ∥ FC</span> (סעיף א, <span class="m">FC</span> על <span class="m">AC</span>), ו־<span class="m">EF ∥ DC</span> (נתון, <span class="m">DC</span> על <span class="m">BC</span>). שני זוגות של צלעות נגדיות מקבילות, ולכן המרובע מקבילית.</p>
-      <p><strong>(2) <span class="m">EF/BD</span>.</strong> במקבילית צלעות נגדיות שוות: <span class="m">EF = DC = BC − BD = 3BD − BD = 2BD</span>, ולכן <span class="m">EF/BD = 2</span>.</p>
+      <p><strong>(1) הוכחה: <span class="m">\(EDCF\)</span> מקבילית.</strong> <span class="m">\(ED \parallel FC\)</span> (סעיף א, <span class="m">\(FC\)</span> על <span class="m">\(AC\)</span>), ו־<span class="m">\(EF \parallel DC\)</span> (נתון, <span class="m">\(DC\)</span> על <span class="m">\(BC\)</span>). שני זוגות של צלעות נגדיות מקבילות, ולכן המרובע מקבילית.</p>
+      <p><strong>(2) <span class="m">\(\dfrac{EF}{BD}\)</span>.</strong> במקבילית צלעות נגדיות שוות: <span class="m">\(EF = DC = BC - BD = 3BD - BD = 2BD\)</span>, ולכן <span class="m">\(\dfrac{EF}{BD} = 2\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">EF/BD = 2</span></p>
+    <p class="ans"><span class="m">\(\dfrac{EF}{BD} = 2\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-pgram">הגדרת מקבילית וצלעות נגדיות</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ג.</span><span class="m">G</span> אמצע <span class="m">EF</span>, והמשך <span class="m">BG</span> חותך את <span class="m">AC</span> בנקודה <span class="m">H</span></h3>
+    <h3><span class="lt">ג.</span><span class="m">\(G\)</span> אמצע <span class="m">\(EF\)</span>, והמשך <span class="m">\(BG\)</span> חותך את <span class="m">\(AC\)</span> בנקודה <span class="m">\(H\)</span></h3>
     <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">BEGD</span> מקבילית.</strong> <span class="m">EG = EF/2 = BD</span>, ו־<span class="m">EG ∥ BD</span> (כי <span class="m">EF ∥ BC</span>). זוג צלעות נגדיות שוות ומקבילות, ולכן המרובע מקבילית.</p>
-      <p><strong>(2) הוכחה: <span class="m">△HGF ∼ △HBC</span>.</strong> <span class="m">GF ∥ BC</span>, ולכן <span class="m">∢HGF = ∢HBC</span> ו־<span class="m">∢HFG = ∢HCB</span> (זוויות מתאימות). לפי ז.ז המשולשים דומים.</p>
-      <p><strong>(3) הוכחה: <span class="m">FC = 2HF</span>.</strong> <span class="m">GF = EF/2 = BD = BC/3</span>, ולכן יחס הדמיון הוא <span class="m">GF/BC = 1/3</span> ו־<span class="m">HF/HC = 1/3</span>.</p>
-      <p><span class="m">HC = 3HF</span>, ולכן <span class="m">FC = HC − HF = 2HF</span>.</p>
+      <p><strong>(1) הוכחה: <span class="m">\(BEGD\)</span> מקבילית.</strong> <span class="m">\(EG = \dfrac{EF}{2} = BD\)</span>, ו־<span class="m">\(EG \parallel BD\)</span> (כי <span class="m">\(EF \parallel BC\)</span>). זוג צלעות נגדיות שוות ומקבילות, ולכן המרובע מקבילית.</p>
+      <p><strong>(2) הוכחה: <span class="m">\(\triangle HGF \sim \triangle HBC\)</span>.</strong> <span class="m">\(GF \parallel BC\)</span>, ולכן <span class="m">\(\measuredangle HGF = \measuredangle HBC\)</span> ו־<span class="m">\(\measuredangle HFG = \measuredangle HCB\)</span> (זוויות מתאימות). לפי ז.ז המשולשים דומים.</p>
+      <p><strong>(3) הוכחה: <span class="m">\(FC = 2HF\)</span>.</strong> <span class="m">\(GF = \dfrac{EF}{2} = BD = \dfrac{BC}{3}\)</span>, ולכן יחס הדמיון הוא <span class="m">\(\dfrac{GF}{BC} = \dfrac{1}{3}\)</span> ו־<span class="m">\(\dfrac{HF}{HC} = \dfrac{1}{3}\)</span>.</p>
+      <p><span class="m">\(HC = 3HF\)</span>, ולכן <span class="m">\(FC = HC - HF = 2HF\)</span>.</p>
     </div>
     <p class="uses">שימוש ב: <a href="#t-pgram">משפט: זוג צלעות שוות ומקבילות</a><a href="#t-par">זוויות מתאימות</a><a href="#t-aa">ז.ז</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ד.</span><span class="m">S△HGF = S</span></h3>
+    <h3><span class="lt">ד.</span><span class="m">\(S_{\triangle HGF} = S\)</span></h3>
     <div class="steps">
-      <p><strong>(1) <span class="m">S△BCH</span>.</strong> יחס הדמיון בין <span class="m">△HBC</span> ל־<span class="m">△HGF</span> הוא <span class="m">3</span>, ולכן יחס השטחים הוא <span class="m">9</span> ו־<span class="m">S△BCH = 9S</span>.</p>
-      <p><strong>(2) <span class="m">S△ABC</span>.</strong> <span class="m">△AEF ∼ △ABC</span> (<span class="m">EF ∥ BC</span>) ביחס <span class="m">AE/AB = 2/3</span>, ולכן <span class="m">AF = 2AC/3</span> ו־<span class="m">FC = AC/3</span>.</p>
-      <p>מסעיף ג(3): <span class="m">HF = FC/2 = AC/6</span>, ולכן <span class="m">HC = HF + FC = AC/2</span>. כלומר <span class="m">H</span> אמצע <span class="m">AC</span>, ו־<span class="m">BH</span> תיכון.</p>
-      <p>התיכון מחלק את המשולש לשני חלקים שווי שטח: <span class="m">S△ABC = 2·S△BCH = 18S</span>.</p>
+      <p><strong>(1) <span class="m">\(S_{\triangle BCH}\)</span>.</strong> יחס הדמיון בין <span class="m">\(\triangle HBC\)</span> ל־<span class="m">\(\triangle HGF\)</span> הוא <span class="m">\(3\)</span>, ולכן יחס השטחים הוא <span class="m">\(9\)</span> ו־<span class="m">\(S_{\triangle BCH} = 9S\)</span>.</p>
+      <p><strong>(2) <span class="m">\(S_{\triangle ABC}\)</span>.</strong> <span class="m">\(\triangle AEF \sim \triangle ABC\)</span> (<span class="m">\(EF \parallel BC\)</span>) ביחס <span class="m">\(\dfrac{AE}{AB} = \dfrac{2}{3}\)</span>, ולכן <span class="m">\(AF = \dfrac{2AC}{3}\)</span> ו־<span class="m">\(FC = \dfrac{AC}{3}\)</span>.</p>
+      <p>מסעיף ג(3): <span class="m">\(HF = \dfrac{FC}{2} = \dfrac{AC}{6}\)</span>, ולכן <span class="m">\(HC = HF + FC = \dfrac{AC}{2}\)</span>. כלומר <span class="m">\(H\)</span> אמצע <span class="m">\(AC\)</span>, ו־<span class="m">\(BH\)</span> תיכון.</p>
+      <p>התיכון מחלק את המשולש לשני חלקים שווי שטח: <span class="m">\(S_{\triangle ABC} = 2\cdot S_{\triangle BCH} = 18S\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">S△BCH = 9S</span>, <span class="m">S△ABC = 18S</span></p>
+    <p class="ans"><span class="m">\(S_{\triangle BCH} = 9S\)</span>, <span class="m">\(S_{\triangle ABC} = 18S\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-ratio">יחס שטחים = k²</a><a href="#t-thales">תאלס המורחב</a><a href="#t-area">תיכון מחלק לשטחים שווים</a></p>
   </div>
 </section>
@@ -503,60 +514,60 @@ footer{color:var(--muted);font-size:.9rem}
   <div class="setup">
     <div class="given">
       <span class="lbl">נתון</span>
-      <p><span class="m">ABCD</span> מקבילית, ו־<span class="m">∢C</span> קהה. הנקודה <span class="m">E</span> על הצלע <span class="m">AB</span>, והנקודה <span class="m">F</span> על המשך הצלע <span class="m">CB</span>. <span class="m">AE = AD</span> ו־<span class="m">BE = BF</span>.</p>
+      <p><span class="m">\(ABCD\)</span> מקבילית, ו־<span class="m">\(\measuredangle C\)</span> קהה. הנקודה <span class="m">\(E\)</span> על הצלע <span class="m">\(AB\)</span>, והנקודה <span class="m">\(F\)</span> על המשך הצלע <span class="m">\(CB\)</span>. <span class="m">\(AE = AD\)</span> ו־<span class="m">\(BE = BF\)</span>.</p>
     </div>
     <figure><img src="img/summer-geometry/q7.png" alt="מקבילית ABCD, E על AB, F על המשך CB, הקטע DF והקטע CG"><figcaption>השרטוט מעבודת הקיץ</figcaption></figure>
   </div>
 
   <div class="part">
-    <h3><span class="lt">א.</span>נסמן <span class="m">∢ADE = α</span></h3>
-    <p class="alt"><strong>השלמה:</strong> בסעיף (1) נחתכה האות האחרונה, והכוונה היא ל־<span class="m">∢ABC</span>. בסעיף (2) צריך להוכיח ש־<span class="m">E</span> נמצאת על הקטע <span class="m">DF</span>.</p>
+    <h3><span class="lt">א.</span>נסמן <span class="m">\(\measuredangle ADE = \alpha\)</span></h3>
+    <p class="alt"><strong>השלמה:</strong> בסעיף (1) נחתכה האות האחרונה, והכוונה היא ל־<span class="m">\(\measuredangle ABC\)</span>. בסעיף (2) צריך להוכיח ש־<span class="m">\(E\)</span> נמצאת על הקטע <span class="m">\(DF\)</span>.</p>
     <div class="steps">
-      <p><strong>(1) <span class="m">∢ABC</span>.</strong> המשולש <span class="m">ADE</span> שווה שוקיים (<span class="m">AE = AD</span>), ולכן <span class="m">∢AED = ∢ADE = α</span> ו־<span class="m">∢DAE = 180° − 2α</span>.</p>
-      <p>במקבילית זוויות סמוכות משלימות ל־180°: <span class="m">∢ABC = 180° − ∢DAB = 2α</span>.</p>
-      <p><strong>(2) הוכחה: <span class="m">D</span>, <span class="m">E</span>, <span class="m">F</span> על ישר אחד.</strong> <span class="m">F</span> על המשך <span class="m">CB</span>, ולכן <span class="m">∢EBF = 180° − ∢ABC = 180° − 2α</span>.</p>
-      <p>המשולש <span class="m">BEF</span> שווה שוקיים (<span class="m">BE = BF</span>), ולכן <span class="m">∢BEF = ∢BFE = (180° − ∢EBF)/2 = α</span>.</p>
-      <p>הנקודות <span class="m">A, E, B</span> על ישר אחד, ולכן <span class="m">∢DEB = 180° − ∢AED = 180° − α</span>.</p>
-      <p><span class="m">∢DEB + ∢BEF = 180° − α + α = 180°</span>. זו זווית שטוחה, ולכן <span class="m">D</span>, <span class="m">E</span>, <span class="m">F</span> על ישר אחד ו־<span class="m">E</span> בין <span class="m">D</span> ל־<span class="m">F</span>. (הנקודות <span class="m">D</span> ו־<span class="m">F</span> נמצאות בצדדים שונים של <span class="m">AB</span>.)</p>
+      <p><strong>(1) <span class="m">\(\measuredangle ABC\)</span>.</strong> המשולש <span class="m">\(ADE\)</span> שווה שוקיים (<span class="m">\(AE = AD\)</span>), ולכן <span class="m">\(\measuredangle AED = \measuredangle ADE = \alpha\)</span> ו־<span class="m">\(\measuredangle DAE = 180^{\circ} - 2\alpha\)</span>.</p>
+      <p>במקבילית זוויות סמוכות משלימות ל־180°: <span class="m">\(\measuredangle ABC = 180^{\circ} - \measuredangle DAB = 2\alpha\)</span>.</p>
+      <p><strong>(2) הוכחה: <span class="m">\(D\)</span>, <span class="m">\(E\)</span>, <span class="m">\(F\)</span> על ישר אחד.</strong> <span class="m">\(F\)</span> על המשך <span class="m">\(CB\)</span>, ולכן <span class="m">\(\measuredangle EBF = 180^{\circ} - \measuredangle ABC = 180^{\circ} - 2\alpha\)</span>.</p>
+      <p>המשולש <span class="m">\(BEF\)</span> שווה שוקיים (<span class="m">\(BE = BF\)</span>), ולכן <span class="m">\(\measuredangle BEF = \measuredangle BFE = \dfrac{180^{\circ} - \measuredangle EBF}{2} = \alpha\)</span>.</p>
+      <p>הנקודות <span class="m">\(A, E, B\)</span> על ישר אחד, ולכן <span class="m">\(\measuredangle DEB = 180^{\circ} - \measuredangle AED = 180^{\circ} - \alpha\)</span>.</p>
+      <p><span class="m">\(\measuredangle DEB + \measuredangle BEF = 180^{\circ} - \alpha + \alpha = 180^{\circ}\)</span>. זו זווית שטוחה, ולכן <span class="m">\(D\)</span>, <span class="m">\(E\)</span>, <span class="m">\(F\)</span> על ישר אחד ו־<span class="m">\(E\)</span> בין <span class="m">\(D\)</span> ל־<span class="m">\(F\)</span>. (הנקודות <span class="m">\(D\)</span> ו־<span class="m">\(F\)</span> נמצאות בצדדים שונים של <span class="m">\(AB\)</span>.)</p>
     </div>
-    <p class="ans"><span class="m">∢ABC = 2α</span></p>
+    <p class="ans"><span class="m">\(\measuredangle ABC = 2\alpha\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-iso">זוויות בסיס</a><a href="#t-pgram">זוויות סמוכות במקבילית</a><a href="#t-angles">זווית שטוחה</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ב.</span><span class="m">G</span> על המשך <span class="m">CE</span> כך ש־<span class="m">EG = EC</span>, ונתון <span class="m">BC = BG</span></h3>
-    <p class="alt"><strong>השלמה:</strong> בסעיף (2) נחתכה האות הראשונה, והכוונה היא כנראה ל־<span class="m">∢ECB</span>. בסוף הסעיף מופיעה גם <span class="m">∢GBC</span>.</p>
+    <h3><span class="lt">ב.</span><span class="m">\(G\)</span> על המשך <span class="m">\(CE\)</span> כך ש־<span class="m">\(EG = EC\)</span>, ונתון <span class="m">\(BC = BG\)</span></h3>
+    <p class="alt"><strong>השלמה:</strong> בסעיף (2) נחתכה האות הראשונה, והכוונה היא כנראה ל־<span class="m">\(\measuredangle ECB\)</span>. בסוף הסעיף מופיעה גם <span class="m">\(\measuredangle GBC\)</span>.</p>
     <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">∢CEB = 90°</span>.</strong> המשולש <span class="m">BCG</span> שווה שוקיים (<span class="m">BC = BG</span>), ו־<span class="m">E</span> אמצע הבסיס <span class="m">CG</span>. לכן <span class="m">BE</span> הוא התיכון לבסיס, והוא גם גובה: <span class="m">BE ⊥ CG</span>.</p>
-      <p><strong>(2) <span class="m">∢ECB</span>.</strong> <span class="m">∢EBC = ∢ABC = 2α</span>. במשולש <span class="m">CEB</span>: <span class="m">∢ECB = 180° − 90° − 2α = 90° − 2α</span>.</p>
-      <p class="alt">התיכון <span class="m">BE</span> הוא גם חוצה זווית הראש, ולכן <span class="m">∢GBC = 2·2α = 4α</span>.</p>
+      <p><strong>(1) הוכחה: <span class="m">\(\measuredangle CEB = 90^{\circ}\)</span>.</strong> המשולש <span class="m">\(BCG\)</span> שווה שוקיים (<span class="m">\(BC = BG\)</span>), ו־<span class="m">\(E\)</span> אמצע הבסיס <span class="m">\(CG\)</span>. לכן <span class="m">\(BE\)</span> הוא התיכון לבסיס, והוא גם גובה: <span class="m">\(BE \perp CG\)</span>.</p>
+      <p><strong>(2) <span class="m">\(\measuredangle ECB\)</span>.</strong> <span class="m">\(\measuredangle EBC = \measuredangle ABC = 2\alpha\)</span>. במשולש <span class="m">\(CEB\)</span>: <span class="m">\(\measuredangle ECB = 180^{\circ} - 90^{\circ} - 2\alpha = 90^{\circ} - 2\alpha\)</span>.</p>
+      <p class="alt">התיכון <span class="m">\(BE\)</span> הוא גם חוצה זווית הראש, ולכן <span class="m">\(\measuredangle GBC = 2\cdot 2\alpha = 4\alpha\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">∢ECB = 90° − 2α</span></p>
+    <p class="ans"><span class="m">\(\measuredangle ECB = 90^{\circ} - 2\alpha\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-iso">התיכון לבסיס הוא גובה</a><a href="#t-angles">סכום זוויות במשולש</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ג.</span>נתון <span class="m">DE = 2EF</span>. מצאו את <span class="m">α</span></h3>
-    <p class="alt"><strong>השלמה:</strong> בקובץ נעלם הסמל אחרי "מצאו את". לפי שאר הנתונים, מבקשים את <span class="m">α</span>.</p>
+    <h3><span class="lt">ג.</span>נתון <span class="m">\(DE = 2EF\)</span>. מצאו את <span class="m">\(\alpha\)</span></h3>
+    <p class="alt"><strong>השלמה:</strong> בקובץ נעלם הסמל אחרי "מצאו את". לפי שאר הנתונים, מבקשים את <span class="m">\(\alpha\)</span>.</p>
     <div class="steps">
-      <p>המשולשים <span class="m">ADE</span> ו־<span class="m">BFE</span> שווי שוקיים, ובשניהם זוויות הבסיס שוות ל־<span class="m">α</span>. לכן הם דומים לפי ז.ז, ויחס הדמיון הוא <span class="m">DE/FE = 2</span>.</p>
-      <p>מכאן <span class="m">AE = 2BE</span> ו־<span class="m">AD = 2BF</span>. נסמן <span class="m">BE = t</span>, ולכן <span class="m">AD = AE = 2t</span>. במקבילית <span class="m">BC = AD = 2t</span>.</p>
-      <p>במשולש ישר הזווית <span class="m">CEB</span> הניצב <span class="m">BE = t</span> שווה למחצית היתר <span class="m">BC = 2t</span>. לכן הזווית שמולו היא <span class="m">∢BCE = 30°</span>, ו־<span class="m">∢EBC = 60°</span>.</p>
-      <p><span class="m">2α = 60°</span>, ולכן <span class="m">α = 30°</span>. בדיקה: <span class="m">∢C = 180° − 60° = 120°</span>, אכן זווית קהה.</p>
+      <p>המשולשים <span class="m">\(ADE\)</span> ו־<span class="m">\(BFE\)</span> שווי שוקיים, ובשניהם זוויות הבסיס שוות ל־<span class="m">\(\alpha\)</span>. לכן הם דומים לפי ז.ז, ויחס הדמיון הוא <span class="m">\(\dfrac{DE}{FE} = 2\)</span>.</p>
+      <p>מכאן <span class="m">\(AE = 2BE\)</span> ו־<span class="m">\(AD = 2BF\)</span>. נסמן <span class="m">\(BE = t\)</span>, ולכן <span class="m">\(AD = AE = 2t\)</span>. במקבילית <span class="m">\(BC = AD = 2t\)</span>.</p>
+      <p>במשולש ישר הזווית <span class="m">\(CEB\)</span> הניצב <span class="m">\(BE = t\)</span> שווה למחצית היתר <span class="m">\(BC = 2t\)</span>. לכן הזווית שמולו היא <span class="m">\(\measuredangle BCE = 30^{\circ}\)</span>, ו־<span class="m">\(\measuredangle EBC = 60^{\circ}\)</span>.</p>
+      <p><span class="m">\(2\alpha = 60^{\circ}\)</span>, ולכן <span class="m">\(\alpha = 30^{\circ}\)</span>. בדיקה: <span class="m">\(\measuredangle C = 180^{\circ} - 60^{\circ} = 120^{\circ}\)</span>, אכן זווית קהה.</p>
     </div>
-    <p class="ans"><span class="m">α = 30°</span></p>
+    <p class="ans"><span class="m">\(\alpha = 30^{\circ}\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-aa">ז.ז</a><a href="#t-pgram">צלעות נגדיות במקבילית</a><a href="#t-right">ניצב שווה למחצית היתר</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ד.</span><span class="m">S△BEF = S</span>. הביעו את שטח המקבילית <span class="m">ABCD</span></h3>
+    <h3><span class="lt">ד.</span><span class="m">\(S_{\triangle BEF} = S\)</span>. הביעו את שטח המקבילית <span class="m">\(ABCD\)</span></h3>
     <div class="steps">
-      <p>למשולשים <span class="m">BEF</span> ו־<span class="m">BEC</span> יש קדקוד משותף <span class="m">E</span>, והבסיסים <span class="m">BF = t</span> ו־<span class="m">BC = 2t</span> על הישר <span class="m">CF</span>. לכן <span class="m">S△BEC = 2S</span>.</p>
-      <p><span class="m">CE</span> הוא גובה המקבילית לצלע <span class="m">AB = AE + EB = 3t</span>.</p>
-      <p><span class="m">S(ABCD) = AB·CE = 3t·CE = 6·(½·t·CE) = 6·S△BEC = 12S</span></p>
-      <p class="alt"><strong>בדיקה עם טריגונומטריה:</strong> <span class="m">S = ½t²·sin120° = (√3/4)t²</span>, ו־<span class="m">CE = √3·t</span>, ולכן <span class="m">S(ABCD) = 3√3·t² = 12S</span>.</p>
+      <p>למשולשים <span class="m">\(BEF\)</span> ו־<span class="m">\(BEC\)</span> יש קדקוד משותף <span class="m">\(E\)</span>, והבסיסים <span class="m">\(BF = t\)</span> ו־<span class="m">\(BC = 2t\)</span> על הישר <span class="m">\(CF\)</span>. לכן <span class="m">\(S_{\triangle BEC} = 2S\)</span>.</p>
+      <p><span class="m">\(CE\)</span> הוא גובה המקבילית לצלע <span class="m">\(AB = AE + EB = 3t\)</span>.</p>
+      <p><span class="m">\(S_{ABCD} = AB\cdot CE = 3t\cdot CE = 6\cdot (\tfrac{1}{2}\cdot t\cdot CE) = 6\cdot S_{\triangle BEC} = 12S\)</span></p>
+      <p class="alt"><strong>בדיקה עם טריגונומטריה:</strong> <span class="m">\(S = \tfrac{1}{2}t^{2}\cdot \sin 120^{\circ} = \left(\dfrac{\sqrt{3}}{4}\right)t^{2}\)</span>, ו־<span class="m">\(CE = \sqrt{3}\cdot t\)</span>, ולכן <span class="m">\(S_{ABCD} = 3\sqrt{3}\cdot t^{2} = 12S\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">S(ABCD) = 12S</span></p>
+    <p class="ans"><span class="m">\(S_{ABCD} = 12S\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-area">משולשים בעלי גובה משותף</a><a href="#t-pgram">שטח מקבילית</a></p>
   </div>
 </section>
@@ -567,43 +578,43 @@ footer{color:var(--muted);font-size:.9rem}
   <div class="setup">
     <div class="given">
       <span class="lbl">נתון</span>
-      <p>במשולש <span class="m">ABC</span> הנקודות <span class="m">E</span> ו־<span class="m">G</span> על הצלע <span class="m">BC</span> (בסדר <span class="m">B, E, G, C</span>), והנקודה <span class="m">D</span> על הצלע <span class="m">AB</span>.</p>
+      <p>במשולש <span class="m">\(ABC\)</span> הנקודות <span class="m">\(E\)</span> ו־<span class="m">\(G\)</span> על הצלע <span class="m">\(BC\)</span> (בסדר <span class="m">\(B, E, G, C\)</span>), והנקודה <span class="m">\(D\)</span> על הצלע <span class="m">\(AB\)</span>.</p>
     </div>
     <figure><img src="img/summer-geometry/q8.png" alt="משולש ABC, D על AB, E ו־G על BC, F על AC, והקטעים DE, DG, DF, FG"><figcaption>השרטוט מעבודת הקיץ</figcaption></figure>
   </div>
 
   <div class="part">
-    <h3><span class="lt">א.</span>נתון <span class="m">∢DGB = ∢BDE</span></h3>
+    <h3><span class="lt">א.</span>נתון <span class="m">\(\measuredangle DGB = \measuredangle BDE\)</span></h3>
     <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">△BDG ∼ △BED</span>.</strong> <span class="m">∢B</span> משותפת, ו־<span class="m">∢BGD = ∢BDE</span> לפי הנתון. לכן המשולשים דומים לפי ז.ז, בהתאמה <span class="m">B↔B</span>, <span class="m">D↔E</span>, <span class="m">G↔D</span>.</p>
-      <p><strong>(2) הוכחה: <span class="m">BD² = BE·BG</span>.</strong> מהדמיון: <span class="m">BD/BE = BG/BD</span>. נכפיל בהצלבה ונקבל <span class="m">BD² = BE·BG</span>.</p>
+      <p><strong>(1) הוכחה: <span class="m">\(\triangle BDG \sim \triangle BED\)</span>.</strong> <span class="m">\(\measuredangle B\)</span> משותפת, ו־<span class="m">\(\measuredangle BGD = \measuredangle BDE\)</span> לפי הנתון. לכן המשולשים דומים לפי ז.ז, בהתאמה <span class="m">\(B\leftrightarrow B\)</span>, <span class="m">\(D\leftrightarrow E\)</span>, <span class="m">\(G\leftrightarrow D\)</span>.</p>
+      <p><strong>(2) הוכחה: <span class="m">\(BD^{2} = BE\cdot BG\)</span>.</strong> מהדמיון: <span class="m">\(\dfrac{BD}{BE} = \dfrac{BG}{BD}\)</span>. נכפיל בהצלבה ונקבל <span class="m">\(BD^{2} = BE\cdot BG\)</span>.</p>
     </div>
     <p class="uses">שימוש ב: <a href="#t-aa">ז.ז</a><a href="#t-ratio">יחסים במשולשים דומים</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ב.</span><span class="m">F</span> על <span class="m">AC</span>, ונתון <span class="m">∢GFC = ∢FEC</span>. הוכחה: <span class="m">FC² = GC·CE</span></h3>
+    <h3><span class="lt">ב.</span><span class="m">\(F\)</span> על <span class="m">\(AC\)</span>, ונתון <span class="m">\(\measuredangle GFC = \measuredangle FEC\)</span>. הוכחה: <span class="m">\(FC^{2} = GC\cdot CE\)</span></h3>
     <div class="steps">
-      <p>נשווה את <span class="m">△CFG</span> ו־<span class="m">△CEF</span>: <span class="m">∢C</span> משותפת, ו־<span class="m">∢CFG = ∢CEF</span> לפי הנתון. לפי ז.ז המשולשים דומים.</p>
-      <p>מכאן <span class="m">CF/CE = CG/CF</span>, ולכן <span class="m">FC² = GC·CE</span>.</p>
+      <p>נשווה את <span class="m">\(\triangle CFG\)</span> ו־<span class="m">\(\triangle CEF\)</span>: <span class="m">\(\measuredangle C\)</span> משותפת, ו־<span class="m">\(\measuredangle CFG = \measuredangle CEF\)</span> לפי הנתון. לפי ז.ז המשולשים דומים.</p>
+      <p>מכאן <span class="m">\(\dfrac{CF}{CE} = \dfrac{CG}{CF}\)</span>, ולכן <span class="m">\(FC^{2} = GC\cdot CE\)</span>.</p>
     </div>
     <p class="uses">שימוש ב: <a href="#t-aa">ז.ז</a><a href="#t-ratio">יחסים במשולשים דומים</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ג.</span>נתון <span class="m">GC = BE</span>. הוכחה: <span class="m">BD = FC</span></h3>
+    <h3><span class="lt">ג.</span>נתון <span class="m">\(GC = BE\)</span>. הוכחה: <span class="m">\(BD = FC\)</span></h3>
     <div class="steps">
-      <p><span class="m">BG = BE + EG = GC + EG = CE</span>.</p>
-      <p>מסעיפים א ו־ב: <span class="m">BD² = BE·BG</span> ו־<span class="m">FC² = GC·CE</span>. הגורמים שווים בזוגות (<span class="m">BE = GC</span>, <span class="m">BG = CE</span>), ולכן <span class="m">BD² = FC²</span>, כלומר <span class="m">BD = FC</span>.</p>
+      <p><span class="m">\(BG = BE + EG = GC + EG = CE\)</span>.</p>
+      <p>מסעיפים א ו־ב: <span class="m">\(BD^{2} = BE\cdot BG\)</span> ו־<span class="m">\(FC^{2} = GC\cdot CE\)</span>. הגורמים שווים בזוגות (<span class="m">\(BE = GC\)</span>, <span class="m">\(BG = CE\)</span>), ולכן <span class="m">\(BD^{2} = FC^{2}\)</span>, כלומר <span class="m">\(BD = FC\)</span>.</p>
     </div>
     <p class="uses">שימוש ב: חיבור קטעים והצבה בתוצאות הקודמות</p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ד.</span>נתון <span class="m">AD = AF</span>. הוכחה: <span class="m">DF ∥ BC</span></h3>
+    <h3><span class="lt">ד.</span>נתון <span class="m">\(AD = AF\)</span>. הוכחה: <span class="m">\(DF \parallel BC\)</span></h3>
     <div class="steps">
-      <p><span class="m">AD = AF</span> ומסעיף ג <span class="m">DB = FC</span>, ולכן <span class="m">AD/DB = AF/FC</span>.</p>
-      <p>הישר <span class="m">DF</span> מחלק את הצלעות <span class="m">AB</span> ו־<span class="m">AC</span> באותו יחס, ולכן לפי משפט תאלס ההפוך <span class="m">DF ∥ BC</span>.</p>
+      <p><span class="m">\(AD = AF\)</span> ומסעיף ג <span class="m">\(DB = FC\)</span>, ולכן <span class="m">\(\dfrac{AD}{DB} = \dfrac{AF}{FC}\)</span>.</p>
+      <p>הישר <span class="m">\(DF\)</span> מחלק את הצלעות <span class="m">\(AB\)</span> ו־<span class="m">\(AC\)</span> באותו יחס, ולכן לפי משפט תאלס ההפוך <span class="m">\(DF \parallel BC\)</span>.</p>
     </div>
     <p class="uses">שימוש ב: <a href="#t-thales">תאלס ההפוך</a></p>
   </div>
@@ -615,53 +626,53 @@ footer{color:var(--muted);font-size:.9rem}
   <div class="setup">
     <div class="given">
       <span class="lbl">נתון</span>
-      <p>במשולש <span class="m">ABC</span> הנקודות <span class="m">E</span> ו־<span class="m">D</span> על הצלעות <span class="m">AC</span> ו־<span class="m">BC</span> בהתאמה. <span class="m">∢ADB = 90°</span> ו־<span class="m">AE = DE</span>.</p>
+      <p>במשולש <span class="m">\(ABC\)</span> הנקודות <span class="m">\(E\)</span> ו־<span class="m">\(D\)</span> על הצלעות <span class="m">\(AC\)</span> ו־<span class="m">\(BC\)</span> בהתאמה. <span class="m">\(\measuredangle ADB = 90^{\circ}\)</span> ו־<span class="m">\(AE = DE\)</span>.</p>
     </div>
     <figure><img src="img/summer-geometry/q9.png" alt="משולש ABC ישר זווית ב־A, AD גובה ליתר, E על AC והקטע DE"><figcaption>השרטוט מעבודת הקיץ</figcaption></figure>
   </div>
 
   <div class="part">
-    <h3><span class="lt">א.</span>הוכחה: <span class="m">AE = EC</span></h3>
+    <h3><span class="lt">א.</span>הוכחה: <span class="m">\(AE = EC\)</span></h3>
     <div class="steps">
-      <p><span class="m">∢ADC = 90°</span>, כי היא צמודה ל־<span class="m">∢ADB</span>.</p>
-      <p>המשולש <span class="m">AED</span> שווה שוקיים, ולכן <span class="m">∢EAD = ∢EDA</span>. נסמן את שתיהן ב־<span class="m">x</span>.</p>
-      <p><span class="m">∢EDC = 90° − x</span>, ובמשולש <span class="m">ADC</span>: <span class="m">∢ACD = 180° − 90° − x = 90° − x</span>.</p>
-      <p>לכן <span class="m">∢EDC = ∢ECD</span>, ובמשולש <span class="m">EDC</span> מול זוויות שוות יש צלעות שוות: <span class="m">ED = EC</span>. מכאן <span class="m">AE = ED = EC</span>.</p>
-      <p class="alt">במילים אחרות, <span class="m">DE</span> הוא התיכון ליתר במשולש ישר הזווית <span class="m">ADC</span>.</p>
+      <p><span class="m">\(\measuredangle ADC = 90^{\circ}\)</span>, כי היא צמודה ל־<span class="m">\(\measuredangle ADB\)</span>.</p>
+      <p>המשולש <span class="m">\(AED\)</span> שווה שוקיים, ולכן <span class="m">\(\measuredangle EAD = \measuredangle EDA\)</span>. נסמן את שתיהן ב־<span class="m">\(x\)</span>.</p>
+      <p><span class="m">\(\measuredangle EDC = 90^{\circ} - x\)</span>, ובמשולש <span class="m">\(ADC\)</span>: <span class="m">\(\measuredangle ACD = 180^{\circ} - 90^{\circ} - x = 90^{\circ} - x\)</span>.</p>
+      <p>לכן <span class="m">\(\measuredangle EDC = \measuredangle ECD\)</span>, ובמשולש <span class="m">\(EDC\)</span> מול זוויות שוות יש צלעות שוות: <span class="m">\(ED = EC\)</span>. מכאן <span class="m">\(AE = ED = EC\)</span>.</p>
+      <p class="alt">במילים אחרות, <span class="m">\(DE\)</span> הוא התיכון ליתר במשולש ישר הזווית <span class="m">\(ADC\)</span>.</p>
     </div>
     <p class="uses">שימוש ב: <a href="#t-angles">זוויות צמודות, סכום זוויות</a><a href="#t-iso">שווה שוקיים וההפך שלו</a><a href="#t-right">התיכון ליתר</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ב.</span>נתון <span class="m">∢BAC = 90°</span></h3>
-    <p class="alt"><strong>השלמה:</strong> בקובץ נעלם שם הזווית. לפי השרטוט והמשך הסעיף, הזווית הישרה היא <span class="m">∢BAC</span>.</p>
+    <h3><span class="lt">ב.</span>נתון <span class="m">\(\measuredangle BAC = 90^{\circ}\)</span></h3>
+    <p class="alt"><strong>השלמה:</strong> בקובץ נעלם שם הזווית. לפי השרטוט והמשך הסעיף, הזווית הישרה היא <span class="m">\(\measuredangle BAC\)</span>.</p>
     <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">△ADC ∼ △BAC</span>.</strong> <span class="m">∢C</span> משותפת, ו־<span class="m">∢ADC = ∢BAC = 90°</span>. לפי ז.ז המשולשים דומים, בהתאמה <span class="m">A↔B</span>, <span class="m">D↔A</span>, <span class="m">C↔C</span>.</p>
-      <p><strong>(2) הוכחה: <span class="m">AC² = BC·DC</span>.</strong> מהדמיון: <span class="m">AC/BC = DC/AC</span>, ובהכפלה בהצלבה <span class="m">AC² = BC·DC</span>.</p>
+      <p><strong>(1) הוכחה: <span class="m">\(\triangle ADC \sim \triangle BAC\)</span>.</strong> <span class="m">\(\measuredangle C\)</span> משותפת, ו־<span class="m">\(\measuredangle ADC = \measuredangle BAC = 90^{\circ}\)</span>. לפי ז.ז המשולשים דומים, בהתאמה <span class="m">\(A\leftrightarrow B\)</span>, <span class="m">\(D\leftrightarrow A\)</span>, <span class="m">\(C\leftrightarrow C\)</span>.</p>
+      <p><strong>(2) הוכחה: <span class="m">\(AC^{2} = BC\cdot DC\)</span>.</strong> מהדמיון: <span class="m">\(\dfrac{AC}{BC} = \dfrac{DC}{AC}\)</span>, ובהכפלה בהצלבה <span class="m">\(AC^{2} = BC\cdot DC\)</span>.</p>
     </div>
     <p class="uses">שימוש ב: <a href="#t-aa">ז.ז</a><a href="#t-ratio">יחסים במשולשים דומים</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ג.</span>נתון <span class="m">DC/AE = 2/3</span></h3>
-    <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות הראשונה במונים. הקריאה <span class="m">DC</span> מתאימה לשלושת השברים בסעיף.</p>
+    <h3><span class="lt">ג.</span>נתון <span class="m">\(\dfrac{DC}{AE} = \dfrac{2}{3}\)</span></h3>
+    <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות הראשונה במונים. הקריאה <span class="m">\(DC\)</span> מתאימה לשלושת השברים בסעיף.</p>
     <div class="steps">
-      <p><strong>(1) <span class="m">DC/AC</span>.</strong> מסעיף א, <span class="m">AC = 2AE</span>. לכן <span class="m">DC/AC = DC/(2AE) = (1/2)·(2/3) = 1/3</span>.</p>
-      <p><strong>(2) <span class="m">DC/DB</span>.</strong> נסמן <span class="m">DC = k</span> ו־<span class="m">AC = 3k</span>. מסעיף ב(2): <span class="m">BC = AC²/DC = 9k²/k = 9k</span>.</p>
-      <p><span class="m">DB = BC − DC = 8k</span>, ולכן <span class="m">DC/DB = 1/8</span>.</p>
+      <p><strong>(1) <span class="m">\(\dfrac{DC}{AC}\)</span>.</strong> מסעיף א, <span class="m">\(AC = 2AE\)</span>. לכן <span class="m">\(\dfrac{DC}{AC} = \dfrac{DC}{2AE} = \dfrac{1}{2}\cdot \dfrac{2}{3} = \dfrac{1}{3}\)</span>.</p>
+      <p><strong>(2) <span class="m">\(\dfrac{DC}{DB}\)</span>.</strong> נסמן <span class="m">\(DC = k\)</span> ו־<span class="m">\(AC = 3k\)</span>. מסעיף ב(2): <span class="m">\(BC = \dfrac{AC^{2}}{DC} = \dfrac{9k^{2}}{k} = 9k\)</span>.</p>
+      <p><span class="m">\(DB = BC - DC = 8k\)</span>, ולכן <span class="m">\(\dfrac{DC}{DB} = \dfrac{1}{8}\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">DC/AC = 1/3</span>, <span class="m">DC/DB = 1/8</span></p>
+    <p class="ans"><span class="m">\(\dfrac{DC}{AC} = \dfrac{1}{3}\)</span>, <span class="m">\(\dfrac{DC}{DB} = \dfrac{1}{8}\)</span></p>
     <p class="uses">שימוש ב: תוצאות סעיפים א ו־ב</p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ד.</span>נתון <span class="m">S△CED = 4</span></h3>
+    <h3><span class="lt">ד.</span>נתון <span class="m">\(S_{\triangle CED} = 4\)</span></h3>
     <div class="steps">
-      <p><strong>(1) <span class="m">S△ACD</span>.</strong> <span class="m">E</span> אמצע <span class="m">AC</span>, ולכן <span class="m">DE</span> תיכון במשולש <span class="m">ACD</span> ומחלק אותו לשני משולשים שווי שטח: <span class="m">S△ACD = 2·4 = 8</span>.</p>
-      <p><strong>(2) <span class="m">S△ABC</span>.</strong> למשולשים <span class="m">ADC</span> ו־<span class="m">ABC</span> יש קדקוד משותף <span class="m">A</span>, והבסיסים <span class="m">DC</span> ו־<span class="m">BC</span> על אותו ישר. <span class="m">BC = 9·DC</span>, ולכן <span class="m">S△ABC = 9·8 = 72</span>.</p>
-      <p class="alt"><strong>בדיקה:</strong> יחס הדמיון בין <span class="m">△ADC</span> ל־<span class="m">△BAC</span> הוא <span class="m">AC/BC = 1/3</span>, ולכן יחס השטחים הוא <span class="m">1/9</span>. אותה תוצאה.</p>
+      <p><strong>(1) <span class="m">\(S_{\triangle ACD}\)</span>.</strong> <span class="m">\(E\)</span> אמצע <span class="m">\(AC\)</span>, ולכן <span class="m">\(DE\)</span> תיכון במשולש <span class="m">\(ACD\)</span> ומחלק אותו לשני משולשים שווי שטח: <span class="m">\(S_{\triangle ACD} = 2\cdot 4 = 8\)</span>.</p>
+      <p><strong>(2) <span class="m">\(S_{\triangle ABC}\)</span>.</strong> למשולשים <span class="m">\(ADC\)</span> ו־<span class="m">\(ABC\)</span> יש קדקוד משותף <span class="m">\(A\)</span>, והבסיסים <span class="m">\(DC\)</span> ו־<span class="m">\(BC\)</span> על אותו ישר. <span class="m">\(BC = 9\cdot DC\)</span>, ולכן <span class="m">\(S_{\triangle ABC} = 9\cdot 8 = 72\)</span>.</p>
+      <p class="alt"><strong>בדיקה:</strong> יחס הדמיון בין <span class="m">\(\triangle ADC\)</span> ל־<span class="m">\(\triangle BAC\)</span> הוא <span class="m">\(\dfrac{AC}{BC} = \dfrac{1}{3}\)</span>, ולכן יחס השטחים הוא <span class="m">\(\dfrac{1}{9}\)</span>. אותה תוצאה.</p>
     </div>
-    <p class="ans"><span class="m">S△ACD = 8</span>, <span class="m">S△ABC = 72</span></p>
+    <p class="ans"><span class="m">\(S_{\triangle ACD} = 8\)</span>, <span class="m">\(S_{\triangle ABC} = 72\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-area">תיכון וגובה משותף</a><a href="#t-ratio">יחס שטחים = k²</a></p>
   </div>
 </section>
@@ -672,39 +683,39 @@ footer{color:var(--muted);font-size:.9rem}
   <div class="setup">
     <div class="given">
       <span class="lbl">נתון</span>
-      <p><span class="m">BD</span> חוצה את <span class="m">∢ABC</span> במשולש <span class="m">ABC</span> (<span class="m">D</span> על <span class="m">AC</span>). על הצלע <span class="m">BC</span> נבנה משולש <span class="m">BCE</span>, ו־<span class="m">DC = CE</span>.</p>
+      <p><span class="m">\(BD\)</span> חוצה את <span class="m">\(\measuredangle ABC\)</span> במשולש <span class="m">\(ABC\)</span> (<span class="m">\(D\)</span> על <span class="m">\(AC\)</span>). על הצלע <span class="m">\(BC\)</span> נבנה משולש <span class="m">\(BCE\)</span>, ו־<span class="m">\(DC = CE\)</span>.</p>
     </div>
     <figure><img src="img/summer-geometry/q10.png" alt="משולש ABC עם חוצה הזווית BD, והמשולש BCE שנבנה על BC"><figcaption>השרטוט מעבודת הקיץ</figcaption></figure>
   </div>
 
   <div class="part">
-    <h3><span class="lt">א.</span>הוכחה: <span class="m">AB/BC = AD/EC</span></h3>
+    <h3><span class="lt">א.</span>הוכחה: <span class="m">\(\dfrac{AB}{BC} = \dfrac{AD}{EC}\)</span></h3>
     <div class="steps">
-      <p>לפי משפט חוצה הזווית במשולש <span class="m">ABC</span>: <span class="m">AB/BC = AD/DC</span>.</p>
-      <p>נציב <span class="m">DC = EC</span> ונקבל <span class="m">AB/BC = AD/EC</span>.</p>
+      <p>לפי משפט חוצה הזווית במשולש <span class="m">\(ABC\)</span>: <span class="m">\(\dfrac{AB}{BC} = \dfrac{AD}{DC}\)</span>.</p>
+      <p>נציב <span class="m">\(DC = EC\)</span> ונקבל <span class="m">\(\dfrac{AB}{BC} = \dfrac{AD}{EC}\)</span>.</p>
     </div>
     <p class="uses">שימוש ב: <a href="#t-bisector">חוצה הזווית</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ב.</span>נתון <span class="m">∢BAD = ∢BCE</span>. הוכחה: <span class="m">△ABD ∼ △CBE</span></h3>
+    <h3><span class="lt">ב.</span>נתון <span class="m">\(\measuredangle BAD = \measuredangle BCE\)</span>. הוכחה: <span class="m">\(\triangle ABD \sim \triangle CBE\)</span></h3>
     <div class="steps">
-      <p>מסעיף א: <span class="m">AB/CB = AD/CE</span>, כלומר שתי צלעות במשולש <span class="m">ABD</span> פרופורציוניות לשתי צלעות במשולש <span class="m">CBE</span>.</p>
-      <p>הזווית שבין <span class="m">AB</span> ל־<span class="m">AD</span> היא <span class="m">∢BAD</span>, והזווית שבין <span class="m">CB</span> ל־<span class="m">CE</span> היא <span class="m">∢BCE</span>, והן שוות לפי הנתון.</p>
-      <p>לפי צ.ז.צ המשולשים דומים, בהתאמה <span class="m">A↔C</span>, <span class="m">B↔B</span>, <span class="m">D↔E</span>.</p>
+      <p>מסעיף א: <span class="m">\(\dfrac{AB}{CB} = \dfrac{AD}{CE}\)</span>, כלומר שתי צלעות במשולש <span class="m">\(ABD\)</span> פרופורציוניות לשתי צלעות במשולש <span class="m">\(CBE\)</span>.</p>
+      <p>הזווית שבין <span class="m">\(AB\)</span> ל־<span class="m">\(AD\)</span> היא <span class="m">\(\measuredangle BAD\)</span>, והזווית שבין <span class="m">\(CB\)</span> ל־<span class="m">\(CE\)</span> היא <span class="m">\(\measuredangle BCE\)</span>, והן שוות לפי הנתון.</p>
+      <p>לפי צ.ז.צ המשולשים דומים, בהתאמה <span class="m">\(A\leftrightarrow C\)</span>, <span class="m">\(B\leftrightarrow B\)</span>, <span class="m">\(D\leftrightarrow E\)</span>.</p>
     </div>
     <p class="uses">שימוש ב: <a href="#t-sas">צ.ז.צ</a></p>
   </div>
 
   <div class="part">
-    <h3><span class="lt">ג.</span>נתון <span class="m">AB ⊥ BE</span>. מצאו את <span class="m">∢ABD</span></h3>
+    <h3><span class="lt">ג.</span>נתון <span class="m">\(AB \perp BE\)</span>. מצאו את <span class="m">\(\measuredangle ABD\)</span></h3>
     <div class="steps">
-      <p>נסמן <span class="m">∢ABD = β</span>. <span class="m">BD</span> חוצה זווית, ולכן גם <span class="m">∢DBC = β</span>.</p>
-      <p>מהדמיון בסעיף ב: <span class="m">∢CBE = ∢ABD = β</span> (זוויות מתאימות).</p>
-      <p>המשולש <span class="m">BCE</span> בנוי מחוץ למשולש <span class="m">ABC</span>, ולכן <span class="m">∢ABE = ∢ABD + ∢DBC + ∢CBE = 3β</span>.</p>
-      <p><span class="m">AB ⊥ BE</span>, ולכן <span class="m">3β = 90°</span> ו־<span class="m">β = 30°</span>.</p>
+      <p>נסמן <span class="m">\(\measuredangle ABD = \beta\)</span>. <span class="m">\(BD\)</span> חוצה זווית, ולכן גם <span class="m">\(\measuredangle DBC = \beta\)</span>.</p>
+      <p>מהדמיון בסעיף ב: <span class="m">\(\measuredangle CBE = \measuredangle ABD = \beta\)</span> (זוויות מתאימות).</p>
+      <p>המשולש <span class="m">\(BCE\)</span> בנוי מחוץ למשולש <span class="m">\(ABC\)</span>, ולכן <span class="m">\(\measuredangle ABE = \measuredangle ABD + \measuredangle DBC + \measuredangle CBE = 3\beta\)</span>.</p>
+      <p><span class="m">\(AB \perp BE\)</span>, ולכן <span class="m">\(3\beta = 90^{\circ}\)</span> ו־<span class="m">\(\beta = 30^{\circ}\)</span>.</p>
     </div>
-    <p class="ans"><span class="m">∢ABD = 30°</span></p>
+    <p class="ans"><span class="m">\(\measuredangle ABD = 30^{\circ}\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-ratio">זוויות מתאימות</a><a href="#t-bisector">חוצה זווית</a></p>
   </div>
 </section>

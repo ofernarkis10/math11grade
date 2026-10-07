@@ -96,6 +96,20 @@ html{scroll-behavior:smooth}
 .btn:hover,.btn:focus-visible{filter:brightness(1.1);outline:none}
 .lead a{color:var(--accent);font-weight:600}
 </style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -121,7 +135,7 @@ html{scroll-behavior:smooth}
 <section class="ch" id="what">
   <h2>1. מה זו פונקציה מורכבת</h2>
   <div class="meaning">
-    <p><strong>פונקציה מורכבת</strong> היא "פונקציה בתוך פונקציה": מפעילים פונקציה אחת על x, ועל התוצאה מפעילים פונקציה שנייה. מסמנים <span class="m">y = f(g(x))</span>, ובקיצור <span class="m">(f∘g)(x)</span>.</p>
+    <p><strong>פונקציה מורכבת</strong> היא "פונקציה בתוך פונקציה": מפעילים פונקציה אחת על x, ועל התוצאה מפעילים פונקציה שנייה. מסמנים <span class="m">\(y = f(g(x))\)</span>, ובקיצור <span class="m">\((f \circ g)(x)\)</span>.</p>
     <p><span class="inner">g</span> היא <strong class="inner">הפונקציה הפנימית</strong>, זו שפועלת ראשונה על x. <span class="outer">f</span> היא <strong class="outer">הפונקציה החיצונית</strong>, זו שפועלת אחרונה.</p>
   </div>
   <div class="machine" aria-label="תרשים: x נכנס לפונקציה הפנימית g, התוצאה g(x) נכנסת לפונקציה החיצונית f">
@@ -135,41 +149,41 @@ html{scroll-behavior:smooth}
     <p><strong>איך מזהים מה פנימי ומה חיצוני?</strong> שואלים: "אם הייתי מחשב את הערך במחשבון עבור x מסוים, מה הייתי לוחץ אחרון?" הפעולה האחרונה היא הפונקציה החיצונית, וכל מה שנמצא "בתוכה" הוא הפונקציה הפנימית.</p>
   </div>
   <div class="tablebox"><table>
-    <thead><tr><th>הפונקציה</th><th>פנימית <span class="m">g(x)</span></th><th>חיצונית <span class="m">f(u)</span></th></tr></thead>
+    <thead><tr><th>הפונקציה</th><th>פנימית <span class="m">\(g(x)\)</span></th><th>חיצונית <span class="m">\(f(u)\)</span></th></tr></thead>
     <tbody>
-      <tr><td><span class="m">(3x² − 5)⁷</span></td><td><span class="m">3x² − 5</span></td><td><span class="m">u⁷</span></td></tr>
-      <tr><td><span class="m">√(x² + 9)</span></td><td><span class="m">x² + 9</span></td><td><span class="m">√u</span></td></tr>
-      <tr><td><span class="m">1/(2x − 1)³</span></td><td><span class="m">2x − 1</span></td><td><span class="m">1/u³</span></td></tr>
-      <tr><td><span class="m">sin(4x)</span></td><td><span class="m">4x</span></td><td><span class="m">sin u</span></td></tr>
-      <tr><td><span class="m">sin²x = (sin x)²</span></td><td><span class="m">sin x</span></td><td><span class="m">u²</span></td></tr>
-      <tr><td><span class="m">cos(√x)</span></td><td><span class="m">√x</span></td><td><span class="m">cos u</span></td></tr>
+      <tr><td><span class="m">\((3x^{2} - 5)^{7}\)</span></td><td><span class="m">\(3x^{2} - 5\)</span></td><td><span class="m">\(u^{7}\)</span></td></tr>
+      <tr><td><span class="m">\(\sqrt{x^{2} + 9}\)</span></td><td><span class="m">\(x^{2} + 9\)</span></td><td><span class="m">\(\sqrt{u}\)</span></td></tr>
+      <tr><td><span class="m">\(\dfrac{1}{(2x - 1)^{3}}\)</span></td><td><span class="m">\(2x - 1\)</span></td><td><span class="m">\(\dfrac{1}{u^{3}}\)</span></td></tr>
+      <tr><td><span class="m">\({\sin(4x)}\)</span></td><td><span class="m">\(4x\)</span></td><td><span class="m">\({\sin u}\)</span></td></tr>
+      <tr><td><span class="m">\({\sin^{2} x} = ({\sin x})^{2}\)</span></td><td><span class="m">\({\sin x}\)</span></td><td><span class="m">\(u^{2}\)</span></td></tr>
+      <tr><td><span class="m">\({\cos(\sqrt{x})}\)</span></td><td><span class="m">\(\sqrt{x}\)</span></td><td><span class="m">\({\cos u}\)</span></td></tr>
     </tbody>
   </table></div>
-  <div class="note"><strong>שימו לב:</strong> <span class="m">sin²x</span> ו־<span class="m">sin(x²)</span> הן פונקציות שונות. ב־<span class="m">sin²x</span> החזקה היא החיצונית, וב־<span class="m">sin(x²)</span> הסינוס הוא החיצוני.</div>
+  <div class="note"><strong>שימו לב:</strong> <span class="m">\({\sin^{2} x}\)</span> ו־<span class="m">\({\sin(x^{2})}\)</span> הן פונקציות שונות. ב־<span class="m">\({\sin^{2} x}\)</span> החזקה היא החיצונית, וב־<span class="m">\({\sin(x^{2})}\)</span> הסינוס הוא החיצוני.</div>
 </section>
 
 <!-- 2. CHAIN RULE -->
 <section class="ch" id="chain">
   <h2>2. כלל השרשרת</h2>
   <div class="big">
-    <span class="m">[ f(g(x)) ]′ = f′(g(x)) · g′(x)</span>
+    <span class="m">\([ f(g(x)) ]' = f'(g(x)) \cdot g'(x)\)</span>
     <small>נגזרת החיצונית (כשהפנימית נשארת בתוכה כמו שהיא) כפול נגזרת הפנימית</small>
   </div>
   <div class="meaning">
     <p><strong>במילים:</strong> גוזרים את הפונקציה החיצונית ו"לא נוגעים" במה שבתוכה, ואז כופלים בנגזרת של מה שבתוכה.</p>
-    <p><strong>בכתיב של לייבניץ:</strong> אם <span class="m">u = g(x)</span> ו־<span class="m">y = f(u)</span>, אז <span class="m">dy/dx = (dy/du) · (du/dx)</span>. נראה כמו "צמצום" של <span class="m">du</span>, וזו דרך טובה לזכור את הכלל.</p>
-    <p><strong>למה זה נכון? (אינטואיציה)</strong> נגזרת היא קצב שינוי. אם u משתנה פי 3 מהר יותר מ־x, ו־y משתנה פי 2 מהר יותר מ־u, אז y משתנה פי <span class="m">2·3 = 6</span> מהר יותר מ־x. קצבי השינוי <strong>נכפלים</strong> לאורך השרשרת. דוגמה מוחשית: גלגל שיניים גדול מסובב גלגל בינוני פי 3, והבינוני מסובב קטן פי 2. הקטן מסתובב פי 6 מהר מהגדול.</p>
+    <p><strong>בכתיב של לייבניץ:</strong> אם <span class="m">\(u = g(x)\)</span> ו־<span class="m">\(y = f(u)\)</span>, אז <span class="m">\(\dfrac{dy}{dx} = \dfrac{dy}{du} \cdot \dfrac{du}{dx}\)</span>. נראה כמו "צמצום" של <span class="m">\(du\)</span>, וזו דרך טובה לזכור את הכלל.</p>
+    <p><strong>למה זה נכון? (אינטואיציה)</strong> נגזרת היא קצב שינוי. אם u משתנה פי 3 מהר יותר מ־x, ו־y משתנה פי 2 מהר יותר מ־u, אז y משתנה פי <span class="m">\(2 \cdot 3 = 6\)</span> מהר יותר מ־x. קצבי השינוי <strong>נכפלים</strong> לאורך השרשרת. דוגמה מוחשית: גלגל שיניים גדול מסובב גלגל בינוני פי 3, והבינוני מסובב קטן פי 2. הקטן מסתובב פי 6 מהר מהגדול.</p>
   </div>
   <div class="example">
     <span class="tag">דוגמה פתורה</span>
-    <p>גזרו את <span class="m">y = (x² + 3x)⁵</span>.</p>
+    <p>גזרו את <span class="m">\(y = (x^{2} + 3x)^{5}\)</span>.</p>
     <div class="steps">
-      <p>פנימית: <span class="m inner">u = x² + 3x</span>, ונגזרתה <span class="m">u′ = 2x + 3</span>.</p>
-      <p>חיצונית: <span class="m outer">u⁵</span>, ונגזרתה <span class="m">5u⁴</span>.</p>
-      <p>לכן <span class="m">y′ = 5(x² + 3x)⁴ · (2x + 3)</span>.</p>
+      <p>פנימית: <span class="m inner">\(u = x^{2} + 3x\)</span>, ונגזרתה <span class="m">\(u' = 2x + 3\)</span>.</p>
+      <p>חיצונית: <span class="m outer">\(u^{5}\)</span>, ונגזרתה <span class="m">\(5u^{4}\)</span>.</p>
+      <p>לכן <span class="m">\(y' = 5(x^{2} + 3x)^{4} \cdot (2x + 3)\)</span>.</p>
     </div>
   </div>
-  <div class="note"><strong>בדיקה עצמית:</strong> במקרה <span class="m">g(x) = x</span> הנגזרת הפנימית היא 1, וכלל השרשרת נותן בדיוק את הנגזרת הרגילה. לכן הכלל מכליל את מה שכבר הכרתם, ולא מחליף אותו.</div>
+  <div class="note"><strong>בדיקה עצמית:</strong> במקרה <span class="m">\(g(x) = x\)</span> הנגזרת הפנימית היא 1, וכלל השרשרת נותן בדיוק את הנגזרת הרגילה. לכן הכלל מכליל את מה שכבר הכרתם, ולא מחליף אותו.</div>
 </section>
 
 <!-- 3. BASE DERIVATIVES -->
@@ -177,15 +191,15 @@ html{scroll-behavior:smooth}
   <h2>3. תזכורת: נגזרות בסיסיות</h2>
   <p class="lead">כדי להשתמש בכלל השרשרת צריך לדעת לגזור את הפונקציה החיצונית. אלה הנגזרות הבסיסיות של כיתה יא׳:</p>
   <div class="formulas">
-    <div class="f"><b>קבוע</b><span class="m">(c)′ = 0</span></div>
-    <div class="f"><b>חזקה (כל n ממשי)</b><span class="m">(xⁿ)′ = n·xⁿ⁻¹</span></div>
-    <div class="f"><b>שורש ריבועי</b><span class="m">(√x)′ = 1/(2√x)</span></div>
-    <div class="f"><b>הופכי</b><span class="m">(1/x)′ = −1/x²</span></div>
-    <div class="f"><b>סינוס</b><span class="m">(sin x)′ = cos x</span></div>
-    <div class="f"><b>קוסינוס</b><span class="m">(cos x)′ = −sin x</span></div>
-    <div class="f"><b>טנגנס</b><span class="m">(tan x)′ = 1/cos²x</span></div>
-    <div class="f"><b>מכפלה</b><span class="m">(u·v)′ = u′v + uv′</span></div>
-    <div class="f"><b>מנה</b><span class="m">(u/v)′ = (u′v − uv′)/v²</span></div>
+    <div class="f"><b>קבוע</b><span class="m">\((c)' = 0\)</span></div>
+    <div class="f"><b>חזקה (כל n ממשי)</b><span class="m">\((x^{n})' = n \cdot x^{n-1}\)</span></div>
+    <div class="f"><b>שורש ריבועי</b><span class="m">\((\sqrt{x})' = \dfrac{1}{2\sqrt{x}}\)</span></div>
+    <div class="f"><b>הופכי</b><span class="m">\(\left(\dfrac{1}{x}\right)' = - \dfrac{1}{x^{2}}\)</span></div>
+    <div class="f"><b>סינוס</b><span class="m">\(({\sin x})' = {\cos x}\)</span></div>
+    <div class="f"><b>קוסינוס</b><span class="m">\(({\cos x})' = - {\sin x}\)</span></div>
+    <div class="f"><b>טנגנס</b><span class="m">\(({\tan x})' = \dfrac{1}{{\cos^{2} x}}\)</span></div>
+    <div class="f"><b>מכפלה</b><span class="m">\((u \cdot v)' = u'v + uv'\)</span></div>
+    <div class="f"><b>מנה</b><span class="m">\(\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^{2}}\)</span></div>
   </div>
   <div class="note"><strong>חשוב:</strong> נגזרות הפונקציות הטריגונומטריות נכונות רק כאשר x נמדד ב<strong>רדיאנים</strong>.</div>
 </section>
@@ -193,43 +207,43 @@ html{scroll-behavior:smooth}
 <!-- 4. RULES TABLE -->
 <section class="ch" id="rules">
   <h2>4. טבלת הכללים לפונקציה מורכבת</h2>
-  <p class="lead">כל שורה בטבלה היא כלל השרשרת שהופעל על פונקציה חיצונית מוכרת. <span class="m">f</span> מסמנת כאן את הפונקציה הפנימית ו־<span class="m">f′</span> את נגזרתה.</p>
+  <p class="lead">כל שורה בטבלה היא כלל השרשרת שהופעל על פונקציה חיצונית מוכרת. <span class="m">\(f\)</span> מסמנת כאן את הפונקציה הפנימית ו־<span class="m">\(f'\)</span> את נגזרתה.</p>
   <div class="tablebox"><table>
     <thead><tr><th>הפונקציה</th><th>הנגזרת</th><th>דוגמה</th></tr></thead>
     <tbody>
-      <tr><td><span class="m">[f(x)]ⁿ</span></td><td><span class="m">n·[f(x)]ⁿ⁻¹ · f′(x)</span></td><td><span class="m">[(x²+1)³]′ = 3(x²+1)²·2x</span></td></tr>
-      <tr><td><span class="m">√f(x)</span></td><td><span class="m">f′(x) / (2√f(x))</span></td><td><span class="m">[√(5x−1)]′ = 5/(2√(5x−1))</span></td></tr>
-      <tr><td><span class="m">ⁿ√f(x) = f^(1/n)</span></td><td><span class="m">f′(x) / (n·ⁿ√[f(x)]ⁿ⁻¹)</span></td><td><span class="m">[∛(x²)]′ = 2x/(3∛x⁴)</span></td></tr>
-      <tr><td><span class="m">1/f(x)</span></td><td><span class="m">−f′(x) / [f(x)]²</span></td><td><span class="m">[1/(x²+4)]′ = −2x/(x²+4)²</span></td></tr>
-      <tr><td><span class="m">1/[f(x)]ⁿ</span></td><td><span class="m">−n·f′(x) / [f(x)]ⁿ⁺¹</span></td><td><span class="m">[1/(3x−2)²]′ = −6/(3x−2)³</span></td></tr>
-      <tr><td><span class="m">f(ax + b)</span></td><td><span class="m">a · f′(ax + b)</span></td><td><span class="m">[(2x+7)⁹]′ = 2·9(2x+7)⁸</span></td></tr>
-      <tr><td><span class="m">sin(f(x))</span></td><td><span class="m">cos(f(x)) · f′(x)</span></td><td><span class="m">[sin(x²)]′ = 2x·cos(x²)</span></td></tr>
-      <tr><td><span class="m">cos(f(x))</span></td><td><span class="m">−sin(f(x)) · f′(x)</span></td><td><span class="m">[cos 3x]′ = −3 sin 3x</span></td></tr>
-      <tr><td><span class="m">tan(f(x))</span></td><td><span class="m">f′(x) / cos²(f(x))</span></td><td><span class="m">[tan 5x]′ = 5/cos²(5x)</span></td></tr>
-      <tr><td><span class="m">sinⁿx</span></td><td><span class="m">n·sinⁿ⁻¹x · cos x</span></td><td><span class="m">[sin³x]′ = 3sin²x·cos x</span></td></tr>
-      <tr><td><span class="m">cosⁿx</span></td><td><span class="m">−n·cosⁿ⁻¹x · sin x</span></td><td><span class="m">[cos²x]′ = −2cos x·sin x</span></td></tr>
+      <tr><td><span class="m">\([f(x)]^{n}\)</span></td><td><span class="m">\(n \cdot [f(x)]^{n-1} \cdot f'(x)\)</span></td><td><span class="m">\([(x^{2}+1)^{3}]' = 3(x^{2}+1)^{2} \cdot 2x\)</span></td></tr>
+      <tr><td><span class="m">\(\sqrt{f(x)}\)</span></td><td><span class="m">\(\dfrac{f'(x)}{2\sqrt{f(x)}}\)</span></td><td><span class="m">\([\sqrt{5x - 1}]' = \dfrac{5}{2\sqrt{5x - 1}}\)</span></td></tr>
+      <tr><td><span class="m">\(\sqrt[n]{f(x)} = f^{1/n}\)</span></td><td><span class="m">\(\dfrac{f'(x)}{n \cdot \sqrt[n]{[f(x)]^{n-1}}}\)</span></td><td><span class="m">\([\sqrt[3]{x^{2}}]' = \dfrac{2x}{3\sqrt[3]{x^{4}}}\)</span></td></tr>
+      <tr><td><span class="m">\(\dfrac{1}{f(x)}\)</span></td><td><span class="m">\(- \dfrac{f'(x)}{[f(x)]^{2}}\)</span></td><td><span class="m">\(\left[\dfrac{1}{x^{2}+4}\right]' = - \dfrac{2x}{(x^{2}+4)^{2}}\)</span></td></tr>
+      <tr><td><span class="m">\(\dfrac{1}{[f(x)]^{n}}\)</span></td><td><span class="m">\(- \dfrac{n \cdot f'(x)}{[f(x)]^{n+1}}\)</span></td><td><span class="m">\(\left[\dfrac{1}{(3x - 2)^{2}}\right]' = - \dfrac{6}{(3x - 2)^{3}}\)</span></td></tr>
+      <tr><td><span class="m">\(f(ax + b)\)</span></td><td><span class="m">\(a \cdot f'(ax + b)\)</span></td><td><span class="m">\([(2x+7)^{9}]' = 2 \cdot 9(2x+7)^{8}\)</span></td></tr>
+      <tr><td><span class="m">\({\sin(f(x))}\)</span></td><td><span class="m">\({\cos(f(x))} \cdot f'(x)\)</span></td><td><span class="m">\([{\sin(x^{2})}]' = 2x \cdot {\cos(x^{2})}\)</span></td></tr>
+      <tr><td><span class="m">\({\cos(f(x))}\)</span></td><td><span class="m">\(- {\sin(f(x))} \cdot f'(x)\)</span></td><td><span class="m">\([{\cos 3x}]' = - 3 {\sin 3x}\)</span></td></tr>
+      <tr><td><span class="m">\({\tan(f(x))}\)</span></td><td><span class="m">\(\dfrac{f'(x)}{{\cos^{2}(f(x))}}\)</span></td><td><span class="m">\([{\tan 5x}]' = \dfrac{5}{{\cos^{2}(5x)}}\)</span></td></tr>
+      <tr><td><span class="m">\({\sin^{n} x}\)</span></td><td><span class="m">\(n \cdot {\sin^{n-1} x} \cdot {\cos x}\)</span></td><td><span class="m">\([{\sin^{3} x}]' = 3{\sin^{2} x} \cdot {\cos x}\)</span></td></tr>
+      <tr><td><span class="m">\({\cos^{n} x}\)</span></td><td><span class="m">\(- n \cdot {\cos^{n-1} x} \cdot {\sin x}\)</span></td><td><span class="m">\([{\cos^{2} x}]' = - 2{\cos x} \cdot {\sin x}\)</span></td></tr>
     </tbody>
   </table></div>
   <div class="meaning">
-    <p><strong>מקרה חשוב: פנימית לינארית.</strong> כשהפונקציה הפנימית היא <span class="m">ax + b</span>, נגזרתה היא פשוט <span class="m">a</span>. לכן גוזרים כרגיל וכופלים במקדם של x: <span class="m">[sin(2x)]′ = 2cos 2x</span>, <span class="m">[√(4x+1)]′ = 4/(2√(4x+1)) = 2/√(4x+1)</span>.</p>
-    <p><strong>טיפ: הפכו שורשים ושברים לחזקות.</strong> <span class="m">√f = f^(1/2)</span>, <span class="m">1/f³ = f⁻³</span>, <span class="m">1/√f = f^(−1/2)</span>. אז מספיק לזכור רק את כלל החזקה: <span class="m">[f^(−1/2)]′ = −½·f^(−3/2)·f′</span>.</p>
-    <p><strong>תחום הגזירות:</strong> לפונקציה <span class="m">√f(x)</span> אין נגזרת בנקודות שבהן <span class="m">f(x) = 0</span>, כי שם המכנה <span class="m">2√f(x)</span> מתאפס. תחום הנגזרת יכול להיות קטן מתחום הפונקציה.</p>
+    <p><strong>מקרה חשוב: פנימית לינארית.</strong> כשהפונקציה הפנימית היא <span class="m">\(ax + b\)</span>, נגזרתה היא פשוט <span class="m">\(a\)</span>. לכן גוזרים כרגיל וכופלים במקדם של x: <span class="m">\([{\sin(2x)}]' = 2{\cos 2x}\)</span>, <span class="m">\([\sqrt{4x+1}]' = \dfrac{4}{2\sqrt{4x+1}} = \dfrac{2}{\sqrt{4x+1}}\)</span>.</p>
+    <p><strong>טיפ: הפכו שורשים ושברים לחזקות.</strong> <span class="m">\(\sqrt{f} = f^{1/2}\)</span>, <span class="m">\(\dfrac{1}{f^{3}} = f^{-3}\)</span>, <span class="m">\(\dfrac{1}{\sqrt{f}} = f^{ - 1/2}\)</span>. אז מספיק לזכור רק את כלל החזקה: <span class="m">\([f^{ - 1/2}]' = - {\dfrac{1}{2}} \cdot f^{ - 3/2} \cdot f'\)</span>.</p>
+    <p><strong>תחום הגזירות:</strong> לפונקציה <span class="m">\(\sqrt{f(x)}\)</span> אין נגזרת בנקודות שבהן <span class="m">\(f(x) = 0\)</span>, כי שם המכנה <span class="m">\(2\sqrt{f(x)}\)</span> מתאפס. תחום הנגזרת יכול להיות קטן מתחום הפונקציה.</p>
   </div>
   <div class="example">
     <span class="tag">דוגמה פתורה: שורש</span>
-    <p>גזרו את <span class="m">y = √(x² − 6x + 13)</span>.</p>
+    <p>גזרו את <span class="m">\(y = \sqrt{x^{2} - 6x + 13}\)</span>.</p>
     <div class="steps">
-      <p><span class="m">y′ = (2x − 6) / (2√(x² − 6x + 13)) = (x − 3) / √(x² − 6x + 13)</span></p>
+      <p><span class="m">\(y' = \dfrac{2x - 6}{2\sqrt{x^{2} - 6x + 13}} = \dfrac{x - 3}{\sqrt{x^{2} - 6x + 13}}\)</span></p>
       <p>שימו לב לצמצום ב־2. כדאי תמיד לפשט, כי בהמשך נחפש היכן הנגזרת מתאפסת.</p>
     </div>
   </div>
   <div class="example">
     <span class="tag">דוגמה פתורה: טריגונומטריה</span>
-    <p>גזרו את <span class="m">y = cos²(3x)</span>.</p>
+    <p>גזרו את <span class="m">\(y = {\cos^{2}(3x)}\)</span>.</p>
     <div class="steps">
-      <p>שלוש שכבות: חזקה ⟵ קוסינוס ⟵ <span class="m">3x</span>.</p>
-      <p><span class="m">y′ = 2cos(3x) · (−sin 3x) · 3 = −6 sin(3x)cos(3x) = −3 sin(6x)</span></p>
-      <p>(השתמשנו בזהות <span class="m">2sin α cos α = sin 2α</span>.)</p>
+      <p>שלוש שכבות: חזקה ⟵ קוסינוס ⟵ <span class="m">\(3x\)</span>.</p>
+      <p><span class="m">\(y' = 2{\cos(3x)} \cdot ( - {\sin 3x}) \cdot 3 = - 6 {\sin(3x)}{\cos(3x)} = - 3 {\sin(6x)}\)</span></p>
+      <p>(השתמשנו בזהות <span class="m">\(2{\sin {\alpha}} {\cos {\alpha}} = {\sin 2{\alpha}}\)</span>.)</p>
     </div>
   </div>
 </section>
@@ -242,19 +256,19 @@ html{scroll-behavior:smooth}
   </div>
   <div class="example">
     <span class="tag">דוגמה פתורה: מכפלה</span>
-    <p>גזרו את <span class="m">y = x²·(1 − x)⁴</span>.</p>
+    <p>גזרו את <span class="m">\(y = x^{2} \cdot (1 - x)^{4}\)</span>.</p>
     <div class="steps">
-      <p><span class="m">y′ = 2x(1 − x)⁴ + x² · 4(1 − x)³·(−1)</span></p>
-      <p>מוציאים גורם משותף: <span class="m">y′ = 2x(1 − x)³ [ (1 − x) − 2x ] = 2x(1 − x)³(1 − 3x)</span></p>
-      <p>הצורה המפורקת מאפשרת למצוא מיד את נקודות האפס: <span class="m">x = 0, 1, 1/3</span>.</p>
+      <p><span class="m">\(y' = 2x(1 - x)^{4} + x^{2} \cdot 4(1 - x)^{3} \cdot ( - 1)\)</span></p>
+      <p>מוציאים גורם משותף: <span class="m">\(y' = 2x(1 - x)^{3} [ (1 - x) - 2x ] = 2x(1 - x)^{3}(1 - 3x)\)</span></p>
+      <p>הצורה המפורקת מאפשרת למצוא מיד את נקודות האפס: <span class="m">\(x = 0, 1, \dfrac{1}{3}\)</span>.</p>
     </div>
   </div>
   <div class="example">
     <span class="tag">דוגמה פתורה: מנה</span>
-    <p>גזרו את <span class="m">y = x / √(x² + 1)</span>.</p>
+    <p>גזרו את <span class="m">\(y = \dfrac{x}{\sqrt{x^{2} + 1}}\)</span>.</p>
     <div class="steps">
-      <p><span class="m">y′ = [ 1·√(x²+1) − x · x/√(x²+1) ] / (x² + 1)</span></p>
-      <p>כופלים מונה ומכנה ב־<span class="m">√(x²+1)</span>: <span class="m">y′ = [ (x² + 1) − x² ] / (x² + 1)^(3/2) = 1 / (x² + 1)^(3/2)</span></p>
+      <p><span class="m">\(y' = \dfrac{1 \cdot \sqrt{x^{2}+1} - \frac{x \cdot x}{\sqrt{x^{2}+1}}}{x^{2} + 1}\)</span></p>
+      <p>כופלים מונה ומכנה ב־<span class="m">\(\sqrt{x^{2}+1}\)</span>: <span class="m">\(y' = \dfrac{(x^{2} + 1) - x^{2}}{(x^{2} + 1)^{3/2}} = \dfrac{1}{(x^{2} + 1)^{3/2}}\)</span></p>
     </div>
   </div>
   <div class="note"><strong>טיפ לפישוט:</strong> אחרי גזירת מכפלה שבה מופיעה אותה סוגריים בחזקות שונות, הוציאו את החזקה <strong>הנמוכה</strong> כגורם משותף. כך מקבלים ביטוי מפורק שקל לבדוק את סימנו.</div>
@@ -265,23 +279,23 @@ html{scroll-behavior:smooth}
   <h2>6. כמה שכבות של הרכבה</h2>
   <div class="meaning">
     <p>כשיש יותר משתי שכבות, כלל השרשרת פשוט ממשיך: גוזרים מבחוץ פנימה, שכבה אחרי שכבה, וכופלים את כל הנגזרות.</p>
-    <p><span class="m">[ f(g(h(x))) ]′ = f′(g(h(x))) · g′(h(x)) · h′(x)</span></p>
+    <p><span class="m">\([ f(g(h(x))) ]' = f'(g(h(x))) \cdot g'(h(x)) \cdot h'(x)\)</span></p>
   </div>
   <div class="example">
     <span class="tag">דוגמה פתורה</span>
-    <p>גזרו את <span class="m">y = √(sin(x²))</span>.</p>
+    <p>גזרו את <span class="m">\(y = \sqrt{{\sin(x^{2})}}\)</span>.</p>
     <div class="steps">
-      <p>השכבות מבחוץ פנימה: <span class="m">√ ⟵ sin ⟵ x²</span>.</p>
-      <p><span class="m">y′ = 1/(2√(sin(x²))) · cos(x²) · 2x = x·cos(x²) / √(sin(x²))</span></p>
+      <p>השכבות מבחוץ פנימה: <span class="m">\(\sqrt{} \longleftarrow {\sin} \longleftarrow x^{2}\)</span>.</p>
+      <p><span class="m">\(y' = \dfrac{1}{2\sqrt{{\sin(x^{2})}}} \cdot {\cos(x^{2})} \cdot 2x = \dfrac{x \cdot {\cos(x^{2})}}{\sqrt{{\sin(x^{2})}}}\)</span></p>
     </div>
   </div>
   <div class="example">
     <span class="tag">דוגמה פתורה: נגזרת בנקודה</span>
-    <p>נתון <span class="m">g(x) = f(2x − 3)</span>, וידוע ש־<span class="m">f′(5) = 7</span>. חשבו את <span class="m">g′(4)</span>.</p>
+    <p>נתון <span class="m">\(g(x) = f(2x - 3)\)</span>, וידוע ש־<span class="m">\(f'(5) = 7\)</span>. חשבו את <span class="m">\(g'(4)\)</span>.</p>
     <div class="steps">
-      <p><span class="m">g′(x) = f′(2x − 3) · 2</span></p>
-      <p><span class="m">g′(4) = f′(5) · 2 = 14</span></p>
-      <p>שימו לב: מציבים <span class="m">x = 4</span> <strong>בתוך</strong> הפנימית, ולכן צריך את <span class="m">f′(5)</span> ולא את <span class="m">f′(4)</span>.</p>
+      <p><span class="m">\(g'(x) = f'(2x - 3) \cdot 2\)</span></p>
+      <p><span class="m">\(g'(4) = f'(5) \cdot 2 = 14\)</span></p>
+      <p>שימו לב: מציבים <span class="m">\(x = 4\)</span> <strong>בתוך</strong> הפנימית, ולכן צריך את <span class="m">\(f'(5)\)</span> ולא את <span class="m">\(f'(4)\)</span>.</p>
     </div>
   </div>
 </section>
@@ -290,12 +304,12 @@ html{scroll-behavior:smooth}
 <section class="ch" id="mistakes">
   <h2>7. טעויות נפוצות</h2>
   <ul class="mistakes">
-    <li><strong>לשכוח לכפול בנגזרת הפנימית.</strong> <span class="m">[(3x+1)⁴]′ ≠ 4(3x+1)³</span>. התשובה הנכונה: <span class="m">12(3x+1)³</span>.</li>
-    <li><strong>לגזור גם את הפנימית בתוך החיצונית.</strong> <span class="m">[sin(x²)]′ ≠ cos(2x)</span>. הפנימית נשארת כמו שהיא בתוך הקוסינוס: <span class="m">2x·cos(x²)</span>.</li>
-    <li><strong>לבלבל בין <span class="m">sin²x</span> ל־<span class="m">sin(x²)</span>.</strong> <span class="m">(sin²x)′ = 2sin x·cos x</span>, ואילו <span class="m">[sin(x²)]′ = 2x·cos(x²)</span>.</li>
-    <li><strong>להוריד את החזקה גם בתוך הסוגריים.</strong> <span class="m">[(x²+1)³]′ ≠ 3(2x)²</span>. גוזרים את החזקה החיצונית ומשאירים את <span class="m">x²+1</span> כמו שהוא.</li>
-    <li><strong>לשכוח את המינוס של קוסינוס.</strong> <span class="m">[cos(5x)]′ = −5 sin(5x)</span>.</li>
-    <li><strong>טעות בחזקה שלילית.</strong> <span class="m">[(x−2)⁻³]′ = −3(x−2)⁻⁴</span>: החזקה יורדת ב־1 ומגיעה ל־<span class="m">−4</span>, לא ל־<span class="m">−2</span>.</li>
+    <li><strong>לשכוח לכפול בנגזרת הפנימית.</strong> <span class="m">\([(3x+1)^{4}]' \neq 4(3x+1)^{3}\)</span>. התשובה הנכונה: <span class="m">\(12(3x+1)^{3}\)</span>.</li>
+    <li><strong>לגזור גם את הפנימית בתוך החיצונית.</strong> <span class="m">\([{\sin(x^{2})}]' \neq {\cos(2x)}\)</span>. הפנימית נשארת כמו שהיא בתוך הקוסינוס: <span class="m">\(2x \cdot {\cos(x^{2})}\)</span>.</li>
+    <li><strong>לבלבל בין <span class="m">\({\sin^{2} x}\)</span> ל־<span class="m">\({\sin(x^{2})}\)</span>.</strong> <span class="m">\(({\sin^{2} x})' = 2{\sin x} \cdot {\cos x}\)</span>, ואילו <span class="m">\([{\sin(x^{2})}]' = 2x \cdot {\cos(x^{2})}\)</span>.</li>
+    <li><strong>להוריד את החזקה גם בתוך הסוגריים.</strong> <span class="m">\([(x^{2}+1)^{3}]' \neq 3(2x)^{2}\)</span>. גוזרים את החזקה החיצונית ומשאירים את <span class="m">\(x^{2}+1\)</span> כמו שהוא.</li>
+    <li><strong>לשכוח את המינוס של קוסינוס.</strong> <span class="m">\([{\cos(5x)}]' = - 5 {\sin(5x)}\)</span>.</li>
+    <li><strong>טעות בחזקה שלילית.</strong> <span class="m">\([(x - 2)^{-3}]' = - 3(x - 2)^{-4}\)</span>: החזקה יורדת ב־1 ומגיעה ל־<span class="m">\(- 4\)</span>, לא ל־<span class="m">\(- 2\)</span>.</li>
     <li><strong>להשאיר את התשובה לא מפושטת</strong> ואז לא להצליח למצוא היכן היא מתאפסת. תמיד הוציאו גורמים משותפים וצמצמו.</li>
   </ul>
 </section>
