@@ -16,6 +16,7 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | Topic | File | Description |
 |---|---|---|
 | Curriculum | `curriculum-5units-grade10-11.html` | Reference: the 5-unit syllabus for grades 10–11, by subject and hours |
+| Summer work | `summer-work-grade10-5units.pdf` | PDF: summer assignment given at the end of grade 10 (29 questions: polynomials, rational functions, geometry without circles, composite functions), with links to answers |
 | Sequences | `sequences-00-overview.html` | Overview of all sequence types |
 | | `sequences-01-arithmetic.html` | Arithmetic sequences |
 | | `sequences-02-geometric.html` | Geometric sequences |
@@ -43,6 +44,7 @@ Most study pages combine explanation and practice. A topic can also split them i
 math11grade/
 ├── index.html                          home page: table of contents + list of all documents
 ├── curriculum-5units-grade10-11.html   curriculum reference
+├── summer-work-grade10-5units.pdf    summer assignment from the end of grade 10 (PDF)
 ├── sequences-NN-<name>.html            sequences topic, pages 00–07
 ├── composite-derivatives-NN-<name>.html  derivatives of composite functions (01 rules, 02 exercises)
 ├── README.md
