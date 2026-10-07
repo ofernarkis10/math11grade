@@ -49,6 +49,18 @@ ul.docs li a:focus-visible{box-shadow:0 0 0 3px var(--accent-soft)}
 @media (max-width:520px){h1{font-size:2rem} ul.docs li a{grid-template-columns:2.4rem 1fr} .q{grid-column:2;justify-self:start} .d{grid-column:2}}
 footer{color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* Table of contents: jump links to each main topic */
+html{scroll-behavior:smooth}
+section.topic{scroll-margin-top:16px}
+nav.toc{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 22px;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px}
+nav.toc h2{font-size:1.2rem;color:var(--ink)}
+nav.toc ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+nav.toc a{display:flex;flex-direction:column;gap:0;padding:8px 12px;border:1px solid var(--line);border-radius:8px;color:var(--accent);font-weight:700;text-decoration:none;min-width:0}
+nav.toc a small{color:var(--muted);font-weight:400;font-size:.82rem;white-space:nowrap}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);background:var(--accent-soft);outline:none}
+.to-top{position:fixed;inset-inline-start:auto;left:16px;bottom:16px;background:var(--accent);color:var(--paper);text-decoration:none;font-weight:700;font-size:.9rem;padding:8px 14px;border-radius:99px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.to-top:hover,.to-top:focus-visible{filter:brightness(1.1);outline:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
@@ -58,6 +70,16 @@ footer{color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);paddi
   <h1>מתמטיקה לכיתה יא׳</h1>
   <p class="lead">אוסף דפי לימוד ותרגול במתמטיקה לתלמידי כיתה יא׳ ברמת 5 יחידות, לפי תוכנית הלימודים בישראל. כל דף מסביר נושא אחד לעומק: מה המשמעות שלו, הנוסחאות ומאיפה הן באות, דרכי פתרון וטעויות נפוצות. אחרי ההסבר יש שאלות תרגול מדורגות עם פתרונות מלאים.</p>
 </header>
+
+<!-- TABLE OF CONTENTS: rebuilt automatically by the script at the bottom from every section.topic (its id, h2 and count). The static links below are a fallback; a new topic section appears here on its own. -->
+<nav class="toc" id="toc" aria-label="תוכן עניינים">
+  <h2>תוכן עניינים</h2>
+  <ol>
+    <li><a href="#curriculum">תוכנית הלימודים</a></li>
+    <li><a href="#sequences">סדרות</a></li>
+    <li><a href="#composite-derivatives">נגזרות של פונקציות מורכבות</a></li>
+  </ol>
+</nav>
 
 <div class="about">
   <div><h3>מבנה כל דף</h3><p>הסבר ונוסחאות, ואחריו שאלות בשלוש רמות: בסיס, ביסוס ורמת בגרות.</p></div>
@@ -98,5 +120,19 @@ footer{color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);paddi
 
 <footer>האתר נבנה בהדרגה, ודפים חדשים יתווספו לרשימה זו. חלוקת הנושאים בין שאלונים ושנים עשויה להשתנות, ולכן כדאי לוודא מול תוכנית הלימודים העדכנית של משרד החינוך.</footer>
 </div>
+<a class="to-top" href="#toc">↑ תוכן עניינים</a>
+<script>
+// Build the table of contents from the topic sections, so new topics are listed automatically
+(function(){
+  var ol=document.querySelector('#toc ol'); if(!ol) return;
+  var html='';
+  document.querySelectorAll('section.topic[id]').forEach(function(sec){
+    var h=sec.querySelector('h2'); if(!h) return;
+    var c=sec.querySelector('.topic-head span');
+    html+='<li><a href="#'+sec.id+'">'+h.textContent+(c?'<small>'+c.textContent+'</small>':'')+'</a></li>';
+  });
+  if(html) ol.innerHTML=html;
+})();
+</script>
 </body>
 </html>
