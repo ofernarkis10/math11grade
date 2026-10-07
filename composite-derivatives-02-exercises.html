@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>תרגילים: נגזרות של פונקציות מורכבות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same worksheet style as the rest of the site; explanation chapters, a rules table, worked examples, then graded exercises with folding solutions */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:middle}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td .m{font-size:1rem}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.big{background:var(--accent-soft);border-radius:10px;padding:16px 18px;text-align:center;display:flex;flex-direction:column;gap:6px}
+.big .m{font-size:1.25rem;font-weight:600;white-space:normal}
+.big small{color:var(--muted);font-size:.92rem}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ul.mistakes{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+.steps .m{white-space:normal}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+
+/* inner/outer machine diagram, drawn left-to-right like the formula */
+.machine{direction:ltr;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:14px 8px;font-family:var(--f-math);font-size:.95rem}
+.machine .box{border:2px solid var(--accent);border-radius:8px;padding:8px 12px;text-align:center;line-height:1.3;background:var(--paper)}
+.machine .box.out{border-color:var(--mark)}
+.machine .box small{display:block;font-family:var(--f-body);font-size:.75rem;color:var(--muted)}
+.machine .val{padding:6px 10px;background:var(--accent-soft);border-radius:99px}
+.machine .arr{color:var(--muted)}
+.inner{color:var(--accent);font-weight:600}
+.outer{color:var(--mark);font-weight:600}
+
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+@media print{body{background:#fff} details{display:block} details .sol{display:block} summary{display:none} nav{display:none}}
+.lead a{color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · חשבון דיפרנציאלי · נגזרות של פונקציות מורכבות</span>
+  <h1>תרגילים: נגזרות של פונקציות מורכבות</h1>
+  <p class="lead">42 שאלות מדורגות עם פתרונות מלאים, בשלוש רמות. הכללים וההסברים נמצאים בדף <a href="composite-derivatives-01-rules.html">כללי הגזירה של פונקציה מורכבת</a>.</p>
+</header>
+
+<nav aria-label="תוכן"><strong>תוכן</strong><ol>
+  <li><a href="#lvl1">רמה א׳: בסיס (1–15)</a></li>
+  <li><a href="#lvl2">רמה ב׳: ביסוס (16–30)</a></li>
+  <li><a href="#lvl3">רמה ג׳: רמת בגרות (31–42)</a></li>
+  <li><a href="composite-derivatives-01-rules.html">חזרה לכללי הגזירה</a></li>
+</ol></nav>
+
+<div class="note"><strong>לפני שמתחילים:</strong> בכל שאלה זהו קודם את הפונקציה הפנימית ואת החיצונית. אחר כך גזרו לפי כלל השרשרת: <span class="m">[f(g(x))]′ = f′(g(x))·g′(x)</span>, ופשטו את התשובה.</div>
+
+<section class="ch level" id="lvl1"><h2>רמה א׳: בסיס <small>שאלות 1–15</small></h2><p class="lead">גזרו את הפונקציות. הפעלה ישירה של כלל אחד מהטבלה.</p><ol class="exercises" start="1">
+<li><span class="m">y = (3x − 2)⁵</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 5(3x − 2)⁴ · 3 = 15(3x − 2)⁴</span></p></div></details></li>
+<li><span class="m">y = (x² + 1)⁴</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 4(x² + 1)³ · 2x = 8x(x² + 1)³</span></p></div></details></li>
+<li><span class="m">y = √(4x + 1)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 4 / (2√(4x + 1)) = 2 / √(4x + 1)</span></p></div></details></li>
+<li><span class="m">y = 1 / (2x − 5)³</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y = (2x − 5)⁻³</span></p><p><span class="m">y′ = −3(2x − 5)⁻⁴ · 2 = −6 / (2x − 5)⁴</span></p></div></details></li>
+<li><span class="m">y = sin(3x)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 3cos(3x)</span></p></div></details></li>
+<li><span class="m">y = cos(x²)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = −sin(x²) · 2x = −2x·sin(x²)</span></p></div></details></li>
+<li><span class="m">y = sin²x</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 2sin x · cos x = sin(2x)</span></p></div></details></li>
+<li><span class="m">y = (5 − 2x)⁶</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 6(5 − 2x)⁵ · (−2) = −12(5 − 2x)⁵</span></p><p>שימו לב למינוס שמגיע מהנגזרת הפנימית.</p></div></details></li>
+<li><span class="m">y = √(x² + 16)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 2x / (2√(x² + 16)) = x / √(x² + 16)</span></p></div></details></li>
+<li><span class="m">y = (x³ − 2x)⁴</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 4(x³ − 2x)³ · (3x² − 2)</span></p></div></details></li>
+<li><span class="m">y = 1 / (x² + 1)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y = (x² + 1)⁻¹</span></p><p><span class="m">y′ = −(x² + 1)⁻² · 2x = −2x / (x² + 1)²</span></p></div></details></li>
+<li><span class="m">y = cos(5x − 1)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = −sin(5x − 1) · 5 = −5sin(5x − 1)</span></p></div></details></li>
+<li><span class="m">y = sin(x/2)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = cos(x/2) · ½ = ½cos(x/2)</span></p></div></details></li>
+<li><span class="m">y = ∛(3x + 2)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y = (3x + 2)^(1/3)</span></p><p><span class="m">y′ = ⅓(3x + 2)^(−2/3) · 3 = 1 / ∛(3x + 2)²</span></p></div></details></li>
+<li><span class="m">y = tan(x²)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 2x / cos²(x²)</span></p></div></details></li>
+</ol></section>
+
+<section class="ch level" id="lvl2"><h2>רמה ב׳: ביסוס <small>שאלות 16–30</small></h2><p class="lead">שורשים עם פנימית ריבועית, שילוב עם מכפלה ומנה, ושתי שכבות של הרכבה. פשטו את התשובה.</p><ol class="exercises" start="16">
+<li><span class="m">y = √(x² − 6x + 10)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = (2x − 6) / (2√(x² − 6x + 10)) = (x − 3) / √(x² − 6x + 10)</span></p></div></details></li>
+<li><span class="m">y = 5 / (x² + 3)²</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y = 5(x² + 3)⁻²</span></p><p><span class="m">y′ = −10(x² + 3)⁻³ · 2x = −20x / (x² + 3)³</span></p></div></details></li>
+<li><span class="m">y = x(2x + 1)³</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = (2x + 1)³ + x · 3(2x + 1)² · 2</span></p><p><span class="m">= (2x + 1)² [ (2x + 1) + 6x ] = (2x + 1)²(8x + 1)</span></p></div></details></li>
+<li><span class="m">y = x√(1 − x)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = √(1 − x) + x · (−1)/(2√(1 − x))</span></p><p>מכנה משותף: <span class="m">y′ = [ 2(1 − x) − x ] / (2√(1 − x)) = (2 − 3x) / (2√(1 − x))</span></p></div></details></li>
+<li><span class="m">y = tan(2x)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 2 / cos²(2x)</span></p></div></details></li>
+<li><span class="m">y = ( (x + 1)/(x − 1) )³</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>הנגזרת הפנימית (כלל המנה): <span class="m">[ (x+1)/(x−1) ]′ = [ (x−1) − (x+1) ] / (x−1)² = −2/(x−1)²</span></p><p><span class="m">y′ = 3( (x+1)/(x−1) )² · (−2)/(x−1)² = −6(x + 1)² / (x − 1)⁴</span></p></div></details></li>
+<li><span class="m">y = cos³(2x)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 3cos²(2x) · (−sin 2x) · 2 = −6cos²(2x)·sin(2x)</span></p></div></details></li>
+<li><span class="m">y = (x − 1)²(x + 2)³</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 2(x − 1)(x + 2)³ + (x − 1)² · 3(x + 2)²</span></p><p>גורם משותף <span class="m">(x − 1)(x + 2)²</span>: <span class="m">y′ = (x − 1)(x + 2)² [ 2(x + 2) + 3(x − 1) ] = (x − 1)(x + 2)²(5x + 1)</span></p></div></details></li>
+<li><span class="m">y = x / (x² + 1)²</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = [ (x² + 1)² − x · 2(x² + 1)·2x ] / (x² + 1)⁴</span></p><p>מצמצמים ב־<span class="m">(x² + 1)</span>: <span class="m">y′ = [ (x² + 1) − 4x² ] / (x² + 1)³ = (1 − 3x²) / (x² + 1)³</span></p></div></details></li>
+<li><span class="m">y = 1 / √(2x − 1)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y = (2x − 1)^(−1/2)</span></p><p><span class="m">y′ = −½(2x − 1)^(−3/2) · 2 = −1 / ( (2x − 1)√(2x − 1) )</span></p></div></details></li>
+<li><span class="m">y = (2x + 1) / √(x² + 2)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = [ 2√(x² + 2) − (2x + 1) · x/√(x² + 2) ] / (x² + 2)</span></p><p>כופלים מונה ומכנה ב־<span class="m">√(x² + 2)</span>: <span class="m">y′ = [ 2(x² + 2) − 2x² − x ] / (x² + 2)^(3/2) = (4 − x) / (x² + 2)^(3/2)</span></p></div></details></li>
+<li><span class="m">y = x·sin(2x)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = sin(2x) + x · 2cos(2x) = sin(2x) + 2x·cos(2x)</span></p></div></details></li>
+<li><span class="m">y = sin(3x)·cos(3x)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>כלל המכפלה: <span class="m">y′ = 3cos(3x)·cos(3x) + sin(3x)·(−3sin 3x) = 3(cos²3x − sin²3x) = 3cos(6x)</span></p><p>דרך קצרה: <span class="m">y = ½sin(6x)</span>, ולכן <span class="m">y′ = ½ · 6cos(6x) = 3cos(6x)</span>.</p></div></details></li>
+<li><span class="m">y = √(1 + cos²x)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>שלוש שכבות: שורש ⟵ ריבוע ⟵ קוסינוס.</p><p><span class="m">y′ = 2cos x·(−sin x) / (2√(1 + cos²x)) = −sin x·cos x / √(1 + cos²x)</span></p></div></details></li>
+<li><span class="m">y = 1 / sin²x</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y = (sin x)⁻²</span></p><p><span class="m">y′ = −2(sin x)⁻³ · cos x = −2cos x / sin³x</span></p></div></details></li>
+</ol></section>
+
+<section class="ch level" id="lvl3"><h2>רמה ג׳: רמת בגרות <small>שאלות 31–42</small></h2><p class="lead">כמה שכבות, משיק, נקודות קיצון ונגזרת בנקודה.</p><ol class="exercises" start="31">
+<li>גזרו את <span class="m">y = √(sin x)</span> ואת <span class="m">y = sin(√x)</span>. מה ההבדל?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">[√(sin x)]′ = cos x / (2√(sin x))</span>: החיצונית שורש, הפנימית סינוס.</p><p><span class="m">[sin(√x)]′ = cos(√x) / (2√x)</span>: החיצונית סינוס, הפנימית שורש.</p></div></details></li>
+<li>גזרו את <span class="m">y = (sin x + cos x)²</span> והראו שהתוצאה שווה ל־<span class="m">2cos(2x)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 2(sin x + cos x)(cos x − sin x) = 2(cos²x − sin²x) = 2cos(2x)</span></p><p>בדיקה בדרך אחרת: <span class="m">y = 1 + 2sin x cos x = 1 + sin 2x</span>, ולכן <span class="m">y′ = 2cos 2x</span>.</p></div></details></li>
+<li>מצאו את משוואת המשיק לגרף <span class="m">y = √(2x + 5)</span> בנקודה שבה <span class="m">x = 2</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y(2) = √9 = 3</span></p><p><span class="m">y′ = 2/(2√(2x + 5)) = 1/√(2x + 5)</span>, ולכן <span class="m">y′(2) = 1/3</span></p><p><span class="m">y − 3 = (1/3)(x − 2) ⇒ y = x/3 + 7/3</span></p></div></details></li>
+<li>מצאו את נקודות הקיצון של <span class="m">f(x) = (x² − 4)³</span> וקבעו את סוגן.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">f′(x) = 3(x² − 4)² · 2x = 6x(x² − 4)²</span></p><p><span class="m">f′(x) = 0 ⇒ x = 0, x = ±2</span></p><p>הגורם <span class="m">(x² − 4)²</span> אינו שלילי, ולכן סימן הנגזרת נקבע לפי <span class="m">6x</span>: שלילית עבור <span class="m">x &lt; 0</span> וחיובית עבור <span class="m">x &gt; 0</span>.</p><p>מינימום ב־<span class="m">(0, −64)</span>. ב־<span class="m">x = ±2</span> הנגזרת מתאפסת אך לא מחליפה סימן, ולכן אלה אינן נקודות קיצון (נקודות פיתול עם משיק אופקי).</p></div></details></li>
+<li>נתון <span class="m">g(x) = f(3x − 1)</span>, וידוע ש־<span class="m">f′(5) = 4</span>. חשבו את <span class="m">g′(2)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">g′(x) = 3f′(3x − 1)</span></p><p><span class="m">g′(2) = 3f′(5) = 12</span></p></div></details></li>
+<li>מצאו את תחום ההגדרה של <span class="m">f(x) = √(9 − x²)</span>, את תחום הגזירות שלה ואת נקודת הקיצון הפנימית.<details><summary>הצג פתרון</summary><div class="sol steps"><p>תחום הגדרה: <span class="m">−3 ≤ x ≤ 3</span>.</p><p><span class="m">f′(x) = −2x / (2√(9 − x²)) = −x / √(9 − x²)</span>, מוגדרת רק עבור <span class="m">−3 &lt; x &lt; 3</span> (בקצוות המכנה מתאפס).</p><p><span class="m">f′(x) = 0 ⇒ x = 0</span>. הנגזרת חיובית משמאל ל־0 ושלילית מימין, לכן מקסימום ב־<span class="m">(0, 3)</span>. (הגרף הוא חצי מעגל עליון ברדיוס 3.)</p></div></details></li>
+<li>מצאו את הנקודה על הגרף של <span class="m">y = √(x² + 9)</span> שבה שיפוע המשיק הוא <span class="m">4/5</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = x / √(x² + 9) = 4/5</span></p><p>השיפוע חיובי, לכן <span class="m">x &gt; 0</span>. <span class="m">5x = 4√(x² + 9) ⇒ 25x² = 16x² + 144 ⇒ x² = 16 ⇒ x = 4</span></p><p><span class="m">y(4) = √25 = 5</span>. הנקודה: <span class="m">(4, 5)</span>.</p></div></details></li>
+<li>נתונה הפונקציה <span class="m">y = (ax + 1)³</span>. שיפוע המשיק לגרף בנקודה שבה <span class="m">x = 0</span> הוא 6. מצאו את <span class="m">a</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 3(ax + 1)² · a</span></p><p><span class="m">y′(0) = 3a = 6 ⇒ a = 2</span></p></div></details></li>
+<li>מצאו את משוואת המשיק לגרף <span class="m">y = sin²x</span> בנקודה שבה <span class="m">x = π/4</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y(π/4) = (√2/2)² = ½</span></p><p><span class="m">y′ = 2sin x·cos x = sin(2x)</span>, ולכן <span class="m">y′(π/4) = sin(π/2) = 1</span></p><p><span class="m">y − ½ = 1·(x − π/4) ⇒ y = x − π/4 + ½</span></p></div></details></li>
+<li>נתון <span class="m">h(x) = f(x²)</span>, וידוע ש־<span class="m">f′(4) = 3</span>. חשבו את <span class="m">h′(2)</span> ואת <span class="m">h′(−2)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">h′(x) = f′(x²) · 2x</span></p><p><span class="m">h′(2) = f′(4) · 4 = 12</span></p><p><span class="m">h′(−2) = f′(4) · (−4) = −12</span></p><p>בשני המקרים מציבים בפנימית את אותו ערך (4), אבל הנגזרת הפנימית <span class="m">2x</span> שונה.</p></div></details></li>
+<li>נתונה <span class="m">f(x) = x√(4 − x²)</span>. מצאו את תחום ההגדרה, את הנגזרת ואת נקודות הקיצון.<details><summary>הצג פתרון</summary><div class="sol steps"><p>תחום הגדרה: <span class="m">−2 ≤ x ≤ 2</span>.</p><p><span class="m">f′(x) = √(4 − x²) + x · (−2x)/(2√(4 − x²)) = [ (4 − x²) − x² ] / √(4 − x²) = (4 − 2x²) / √(4 − x²)</span></p><p><span class="m">f′(x) = 0 ⇒ x² = 2 ⇒ x = ±√2</span></p><p>סימן הנגזרת: שלילית ב־<span class="m">(−2, −√2)</span>, חיובית ב־<span class="m">(−√2, √2)</span>, שלילית ב־<span class="m">(√2, 2)</span>.</p><p>מינימום ב־<span class="m">(−√2, −2)</span>, מקסימום ב־<span class="m">(√2, 2)</span>. בקצוות: <span class="m">(−2, 0)</span> מקסימום קצה, <span class="m">(2, 0)</span> מינימום קצה.</p></div></details></li>
+<li>מצאו את נקודות הקיצון של <span class="m">f(x) = sin²x + cos x</span> בתחום <span class="m">0 &lt; x &lt; 2π</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">f′(x) = 2sin x·cos x − sin x = sin x(2cos x − 1)</span></p><p><span class="m">sin x = 0 ⇒ x = π</span>; <span class="m">cos x = ½ ⇒ x = π/3, 5π/3</span></p><p>סימן הנגזרת: <span class="m">+</span> ב־<span class="m">(0, π/3)</span>, <span class="m">−</span> ב־<span class="m">(π/3, π)</span>, <span class="m">+</span> ב־<span class="m">(π, 5π/3)</span>, <span class="m">−</span> ב־<span class="m">(5π/3, 2π)</span>.</p><p>מקסימום ב־<span class="m">(π/3, 5/4)</span> וב־<span class="m">(5π/3, 5/4)</span>, מינימום ב־<span class="m">(π, −1)</span>.</p><p>(<span class="m">f(π/3) = ¾ + ½ = 5/4</span>, <span class="m">f(π) = 0 − 1 = −1</span>.)</p></div></details></li>
+</ol></section>
+
+<footer>הפתרונות מוסתרים כדי לאפשר תרגול עצמי. לחצו על "הצג פתרון" כדי לבדוק. בהדפסה כל הפתרונות מוצגים.</footer>
+</div>
+</body>
+</html>

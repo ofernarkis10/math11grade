@@ -24,11 +24,12 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | | `sequences-05-general-term.html` | Sequences given by a general-term formula |
 | | `sequences-06-mixed.html` | Mixed and combined sequences |
 | | `sequences-07-induction.html` | Mathematical induction |
-| Derivatives of composite functions | `composite-derivatives-01-rules.html` | The chain rule and its derived rules, with 42 graded exercises |
+| Derivatives of composite functions | `composite-derivatives-01-rules.html` | The chain rule and the rules derived from it, with worked examples |
+| | `composite-derivatives-02-exercises.html` | 42 graded exercises with full solutions |
 
 ## Structure of a study page
 
-Every study page follows the same layout:
+Most study pages combine explanation and practice. A topic can also split them into an explanation page and a separate exercises page (as in the derivatives topic). Every page follows the same layout:
 
 1. **Back link** to `index.html` and a header with the topic name.
 2. **Table of contents** for the page.
@@ -43,7 +44,7 @@ math11grade/
 ├── index.html                          home page: table of contents + list of all documents
 ├── curriculum-5units-grade10-11.html   curriculum reference
 ├── sequences-NN-<name>.html            sequences topic, pages 00–07
-├── composite-derivatives-NN-<name>.html  derivatives of composite functions
+├── composite-derivatives-NN-<name>.html  derivatives of composite functions (01 rules, 02 exercises)
 ├── README.md
 └── LICENSE                             CC0 1.0 Universal
 ```

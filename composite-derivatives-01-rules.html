@@ -92,6 +92,9 @@ footer{color:var(--muted);font-size:.9rem;text-align:center}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 html{scroll-behavior:smooth}
 @media print{body{background:#fff} details{display:block} details .sol{display:block} summary{display:none} nav{display:none}}
+.btn{align-self:flex-start;background:var(--accent);color:var(--paper);font-weight:700;text-decoration:none;padding:8px 18px;border-radius:99px}
+.btn:hover,.btn:focus-visible{filter:brightness(1.1);outline:none}
+.lead a{color:var(--accent);font-weight:600}
 </style>
 </head>
 <body>
@@ -100,7 +103,7 @@ html{scroll-behavior:smooth}
 <header>
   <span class="eyebrow">מתמטיקה · 5 יחידות · חשבון דיפרנציאלי · נגזרות של פונקציות מורכבות</span>
   <h1>כללי הגזירה של פונקציה מורכבת</h1>
-  <p class="lead">מה זו פונקציה מורכבת, איך מזהים את הפונקציה הפנימית ואת החיצונית, כלל השרשרת וכל הכללים הנגזרים ממנו. בסוף הדף 20 שאלות תרגול מדורגות עם פתרונות מלאים.</p>
+  <p class="lead">מה זו פונקציה מורכבת, איך מזהים את הפונקציה הפנימית ואת החיצונית, כלל השרשרת וכל הכללים הנגזרים ממנו. התרגול לנושא נמצא בדף נפרד: <a href="composite-derivatives-02-exercises.html">תרגילים בגזירת פונקציות מורכבות</a>.</p>
 </header>
 
 <nav aria-label="תוכן"><strong>תוכן</strong><ol>
@@ -111,9 +114,7 @@ html{scroll-behavior:smooth}
   <li><a href="#combine">שילוב עם מכפלה ומנה</a></li>
   <li><a href="#layers">כמה שכבות של הרכבה</a></li>
   <li><a href="#mistakes">טעויות נפוצות</a></li>
-  <li><a href="#lvl1">תרגול רמה א׳: בסיס</a></li>
-  <li><a href="#lvl2">תרגול רמה ב׳: ביסוס</a></li>
-  <li><a href="#lvl3">תרגול רמה ג׳: רמת בגרות</a></li>
+  <li><a href="#practice">לדף התרגילים</a></li>
 </ol></nav>
 
 <!-- 1. WHAT -->
@@ -299,59 +300,13 @@ html{scroll-behavior:smooth}
   </ul>
 </section>
 
-<!-- EXERCISES -->
-<section class="ch level" id="lvl1"><h2>תרגול רמה א׳: בסיס <small>שאלות 1–7</small></h2><p class="lead">גזרו את הפונקציות. הפעלה ישירה של כלל אחד מהטבלה.</p><ol class="exercises" start="1">
-<li><span class="m">y = (3x − 2)⁵</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 5(3x − 2)⁴ · 3 = 15(3x − 2)⁴</span></p></div></details></li>
-<li><span class="m">y = (x² + 1)⁴</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 4(x² + 1)³ · 2x = 8x(x² + 1)³</span></p></div></details></li>
-<li><span class="m">y = √(4x + 1)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 4 / (2√(4x + 1)) = 2 / √(4x + 1)</span></p></div></details></li>
-<li><span class="m">y = 1 / (2x − 5)³</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y = (2x − 5)⁻³</span></p><p><span class="m">y′ = −3(2x − 5)⁻⁴ · 2 = −6 / (2x − 5)⁴</span></p></div></details></li>
-<li><span class="m">y = sin(3x)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 3cos(3x)</span></p></div></details></li>
-<li><span class="m">y = cos(x²)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = −sin(x²) · 2x = −2x·sin(x²)</span></p></div></details></li>
-<li><span class="m">y = sin²x</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 2sin x · cos x = sin(2x)</span></p></div></details></li>
-<li><span class="m">y = (5 − 2x)⁶</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 6(5 − 2x)⁵ · (−2) = −12(5 − 2x)⁵</span></p><p>שימו לב למינוס שמגיע מהנגזרת הפנימית.</p></div></details></li>
-<li><span class="m">y = √(x² + 16)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 2x / (2√(x² + 16)) = x / √(x² + 16)</span></p></div></details></li>
-<li><span class="m">y = (x³ − 2x)⁴</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 4(x³ − 2x)³ · (3x² − 2)</span></p></div></details></li>
-<li><span class="m">y = 1 / (x² + 1)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y = (x² + 1)⁻¹</span></p><p><span class="m">y′ = −(x² + 1)⁻² · 2x = −2x / (x² + 1)²</span></p></div></details></li>
-<li><span class="m">y = cos(5x − 1)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = −sin(5x − 1) · 5 = −5sin(5x − 1)</span></p></div></details></li>
-<li><span class="m">y = sin(x/2)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = cos(x/2) · ½ = ½cos(x/2)</span></p></div></details></li>
-<li><span class="m">y = ∛(3x + 2)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y = (3x + 2)^(1/3)</span></p><p><span class="m">y′ = ⅓(3x + 2)^(−2/3) · 3 = 1 / ∛(3x + 2)²</span></p></div></details></li>
-<li><span class="m">y = tan(x²)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 2x / cos²(x²)</span></p></div></details></li>
-</ol></section>
+<section class="ch next" id="practice">
+  <h2>ועכשיו לתרגול</h2>
+  <p>42 תרגילים מדורגים עם פתרונות מלאים, בשלוש רמות: בסיס, ביסוס ורמת בגרות.</p>
+  <a class="btn" href="composite-derivatives-02-exercises.html">← לדף התרגילים</a>
+</section>
 
-<section class="ch level" id="lvl2"><h2>תרגול רמה ב׳: ביסוס <small>שאלות 8–14</small></h2><p class="lead">שורשים עם פנימית ריבועית, שילוב עם מכפלה ומנה, ושתי שכבות של הרכבה. פשטו את התשובה.</p><ol class="exercises" start="8">
-<li><span class="m">y = √(x² − 6x + 10)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = (2x − 6) / (2√(x² − 6x + 10)) = (x − 3) / √(x² − 6x + 10)</span></p></div></details></li>
-<li><span class="m">y = 5 / (x² + 3)²</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y = 5(x² + 3)⁻²</span></p><p><span class="m">y′ = −10(x² + 3)⁻³ · 2x = −20x / (x² + 3)³</span></p></div></details></li>
-<li><span class="m">y = x(2x + 1)³</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = (2x + 1)³ + x · 3(2x + 1)² · 2</span></p><p><span class="m">= (2x + 1)² [ (2x + 1) + 6x ] = (2x + 1)²(8x + 1)</span></p></div></details></li>
-<li><span class="m">y = x√(1 − x)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = √(1 − x) + x · (−1)/(2√(1 − x))</span></p><p>מכנה משותף: <span class="m">y′ = [ 2(1 − x) − x ] / (2√(1 − x)) = (2 − 3x) / (2√(1 − x))</span></p></div></details></li>
-<li><span class="m">y = tan(2x)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 2 / cos²(2x)</span></p></div></details></li>
-<li><span class="m">y = ( (x + 1)/(x − 1) )³</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>הנגזרת הפנימית (כלל המנה): <span class="m">[ (x+1)/(x−1) ]′ = [ (x−1) − (x+1) ] / (x−1)² = −2/(x−1)²</span></p><p><span class="m">y′ = 3( (x+1)/(x−1) )² · (−2)/(x−1)² = −6(x + 1)² / (x − 1)⁴</span></p></div></details></li>
-<li><span class="m">y = cos³(2x)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 3cos²(2x) · (−sin 2x) · 2 = −6cos²(2x)·sin(2x)</span></p></div></details></li>
-<li><span class="m">y = (x − 1)²(x + 2)³</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 2(x − 1)(x + 2)³ + (x − 1)² · 3(x + 2)²</span></p><p>גורם משותף <span class="m">(x − 1)(x + 2)²</span>: <span class="m">y′ = (x − 1)(x + 2)² [ 2(x + 2) + 3(x − 1) ] = (x − 1)(x + 2)²(5x + 1)</span></p></div></details></li>
-<li><span class="m">y = x / (x² + 1)²</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = [ (x² + 1)² − x · 2(x² + 1)·2x ] / (x² + 1)⁴</span></p><p>מצמצמים ב־<span class="m">(x² + 1)</span>: <span class="m">y′ = [ (x² + 1) − 4x² ] / (x² + 1)³ = (1 − 3x²) / (x² + 1)³</span></p></div></details></li>
-<li><span class="m">y = 1 / √(2x − 1)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y = (2x − 1)^(−1/2)</span></p><p><span class="m">y′ = −½(2x − 1)^(−3/2) · 2 = −1 / ( (2x − 1)√(2x − 1) )</span></p></div></details></li>
-<li><span class="m">y = (2x + 1) / √(x² + 2)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = [ 2√(x² + 2) − (2x + 1) · x/√(x² + 2) ] / (x² + 2)</span></p><p>כופלים מונה ומכנה ב־<span class="m">√(x² + 2)</span>: <span class="m">y′ = [ 2(x² + 2) − 2x² − x ] / (x² + 2)^(3/2) = (4 − x) / (x² + 2)^(3/2)</span></p></div></details></li>
-<li><span class="m">y = x·sin(2x)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = sin(2x) + x · 2cos(2x) = sin(2x) + 2x·cos(2x)</span></p></div></details></li>
-<li><span class="m">y = sin(3x)·cos(3x)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>כלל המכפלה: <span class="m">y′ = 3cos(3x)·cos(3x) + sin(3x)·(−3sin 3x) = 3(cos²3x − sin²3x) = 3cos(6x)</span></p><p>דרך קצרה: <span class="m">y = ½sin(6x)</span>, ולכן <span class="m">y′ = ½ · 6cos(6x) = 3cos(6x)</span>.</p></div></details></li>
-<li><span class="m">y = √(1 + cos²x)</span><details><summary>הצג פתרון</summary><div class="sol steps"><p>שלוש שכבות: שורש ⟵ ריבוע ⟵ קוסינוס.</p><p><span class="m">y′ = 2cos x·(−sin x) / (2√(1 + cos²x)) = −sin x·cos x / √(1 + cos²x)</span></p></div></details></li>
-<li><span class="m">y = 1 / sin²x</span><details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y = (sin x)⁻²</span></p><p><span class="m">y′ = −2(sin x)⁻³ · cos x = −2cos x / sin³x</span></p></div></details></li>
-</ol></section>
-
-<section class="ch level" id="lvl3"><h2>תרגול רמה ג׳: רמת בגרות <small>שאלות 15–20</small></h2><p class="lead">כמה שכבות, משיק, נקודות קיצון ונגזרת בנקודה.</p><ol class="exercises" start="15">
-<li>גזרו את <span class="m">y = √(sin x)</span> ואת <span class="m">y = sin(√x)</span>. מה ההבדל?<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">[√(sin x)]′ = cos x / (2√(sin x))</span>: החיצונית שורש, הפנימית סינוס.</p><p><span class="m">[sin(√x)]′ = cos(√x) / (2√x)</span>: החיצונית סינוס, הפנימית שורש.</p></div></details></li>
-<li>גזרו את <span class="m">y = (sin x + cos x)²</span> והראו שהתוצאה שווה ל־<span class="m">2cos(2x)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 2(sin x + cos x)(cos x − sin x) = 2(cos²x − sin²x) = 2cos(2x)</span></p><p>בדיקה בדרך אחרת: <span class="m">y = 1 + 2sin x cos x = 1 + sin 2x</span>, ולכן <span class="m">y′ = 2cos 2x</span>.</p></div></details></li>
-<li>מצאו את משוואת המשיק לגרף <span class="m">y = √(2x + 5)</span> בנקודה שבה <span class="m">x = 2</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y(2) = √9 = 3</span></p><p><span class="m">y′ = 2/(2√(2x + 5)) = 1/√(2x + 5)</span>, ולכן <span class="m">y′(2) = 1/3</span></p><p><span class="m">y − 3 = (1/3)(x − 2) ⇒ y = x/3 + 7/3</span></p></div></details></li>
-<li>מצאו את נקודות הקיצון של <span class="m">f(x) = (x² − 4)³</span> וקבעו את סוגן.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">f′(x) = 3(x² − 4)² · 2x = 6x(x² − 4)²</span></p><p><span class="m">f′(x) = 0 ⇒ x = 0, x = ±2</span></p><p>הגורם <span class="m">(x² − 4)²</span> אינו שלילי, ולכן סימן הנגזרת נקבע לפי <span class="m">6x</span>: שלילית עבור <span class="m">x &lt; 0</span> וחיובית עבור <span class="m">x &gt; 0</span>.</p><p>מינימום ב־<span class="m">(0, −64)</span>. ב־<span class="m">x = ±2</span> הנגזרת מתאפסת אך לא מחליפה סימן, ולכן אלה אינן נקודות קיצון (נקודות פיתול עם משיק אופקי).</p></div></details></li>
-<li>נתון <span class="m">g(x) = f(3x − 1)</span>, וידוע ש־<span class="m">f′(5) = 4</span>. חשבו את <span class="m">g′(2)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">g′(x) = 3f′(3x − 1)</span></p><p><span class="m">g′(2) = 3f′(5) = 12</span></p></div></details></li>
-<li>מצאו את תחום ההגדרה של <span class="m">f(x) = √(9 − x²)</span>, את תחום הגזירות שלה ואת נקודת הקיצון הפנימית.<details><summary>הצג פתרון</summary><div class="sol steps"><p>תחום הגדרה: <span class="m">−3 ≤ x ≤ 3</span>.</p><p><span class="m">f′(x) = −2x / (2√(9 − x²)) = −x / √(9 − x²)</span>, מוגדרת רק עבור <span class="m">−3 &lt; x &lt; 3</span> (בקצוות המכנה מתאפס).</p><p><span class="m">f′(x) = 0 ⇒ x = 0</span>. הנגזרת חיובית משמאל ל־0 ושלילית מימין, לכן מקסימום ב־<span class="m">(0, 3)</span>. (הגרף הוא חצי מעגל עליון ברדיוס 3.)</p></div></details></li>
-<li>מצאו את הנקודה על הגרף של <span class="m">y = √(x² + 9)</span> שבה שיפוע המשיק הוא <span class="m">4/5</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = x / √(x² + 9) = 4/5</span></p><p>השיפוע חיובי, לכן <span class="m">x &gt; 0</span>. <span class="m">5x = 4√(x² + 9) ⇒ 25x² = 16x² + 144 ⇒ x² = 16 ⇒ x = 4</span></p><p><span class="m">y(4) = √25 = 5</span>. הנקודה: <span class="m">(4, 5)</span>.</p></div></details></li>
-<li>נתונה הפונקציה <span class="m">y = (ax + 1)³</span>. שיפוע המשיק לגרף בנקודה שבה <span class="m">x = 0</span> הוא 6. מצאו את <span class="m">a</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y′ = 3(ax + 1)² · a</span></p><p><span class="m">y′(0) = 3a = 6 ⇒ a = 2</span></p></div></details></li>
-<li>מצאו את משוואת המשיק לגרף <span class="m">y = sin²x</span> בנקודה שבה <span class="m">x = π/4</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">y(π/4) = (√2/2)² = ½</span></p><p><span class="m">y′ = 2sin x·cos x = sin(2x)</span>, ולכן <span class="m">y′(π/4) = sin(π/2) = 1</span></p><p><span class="m">y − ½ = 1·(x − π/4) ⇒ y = x − π/4 + ½</span></p></div></details></li>
-<li>נתון <span class="m">h(x) = f(x²)</span>, וידוע ש־<span class="m">f′(4) = 3</span>. חשבו את <span class="m">h′(2)</span> ואת <span class="m">h′(−2)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">h′(x) = f′(x²) · 2x</span></p><p><span class="m">h′(2) = f′(4) · 4 = 12</span></p><p><span class="m">h′(−2) = f′(4) · (−4) = −12</span></p><p>בשני המקרים מציבים בפנימית את אותו ערך (4), אבל הנגזרת הפנימית <span class="m">2x</span> שונה.</p></div></details></li>
-<li>נתונה <span class="m">f(x) = x√(4 − x²)</span>. מצאו את תחום ההגדרה, את הנגזרת ואת נקודות הקיצון.<details><summary>הצג פתרון</summary><div class="sol steps"><p>תחום הגדרה: <span class="m">−2 ≤ x ≤ 2</span>.</p><p><span class="m">f′(x) = √(4 − x²) + x · (−2x)/(2√(4 − x²)) = [ (4 − x²) − x² ] / √(4 − x²) = (4 − 2x²) / √(4 − x²)</span></p><p><span class="m">f′(x) = 0 ⇒ x² = 2 ⇒ x = ±√2</span></p><p>סימן הנגזרת: שלילית ב־<span class="m">(−2, −√2)</span>, חיובית ב־<span class="m">(−√2, √2)</span>, שלילית ב־<span class="m">(√2, 2)</span>.</p><p>מינימום ב־<span class="m">(−√2, −2)</span>, מקסימום ב־<span class="m">(√2, 2)</span>. בקצוות: <span class="m">(−2, 0)</span> מקסימום קצה, <span class="m">(2, 0)</span> מינימום קצה.</p></div></details></li>
-<li>מצאו את נקודות הקיצון של <span class="m">f(x) = sin²x + cos x</span> בתחום <span class="m">0 &lt; x &lt; 2π</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><p><span class="m">f′(x) = 2sin x·cos x − sin x = sin x(2cos x − 1)</span></p><p><span class="m">sin x = 0 ⇒ x = π</span>; <span class="m">cos x = ½ ⇒ x = π/3, 5π/3</span></p><p>סימן הנגזרת: <span class="m">+</span> ב־<span class="m">(0, π/3)</span>, <span class="m">−</span> ב־<span class="m">(π/3, π)</span>, <span class="m">+</span> ב־<span class="m">(π, 5π/3)</span>, <span class="m">−</span> ב־<span class="m">(5π/3, 2π)</span>.</p><p>מקסימום ב־<span class="m">(π/3, 5/4)</span> וב־<span class="m">(5π/3, 5/4)</span>, מינימום ב־<span class="m">(π, −1)</span>.</p><p>(<span class="m">f(π/3) = ¾ + ½ = 5/4</span>, <span class="m">f(π) = 0 − 1 = −1</span>.)</p></div></details></li>
-</ol></section>
-
-<footer>הפתרונות מוסתרים כדי לאפשר תרגול עצמי. לחצו על "הצג פתרון" כדי לבדוק. בהדפסה כל הפתרונות מוצגים.</footer>
+<footer>כל הכללים בדף זה מתורגלים בדף התרגילים של הנושא.</footer>
 </div>
 </body>
 </html>
