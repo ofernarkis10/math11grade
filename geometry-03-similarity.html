@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>פרופורציה ודמיון משולשים · דף לימוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same study-page style as the rest of the site; geometry pages add figures (inline SVG drawn with the color tokens), theorem boxes and converse boxes */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:68ch}
+.lead a,.meaning a{color:var(--accent);font-weight:600}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav.pages{display:flex;gap:8px;flex-wrap:wrap}
+nav.pages a,nav.pages span{padding:6px 14px;border:1px solid var(--line);border-radius:99px;font-size:.9rem;font-weight:600;text-decoration:none;color:var(--accent);background:var(--paper)}
+nav.pages span{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+nav.pages a:hover,nav.pages a:focus-visible{border-color:var(--accent);outline:none}
+
+nav.toc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav.toc ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav.toc a{color:var(--accent);text-decoration:none;font-weight:600}
+nav.toc a:hover,nav.toc a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav.toc ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:70ch;display:flex;flex-direction:column;gap:10px}
+.meaning ul,.meaning ol{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:4px}
+
+/* theorem / converse / definition boxes */
+.thm{border-inline-start:4px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0;padding:10px 16px;display:flex;flex-direction:column;gap:4px}
+.thm .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.thm.conv{border-color:var(--mark);background:var(--mark-soft)}
+.thm.conv .tag{color:var(--mark)}
+.proof{font-size:.96rem;color:var(--ink);display:flex;flex-direction:column;gap:4px;border-inline-start:2px dotted var(--line);padding-inline-start:14px}
+.proof b{color:var(--muted)}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ul.mistakes{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:8px}
+
+/* figures */
+.figrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:20px;align-items:center}
+@media (max-width:680px){.figrow{grid-template-columns:minmax(0,1fr)}}
+.figrow > div{display:flex;flex-direction:column;gap:10px;min-width:0}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+figure.fig{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+figure.fig svg{width:100%;height:auto;direction:ltr;overflow:visible}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center}
+.fig .ln{stroke:var(--ink);stroke-width:2;fill:none;stroke-linejoin:round}
+.fig .ac{stroke:var(--accent);stroke-width:2;fill:none}
+.fig .mk{stroke:var(--mark);stroke-width:2;fill:none}
+.fig .thick{stroke-width:4;stroke-linecap:round}
+.fig .thin{stroke-width:1.4}
+.fig .dash{stroke-dasharray:5 4}
+.fig .soft{stroke:var(--muted);stroke-width:1.4;fill:none;stroke-dasharray:4 4}
+.fig .fill{fill:var(--accent-soft)}
+.fig .pt{fill:var(--ink)}
+.fig .pta{fill:var(--accent)}
+.fig .ptm{fill:var(--mark)}
+.fig text{font-family:var(--f-math);font-size:15px;fill:var(--ink);text-anchor:middle}
+.fig text.he{font-family:var(--f-body);font-size:14px;direction:rtl}
+.fig text.a{fill:var(--accent);font-weight:600}
+.fig text.k{fill:var(--mark);font-weight:600}
+.fig text.sm{font-size:12px}
+
+.btn{align-self:flex-start;background:var(--accent);color:var(--paper);font-weight:700;text-decoration:none;padding:8px 18px;border-radius:99px}
+.btn:hover,.btn:focus-visible{filter:brightness(1.1);outline:none}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:#fff} nav.toc,nav.pages,.back{display:none} section.ch{break-inside:avoid-page}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · גאומטריה אוקלידית · נושא 3 מתוך 3</span>
+  <h1>פרופורציה ודמיון משולשים</h1>
+  <p class="lead">הנושא השלישי בפרק הגאומטריה האוקלידית. תכונות של פרופורציות, משפט תאלס וההפוך לו, הגדרת הדמיון ושלושת משפטי הדמיון, יחסי היקפים ושטחים, משפט חוצה הזווית, דמיון במשולש ישר זווית ובמעגל, ובניות של חלוקת קטע.</p>
+</header>
+<nav class="pages" aria-label="דפי הנושא"><a href="geometry-01-loci-triangle-centers.html">1. מקומות גאומטריים ונקודות מיוחדות</a><a href="geometry-02-circle.html">2. המעגל</a><span aria-current="page">3. פרופורציה ודמיון</span></nav>
+<nav class="toc" aria-label="תוכן"><strong>תוכן</strong><ol>
+  <li><a href="#proportion">יחס ופרופורציה</a></li>
+  <li><a href="#thales">משפט תאלס</a></li>
+  <li><a href="#converse">תאלס ההפוך וקטע אמצעים</a></li>
+  <li><a href="#definition">דמיון משולשים: ההגדרה</a></li>
+  <li><a href="#theorems">משפטי הדמיון</a></li>
+  <li><a href="#ratios">יחסים במשולשים דומים</a></li>
+  <li><a href="#bisector">משפט חוצה הזווית</a></li>
+  <li><a href="#right">דמיון במשולש ישר זווית</a></li>
+  <li><a href="#circle">דמיון במעגל</a></li>
+  <li><a href="#identify">איך מזהים משולשים דומים</a></li>
+  <li><a href="#constructions">בניות: חלוקת קטע</a></li>
+  <li><a href="#mistakes">טעויות נפוצות</a></li>
+</ol></nav>
+
+<!-- 1. PROPORTION -->
+<section class="ch" id="proportion">
+  <h2>1. יחס ופרופורציה</h2>
+  <div class="meaning">
+    <p><strong>יחס</strong> בין שני גדלים הוא המנה שלהם: <span class="m">a : b = a/b</span>. <strong>פרופורציה</strong> היא שוויון בין שני יחסים: <span class="m">a/b = c/d</span>.</p>
+  </div>
+  <div class="tablebox"><table>
+    <thead><tr><th>אם <span class="m">a/b = c/d</span>, אז…</th><th>שם הכלל</th></tr></thead>
+    <tbody>
+      <tr><td><span class="m">a·d = b·c</span></td><td>כפל בהצלבה (מכפלת הקצוות = מכפלת האמצעים)</td></tr>
+      <tr><td><span class="m">a/c = b/d</span></td><td>החלפת האמצעים</td></tr>
+      <tr><td><span class="m">b/a = d/c</span></td><td>היפוך שני היחסים</td></tr>
+      <tr><td><span class="m">(a+b)/b = (c+d)/d</span></td><td>הוספת המכנה למונה. מעבר מ"חלק לחלק" ל"חלק לשלם"</td></tr>
+      <tr><td><span class="m">(a−b)/b = (c−d)/d</span></td><td>חיסור המכנה מהמונה</td></tr>
+      <tr><td><span class="m">a/b = (a+c)/(b+d)</span></td><td>סכום המונים חלקי סכום המכנים שווה לאותו יחס</td></tr>
+    </tbody>
+  </table></div>
+  <div class="example"><span class="tag">דוגמה: חלוקה פנימית ביחס נתון</span>
+    <p>נקודה <span class="m">D</span> מחלקת את <span class="m">AB = 20</span> ביחס <span class="m">AD : DB = 2 : 3</span>. יש 5 חלקים, ולכן <span class="m">AD = ⅖·20 = 8</span> ו־<span class="m">DB = ⅗·20 = 12</span>.</p>
+  </div>
+</section>
+
+<!-- 2. THALES -->
+<section class="ch" id="thales">
+  <h2>2. משפט תאלס</h2>
+  <div class="figrow">
+    <div>
+      <div class="thm"><span class="tag">משפט תאלס</span>
+        <p>אם ישרים מקבילים חותכים את שוקי זווית, הקטעים שנוצרים על שוק אחת פרופורציוניים לקטעים המתאימים על השוק השנייה.</p>
+      </div>
+      <div class="meaning"><p>במשולש <span class="m">ABC</span>, אם <span class="m">DE ∥ BC</span>:</p></div>
+      <div class="thm" style="text-align:center">
+        <p><span class="m">AD/DB = AE/EC</span></p>
+        <p><span class="m">AD/AB = AE/AC</span></p>
+      </div>
+    </div>
+    <figure class="fig"><svg viewBox="5 -9 321 248" style="max-width:300px" role="img" aria-label="משולש ABC וקטע DE מקביל ל-BC">
+<polygon class="ln" points="150.0,30.0 40.0,210.0 290.0,210.0"/>
+<line class="ac" x1="106.0" y1="102.0" x2="206.0" y2="102.0"/>
+<path class="mk" d="M122.0,102.0 A16,16 0 0 0 114.3,88.3"/>
+<path class="mk" d="M56.0,210.0 A16,16 0 0 0 48.3,196.3"/>
+<circle class="pt" cx="150.0" cy="30.0" r="3.2"/>
+<text class="lb" x="148.8" y="20.1">A</text>
+<circle class="pt" cx="40.0" cy="210.0" r="3.2"/>
+<text class="lb" x="26.6" y="221.7">B</text>
+<circle class="pt" cx="290.0" cy="210.0" r="3.2"/>
+<text class="lb" x="303.6" y="221.3">C</text>
+<circle class="pt" cx="106.0" cy="102.0" r="3.2"/>
+<circle class="pt" cx="206.0" cy="102.0" r="3.2"/>
+<text class="lb" x="92.0" y="107.0">D</text>
+<text class="lb" x="220.0" y="107.0">E</text>
+</svg><figcaption><span class="m">DE ∥ BC  ⇒  AD/DB = AE/EC</span></figcaption></figure>
+  </div>
+  <div class="thm"><span class="tag">משפט תאלס המורחב</span>
+    <p>בנוסף, היחס בין הקטעים <strong>המקבילים</strong> שווה ליחס בין הקטע הקטן על השוק לשוק כולה: <span class="m">DE/BC = AD/AB = AE/AC</span>.</p>
+  </div>
+  <p class="note"><strong>שימו לב:</strong> ביחס עם <span class="m">DE/BC</span> משתמשים בשוק <strong>כולה</strong> (<span class="m">AD/AB</span>), לא ב־<span class="m">AD/DB</span>.</p>
+  <div class="example"><span class="tag">דוגמה</span>
+    <p>במשולש <span class="m">ABC</span>, <span class="m">DE ∥ BC</span>, <span class="m">AD = 4</span>, <span class="m">DB = 6</span>, <span class="m">AE = 5</span>, <span class="m">BC = 15</span>.</p>
+    <p><span class="m">4/6 = 5/EC</span>, ולכן <span class="m">EC = 7.5</span>.</p>
+    <p><span class="m">DE/15 = 4/10</span>, ולכן <span class="m">DE = 6</span>.</p>
+  </div>
+  <div class="meaning"><p>המשפט נכון גם בצורת "שעון חול": כש־<span class="m">D</span> ו־<span class="m">E</span> נמצאות על ההמשכים של <span class="m">BA</span> ו־<span class="m">CA</span> מעבר ל־<span class="m">A</span>, ו־<span class="m">DE ∥ BC</span>.</p></div>
+</section>
+
+<!-- 3. CONVERSE + MIDSEGMENT -->
+<section class="ch" id="converse">
+  <h2>3. המשפט ההפוך לתאלס וקטע אמצעים</h2>
+  <div class="thm conv"><span class="tag">המשפט ההפוך</span>
+    <p>אם <span class="m">D</span> על <span class="m">AB</span>, <span class="m">E</span> על <span class="m">AC</span>, ו־<span class="m">AD/DB = AE/EC</span> (או <span class="m">AD/AB = AE/AC</span>), אז <span class="m">DE ∥ BC</span>.</p>
+  </div>
+  <p class="note"><strong>זהירות:</strong> השוויון <span class="m">AD/AB = DE/BC</span> <strong>לא</strong> מבטיח ש־<span class="m">DE ∥ BC</span>. מ־<span class="m">D</span> אפשר למתוח קטע באורך הנדרש עד <span class="m">AC</span> בשני כיוונים, ורק אחד מהם מקביל ל־<span class="m">BC</span>.</p>
+  <h3>קטע אמצעים: מקרה פרטי של תאלס</h3>
+  <div class="thm"><span class="tag">משפט</span>
+    <p>קטע אמצעים במשולש (מחבר אמצעי שתי צלעות) <strong>מקביל לצלע השלישית ושווה למחציתה</strong>.</p>
+  </div>
+  <div class="thm conv"><span class="tag">משפט הפוך</span>
+    <p>ישר שיוצא מאמצע צלע אחת ומקביל לצלע שנייה חוצה את הצלע השלישית.</p>
+  </div>
+  <div class="meaning"><p>בטרפז, קטע האמצעים (מחבר את אמצעי השוקיים) מקביל לבסיסים ושווה למחצית סכומם: <span class="m">(a + b)/2</span>.</p></div>
+</section>
+
+<!-- 4. SIMILARITY DEFINITION -->
+<section class="ch" id="definition">
+  <h2>4. דמיון משולשים: ההגדרה</h2>
+  <div class="thm"><span class="tag">הגדרה</span>
+    <p>שני משולשים <strong>דומים</strong> אם הזוויות שלהם שוות בהתאמה והצלעות המתאימות פרופורציוניות. כותבים <span class="m">△ABC ∼ △DEF</span>:</p>
+    <p><span class="m">∠A = ∠D, ∠B = ∠E, ∠C = ∠F</span> &nbsp;וגם&nbsp; <span class="m">AB/DE = BC/EF = AC/DF = k</span></p>
+  </div>
+  <div class="meaning">
+    <p>המספר <span class="m">k</span> הוא <strong>יחס הדמיון</strong>. למשל, אם <span class="m">k = 2</span> המשולש הראשון הוא "הגדלה פי 2" של השני.</p>
+    <p><strong>סדר האותיות קובע את ההתאמה:</strong> <span class="m">A</span> מתאים ל־<span class="m">D</span>, <span class="m">B</span> ל־<span class="m">E</span> ו־<span class="m">C</span> ל־<span class="m">F</span>. צלעות מתאימות הן צלעות שנמצאות מול זוויות שוות.</p>
+    <p>חפיפה היא מקרה פרטי של דמיון, עם <span class="m">k = 1</span>.</p>
+  </div>
+</section>
+
+<!-- 5. SIMILARITY THEOREMS -->
+<section class="ch" id="theorems">
+  <h2>5. משפטי הדמיון</h2>
+  <div class="meaning"><p>אין צורך לבדוק את כל שש ההתאמות שבהגדרה. מספיק אחד משלושת המשפטים:</p></div>
+  <div class="tablebox"><table>
+    <thead><tr><th>משפט</th><th>מה צריך להראות</th><th>דומה למשפט החפיפה</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ז.ז</strong></td><td>שתי זוויות שוות בהתאמה (ואז גם השלישית).</td><td>ז.צ.ז, בלי הצלע</td></tr>
+      <tr><td><strong>צ.ז.צ</strong></td><td>שתי צלעות פרופורציוניות והזווית <strong>שביניהן</strong> שווה.</td><td>צ.ז.צ</td></tr>
+      <tr><td><strong>צ.צ.צ</strong></td><td>שלוש הצלעות פרופורציוניות.</td><td>צ.צ.צ</td></tr>
+    </tbody>
+  </table></div>
+  <div class="example"><span class="tag">דוגמאות</span>
+    <p><strong>צ.צ.צ:</strong> משולש עם הצלעות 4, 6, 8 ומשולש עם הצלעות 6, 9, 12. כל היחסים שווים: <span class="m">6/4 = 9/6 = 12/8 = 1.5</span>. המשולשים דומים, עם <span class="m">k = 1.5</span>.</p>
+    <p><strong>צ.ז.צ:</strong> במשולש <span class="m">ABC</span>, <span class="m">AB = 12</span>, <span class="m">AC = 9</span>. על <span class="m">AB</span> הנקודה <span class="m">E</span> עם <span class="m">AE = 3</span>, ועל <span class="m">AC</span> הנקודה <span class="m">D</span> עם <span class="m">AD = 4</span>. הזווית <span class="m">A</span> משותפת, ו־<span class="m">AD/AB = 4/12 = 1/3</span>, <span class="m">AE/AC = 3/9 = 1/3</span>. לכן <span class="m">△ADE ∼ △ABC</span>. שימו לב ש־<span class="m">D</span> מתאים ל־<span class="m">B</span>, ולכן <span class="m">DE</span> <strong>אינו</strong> מקביל ל־<span class="m">BC</span>.</p>
+  </div>
+</section>
+
+<!-- 6. RATIOS -->
+<section class="ch" id="ratios">
+  <h2>6. יחסים במשולשים דומים</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>מה משווים</th><th>היחס</th></tr></thead>
+    <tbody>
+      <tr><td>צלעות מתאימות</td><td><span class="m">k</span></td></tr>
+      <tr><td>היקפים</td><td><span class="m">k</span></td></tr>
+      <tr><td>גבהים, תיכונים וחוצי זוויות מתאימים</td><td><span class="m">k</span></td></tr>
+      <tr><td>רדיוסי המעגלים החוסמים, רדיוסי המעגלים החסומים</td><td><span class="m">k</span></td></tr>
+      <tr><td><strong>שטחים</strong></td><td><strong><span class="m">k²</span></strong></td></tr>
+    </tbody>
+  </table></div>
+  <div class="meaning">
+    <p><strong>למה השטח ביחס <span class="m">k²</span>?</strong> שטח משולש הוא <span class="m">½·בסיס·גובה</span>. גם הבסיס וגם הגובה גדלים פי <span class="m">k</span>, ולכן השטח גדל פי <span class="m">k·k = k²</span>.</p>
+    <p>אותם יחסים נכונים לכל שני <strong>מצולעים דומים</strong>: היקפים ביחס <span class="m">k</span>, שטחים ביחס <span class="m">k²</span>.</p>
+  </div>
+  <div class="example"><span class="tag">דוגמאות</span>
+    <p>יחס הדמיון בין משולש קטן לגדול הוא <span class="m">2 : 3</span>, ושטח הקטן 18. שטח הגדול: <span class="m">18 · (3/2)² = 18 · 9/4 = 40.5</span>.</p>
+    <p>שטחים של שני משולשים דומים הם ביחס <span class="m">16 : 25</span>. יחס הדמיון הוא <span class="m">√16 : √25 = 4 : 5</span>. אם היקף הגדול 40, היקף הקטן <span class="m">40 · 4/5 = 32</span>.</p>
+  </div>
+</section>
+
+<!-- 7. ANGLE BISECTOR -->
+<section class="ch" id="bisector">
+  <h2>7. משפט חוצה הזווית</h2>
+  <div class="figrow">
+    <div>
+      <div class="thm"><span class="tag">משפט</span>
+        <p>חוצה זווית פנימית במשולש מחלק את הצלע שמולו ביחס של שתי הצלעות הסמוכות לזווית:</p>
+        <p style="text-align:center"><span class="m">BD/DC = AB/AC</span></p>
+      </div>
+      <div class="thm conv"><span class="tag">משפט הפוך</span><p>אם <span class="m">BD/DC = AB/AC</span>, אז <span class="m">AD</span> חוצה את זווית <span class="m">A</span>.</p></div>
+    </div>
+    <figure class="fig"><svg viewBox="-6 7 342 233" style="max-width:300px" role="img" aria-label="חוצה הזווית AD מחלק את BC ביחס AB:AC">
+<polygon class="ln" points="105.0,45.0 30.0,200.0 300.0,200.0"/>
+<line class="ac" x1="105.0" y1="45.0" x2="140.4" y2="200.0"/>
+<path class="mk" d="M93.7,68.4 A26,26 0 0 0 110.8,70.3"/>
+<path class="mk" d="M112.1,76.2 A32,32 0 0 0 130.1,64.9"/>
+<circle class="pt" cx="105.0" cy="45.0" r="3.2"/>
+<text class="lb" x="99.1" y="36.2">A</text>
+<circle class="pt" cx="30.0" cy="200.0" r="3.2"/>
+<text class="lb" x="16.2" y="210.8">B</text>
+<circle class="pt" cx="300.0" cy="200.0" r="3.2"/>
+<text class="lb" x="314.2" y="209.7">C</text>
+<circle class="pt" cx="140.4" cy="200.0" r="3.2"/>
+<text class="lb" x="140.4" y="223.0">D</text>
+</svg><figcaption><span class="m">BD / DC = AB / AC</span></figcaption></figure>
+  </div>
+  <div class="proof">
+    <p><b>הוכחה:</b> דרך <span class="m">C</span> מעבירים ישר מקביל ל־<span class="m">AD</span>, שפוגש את המשך <span class="m">BA</span> בנקודה <span class="m">E</span>.</p>
+    <p><span class="m">∠ACE = ∠CAD</span> (מתחלפות) ו־<span class="m">∠AEC = ∠BAD</span> (מתאימות). מכיוון ש־<span class="m">∠BAD = ∠CAD</span>, גם <span class="m">∠ACE = ∠AEC</span>, ולכן משולש <span class="m">ACE</span> שווה שוקיים: <span class="m">AE = AC</span>.</p>
+    <p>לפי תאלס במשולש <span class="m">BCE</span> (<span class="m">AD ∥ EC</span>): <span class="m">BD/DC = BA/AE = AB/AC</span>.</p>
+  </div>
+  <div class="example"><span class="tag">דוגמה</span>
+    <p>במשולש <span class="m">ABC</span>: <span class="m">AB = 6</span>, <span class="m">AC = 9</span>, <span class="m">BC = 10</span>. <span class="m">AD</span> חוצה את זווית <span class="m">A</span>.</p>
+    <p><span class="m">BD : DC = 6 : 9 = 2 : 3</span>, ולכן <span class="m">BD = ⅖·10 = 4</span> ו־<span class="m">DC = 6</span>.</p>
+  </div>
+</section>
+
+<!-- 8. RIGHT TRIANGLE -->
+<section class="ch" id="right">
+  <h2>8. דמיון במשולש ישר זווית</h2>
+  <div class="figrow">
+    <div>
+      <div class="meaning"><p>במשולש <span class="m">ABC</span> עם <span class="m">∠C = 90°</span>, הגובה <span class="m">CH</span> ליתר מחלק אותו לשני משולשים. שלושת המשולשים דומים זה לזה (ז.ז, כי לכל זוג יש זווית ישרה וזווית משותפת):</p></div>
+      <div class="thm" style="text-align:center"><p><span class="m">△ABC ∼ △ACH ∼ △CBH</span></p></div>
+      <div class="meaning"><p>אם <span class="m">AH = p</span>, <span class="m">HB = q</span>, <span class="m">AB = c</span> ו־<span class="m">CH = h</span>, מהדמיון מקבלים:</p></div>
+      <div class="thm">
+        <p><span class="m">h² = p · q</span></p>
+        <p><span class="m">AC² = p · c</span>,&nbsp; <span class="m">BC² = q · c</span></p>
+        <p><span class="m">h = AC · BC / c</span></p>
+      </div>
+    </div>
+    <figure class="fig"><svg viewBox="-6 43 353 197" style="max-width:320px" role="img" aria-label="משולש ישר זווית ABC עם הגובה CH ליתר">
+<polygon class="ln" points="30.0,200.0 310.0,200.0 100.0,78.8"/>
+<line class="ac" x1="100.0" y1="78.8" x2="100.0" y2="200.0"/>
+<polyline class="ln thin" points="94.5,88.3 104.0,93.8 109.5,84.3"/>
+<polyline class="ln thin" points="109.0,200.0 109.0,191.0 100.0,191.0"/>
+<circle class="pt" cx="30.0" cy="200.0" r="3.2"/>
+<text class="lb" x="15.6" y="209.1">A</text>
+<circle class="pt" cx="310.0" cy="200.0" r="3.2"/>
+<text class="lb" x="324.4" y="209.1">B</text>
+<circle class="pt" cx="100.0" cy="78.8" r="3.2"/>
+<text class="lb" x="90.2" y="72.4">C</text>
+<circle class="pt" cx="100.0" cy="200.0" r="3.2"/>
+<text class="lb" x="100.0" y="223.0">H</text>
+<text class="k" x="65.0" y="221.0">p</text>
+<text class="k" x="205.0" y="221.0">q</text>
+<text class="a" x="110.0" y="144.4">h</text>
+</svg><figcaption><span class="m">h² = p·q,  AC² = p·c,  BC² = q·c</span></figcaption></figure>
+  </div>
+  <div class="example"><span class="tag">דוגמה</span>
+    <p>הגובה ליתר מחלק אותו לקטעים <span class="m">p = 4</span> ו־<span class="m">q = 9</span>. אז <span class="m">h = √(4·9) = 6</span>, <span class="m">c = 13</span>, <span class="m">AC = √(4·13) = 2√13</span>, <span class="m">BC = √(9·13) = 3√13</span>.</p>
+    <p>בדיקה בפיתגורס: <span class="m">52 + 117 = 169 = 13²</span>.</p>
+  </div>
+</section>
+
+<!-- 9. CIRCLE -->
+<section class="ch" id="circle">
+  <h2>9. דמיון במעגל</h2>
+  <div class="meaning"><p>שלושה משפטים שמוכחים בדמיון משולשים, בעזרת הזוויות ההיקפיות מ<a href="geometry-02-circle.html#inscribed">נושא המעגל</a>.</p></div>
+  <div class="figs">
+    <figure class="fig"><svg viewBox="37 7 234 227" style="max-width:280px" role="img" aria-label="שני מיתרים AB ו-CD נחתכים בנקודה E">
+<circle class="ln" cx="150.0" cy="130.0" r="90.0"/>
+<line class="ln" x1="72.1" y1="85.0" x2="234.6" y2="160.8"/>
+<line class="ln" x1="180.8" y1="45.4" x2="81.1" y2="187.9"/>
+<line class="mk dash" x1="72.1" y1="85.0" x2="180.8" y2="45.4"/>
+<line class="ac dash" x1="81.1" y1="187.9" x2="234.6" y2="160.8"/>
+<circle class="pt" cx="72.1" cy="85.0" r="3.2"/>
+<text class="lb" x="59.1" y="82.5">A</text>
+<circle class="pt" cx="234.6" cy="160.8" r="3.2"/>
+<text class="lb" x="248.7" y="170.9">B</text>
+<circle class="pt" cx="180.8" cy="45.4" r="3.2"/>
+<text class="lb" x="185.9" y="36.3">C</text>
+<circle class="pt" cx="81.1" cy="187.9" r="3.2"/>
+<text class="lb" x="69.6" y="202.5">D</text>
+<circle class="pt" cx="133.1" cy="113.5" r="3.2"/>
+<text class="lb" x="147.1" y="110.5">E</text>
+</svg><figcaption><span class="m">AE · EB = CE · ED</span></figcaption></figure>
+    <figure class="fig"><svg viewBox="21 28 344 186" style="max-width:320px" role="img" aria-label="משיק PT וחותך PAB מנקודה P מחוץ למעגל">
+<circle class="ln" cx="110.0" cy="130.0" r="70.0"/>
+<line class="ac" x1="330.0" y1="150.0" x2="138.1" y2="65.9"/>
+<line class="mk" x1="330.0" y1="150.0" x2="55.1" y2="173.4"/>
+<line class="soft" x1="110.0" y1="130.0" x2="138.1" y2="65.9"/>
+<polyline class="ln thin" points="134.5,74.1 142.7,77.7 146.3,69.5"/>
+<circle class="pt" cx="330.0" cy="150.0" r="3.2"/>
+<circle class="pt" cx="138.1" cy="65.9" r="3.2"/>
+<circle class="pt" cx="171.5" cy="163.5" r="3.2"/>
+<circle class="pt" cx="55.1" cy="173.4" r="3.2"/>
+<text class="lb" x="343.0" y="155.0">P</text>
+<text class="lb" x="138.1" y="56.9">T</text>
+<text class="lb" x="177.5" y="184.5">A</text>
+<text class="lb" x="43.3" y="187.7">B</text>
+</svg><figcaption><span class="m">PT² = PA · PB</span></figcaption></figure>
+  </div>
+  <div class="thm"><span class="tag">שני מיתרים נחתכים</span>
+    <p>אם המיתרים <span class="m">AB</span> ו־<span class="m">CD</span> נחתכים ב־<span class="m">E</span>: &nbsp;<span class="m">AE · EB = CE · ED</span></p>
+  </div>
+  <div class="proof"><p><b>הוכחה:</b> <span class="m">△AEC ∼ △DEB</span> לפי ז.ז: <span class="m">∠AEC = ∠DEB</span> (קודקודיות), ו־<span class="m">∠CAB = ∠CDB</span> (היקפיות על הקשת <span class="m">CB</span>). מכאן <span class="m">AE/DE = CE/BE</span>, ובכפל בהצלבה מקבלים את המשפט.</p></div>
+  <div class="thm"><span class="tag">משיק וחותך מאותה נקודה</span>
+    <p>אם <span class="m">PT</span> משיק, והחותך מ־<span class="m">P</span> פוגש את המעגל ב־<span class="m">A</span> (הקרובה) וב־<span class="m">B</span> (הרחוקה): &nbsp;<span class="m">PT² = PA · PB</span></p>
+  </div>
+  <div class="proof"><p><b>הוכחה:</b> <span class="m">△PTA ∼ △PBT</span> לפי ז.ז: הזווית <span class="m">P</span> משותפת, ו־<span class="m">∠PTA = ∠PBT</span> (הזווית בין משיק למיתר שווה להיקפית על הקשת <span class="m">TA</span>). מכאן <span class="m">PT/PB = PA/PT</span>.</p></div>
+  <div class="thm"><span class="tag">שני חותכים מאותה נקודה</span>
+    <p>אם חותך אחד פוגש את המעגל ב־<span class="m">A, B</span> וחותך שני ב־<span class="m">C, D</span>: &nbsp;<span class="m">PA · PB = PC · PD</span></p>
+  </div>
+  <div class="example"><span class="tag">דוגמאות</span>
+    <p><strong>מיתרים:</strong> <span class="m">AE = 4</span>, <span class="m">EB = 6</span>, <span class="m">CE = 3</span>. אז <span class="m">4·6 = 3·ED</span>, ולכן <span class="m">ED = 8</span>.</p>
+    <p><strong>משיק וחותך:</strong> <span class="m">PA = 4</span>, <span class="m">PB = 9</span>. אז <span class="m">PT² = 36</span>, ולכן <span class="m">PT = 6</span>.</p>
+    <p><strong>שני חותכים:</strong> <span class="m">PA = 3</span>, <span class="m">AB = 5</span> (ולכן <span class="m">PB = 8</span>), <span class="m">PC = 4</span>. אז <span class="m">3·8 = 4·PD</span>, <span class="m">PD = 6</span> והמיתר <span class="m">CD = 2</span>.</p>
+  </div>
+</section>
+
+<!-- 10. IDENTIFY -->
+<section class="ch" id="identify">
+  <h2>10. איך מזהים משולשים דומים</h2>
+  <div class="meaning">
+    <p>ברוב השאלות קשה יותר <strong>למצוא</strong> את המשולשים הדומים מאשר להוכיח את הדמיון. מה לחפש:</p>
+    <ul>
+      <li><strong>קווים מקבילים:</strong> יוצרים זוויות מתחלפות ומתאימות שוות. צורת "<strong>A</strong>": משולש קטן בתוך גדול עם קדקוד משותף. צורת "<strong>שעון חול</strong>": שני משולשים משני צדי נקודת חיתוך.</li>
+      <li><strong>זווית משותפת</strong>, ועוד זווית אחת שווה.</li>
+      <li><strong>זוויות קודקודיות</strong> בנקודת חיתוך.</li>
+      <li><strong>זוויות היקפיות</strong> הנשענות על אותה קשת.</li>
+      <li><strong>גובה ליתר</strong> במשולש ישר זווית.</li>
+    </ul>
+    <p><strong>איך לכתוב:</strong> כותבים את הדמיון בסדר אותיות מתאים, ואז את שרשרת היחסים. אחר כך בוחרים את היחס שבו ידועים שלושה גדלים מתוך ארבעה.</p>
+  </div>
+  <div class="example"><span class="tag">דוגמה: אלכסוני טרפז</span>
+    <p>בטרפז <span class="m">ABCD</span> (<span class="m">AB ∥ CD</span>) האלכסונים נחתכים ב־<span class="m">E</span>. נתון <span class="m">AB = 12</span>, <span class="m">CD = 8</span>, <span class="m">AC = 15</span>.</p>
+    <p>צורת שעון חול: <span class="m">△ABE ∼ △CDE</span> (זוויות מתחלפות וקודקודיות), ולכן <span class="m">AE/EC = AB/CD = 12/8 = 3/2</span>.</p>
+    <p>מחלקים את <span class="m">AC = 15</span> ביחס <span class="m">3 : 2</span>: <span class="m">AE = 9</span>, <span class="m">EC = 6</span>.</p>
+  </div>
+</section>
+
+<!-- 11. CONSTRUCTIONS -->
+<section class="ch" id="constructions">
+  <h2>11. בניות: חלוקת קטע</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>הבנייה</th><th>השלבים</th></tr></thead>
+    <tbody>
+      <tr><td><strong>חלוקת קטע <span class="m">AB</span> ל־<span class="m">n</span> חלקים שווים</strong></td><td>מ־<span class="m">A</span> מעבירים קרן כלשהי, ומסמנים עליה במחוגה <span class="m">n</span> קטעים שווים. מחברים את הסימון האחרון ל־<span class="m">B</span>, ודרך שאר הסימונים מעבירים ישרים מקבילים לקטע הזה. לפי תאלס הם מחלקים את <span class="m">AB</span> לחלקים שווים.</td></tr>
+      <tr><td><strong>חלוקת קטע ביחס <span class="m">m : n</span></strong></td><td>מסמנים על הקרן <span class="m">m + n</span> קטעים שווים, מחברים את האחרון ל־<span class="m">B</span>, ומעבירים מקביל אחד בלבד, דרך הסימון ה־<span class="m">m</span>.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 12. MISTAKES -->
+<section class="ch" id="mistakes">
+  <h2>12. טעויות נפוצות</h2>
+  <ul class="mistakes">
+    <li><strong>יחס השטחים הוא <span class="m">k</span>.</strong> לא נכון: יחס השטחים הוא <span class="m">k²</span>. מהצד השני, אם נתון יחס שטחים, יחס הדמיון הוא השורש שלו.</li>
+    <li><strong>סדר אותיות לא תואם.</strong> ב־<span class="m">△ABC ∼ △DEF</span> הצלע <span class="m">AB</span> מתאימה ל־<span class="m">DE</span>. אם הסדר שגוי, היחסים יוצאים שגויים.</li>
+    <li><strong>לכתוב <span class="m">DE/BC = AD/DB</span>.</strong> הנכון הוא <span class="m">DE/BC = AD/AB</span>, עם השוק כולה.</li>
+    <li><strong>להסיק מקביליות מ־<span class="m">AD/AB = DE/BC</span>.</strong> המשפט ההפוך לתאלס דורש את היחסים על שתי <strong>השוקיים</strong>.</li>
+    <li><strong>במשיק וחותך, להכפיל ב־<span class="m">AB</span> במקום ב־<span class="m">PB</span>.</strong> מכפילים את המרחק מ־<span class="m">P</span> לנקודה הקרובה במרחק מ־<span class="m">P</span> לנקודה הרחוקה.</li>
+    <li><strong>במשפט חוצה הזווית, להשתמש בצלע הלא נכונה.</strong> היחס <span class="m">BD/DC</span> שווה ליחס בין הצלעות <strong>הסמוכות</strong> לזווית, <span class="m">AB/AC</span>, בסדר מתאים: <span class="m">BD</span> צמוד ל־<span class="m">AB</span>.</li>
+    <li><strong>בצ.ז.צ, זווית שאינה בין שתי הצלעות.</strong> הזווית השווה חייבת להיות כלואה בין שתי הצלעות הפרופורציוניות.</li>
+  </ul>
+</section>
+
+<section class="ch" id="back">
+  <h2>סיכום הפרק</h2>
+  <p>זה הנושא האחרון בפרק הגאומטריה האוקלידית. לחזרה: <a href="geometry-01-loci-triangle-centers.html">מקומות גאומטריים ונקודות מיוחדות</a> · <a href="geometry-02-circle.html">המעגל</a>.</p>
+  <a class="btn" href="index.html">← לדף הראשי</a>
+</section>
+
+<footer>גאומטריה אוקלידית · נושא 3: פרופורציה ודמיון משולשים</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>המעגל · דף לימוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same study-page style as the rest of the site; geometry pages add figures (inline SVG drawn with the color tokens), theorem boxes and converse boxes */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:68ch}
+.lead a,.meaning a{color:var(--accent);font-weight:600}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav.pages{display:flex;gap:8px;flex-wrap:wrap}
+nav.pages a,nav.pages span{padding:6px 14px;border:1px solid var(--line);border-radius:99px;font-size:.9rem;font-weight:600;text-decoration:none;color:var(--accent);background:var(--paper)}
+nav.pages span{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+nav.pages a:hover,nav.pages a:focus-visible{border-color:var(--accent);outline:none}
+
+nav.toc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav.toc ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav.toc a{color:var(--accent);text-decoration:none;font-weight:600}
+nav.toc a:hover,nav.toc a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav.toc ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:70ch;display:flex;flex-direction:column;gap:10px}
+.meaning ul,.meaning ol{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:4px}
+
+/* theorem / converse / definition boxes */
+.thm{border-inline-start:4px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0;padding:10px 16px;display:flex;flex-direction:column;gap:4px}
+.thm .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.thm.conv{border-color:var(--mark);background:var(--mark-soft)}
+.thm.conv .tag{color:var(--mark)}
+.proof{font-size:.96rem;color:var(--ink);display:flex;flex-direction:column;gap:4px;border-inline-start:2px dotted var(--line);padding-inline-start:14px}
+.proof b{color:var(--muted)}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ul.mistakes{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:8px}
+
+/* figures */
+.figrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:20px;align-items:center}
+@media (max-width:680px){.figrow{grid-template-columns:minmax(0,1fr)}}
+.figrow > div{display:flex;flex-direction:column;gap:10px;min-width:0}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+figure.fig{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+figure.fig svg{width:100%;height:auto;direction:ltr;overflow:visible}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center}
+.fig .ln{stroke:var(--ink);stroke-width:2;fill:none;stroke-linejoin:round}
+.fig .ac{stroke:var(--accent);stroke-width:2;fill:none}
+.fig .mk{stroke:var(--mark);stroke-width:2;fill:none}
+.fig .thick{stroke-width:4;stroke-linecap:round}
+.fig .thin{stroke-width:1.4}
+.fig .dash{stroke-dasharray:5 4}
+.fig .soft{stroke:var(--muted);stroke-width:1.4;fill:none;stroke-dasharray:4 4}
+.fig .fill{fill:var(--accent-soft)}
+.fig .pt{fill:var(--ink)}
+.fig .pta{fill:var(--accent)}
+.fig .ptm{fill:var(--mark)}
+.fig text{font-family:var(--f-math);font-size:15px;fill:var(--ink);text-anchor:middle}
+.fig text.he{font-family:var(--f-body);font-size:14px;direction:rtl}
+.fig text.a{fill:var(--accent);font-weight:600}
+.fig text.k{fill:var(--mark);font-weight:600}
+.fig text.sm{font-size:12px}
+
+.btn{align-self:flex-start;background:var(--accent);color:var(--paper);font-weight:700;text-decoration:none;padding:8px 18px;border-radius:99px}
+.btn:hover,.btn:focus-visible{filter:brightness(1.1);outline:none}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:#fff} nav.toc,nav.pages,.back{display:none} section.ch{break-inside:avoid-page}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · גאומטריה אוקלידית · נושא 2 מתוך 3</span>
+  <h1>המעגל</h1>
+  <p class="lead">הנושא השני מתוך שלושה בפרק הגאומטריה האוקלידית. מושגי היסוד של המעגל, המשפטים על מיתרים וקשתות, זווית היקפית וזווית מרכזית, מרובע חסום במעגל, משיקים והזווית בין משיק למיתר, ובניות במחוגה ובסרגל.</p>
+</header>
+<nav class="pages" aria-label="דפי הנושא"><a href="geometry-01-loci-triangle-centers.html">1. מקומות גאומטריים ונקודות מיוחדות</a><span aria-current="page">2. המעגל</span><a href="geometry-03-similarity.html">3. פרופורציה ודמיון</a></nav>
+<nav class="toc" aria-label="תוכן"><strong>תוכן</strong><ol>
+  <li><a href="#defs">מושגי יסוד</a></li>
+  <li><a href="#chords">מיתרים ומרחקם מהמרכז</a></li>
+  <li><a href="#arcs">קשתות, מיתרים וזוויות מרכזיות</a></li>
+  <li><a href="#inscribed">זווית היקפית</a></li>
+  <li><a href="#cyclic">מרובע חסום במעגל</a></li>
+  <li><a href="#tangent">משיק למעגל</a></li>
+  <li><a href="#tangent-chord">הזווית בין משיק למיתר</a></li>
+  <li><a href="#triangle">מעגל חוסם וחסום למשולש</a></li>
+  <li><a href="#angles">זוויות בין מיתרים וחותכים</a></li>
+  <li><a href="#constructions">בניות</a></li>
+  <li><a href="#mistakes">טעויות נפוצות</a></li>
+</ol></nav>
+
+<!-- 1. DEFINITIONS -->
+<section class="ch" id="defs">
+  <h2>1. מושגי יסוד</h2>
+  <div class="figrow">
+    <div class="tablebox"><table style="min-width:0">
+      <tbody>
+        <tr><td><strong>מעגל</strong></td><td>כל הנקודות במישור שמרחקן מנקודה <span class="m">O</span> (המרכז) הוא <span class="m">r</span> (הרדיוס). זה המקום הגאומטרי מ<a href="geometry-01-loci-triangle-centers.html#basic">הנושא הקודם</a>.</td></tr>
+        <tr><td><strong>מיתר</strong></td><td>קטע שמחבר שתי נקודות על המעגל.</td></tr>
+        <tr><td><strong>קוטר</strong></td><td>מיתר שעובר דרך המרכז. <span class="m">d = 2r</span>, והוא המיתר הארוך ביותר.</td></tr>
+        <tr><td><strong>קשת</strong></td><td>חלק מהמעגל בין שתי נקודות. מידת הקשת (במעלות) שווה למידת הזווית המרכזית שנשענת עליה.</td></tr>
+        <tr><td><strong>משיק</strong></td><td>ישר שיש לו נקודה משותפת <strong>אחת בדיוק</strong> עם המעגל (נקודת ההשקה).</td></tr>
+        <tr><td><strong>חותך</strong></td><td>ישר שחותך את המעגל בשתי נקודות.</td></tr>
+      </tbody>
+    </table></div>
+    <figure class="fig"><svg viewBox="51 0 218 234" style="max-width:320px" role="img" aria-label="חלקי המעגל: מרכז, רדיוס, קוטר, מיתר, קשת ומשיק">
+<circle class="ln" cx="160.0" cy="130.0" r="90.0"/>
+<line class="ln" x1="75.4" y1="160.8" x2="244.6" y2="99.2"/>
+<line class="ac" x1="160.0" y1="130.0" x2="223.6" y2="193.6"/>
+<line class="mk" x1="202.3" y1="50.5" x2="104.6" y2="59.1"/>
+<path class="mk thick" d="M202.3,50.5 A90.0,90.0 0 0 0 104.6,59.1"/>
+<line class="ac" x1="65.0" y1="220.0" x2="255.0" y2="220.0"/>
+<polyline class="ln thin" points="169.0,220.0 169.0,211.0 160.0,211.0"/>
+<line class="soft" x1="160.0" y1="130.0" x2="160.0" y2="220.0"/>
+<circle class="pt" cx="160.0" cy="130.0" r="3.2"/>
+<circle class="pt" cx="75.4" cy="160.8" r="3.2"/>
+<circle class="pt" cx="244.6" cy="99.2" r="3.2"/>
+<circle class="pt" cx="223.6" cy="193.6" r="3.2"/>
+<circle class="pt" cx="202.3" cy="50.5" r="3.2"/>
+<circle class="pt" cx="104.6" cy="59.1" r="3.2"/>
+<circle class="pt" cx="160.0" cy="220.0" r="3.2"/>
+<text class="lb" x="156.0" y="121.0">O</text>
+<text class="he a" x="221.8" y="162.8">רדיוס</text>
+<text class="he" x="102.0" y="133.0">קוטר</text>
+<text class="he k" x="153.4" y="73.8">מיתר</text>
+<text class="he k" x="152.2" y="29.3">קשת</text>
+<text class="he a" x="238.0" y="213.0">משיק</text>
+</svg><figcaption>המשיק מאונך לרדיוס בנקודת ההשקה</figcaption></figure>
+  </div>
+  <div class="tablebox"><table>
+    <tbody>
+      <tr><td><strong>זווית מרכזית</strong></td><td>הקדקוד במרכז המעגל, והשוקיים רדיוסים.</td></tr>
+      <tr><td><strong>זווית היקפית</strong></td><td>הקדקוד על המעגל, והשוקיים מיתרים.</td></tr>
+      <tr><td><strong>מצולע חסום במעגל</strong></td><td>כל קדקודיו על המעגל. המעגל <strong>חוסם</strong> את המצולע.</td></tr>
+      <tr><td><strong>מצולע חוסם מעגל</strong></td><td>כל צלעותיו משיקות למעגל. המעגל <strong>חסום</strong> במצולע.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 2. CHORDS -->
+<section class="ch" id="chords">
+  <h2>2. מיתרים והמרחק שלהם מהמרכז</h2>
+  <div class="thm"><span class="tag">משפט</span>
+    <p>האנך מהמרכז למיתר <strong>חוצה את המיתר</strong> (וגם את הקשת שלו).</p>
+  </div>
+  <div class="thm conv"><span class="tag">משפטים קרובים</span>
+    <p>הקטע מהמרכז לאמצע המיתר מאונך למיתר. האנך האמצעי של כל מיתר עובר דרך מרכז המעגל.</p>
+  </div>
+  <div class="proof"><p><b>למה זה נכון:</b> אם <span class="m">AB</span> מיתר, אז <span class="m">OA = OB</span> (רדיוסים), ולכן משולש <span class="m">OAB</span> שווה שוקיים. במשולש שווה שוקיים הגובה לבסיס הוא גם התיכון, ולהפך.</p></div>
+  <div class="meaning"><p>האנך מהמרכז, חצי המיתר והרדיוס יוצרים משולש ישר זווית. אם <span class="m">ℓ</span> אורך המיתר ו־<span class="m">d</span> מרחקו מהמרכז:</p></div>
+  <div class="thm" style="text-align:center"><p><span class="m">(ℓ/2)² + d² = r²</span></p></div>
+  <div class="example"><span class="tag">דוגמה</span>
+    <p>במעגל שרדיוסו 13 יש מיתר שאורכו 24. חצי המיתר הוא 12, והמרחק מהמרכז: <span class="m">d = √(169 − 144) = 5</span>.</p>
+  </div>
+  <div class="thm"><span class="tag">משפט</span>
+    <p>באותו מעגל (או במעגלים שווים): מיתרים שווים רחוקים במידה שווה מהמרכז, ולהפך. מיתר ארוך יותר קרוב יותר למרכז.</p>
+  </div>
+</section>
+
+<!-- 3. ARCS -->
+<section class="ch" id="arcs">
+  <h2>3. קשתות, מיתרים וזוויות מרכזיות</h2>
+  <div class="thm"><span class="tag">משפט</span>
+    <p>באותו מעגל (או במעגלים שווים), ארבעת הדברים הבאים באים יחד. אם אחד מהם מתקיים, כולם מתקיימים:</p>
+    <p><strong>זוויות מרכזיות שוות ⇔ קשתות שוות ⇔ מיתרים שווים ⇔ מרחקים שווים מהמרכז</strong></p>
+  </div>
+  <div class="proof"><p><b>למה זה נכון:</b> כל מיתר <span class="m">AB</span> יוצר עם המרכז משולש שווה שוקיים <span class="m">OAB</span> שהשוקיים שלו רדיוסים. שני משולשים כאלה חופפים לפי צ.ז.צ (זווית מרכזית שווה) או לפי צ.צ.צ (מיתר שווה), ומהחפיפה נובע כל השאר.</p></div>
+  <p class="note"><strong>עוד משפט:</strong> הקשתות הכלואות בין שני מיתרים מקבילים שוות זו לזו.</p>
+</section>
+
+<!-- 4. INSCRIBED ANGLE -->
+<section class="ch" id="inscribed">
+  <h2>4. זווית היקפית</h2>
+  <div class="figrow">
+    <div>
+      <div class="thm"><span class="tag">המשפט המרכזי</span>
+        <p>זווית היקפית שווה ל<strong>מחצית</strong> הזווית המרכזית הנשענת על אותה קשת.</p>
+      </div>
+      <div class="proof">
+        <p><b>הוכחה למקרה שהמרכז על אחת השוקיים</b> (<span class="m">CA</span> קוטר):</p>
+        <p><span class="m">OC = OB</span> (רדיוסים), ולכן <span class="m">∠OCB = ∠OBC = α</span>. הזווית <span class="m">∠AOB</span> היא זווית חיצונית למשולש <span class="m">OCB</span>, ולכן היא שווה לסכום שתי הזוויות שאינן צמודות לה: <span class="m">∠AOB = 2α</span>.</p>
+        <p>שאר המקרים (המרכז בתוך הזווית או מחוצה לה) מתקבלים מהמקרה הזה: מעבירים קוטר מ־<span class="m">C</span> ומחברים או מחסרים.</p>
+      </div>
+    </div>
+    <figure class="fig"><svg viewBox="38 10 224 239" style="max-width:300px" role="img" aria-label="זווית מרכזית AOB וזווית היקפית ACB הנשענות על אותה קשת AB">
+<circle class="ln" cx="150.0" cy="140.0" r="95.0"/>
+<path class="ac thick" d="M72.2,194.5 A95.0,95.0 0 0 0 227.8,194.5"/>
+<line class="ac" x1="150.0" y1="140.0" x2="72.2" y2="194.5"/>
+<line class="ac" x1="150.0" y1="140.0" x2="227.8" y2="194.5"/>
+<line class="mk" x1="125.4" y1="48.2" x2="72.2" y2="194.5"/>
+<line class="mk" x1="125.4" y1="48.2" x2="227.8" y2="194.5"/>
+<path class="ac" d="M133.6,151.5 A20,20 0 0 0 166.4,151.5"/>
+<path class="mk" d="M115.2,76.4 A30,30 0 0 0 142.6,72.8"/>
+<circle class="pt" cx="150.0" cy="140.0" r="3.2"/>
+<circle class="pt" cx="72.2" cy="194.5" r="3.2"/>
+<circle class="pt" cx="227.8" cy="194.5" r="3.2"/>
+<circle class="pt" cx="125.4" cy="48.2" r="3.2"/>
+<text class="lb" x="59.9" y="208.1">A</text>
+<text class="lb" x="240.1" y="208.1">B</text>
+<text class="lb" x="121.5" y="38.7">C</text>
+<text class="lb" x="136.0" y="139.0">O</text>
+<text class="a" x="150.0" y="181.0">2α</text>
+<text class="k" x="129.4" y="99.2">α</text>
+</svg><figcaption><span class="m">∠ACB = ½∠AOB</span>: ההיקפית היא מחצית המרכזית</figcaption></figure>
+  </div>
+  <h3>מסקנות</h3>
+  <div class="meaning"><ul>
+    <li>זוויות היקפיות הנשענות על אותה קשת, או על קשתות שוות, <strong>שוות</strong> זו לזו.</li>
+    <li>זווית היקפית הנשענת על <strong>קוטר</strong> היא <strong>ישרה</strong> (90°), כי הזווית המרכזית שלה היא 180°.</li>
+    <li><strong>ההפוך:</strong> זווית היקפית ישרה נשענת על קוטר. לכן <strong>במשולש ישר זווית, היתר הוא קוטר המעגל החוסם</strong>.</li>
+    <li>זוויות היקפיות שוות נשענות על מיתרים שווים, ולהפך.</li>
+    <li>שתי זוויות היקפיות שנשענות על אותו מיתר אבל נמצאות <strong>משני צדדיו</strong> משלימות זו את זו ל־180°.</li>
+  </ul></div>
+  <div class="example"><span class="tag">דוגמה</span>
+    <p>משולש <span class="m">ABC</span> חסום במעגל שמרכזו <span class="m">O</span>, ו־<span class="m">∠ACB = 40°</span>. אז הזווית המרכזית <span class="m">∠AOB = 80°</span>.</p>
+    <p>משולש <span class="m">AOB</span> שווה שוקיים (<span class="m">OA = OB</span>), ולכן <span class="m">∠OAB = (180° − 80°)/2 = 50°</span>.</p>
+  </div>
+</section>
+
+<!-- 5. CYCLIC QUADRILATERAL -->
+<section class="ch" id="cyclic">
+  <h2>5. מרובע חסום במעגל</h2>
+  <div class="figrow">
+    <div>
+      <div class="thm"><span class="tag">משפט</span>
+        <p>במרובע חסום במעגל, סכום כל שתי זוויות <strong>נגדיות</strong> הוא 180°.</p>
+      </div>
+      <div class="proof"><p><b>למה זה נכון:</b> <span class="m">∠A</span> ו־<span class="m">∠C</span> הן זוויות היקפיות שנשענות על שתי הקשתות <span class="m">BD</span>, ושתי הקשתות יחד הן המעגל כולו, 360°. כל זווית היא מחצית הקשת שלה, ולכן הסכום הוא <span class="m">360°/2 = 180°</span>.</p></div>
+      <div class="thm conv"><span class="tag">משפט הפוך</span>
+        <p>אם במרובע סכום זוג זוויות נגדיות הוא 180°, אפשר לחסום אותו במעגל.</p>
+      </div>
+    </div>
+    <figure class="fig"><svg viewBox="22 10 260 256" style="max-width:300px" role="img" aria-label="מרובע ABCD חסום במעגל; זוויות נגדיות משלימות ל-180 מעלות">
+<circle class="soft" cx="150.0" cy="140.0" r="95.0"/>
+<polygon class="ln" points="58.2,115.4 174.6,48.2 244.6,131.7 117.5,229.3"/>
+<path class="ac" d="M68.4,134.9 A22,22 0 0 0 77.3,104.4"/>
+<path class="mk" d="M230.5,114.9 A22,22 0 0 0 227.2,145.1"/>
+<circle class="pt" cx="58.2" cy="115.4" r="3.2"/>
+<text class="lb" x="43.7" y="116.5">A</text>
+<circle class="pt" cx="174.6" cy="48.2" r="3.2"/>
+<text class="lb" x="178.5" y="38.7">B</text>
+<circle class="pt" cx="244.6" cy="131.7" r="3.2"/>
+<text class="lb" x="259.6" y="135.4">C</text>
+<circle class="pt" cx="117.5" cy="229.3" r="3.2"/>
+<text class="lb" x="112.4" y="248.4">D</text>
+<text class="a" x="92.2" y="122.4">α</text>
+<text class="k sm" x="196.6" y="140.7">180°−α</text>
+</svg><figcaption><span class="m">∠A + ∠C = 180°,  ∠B + ∠D = 180°</span></figcaption></figure>
+  </div>
+  <div class="meaning">
+    <p><strong>עוד דרך להראות שמרובע חסום:</strong> אם שני קדקודים "רואים" צלע מאותו צד שלה בזוויות שוות, למשל <span class="m">∠ADB = ∠ACB</span>, אז ארבע הנקודות על מעגל אחד.</p>
+    <p><strong>מסקנות:</strong></p>
+    <ul>
+      <li>הזווית החיצונית של מרובע חסום שווה לזווית הפנימית שמולה.</li>
+      <li>מקבילית חסומה במעגל היא מלבן. טרפז חסום במעגל הוא שווה שוקיים.</li>
+      <li>כל מלבן, ריבוע וטרפז שווה שוקיים אפשר לחסום במעגל.</li>
+    </ul>
+  </div>
+  <div class="example"><span class="tag">דוגמה</span>
+    <p>במרובע חסום <span class="m">ABCD</span>: <span class="m">∠A = 75°</span>, <span class="m">∠B = 100°</span>. אז <span class="m">∠C = 180° − 75° = 105°</span> ו־<span class="m">∠D = 180° − 100° = 80°</span>.</p>
+  </div>
+</section>
+
+<!-- 6. TANGENT -->
+<section class="ch" id="tangent">
+  <h2>6. משיק למעגל</h2>
+  <div class="thm"><span class="tag">משפט</span>
+    <p>המשיק <strong>מאונך לרדיוס</strong> בנקודת ההשקה.</p>
+  </div>
+  <div class="thm conv"><span class="tag">משפט הפוך</span>
+    <p>ישר שמאונך לרדיוס בקצה שלו (הנקודה שעל המעגל) הוא משיק.</p>
+  </div>
+  <div class="figrow">
+    <div>
+      <div class="thm"><span class="tag">משפט: שני משיקים מנקודה אחת</span>
+        <p>מנקודה <span class="m">P</span> מחוץ למעגל יוצאים שני משיקים, <span class="m">PA</span> ו־<span class="m">PB</span>. אז:</p>
+        <p>• <span class="m">PA = PB</span> (קטעי המשיקים שווים)<br>• <span class="m">PO</span> חוצה את הזווית <span class="m">APB</span><br>• <span class="m">PO</span> הוא האנך האמצעי של <span class="m">AB</span></p>
+      </div>
+      <div class="proof"><p><b>למה זה נכון:</b> המשולשים <span class="m">OAP</span> ו־<span class="m">OBP</span> ישרי זווית (משיק ⊥ רדיוס), <span class="m">OA = OB</span> ו־<span class="m">OP</span> משותפת. הם חופפים (יתר וניצב), ומכאן כל שלוש התוצאות.</p></div>
+    </div>
+    <figure class="fig"><svg viewBox="11 30 324 199" style="max-width:340px" role="img" aria-label="שני משיקים PA ו-PB מנקודה P מחוץ למעגל">
+<circle class="ln" cx="90.0" cy="130.0" r="65.0"/>
+<line class="ac" x1="300.0" y1="130.0" x2="110.1" y2="68.2"/>
+<line class="ac" x1="300.0" y1="130.0" x2="110.1" y2="191.8"/>
+<line class="ln" x1="90.0" y1="130.0" x2="110.1" y2="68.2"/>
+<line class="ln" x1="90.0" y1="130.0" x2="110.1" y2="191.8"/>
+<line class="soft" x1="90.0" y1="130.0" x2="300.0" y2="130.0"/>
+<line class="soft" x1="110.1" y1="68.2" x2="110.1" y2="191.8"/>
+<polyline class="ln thin" points="107.3,76.8 115.9,79.5 118.7,71.0"/>
+<polyline class="ln thin" points="107.3,183.2 115.9,180.5 118.7,189.0"/>
+<line class="ln thin" x1="209.3" y1="94.2" x2="205.6" y2="105.6"/>
+<line class="ln thin" x1="204.5" y1="92.6" x2="200.8" y2="104.0"/>
+<line class="ln thin" x1="205.6" y1="154.4" x2="209.3" y2="165.8"/>
+<line class="ln thin" x1="200.8" y1="156.0" x2="204.5" y2="167.4"/>
+<path class="mk" d="M267.7,119.5 A34,34 0 0 0 266.0,130.0"/>
+<path class="mk" d="M260.0,130.0 A40,40 0 0 0 262.0,142.4"/>
+<circle class="pt" cx="90.0" cy="130.0" r="3.2"/>
+<circle class="pt" cx="300.0" cy="130.0" r="3.2"/>
+<circle class="pt" cx="110.1" cy="68.2" r="3.2"/>
+<circle class="pt" cx="110.1" cy="191.8" r="3.2"/>
+<text class="lb" x="76.0" y="135.0">O</text>
+<text class="lb" x="313.0" y="135.0">P</text>
+<text class="lb" x="106.1" y="59.2">A</text>
+<text class="lb" x="106.1" y="211.8">B</text>
+</svg><figcaption><span class="m">PA = PB</span>, ו־<span class="m">PO</span> חוצה את זווית <span class="m">P</span></figcaption></figure>
+  </div>
+  <div class="example"><span class="tag">דוגמה</span>
+    <p>רדיוס המעגל 6, ו־<span class="m">OP = 10</span>. במשולש <span class="m">OAP</span> הזווית ב־<span class="m">A</span> ישרה, ולכן <span class="m">PA = √(100 − 36) = 8</span>, וגם <span class="m">PB = 8</span>.</p>
+  </div>
+  <h3>מרובע חוסם מעגל</h3>
+  <div class="thm"><span class="tag">משפט</span>
+    <p>במרובע שחוסם מעגל, סכומי זוגות הצלעות הנגדיות שווים: <span class="m">AB + CD = BC + AD</span>. גם ההפך נכון: מרובע שמקיים את השוויון הזה חוסם מעגל.</p>
+  </div>
+  <div class="proof"><p><b>למה זה נכון:</b> מכל קדקוד יוצאים שני קטעי משיקים שווים. כל צלע מורכבת משני קטעים כאלה, ובכל אחד מהסכומים <span class="m">AB + CD</span> ו־<span class="m">BC + AD</span> מופיע כל אחד מארבעת הקטעים פעם אחת.</p></div>
+  <div class="example"><span class="tag">דוגמה</span>
+    <p>מרובע <span class="m">ABCD</span> חוסם מעגל, <span class="m">AB = 7</span>, <span class="m">CD = 9</span>, <span class="m">BC = 5</span>. אז <span class="m">AD = 7 + 9 − 5 = 11</span>.</p>
+  </div>
+</section>
+
+<!-- 7. TANGENT-CHORD -->
+<section class="ch" id="tangent-chord">
+  <h2>7. הזווית בין משיק למיתר</h2>
+  <div class="figrow">
+    <div>
+      <div class="thm"><span class="tag">משפט</span>
+        <p>הזווית בין משיק למיתר שיוצא מנקודת ההשקה שווה לזווית ההיקפית הנשענת על הקשת <strong>הכלואה</strong> בין המשיק למיתר. כלומר היא שווה למחצית הקשת הזו.</p>
+      </div>
+      <div class="proof"><p><b>רעיון ההוכחה:</b> מעבירים מנקודת ההשקה <span class="m">T</span> קוטר <span class="m">TD</span>. הזווית בין המשיק לקוטר היא 90°, וגם <span class="m">∠TAD = 90°</span> (היקפית על קוטר). מחשבים את שתי הזוויות כ־90° פחות אותה זווית, ומקבלים שהן שוות.</p></div>
+    </div>
+    <figure class="fig"><svg viewBox="36 21 248 222" style="max-width:320px" role="img" aria-label="זווית בין המשיק למיתר TA שווה לזווית ההיקפית TCA">
+<circle class="ln" cx="160.0" cy="120.0" r="85.0"/>
+<path class="ac thick" d="M160.0,205.0 A85.0,85.0 0 0 0 239.9,90.9"/>
+<line class="ac" x1="50.0" y1="205.0" x2="270.0" y2="205.0"/>
+<line class="ln" x1="160.0" y1="205.0" x2="239.9" y2="90.9"/>
+<line class="mk" x1="86.4" y1="77.5" x2="160.0" y2="205.0"/>
+<line class="mk" x1="86.4" y1="77.5" x2="239.9" y2="90.9"/>
+<path class="mk" d="M186.0,205.0 A26,26 0 0 0 174.9,183.7"/>
+<path class="mk" d="M101.4,103.5 A30,30 0 0 0 116.3,80.1"/>
+<circle class="pt" cx="160.0" cy="205.0" r="3.2"/>
+<circle class="pt" cx="239.9" cy="90.9" r="3.2"/>
+<circle class="pt" cx="86.4" cy="77.5" r="3.2"/>
+<text class="lb" x="160.0" y="226.0">T</text>
+<text class="lb" x="254.0" y="90.8">A</text>
+<text class="lb" x="73.4" y="75.0">C</text>
+<text class="k" x="202.0" y="198.0">β</text>
+<text class="k" x="126.4" y="94.5">β</text>
+</svg><figcaption>הזווית בין משיק למיתר = ההיקפית על הקשת הכלואה</figcaption></figure>
+  </div>
+  <div class="example"><span class="tag">דוגמה</span>
+    <p>הזווית בין המשיק למיתר <span class="m">TA</span> היא 40°. אז הזווית המרכזית על הקשת <span class="m">TA</span> היא 80°, וכל זווית היקפית מהצד השני של המיתר, כמו <span class="m">∠TCA</span>, שווה ל־40°.</p>
+  </div>
+</section>
+
+<!-- 8. TRIANGLE CIRCLES -->
+<section class="ch" id="triangle">
+  <h2>8. המעגל החוסם והמעגל החסום של משולש</h2>
+  <div class="meaning">
+    <p>זה המפגש בין הנושא הזה לנושא <a href="geometry-01-loci-triangle-centers.html#circum">מקומות גאומטריים ונקודות מיוחדות</a>:</p>
+    <ul>
+      <li><strong>מעגל חוסם:</strong> כל צלע של המשולש היא מיתר, ולכן המרכז נמצא על האנך האמצעי של כל צלע.</li>
+      <li><strong>מעגל חסום:</strong> כל צלע היא משיק, ומכל קדקוד יוצאים שני משיקים, ולכן המרכז נמצא על חוצה כל זווית.</li>
+      <li><strong>משולש ישר זווית:</strong> היתר הוא קוטר המעגל החוסם, <span class="m">R = c/2</span>, והתיכון ליתר שווה ל־<span class="m">c/2</span>.</li>
+      <li>קטעי המשיקים מקדקוד <span class="m">A</span> למעגל החסום שווים ל־<span class="m">p − a</span>, כאשר <span class="m">p</span> חצי ההיקף ו־<span class="m">a</span> הצלע שמול <span class="m">A</span>.</li>
+      <li>כל מצולע משוכלל (כל הצלעות וכל הזוויות שוות) אפשר גם לחסום במעגל וגם לחסום בו מעגל, עם אותו מרכז.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 9. ANGLES BETWEEN CHORDS -->
+<section class="ch" id="angles">
+  <h2>9. זוויות בין מיתרים ובין חותכים</h2>
+  <div class="meaning"><p>שני משפטים שנובעים ישירות מהזווית ההיקפית. כדאי להכיר אותם, וגם לדעת להוכיח אותם בשתי שורות: מחברים מיתר אחד ומשתמשים בזווית חיצונית של משולש.</p></div>
+  <div class="thm"><span class="tag">זווית בין שני מיתרים שנחתכים בתוך המעגל</span>
+    <p>שווה ל<strong>מחצית סכום</strong> הקשתות שהיא והזווית הקודקודית לה נשענות עליהן.</p>
+  </div>
+  <div class="thm"><span class="tag">זווית בין שני חותכים (או משיק וחותך) מנקודה מחוץ למעגל</span>
+    <p>שווה ל<strong>מחצית ההפרש</strong> בין הקשת הגדולה לקשת הקטנה שהשוקיים כולאות.</p>
+  </div>
+  <div class="example"><span class="tag">דוגמאות</span>
+    <p>שני מיתרים נחתכים בתוך המעגל, והקשתות שמול הזוויות הקודקודיות הן 80° ו־40°. הזווית בין המיתרים: <span class="m">(80° + 40°)/2 = 60°</span>.</p>
+    <p>שני חותכים יוצאים מנקודה <span class="m">P</span> וכולאים קשתות של 100° ושל 30°. הזווית ב־<span class="m">P</span>: <span class="m">(100° − 30°)/2 = 35°</span>.</p>
+  </div>
+</section>
+
+<!-- 10. CONSTRUCTIONS -->
+<section class="ch" id="constructions">
+  <h2>10. בניות במחוגה ובסרגל</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>הבנייה</th><th>השלבים</th><th>למה זה עובד</th></tr></thead>
+    <tbody>
+      <tr><td><strong>מציאת מרכז של מעגל נתון</strong></td><td>משרטטים שני מיתרים לא מקבילים ובונים את האנך האמצעי של כל אחד. נקודת החיתוך היא המרכז.</td><td>המרכז נמצא על האנך האמצעי של כל מיתר.</td></tr>
+      <tr><td><strong>משיק בנקודה <span class="m">A</span> על המעגל</strong></td><td>מחברים את הרדיוס <span class="m">OA</span> ובונים ב־<span class="m">A</span> אנך לרדיוס.</td><td>ישר מאונך לרדיוס בקצהו הוא משיק.</td></tr>
+      <tr><td><strong>משיקים מנקודה <span class="m">P</span> מחוץ למעגל</strong></td><td>מוצאים את אמצע <span class="m">OP</span>, משרטטים מעגל ש־<span class="m">OP</span> קוטר שלו. הוא חותך את המעגל הנתון בנקודות ההשקה <span class="m">T₁, T₂</span>. מחברים <span class="m">PT₁</span> ו־<span class="m">PT₂</span>.</td><td><span class="m">∠OTP</span> היא זווית היקפית על הקוטר <span class="m">OP</span>, ולכן ישרה: <span class="m">PT ⊥ OT</span>.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 11. MISTAKES -->
+<section class="ch" id="mistakes">
+  <h2>11. טעויות נפוצות</h2>
+  <ul class="mistakes">
+    <li><strong>להשוות זווית היקפית לזווית מרכזית שלא נשענת על אותה קשת.</strong> היחס "מחצית" נכון רק כשהן נשענות על אותה קשת.</li>
+    <li><strong>לחשוב שזוויות היקפיות על אותו מיתר תמיד שוות.</strong> הן שוות רק כשהן באותו צד של המיתר. משני הצדדים הן משלימות ל־180°.</li>
+    <li><strong>לשכוח לחבר רדיוס לנקודת ההשקה.</strong> בשאלה עם משיק זה כמעט תמיד הצעד הראשון, כי הוא יוצר זווית ישרה.</li>
+    <li><strong>במרובע חסום, לחבר זוויות סמוכות.</strong> הזוויות ה<strong>נגדיות</strong> משלימות ל־180°, לא הסמוכות.</li>
+    <li><strong>לחשוב שכל מקבילית ניתנת לחסימה במעגל.</strong> רק מלבן (וריבוע).</li>
+    <li><strong>לבלבל בין מידת קשת לאורך קשת.</strong> מידת הקשת נמדדת במעלות ושווה לזווית המרכזית. אורך הקשת הוא מרחק.</li>
+    <li><strong>לבלבל בין מרובע חסום (הקדקודים על המעגל) למרובע חוסם (הצלעות משיקות).</strong> בראשון זוויות נגדיות משלימות ל־180°. בשני סכומי הצלעות הנגדיות שווים.</li>
+  </ul>
+</section>
+
+<section class="ch" id="next">
+  <h2>הנושא הבא: פרופורציה ודמיון משולשים</h2>
+  <p>משפט תאלס, משפטי הדמיון, משפט חוצה הזווית ודמיון במעגל.</p>
+  <a class="btn" href="geometry-03-similarity.html">← לדף פרופורציה ודמיון</a>
+</section>
+
+<footer>גאומטריה אוקלידית · נושא 2: המעגל</footer>
+</div>
+</body>
+</html>
