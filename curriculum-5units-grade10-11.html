@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>תוכנית הלימודים · כיתות י׳–י״א · 5 יחידות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a reference page on graph-paper ground; one chapter card per subject domain, each grade a labelled block of topics */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:420px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+td:nth-child(n+2),th:nth-child(n+2){text-align:center;width:6.5rem}
+tr:last-child td{border-bottom:0}
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.num{font-family:var(--f-math);color:var(--muted);font-size:.85rem}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.grade{display:flex;flex-direction:column;gap:10px;border-inline-start:4px solid var(--accent);padding-inline-start:16px}
+.grade.g11{border-inline-start-color:var(--mark)}
+.grade h3 small{font-family:var(--f-body);font-size:.82rem;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:2px 10px;margin-inline-start:8px;white-space:nowrap}
+.grade.g11 h3 small{color:var(--mark);background:var(--mark-soft)}
+ul.topics{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:10px}
+ul.topics li::marker{color:var(--accent)}
+.grade.g11 ul.topics li::marker{color:var(--mark)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-inline-end:6px;vertical-align:-1px;background:var(--accent)}
+.legend span.l11::before{background:var(--mark)}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+a.inline{color:var(--accent);font-weight:600}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="he">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header><span class="eyebrow">מתמטיקה · 5 יחידות · מסמך עזר</span><h1>תוכנית הלימודים: כיתות י׳–י״א</h1><p class="lead">רשימה משולבת ומפורטת של נושאי הלימוד בשתי השנים, לפי פירוט תוכנית הלימודים הרשמי של משרד החינוך. כל תחום מציג מה נלמד בכיתה י׳ ומה בכיתה י״א, עם מספר השעות המומלץ לכל פרק.</p>
+<div class="legend"><span>כיתה י׳</span><span class="l11">כיתה י״א</span></div></header>
+<nav aria-label="תוכן"><strong>תוכן</strong><ol>
+<li><a href="#d1">הנדסה אנליטית</a></li>
+<li><a href="#d2">אנליזה — מבוא לפונקציות</a></li>
+<li><a href="#d3">חשבון דיפרנציאלי</a></li>
+<li><a href="#d4">סדרות ואינדוקציה מתמטית</a></li>
+<li><a href="#d5">חשבון אינטגרלי</a></li>
+<li><a href="#d6">טריגונומטריה</a></li>
+<li><a href="#d7">גאומטריה אוקלידית</a></li>
+<li><a href="#d8">הסתברות</a></li>
+</ol></nav>
+<div class="tablebox"><table><thead><tr><th>תחום</th><th>כיתה י׳</th><th>כיתה י״א</th></tr></thead><tbody>
+<tr><td>הנדסה אנליטית</td><td>✓</td><td>—</td></tr>
+<tr><td>אנליזה — מבוא לפונקציות</td><td>✓</td><td>—</td></tr>
+<tr><td>חשבון דיפרנציאלי</td><td>✓</td><td>✓</td></tr>
+<tr><td>סדרות ואינדוקציה מתמטית</td><td>—</td><td>✓</td></tr>
+<tr><td>חשבון אינטגרלי</td><td>—</td><td>✓</td></tr>
+<tr><td>טריגונומטריה</td><td>✓</td><td>✓</td></tr>
+<tr><td>גאומטריה אוקלידית</td><td>✓</td><td>—</td></tr>
+<tr><td>הסתברות</td><td>—</td><td>✓</td></tr>
+</tbody></table></div>
+<div class="note"><strong>שימו לב:</strong> סדרות ואינדוקציה נלמדות בכיתה י״א בלבד (ולא בכיתה י׳). דפי הלימוד והתרגול בנושא נמצאים בדפים <a class="inline" href="sequences-00-overview.html">סדרות: מבט כללי</a> ובהמשכו.</div>
+<section class="ch" id="d1"><span class="num">01</span><h2>הנדסה אנליטית</h2>
+<div class="note">בכיתה י״א אין פרק נפרד בהנדסה אנליטית. ההרחבה (פרבולה, אליפסה, וקטורים) מופיעה בהמשך התוכנית, מחוץ לטווח כיתות י׳-י״א.</div>
+<div class="grade g10"><h3>כיתה י׳ — מבוא להנדסה אנליטית <small>10 שעות</small></h3>
+<ul class="topics">
+<li><strong>משוואת ישר.</strong> חזרה על הישר והפרבולה תוך קישור למושג הפונקציה; אבחנה בין גרף של פונקציה לקבוצת נקודות שאינה גרף (כגון <span class="m">x=k)</span>; מציאת משוואה לפי שתי נקודות או לפי שיפוע ונקודה; הקבלה, אמצע קטע, חיתוך וניצבות, מרחק בין שתי נקודות; אבחנה בין משוואה מפורשת למשוואה כללית. הפרק נפתח במבוא היסטורי על מקורות ההנדסה האנליטית.</li>
+<li><strong>מערכות משוואות.</strong> קישור למערכת משוואות לינאריות והצגתה הגרפית, כולל שימוש בפרמטרים (ביטויים לינאריים); מערכת של משוואה ריבועית ומשוואה לינארית.</li>
+<li><strong>משוואת מעגל.</strong> משוואת מעגל קנוני (מרכזו בראשית הצירים) כהכנה להוראת הטריגונומטריה וכדוגמה למקום גאומטרי שאינו גרף של פונקציה; הצגת מעגל לפי נוסחת המרחק בין נקודות, והקשר להזזה של מעגל קנוני (דוגמה לטרנספורמציה של תבנית). התוכנית אינה כוללת משוואה כללית של מעגל.</li>
+</ul></div>
+</section>
+<section class="ch" id="d2"><span class="num">02</span><h2>אנליזה — מבוא לפונקציות</h2>
+<div class="grade g10"><h3>כיתה י׳ — מבוא לאנליזה <small>15 שעות</small></h3>
+<p class="lead">מטרה: הנחת המסד לחשבון הדיפרנציאלי באופן אינטואיטיבי ופורמלי ופיתוח "חוש לפונקציות".</p>
+<ul class="topics">
+<li><strong>פונקציות פולינומיאליות.</strong> חזרה על הפונקציה הקווית והריבועית; פונקציות חזקה <span class="m">f(x)=xⁿ</span> כהכללה שלהן, והזזות ומתיחות ככלי ליצירת משפחות; אבחנה בין פונקציות חזקה זוגיות ואי-זוגיות ובין שורש מריבוי זוגי לאי-זוגי; חקירה איכותנית: הפולינום כמכפלת גורמים לינאריים וריבועיים והשפעתם על הגרף, חיוביות ושליליות, התנהגות באינסוף, מספר נקודות קיצון; דיון ראשוני בקצב שינוי.</li>
+<li><strong>פונקציות שאינן פולינומיאליות.</strong> זיהוי התנהגות במונחי קצב שינוי; זוגיות ואי-זוגיות; פונקציית הערך המוחלט, פונקציית השורש הריבועי, <span class="m">f(x)=1/x</span> ו-<span class="m">f(x)=1/x²</span>.</li>
+<li><strong>פעולות על פונקציות והשפעתן.</strong> שיקוף לציר x <span class="m">(f→−f)</span> ולציר y <span class="m">(f(x)→f(−x))</span>; הזזות ומתיחות: <span class="m">a(x−p)ⁿ+k</span>, <span class="m">a√(x−p)+k</span>, <span class="m">a/(x−p)+n+k</span>; סכום, הפרש, מכפלה ומנה; הפונקציה <span class="m">g=1/f</span> והקשר בין הגרפים, תחומי הגדרה, אפסים ואסימפטוטות.</li>
+<li><strong>הרכבת פונקציות ופונקציה הפוכה.</strong> הרכבה: ערך מוחלט, ריבוע ושורש של פונקציה. פונקציה הפוכה: תנאים לקיומה, פונקציית השורש כהפוכה לריבועית (סימון <span class="m">x^(1/2)=√x)</span>, שורש שלישי כהפוכה לחזקה שלישית, העובדה <span class="m">√(x²)=|x|</span>, סימטריה ביחס לישר <span class="m">y=x</span>.</li>
+</ul></div>
+</section>
+<section class="ch" id="d3"><span class="num">03</span><h2>חשבון דיפרנציאלי</h2>
+<div class="grade g10"><h3>כיתה י׳ — יסודות החשבון הדיפרנציאלי <small>45 שעות</small></h3>
+<ul class="topics">
+<li><strong>פיתוח מושג הנגזרת.</strong> בעיות של קצב שינוי אחיד ומשתנה (דלק, מהירות, טמפרטורה); "מדרגות" כתיאור קצב שינוי: <span class="m">ΔY/ΔX</span> וצמצום רוחב המדרגה; המשיק כקירוב לינארי <span class="m">(zoom</span> <span class="m">in)</span> ושיפועו כערך הנגזרת; הגדרת הנגזרת כגבול קצב השינוי הממוצע, <span class="m">f'(x₀)=lim</span> <span class="m">[f(x₀+Δx)−f(x₀)]/Δx</span>; חישובי גבולות באופן אינטואיטיבי ונומרי; הערה: יש משיק גם כשהנגזרת אינה מוגדרת <span class="m">(√x</span> ב-<span class="m">x=0)</span>.</li>
+<li><strong>כללי גזירה.</strong> <span class="m">(af)'=af'</span>, <span class="m">(f±g)'=f'±g'</span>, <span class="m">(fg)'</span>, <span class="m">(f(g))'=f'(g)·g'</span> — עם הוכחות על סמך הגדרת הנגזרת. נגזרת של פונקציית מנה נלמדת בהמשך, בפרק הפונקציות הרציונליות. הקשר האיכותני בין גרף הפונקציה לגרף הנגזרת, לפונקציות "חלקות" (גזירות ברציפות).</li>
+<li><strong>חקירת פונקציות פולינומיאליות.</strong> תחום הגדרה, חיתוך עם הצירים, נקודות קיצון, תחומי עלייה וירידה, זוגיות ואי-זוגיות, שרטוט סקיצה; חקירה בתחום סגור; משוואת משיק בנקודה שעל הגרף; חקירה איכותנית של פתרון משוואות ואי-שוויונות; פונקציה קדומה לפולינומים (ללא סימן האינטגרל) — האם היא יחידה?</li>
+<li><strong>פונקציות רציונליות.</strong> הנגזרת של <span class="m">1/x</span>; חקירת <span class="m">1/f</span> כפונקציה מורכבת; פונקציות רציונליות כלליות: נקודות אי-הגדרה שונות, התנהגות בסביבתן (אסימפטוטה אנכית או נקודת אי-רציפות סליקה — חור בגרף), התנהגות כאשר x→±∞ ואסימפטוטות אופקיות (בחישוב גבול אינטואיטי, בלי טכניקות אלגבריות), נגזרת של פונקציית מנה, שרטוט סקיצה על סמך תחום הגדרה, אסימפטוטות, חיתוך עם הצירים וסימני המונה והמכנה, וחקירת התכונות בעזרת הנגזרת.</li>
+<li><strong>פונקציות שורש.</strong> נגזרת פונקציית השורש הריבועי וניתוחה; הצגתה כפונקציה הפוכה לריבועית — שיקוף ביחס ל-<span class="m">y=x</span> והקשר בין הנגזרות של פונקציות הפוכות; פונקציית שורש מורכבת ברמת מורכבות מוגבלת (פונקציה לינארית תחת השורש, אפשרות להרחיב לריבועית); חקירה איכותנית בעזרת הנגזרת, משיק ומשוואת משיק. החקירה של פונקציות מורכבות יותר (למשל <span class="m">√(5−x))</span> נמשכת בכיתה י״א.</li>
+<li><strong>בעיות קיצון.</strong> בעיות בתחום פתוח ובתחום סגור, בגאומטריית המישור והמרחב, בגאומטריה אנליטית, באנליזה, בטריגונומטריה, ובהקשרים מעשיים (פיזיקה, כלכלה); דגש על הבנת משמעות ערך הקיצון מעבר לתוצאה האנליטית; פתרון בעיות קיצון גם ללא נגזרת.</li>
+</ul></div>
+<div class="grade g11"><h3>כיתה י״א — השתנות קצב השינוי ופונקציות עם שורשים <small>30 שעות</small></h3>
+<p class="lead">שילוב בחקירה: פעולות על פונקציות (מכיתה י׳), ערך מוחלט, זוגיות, הרכבה, מכפלה, מנה; יישומים: בעיות קיצון בתחום פתוח וסגור, נפח וגופים, תנועה וכלכלה, ושיפוע ומשוואת משיק. דגש: ללא הכבדה בטכניקה אלגברית.</p>
+<ul class="topics">
+<li><strong>השתנות קצב השינוי של הפונקציה <span class="m">(18</span> שעות).</strong> הנגזרת הראשונה היא קצב השינוי של הפונקציה, והקעירות היא קצב השינוי של הנגזרת הראשונה; נגזרת שנייה והקשר בין סימנה לסוג הקעירות (∪ או ∩); נקודת פיתול — נקודה בתחום ההגדרה שבה הפונקציה משנה סוג קעירות; זיהוי נקודות חשודות <span class="m">(f''=0</span> או <span class="m">f''</span> לא מוגדרת); סוגי נקודות פיתול (אופקית, משופעת, אנכית); תפקיד הנגזרת השנייה בזיהוי סוג קיצון ומגבלותיו (אם <span class="m">f''=0</span> אין מסקנה); בעיות מציאותיות: דרך→מהירות→תאוצה.</li>
+<li><strong>פונקציות עם שורשים ריבועיים <span class="m">(12</span> שעות).</strong> שורש בתוך סכום, מכפלה או מנה, וסרטוט וחקירה של <span class="m">√f(x)</span> בהינתן גרף f ובשמירה על רמת סיבוכיות אלגברית נמוכה; תכונות מיוחדות: תחום הגדרה שונה מהותית מפונקציות רציונליות, קיצון בקצה תחום ההגדרה, אסימפטוטות שונות ב-∞ וב-(−∞); הבדל בין <span class="m">√(x²)</span> ל-x; פונקציית השורש אינה גזירה ב-<span class="m">x=0</span> אך יש לה שם משיק אנכי; בהעלאה בריבוע חובה לבדוק פתרונות בהצבה. משוואות אי-רציונליות נלמדות בשילוב עם החקירה.</li>
+</ul></div>
+</section>
+<section class="ch" id="d4"><span class="num">04</span><h2>סדרות ואינדוקציה מתמטית</h2>
+<div class="note">נושא של כיתה י״א בלבד. בכיתה י׳ סדרות אינן מופיעות בתוכנית הרשמית.</div>
+<div class="grade g11"><h3>כיתה י״א — אינדוקציה מתמטית וסדרות <small>40 שעות</small></h3>
+<p class="lead">פירוט: סדרה חשבונית והנדסית — 25 שעות; אינדוקציה מתמטית ושימושיה — 15 שעות.</p>
+<ul class="topics">
+<li><strong>מבוא לסדרות.</strong> סדרות מספריות עם חוקיות; ייצוג כפונקציה המוגדרת על משתנה בדיד; כלל נסיגה; רב-ייצוג: מילולי, סימבולי (נוסחה לפי מקום או נוסחת נסיגה), גרפי וטבלאי; סדרות עולות, יורדות, מחזוריות או אחרות; חיוביות, שליליות או בעלות סימן מתחלף; שימוש בטכנולוגיה להצגה מספרית וגרפית.</li>
+<li><strong>סדרה חשבונית.</strong> הגדרה לפי מקום <span class="m">(a_n=a₁+(n−1)d)</span> ולפי נוסחת נסיגה והמעבר ביניהן; הוכחת נוסחת הסכומים החלקיים (בכמה דרכים); הצגה גרפית: נקודות על גרף פונקציה לינארית, וסדרת הסכומים החלקיים כנקודות על גרף פונקציה ריבועית; זיהוי סדרות חשבוניות ופתרון בעיות (שתי משוואות, לכל היותר אחת ריבועית); פעולות על איברים ששומרות על תכונת החשבוניות; קישור לטרנספורמציות מכיתה י׳; התבוננות בדילוגים (מקומות זוגיים/אי-זוגיים) וסדרות כלליות בעלות תת-סדרות חשבוניות; כל איבר הוא הממוצע החשבוני של שכניו.</li>
+<li><strong>סדרה הנדסית.</strong> הגדרה לפי מקום ולפי נוסחת נסיגה והמעבר ביניהן; חוקי החזקות (מעריך שלם חיובי ושלילי); ייצוג גרפי של סדרות עולות, יורדות ובעלות סימנים מתחלפים והשוואת קצב השינוי לסדרה חשבונית; פתרון משוואות מעריכיות בניסוי וטעייה (ללא לוגריתמים); סדרת הסכומים החלקיים; סכום אינסוף איברים כאשר הסדרה מתכנסת (דיון בגבול, <span class="m">|q|&lt;1)</span>; ייצוג עשרוני של רציונליים כסכום אינסופי; יישומים: ספירה בינארית, ריבית בנקאית, גדילה ודעיכה דיסקרטית; שימוש באקסל ובמחשבון להדגמת התכנסות; סדרות כלליות בעלות תת-סדרות הנדסיות.</li>
+<li><strong>אינדוקציה מתמטית.</strong> אינדוקציה כשיטת הוכחה דדוקטיבית לצד הוכחה ישירה והוכחה בשלילה; עיקרון האינדוקציה: שלב הבסיס <span class="m">(n=1)</span> ושלב הצעד (אם k מקיים את הטענה גם k+1 מקיים אותה); הוכחה בדרכים שונות (למשל n³−n מתחלק ב-<span class="m">6)</span>; טענות בייצוג ויזואלי, התחלקות וסכומים; זיהוי הוכחות אינדוקטיביות תקינות ומהלכים שגויים; הבחנה בין הוכחה באינדוקציה להכללה מדוגמאות; ששני שלבי האינדוקציה אינם תלויים זה בזה; ההנחה בשלב הצעד היא רק חלק ממנו.</li>
+<li><strong>סדרות כלליות ושימוש באינדוקציה.</strong> הגדרה לפי מקום או לפי כלל נסיגה (תנאי התחלה וחישוב כל איבר מהקודם); המעבר מנסיגה לנוסחה לפי מקום אינו תמיד אפשרי, ולכן נדרש רק בסדרות חשבוניות והנדסיות; שימוש באינדוקציה להוכחת שקילות כלל נסיגה והגדרה לפי מקום בסדרות חשבוניות והנדסיות, נוסחאות סכומים ושקילות הצגות; הקשר בין נוסחת נסיגה לרקורסיה במדעי המחשב.</li>
+</ul></div>
+</section>
+<section class="ch" id="d5"><span class="num">05</span><h2>חשבון אינטגרלי</h2>
+<div class="note">נושא חדש — נלמד רק בכיתה י״א. הגישה: אינטגרל כפונקציית הצטברות של פונקציה רציפה.</div>
+<div class="grade g11"><h3>כיתה י״א — חשבון אינטגרלי <small>25 שעות</small></h3>
+<ul class="topics">
+<li><strong>פיתוח מושג האינטגרל והצטברות.</strong> הצטברות של פונקציה קבועה ושל פונקציית מדרגות (מקרה פרדיגמטי: מהירות והעתק); קירוב הצטברות של פונקציה כללית בעזרת פונקציית מדרגות (שיטת המלבנים, ככל שמספר הקטעים גדל הקירוב משתפר); הגדרת פונקציית ההצטברות <span class="m">F_a(x)=∫ₐ</span>ˣ <span class="m">f(u)du</span> ותכונותיה <span class="m">(F_a(a)=0</span>; f חיובית ⇒ F עולה; f עולה ⇒ F קעורה כלפי מעלה וכו'); האינטגרל המסוים כערך פונקציית ההצטברות.</li>
+<li><strong>המשפט היסודי של החשבון הדיפרנציאלי והאינטגרלי.</strong> פונקציית ההצטברות היא פונקציה קדומה של f (הוכחה במקרה פשוט: f רציפה חיובית ועולה), ואינטגרציה היא הפעולה ההפוכה לגזירה; חלק שני: אם <span class="m">F'=f</span> אז <span class="m">∫ₐ</span>ᵇ <span class="m">f=F(b)−F(a)</span>, שתי פונקציות קדומות נבדלות בקבוע; הקשר בין גרף הפונקציה, גרף הנגזרת וגרף פונקציית ההצטברות.</li>
+<li><strong>מציאת אינטגרלים.</strong> אינטגרלים של פולינום, <span class="m">∫xⁿdx</span> <span class="m">(n≠−1)</span>, <span class="m">∫1/x</span> dx, <span class="m">∫1/(2√x)dx</span> ופונקציות טריגונומטריות (כולל שימוש בזהויות); כללים: כפל בקבוע, סכום והפרש, פונקציה מורכבת שהפנימית בה לינארית, ומכפלת פונקציה בנגזרתה (כשניתנת הנחיה).</li>
+<li><strong>יישומי האינטגרל.</strong> בעיות הצטברות (תנועה, מים בבריכה, תזרים כספי); שטח בין גרף לציר x (פונקציה חיובית, שלילית או משנה סימן), שטח בין גרפים ושטחים מורכבים; נפחים: פירמידה, גוף סיבוב סביב ציר x (כולל גופים קטומים וטבעות), הוכחת נוסחאות נפח של גליל, חרוט, כדור ופירמידה; ערך ממוצע של פונקציה <span class="m">(1/(b−a))∫ₐ</span>ᵇ f; מציאת פונקציה על סמך נגזרתה ונקודה עליה; בעיות קיצון המשלבות אינטגרלים.</li>
+</ul></div>
+</section>
+<section class="ch" id="d6"><span class="num">06</span><h2>טריגונומטריה</h2>
+<div class="grade g10"><h3>כיתה י׳ — פונקציות טריגונומטריות וטריגונומטריה במישור <small>30 שעות</small></h3>
+<p class="lead">סדר ההוראה של שני הפרקים נתון לבחירת המורה.</p>
+<ul class="topics">
+<li><strong>פונקציות טריגונומטריות <span class="m">(15</span> שעות).</strong> התאמה בין מספר ממשי לנקודה על מעגל היחידה (לפי אורך קשת; היקף <span class="m">2π)</span>; sin ו-cos כשיעורי y ו-x של הנקודה, ו-tan דרך הישר המשיק בנקודה <span class="m">(1</span>,<span class="m">0)</span>; גזירת מחזוריות וסימטריה מההגדרות; גרפים, הזזות ומתיחות; זהויות <span class="m">sin²x+cos²x=1</span>, <span class="m">sin(π/2−x)=cos</span> x, tan <span class="m">x=sin</span> <span class="m">x/cos</span> x (הוכחה בדמיון משולשים); ערכים מיוחדים של <span class="m">π/6</span>, <span class="m">π/3</span>, <span class="m">π/2</span>; פתרון משוואות מהצורה <span class="m">a·sin(x+b)+c=0</span> (וכן cos ו-<span class="m">tan)</span>, פתרון כללי ובתחום חלקי; הקשר ליחסים במשולש ישר זווית; מידול תופעות מחזוריות.</li>
+<li><strong>טריגונומטריה במישור כולל משוואות טריגונומטריות <span class="m">(15</span> שעות).</strong> נוסחת שטח משולש <span class="m">S=</span>½·a·b·sinC (הוכחה למשולש חד-זוויות וקהה-זווית); משפט הסינוסים <span class="m">a/sinA=b/sinB=c/sinC=2R</span>; משפט הקוסינוסים <span class="m">c²=a²+b²−2ab·cosC</span>; שימושים בהוכחות וחישובי גדלים; קישור בין פתרון בעיות גאומטריות להכרה איכותית של הפונקציות; הבדל בין זהות למשוואה; בקרת ממדים ויחידות; הבחנה בין חישוב מקורב להוכחה כללית.</li>
+</ul></div>
+<div class="grade g11"><h3>כיתה י״א — זהויות טריגונומטריות ופונקציות טריגונומטריות <small>30 שעות</small></h3>
+<p class="lead">פונקציות טריגונומטריות מוצע ללמד אחרי החשבון האינטגרלי.</p>
+<ul class="topics">
+<li><strong>זהויות טריגונומטריות ויישומן בגאומטריה <span class="m">(15</span> שעות).</strong> הכרת הזהויות <span class="m">sin(α±β)</span>, <span class="m">cos(α±β)</span>, <span class="m">sin2α</span>, <span class="m">cos2α</span>, sinα±sinβ, cosα±cosβ ופתרון משוואות מתאימות; הוכחת אחת מארבע זהויות הסכום וההפרש (אלגברית או גאומטרית) והסקת האחרות ממנה — כתשתית תאורטית להוכחת נגזרת הסינוס ולפישוט פונקציות לחקירה; שימושים במשפטים טריגונומטריים בהוכחות בגאומטריה; יישומים בגופים מרחביים פשוטים (כדור, מנסרה ישרה, פירמידה ישרה, גליל וחרוט ישרים): אורכים, שטחים ונפחים, ללא משפטי גאומטריה במרחב.</li>
+<li><strong>חשבון דיפרנציאלי ואינטגרלי של פונקציות טריגונומטריות <span class="m">(15</span> שעות).</strong> שימוש במחזוריות ובסימטריה לחקירה בתחום מצומצם; חקירת פונקציה מהצורה <span class="m">a·sin(b(x−c))+d</span> ותפקידי הפרמטרים; נגזרת הסינוס (ברדיאנים) בעזרת lim <span class="m">sinx/x=1</span>; נגזרות קוסינוס וטנגנס; חקירת פונקציות טריגונומטריות מורכבות (סכום, הפרש, מכפלה, מנה, הרכבת פולינום ושורש על פונקציה טריגונומטרית בעלת ארגומנט לינארי); בעיות ערך קיצון. אינטגרלים של פונקציות טריגונומטריות נלמדים בפרק האינטגרלי.</li>
+</ul></div>
+</section>
+<section class="ch" id="d7"><span class="num">07</span><h2>גאומטריה אוקלידית</h2>
+<div class="note">נלמדת בכיתה י׳ בלבד. בכיתה י״א הגאומטריה ממשיכה דרך הטריגונומטריה והיישומים בגופים מרחביים (סעיף <span class="m">6)</span>.</div>
+<div class="grade g10"><h3>כיתה י׳ — גאומטריה אוקלידית <small>50 שעות</small></h3>
+<p class="lead">דגשי הפרק: מערכת היסקית ומיומנויות הוכחה — כמתים ("לכל", "קיים"), תנאי הכרחי ומספיק, דוגמה נגדית, הבחנה בין משפט למשפט הפוך, והוכחה בדרך השלילה.</p>
+<ul class="topics">
+<li><strong>מקומות גאומטריים ונקודות מיוחדות במשולש <span class="m">(10</span> שעות).</strong> מקום גאומטרי (מעגל, אנך אמצעי, חוצה זווית, ישרים מקבילים) והוכחה בשני כיוונים; שלושת האנכים האמצעיים נפגשים במרכז המעגל החוסם; שלושת חוצי הזוויות — מרכז המעגל החסום; שלושת התיכונים נפגשים במרכז הכובד ומתחלקים ביחס 2:1; שלושת הגבהים נפגשים בנקודה אחת; משפט חפיפה רביעי (שתי צלעות שוות וזווית שווה מול הגדולה מביניהן) והמקרה שבו אין חפיפה; משפט פיתגורס ההפוך.</li>
+<li><strong>המעגל <span class="m">(20</span> שעות).</strong> הגדרות (רדיוס, מיתר, קוטר, קשת, זווית מרכזית והיקפית); משפטים על קשתות, זוויות ומיתרים; זווית היקפית שווה למחצית המרכזית ונשענת על אותה קשת; זווית היקפית הנשענת על קוטר היא ישרה; מרובע חסום במעגל (סכום זוויות נגדיות <span class="m">180°)</span> והמשפט ההפוך; משיק למעגל: ניצבות לרדיוס בנקודת ההשקה, שני משיקים מנקודה שווים זה לזה, הזווית בין משיק למיתר שווה להיקפית על הקשת הכלואה; בניות: מציאת מרכז מעגל נתון, העברת משיק מנקודה על המעגל ומחוצה לו.</li>
+<li><strong>פרופורציה ודמיון משולשים <span class="m">(20</span> שעות).</strong> משפט תאלס, המשפט ההפוך לו והמשפטים הנובעים; משפטי הדמיון של משולשים; יחס היקפים, תיכונים, חוצי זווית, גבהים ורדיוסי מעגלים חוסמים וחסומים במשולשים דומים; יחס היקפים ושטחים במצולעים דומים; משפט חוצה הזווית הפנימית; תכונות של קטעים פרופורציוניים; זיהוי משולשים דומים והוכחת הדמיון; דמיון במעגל: מיתרים נחתכים, משיק וחותך, שני חותכים היוצאים מאותה נקודה; בניות: חלוקת קטע ל-n חלקים שווים ולפי יחס נתון.</li>
+</ul></div>
+</section>
+<section class="ch" id="d8"><span class="num">08</span><h2>הסתברות</h2>
+<div class="note">נושא חדש — נלמד בכיתה י״א. פרק ההסתברות לא נמצא בטקסט שנקרא מתוך מסמך כיתה י״א, ולכן 25 השעות הן מטבלת החלוקה הרשמית, ואילו פירוט התכנים להלן לא אומת מול המסמך.</div>
+<div class="grade g11"><h3>כיתה י״א — הסתברות <small>25 שעות</small></h3>
+<p class="lead">פירוט התכנים: לא אומת מול המסמך הרשמי.</p>
+<ul class="topics">
+<li><strong>הסתברות קלאסית וחוקי ההסתברות.</strong> אקראיות, מרחב הסתברות סופי, מאורעות, חוקי ההסתברות הבסיסיים.</li>
+<li><strong>הסתברות מותנית ואי-תלות.</strong> הבחנה בין מאורעות תלויים ובלתי תלויים, הסתברות מותנית.</li>
+<li><strong>ניסויים רב-שלביים.</strong> ייצוג באמצעות טבלאות ועצי הסתברות; נוסחת הבינום ויישומיה.</li>
+</ul></div>
+</section>
+<footer>מקור: פירוט תוכנית הלימודים של משרד החינוך, מתמטיקה 5 יח״ל, כיתה י׳ וכיתה י״א. פירוט תכני ההסתברות לא אומת מול המסמך הרשמי, ולכן כדאי לוודא מול תוכנית הלימודים העדכנית.</footer>
+</div>
+</body>
+</html>
