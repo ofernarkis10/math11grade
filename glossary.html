@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מילון מושגים · מתמטיקה יא׳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Glossary: same tokens and graph-paper ground as index.html; one card per term, grouped by topic, with live search */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+.wrap{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:28px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:2.6rem}
+h2{font-size:1.5rem;color:var(--accent)}
+p{margin:0}
+a.back{color:var(--accent);text-decoration:none;font-weight:700;font-size:.95rem;align-self:flex-start}
+a.back:hover{text-decoration:underline}
+header{display:flex;flex-direction:column;gap:12px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.lead{max-width:66ch;font-size:1.08rem}
+/* search + topic jump bar, sticky so it stays reachable while scrolling */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding-block:10px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--line)}
+.bar input{width:100%;font:inherit;font-size:1.05rem;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink)}
+.bar input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.jump{display:flex;flex-wrap:wrap;gap:6px}
+.jump a{display:inline-flex;gap:6px;align-items:baseline;padding:4px 12px;border:1px solid var(--line);border-radius:99px;background:var(--paper);color:var(--accent);font-weight:700;font-size:.88rem;text-decoration:none}
+.jump a small{color:var(--muted);font-weight:400}
+.jump a:hover,.jump a:focus-visible{border-color:var(--accent);background:var(--accent-soft);outline:none}
+.status{color:var(--muted);font-size:.9rem;min-height:1.4em}
+section.topic{display:flex;flex-direction:column;gap:14px;scroll-margin-top:130px}
+.topic-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--accent);padding-bottom:8px}
+.topic-head span{color:var(--muted);font-size:.9rem}
+ul.terms{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+li.term{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 18px;display:flex;flex-direction:column;gap:8px;scroll-margin-top:130px;min-width:0}
+li.term:target{border-color:var(--mark);box-shadow:0 0 0 3px var(--accent-soft)}
+.th{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px}
+dfn{font-style:normal;font-family:var(--f-display);font-weight:700;font-size:1.22rem}
+.en{color:var(--muted);font-size:.86rem;font-style:italic}
+.f{background:var(--accent-soft);border-radius:8px;padding:2px 12px;overflow-x:auto}
+.refs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.85rem}
+.refs span{color:var(--muted)}
+.refs a{color:var(--mark);font-weight:700;text-decoration:none;border-bottom:1px dotted currentColor}
+.refs a:hover{border-bottom-style:solid}
+.m{direction:ltr;unicode-bidi:isolate}
+.hidden{display:none!important}
+footer{color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
+@media (max-width:520px){h1{font-size:2rem}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+.m .katex{font-size:1.1em}
+.f .katex-display{margin:.5em 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · מסמך עזר</span>
+  <h1>מילון מושגים</h1>
+  <p class="lead">כל המושגים שמופיעים בדפי האתר, במקום אחד: הגדרה קצרה במילים פשוטות, הנוסחה כשיש, השם באנגלית וקישורים לדפים שבהם המושג מוסבר ומתורגל. אפשר לחפש מושג בעברית או באנגלית.</p>
+</header>
+
+<div class="bar">
+  <input type="search" id="q" placeholder="חיפוש מושג… (למשל: משיק, chain, תיכון)" aria-label="חיפוש מושג" autocomplete="off">
+  <nav class="jump" aria-label="נושאים"><a href="#logic">לוגיקה והוכחה<small>14</small></a><a href="#sequences">סדרות<small>25</small></a><a href="#calculus">פונקציות וחשבון דיפרנציאלי<small>29</small></a><a href="#triangles">גאומטריה: משולשים ומקומות גאומטריים<small>18</small></a><a href="#circle">גאומטריה: המעגל<small>14</small></a><a href="#similarity">גאומטריה: פרופורציה ודמיון<small>11</small></a></nav>
+  <div class="status" id="status" aria-live="polite">111 מושגים</div>
+</div>
+
+<section class="topic" id="logic">
+  <div class="topic-head"><h2>לוגיקה והוכחה</h2><span>14 מושגים · מושגים של מערכת היסקית ושל דרכי הוכחה</span></div>
+  <ul class="terms">
+<li class="term" id="logic-1" data-s="אקסיומה axiom">
+  <div class="th"><dfn>אקסיומה</dfn><span class="en" lang="en" dir="ltr">Axiom</span></div>
+  <p>טענה בסיסית שמקבלים כנכונה בלי הוכחה. כל המשפטים בגאומטריה נבנים מעל האקסיומות.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="logic-2" data-s="מושג יסודי primitive notion">
+  <div class="th"><dfn>מושג יסודי</dfn><span class="en" lang="en" dir="ltr">Primitive notion</span></div>
+  <p>מושג שלא מגדירים, כמו נקודה, ישר ומישור. בעזרתו מגדירים את כל שאר המושגים.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="logic-3" data-s="הגדרה definition">
+  <div class="th"><dfn>הגדרה</dfn><span class="en" lang="en" dir="ltr">Definition</span></div>
+  <p>קביעה של משמעות מושג חדש בעזרת מושגים שכבר מוכרים. הגדרה לא מוכיחים.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="logic-4" data-s="משפט theorem">
+  <div class="th"><dfn>משפט</dfn><span class="en" lang="en" dir="ltr">Theorem</span></div>
+  <p>טענה שהוכחה מתוך אקסיומות, הגדרות ומשפטים קודמים. בנוי מ"נתון" (אם…) ו"מסקנה" (אז…).</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="logic-5" data-s="משפט הפוך converse">
+  <div class="th"><dfn>משפט הפוך</dfn><span class="en" lang="en" dir="ltr">Converse</span></div>
+  <p>המשפט שמתקבל כשמחליפים בין הנתון למסקנה. משפט הפוך אינו נכון אוטומטית, וצריך להוכיח אותו בנפרד.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a><a href="geometry-03-similarity.html#converse">דמיון משולשים</a></div>
+</li>
+<li class="term" id="logic-6" data-s="תנאי הכרחי ותנאי מספיק necessary / sufficient condition">
+  <div class="th"><dfn>תנאי הכרחי ותנאי מספיק</dfn><span class="en" lang="en" dir="ltr">Necessary / sufficient condition</span></div>
+  <p>אם <span class="m">\(P \Rightarrow Q\)</span>, אז <span class="m">\(P\)</span> הוא תנאי מספיק ל־<span class="m">\(Q\)</span>, ו־<span class="m">\(Q\)</span> הוא תנאי הכרחי ל־<span class="m">\(P\)</span>. למשל: להיות ריבוע מספיק כדי להיות מלבן, ולהיות מלבן הכרחי כדי להיות ריבוע.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="logic-7" data-s="אם ורק אם if and only if">
+  <div class="th"><dfn>אם ורק אם</dfn><span class="en" lang="en" dir="ltr">If and only if</span></div>
+  <p>קיצור לשני הכיוונים יחד: המשפט וההפוך שלו נכונים. אז התנאי הוא גם הכרחי וגם מספיק.</p><div class="f"><span class="m">\[P \Leftrightarrow Q\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="logic-8" data-s="כמתים: &quot;לכל&quot; ו&quot;קיים&quot; quantifiers">
+  <div class="th"><dfn>כמתים: "לכל" ו"קיים"</dfn><span class="en" lang="en" dir="ltr">Quantifiers</span></div>
+  <p>"לכל" טוען שתכונה מתקיימת בכל המקרים, ו"קיים" טוען שיש לפחות מקרה אחד. כדי להפריך "לכל" מספיקה דוגמה נגדית אחת.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="logic-9" data-s="דוגמה נגדית counterexample">
+  <div class="th"><dfn>דוגמה נגדית</dfn><span class="en" lang="en" dir="ltr">Counterexample</span></div>
+  <p>מקרה אחד שבו הנתון מתקיים והמסקנה לא. דוגמה נגדית מספיקה כדי להראות שטענה כללית אינה נכונה.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="logic-10" data-s="הוכחה בדרך השלילה proof by contradiction">
+  <div class="th"><dfn>הוכחה בדרך השלילה</dfn><span class="en" lang="en" dir="ltr">Proof by contradiction</span></div>
+  <p>מניחים שהמסקנה אינה נכונה ומגיעים לסתירה עם הנתון או עם משפט ידוע. לכן ההנחה שגויה, והמסקנה נכונה.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="logic-11" data-s="אינדוקציה מתמטית mathematical induction">
+  <div class="th"><dfn>אינדוקציה מתמטית</dfn><span class="en" lang="en" dir="ltr">Mathematical induction</span></div>
+  <p>שיטה להוכיח טענה לכל <span class="m">\(n\)</span> טבעי, כמו שורת דומינו: מראים שהאבן הראשונה נופלת, ושכל אבן מפילה את הבאה. שלושה שלבים: בסיס, הנחה וצעד.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-07-induction.html">אינדוקציה</a><a href="sequences-00-overview.html#induction">סדרות: מבט כללי</a></div>
+</li>
+<li class="term" id="logic-12" data-s="בסיס האינדוקציה base case">
+  <div class="th"><dfn>בסיס האינדוקציה</dfn><span class="en" lang="en" dir="ltr">Base case</span></div>
+  <p>בדיקה שהטענה נכונה עבור הערך הראשון, בדרך כלל <span class="m">\(n=1\)</span>.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-07-induction.html">אינדוקציה</a></div>
+</li>
+<li class="term" id="logic-13" data-s="הנחת האינדוקציה induction hypothesis">
+  <div class="th"><dfn>הנחת האינדוקציה</dfn><span class="en" lang="en" dir="ltr">Induction hypothesis</span></div>
+  <p>מניחים שהטענה נכונה עבור <span class="m">\(n=k\)</span> כלשהו. משתמשים בהנחה הזאת בצעד.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-07-induction.html">אינדוקציה</a></div>
+</li>
+<li class="term" id="logic-14" data-s="צעד האינדוקציה induction step">
+  <div class="th"><dfn>צעד האינדוקציה</dfn><span class="en" lang="en" dir="ltr">Induction step</span></div>
+  <p>מוכיחים שאם הטענה נכונה עבור <span class="m">\(n=k\)</span>, היא נכונה גם עבור <span class="m">\(n=k+1\)</span>. חייבים להשתמש בהנחה.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-07-induction.html">אינדוקציה</a></div>
+</li>
+  </ul>
+</section>
+
+<section class="topic" id="sequences">
+  <div class="topic-head"><h2>סדרות</h2><span>25 מושגים · סדרה חשבונית, הנדסית, טורים, כלל נסיגה ואיבר כללי</span></div>
+  <ul class="terms">
+<li class="term" id="sequences-1" data-s="סדרה sequence">
+  <div class="th"><dfn>סדרה</dfn><span class="en" lang="en" dir="ltr">Sequence</span></div>
+  <p>רשימה מסודרת של מספרים. <span class="m">\(a_n\)</span> הוא האיבר שנמצא במקום ה־<span class="m">\(n\)</span>. אפשר לראות סדרה כפונקציה שהתחום שלה הוא המספרים הטבעיים.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-00-overview.html">סדרות: מבט כללי</a><a href="sequences-05-general-term.html">איבר כללי</a></div>
+</li>
+<li class="term" id="sequences-2" data-s="איבר כללי general term">
+  <div class="th"><dfn>איבר כללי</dfn><span class="en" lang="en" dir="ltr">General term</span></div>
+  <p>נוסחה שנותנת את האיבר <span class="m">\(a_n\)</span> ישירות לפי המקום <span class="m">\(n\)</span>, בלי לחשב את האיברים הקודמים.</p><div class="f"><span class="m">\[a_n = f(n)\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-05-general-term.html">איבר כללי</a><a href="sequences-00-overview.html#formula">סדרות: מבט כללי</a></div>
+</li>
+<li class="term" id="sequences-3" data-s="סדרה חשבונית arithmetic sequence">
+  <div class="th"><dfn>סדרה חשבונית</dfn><span class="en" lang="en" dir="ltr">Arithmetic sequence</span></div>
+  <p>סדרה שבה ההפרש בין כל איבר לקודם לו קבוע. גדלה (או קטנה) בקצב לינארי.</p><div class="f"><span class="m">\[a_n = a_1 + (n-1)d\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-01-arithmetic.html">סדרה חשבונית</a><a href="sequences-00-overview.html#arith">סדרות: מבט כללי</a></div>
+</li>
+<li class="term" id="sequences-4" data-s="הפרש הסדרה common difference">
+  <div class="th"><dfn>הפרש הסדרה</dfn><span class="en" lang="en" dir="ltr">Common difference</span></div>
+  <p>בסדרה חשבונית: המספר הקבוע <span class="m">\(d\)</span> שמוסיפים כדי לעבור מאיבר לאיבר. אם <span class="m">\(d>0\)</span> הסדרה עולה, ואם <span class="m">\(d\lt 0\)</span> היא יורדת.</p><div class="f"><span class="m">\[d = a_{n+1} - a_n\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-01-arithmetic.html">סדרה חשבונית</a></div>
+</li>
+<li class="term" id="sequences-5" data-s="סכום סדרה חשבונית arithmetic series">
+  <div class="th"><dfn>סכום סדרה חשבונית</dfn><span class="en" lang="en" dir="ltr">Arithmetic series</span></div>
+  <p>סכום <span class="m">\(n\)</span> האיברים הראשונים. הרעיון של גאוס: מחברים זוגות של איברים מהקצוות, ולכל זוג אותו סכום.</p><div class="f"><span class="m">\[S_n = \frac{n(a_1+a_n)}{2} = \frac{n}{2}\left(2a_1+(n-1)d\right)\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-01-arithmetic.html">סדרה חשבונית</a><a href="sequences-00-overview.html#arith">סדרות: מבט כללי</a></div>
+</li>
+<li class="term" id="sequences-6" data-s="סדרה הנדסית geometric sequence">
+  <div class="th"><dfn>סדרה הנדסית</dfn><span class="en" lang="en" dir="ltr">Geometric sequence</span></div>
+  <p>סדרה שבה המנה בין כל איבר לקודם לו קבועה. גדלה (או דועכת) בקצב מעריכי.</p><div class="f"><span class="m">\[a_n = a_1 \cdot q^{\,n-1}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-02-geometric.html">סדרה הנדסית</a><a href="sequences-00-overview.html#geo">סדרות: מבט כללי</a></div>
+</li>
+<li class="term" id="sequences-7" data-s="מנת הסדרה common ratio">
+  <div class="th"><dfn>מנת הסדרה</dfn><span class="en" lang="en" dir="ltr">Common ratio</span></div>
+  <p>בסדרה הנדסית: המספר הקבוע <span class="m">\(q\)</span> שבו כופלים כדי לעבור מאיבר לאיבר. גידול של <span class="m">\(p\)</span> אחוזים מתאים ל־<span class="m">\(q = 1+\frac{p}{100}\)</span>.</p><div class="f"><span class="m">\[q = \frac{a_{n+1}}{a_n}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-02-geometric.html">סדרה הנדסית</a></div>
+</li>
+<li class="term" id="sequences-8" data-s="סכום סדרה הנדסית geometric series">
+  <div class="th"><dfn>סכום סדרה הנדסית</dfn><span class="en" lang="en" dir="ltr">Geometric series</span></div>
+  <p>סכום <span class="m">\(n\)</span> האיברים הראשונים, כאשר <span class="m">\(q \neq 1\)</span>. כאשר <span class="m">\(q=1\)</span> כל האיברים שווים, והסכום הוא <span class="m">\(n\cdot a_1\)</span>.</p><div class="f"><span class="m">\[S_n = \frac{a_1\left(q^{n}-1\right)}{q-1}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-02-geometric.html">סדרה הנדסית</a><a href="sequences-00-overview.html#geo">סדרות: מבט כללי</a></div>
+</li>
+<li class="term" id="sequences-9" data-s="תכונת האמצע middle-term property">
+  <div class="th"><dfn>תכונת האמצע</dfn><span class="en" lang="en" dir="ltr">Middle-term property</span></div>
+  <p>בסדרה חשבונית כל איבר הוא הממוצע של שכניו. בסדרה הנדסית ריבוע כל איבר שווה למכפלת שכניו.</p><div class="f"><span class="m">\[a_n=\frac{a_{n-1}+a_{n+1}}{2} \qquad a_n^{2}=a_{n-1}\cdot a_{n+1}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-01-arithmetic.html">סדרה חשבונית</a><a href="sequences-02-geometric.html">סדרה הנדסית</a></div>
+</li>
+<li class="term" id="sequences-10" data-s="ריבית דריבית compound interest">
+  <div class="th"><dfn>ריבית דריבית</dfn><span class="en" lang="en" dir="ltr">Compound interest</span></div>
+  <p>גידול באחוז קבוע בכל תקופה, כשהריבית מצטרפת לקרן. הסכומים יוצרים סדרה הנדסית. אותה נוסחה מתארת גידול אוכלוסייה ודעיכה.</p><div class="f"><span class="m">\[A_n = A_0\left(1+\tfrac{p}{100}\right)^{n}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-02-geometric.html">סדרה הנדסית</a></div>
+</li>
+<li class="term" id="sequences-11" data-s="טור הנדסי אינסופי מתכנס convergent infinite geometric series">
+  <div class="th"><dfn>טור הנדסי אינסופי מתכנס</dfn><span class="en" lang="en" dir="ltr">Convergent infinite geometric series</span></div>
+  <p>סכום של אינסוף איברים של סדרה הנדסית. יש לו סכום סופי רק כאשר <span class="m">\(|q|\lt 1\)</span>.</p><div class="f"><span class="m">\[S = \frac{a_1}{1-q}, \quad |q|\lt 1\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-03-infinite-series.html">טור אינסופי</a><a href="sequences-00-overview.html#infinite">סדרות: מבט כללי</a></div>
+</li>
+<li class="term" id="sequences-12" data-s="תנאי התכנסות convergence condition">
+  <div class="th"><dfn>תנאי התכנסות</dfn><span class="en" lang="en" dir="ltr">Convergence condition</span></div>
+  <p>התנאי <span class="m">\(-1 \lt q \lt 1\)</span>, <span class="m">\(q\neq 0\)</span>, שבו הסכומים החלקיים מתקרבים למספר אחד. בשאלות עם פרמטר מתחילים מהתנאי הזה.</p><div class="f"><span class="m">\[|q| \lt 1\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-03-infinite-series.html">טור אינסופי</a><a href="sequences-00-overview.html#infinite">סדרות: מבט כללי</a></div>
+</li>
+<li class="term" id="sequences-13" data-s="סכום חלקי partial sum">
+  <div class="th"><dfn>סכום חלקי</dfn><span class="en" lang="en" dir="ltr">Partial sum</span></div>
+  <p>הסכום <span class="m">\(S_n\)</span> של <span class="m">\(n\)</span> האיברים הראשונים. סכום טור אינסופי הוא הגבול שאליו הסכומים החלקיים מתקרבים.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-03-infinite-series.html">טור אינסופי</a></div>
+</li>
+<li class="term" id="sequences-14" data-s="שבר עשרוני מחזורי repeating decimal">
+  <div class="th"><dfn>שבר עשרוני מחזורי</dfn><span class="en" lang="en" dir="ltr">Repeating decimal</span></div>
+  <p>מספר שספרותיו חוזרות, כמו <span class="m">\(0.\overline{3}\)</span>. אפשר לכתוב אותו כטור הנדסי אינסופי ולהפוך אותו לשבר רגיל.</p><div class="f"><span class="m">\[0.\overline{3} = \frac{3}{10}+\frac{3}{100}+\dots = \frac{1}{3}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-03-infinite-series.html">טור אינסופי</a></div>
+</li>
+<li class="term" id="sequences-15" data-s="כלל נסיגה recursive formula">
+  <div class="th"><dfn>כלל נסיגה</dfn><span class="en" lang="en" dir="ltr">Recursive formula</span></div>
+  <p>הגדרה של סדרה צעד אחר צעד: נוסחה שמחשבת איבר בעזרת האיבר (או האיברים) שלפניו, יחד עם האיבר הראשון.</p><div class="f"><span class="m">\[a_{n+1} = f(a_n), \quad a_1 \text{ נתון}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-04-recursive.html">כלל נסיגה</a><a href="sequences-00-overview.html#recursive">סדרות: מבט כללי</a></div>
+</li>
+<li class="term" id="sequences-16" data-s="כלל נסיגה מסדר ראשון / שני first / second order recursion">
+  <div class="th"><dfn>כלל נסיגה מסדר ראשון / שני</dfn><span class="en" lang="en" dir="ltr">First / second order recursion</span></div>
+  <p>בסדר ראשון כל איבר תלוי באיבר אחד שלפניו, ולכן צריך איבר התחלה אחד. בסדר שני הוא תלוי בשניים שלפניו, וצריך שני איברי התחלה.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-00-overview.html#recursive">סדרות: מבט כללי</a><a href="sequences-04-recursive.html">כלל נסיגה</a></div>
+</li>
+<li class="term" id="sequences-17" data-s="סדרת עזר auxiliary sequence">
+  <div class="th"><dfn>סדרת עזר</dfn><span class="en" lang="en" dir="ltr">Auxiliary sequence</span></div>
+  <p>סדרה חדשה שבונים מהסדרה הנתונה, למשל <span class="m">\(b_n = a_n + c\)</span> או <span class="m">\(b_n=\frac{1}{a_n}\)</span>, כך שתצא חשבונית או הנדסית ואפשר יהיה לפתור אותה.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-04-recursive.html">כלל נסיגה</a></div>
+</li>
+<li class="term" id="sequences-18" data-s="סכימה טלסקופית telescoping sum">
+  <div class="th"><dfn>סכימה טלסקופית</dfn><span class="en" lang="en" dir="ltr">Telescoping sum</span></div>
+  <p>סכום שבו כל איבר נכתב כהפרש, כך שרוב החלקים מצטמצמים זה עם זה ונשארים רק הקצוות.</p><div class="f"><span class="m">\[\sum_{k=1}^{n}(b_{k+1}-b_k) = b_{n+1}-b_1\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-04-recursive.html">כלל נסיגה</a><a href="sequences-05-general-term.html">איבר כללי</a></div>
+</li>
+<li class="term" id="sequences-19" data-s="סדרה מחזורית periodic sequence">
+  <div class="th"><dfn>סדרה מחזורית</dfn><span class="en" lang="en" dir="ltr">Periodic sequence</span></div>
+  <p>סדרה שחוזרת על עצמה כל <span class="m">\(T\)</span> איברים: <span class="m">\(a_{n+T}=a_n\)</span>. מחשבים כמה איברים ראשונים עד שמזהים את המחזור.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-04-recursive.html">כלל נסיגה</a></div>
+</li>
+<li class="term" id="sequences-20" data-s="סדרה עולה / יורדת (מונוטוניות) monotonic sequence">
+  <div class="th"><dfn>סדרה עולה / יורדת (מונוטוניות)</dfn><span class="en" lang="en" dir="ltr">Monotonic sequence</span></div>
+  <p>סדרה עולה אם <span class="m">\(a_{n+1}>a_n\)</span> לכל <span class="m">\(n\)</span>, ויורדת אם <span class="m">\(a_{n+1}\lt a_n\)</span>. בודקים את הסימן של ההפרש <span class="m">\(a_{n+1}-a_n\)</span>.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-05-general-term.html">איבר כללי</a><a href="sequences-00-overview.html">סדרות: מבט כללי</a></div>
+</li>
+<li class="term" id="sequences-21" data-s="איבר מקסימלי / מינימלי greatest / least term">
+  <div class="th"><dfn>איבר מקסימלי / מינימלי</dfn><span class="en" lang="en" dir="ltr">Greatest / least term</span></div>
+  <p>האיבר הגדול (או הקטן) ביותר בסדרה. מוצאים אותו בבדיקת המקום שבו הסדרה מפסיקה לעלות ומתחילה לרדת, או להפך.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-05-general-term.html">איבר כללי</a></div>
+</li>
+<li class="term" id="sequences-22" data-s="איבר מתוך סכומים term from partial sums">
+  <div class="th"><dfn>איבר מתוך סכומים</dfn><span class="en" lang="en" dir="ltr">Term from partial sums</span></div>
+  <p>כשנתונה נוסחה ל־<span class="m">\(S_n\)</span>, כל איבר הוא ההפרש בין שני סכומים עוקבים.</p><div class="f"><span class="m">\[a_n = S_n - S_{n-1}\ (n\ge 2), \quad a_1 = S_1\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-05-general-term.html">איבר כללי</a><a href="sequences-00-overview.html">סדרות: מבט כללי</a></div>
+</li>
+<li class="term" id="sequences-23" data-s="סדרה שזורה interleaved sequence">
+  <div class="th"><dfn>סדרה שזורה</dfn><span class="en" lang="en" dir="ltr">Interleaved sequence</span></div>
+  <p>שתי סדרות שמופיעות לסירוגין: האיברים במקומות האי־זוגיים הם סדרה אחת, ובמקומות הזוגיים סדרה אחרת.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-06-mixed.html">סדרות מעורבות</a><a href="sequences-00-overview.html#mixed">סדרות: מבט כללי</a></div>
+</li>
+<li class="term" id="sequences-24" data-s="סדרה נגזרת derived sequence">
+  <div class="th"><dfn>סדרה נגזרת</dfn><span class="en" lang="en" dir="ltr">Derived sequence</span></div>
+  <p>סדרה חדשה שמתקבלת מפעולה על כל איבר. אם <span class="m">\(a_n\)</span> חשבונית, אז <span class="m">\(2^{a_n}\)</span> הנדסית. אם <span class="m">\(a_n\)</span> הנדסית וחיובית, אז <span class="m">\(\log a_n\)</span> חשבונית.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-06-mixed.html">סדרות מעורבות</a><a href="sequences-00-overview.html#mixed">סדרות: מבט כללי</a></div>
+</li>
+<li class="term" id="sequences-25" data-s="גדילה לינארית ומעריכית linear vs exponential growth">
+  <div class="th"><dfn>גדילה לינארית ומעריכית</dfn><span class="en" lang="en" dir="ltr">Linear vs exponential growth</span></div>
+  <p>בגדילה לינארית מוסיפים כל פעם אותו מספר (סדרה חשבונית). בגדילה מעריכית כופלים כל פעם באותו מספר (סדרה הנדסית).</p>
+  <div class="refs"><span>מופיע ב:</span><a href="sequences-00-overview.html">סדרות: מבט כללי</a><a href="sequences-01-arithmetic.html">סדרה חשבונית</a><a href="sequences-02-geometric.html">סדרה הנדסית</a></div>
+</li>
+  </ul>
+</section>
+
+<section class="topic" id="calculus">
+  <div class="topic-head"><h2>פונקציות וחשבון דיפרנציאלי</h2><span>29 מושגים · נגזרות, כלל השרשרת, חקירת פונקציות ואסימפטוטות</span></div>
+  <ul class="terms">
+<li class="term" id="calculus-1" data-s="פולינום polynomial">
+  <div class="th"><dfn>פולינום</dfn><span class="en" lang="en" dir="ltr">Polynomial</span></div>
+  <p>פונקציה מהצורה <span class="m">\(a_nx^n+\dots+a_1x+a_0\)</span>. החזקה הגבוהה ביותר היא המעלה של הפולינום, והמקדם שלה הוא המקדם המוביל. פולינום מוגדר לכל <span class="m">\(x\)</span>.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-2" data-s="פונקציה רציונלית rational function">
+  <div class="th"><dfn>פונקציה רציונלית</dfn><span class="en" lang="en" dir="ltr">Rational function</span></div>
+  <p>מנה של שני פולינומים. היא לא מוגדרת בנקודות שבהן המכנה מתאפס.</p><div class="f"><span class="m">\[f(x)=\frac{p(x)}{q(x)}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-3" data-s="תחום הגדרה domain">
+  <div class="th"><dfn>תחום הגדרה</dfn><span class="en" lang="en" dir="ltr">Domain</span></div>
+  <p>כל ערכי <span class="m">\(x\)</span> שעבורם הפונקציה מוגדרת. בשבר מוציאים את הנקודות שבהן המכנה מתאפס, ובשורש ריבועי דורשים ביטוי לא שלילי.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a><a href="composite-derivatives-01-rules.html">כללי הגזירה</a></div>
+</li>
+<li class="term" id="calculus-4" data-s="חיתוך עם הצירים intercepts">
+  <div class="th"><dfn>חיתוך עם הצירים</dfn><span class="en" lang="en" dir="ltr">Intercepts</span></div>
+  <p>חיתוך עם ציר <span class="m">\(x\)</span>: פותרים <span class="m">\(f(x)=0\)</span>. חיתוך עם ציר <span class="m">\(y\)</span>: מציבים <span class="m">\(x=0\)</span>, אם <span class="m">\(0\)</span> בתחום ההגדרה.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-5" data-s="פרמטר parameter">
+  <div class="th"><dfn>פרמטר</dfn><span class="en" lang="en" dir="ltr">Parameter</span></div>
+  <p>אות שמייצגת מספר קבוע אבל לא ידוע, כמו <span class="m">\(a\)</span> ב־<span class="m">\(f(x)=ax^2+3\)</span>. מוצאים אותו מנתון נוסף בשאלה.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a><a href="sequences-03-infinite-series.html">טור אינסופי</a></div>
+</li>
+<li class="term" id="calculus-6" data-s="נגזרת derivative">
+  <div class="th"><dfn>נגזרת</dfn><span class="en" lang="en" dir="ltr">Derivative</span></div>
+  <p>קצב השינוי הרגעי של פונקציה. ערך הנגזרת בנקודה הוא השיפוע של המשיק לגרף באותה נקודה.</p><div class="f"><span class="m">\[f'(x_0) = \text{שיפוע המשיק ב־}x_0\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="composite-derivatives-01-rules.html#base">כללי הגזירה</a><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-7" data-s="נגזרת של חזקה power rule">
+  <div class="th"><dfn>נגזרת של חזקה</dfn><span class="en" lang="en" dir="ltr">Power rule</span></div>
+  <p>נכונה לכל מעריך ממשי <span class="m">\(n\)</span>, גם שלילי וגם שבר. לכן כדאי לכתוב שורשים ושברים כחזקות לפני הגזירה.</p><div class="f"><span class="m">\[\left(x^{n}\right)' = n\,x^{n-1}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="composite-derivatives-01-rules.html#base">כללי הגזירה</a><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-8" data-s="נגזרת של שורש derivative of a square root">
+  <div class="th"><dfn>נגזרת של שורש</dfn><span class="en" lang="en" dir="ltr">Derivative of a square root</span></div>
+  <p>מקרה פרטי של נגזרת חזקה עם <span class="m">\(n=\frac12\)</span>. השורש לא גזיר ב־<span class="m">\(x=0\)</span>.</p><div class="f"><span class="m">\[\left(\sqrt{x}\right)' = \frac{1}{2\sqrt{x}}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="composite-derivatives-01-rules.html#base">כללי הגזירה</a></div>
+</li>
+<li class="term" id="calculus-9" data-s="נגזרות טריגונומטריות trigonometric derivatives">
+  <div class="th"><dfn>נגזרות טריגונומטריות</dfn><span class="en" lang="en" dir="ltr">Trigonometric derivatives</span></div>
+  <p>הנגזרות של סינוס, קוסינוס וטנגנס. הן נכונות רק כשהזווית נמדדת ברדיאנים. שימו לב למינוס בנגזרת של קוסינוס.</p><div class="f"><span class="m">\[(\sin x)'=\cos x \quad (\cos x)'=-\sin x \quad (\tan x)'=\frac{1}{\cos^{2}x}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="composite-derivatives-01-rules.html#base">כללי הגזירה</a><a href="composite-derivatives-01-rules.html#rules">כללי הגזירה</a></div>
+</li>
+<li class="term" id="calculus-10" data-s="רדיאן radian">
+  <div class="th"><dfn>רדיאן</dfn><span class="en" lang="en" dir="ltr">Radian</span></div>
+  <p>יחידת מידה לזוויות: זווית שבה אורך הקשת שווה לרדיוס. <span class="m">\(\pi\)</span> רדיאנים הם <span class="m">\(180^\circ\)</span>.</p><div class="f"><span class="m">\[\pi \text{ rad} = 180^{\circ}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="composite-derivatives-01-rules.html">כללי הגזירה</a></div>
+</li>
+<li class="term" id="calculus-11" data-s="כלל המכפלה product rule">
+  <div class="th"><dfn>כלל המכפלה</dfn><span class="en" lang="en" dir="ltr">Product rule</span></div>
+  <p>נגזרת של מכפלת שתי פונקציות.</p><div class="f"><span class="m">\[(uv)' = u'v + uv'\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="composite-derivatives-01-rules.html#combine">כללי הגזירה</a><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-12" data-s="כלל המנה quotient rule">
+  <div class="th"><dfn>כלל המנה</dfn><span class="en" lang="en" dir="ltr">Quotient rule</span></div>
+  <p>נגזרת של מנת שתי פונקציות. הסדר במונה חשוב: קודם <span class="m">\(u'v\)</span> ואחר כך מחסירים <span class="m">\(uv'\)</span>.</p><div class="f"><span class="m">\[\left(\frac{u}{v}\right)' = \frac{u'v - uv'}{v^{2}}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="composite-derivatives-01-rules.html#combine">כללי הגזירה</a><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-13" data-s="פונקציה מורכבת (הרכבה) composite function">
+  <div class="th"><dfn>פונקציה מורכבת (הרכבה)</dfn><span class="en" lang="en" dir="ltr">Composite function</span></div>
+  <p>פונקציה שבתוכה יש פונקציה אחרת: מפעילים קודם את <span class="m">\(g\)</span> ועל התוצאה מפעילים את <span class="m">\(f\)</span>. למשל <span class="m">\(\sqrt{x^2+1}\)</span>.</p><div class="f"><span class="m">\[f\big(g(x)\big)\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="composite-derivatives-01-rules.html#what">כללי הגזירה</a><a href="composite-derivatives-02-exercises.html">תרגילי נגזרות</a></div>
+</li>
+<li class="term" id="calculus-14" data-s="פונקציה פנימית וחיצונית inner / outer function">
+  <div class="th"><dfn>פונקציה פנימית וחיצונית</dfn><span class="en" lang="en" dir="ltr">Inner / outer function</span></div>
+  <p>בהרכבה <span class="m">\(f(g(x))\)</span>: <span class="m">\(g\)</span> היא הפנימית (מה שמחשבים ראשון), ו־<span class="m">\(f\)</span> היא החיצונית (הפעולה האחרונה). זיהוי נכון שלהן הוא הצעד הראשון בגזירה.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="composite-derivatives-01-rules.html#what">כללי הגזירה</a></div>
+</li>
+<li class="term" id="calculus-15" data-s="כלל השרשרת chain rule">
+  <div class="th"><dfn>כלל השרשרת</dfn><span class="en" lang="en" dir="ltr">Chain rule</span></div>
+  <p>גוזרים את החיצונית ומשאירים בתוכה את הפנימית כמו שהיא, ואז כופלים בנגזרת של הפנימית.</p><div class="f"><span class="m">\[\Big[f\big(g(x)\big)\Big]' = f'\big(g(x)\big)\cdot g'(x)\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="composite-derivatives-01-rules.html#chain">כללי הגזירה</a><a href="composite-derivatives-02-exercises.html">תרגילי נגזרות</a></div>
+</li>
+<li class="term" id="calculus-16" data-s="כתיב לייבניץ leibniz notation">
+  <div class="th"><dfn>כתיב לייבניץ</dfn><span class="en" lang="en" dir="ltr">Leibniz notation</span></div>
+  <p>כתיבת נגזרת כמנה של שינויים קטנים. בכתיב הזה כלל השרשרת נראה כמו צמצום שברים.</p><div class="f"><span class="m">\[\frac{dy}{dx} = \frac{dy}{du}\cdot\frac{du}{dx}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="composite-derivatives-01-rules.html#chain">כללי הגזירה</a></div>
+</li>
+<li class="term" id="calculus-17" data-s="הרכבה של כמה שכבות multi-layer composition">
+  <div class="th"><dfn>הרכבה של כמה שכבות</dfn><span class="en" lang="en" dir="ltr">Multi-layer composition</span></div>
+  <p>פונקציה שבנויה מכמה הרכבות זו בתוך זו. מפעילים את כלל השרשרת שוב ושוב, מהשכבה החיצונית פנימה.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="composite-derivatives-01-rules.html#layers">כללי הגזירה</a><a href="composite-derivatives-02-exercises.html">תרגילי נגזרות</a></div>
+</li>
+<li class="term" id="calculus-18" data-s="תחום הגזירות differentiability domain">
+  <div class="th"><dfn>תחום הגזירות</dfn><span class="en" lang="en" dir="ltr">Differentiability domain</span></div>
+  <p>הנקודות שבהן לפונקציה יש נגזרת. הוא יכול להיות קטן מתחום ההגדרה, למשל <span class="m">\(\sqrt{x}\)</span> מוגדרת ב־<span class="m">\(0\)</span> אבל לא גזירה שם.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="composite-derivatives-01-rules.html">כללי הגזירה</a></div>
+</li>
+<li class="term" id="calculus-19" data-s="משיק לגרף tangent line">
+  <div class="th"><dfn>משיק לגרף</dfn><span class="en" lang="en" dir="ltr">Tangent line</span></div>
+  <p>ישר שנוגע בגרף בנקודה ושיפועו שווה לנגזרת באותה נקודה.</p><div class="f"><span class="m">\[y - f(x_0) = f'(x_0)\,(x - x_0)\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a><a href="composite-derivatives-02-exercises.html">תרגילי נגזרות</a></div>
+</li>
+<li class="term" id="calculus-20" data-s="עלייה וירידה increasing / decreasing">
+  <div class="th"><dfn>עלייה וירידה</dfn><span class="en" lang="en" dir="ltr">Increasing / decreasing</span></div>
+  <p>היכן ש־<span class="m">\(f'(x)>0\)</span> הפונקציה עולה, והיכן ש־<span class="m">\(f'(x)\lt 0\)</span> היא יורדת.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-21" data-s="טבלת סימנים sign table">
+  <div class="th"><dfn>טבלת סימנים</dfn><span class="en" lang="en" dir="ltr">Sign table</span></div>
+  <p>טבלה שמסמנת את סימן הנגזרת (או הפונקציה) בכל קטע בין הנקודות החשובות. ממנה קוראים עלייה, ירידה וסוג הקיצון.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-22" data-s="נקודת קיצון extremum">
+  <div class="th"><dfn>נקודת קיצון</dfn><span class="en" lang="en" dir="ltr">Extremum</span></div>
+  <p>נקודת מקסימום או מינימום מקומי. מחפשים נקודות שבהן <span class="m">\(f'(x)=0\)</span> ובודקים אם הסימן של הנגזרת מתחלף. מעבר מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span> הוא מינימום, ומ־<span class="m">\(+\)</span> ל־<span class="m">\(-\)</span> הוא מקסימום. אם הסימן לא מתחלף, אין קיצון.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a><a href="composite-derivatives-02-exercises.html">תרגילי נגזרות</a></div>
+</li>
+<li class="term" id="calculus-23" data-s="קיצון מוחלט בקטע סגור absolute extremum on a closed interval">
+  <div class="th"><dfn>קיצון מוחלט בקטע סגור</dfn><span class="en" lang="en" dir="ltr">Absolute extremum on a closed interval</span></div>
+  <p>הערך הגדול (או הקטן) ביותר של הפונקציה בקטע <span class="m">\([a,b]\)</span>. משווים את ערכי הפונקציה בנקודות הקיצון שבתוך הקטע ובקצות הקטע.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-24" data-s="אסימפטוטה אנכית vertical asymptote">
+  <div class="th"><dfn>אסימפטוטה אנכית</dfn><span class="en" lang="en" dir="ltr">Vertical asymptote</span></div>
+  <p>ישר <span class="m">\(x=c\)</span> שהגרף מתקרב אליו ושואף לאינסוף. קורה כשהמכנה מתאפס ב־<span class="m">\(c\)</span> והמונה לא.</p><div class="f"><span class="m">\[x = c\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-25" data-s="אסימפטוטה אופקית horizontal asymptote">
+  <div class="th"><dfn>אסימפטוטה אופקית</dfn><span class="en" lang="en" dir="ltr">Horizontal asymptote</span></div>
+  <p>ישר <span class="m">\(y=c\)</span> שהגרף מתקרב אליו כש־<span class="m">\(x\)</span> שואף לאינסוף. כשמעלת המונה קטנה ממעלת המכנה, <span class="m">\(y=0\)</span>. כשהמעלות שוות, <span class="m">\(c\)</span> הוא המנה של המקדמים המובילים.</p><div class="f"><span class="m">\[y = c\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-26" data-s="נקודת אי־רציפות סליקה (&quot;חור&quot;) removable discontinuity">
+  <div class="th"><dfn>נקודת אי־רציפות סליקה ("חור")</dfn><span class="en" lang="en" dir="ltr">Removable discontinuity</span></div>
+  <p>נקודה שבה גם המונה וגם המכנה מתאפסים והגורם מצטמצם. בגרף יש "חור" בנקודה, ולא אסימפטוטה.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-27" data-s="פונקציה זוגית ואי־זוגית even / odd function">
+  <div class="th"><dfn>פונקציה זוגית ואי־זוגית</dfn><span class="en" lang="en" dir="ltr">Even / odd function</span></div>
+  <p>זוגית: <span class="m">\(f(-x)=f(x)\)</span>, והגרף סימטרי לציר <span class="m">\(y\)</span>. אי־זוגית: <span class="m">\(f(-x)=-f(x)\)</span>, והגרף סימטרי לראשית הצירים.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-28" data-s="הזזות ושיקופים shifts and reflections">
+  <div class="th"><dfn>הזזות ושיקופים</dfn><span class="en" lang="en" dir="ltr">Shifts and reflections</span></div>
+  <p><span class="m">\(f(x)+n\)</span> מזיז את הגרף <span class="m">\(n\)</span> למעלה. <span class="m">\(f(x+k)\)</span> מזיז <span class="m">\(k\)</span> שמאלה. <span class="m">\(-f(x)\)</span> הוא שיקוף בציר <span class="m">\(x\)</span>, ו־<span class="m">\(-f(-x)\)</span> הוא סיבוב ב־<span class="m">\(180^\circ\)</span> סביב הראשית.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+<li class="term" id="calculus-29" data-s="פונקציה קדומה antiderivative">
+  <div class="th"><dfn>פונקציה קדומה</dfn><span class="en" lang="en" dir="ltr">Antiderivative</span></div>
+  <p>פונקציה <span class="m">\(F\)</span> שהנגזרת שלה היא <span class="m">\(f\)</span>. אם נתון <span class="m">\(F'=f\)</span>, אז הסימן של <span class="m">\(f\)</span> קובע היכן <span class="m">\(F\)</span> עולה ויורדת.</p><div class="f"><span class="m">\[F'(x) = f(x)\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-calculus-solutions.html">עבודת קיץ: חדו״א</a></div>
+</li>
+  </ul>
+</section>
+
+<section class="topic" id="triangles">
+  <div class="topic-head"><h2>גאומטריה: משולשים ומקומות גאומטריים</h2><span>18 מושגים · מקום גאומטרי, הנקודות המיוחדות במשולש, חפיפה ומרובעים</span></div>
+  <ul class="terms">
+<li class="term" id="triangles-1" data-s="מקום גאומטרי locus">
+  <div class="th"><dfn>מקום גאומטרי</dfn><span class="en" lang="en" dir="ltr">Locus</span></div>
+  <p>אוסף כל הנקודות שמקיימות תכונה מסוימת, ורק הן. כדי להוכיח מקום גאומטרי צריך שני כיוונים: כל נקודה במקום מקיימת את התכונה, וכל נקודה שמקיימת את התכונה נמצאת במקום.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#locus">מקומות גאומטריים</a><a href="geometry-01-loci-triangle-centers.html#basic">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="triangles-2" data-s="אנך אמצעי perpendicular bisector">
+  <div class="th"><dfn>אנך אמצעי</dfn><span class="en" lang="en" dir="ltr">Perpendicular bisector</span></div>
+  <p>ישר שמאונך לקטע ועובר באמצעו. הוא המקום הגאומטרי של כל הנקודות שנמצאות במרחק שווה מקצות הקטע.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#basic">מקומות גאומטריים</a><a href="geometry-01-loci-triangle-centers.html#circum">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="triangles-3" data-s="חוצה זווית angle bisector">
+  <div class="th"><dfn>חוצה זווית</dfn><span class="en" lang="en" dir="ltr">Angle bisector</span></div>
+  <p>קרן שמחלקת זווית לשתי זוויות שוות. היא המקום הגאומטרי של הנקודות שנמצאות במרחק שווה משוקי הזווית.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#basic">מקומות גאומטריים</a><a href="geometry-01-loci-triangle-centers.html#incenter">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="triangles-4" data-s="תיכון median">
+  <div class="th"><dfn>תיכון</dfn><span class="en" lang="en" dir="ltr">Median</span></div>
+  <p>קטע שמחבר קדקוד של משולש לאמצע הצלע שמולו. תיכון מחלק את המשולש לשני משולשים שווי שטח.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#centroid">מקומות גאומטריים</a><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a></div>
+</li>
+<li class="term" id="triangles-5" data-s="גובה altitude">
+  <div class="th"><dfn>גובה</dfn><span class="en" lang="en" dir="ltr">Altitude</span></div>
+  <p>קטע שיורד מקדקוד ומאונך לצלע שמולו (או להמשך שלה).</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#altitudes">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="triangles-6" data-s="מרכז המעגל החוסם circumcenter">
+  <div class="th"><dfn>מרכז המעגל החוסם</dfn><span class="en" lang="en" dir="ltr">Circumcenter</span></div>
+  <p>נקודת המפגש של שלושת האנכים האמצעיים במשולש. היא במרחק שווה משלושת הקדקודים, ולכן היא מרכז המעגל שעובר דרכם.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#circum">מקומות גאומטריים</a><a href="geometry-02-circle.html#triangle">המעגל</a></div>
+</li>
+<li class="term" id="triangles-7" data-s="מרכז המעגל החסום incenter">
+  <div class="th"><dfn>מרכז המעגל החסום</dfn><span class="en" lang="en" dir="ltr">Incenter</span></div>
+  <p>נקודת המפגש של שלושת חוצי הזוויות במשולש. היא במרחק שווה משלוש הצלעות, ולכן היא מרכז המעגל שמשיק להן מבפנים.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#incenter">מקומות גאומטריים</a><a href="geometry-02-circle.html#triangle">המעגל</a></div>
+</li>
+<li class="term" id="triangles-8" data-s="מרכז הכובד (מפגש התיכונים) centroid">
+  <div class="th"><dfn>מרכז הכובד (מפגש התיכונים)</dfn><span class="en" lang="en" dir="ltr">Centroid</span></div>
+  <p>נקודת המפגש של שלושת התיכונים. היא מחלקת כל תיכון ביחס <span class="m">\(2:1\)</span>, כשהחלק הארוך צמוד לקדקוד.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#centroid">מקומות גאומטריים</a><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a></div>
+</li>
+<li class="term" id="triangles-9" data-s="מפגש הגבהים orthocenter">
+  <div class="th"><dfn>מפגש הגבהים</dfn><span class="en" lang="en" dir="ltr">Orthocenter</span></div>
+  <p>נקודת המפגש של שלושת הגבהים (או ההמשכים שלהם). במשולש קהה זווית היא נמצאת מחוץ למשולש.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#altitudes">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="triangles-10" data-s="משפט החפיפה הרביעי (צ.צ.ז) ssa congruence">
+  <div class="th"><dfn>משפט החפיפה הרביעי (צ.צ.ז)</dfn><span class="en" lang="en" dir="ltr">SSA congruence</span></div>
+  <p>שני משולשים חופפים אם שתי צלעות והזווית שמול הגדולה מביניהן שוות בהתאמה. התנאי "מול הגדולה" הכרחי.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#congruence">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="triangles-11" data-s="משפט פיתגורס וההפוך לו pythagorean theorem and converse">
+  <div class="th"><dfn>משפט פיתגורס וההפוך לו</dfn><span class="en" lang="en" dir="ltr">Pythagorean theorem and converse</span></div>
+  <p>במשולש ישר זווית, ריבוע היתר שווה לסכום ריבועי הניצבים. ההפוך: אם זה מתקיים, הזווית שמול הצלע הגדולה ישרה.</p><div class="f"><span class="m">\[a^{2}+b^{2}=c^{2}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html#pythagoras">מקומות גאומטריים</a><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a></div>
+</li>
+<li class="term" id="triangles-12" data-s="התיכון ליתר median to the hypotenuse">
+  <div class="th"><dfn>התיכון ליתר</dfn><span class="en" lang="en" dir="ltr">Median to the hypotenuse</span></div>
+  <p>במשולש ישר זווית, התיכון ליתר שווה למחצית היתר. לכן אמצע היתר הוא מרכז המעגל החוסם.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-01-loci-triangle-centers.html">מקומות גאומטריים</a><a href="geometry-02-circle.html#triangle">המעגל</a><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a></div>
+</li>
+<li class="term" id="triangles-13" data-s="ניצב מול זווית של 30° leg opposite 30°">
+  <div class="th"><dfn>ניצב מול זווית של 30°</dfn><span class="en" lang="en" dir="ltr">Leg opposite 30°</span></div>
+  <p>במשולש ישר זווית, ניצב שווה למחצית היתר אם ורק אם הזווית שמולו היא <span class="m">\(30^\circ\)</span>.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a></div>
+</li>
+<li class="term" id="triangles-14" data-s="משולש שווה שוקיים isosceles triangle">
+  <div class="th"><dfn>משולש שווה שוקיים</dfn><span class="en" lang="en" dir="ltr">Isosceles triangle</span></div>
+  <p>משולש עם שתי צלעות שוות (שוקיים). זוויות הבסיס שוות, והתיכון לבסיס הוא גם גובה וגם חוצה זווית הראש.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a><a href="geometry-01-loci-triangle-centers.html">מקומות גאומטריים</a></div>
+</li>
+<li class="term" id="triangles-15" data-s="זוויות בין ישרים מקבילים angles and parallel lines">
+  <div class="th"><dfn>זוויות בין ישרים מקבילים</dfn><span class="en" lang="en" dir="ltr">Angles and parallel lines</span></div>
+  <p>ישר שחותך שני ישרים מקבילים יוצר זוויות מתחלפות שוות וזוויות מתאימות שוות. זוויות צמודות משלימות ל־<span class="m">\(180^\circ\)</span>, וזוויות קודקודיות שוות.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a><a href="geometry-03-similarity.html">דמיון משולשים</a></div>
+</li>
+<li class="term" id="triangles-16" data-s="מקבילית parallelogram">
+  <div class="th"><dfn>מקבילית</dfn><span class="en" lang="en" dir="ltr">Parallelogram</span></div>
+  <p>מרובע ששתי צלעותיו הנגדיות מקבילות. צלעות נגדיות שוות, זוויות נגדיות שוות והאלכסונים חוצים זה את זה.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a></div>
+</li>
+<li class="term" id="triangles-17" data-s="מעוין rhombus">
+  <div class="th"><dfn>מעוין</dfn><span class="en" lang="en" dir="ltr">Rhombus</span></div>
+  <p>מקבילית שכל צלעותיה שוות. האלכסונים מאונכים זה לזה וחוצים את זוויות המעוין.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a></div>
+</li>
+<li class="term" id="triangles-18" data-s="יחסי שטחים area ratios">
+  <div class="th"><dfn>יחסי שטחים</dfn><span class="en" lang="en" dir="ltr">Area ratios</span></div>
+  <p>למשולשים עם אותו גובה, יחס השטחים שווה ליחס הבסיסים. למשולשים דומים, יחס השטחים שווה לריבוע יחס הדמיון.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a><a href="geometry-03-similarity.html#ratios">דמיון משולשים</a></div>
+</li>
+  </ul>
+</section>
+
+<section class="topic" id="circle">
+  <div class="topic-head"><h2>גאומטריה: המעגל</h2><span>14 מושגים · מושגי המעגל, זוויות, משיקים ומרובעים חסומים</span></div>
+  <ul class="terms">
+<li class="term" id="circle-1" data-s="מעגל circle">
+  <div class="th"><dfn>מעגל</dfn><span class="en" lang="en" dir="ltr">Circle</span></div>
+  <p>אוסף כל הנקודות במישור שנמצאות במרחק קבוע (הרדיוס) מנקודה קבועה (המרכז).</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-02-circle.html#defs">המעגל</a></div>
+</li>
+<li class="term" id="circle-2" data-s="רדיוס וקוטר radius and diameter">
+  <div class="th"><dfn>רדיוס וקוטר</dfn><span class="en" lang="en" dir="ltr">Radius and diameter</span></div>
+  <p>רדיוס הוא קטע מהמרכז לנקודה על המעגל. קוטר הוא מיתר שעובר דרך המרכז, ואורכו פעמיים הרדיוס.</p><div class="f"><span class="m">\[d = 2r\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-02-circle.html#defs">המעגל</a></div>
+</li>
+<li class="term" id="circle-3" data-s="מיתר chord">
+  <div class="th"><dfn>מיתר</dfn><span class="en" lang="en" dir="ltr">Chord</span></div>
+  <p>קטע שמחבר שתי נקודות על המעגל. האנך מהמרכז למיתר חוצה אותו. מיתרים שווים נמצאים במרחק שווה מהמרכז.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-02-circle.html#defs">המעגל</a><a href="geometry-02-circle.html#chords">המעגל</a></div>
+</li>
+<li class="term" id="circle-4" data-s="קשת arc">
+  <div class="th"><dfn>קשת</dfn><span class="en" lang="en" dir="ltr">Arc</span></div>
+  <p>חלק מהמעגל בין שתי נקודות עליו. מידת קשת נמדדת במעלות ושווה לזווית המרכזית שנשענת עליה. אורך הקשת הוא מרחק, וזה דבר אחר.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-02-circle.html#defs">המעגל</a><a href="geometry-02-circle.html#arcs">המעגל</a></div>
+</li>
+<li class="term" id="circle-5" data-s="זווית מרכזית central angle">
+  <div class="th"><dfn>זווית מרכזית</dfn><span class="en" lang="en" dir="ltr">Central angle</span></div>
+  <p>זווית שהקדקוד שלה במרכז המעגל ושוקיה רדיוסים.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-02-circle.html#arcs">המעגל</a></div>
+</li>
+<li class="term" id="circle-6" data-s="זווית היקפית inscribed angle">
+  <div class="th"><dfn>זווית היקפית</dfn><span class="en" lang="en" dir="ltr">Inscribed angle</span></div>
+  <p>זווית שהקדקוד שלה על המעגל ושוקיה מיתרים. היא שווה למחצית הזווית המרכזית שנשענת על אותה קשת. זווית היקפית שנשענת על קוטר היא ישרה.</p><div class="f"><span class="m">\[\alpha_{\text{היקפית}} = \tfrac12\,\alpha_{\text{מרכזית}}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-02-circle.html#inscribed">המעגל</a></div>
+</li>
+<li class="term" id="circle-7" data-s="מרובע חסום במעגל cyclic quadrilateral">
+  <div class="th"><dfn>מרובע חסום במעגל</dfn><span class="en" lang="en" dir="ltr">Cyclic quadrilateral</span></div>
+  <p>מרובע שכל ארבעת קדקודיו על מעגל. סכום כל שתי זוויות נגדיות בו הוא <span class="m">\(180^\circ\)</span>, ולהפך.</p><div class="f"><span class="m">\[\alpha + \gamma = 180^{\circ}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-02-circle.html#cyclic">המעגל</a></div>
+</li>
+<li class="term" id="circle-8" data-s="מצולע חסום / חוסם inscribed / circumscribed polygon">
+  <div class="th"><dfn>מצולע חסום / חוסם</dfn><span class="en" lang="en" dir="ltr">Inscribed / circumscribed polygon</span></div>
+  <p>מצולע חסום במעגל: כל קדקודיו על המעגל. מצולע חוסם מעגל: כל צלעותיו משיקות למעגל.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-02-circle.html">המעגל</a></div>
+</li>
+<li class="term" id="circle-9" data-s="משיק tangent">
+  <div class="th"><dfn>משיק</dfn><span class="en" lang="en" dir="ltr">Tangent</span></div>
+  <p>ישר שיש לו נקודה משותפת אחת בדיוק עם המעגל. המשיק מאונך לרדיוס בנקודת ההשקה. שני משיקים מאותה נקודה חיצונית שווים באורכם.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-02-circle.html#tangent">המעגל</a></div>
+</li>
+<li class="term" id="circle-10" data-s="מרובע חוסם מעגל tangential quadrilateral">
+  <div class="th"><dfn>מרובע חוסם מעגל</dfn><span class="en" lang="en" dir="ltr">Tangential quadrilateral</span></div>
+  <p>מרובע שכל צלעותיו משיקות למעגל. סכומי הצלעות הנגדיות בו שווים.</p><div class="f"><span class="m">\[a + c = b + d\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-02-circle.html#tangent">המעגל</a></div>
+</li>
+<li class="term" id="circle-11" data-s="הזווית בין משיק למיתר tangent–chord angle">
+  <div class="th"><dfn>הזווית בין משיק למיתר</dfn><span class="en" lang="en" dir="ltr">Tangent–chord angle</span></div>
+  <p>הזווית בין משיק למיתר שיוצא מנקודת ההשקה שווה לזווית ההיקפית שנשענת על אותה קשת מהצד השני.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-02-circle.html#tangent-chord">המעגל</a></div>
+</li>
+<li class="term" id="circle-12" data-s="חותך secant">
+  <div class="th"><dfn>חותך</dfn><span class="en" lang="en" dir="ltr">Secant</span></div>
+  <p>ישר שחותך את המעגל בשתי נקודות.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-02-circle.html#angles">המעגל</a><a href="geometry-03-similarity.html#circle">דמיון משולשים</a></div>
+</li>
+<li class="term" id="circle-13" data-s="זוויות בין מיתרים ובין חותכים angles of chords and secants">
+  <div class="th"><dfn>זוויות בין מיתרים ובין חותכים</dfn><span class="en" lang="en" dir="ltr">Angles of chords and secants</span></div>
+  <p>זווית בין שני מיתרים שנחתכים בתוך המעגל שווה למחצית סכום הקשתות שהיא והקודקודית שלה כולאות. זווית בין שני חותכים מחוץ למעגל שווה למחצית ההפרש של הקשתות.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-02-circle.html#angles">המעגל</a></div>
+</li>
+<li class="term" id="circle-14" data-s="בנייה במחוגה ובסרגל compass and straightedge construction">
+  <div class="th"><dfn>בנייה במחוגה ובסרגל</dfn><span class="en" lang="en" dir="ltr">Compass and straightedge construction</span></div>
+  <p>בנייה של צורות בעזרת מחוגה וסרגל ללא שנתות בלבד, בלי למדוד אורכים או זוויות. למשל: אנך אמצעי, חוצה זווית, מציאת מרכז של מעגל נתון וחלוקת קטע ביחס נתון.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-02-circle.html#constructions">המעגל</a><a href="geometry-03-similarity.html#constructions">דמיון משולשים</a></div>
+</li>
+  </ul>
+</section>
+
+<section class="topic" id="similarity">
+  <div class="topic-head"><h2>גאומטריה: פרופורציה ודמיון</h2><span>11 מושגים · יחס, תאלס, משפטי הדמיון ודמיון במעגל</span></div>
+  <ul class="terms">
+<li class="term" id="similarity-1" data-s="יחס ופרופורציה ratio and proportion">
+  <div class="th"><dfn>יחס ופרופורציה</dfn><span class="en" lang="en" dir="ltr">Ratio and proportion</span></div>
+  <p>יחס הוא מנה של שני גדלים, <span class="m">\(a:b\)</span>. פרופורציה היא שוויון בין שני יחסים. בפרופורציה מכפלת הקיצוניים שווה למכפלת האמצעיים.</p><div class="f"><span class="m">\[\frac{a}{b}=\frac{c}{d} \iff ad = bc\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-03-similarity.html#proportion">דמיון משולשים</a></div>
+</li>
+<li class="term" id="similarity-2" data-s="משפט תאלס thales&#x27; (intercept) theorem">
+  <div class="th"><dfn>משפט תאלס</dfn><span class="en" lang="en" dir="ltr">Thales' (intercept) theorem</span></div>
+  <p>ישרים מקבילים שחותכים שוקי זווית מקצים עליהן קטעים פרופורציוניים. במשולש: ישר שמקביל לצלע יוצר משולש דומה ומחלק את שתי הצלעות האחרות באותו יחס.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-03-similarity.html#thales">דמיון משולשים</a><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a></div>
+</li>
+<li class="term" id="similarity-3" data-s="המשפט ההפוך לתאלס converse of thales&#x27; theorem">
+  <div class="th"><dfn>המשפט ההפוך לתאלס</dfn><span class="en" lang="en" dir="ltr">Converse of Thales' theorem</span></div>
+  <p>אם ישר מחלק שתי צלעות במשולש באותו יחס, הוא מקביל לצלע השלישית.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-03-similarity.html#converse">דמיון משולשים</a><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a></div>
+</li>
+<li class="term" id="similarity-4" data-s="קטע אמצעים midsegment">
+  <div class="th"><dfn>קטע אמצעים</dfn><span class="en" lang="en" dir="ltr">Midsegment</span></div>
+  <p>קטע שמחבר את אמצעי שתי צלעות במשולש. הוא מקביל לצלע השלישית ושווה למחציתה. זה מקרה פרטי של תאלס.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-03-similarity.html#converse">דמיון משולשים</a></div>
+</li>
+<li class="term" id="similarity-5" data-s="משולשים דומים similar triangles">
+  <div class="th"><dfn>משולשים דומים</dfn><span class="en" lang="en" dir="ltr">Similar triangles</span></div>
+  <p>משולשים שהזוויות שלהם שוות בהתאמה והצלעות המתאימות פרופורציוניות. בכתיבה, סדר האותיות קובע אילו קדקודים מתאימים.</p><div class="f"><span class="m">\[\triangle ABC \sim \triangle DEF\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-03-similarity.html#definition">דמיון משולשים</a></div>
+</li>
+<li class="term" id="similarity-6" data-s="יחס הדמיון similarity ratio">
+  <div class="th"><dfn>יחס הדמיון</dfn><span class="en" lang="en" dir="ltr">Similarity ratio</span></div>
+  <p>היחס הקבוע <span class="m">\(k\)</span> בין צלעות מתאימות של משולשים דומים. גם יחס ההיקפים, התיכונים והגבהים הוא <span class="m">\(k\)</span>, ויחס השטחים הוא <span class="m">\(k^2\)</span>.</p><div class="f"><span class="m">\[\frac{S_1}{S_2}=k^{2}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-03-similarity.html#ratios">דמיון משולשים</a><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a></div>
+</li>
+<li class="term" id="similarity-7" data-s="משפטי הדמיון (ז.ז, צ.ז.צ, צ.צ.צ) similarity criteria">
+  <div class="th"><dfn>משפטי הדמיון (ז.ז, צ.ז.צ, צ.צ.צ)</dfn><span class="en" lang="en" dir="ltr">Similarity criteria</span></div>
+  <p>ז.ז: שתי זוויות שוות בהתאמה. צ.ז.צ: שתי צלעות פרופורציוניות והזווית שביניהן שווה. צ.צ.צ: שלוש צלעות פרופורציוניות.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-03-similarity.html#theorems">דמיון משולשים</a><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a></div>
+</li>
+<li class="term" id="similarity-8" data-s="משפט חוצה הזווית angle bisector theorem">
+  <div class="th"><dfn>משפט חוצה הזווית</dfn><span class="en" lang="en" dir="ltr">Angle bisector theorem</span></div>
+  <p>חוצה זווית פנימית במשולש מחלק את הצלע שמולו ביחס של שתי הצלעות הכולאות את הזווית.</p><div class="f"><span class="m">\[\frac{BD}{DC}=\frac{AB}{AC}\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-03-similarity.html#bisector">דמיון משולשים</a><a href="summer-work-geometry-solutions.html">עבודת קיץ: גאומטריה</a></div>
+</li>
+<li class="term" id="similarity-9" data-s="דמיון במשולש ישר זווית right-triangle similarity">
+  <div class="th"><dfn>דמיון במשולש ישר זווית</dfn><span class="en" lang="en" dir="ltr">Right-triangle similarity</span></div>
+  <p>הגובה ליתר מחלק את המשולש לשני משולשים דומים לו ודומים זה לזה. מכאן: הגובה ליתר בריבוע שווה למכפלת היטלי הניצבים, וכל ניצב בריבוע שווה ליתר כפול ההיטל שלו.</p><div class="f"><span class="m">\[h^{2}=p\cdot q \qquad a^{2}=c\cdot p\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-03-similarity.html#right">דמיון משולשים</a></div>
+</li>
+<li class="term" id="similarity-10" data-s="דמיון במעגל similarity in a circle">
+  <div class="th"><dfn>דמיון במעגל</dfn><span class="en" lang="en" dir="ltr">Similarity in a circle</span></div>
+  <p>שני מיתרים שנחתכים: מכפלת קטעי מיתר אחד שווה למכפלת קטעי השני. משיק וחותך מאותה נקודה: ריבוע המשיק שווה למכפלת החותך כולו בחלקו החיצוני.</p><div class="f"><span class="m">\[AE\cdot EB = CE\cdot ED \qquad PT^{2}=PA\cdot PB\]</span></div>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-03-similarity.html#circle">דמיון משולשים</a></div>
+</li>
+<li class="term" id="similarity-11" data-s="תבנית &quot;שעון חול&quot; hourglass pattern">
+  <div class="th"><dfn>תבנית "שעון חול"</dfn><span class="en" lang="en" dir="ltr">Hourglass pattern</span></div>
+  <p>שני משולשים שנוצרים מזוג ישרים מקבילים ושני ישרים שנחתכים ביניהם. הם דומים בזכות זוויות קודקודיות וזוויות מתחלפות.</p>
+  <div class="refs"><span>מופיע ב:</span><a href="geometry-03-similarity.html#identify">דמיון משולשים</a></div>
+</li>
+  </ul>
+</section>
+
+<footer>המילון מתעדכן יחד עם האתר. כשנוסף דף חדש, המושגים שלו מתווספים כאן בנושא המתאים.</footer>
+</div>
+<script>
+// Live search: filters terms by Hebrew or English name (and definition text); hides empty topics
+(function(){
+  var q=document.getElementById('q'), st=document.getElementById('status');
+  var terms=[].slice.call(document.querySelectorAll('li.term'));
+  var total=terms.length;
+  terms.forEach(function(li){ li._txt=(li.getAttribute('data-s')+' '+li.querySelector('p').textContent).toLowerCase(); });
+  q.addEventListener('input',function(){
+    var v=q.value.trim().toLowerCase(), n=0;
+    terms.forEach(function(li){
+      var nameHit=li.getAttribute('data-s').indexOf(v)>-1, hit=!v||nameHit||li._txt.indexOf(v)>-1;
+      li.classList.toggle('hidden',!hit); if(hit) n++;
+    });
+    document.querySelectorAll('section.topic').forEach(function(s){
+      s.classList.toggle('hidden',!s.querySelector('li.term:not(.hidden)'));
+    });
+    st.textContent=v?(n?n+' מושגים מתאימים':'לא נמצא מושג מתאים'):total+' מושגים';
+  });
+})();
+</script>
+</body>
+</html>
