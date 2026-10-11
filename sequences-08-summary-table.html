@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>טבלת סיכום: סוגי הסדרות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+
+<style>
+/* Layout: a reference sheet. One wide comparison table (rows = sequence types, grouped columns) with a sticky type column; below it, shared tools and links between types. On phones each row becomes a labelled card. */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --g1:#e3f0f5; --g2:#eef2e4; --g3:#f4ece1; --g4:#efe8f2;
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05);
+  --g1:#1b313b; --g2:#232d1e; --g3:#33281d; --g4:#2a2232; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05);
+  --g1:#1b313b; --g2:#232d1e; --g3:#33281d; --g4:#2a2232; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+.wrap{max-width:1400px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+.narrow{max-width:860px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.6rem;color:var(--accent)}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.lead{color:var(--muted);max-width:70ch}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+.hint{font-size:.9rem;color:var(--muted)}
+
+/* comparison table */
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:12px}
+table.cmp{border-collapse:separate;border-spacing:0;min-width:1700px;width:100%;font-size:.93rem}
+table.cmp th, table.cmp td{padding:10px 12px;border-bottom:1px solid var(--line);border-inline-start:1px solid var(--line);text-align:start;vertical-align:top}
+table.cmp thead th{position:sticky;top:0;z-index:2;font-weight:700;background:var(--paper)}
+table.cmp thead tr.grp th{font-family:var(--f-display);font-size:1.02rem;text-align:center;color:var(--ink)}
+table.cmp thead tr.cols th{font-size:.86rem;color:var(--muted);top:41px}
+.g1{background:var(--g1)!important}.g2{background:var(--g2)!important}.g3{background:var(--g3)!important}.g4{background:var(--g4)!important}
+table.cmp th.type{position:sticky;inset-inline-start:0;z-index:1;background:var(--paper);min-width:190px;max-width:210px;border-inline-start:0;box-shadow:inset -2px 0 0 var(--accent)}
+table.cmp thead th.type{z-index:3}
+table.cmp tbody th.type a{font-family:var(--f-display);font-size:1.12rem;color:var(--accent);text-decoration:none;display:block}
+table.cmp tbody th.type a:hover,table.cmp tbody th.type a:focus-visible{text-decoration:underline}
+table.cmp tbody th.type .ex{display:block;font-weight:400;color:var(--muted);font-size:.85rem;margin-top:4px}
+table.cmp td{min-width:150px}
+table.cmp td.w{min-width:200px}
+table.cmp tbody tr:last-child > *{border-bottom:0}
+table.cmp tbody tr:hover td{background:var(--accent-soft)}
+table.cmp td strong{color:var(--mark)}
+table.cmp .m:has(.katex){white-space:nowrap}
+table.cmp .v{min-width:0}
+
+
+/* phones: each row becomes a card with labelled fields */
+@media (max-width:760px){
+  .tablebox{overflow:visible;background:none;border:0}
+  table.cmp{min-width:0}
+  table.cmp thead{display:none}
+  table.cmp, table.cmp tbody, table.cmp tr, table.cmp th, table.cmp td{display:block;width:100%}
+  table.cmp tr{background:var(--paper);border:1px solid var(--line);border-radius:12px;margin-bottom:14px;overflow:hidden}
+  table.cmp th.type{position:static;max-width:none;box-shadow:none;background:var(--accent-soft);border-bottom:2px solid var(--accent)}
+  table.cmp td{border-inline-start:0;min-width:0;display:grid;grid-template-columns:7.5rem 1fr;gap:10px}
+  table.cmp td::before{content:attr(data-label);font-weight:700;color:var(--muted);font-size:.82rem}
+  table.cmp tbody tr:hover td{background:none}
+}
+
+/* tools and links */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.card h3{font-size:1.05rem;color:var(--ink)}
+section.block{display:flex;flex-direction:column;gap:14px}
+footer{color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
+
+@media print{
+  @page{size:A4 landscape;margin:10mm}
+  body{background:#fff;font-size:11px}
+  .back,.hint{display:none}
+  .tablebox{overflow:visible;border:0}
+  table.cmp{min-width:0;font-size:9.5px}
+  table.cmp th, table.cmp td{padding:5px 6px}
+  table.cmp thead th, table.cmp th.type{position:static}
+  section.block{break-inside:avoid}
+}
+</style>
+
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header><span class="eyebrow">מתמטיקה · 5 יחידות · סדרות · דף סיכום</span>
+<h1>טבלת סיכום: סוגי הסדרות</h1>
+<p class="lead">כל סוגי הסדרות בטבלה אחת. כל שורה היא סוג של סדרה, וכל עמודה היא אותה שאלה עבור כל הסוגים: איך מוצאים את האיבר הכללי, איך מחשבים סכום, מה הקשר בין שלושה איברים עוקבים, ואיך מוכיחים שזו הסדרה. לחיצה על שם הסדרה פותחת את דף הלימוד שלה.</p>
+<p class="hint">במסך רחב הטבלה נגללת הצידה ועמודת הסוג נשארת במקומה. בטלפון כל סדרה מוצגת ככרטיס.</p>
+</header>
+<div class="tablebox" role="region" aria-label="טבלת השוואה בין סוגי הסדרות" tabindex="0">
+<table class="cmp">
+<thead>
+<tr class="grp"><th class="type" rowspan="2">סוג הסדרה</th>
+<th class="g1" colspan="2">הגדרה</th>
+<th class="g2" colspan="3">נוסחאות</th>
+<th class="g3" colspan="3">תכונות</th>
+<th class="g4" colspan="3">בשאלות</th>
+</tr><tr class="cols">
+<th class="g1" scope="col">מה מגדיר אותה</th>
+<th class="g1" scope="col">כלל נסיגה</th>
+<th class="g2" scope="col">האיבר הכללי</th>
+<th class="g2" scope="col">סכום</th>
+<th class="g2" scope="col">קשר בין שני איברים</th>
+<th class="g3" scope="col">שלושה איברים עוקבים</th>
+<th class="g3" scope="col">עולה או יורדת</th>
+<th class="g3" scope="col">סוג הגדילה</th>
+<th class="g4" scope="col">איך מוכיחים שזו הסדרה</th>
+<th class="g4" scope="col">איך מוצאים את n</th>
+<th class="g4" scope="col">טעות נפוצה</th>
+</tr></thead><tbody>
+<tr><th class="type" scope="row"><a href="sequences-01-arithmetic.html">סדרה חשבונית</a><span class="ex"><span class="m">\(3, 7, 11, 15, \ldots\)</span></span></th>
+<td class="w" data-label="מה מגדיר אותה"><div class="v">הפרש קבוע <span class="m">\(d\)</span> בין כל שני איברים עוקבים. בכל צעד <strong>מוסיפים</strong> אותו מספר.</div></td>
+<td data-label="כלל נסיגה"><div class="v"><span class="m">\(a_{n+1} = a_{n} + d\)</span></div></td>
+<td class="w" data-label="האיבר הכללי"><div class="v"><span class="m">\(a_{n} = a_{1} + (n-1)d\)</span></div></td>
+<td class="w" data-label="סכום"><div class="v"><span class="m">\(S_{n} = \dfrac{n(a_{1} + a_{n})}{2}\)</span><br><span class="m">\(S_{n} = \dfrac{n[2a_{1} + (n-1)d]}{2}\)</span></div></td>
+<td class="w" data-label="קשר בין שני איברים"><div class="v"><span class="m">\(a_{m} = a_{k} + (m-k)d\)</span><br><span>מחסרים שני איברים כדי למצוא את <span class="m">\(d\)</span>.</span></div></td>
+<td data-label="שלושה איברים עוקבים"><div class="v"><span class="m">\(2b = a + c\)</span><br><span>סימון נוח:</span><br><span class="m">\(a-d,\ a,\ a+d\)</span></div></td>
+<td data-label="עולה או יורדת"><div class="v"><span class="m">\(d \gt 0\)</span> עולה<br><span class="m">\(d \lt 0\)</span> יורדת<br><span class="m">\(d = 0\)</span> קבועה</div></td>
+<td data-label="סוג הגדילה"><div class="v">לינארית: הנקודות <span class="m">\((n, a_{n})\)</span> על קו ישר ששיפועו <span class="m">\(d\)</span>.</div></td>
+<td class="w" data-label="איך מוכיחים שזו הסדרה"><div class="v"><span class="m">\(a_{n+1} - a_{n}\)</span> הוא מספר קבוע שאינו תלוי ב־<span class="m">\(n\)</span>.</div></td>
+<td class="w" data-label="איך מוצאים את n"><div class="v"><span class="m">\(a_{n} = k\)</span>: משוואה ממעלה ראשונה.<br><span class="m">\(S_{n} = k\)</span>: משוואה ריבועית. פוסלים פתרון שאינו טבעי.</div></td>
+<td class="w" data-label="טעות נפוצה"><div class="v">מ־<span class="m">\(a_{k}\)</span> עד <span class="m">\(a_{m}\)</span> יש <span class="m">\(m - k + 1\)</span> איברים, לא <span class="m">\(m - k\)</span>.</div></td>
+</tr>
+<tr><th class="type" scope="row"><a href="sequences-02-geometric.html">סדרה הנדסית</a><span class="ex"><span class="m">\(2, 6, 18, 54, \ldots\)</span></span></th>
+<td class="w" data-label="מה מגדיר אותה"><div class="v">מנה קבועה <span class="m">\(q \neq 0\)</span> בין כל איבר לקודמו. בכל צעד <strong>כופלים</strong> באותו מספר. אין איבר ששווה 0.</div></td>
+<td data-label="כלל נסיגה"><div class="v"><span class="m">\(a_{n+1} = q \cdot a_{n}\)</span></div></td>
+<td class="w" data-label="האיבר הכללי"><div class="v"><span class="m">\(a_{n} = a_{1} \cdot q^{\,n-1}\)</span></div></td>
+<td class="w" data-label="סכום"><div class="v"><span class="m">\(S_{n} = \dfrac{a_{1}(q^{n} - 1)}{q - 1}\)</span><br><span>כאשר <span class="m">\(q \neq 1\)</span></span><br><span class="m">\(S_{n} = n \cdot a_{1}\)</span><br><span>כאשר <span class="m">\(q = 1\)</span></span></div></td>
+<td class="w" data-label="קשר בין שני איברים"><div class="v"><span class="m">\(a_{m} = a_{k} \cdot q^{\,m-k}\)</span><br><span>מחלקים שני איברים כדי למצוא את <span class="m">\(q\)</span>.</span></div></td>
+<td data-label="שלושה איברים עוקבים"><div class="v"><span class="m">\(b^{2} = a \cdot c\)</span><br><span>סימון נוח:</span><br><span class="m">\(\dfrac{a}{q},\ a,\ aq\)</span></div></td>
+<td data-label="עולה או יורדת"><div class="v"><span>עבור <span class="m">\(a_{1} \gt 0\)</span>:</span><br><span class="m">\(q \gt 1\)</span> עולה<br><span class="m">\(0 \lt q \lt 1\)</span> יורדת<br><span class="m">\(q \lt 0\)</span> מתחלפת<br><span class="m">\(q = 1\)</span> קבועה</div></td>
+<td data-label="סוג הגדילה"><div class="v"><span>מעריכית.</span><br><span>עלייה של <span class="m">\(p\%\)</span>:</span><br><span class="m">\(q = 1 + \dfrac{p}{100}\)</span><br><span>ירידה של <span class="m">\(p\%\)</span>:</span><br><span class="m">\(q = 1 - \dfrac{p}{100}\)</span></div></td>
+<td class="w" data-label="איך מוכיחים שזו הסדרה"><div class="v"><span class="m">\(\dfrac{a_{n+1}}{a_{n}}\)</span> הוא מספר קבוע שאינו תלוי ב־<span class="m">\(n\)</span>.</div></td>
+<td class="w" data-label="איך מוצאים את n"><div class="v"><span class="m">\(n\)</span> נמצא במעריך: לוגריתם, או בדיקה של שתי חזקות סמוכות.</div></td>
+<td class="w" data-label="טעות נפוצה"><div class="v">מ־<span class="m">\(q^{2} = 9\)</span> יש שני פתרונות, <span class="m">\(q = \pm 3\)</span>. מ־<span class="m">\(q^{3} = 8\)</span> יש רק אחד.</div></td>
+</tr>
+<tr><th class="type" scope="row"><a href="sequences-03-infinite-series.html">טור הנדסי אינסופי</a><span class="ex"><span class="m">\(8 + 4 + 2 + 1 + \ldots\)</span></span></th>
+<td class="w" data-label="מה מגדיר אותה"><div class="v">הסכום של <strong>כל</strong> איברי סדרה הנדסית שבה <span class="m">\(|q| \lt 1\)</span>. הסכומים החלקיים מתקרבים למספר סופי.</div></td>
+<td data-label="כלל נסיגה"><div class="v"><span>כמו בסדרה הנדסית:</span><br><span class="m">\(a_{n+1} = q \cdot a_{n}\)</span></div></td>
+<td class="w" data-label="האיבר הכללי"><div class="v"><span class="m">\(a_{n} = a_{1} \cdot q^{\,n-1}\)</span><br><span>האיברים שואפים ל־0.</span></div></td>
+<td class="w" data-label="סכום"><div class="v"><span class="m">\(S = \dfrac{a_{1}}{1 - q}\)</span><br><span>רק כאשר <span class="m">\(-1 \lt q \lt 1\)</span> ו־<span class="m">\(q \neq 0\)</span></span></div></td>
+<td class="w" data-label="קשר בין שני איברים"><div class="v"><span>כמו בסדרה הנדסית. סכום כל האיברים שאחרי <span class="m">\(a_{n}\)</span>:</span><br><span class="m">\(\dfrac{a_{n+1}}{1 - q}\)</span></div></td>
+<td data-label="שלושה איברים עוקבים"><div class="v"><span>כמו בסדרה הנדסית:</span><br><span class="m">\(b^{2} = a \cdot c\)</span></div></td>
+<td data-label="עולה או יורדת"><div class="v">לא שואלים על עלייה. שואלים אם הטור <strong>מתכנס</strong>: <span class="m">\(|q| \lt 1\)</span>.</div></td>
+<td data-label="סוג הגדילה"><div class="v">הסכומים <span class="m">\(S_{1}, S_{2}, \ldots\)</span> מתקרבים לגבול <span class="m">\(S\)</span>.</div></td>
+<td class="w" data-label="איך מוכיחים שזו הסדרה"><div class="v">מראים שהסדרה הנדסית ובודקים ש־<span class="m">\(|q| \lt 1\)</span>.</div></td>
+<td class="w" data-label="איך מוצאים את n"><div class="v">לרוב אין <span class="m">\(n\)</span>. הנעלם הוא <span class="m">\(q\)</span> או <span class="m">\(x\)</span>, ותמיד בודקים את תנאי ההתכנסות.</div></td>
+<td class="w" data-label="טעות נפוצה"><div class="v">שימוש בנוסחה כאשר <span class="m">\(|q| \ge 1\)</span>, או שכחה לפסול פתרון שלא מקיים את התנאי.</div></td>
+</tr>
+<tr><th class="type" scope="row"><a href="sequences-04-recursive.html">סדרה בכלל נסיגה</a><span class="ex"><span class="m">\(a_{1} = 1,\ a_{n+1} = 2a_{n} + 1\)</span></span></th>
+<td class="w" data-label="מה מגדיר אותה"><div class="v">איבר ראשון (או שניים) ו<strong>כלל מעבר</strong> מאיבר לאיבר. אותו כלל עם התחלה אחרת נותן סדרה אחרת.</div></td>
+<td data-label="כלל נסיגה"><div class="v"><span class="m">\(a_{n+1} = f(a_{n})\)</span><br><span>מסדר שני:</span><br><span class="m">\(a_{n+2} = f(a_{n+1}, a_{n})\)</span></div></td>
+<td class="w" data-label="האיבר הכללי"><div class="v">לא נתון. מוצאים בעזרת סדרת עזר, סכימה של ההפרשים, או ניחוש והוכחה באינדוקציה.</div></td>
+<td class="w" data-label="סכום"><div class="v">אין נוסחה כללית. בסדרה מחזורית: מספר המחזורים כפול סכום מחזור, ועוד השארית.</div></td>
+<td class="w" data-label="קשר בין שני איברים"><div class="v"><span>מחשבים איבר אחר איבר. בכלל</span><br><span class="m">\(a_{n+1} = k\,a_{n} + c\)</span><br><span>הסדרה</span><br><span class="m">\(b_{n} = a_{n} + \dfrac{c}{k-1}\)</span><br><span>הנדסית עם מנה <span class="m">\(k\)</span>.</span></div></td>
+<td data-label="שלושה איברים עוקבים"><div class="v">אין תכונה כללית. בודקים את הכלל עצמו.</div></td>
+<td data-label="עולה או יורדת"><div class="v">הסימן של <span class="m">\(a_{n+1} - a_{n}\)</span>, לעתים בעזרת אינדוקציה.</div></td>
+<td data-label="סוג הגדילה"><div class="v">תלוי בכלל. לפעמים מתקרבת למספר <span class="m">\(x\)</span> שמקיים <span class="m">\(x = f(x)\)</span>, ולפעמים מחזורית.</div></td>
+<td class="w" data-label="איך מוכיחים שזו הסדרה"><div class="v">מוכיחים שסדרת העזר חשבונית או הנדסית בהצבה כללית, לא בכמה איברים.</div></td>
+<td class="w" data-label="איך מוצאים את n"><div class="v">במחזורית: השארית של <span class="m">\(n\)</span> בחלוקה באורך המחזור קובעת את <span class="m">\(a_{n}\)</span>.</div></td>
+<td class="w" data-label="טעות נפוצה"><div class="v">לחשב את <span class="m">\(b_{1}\)</span> מ־<span class="m">\(a_{2}\)</span> במקום מ־<span class="m">\(a_{1}\)</span>. במחזור, שארית 0 היא האיבר <strong>האחרון</strong> במחזור.</div></td>
+</tr>
+<tr><th class="type" scope="row"><a href="sequences-05-general-term.html">סדרה לפי נוסחת איבר כללי</a><span class="ex"><span class="m">\(a_{n} = n^{2} - 8n + 20\)</span></span></th>
+<td class="w" data-label="מה מגדיר אותה"><div class="v">פונקציה שהתחום שלה הוא המספרים הטבעיים: <span class="m">\(a_{n} = f(n)\)</span>. מגיעים לכל איבר ישירות.</div></td>
+<td data-label="כלל נסיגה"><div class="v"><span>אפשר לבנות:</span><br><span class="m">\(a_{n+1} = a_{n} + \big(f(n+1) - f(n)\big)\)</span></div></td>
+<td class="w" data-label="האיבר הכללי"><div class="v">נתון: <span class="m">\(a_{n} = f(n)\)</span></div></td>
+<td class="w" data-label="סכום"><div class="v"><span>אין נוסחה כללית. מפרקים לחשבונית ולהנדסית, או סכום טלסקופי. אם נתון <span class="m">\(S_{n}\)</span>:</span><br><span class="m">\(a_{n} = S_{n} - S_{n-1}\)</span></div></td>
+<td class="w" data-label="קשר בין שני איברים"><div class="v">מציבים ישירות. <span class="m">\(a_{1} = S_{1}\)</span> נבדק בנפרד.</div></td>
+<td data-label="שלושה איברים עוקבים"><div class="v">אין תכונה כללית.</div></td>
+<td data-label="עולה או יורדת"><div class="v">הסימן של <span class="m">\(a_{n+1} - a_{n}\)</span>, או <span class="m">\(\dfrac{a_{n+1}}{a_{n}}\)</span> בסדרה חיובית. קיצון: קודקוד הפרבולה והשלמים הקרובים.</div></td>
+<td data-label="סוג הגדילה"><div class="v">נקודות בודדות על הגרף של <span class="m">\(f\)</span>, רק ב־<span class="m">\(n\)</span> טבעי.</div></td>
+<td class="w" data-label="איך מוכיחים שזו הסדרה"><div class="v">אם <span class="m">\(a_{n}\)</span> ביטוי לינארי ב־<span class="m">\(n\)</span>, הסדרה חשבונית. אם <span class="m">\(a_{n} = A \cdot B^{n}\)</span>, הסדרה הנדסית. אם <span class="m">\(S_{n} = An^{2} + Bn\)</span>, הסדרה חשבונית.</div></td>
+<td class="w" data-label="איך מוצאים את n"><div class="v">&quot;האם <span class="m">\(k\)</span> איבר?&quot;: פותרים <span class="m">\(f(n) = k\)</span> ובודקים ש־<span class="m">\(n\)</span> טבעי.</div></td>
+<td class="w" data-label="טעות נפוצה"><div class="v">להשתמש ב־<span class="m">\(a_{n} = S_{n} - S_{n-1}\)</span> גם עבור <span class="m">\(n = 1\)</span>, או לא לפסול <span class="m">\(n\)</span> שלילי או שבר.</div></td>
+</tr>
+<tr><th class="type" scope="row"><a href="sequences-06-mixed.html">סדרה שזורה (מעורבת)</a><span class="ex"><span class="m">\(1, 2, 4, 4, 7, 8, \ldots\)</span></span></th>
+<td class="w" data-label="מה מגדיר אותה"><div class="v">המקומות האי־זוגיים יוצרים סדרה אחת, והזוגיים סדרה אחרת. מפרקים לשתי סדרות פשוטות.</div></td>
+<td data-label="כלל נסיגה"><div class="v"><span>לרוב בקפיצה של 2:</span><br><span class="m">\(a_{n+2} = a_{n} + d\)</span><br><span>או</span><br><span class="m">\(a_{n+2} = q \cdot a_{n}\)</span></div></td>
+<td class="w" data-label="האיבר הכללי"><div class="v"><span>נוסחה נפרדת לכל תת־סדרה:</span><br><span class="m">\(a_{2k-1}\)</span> ו־<span class="m">\(a_{2k}\)</span></div></td>
+<td class="w" data-label="סכום"><div class="v"><span class="m">\(S_{2n}\)</span>: <span class="m">\(n\)</span> אי־זוגיים ועוד <span class="m">\(n\)</span> זוגיים.<br><span class="m">\(S_{2n+1}\)</span>: <span class="m">\(n+1\)</span> אי־זוגיים ועוד <span class="m">\(n\)</span> זוגיים.</div></td>
+<td class="w" data-label="קשר בין שני איברים"><div class="v"><span class="m">\(a_{2k-1}\)</span> הוא האיבר ה־<span class="m">\(k\)</span> של תת־הסדרה האי־זוגית, ו־<span class="m">\(a_{2k}\)</span> של הזוגית.</div></td>
+<td data-label="שלושה איברים עוקבים"><div class="v">רק בתוך כל תת־סדרה, לא בין איברים סמוכים בסדרה המקורית.</div></td>
+<td data-label="עולה או יורדת"><div class="v">בודקים כל תת־סדרה בנפרד.</div></td>
+<td data-label="סוג הגדילה"><div class="v">שתי &quot;שרשראות&quot; של נקודות, אחת לכל תת־סדרה.</div></td>
+<td class="w" data-label="איך מוכיחים שזו הסדרה"><div class="v">מראים ש־<span class="m">\(a_{n+2}\)</span> מתקבל מ־<span class="m">\(a_{n}\)</span> בכלל קבוע.</div></td>
+<td class="w" data-label="איך מוצאים את n"><div class="v">קובעים קודם אם <span class="m">\(n\)</span> זוגי או אי־זוגי, ומוצאים את מקומו בתת־הסדרה.</div></td>
+<td class="w" data-label="טעות נפוצה"><div class="v">לספור לא נכון כמה איברים יש מכל סוג.</div></td>
+</tr>
+</tbody></table></div>
+<section class="block"><h2>כלים שמשותפים לכל הסדרות</h2><div class="cards">
+<div class="card"><h3>איבר מתוך סכומים</h3><p><span class="m">\(a_{n} = S_{n} - S_{n-1}\)</span> עבור <span class="m">\(n \ge 2\)</span>, ו־<span class="m">\(a_{1} = S_{1}\)</span>. נכון בכל סדרה.</p></div>
+<div class="card"><h3>סכום של קטע באמצע</h3><p><span class="m">\(a_{k+1} + \ldots + a_{m} = S_{m} - S_{k}\)</span></p></div>
+<div class="card"><h3>עולה או יורדת</h3><p>בודקים את הסימן של <span class="m">\(a_{n+1} - a_{n}\)</span> לכל <span class="m">\(n\)</span>.</p></div>
+<div class="card"><h3>האם <span class="m">\(k\)</span> איבר בסדרה?</h3><p>פותרים <span class="m">\(a_{n} = k\)</span> ובודקים שיש פתרון טבעי.</p></div>
+<div class="card"><h3>הוכחה של נוסחה</h3><p>אינדוקציה: בסיס עבור <span class="m">\(n = 1\)</span>, הנחה עבור <span class="m">\(k\)</span>, צעד עבור <span class="m">\(k + 1\)</span>.</p></div>
+<div class="card"><h3>שני נעלמים</h3><p>כמעט כל שאלה מסתכמת ב־<span class="m">\(a_{1}\)</span> וב־<span class="m">\(d\)</span> (או <span class="m">\(q\)</span>). כל נתון הופך למשוואה בהם.</p></div>
+</div></section>
+<section class="block"><h2>מעברים בין סוגי סדרות</h2><div class="cards">
+<div class="card"><h3>מהנדסית לחשבונית</h3><p>אם <span class="m">\(a_{n}\)</span> הנדסית וחיובית, אז <span class="m">\(\log a_{n}\)</span> חשבונית עם הפרש <span class="m">\(\log q\)</span>.</p></div>
+<div class="card"><h3>מחשבונית להנדסית</h3><p>אם <span class="m">\(a_{n}\)</span> חשבונית, אז <span class="m">\(c^{\,a_{n}}\)</span> הנדסית עם מנה <span class="m">\(c^{\,d}\)</span>.</p></div>
+<div class="card"><h3>תת־סדרה</h3><p>כל איבר <span class="m">\(k\)</span>־י של חשבונית יוצר חשבונית עם הפרש <span class="m">\(kd\)</span>. של הנדסית: הנדסית עם מנה <span class="m">\(q^{k}\)</span>.</p></div>
+<div class="card"><h3>סכומים בקבוצות</h3><p>בחשבונית <span class="m">\(S_{3},\ S_{6} - S_{3},\ S_{9} - S_{6}\)</span> חשבונית (הפרש <span class="m">\(9d\)</span>). בהנדסית הם הנדסית (מנה <span class="m">\(q^{3}\)</span>).</p></div>
+</div></section>
+<footer>להגדרות של המושגים ראו את <a href="glossary.html#sequences">מילון המושגים</a>. להסבר מלא ולתרגול של כל סוג, לחצו על שם הסדרה בטבלה.</footer>
+</div></body></html>

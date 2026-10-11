@@ -28,6 +28,7 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | | `sequences-05-general-term.html` | Sequences given by a general-term formula |
 | | `sequences-06-mixed.html` | Mixed and combined sequences |
 | | `sequences-07-induction.html` | Mathematical induction |
+| | `sequences-08-summary-table.html` | Summary table: one row per sequence type, with the same columns for all (definition, recursion, general term, sum, three consecutive terms, monotonicity, how to prove, finding n, common mistakes) |
 | Derivatives of composite functions | `composite-derivatives-01-rules.html` | The chain rule and the rules derived from it, with worked examples |
 | | `composite-derivatives-02-exercises.html` | 42 graded exercises with full solutions |
 | Euclidean geometry | `geometry-01-loci-triangle-centers.html` | Deductive reasoning, loci, the four special points of a triangle, fourth congruence theorem, converse of Pythagoras |
@@ -56,7 +57,7 @@ math11grade/
 ├── img/summer-geometry/              figures for the geometry solutions page
 ├── summer-work-calculus-solutions.html  worked solutions to the summer-work calculus questions
 ├── img/summer-calculus/              graphs for the calculus solutions page
-├── sequences-NN-<name>.html            sequences topic, pages 00–07
+├── sequences-NN-<name>.html            sequences topic, pages 00–08
 ├── composite-derivatives-NN-<name>.html  derivatives of composite functions (01 rules, 02 exercises)
 ├── geometry-NN-<name>.html              Euclidean geometry (01 loci & triangle centers, 02 circle, 03 similarity)
 ├── README.md
