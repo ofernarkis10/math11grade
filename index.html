@@ -54,9 +54,9 @@ html{scroll-behavior:smooth}
 section.topic{scroll-margin-top:16px}
 nav.toc{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px 22px;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px}
 nav.toc h2{font-size:1.2rem;color:var(--ink)}
-nav.toc ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+nav.toc ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr));gap:8px}
 nav.toc a{display:flex;flex-direction:column;gap:0;padding:8px 12px;border:1px solid var(--line);border-radius:8px;color:var(--accent);font-weight:700;text-decoration:none;min-width:0}
-nav.toc a small{color:var(--muted);font-weight:400;font-size:.82rem;white-space:nowrap}
+nav.toc a small{color:var(--muted);font-weight:400;font-size:.82rem}
 nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);background:var(--accent-soft);outline:none}
 .to-top{position:fixed;inset-inline-start:auto;left:16px;bottom:16px;background:var(--accent);color:var(--paper);text-decoration:none;font-weight:700;font-size:.9rem;padding:8px 14px;border-radius:99px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
 .to-top:hover,.to-top:focus-visible{filter:brightness(1.1);outline:none}
@@ -76,6 +76,7 @@ nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);background:va
 *:has(> .m .mfrac){line-height:2.15}
 td .m .katex{font-size:1.2em}
 </style>
+<script src="font-size.js"></script>
 </head>
 <body>
 <div class="wrap">

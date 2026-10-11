@@ -60,21 +60,23 @@ math11grade/
 ├── sequences-NN-<name>.html            sequences topic, pages 00–08
 ├── composite-derivatives-NN-<name>.html  derivatives of composite functions (01 rules, 02 exercises)
 ├── geometry-NN-<name>.html              Euclidean geometry (01 loci & triangle centers, 02 circle, 03 similarity)
+├── font-size.js                       text-size control shown on every page
 ├── README.md
 └── LICENSE                             CC0 1.0 Universal
 ```
 
-Every page is a single self-contained HTML file: styles are inline, there is no JavaScript framework, and the only external resource is Google Fonts (Frank Ruhl Libre, Assistant, JetBrains Mono). Pages support light and dark mode automatically.
+Every page is a single self-contained HTML file: styles are inline, there is no JavaScript framework, and the only external resource is Google Fonts (Frank Ruhl Libre, Assistant, JetBrains Mono). Pages support light and dark mode automatically. The one shared file is `font-size.js`, which adds a text-size control (א− / 100% / א+, from 85% to 200%) to the bottom corner of every page; the chosen size is remembered across pages and visits in the same browser.
 
 ## Adding a new page
 
 1. **Name the file** `<topic>-NN-<short-name>.html`, where `NN` is the page's order within its topic (`00` for an overview page).
 2. **Copy the layout** of an existing study page (for example `composite-derivatives-01-rules.html`) so the design stays consistent: same `:root` color tokens, fonts, `section.ch` blocks, `ol.exercises` with `<details>` solutions, and the back link to `index.html`.
 3. **Write math** in LaTeX inside `<span class="m">\( … \)</span>`, for example `<span class="m">\(S_{n} = \dfrac{n(a_{1} + a_{n})}{2}\)</span>`. The span keeps the formula left-to-right inside the Hebrew text, and [KaTeX](https://katex.org) typesets it in the browser. Copy the KaTeX block from the `<head>` of an existing page (stylesheet, two scripts and a short `<style>`). Use `\dfrac` for fractions in running text so they stay readable.
-4. **Register the page in `index.html`:**
+4. **Add the text-size control** by putting `<script src="font-size.js"></script>` just before `</head>`. Set the page's body text size in `px` on `body` and other sizes in `rem`/`em` so they all scale with it.
+5. **Register the page in `index.html`:**
    - For an existing topic, add an `<li>` to that topic's `ul.docs`, with number, title, question count and a short description, and update the count in the topic's header.
    - For a new topic, add a new `<section class="topic" id="<topic-id>">` before the `<footer>`. The table of contents at the top of `index.html` is built automatically from these sections, so the new topic appears there without further changes.
-5. **Commit and push** to `main`.
+6. **Commit and push** to `main`.
 
 ## License
 
