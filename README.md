@@ -43,7 +43,7 @@ Most study pages combine explanation and practice. A topic can also split them i
 2. **Table of contents** for the page.
 3. **Explanation:** meaning, formulas, derivations, worked examples and common mistakes.
 4. **Practice in three levels:** רמה א׳ (basic), רמה ב׳ (consolidation) and רמה ג׳ (matriculation / בגרות level).
-5. **Hidden solutions:** each question has a "הצג פתרון" (show solution) toggle, built with `<details>`, so students try first and check afterwards. When a page is printed, all solutions are shown.
+5. **Hidden solutions:** each question has a "הצג פתרון" (show solution) toggle, built with `<details>`, so students try first and check afterwards. When a page is printed, all solutions are shown. In the sequences pages, every solution in the first two levels (and every exercise on the overview page) also has a **הסבר מפורט** (detailed explanation) box: what is given, which formula to use and why, the computation, and a check. Matriculation-level solutions stay concise.
 
 ## Repository layout
 

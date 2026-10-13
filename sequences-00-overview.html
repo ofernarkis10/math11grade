@@ -88,6 +88,13 @@ html{scroll-behavior:smooth}
 td .m .katex{font-size:1.2em}
 </style>
 <script src="font-size.js"></script>
+<style>
+/* Detailed explanation under each learning-level solution */
+.why{margin-top:10px;padding:12px 16px;background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;display:flex;flex-direction:column;gap:8px}
+.why-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.why p{margin:0}
+.why strong{color:var(--accent)}
+</style>
 </head>
 <body>
 <div class="wrap" dir="rtl" lang="he">
@@ -154,22 +161,22 @@ td .m .katex{font-size:1.2em}
     <li>בסדרה חשבונית <span class="m">\(a_{5} = 17\)</span> ו־<span class="m">\(a_{12} = 38\)</span>. מצאו את <span class="m">\(a_{1}\)</span> ואת <span class="m">\(d\)</span>.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p><span class="m">\(a_{12} - a_{5} = 7d = 21\)</span>, לכן <span class="m">\(d = 3\)</span>.</p>
-        <p><span class="m">\(a_{1} = a_{5} - 4d = 17 - 12 = 5\)</span>.</p></div></details></li>
+        <p><span class="m">\(a_{1} = a_{5} - 4d = 17 - 12 = 5\)</span>.</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>שני איברים נתונים, ושני נעלמים: <span class="m">\(a_{1}\)</span> ו־<span class="m">\(d\)</span>. ההפרש בין שני איברים שווה למספר הצעדים ביניהם כפול <span class="m">\(d\)</span>.</p><p>מ־<span class="m">\(a_{5}\)</span> עד <span class="m">\(a_{12}\)</span> יש 7 צעדים: <span class="m">\(a_{12} - a_{5} = 7d\)</span>, כלומר <span class="m">\(38 - 17 = 21 = 7d\)</span>, ולכן <span class="m">\(d = 3\)</span>.</p><p>חוזרים מ־<span class="m">\(a_{5}\)</span> ארבעה צעדים אחורה: <span class="m">\(a_{1} = 17 - 4 \cdot 3 = 5\)</span>. בדיקה: <span class="m">\(a_{12} = 5 + 11 \cdot 3 = 38\)</span> ✓</p></div></details></li>
     <li>חשבו את סכום כל המספרים הדו־ספרתיים המתחלקים ב־7.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p>הסדרה: <span class="m">\(14, 21, \ldots , 98\)</span> עם <span class="m">\(d = 7\)</span>.</p>
         <p>מספר האיברים: <span class="m">\(98 = 14 + (n - 1) \cdot 7 \Rightarrow n = 13\)</span>.</p>
-        <p><span class="m">\(S_{13} = \dfrac{13 \cdot (14 + 98)}{2} = 728\)</span>.</p></div></details></li>
+        <p><span class="m">\(S_{13} = \dfrac{13 \cdot (14 + 98)}{2} = 728\)</span>.</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>המספרים הדו־ספרתיים שמתחלקים ב־7 הם כפולות של 7 מ־14 (<span class="m">\(7 \cdot 2\)</span>) עד 98 (<span class="m">\(7 \cdot 14\)</span>). הם סדרה חשבונית עם <span class="m">\(d = 7\)</span>.</p><p>מספר האיברים: <span class="m">\(98 = 14 + 7(n-1)\)</span>, ולכן <span class="m">\(n - 1 = 12\)</span> ו־<span class="m">\(n = 13\)</span>. אפשר גם לספור: הכפולות <span class="m">\(7 \cdot 2\)</span> עד <span class="m">\(7 \cdot 14\)</span> הן 13 מספרים.</p><p><span class="m">\(S_{13} = \dfrac{13(14 + 98)}{2} = 13 \cdot 56 = 728\)</span>.</p></div></details></li>
     <li>בסדרה חשבונית <span class="m">\(a_{1} = - 20\)</span>, <span class="m">\(d = 3\)</span>.<br>א. מאיזה מקום האיברים חיוביים?<br>ב. מהו ה־n הקטן ביותר שעבורו <span class="m">\(S_{n} \gt 0\)</span>?
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p>א. <span class="m">\(- 20 + 3(n - 1) \gt 0 \Rightarrow n \gt 7.67\)</span>, כלומר מהאיבר השמיני (<span class="m">\(a_{8} = 1\)</span>).</p>
         <p>ב. <span class="m">\(S_{n} = \dfrac{n(3n - 43)}{2} \gt 0 \Rightarrow n \gt 14.33\)</span>, לכן <span class="m">\(n = 15\)</span>.</p>
-        <p>בדיקה: <span class="m">\(S_{14} = - 7\)</span>, <span class="m">\(S_{15} = 15\)</span>.</p></div></details></li>
+        <p>בדיקה: <span class="m">\(S_{14} = - 7\)</span>, <span class="m">\(S_{15} = 15\)</span>.</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>א. איבר חיובי: <span class="m">\(-20 + 3(n-1) &gt; 0\)</span>, כלומר <span class="m">\(3(n-1) &gt; 20\)</span> ו־<span class="m">\(n &gt; 7.67\)</span>. הטבעי הראשון הוא 8: <span class="m">\(a_{8} = -20 + 21 = 1\)</span>.</p><p>ב. בהתחלה הסכום שלילי, כי האיברים הראשונים שליליים. כשהאיברים החיוביים מצטברים, הם מקזזים את השליליים.</p><p><span class="m">\(S_{n} = \dfrac{n[-40 + 3(n-1)]}{2} = \dfrac{n(3n - 43)}{2}\)</span>. הביטוי חיובי כאשר <span class="m">\(3n &gt; 43\)</span>, כלומר <span class="m">\(n &gt; 14.33\)</span>, ולכן <span class="m">\(n = 15\)</span>.</p><p>בדיקה: <span class="m">\(S_{14} = \dfrac{14 \cdot (-1)}{2} = -7\)</span> ו־<span class="m">\(S_{15} = \dfrac{15 \cdot 2}{2} = 15\)</span> ✓</p></div></details></li>
     <li>המספרים <span class="m">\(x - 1, 2x+1, 4x - 3\)</span> הם שלושה איברים עוקבים בסדרה חשבונית. מצאו את x ואת האיברים.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p>לפי תכונת האמצע: <span class="m">\(2(2x+1) = (x - 1) + (4x - 3)\)</span></p>
         <p><span class="m">\(4x + 2 = 5x - 4 \Rightarrow x = 6\)</span></p>
-        <p>האיברים: <span class="m">\(5, 13, 21\)</span> (<span class="m">\(d = 8\)</span>).</p></div></details></li>
+        <p>האיברים: <span class="m">\(5, 13, 21\)</span> (<span class="m">\(d = 8\)</span>).</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>שלושה מספרים בסדרה חשבונית: פעמיים האמצעי שווה לסכום הראשון והשלישי.</p><p><span class="m">\(2(2x + 1) = (x - 1) + (4x - 3)\)</span>, כלומר <span class="m">\(4x + 2 = 5x - 4\)</span>, ולכן <span class="m">\(x = 6\)</span>.</p><p>האיברים: <span class="m">\(5, 13, 21\)</span>. בדיקה: <span class="m">\(13 - 5 = 21 - 13 = 8\)</span> ✓</p></div></details></li>
   </ol>
 </section>
 
@@ -204,19 +211,19 @@ td .m .katex{font-size:1.2em}
     <li>בסדרה הנדסית <span class="m">\(a_{2} = 12\)</span> ו־<span class="m">\(a_{5} = 324\)</span>. מצאו את <span class="m">\(q\)</span> ואת <span class="m">\(a_{1}\)</span>.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p><span class="m">\(\dfrac{a_{5}}{a_{2}} = q^{3} = 27 \Rightarrow q = 3\)</span></p>
-        <p><span class="m">\(a_{1} = \dfrac{12}{3} = 4\)</span></p></div></details></li>
+        <p><span class="m">\(a_{1} = \dfrac{12}{3} = 4\)</span></p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>בסדרה הנדסית מחלקים שני איברים כדי לבודד את <span class="m">\(q\)</span>. מ־<span class="m">\(a_{2}\)</span> ל־<span class="m">\(a_{5}\)</span> יש 3 צעדים: <span class="m">\(\dfrac{a_{5}}{a_{2}} = q^{3}\)</span>.</p><p><span class="m">\(q^{3} = \dfrac{324}{12} = 27\)</span>, ולכן <span class="m">\(q = 3\)</span>. לחזקה שלישית יש פתרון ממשי אחד בלבד.</p><p><span class="m">\(a_{1} = \dfrac{a_{2}}{q} = \dfrac{12}{3} = 4\)</span>. בדיקה: <span class="m">\(4, 12, 36, 108, 324\)</span> ✓</p></div></details></li>
     <li>המספרים <span class="m">\(x, x+6, x+18\)</span> הם סדרה הנדסית. מצאו את x ואת המנה.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p><span class="m">\((x+6)^{2} = x(x+18)\)</span></p>
         <p><span class="m">\(x^{2} + 12x + 36 = x^{2} + 18x \Rightarrow x = 6\)</span></p>
-        <p>האיברים <span class="m">\(6, 12, 24\)</span>, ו־<span class="m">\(q = 2\)</span>.</p></div></details></li>
+        <p>האיברים <span class="m">\(6, 12, 24\)</span>, ו־<span class="m">\(q = 2\)</span>.</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>בסדרה הנדסית האיבר האמצעי בריבוע שווה למכפלת שכניו: <span class="m">\((x + 6)^{2} = x(x + 18)\)</span>.</p><p>פותחים: <span class="m">\(x^{2} + 12x + 36 = x^{2} + 18x\)</span>. ה־<span class="m">\(x^{2}\)</span> מתבטל: <span class="m">\(36 = 6x\)</span>, ולכן <span class="m">\(x = 6\)</span>.</p><p>האיברים: <span class="m">\(6, 12, 24\)</span>, והמנה <span class="m">\(q = 2\)</span>.</p></div></details></li>
     <li>בסדרה <span class="m">\(3, 6, 12, \ldots\)</span>, מהו מספר האיברים המינימלי שסכומם עולה על 1000?
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p><span class="m">\(S_{n} = 3(2^{n} - 1) \gt 1000 \Rightarrow 2^{n} \gt 334.3\)</span></p>
-        <p><span class="m">\(2^{8} = 256\)</span> קטן מדי, <span class="m">\(2^{9} = 512\)</span> מספיק, לכן <span class="m">\(n = 9\)</span> (<span class="m">\(S_{9} = 1533\)</span>).</p></div></details></li>
+        <p><span class="m">\(2^{8} = 256\)</span> קטן מדי, <span class="m">\(2^{9} = 512\)</span> מספיק, לכן <span class="m">\(n = 9\)</span> (<span class="m">\(S_{9} = 1533\)</span>).</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p><span class="m">\(a_{1} = 3\)</span>, <span class="m">\(q = 2\)</span>, ולכן <span class="m">\(S_{n} = \dfrac{3(2^{n} - 1)}{2 - 1} = 3(2^{n} - 1)\)</span>.</p><p>צריך <span class="m">\(3(2^{n} - 1) &gt; 1000\)</span>, כלומר <span class="m">\(2^{n} - 1 &gt; 333.3\)</span>, ולכן <span class="m">\(2^{n} &gt; 334.3\)</span>.</p><p><span class="m">\(2^{8} = 256\)</span> קטן מדי, ו־<span class="m">\(2^{9} = 512\)</span> מספיק. לכן <span class="m">\(n = 9\)</span>. בדיקה: <span class="m">\(S_{8} = 765\)</span> ו־<span class="m">\(S_{9} = 1533\)</span> ✓</p></div></details></li>
     <li>ביישוב גרים 5000 תושבים, והאוכלוסייה גדלה ב־4% בכל שנה. כמה תושבים יהיו בו כעבור 10 שנים?
       <details><summary>הצג פתרון</summary><div class="sol steps">
-        <p><span class="m">\(q = 1.04\)</span>. אחרי 10 שנים: <span class="m">\(5000 \cdot 1.04^{10} \approx 5000 \cdot 1.4802 \approx 7401\)</span> תושבים.</p></div></details></li>
+        <p><span class="m">\(q = 1.04\)</span>. אחרי 10 שנים: <span class="m">\(5000 \cdot 1.04^{10} \approx 5000 \cdot 1.4802 \approx 7401\)</span> תושבים.</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>גידול של 4% בשנה פירושו שבכל שנה האוכלוסייה מוכפלת ב־<span class="m">\(1.04\)</span>, כלומר <span class="m">\(q = 1.04\)</span>.</p><p>אחרי 10 שנים: <span class="m">\(5000 \cdot 1.04^{10}\)</span>.</p><p><span class="m">\(1.04^{10} \approx 1.4802\)</span>, ולכן בערך <span class="m">\(7401\)</span> תושבים. בגידול קבוע של 200 בשנה (4% מהאוכלוסייה ההתחלתית) היו מתקבלים רק 7000.</p></div></details></li>
   </ol>
 </section>
 
@@ -245,21 +252,21 @@ td .m .katex{font-size:1.2em}
   <ol class="exercises">
     <li>סכום טור הנדסי אינסופי הוא 24, והאיבר הראשון הוא 8. מצאו את המנה.
       <details><summary>הצג פתרון</summary><div class="sol steps">
-        <p><span class="m">\(\dfrac{8}{1 - q} = 24 \Rightarrow 1 - q = {\dfrac{1}{3}} \Rightarrow q = {\dfrac{2}{3}}\)</span></p></div></details></li>
+        <p><span class="m">\(\dfrac{8}{1 - q} = 24 \Rightarrow 1 - q = {\dfrac{1}{3}} \Rightarrow q = {\dfrac{2}{3}}\)</span></p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>מציבים בנוסחה <span class="m">\(S = \dfrac{a_{1}}{1 - q}\)</span>: <span class="m">\(\dfrac{8}{1 - q} = 24\)</span>.</p><p><span class="m">\(1 - q = \dfrac{8}{24} = \dfrac{1}{3}\)</span>, ולכן <span class="m">\(q = \dfrac{2}{3}\)</span>.</p><p>בודקים את תנאי ההתכנסות: <span class="m">\(\left|\dfrac{2}{3}\right| &lt; 1\)</span> ✓</p></div></details></li>
     <li>כתבו את השבר העשרוני המחזורי <span class="m">\(0.454545 \ldots\)</span> כשבר פשוט.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p><span class="m">\(0.45 + 0.0045 + \ldots\)</span> הוא טור עם <span class="m">\(a_{1} = 0.45\)</span>, <span class="m">\(q = 0.01\)</span>.</p>
-        <p><span class="m">\(S = \dfrac{0.45}{0.99} = \dfrac{45}{99} = \dfrac{5}{11}\)</span></p></div></details></li>
+        <p><span class="m">\(S = \dfrac{0.45}{0.99} = \dfrac{45}{99} = \dfrac{5}{11}\)</span></p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>מפרקים לפי מחזורים של שתי ספרות: <span class="m">\(0.45 + 0.0045 + 0.000045 + \ldots\)</span></p><p>זה טור הנדסי עם <span class="m">\(a_{1} = 0.45\)</span> ו־<span class="m">\(q = 0.01\)</span>, כי כל מחזור זז שני מקומות ימינה.</p><p><span class="m">\(S = \dfrac{0.45}{0.99} = \dfrac{45}{99} = \dfrac{5}{11}\)</span>.</p></div></details></li>
     <li>סכום טור הנדסי אינסופי הוא 12, וסכום ריבועי איבריו (גם הוא טור אינסופי) הוא 48. מצאו את <span class="m">\(a_{1}\)</span> ואת <span class="m">\(q\)</span>.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p>ריבועי האיברים יוצרים טור עם <span class="m">\(a_{1}^{2}\)</span> ומנה <span class="m">\(q^{2}\)</span>:</p>
         <p><span class="m">\(\dfrac{a_{1}}{1 - q} = 12\)</span> ו־<span class="m">\(\dfrac{a_{1}^{2}}{1 - q^{2}} = 48\)</span>.</p>
         <p>מעלים את הראשונה בריבוע: <span class="m">\(\dfrac{a_{1}^{2}}{(1 - q)^{2}} = 144\)</span>. מחלקים: <span class="m">\(\dfrac{1 - q}{1+q} = {\dfrac{1}{3}}\)</span>.</p>
-        <p><span class="m">\(3 - 3q = 1 + q \Rightarrow q = {\dfrac{1}{2}}\)</span>, ולכן <span class="m">\(a_{1} = 6\)</span>.</p></div></details></li>
+        <p><span class="m">\(3 - 3q = 1 + q \Rightarrow q = {\dfrac{1}{2}}\)</span>, ולכן <span class="m">\(a_{1} = 6\)</span>.</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>ריבועי האיברים יוצרים טור הנדסי עם איבר ראשון <span class="m">\(a_{1}^{2}\)</span> ומנה <span class="m">\(q^{2}\)</span>. לכן יש שתי משוואות: <span class="m">\(\dfrac{a_{1}}{1 - q} = 12\)</span> ו־<span class="m">\(\dfrac{a_{1}^{2}}{1 - q^{2}} = 48\)</span>.</p><p>מעלים את הראשונה בריבוע ומחלקים בשנייה, כדי ש־<span class="m">\(a_{1}\)</span> ייעלם: <span class="m">\(\dfrac{1 - q^{2}}{(1 - q)^{2}} = \dfrac{144}{48} = 3\)</span>.</p><p><span class="m">\(1 - q^{2} = (1 - q)(1 + q)\)</span>, ולכן <span class="m">\(\dfrac{1 + q}{1 - q} = 3\)</span>. מכאן <span class="m">\(1 + q = 3 - 3q\)</span> ו־<span class="m">\(q = \dfrac{1}{2}\)</span>.</p><p><span class="m">\(a_{1} = 12(1 - \dfrac{1}{2}) = 6\)</span>. בדיקה: <span class="m">\(\dfrac{36}{3/4} = 48\)</span> ✓</p></div></details></li>
     <li>עבור אילו ערכי x הטור <span class="m">\(1 + (x - 1) + (x - 1)^{2} + \ldots\)</span> מתכנס? מהו סכומו?
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p><span class="m">\(q = x - 1\)</span>, ונדרש <span class="m">\(|x - 1| \lt 1 \Rightarrow 0 \lt x \lt 2\)</span>.</p>
-        <p><span class="m">\(S = \dfrac{1}{1 - (x - 1)} = \dfrac{1}{2 - x}\)</span></p></div></details></li>
+        <p><span class="m">\(S = \dfrac{1}{1 - (x - 1)} = \dfrac{1}{2 - x}\)</span></p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>המנה היא <span class="m">\(q = x - 1\)</span>. הטור מתכנס כאשר <span class="m">\(|x - 1| &lt; 1\)</span>, כלומר <span class="m">\(-1 &lt; x - 1 &lt; 1\)</span>, ולכן <span class="m">\(0 &lt; x &lt; 2\)</span>.</p><p>בתחום הזה <span class="m">\(S = \dfrac{1}{1 - (x - 1)} = \dfrac{1}{2 - x}\)</span>.</p><p>בדיקה עם <span class="m">\(x = 1.5\)</span>: הטור <span class="m">\(1 + 0.5 + 0.25 + \ldots = 2\)</span>, והנוסחה נותנת <span class="m">\(\dfrac{1}{0.5} = 2\)</span> ✓</p></div></details></li>
   </ol>
 </section>
 
@@ -294,19 +301,19 @@ td .m .katex{font-size:1.2em}
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p><span class="m">\(a_{2} = 7, a_{3} = 11, a_{4} = 17\)</span></p>
         <p>מחברים את כל ההפרשים: <span class="m">\(a_{n} = 5 + 2(1 + 2 + \ldots + (n - 1)) = 5 + n(n - 1)\)</span>.</p>
-        <p>בדיקה: <span class="m">\(a_{4} = 5 + 12 = 17\)</span> ✓</p></div></details></li>
+        <p>בדיקה: <span class="m">\(a_{4} = 5 + 12 = 17\)</span> ✓</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>מציבים בכלל את <span class="m">\(n\)</span> הנכון בכל צעד: <span class="m">\(a_{2} = a_{1} + 2 \cdot 1 = 7\)</span>, <span class="m">\(a_{3} = 7 + 2 \cdot 2 = 11\)</span>, <span class="m">\(a_{4} = 11 + 2 \cdot 3 = 17\)</span>.</p><p>לנוסחה כללית: <span class="m">\(a_{n}\)</span> הוא <span class="m">\(a_{1}\)</span> ועוד כל התוספות <span class="m">\(2 \cdot 1 + 2 \cdot 2 + \ldots + 2(n-1) = 2 \cdot \dfrac{(n-1)n}{2} = n(n-1)\)</span>.</p><p><span class="m">\(a_{n} = 5 + n(n - 1)\)</span>. בדיקה: <span class="m">\(a_{4} = 5 + 12 = 17\)</span> ✓</p></div></details></li>
     <li>נתון <span class="m">\(a_{1} = 3\)</span>, <span class="m">\(a_{n+1} = 2a_{n} + 1\)</span>. הוכיחו ש־<span class="m">\(b_{n} = a_{n} + 1\)</span> הנדסית ומצאו את <span class="m">\(a_{n}\)</span>.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p><span class="m">\(b_{n+1} = 2a_{n} + 2 = 2(a_{n} + 1) = 2b_{n}\)</span></p>
-        <p><span class="m">\(b_{1} = 4 \Rightarrow b_{n} = 4 \cdot 2^{n-1} = 2^{n+1} \Rightarrow a_{n} = 2^{n+1} - 1\)</span></p></div></details></li>
+        <p><span class="m">\(b_{1} = 4 \Rightarrow b_{n} = 4 \cdot 2^{n-1} = 2^{n+1} \Rightarrow a_{n} = 2^{n+1} - 1\)</span></p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>להוכיח ש־<span class="m">\(b_{n}\)</span> הנדסית פירושו להראות ש־<span class="m">\(b_{n+1} = q \cdot b_{n}\)</span> לכל <span class="m">\(n\)</span>, עם <span class="m">\(q\)</span> קבוע.</p><p><span class="m">\(b_{n+1} = a_{n+1} + 1 = (2a_{n} + 1) + 1 = 2a_{n} + 2 = 2(a_{n} + 1) = 2b_{n}\)</span>. המנה היא 2.</p><p><span class="m">\(b_{1} = a_{1} + 1 = 4\)</span>, ולכן <span class="m">\(b_{n} = 4 \cdot 2^{n-1} = 2^{n+1}\)</span>.</p><p><span class="m">\(a_{n} = b_{n} - 1 = 2^{n+1} - 1\)</span>. בדיקה: <span class="m">\(a_{2} = 7\)</span>, ו־<span class="m">\(2^{3} - 1 = 7\)</span> ✓</p></div></details></li>
     <li>נתון <span class="m">\(a_{1} = a_{2} = 1\)</span>, <span class="m">\(a_{n+2} = a_{n+1} + a_{n}\)</span> (סדרת פיבונאצ'י). מצאו את <span class="m">\(a_{8}\)</span>.
       <details><summary>הצג פתרון</summary><div class="sol steps">
-        <p><span class="m">\(1, 1, 2, 3, 5, 8, 13, 21\)</span>, לכן <span class="m">\(a_{8} = 21\)</span>.</p></div></details></li>
+        <p><span class="m">\(1, 1, 2, 3, 5, 8, 13, 21\)</span>, לכן <span class="m">\(a_{8} = 21\)</span>.</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>בפיבונאצ'י כל איבר הוא סכום שני הקודמים. מתחילים מ־<span class="m">\(1, 1\)</span>:</p><p><span class="m">\(a_{3} = 2\)</span>, <span class="m">\(a_{4} = 3\)</span>, <span class="m">\(a_{5} = 5\)</span>, <span class="m">\(a_{6} = 8\)</span>, <span class="m">\(a_{7} = 13\)</span>, <span class="m">\(a_{8} = 21\)</span>.</p></div></details></li>
     <li>נתון <span class="m">\(a_{1} = 2\)</span>, <span class="m">\(a_{n+1} = \dfrac{1}{1 - a_{n}}\)</span>. מצאו את <span class="m">\(a_{100}\)</span> ואת סכום 99 האיברים הראשונים.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p><span class="m">\(a_{2} = - 1, a_{3} = {\dfrac{1}{2}}, a_{4} = 2\)</span>: הסדרה מחזורית עם מחזור 3.</p>
         <p><span class="m">\(100 = 3 \cdot 33 + 1\)</span>, לכן <span class="m">\(a_{100} = a_{1} = 2\)</span>.</p>
-        <p><span class="m">\(S_{99} = 33 \cdot \left(2 - 1 + {\dfrac{1}{2}}\right) = 49.5\)</span></p></div></details></li>
+        <p><span class="m">\(S_{99} = 33 \cdot \left(2 - 1 + {\dfrac{1}{2}}\right) = 49.5\)</span></p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>מחשבים: <span class="m">\(a_{2} = \dfrac{1}{1 - 2} = -1\)</span>, <span class="m">\(a_{3} = \dfrac{1}{1 + 1} = \dfrac{1}{2}\)</span>, <span class="m">\(a_{4} = \dfrac{1}{1 - 1/2} = 2\)</span>.</p><p><span class="m">\(a_{4} = a_{1}\)</span>, ולכן מכאן הכול חוזר: מחזור באורך 3.</p><p><span class="m">\(100 = 3 \cdot 33 + 1\)</span>, שארית 1, ולכן <span class="m">\(a_{100} = a_{1} = 2\)</span>.</p><p>סכום מחזור: <span class="m">\(2 - 1 + \dfrac{1}{2} = 1.5\)</span>. ב־99 איברים יש 33 מחזורים: <span class="m">\(S_{99} = 33 \cdot 1.5 = 49.5\)</span>.</p></div></details></li>
   </ol>
 </section>
 
@@ -339,19 +346,19 @@ td .m .katex{font-size:1.2em}
     <li>נתון <span class="m">\(a_{n} = \dfrac{2n+1}{n+3}\)</span>. הוכיחו שהסדרה עולה. האם יש איבר הגדול מ־2?
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p><span class="m">\(a_{n+1} - a_{n} = \dfrac{2n+3}{n+4} - \dfrac{2n+1}{n+3} = \dfrac{5}{(n+3)(n+4)} \gt 0\)</span>, לכן הסדרה עולה.</p>
-        <p><span class="m">\(a_{n} = 2 - \dfrac{5}{n+3} \lt 2\)</span> תמיד. אין איבר הגדול מ־2, והאיברים מתקרבים ל־2.</p></div></details></li>
+        <p><span class="m">\(a_{n} = 2 - \dfrac{5}{n+3} \lt 2\)</span> תמיד. אין איבר הגדול מ־2, והאיברים מתקרבים ל־2.</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>לבדיקת עלייה מחשבים <span class="m">\(a_{n+1} - a_{n}\)</span>. מכנה משותף: <span class="m">\((n+3)(n+4)\)</span>.</p><p>המונה: <span class="m">\((2n + 3)(n + 3) - (2n + 1)(n + 4) = (2n^{2} + 9n + 9) - (2n^{2} + 9n + 4) = 5\)</span>.</p><p><span class="m">\(\dfrac{5}{(n+3)(n+4)} &gt; 0\)</span>, ולכן הסדרה עולה.</p><p>מפרקים: <span class="m">\(\dfrac{2n + 1}{n + 3} = \dfrac{2(n + 3) - 5}{n + 3} = 2 - \dfrac{5}{n + 3}\)</span>. מחסירים מ־2 מספר חיובי, ולכן כל איבר קטן מ־2.</p></div></details></li>
     <li>סכום n האיברים הראשונים בסדרה הוא <span class="m">\(S_{n} = 3n^{2} + 2n\)</span>. מצאו את <span class="m">\(a_{n}\)</span> והראו שהסדרה חשבונית.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p><span class="m">\(a_{n} = S_{n} - S_{n-1} = 3(2n - 1) + 2 = 6n - 1\)</span></p>
-        <p><span class="m">\(a_{1} = S_{1} = 5 = 6 \cdot 1 - 1\)</span> ✓. הסדרה חשבונית עם <span class="m">\(d = 6\)</span>.</p></div></details></li>
+        <p><span class="m">\(a_{1} = S_{1} = 5 = 6 \cdot 1 - 1\)</span> ✓. הסדרה חשבונית עם <span class="m">\(d = 6\)</span>.</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p><span class="m">\(S_{n} - S_{n-1}\)</span> הוא האיבר ה־<span class="m">\(n\)</span>. <span class="m">\(S_{n-1} = 3(n-1)^{2} + 2(n-1) = 3n^{2} - 4n + 1\)</span>.</p><p><span class="m">\(a_{n} = (3n^{2} + 2n) - (3n^{2} - 4n + 1) = 6n - 1\)</span>.</p><p>בודקים את <span class="m">\(a_{1}\)</span> בנפרד: <span class="m">\(S_{1} = 5\)</span>, ו־<span class="m">\(6 \cdot 1 - 1 = 5\)</span> ✓</p><p><span class="m">\(a_{n} = 6n - 1\)</span> לינארי, ולכן הסדרה חשבונית עם <span class="m">\(d = 6\)</span>.</p></div></details></li>
     <li>נתון <span class="m">\(S_{n} = 2^{n+1} - 2\)</span>. מצאו את <span class="m">\(a_{n}\)</span> וקבעו את סוג הסדרה.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p><span class="m">\(a_{n} = (2^{n+1} - 2) - (2^{n} - 2) = 2^{n}\)</span>, ו־<span class="m">\(a_{1} = S_{1} = 2\)</span> ✓.</p>
-        <p>סדרה הנדסית עם <span class="m">\(q = 2\)</span>.</p></div></details></li>
+        <p>סדרה הנדסית עם <span class="m">\(q = 2\)</span>.</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p><span class="m">\(a_{n} = S_{n} - S_{n-1} = (2^{n+1} - 2) - (2^{n} - 2) = 2^{n+1} - 2^{n}\)</span>.</p><p><span class="m">\(2^{n+1} = 2 \cdot 2^{n}\)</span>, ולכן <span class="m">\(a_{n} = 2^{n}\)</span>.</p><p>בדיקה: <span class="m">\(a_{1} = S_{1} = 2\)</span> ✓. הסדרה <span class="m">\(2, 4, 8, \ldots\)</span> הנדסית עם <span class="m">\(q = 2\)</span>.</p></div></details></li>
     <li>נתון <span class="m">\(S_{n} = n^{2} + n + 1\)</span>. האם הסדרה חשבונית?
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p>עבור <span class="m">\(n \ge 2\)</span>: <span class="m">\(a_{n} = 2n\)</span>. אבל <span class="m">\(a_{1} = S_{1} = 3 \neq 2\)</span>.</p>
-        <p>הסדרה <span class="m">\(3, 4, 6, 8, \ldots\)</span> אינה חשבונית. היא חשבונית רק החל מהאיבר השני.</p></div></details></li>
+        <p>הסדרה <span class="m">\(3, 4, 6, 8, \ldots\)</span> אינה חשבונית. היא חשבונית רק החל מהאיבר השני.</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>עבור <span class="m">\(n \ge 2\)</span>: <span class="m">\(a_{n} = (n^{2} + n + 1) - ((n-1)^{2} + (n-1) + 1) = 2n\)</span>.</p><p>אבל <span class="m">\(a_{1} = S_{1} = 1 + 1 + 1 = 3\)</span>, והנוסחה <span class="m">\(2n\)</span> נותנת 2. הם שונים.</p><p>הסדרה: <span class="m">\(3, 4, 6, 8, \ldots\)</span>. ההפרש בין <span class="m">\(a_{1}\)</span> ל־<span class="m">\(a_{2}\)</span> הוא 1, ומשם 2. לכן היא חשבונית רק החל מהאיבר השני.</p><p>הסיבה: המקדם החופשי <span class="m">\(+1\)</span> ב־<span class="m">\(S_{n}\)</span>. בסדרה חשבונית <span class="m">\(S_{n}\)</span> הוא <span class="m">\(An^{2} + Bn\)</span> בלי מספר חופשי.</p></div></details></li>
   </ol>
 </section>
 
@@ -381,16 +388,16 @@ td .m .katex{font-size:1.2em}
         <p>המספרים: <span class="m">\(5 - d, 5, 5+d\)</span>. אחרי ההוספה: <span class="m">\(6 - d, 9, 24+d\)</span>.</p>
         <p><span class="m">\(81 = (6 - d)(24+d) \Rightarrow d^{2} + 18d - 63 = 0 \Rightarrow d = 3\)</span> או <span class="m">\(d = - 21\)</span>.</p>
         <p><span class="m">\(d = 3\)</span>: המספרים <span class="m">\(2, 5, 8\)</span> (ההנדסית <span class="m">\(3, 9, 27\)</span>).</p>
-        <p><span class="m">\(d = - 21\)</span>: המספרים <span class="m">\(26, 5, - 16\)</span> (ההנדסית <span class="m">\(27, 9, 3\)</span>).</p></div></details></li>
+        <p><span class="m">\(d = - 21\)</span>: המספרים <span class="m">\(26, 5, - 16\)</span> (ההנדסית <span class="m">\(27, 9, 3\)</span>).</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>שלושה מספרים בסדרה חשבונית עם סכום 15: מסמנים <span class="m">\(5 - d,\ 5,\ 5 + d\)</span>.</p><p>אחרי ההוספה: <span class="m">\(6 - d,\ 9,\ 24 + d\)</span>. הם הנדסית, ולכן <span class="m">\(81 = (6 - d)(24 + d)\)</span>, כלומר <span class="m">\(d^{2} + 18d - 63 = 0\)</span>.</p><p><span class="m">\((d - 3)(d + 21) = 0\)</span>. <span class="m">\(d = 3\)</span> נותן <span class="m">\(2, 5, 8\)</span>, ואחרי ההוספה <span class="m">\(3, 9, 27\)</span> ✓</p><p><span class="m">\(d = -21\)</span> נותן <span class="m">\(26, 5, -16\)</span>, ואחרי ההוספה <span class="m">\(27, 9, 3\)</span> ✓</p></div></details></li>
     <li><span class="m">\(a_{n}\)</span> סדרה חשבונית עם <span class="m">\(a_{1} = 1\)</span>, <span class="m">\(d = 2\)</span>. מגדירים <span class="m">\(b_{n} = 3^{an}\)</span>. הראו ש־<span class="m">\(b_{n}\)</span> הנדסית וחשבו את סכום חמשת איבריה הראשונים.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p><span class="m">\(\dfrac{b_{n+1}}{b_{n}} = 3^{a_{n+1} - a_{n}} = 3^{2} = 9\)</span>, כלומר הנדסית עם <span class="m">\(q = 9\)</span>.</p>
-        <p><span class="m">\(b_{1} = 3 \Rightarrow S_{5} = \dfrac{3(9^{5} - 1)}{8} = 22143\)</span></p></div></details></li>
+        <p><span class="m">\(b_{1} = 3 \Rightarrow S_{5} = \dfrac{3(9^{5} - 1)}{8} = 22143\)</span></p></div><div class="why"><span class="why-h">הסבר מפורט</span><p><span class="m">\(\dfrac{b_{n+1}}{b_{n}} = \dfrac{3^{a_{n+1}}}{3^{a_{n}}} = 3^{a_{n+1} - a_{n}} = 3^{d} = 3^{2} = 9\)</span>. המנה קבועה, ולכן <span class="m">\(b_{n}\)</span> הנדסית.</p><p><span class="m">\(b_{1} = 3^{a_{1}} = 3\)</span>. הסכום: <span class="m">\(S_{5} = \dfrac{3(9^{5} - 1)}{9 - 1} = \dfrac{3 \cdot 59048}{8} = 22143\)</span>.</p></div></details></li>
     <li>בסדרה <span class="m">\(1, 2, 4, 4, 7, 8, 10, 16, \ldots\)</span> המקומות האי־זוגיים יוצרים סדרה חשבונית והזוגיים סדרה הנדסית. חשבו את סכום 20 האיברים הראשונים.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p>אי־זוגיים: <span class="m">\(1, 4, 7, \ldots\)</span> (10 איברים, <span class="m">\(d = 3\)</span>): <span class="m">\(S = \dfrac{10(2 + 27)}{2} = 145\)</span>.</p>
         <p>זוגיים: <span class="m">\(2, 4, 8, \ldots\)</span> (10 איברים, <span class="m">\(q = 2\)</span>): <span class="m">\(S = 2(2^{10} - 1) = 2046\)</span>.</p>
-        <p>סה"כ: <span class="m">\(145 + 2046 = 2191\)</span>.</p></div></details></li>
+        <p>סה"כ: <span class="m">\(145 + 2046 = 2191\)</span>.</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p>מפרקים לשתי תת־סדרות. ב־20 איברים יש 10 אי־זוגיים ו־10 זוגיים.</p><p>אי־זוגיים: <span class="m">\(1, 4, 7, \ldots\)</span> (<span class="m">\(d = 3\)</span>). האיבר העשירי 28, והסכום <span class="m">\(\dfrac{10(1 + 28)}{2} = 145\)</span>.</p><p>זוגיים: <span class="m">\(2, 4, 8, \ldots\)</span> (<span class="m">\(q = 2\)</span>). הסכום <span class="m">\(2(2^{10} - 1) = 2046\)</span>.</p><p>סך הכול: <span class="m">\(145 + 2046 = 2191\)</span>.</p></div></details></li>
   </ol>
 </section>
 
@@ -420,20 +427,20 @@ td .m .katex{font-size:1.2em}
     <li>הוכיחו: <span class="m">\(1 + 2 + \ldots + n = \dfrac{n(n+1)}{2}\)</span>
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p>בסיס: <span class="m">\(1 = \dfrac{1 \cdot 2}{2}\)</span> ✓</p>
-        <p>צעד: <span class="m">\(\dfrac{k(k+1)}{2} + (k+1) = \dfrac{(k+1)(k+2)}{2}\)</span> ✓</p></div></details></li>
+        <p>צעד: <span class="m">\(\dfrac{k(k+1)}{2} + (k+1) = \dfrac{(k+1)(k+2)}{2}\)</span> ✓</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p><strong>בסיס:</strong> <span class="m">\(1 = \dfrac{1 \cdot 2}{2}\)</span> ✓</p><p><strong>הנחה:</strong> <span class="m">\(1 + \ldots + k = \dfrac{k(k+1)}{2}\)</span>.</p><p><strong>צעד:</strong> <span class="m">\(\dfrac{k(k+1)}{2} + (k + 1) = (k+1)\left(\dfrac{k}{2} + 1\right) = \dfrac{(k+1)(k+2)}{2}\)</span> ✓</p></div></details></li>
     <li>הוכיחו: <span class="m">\(1^{2} + 2^{2} + \ldots + n^{2} = \dfrac{n(n+1)(2n+1)}{6}\)</span>
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p>בסיס: <span class="m">\(1 = \dfrac{1 \cdot 2 \cdot 3}{6}\)</span> ✓</p>
         <p>צעד: <span class="m">\(\dfrac{k(k+1)(2k+1)}{6} + (k+1)^{2} = \dfrac{(k+1)[k(2k+1) + 6(k+1)]}{6}\)</span></p>
-        <p><span class="m">\(= \dfrac{(k+1)(2k^{2} + 7k + 6)}{6} = \dfrac{(k+1)(k+2)(2k+3)}{6}\)</span> ✓</p></div></details></li>
+        <p><span class="m">\(= \dfrac{(k+1)(2k^{2} + 7k + 6)}{6} = \dfrac{(k+1)(k+2)(2k+3)}{6}\)</span> ✓</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p><strong>בסיס:</strong> <span class="m">\(1 = \dfrac{1 \cdot 2 \cdot 3}{6}\)</span> ✓</p><p><strong>צעד:</strong> מוסיפים <span class="m">\((k+1)^{2}\)</span> לסכום מההנחה, ומוציאים <span class="m">\(\dfrac{k+1}{6}\)</span> כגורם משותף: <span class="m">\(\dfrac{k+1}{6}[k(2k+1) + 6(k+1)]\)</span>.</p><p><span class="m">\(2k^{2} + 7k + 6 = (k+2)(2k+3)\)</span>, ולכן התוצאה <span class="m">\(\dfrac{(k+1)(k+2)(2k+3)}{6}\)</span>, הנוסחה עבור <span class="m">\(k+1\)</span> ✓</p></div></details></li>
     <li>נתון <span class="m">\(a_{1} = 3\)</span>, <span class="m">\(a_{n+1} = 2a_{n} + 1\)</span>. הוכיחו באינדוקציה ש־<span class="m">\(a_{n} = 2^{n+1} - 1\)</span>.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p>בסיס: <span class="m">\(2^{2} - 1 = 3 = a_{1}\)</span> ✓</p>
-        <p>צעד: <span class="m">\(a_{k+1} = 2(2^{k+1} - 1) + 1 = 2^{k+2} - 1\)</span> ✓</p></div></details></li>
+        <p>צעד: <span class="m">\(a_{k+1} = 2(2^{k+1} - 1) + 1 = 2^{k+2} - 1\)</span> ✓</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p><strong>בסיס:</strong> <span class="m">\(2^{2} - 1 = 3 = a_{1}\)</span> ✓</p><p><strong>הנחה:</strong> <span class="m">\(a_{k} = 2^{k+1} - 1\)</span>.</p><p><strong>צעד:</strong> לפי כלל הנסיגה <span class="m">\(a_{k+1} = 2a_{k} + 1\)</span>. מציבים את ההנחה: <span class="m">\(2(2^{k+1} - 1) + 1 = 2^{k+2} - 2 + 1 = 2^{k+2} - 1\)</span> ✓</p></div></details></li>
     <li>הוכיחו ש־<span class="m">\(7^{n} - 1\)</span> מתחלק ב־6 לכל n טבעי.
       <details><summary>הצג פתרון</summary><div class="sol steps">
         <p>בסיס: <span class="m">\(7 - 1 = 6\)</span> ✓</p>
-        <p>צעד: <span class="m">\(7^{k+1} - 1 = 7(7^{k} - 1) + 6\)</span>. שני המחוברים מתחלקים ב־6 (הראשון לפי ההנחה) ✓</p></div></details></li>
+        <p>צעד: <span class="m">\(7^{k+1} - 1 = 7(7^{k} - 1) + 6\)</span>. שני המחוברים מתחלקים ב־6 (הראשון לפי ההנחה) ✓</p></div><div class="why"><span class="why-h">הסבר מפורט</span><p><strong>בסיס:</strong> <span class="m">\(7 - 1 = 6\)</span> ✓. <strong>הנחה:</strong> <span class="m">\(7^{k} - 1\)</span> מתחלק ב־6.</p><p><strong>צעד:</strong> כותבים את הביטוי עבור <span class="m">\(k+1\)</span> כך שיופיע בו ביטוי ההנחה: <span class="m">\(7^{k+1} - 1 = 7(7^{k} - 1) + 6\)</span>.</p><p><span class="m">\(7(7^{k} - 1)\)</span> מתחלק ב־6 לפי ההנחה, ו־6 מתחלק ב־6, ולכן גם הסכום ✓</p></div></details></li>
   </ol>
 </section>
 
