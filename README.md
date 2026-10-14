@@ -29,6 +29,7 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | | `sequences-06-mixed.html` | Mixed and combined sequences |
 | | `sequences-07-induction.html` | Mathematical induction |
 | | `sequences-08-summary-table.html` | Summary table: one row per sequence type, with the same columns for all (definition, recursion, general term, sum, three consecutive terms, monotonicity, how to prove, finding n, common mistakes) |
+| | `sequences-09-homework.html` | Homework to hand in: 60 consolidation-level questions (20 arithmetic, 20 geometric, 20 infinite series), questions only, print-ready |
 | Derivatives of composite functions | `composite-derivatives-01-rules.html` | The chain rule and the rules derived from it, with worked examples |
 | | `composite-derivatives-02-exercises.html` | 42 graded exercises with full solutions |
 | Euclidean geometry | `geometry-01-loci-triangle-centers.html` | Deductive reasoning, loci, the four special points of a triangle, fourth congruence theorem, converse of Pythagoras |
@@ -57,7 +58,7 @@ math11grade/
 ├── img/summer-geometry/              figures for the geometry solutions page
 ├── summer-work-calculus-solutions.html  worked solutions to the summer-work calculus questions
 ├── img/summer-calculus/              graphs for the calculus solutions page
-├── sequences-NN-<name>.html            sequences topic, pages 00–08
+├── sequences-NN-<name>.html            sequences topic, pages 00–09
 ├── composite-derivatives-NN-<name>.html  derivatives of composite functions (01 rules, 02 exercises)
 ├── geometry-NN-<name>.html              Euclidean geometry (01 loci & triangle centers, 02 circle, 03 similarity)
 ├── font-size.js                       text-size control shown on every page
@@ -77,6 +78,10 @@ Every page is a single self-contained HTML file: styles are inline, there is no 
    - For an existing topic, add an `<li>` to that topic's `ul.docs`, with number, title, question count and a short description, and update the count in the topic's header.
    - For a new topic, add a new `<section class="topic" id="<topic-id>">` before the `<footer>`. The table of contents at the top of `index.html` is built automatically from these sections, so the new topic appears there without further changes.
 6. **Commit and push** to `main`.
+
+## Answer keys and tests
+
+Solutions to homework and all tests are kept **outside this repository**, in a private folder next to it, so students cannot see them on GitHub or on the published site. Never add them to this folder.
 
 ## License
 

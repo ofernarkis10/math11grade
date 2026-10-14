@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<title>עבודת בית: סדרות</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a worksheet-style single column on graph-paper ground; each sequence type is a "chapter" with meaning, formulas, worked example, exercises with folding solutions */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.num{font-family:var(--f-math);color:var(--muted);font-size:.85rem}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag,.ex-head{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<style>
+.level{display:flex;flex-direction:column;gap:14px}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+.method{display:flex;flex-direction:column;gap:6px}
+ol.exercises li{break-inside:avoid}
+</style>
+<style>.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}.back:hover,.back:focus-visible{text-decoration:underline}</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+<script src="font-size.js"></script>
+<style>
+/* Detailed explanation under each learning-level solution */
+.why{margin-top:10px;padding:12px 16px;background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;display:flex;flex-direction:column;gap:8px}
+.why-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.why p{margin:0}
+.why strong{color:var(--accent)}
+</style>
+<style>
+/* homework / test pages */
+.meta{display:flex;flex-wrap:wrap;gap:10px 28px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.meta span{min-width:12rem;border-bottom:1px solid var(--muted);padding-bottom:2px;color:var(--muted)}
+.rules{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.rules ul{margin:6px 0 0;padding-inline-start:20px}
+.part-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.part-h small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+ol.hw{margin:0;padding-inline-start:28px;display:flex;flex-direction:column;gap:16px}
+ol.hw > li::marker{font-weight:700;color:var(--accent)}
+ol.sub{list-style:hebrew;margin:6px 0 0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+.pts{font-size:.82rem;font-weight:700;color:var(--mark);white-space:nowrap}
+.ans{margin-top:6px;padding:8px 12px;background:var(--mark-soft);border-radius:6px;display:flex;flex-direction:column;gap:4px}
+.ans b{color:var(--mark)}
+.ans .final{font-weight:600}
+.ref{font-size:.82rem;color:var(--muted)}
+.private{background:var(--mark-soft);border:1px solid var(--mark);border-radius:10px;padding:10px 14px;font-weight:600;color:var(--mark)}
+@media print{
+  :root:not([data-p1]):not([data-p2]){--bg:#fff;--paper:#fff;--ink:#1c2633;--muted:#5b6878;--line:#d9dfe6;--accent:#1f6f8b;--accent-soft:#e3f0f5;--mark:#b4561e;--mark-soft:#fbeee5;--grid:transparent;color-scheme:light}
+  body{background:#fff}
+  .back,.no-print,#font-size-control,.fs-control{display:none!important}
+  section.ch{border:0;padding:0;box-shadow:none}
+  ol.hw > li{break-inside:avoid}
+  .work ol.hw > li{padding-bottom:2.2cm}
+  .test ol.hw > li{padding-bottom:4cm}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header><span class="eyebrow">מתמטיקה · 5 יחידות · סדרות · עבודת בית</span>
+<h1>עבודת בית: סדרה חשבונית, הנדסית וטור מתכנס</h1>
+<p class="lead">60 שאלות ברמת ביסוס: 20 על סדרה חשבונית, 20 על סדרה הנדסית ו־20 על טור הנדסי אינסופי מתכנס. כתבו את דרך הפתרון המלאה, ולא רק את התשובה.</p></header>
+<div class="meta"><span>שם:</span><span>כיתה:</span><span>תאריך הגשה:</span></div>
+<div class="rules no-print"><strong>לפני שמתחילים</strong><ul><li>לכל חלק יש דף לימוד באתר עם הסבר, נוסחאות ודוגמאות פתורות. הקישורים מופיעים בכותרת כל חלק.</li><li>את <a href="sequences-08-summary-table.html">טבלת הסיכום</a> אפשר להשאיר פתוחה לידכם בזמן העבודה.</li><li>בכל תשובה כתבו באיזו נוסחה או תכונה השתמשתם, ובדקו את התוצאה כשאפשר.</li></ul></div>
+<nav class="no-print" aria-label="חלקי העבודה"><strong>חלקי העבודה</strong><ol><li><a href="#arith">חלק א׳: סדרה חשבונית</a></li><li><a href="#geo">חלק ב׳: סדרה הנדסית</a></li><li><a href="#inf">חלק ג׳: טור הנדסי אינסופי מתכנס</a></li></ol></nav>
+<section class="ch work" id="arith"><div class="part-h"><h2>חלק א׳: סדרה חשבונית</h2><small>20 שאלות · <a class="no-print" href="sequences-01-arithmetic.html">לדף הלימוד</a></small></div><ol class="hw">
+<li>בסדרה חשבונית <span class="m">\(a_{4} = 11\)</span> ו־<span class="m">\(a_{9} = 31\)</span>. מצאו את <span class="m">\(a_{1}\)</span>, את <span class="m">\(d\)</span> ואת <span class="m">\(a_{20}\)</span>.</li>
+<li>חשבו את סכום כל המספרים הדו־ספרתיים המתחלקים ב־6.</li>
+<li>חשבו את סכום כל המספרים התלת־ספרתיים שנותנים שארית 2 בחלוקה ב־5.</li>
+<li>המספרים <span class="m">\(x - 3,\ 2x,\ 4x - 1\)</span> הם שלושה איברים עוקבים בסדרה חשבונית. מצאו את <span class="m">\(x\)</span> ואת שלושת האיברים.</li>
+<li>שלושה מספרים יוצרים סדרה חשבונית. סכומם 27 ומכפלתם 585. מצאו אותם.</li>
+<li>בסדרה חשבונית <span class="m">\(a_{1} = 2\)</span> ו־<span class="m">\(S_{12} = 222\)</span>. מצאו את <span class="m">\(d\)</span> ואת <span class="m">\(a_{12}\)</span>.</li>
+<li>בסדרה חשבונית <span class="m">\(a_{1} = 50\)</span> ו־<span class="m">\(d = -4\)</span>. מהו הסכום הגדול ביותר של איברים ראשונים בסדרה, ועבור איזה <span class="m">\(n\)</span> הוא מתקבל?</li>
+<li>כמה איברים מהסדרה <span class="m">\(5, 9, 13, \ldots\)</span> יש לחבר כדי לקבל סכום 324?</li>
+<li>בסדרה חשבונית <span class="m">\(a_{3} + a_{11} = 40\)</span> ו־<span class="m">\(a_{5} = 16\)</span>. מצאו את <span class="m">\(a_{7}\)</span> ואת <span class="m">\(d\)</span>.</li>
+<li>שבצו 6 מספרים בין 3 ל־38 כך שיתקבלו 8 איברים של סדרה חשבונית.</li>
+<li>נתון <span class="m">\(a_{n} = 4n - 3\)</span>. חשבו את סכום האיברים מ־<span class="m">\(a_{10}\)</span> עד <span class="m">\(a_{25}\)</span>.</li>
+<li>בסדרה חשבונית <span class="m">\(S_{5} = 35\)</span> ו־<span class="m">\(S_{10} = 120\)</span>. מצאו את <span class="m">\(a_{1}\)</span> ואת <span class="m">\(d\)</span>.</li>
+<li>באולם יש 25 שורות. בשורה הראשונה 18 מושבים, ובכל שורה 2 מושבים יותר מבשורה שלפניה. כמה מושבים בשורה האחרונה, וכמה מושבים יש באולם?</li>
+<li>רץ רץ ביום הראשון 3 ק״מ, ובכל יום הוא מוסיף חצי ק״מ. אחרי כמה ימים יעבור המרחק הכולל לראשונה 100 ק״מ?</li>
+<li>האם 2026 הוא איבר בסדרה <span class="m">\(7, 12, 17, \ldots\)</span>? אם לא, מהם שני האיברים הקרובים אליו?</li>
+<li>בסדרה חשבונית בת 21 איברים <span class="m">\(a_{1} = 4\)</span> ו־<span class="m">\(d = 3\)</span>. חשבו את סכום האיברים במקומות האי־זוגיים.</li>
+<li>בסדרה חשבונית <span class="m">\(a_{2} + a_{6} = 26\)</span> ו־<span class="m">\(a_{3} \cdot a_{5} = 160\)</span>. מצאו את <span class="m">\(a_{1}\)</span> ואת <span class="m">\(d\)</span>.</li>
+<li>סכום <span class="m">\(n\)</span> האיברים הראשונים בסדרה הוא <span class="m">\(S_{n} = 3n^{2} - n\)</span>. מצאו את <span class="m">\(a_{n}\)</span>, הראו שהסדרה חשבונית וחשבו את <span class="m">\(a_{10}\)</span>.</li>
+<li>נתונות הסדרות <span class="m">\(3, 8, 13, \ldots\)</span> ו־<span class="m">\(2, 9, 16, \ldots\)</span>, בכל אחת 60 איברים. כמה איברים משותפים יש להן?</li>
+<li>אורכי הצלעות של משולש ישר־זווית יוצרים סדרה חשבונית, והיקף המשולש 48 ס״מ. מצאו את אורכי הצלעות.</li>
+</ol></section>
+<section class="ch work" id="geo"><div class="part-h"><h2>חלק ב׳: סדרה הנדסית</h2><small>20 שאלות · <a class="no-print" href="sequences-02-geometric.html">לדף הלימוד</a></small></div><ol class="hw">
+<li>בסדרה הנדסית <span class="m">\(a_{3} = 18\)</span> ו־<span class="m">\(a_{6} = 486\)</span>. מצאו את <span class="m">\(q\)</span>, את <span class="m">\(a_{1}\)</span> ואת <span class="m">\(a_{8}\)</span>.</li>
+<li>בסדרה הנדסית <span class="m">\(a_{2} = 10\)</span> ו־<span class="m">\(a_{4} = 40\)</span>. מצאו את כל האפשרויות ל־<span class="m">\(q\)</span> ול־<span class="m">\(a_{1}\)</span>, וחשבו את <span class="m">\(S_{6}\)</span> בכל אפשרות.</li>
+<li>המספרים <span class="m">\(x - 2,\ x + 1,\ x + 7\)</span> הם סדרה הנדסית. מצאו את <span class="m">\(x\)</span> ואת המנה.</li>
+<li>שלושה מספרים יוצרים סדרה הנדסית. מכפלתם 1000 וסכומם 35. מצאו אותם.</li>
+<li>שבצו 4 מספרים בין 3 ל־96 כך שיתקבלו 6 איברים של סדרה הנדסית.</li>
+<li>האם 1458 הוא איבר בסדרה <span class="m">\(2, 6, 18, \ldots\)</span>? אם כן, באיזה מקום?</li>
+<li>מהו מספר האיברים הקטן ביותר מהסדרה <span class="m">\(5, 10, 20, \ldots\)</span> שסכומם גדול מ־5000?</li>
+<li>בסדרה הנדסית <span class="m">\(q = 3\)</span> ו־<span class="m">\(S_{4} = 80\)</span>. מצאו את <span class="m">\(a_{1}\)</span>.</li>
+<li>בסדרה <span class="m">\(3, 6, 12, \ldots\)</span> חשבו את סכום האיברים מ־<span class="m">\(a_{5}\)</span> עד <span class="m">\(a_{9}\)</span>.</li>
+<li>בסדרה הנדסית <span class="m">\(a_{1} + a_{3} = 20\)</span> ו־<span class="m">\(a_{2} + a_{4} = 60\)</span>. מצאו את <span class="m">\(a_{1}\)</span> ואת <span class="m">\(q\)</span>.</li>
+<li>בסדרה הנדסית חיובית <span class="m">\(a_{2} \cdot a_{8} = 144\)</span>. מצאו את <span class="m">\(a_{5}\)</span>.</li>
+<li>מפקידים 8000 ₪ בריבית דריבית של 3% לשנה. כמה כסף יהיה בחשבון אחרי 6 שנים? (עגלו לשקל)</li>
+<li>טלפון נקנה ב־4000 ₪, וערכו יורד ב־20% בכל שנה. אחרי כמה שנים ירד ערכו לראשונה מתחת ל־1000 ₪?</li>
+<li>מושבת חיידקים משלשת את עצמה כל 30 דקות. בהתחלה יש 200 חיידקים. כמה חיידקים יהיו אחרי 4 שעות?</li>
+<li>בסדרה הנדסית <span class="m">\(a_{1} = 3\)</span> ו־<span class="m">\(q = -2\)</span>. מצאו את <span class="m">\(a_{7}\)</span> ואת <span class="m">\(S_{7}\)</span>.</li>
+<li>בסדרה הנדסית בת 12 איברים, סכום האיברים במקומות הזוגיים הוא 2730, וסכום האיברים במקומות האי־זוגיים הוא 1365. מצאו את <span class="m">\(q\)</span> ואת <span class="m">\(a_{1}\)</span>.</li>
+<li>נתון <span class="m">\(a_{n} = 5 \cdot 2^{n}\)</span>. הראו שהסדרה הנדסית וחשבו את <span class="m">\(S_{8}\)</span>.</li>
+<li>סכום <span class="m">\(n\)</span> האיברים הראשונים בסדרה הוא <span class="m">\(S_{n} = 4^{n} - 1\)</span>. מצאו את <span class="m">\(a_{n}\)</span> וקבעו את סוג הסדרה.</li>
+<li>בסדרה הנדסית <span class="m">\(S_{3} = 13\)</span> ו־<span class="m">\(S_{6} = 364\)</span>. מצאו את <span class="m">\(q\)</span> ואת <span class="m">\(a_{1}\)</span>.</li>
+<li>המספרים <span class="m">\(2, x, y\)</span> הם סדרה הנדסית, והמספרים <span class="m">\(x, y, 30\)</span> הם סדרה חשבונית. מצאו את <span class="m">\(x\)</span> ו־<span class="m">\(y\)</span>.</li>
+</ol></section>
+<section class="ch work" id="inf"><div class="part-h"><h2>חלק ג׳: טור הנדסי אינסופי מתכנס</h2><small>20 שאלות · <a class="no-print" href="sequences-03-infinite-series.html">לדף הלימוד</a></small></div><ol class="hw">
+<li>חשבו את סכום הטור <span class="m">\(12 + 6 + 3 + \ldots\)</span></li>
+<li>חשבו את סכום הטור <span class="m">\(27 - 9 + 3 - \ldots\)</span></li>
+<li>האם הטור <span class="m">\(1 + 1.2 + 1.44 + \ldots\)</span> מתכנס? נמקו.</li>
+<li>סכום טור הנדסי אינסופי הוא 30, ו־<span class="m">\(q = 0.6\)</span>. מצאו את <span class="m">\(a_{1}\)</span>.</li>
+<li>סכום טור הנדסי אינסופי הוא 20, ו־<span class="m">\(a_{1} = 15\)</span>. מצאו את <span class="m">\(q\)</span>.</li>
+<li>כתבו את <span class="m">\(0.888\ldots\)</span> כשבר פשוט.</li>
+<li>כתבו את <span class="m">\(0.363636\ldots\)</span> כשבר פשוט.</li>
+<li>כתבו את <span class="m">\(0.2777\ldots\)</span> כשבר פשוט.</li>
+<li>כתבו את <span class="m">\(3.151515\ldots\)</span> כשבר פשוט.</li>
+<li>לאילו ערכי <span class="m">\(x\)</span> מתכנס הטור <span class="m">\(1 + \dfrac{x}{2} + \dfrac{x^{2}}{4} + \ldots\)</span>? מצאו את <span class="m">\(x\)</span> שעבורו סכום הטור הוא 4.</li>
+<li>לאילו ערכי <span class="m">\(x\)</span> מתכנס הטור <span class="m">\(1 + 3x + 9x^{2} + \ldots\)</span>? מצאו את <span class="m">\(x\)</span> שעבורו סכום הטור הוא 2.</li>
+<li>בטור הנדסי אינסופי <span class="m">\(a_{2} = 3\)</span> וסכום הטור 16. מצאו את <span class="m">\(a_{1}\)</span> ואת <span class="m">\(q\)</span>.</li>
+<li>סכום טור הנדסי אינסופי גדול פי 4 מהאיבר הראשון שלו. מצאו את <span class="m">\(q\)</span>.</li>
+<li>בטור הנדסי אינסופי מתכנס, כל איבר גדול פי 2 מסכום כל האיברים שאחריו. מצאו את <span class="m">\(q\)</span>.</li>
+<li>בטור עם <span class="m">\(a_{1} = 9\)</span> ו־<span class="m">\(q = \dfrac{2}{3}\)</span> חשבו את סכום האיברים במקומות האי־זוגיים ואת סכום האיברים במקומות הזוגיים.</li>
+<li>חשבו את סכום ריבועי האיברים של הטור <span class="m">\(6 + 3 + 1.5 + \ldots\)</span></li>
+<li>כדור נופל מגובה 12 מ׳, ואחרי כל פגיעה בקרקע הוא קופץ ל־<span class="m">\(\dfrac{2}{3}\)</span> מהגובה הקודם. מהו המרחק הכולל שהכדור עובר עד שהוא נעצר?</li>
+<li>בריבוע שצלעו 10 ס״מ חוסמים ריבוע שקודקודיו באמצעי הצלעות, וכך הלאה בלי סוף. חשבו את סכום ההיקפים של כל הריבועים.</li>
+<li>סכום טור הנדסי אינסופי הוא 18, וסכום ריבועי איבריו 108. מצאו את <span class="m">\(a_{1}\)</span> ואת <span class="m">\(q\)</span>.</li>
+<li>סכום טור הנדסי אינסופי הוא 16, וסכום שני האיברים הראשונים שלו הוא 15. מצאו את כל האפשרויות ל־<span class="m">\(a_{1}\)</span> ול־<span class="m">\(q\)</span>.</li>
+</ol></section>
+<footer>בהצלחה! פתרונות יפורסמו בכיתה אחרי מועד ההגשה.</footer>
+</div>
+</body>
+</html>
