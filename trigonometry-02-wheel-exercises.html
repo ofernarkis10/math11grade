@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>תרגול: הגלגל המסתובב · sin ו־cos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same worksheet column as the rest of the site; explanation chapters with interactive SVG figures, then three graded levels of wheel problems with folding solutions */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --green:#2f7d4a; --violet:#7a4fb3;
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05);
+  --green:#6fcf8f; --violet:#b796e8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05);
+  --green:#6fcf8f; --violet:#b796e8; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 72px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav.pagetoc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav.pagetoc ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav.pagetoc a{color:var(--accent);text-decoration:none;font-weight:600}
+nav.pagetoc a:hover,nav.pagetoc a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav.pagetoc ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:center;vertical-align:middle}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+.teacher{border:1px solid var(--line);border-inline-start:4px solid var(--green);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.95rem}
+.teacher strong{color:var(--green)}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:16px}
+ol.exercises li{break-inside:avoid}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+ol.parts{list-style:hebrew;margin:4px 0 0;padding-inline-start:22px}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0;display:flex;flex-direction:column;gap:4px}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+
+/* interactive figures */
+.fig{display:flex;flex-direction:column;gap:10px;align-items:stretch;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--bg)}
+.fig-cap{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.fig svg{width:100%;height:auto;display:block;direction:ltr}
+.fig-row{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:center}
+@media (max-width:640px){.fig-row{grid-template-columns:1fr}}
+.ctl{display:flex;flex-direction:column;gap:8px}
+.ctl label{display:grid;grid-template-columns:5.5rem 1fr 4.2rem;gap:8px;align-items:center;font-weight:600;font-size:.95rem}
+.ctl input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
+.tag-c,.tag-r,.tag-s{font-weight:700}
+.tag-c{color:var(--accent)} .tag-r{color:var(--mark)} .tag-s{color:var(--violet)}
+.f.f-c{border-inline-start:4px solid var(--accent)} .f.f-r{border-inline-start:4px solid var(--mark)} .f.f-s{border-inline-start:4px solid var(--violet)}
+.readout .c{color:var(--accent)} .readout .r{color:var(--mark)} .readout .s{color:var(--violet);font-weight:600}
+.ctl-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent);margin-top:4px}
+.ctl output{font-family:var(--f-math);font-size:.9rem;direction:ltr;text-align:left}
+.readout{font-family:var(--f-math);font-size:.9rem;direction:ltr;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 12px;line-height:1.8;white-space:pre-wrap;unicode-bidi:plaintext}
+.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btns button{font:inherit;font-weight:700;font-size:.9rem;padding:6px 14px;border-radius:99px;border:1px solid var(--accent);background:var(--paper);color:var(--accent);cursor:pointer}
+.btns button:hover,.btns button:focus-visible{background:var(--accent-soft);outline:none}
+.btns label{font-size:.92rem;display:flex;gap:6px;align-items:center}
+svg text{font-family:var(--f-math);font-size:12px;fill:var(--muted)}
+svg .ax{stroke:var(--muted);stroke-width:1.2}
+svg .gr{stroke:var(--line);stroke-width:1}
+svg .acc{stroke:var(--accent);fill:none;stroke-width:2.2}
+svg .mrk{stroke:var(--mark);fill:none;stroke-width:2.2}
+svg .dash{stroke-dasharray:5 4}
+svg .grn{stroke:var(--green);fill:none;stroke-width:2.2}
+svg .vio{stroke:var(--violet);fill:none;stroke-width:2.2}
+
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media print{details{display:block} details>summary{display:none} details .sol{display:flex} .btns{display:none}}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+.m .katex{font-size:1.14em;position:relative}
+.m:has(.katex){white-space:normal}
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.1em}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · פונקציות טריגונומטריות · דף 2</span>
+  <h1>תרגול: נקודה על גלגל מסתובב</h1>
+  <p class="lead">21 שאלות מדורגות עם פתרונות מוסתרים, לפי <a class="back" href="trigonometry-01-polar-wheel.html">דף ההסבר: מערכת צירים קוטבית, sin ו־cos, והגלגל המסתובב</a>. כל הזוויות במעלות. פתרו קודם לבד, ואז לחצו על "הצג פתרון".</p>
+</header>
+
+<nav class="pagetoc" aria-label="תוכן"><strong>תוכן</strong><ol>
+  <li><a href="#lvl1">רמה א׳: נקודה על גלגל שמסתובב במקום</a></li>
+  <li><a href="#lvl2">רמה ב׳: גלגל ענק, דרך ומהירות</a></li>
+  <li><a href="#lvl3">רמה ג׳: גלגל שמתגלגל על הכביש</a></li>
+</ol></nav>
+
+<!-- ============ LEVEL 1 ============ -->
+<section class="ch level" id="lvl1">
+<h2>רמה א׳: נקודה על גלגל שמסתובב במקום <small>שאלות 1–7</small></h2>
+<p class="lead">מרכז הגלגל קבוע בראשית. מוצאים את מיקום הנקודה אחרי זמן נתון, ובהמשך גם את הזמן שבו הנקודה מגיעה למקום נתון.</p>
+<ol class="exercises" start="1">
+<li>גלגל ברדיוס 30 ס"מ מסתובב נגד כיוון השעון במהירות <span class="m">\(60^\circ/\text{s}\)</span>. בהתחלה הוונטיל ב־<span class="m">\((30, 0)\)</span>. מצאו את מיקום הוונטיל (בקוטבית ובקרטזית) אחרי 1, 3 ו־4 שניות.
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>אחרי 1 שנייה: <span class="m">\(\theta = 60^\circ\)</span>. <span class="m">\(x = 30\cos60^\circ = 15,\ y = 30\sin60^\circ = 15\sqrt3 \approx 25.98\)</span>. כלומר <span class="m">\((30,\ 60^\circ) = (15,\ 25.98)\)</span>.</p>
+<p>אחרי 3 שניות: <span class="m">\(\theta = 180^\circ\)</span>. <span class="m">\((30,\ 180^\circ) = (-30,\ 0)\)</span>. חצי סיבוב: הוונטיל בצד השני.</p>
+<p>אחרי 4 שניות: <span class="m">\(\theta = 240^\circ\)</span> (רביע III, <span class="m">\(240^\circ = 180^\circ + 60^\circ\)</span>). <span class="m">\(x = -30\cos60^\circ = -15,\ y = -30\sin60^\circ \approx -25.98\)</span>.</p>
+</div></details></li>
+
+<li>אותו גלגל. מהו זמן המחזור? איפה הוונטיל אחרי 7 שניות? ואחרי 100 שניות?
+<details><summary>הצג פתרון</summary><div class="sol">
+<p><span class="m">\(T = \dfrac{360}{60} = 6\)</span> שניות לסיבוב.</p>
+<p>אחרי 7 שניות: <span class="m">\(\theta = 420^\circ = 360^\circ + 60^\circ\)</span>, כלומר סיבוב שלם ועוד <span class="m">\(60^\circ\)</span>. המיקום כמו אחרי שנייה אחת: <span class="m">\((15,\ 25.98)\)</span>.</p>
+<p>אחרי 100 שניות: <span class="m">\(\theta = 6000^\circ\)</span>. <span class="m">\(6000 = 16 \cdot 360 + 240\)</span>, כלומר 16 סיבובים שלמים ועוד <span class="m">\(240^\circ\)</span>. המיקום: <span class="m">\((-15,\ -25.98)\)</span>.</p>
+<p>דרך נוספת: <span class="m">\(100 = 16 \cdot 6 + 4\)</span>, ולכן המיקום כמו אחרי 4 שניות.</p>
+</div></details></li>
+
+<li>גלגל ברדיוס 40 ס"מ מסתובב נגד כיוון השעון במהירות <span class="m">\(45^\circ/\text{s}\)</span>. בהתחלה הנקודה המסומנת נמצאת בראש הגלגל.
+<ol class="parts"><li>מהי <span class="m">\(\theta_0\)</span>?</li><li>איפה הנקודה אחרי 5 שניות?</li><li>כמה סיבובים עושה הגלגל בדקה?</li></ol>
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>א. ראש הגלגל נמצא על ציר <span class="m">\(y\)</span> החיובי: <span class="m">\(\theta_0 = 90^\circ\)</span>.</p>
+<p>ב. <span class="m">\(\theta = 90^\circ + 45 \cdot 5 = 315^\circ\)</span> (רביע IV). <span class="m">\(x = 40\cos315^\circ = 40 \cdot \tfrac{\sqrt2}{2} = 20\sqrt2 \approx 28.28\)</span>, <span class="m">\(y = 40\sin315^\circ = -20\sqrt2 \approx -28.28\)</span>.</p>
+<p>ג. בדקה: <span class="m">\(45 \cdot 60 = 2700^\circ\)</span>, ו־<span class="m">\(2700 / 360 = 7.5\)</span> סיבובים.</p>
+</div></details></li>
+
+<li>כנף של מאוורר מסתובבת ב־120 סיבובים לדקה (rpm) נגד כיוון השעון. הקצה שלה במרחק 25 ס"מ מהציר, ובהתחלה הוא ב־<span class="m">\(\theta_0 = 0^\circ\)</span>.
+<ol class="parts"><li>מהי המהירות הזוויתית במעלות לשנייה? מהו זמן המחזור?</li><li>איפה הקצה אחרי 0.1 שנייה? אחרי <span class="m">\(\tfrac13\)</span> שנייה?</li></ol>
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>א. <span class="m">\(\omega = 120 \cdot 6 = 720^\circ/\text{s}\)</span> (שני סיבובים בשנייה). <span class="m">\(T = 360/720 = 0.5\)</span> שנייה.</p>
+<p>ב. אחרי 0.1 שנייה: <span class="m">\(\theta = 72^\circ\)</span>. <span class="m">\(x = 25\cos72^\circ \approx 7.73,\ y = 25\sin72^\circ \approx 23.78\)</span> (במחשבון).</p>
+<p>אחרי <span class="m">\(\tfrac13\)</span> שנייה: <span class="m">\(\theta = 240^\circ\)</span>. <span class="m">\(x = 25\cos240^\circ = -12.5,\ y = 25\sin240^\circ \approx -21.65\)</span>.</p>
+</div></details></li>
+
+<li>גלגל ברדיוס 30 ס"מ מסתובב <strong>עם</strong> כיוון השעון במהירות <span class="m">\(60^\circ/\text{s}\)</span>, ובהתחלה הוונטיל ב־<span class="m">\((30, 0)\)</span>. איפה הוא אחרי 2 שניות? השוו לדוגמה הפתורה בסעיף 5 בדף ההסבר.
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>עם כיוון השעון הזווית קטנה: <span class="m">\(\theta = 0^\circ - 60 \cdot 2 = -120^\circ\)</span>, וזו אותה זווית כמו <span class="m">\(-120^\circ + 360^\circ = 240^\circ\)</span>.</p>
+<p><span class="m">\(x = 30\cos240^\circ = -15,\ y = 30\sin240^\circ \approx -25.98\)</span>.</p>
+<p>בדוגמה הפתורה קיבלנו <span class="m">\((-15,\ 25.98)\)</span>. התוצאה היא שיקוף שלה ביחס לציר <span class="m">\(x\)</span>: אותו <span class="m">\(x\)</span>, ו־<span class="m">\(y\)</span> הפוך. זה מתאים לזהויות <span class="m">\(\cos(-\alpha) = \cos\alpha\)</span> ו־<span class="m">\(\sin(-\alpha) = -\sin\alpha\)</span>.</p>
+</div></details></li>
+
+<li><strong>בעיה הפוכה.</strong> הגלגל מהדוגמה הפתורה בסעיף 5 בדף ההסבר (רדיוס 30, <span class="m">\(60^\circ/\text{s}\)</span> נגד כיוון השעון, מתחיל ב־<span class="m">\(0^\circ\)</span>).
+<ol class="parts"><li>מתי לראשונה הוונטיל נמצא 15 ס"מ מעל המרכז? מתי בפעם השנייה?</li><li>מצאו את כל הזמנים שבהם זה קורה.</li><li>מתי לראשונה הוונטיל נמצא 15 ס"מ משמאל למרכז?</li></ol>
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>א. צריך <span class="m">\(y = 30\sin\theta = 15\)</span>, כלומר <span class="m">\(\sin\theta = \tfrac12\)</span>. בסיבוב הראשון: <span class="m">\(\theta = 30^\circ\)</span> או <span class="m">\(\theta = 180^\circ - 30^\circ = 150^\circ\)</span>. מ־<span class="m">\(60t = 30\)</span> מקבלים <span class="m">\(t = 0.5\)</span> שנייה, ומ־<span class="m">\(60t = 150\)</span> מקבלים <span class="m">\(t = 2.5\)</span> שניות.</p>
+<p>ב. זמן המחזור 6 שניות, ולכן <span class="m">\(t = 0.5 + 6k\)</span> או <span class="m">\(t = 2.5 + 6k\)</span>, כאשר <span class="m">\(k = 0, 1, 2, \ldots\)</span></p>
+<p>ג. צריך <span class="m">\(x = 30\cos\theta = -15\)</span>, כלומר <span class="m">\(\cos\theta = -\tfrac12\)</span>: <span class="m">\(\theta = 120^\circ\)</span> (או <span class="m">\(240^\circ\)</span>). לראשונה ב־<span class="m">\(t = 2\)</span> שניות.</p>
+<p>שימו לב: למשוואה <span class="m">\(\sin\theta = \tfrac12\)</span> יש <strong>שני</strong> פתרונות בכל סיבוב. זה הבסיס לפתרון משוואות טריגונומטריות.</p>
+</div></details></li>
+
+<li>נקודה על גלגל ברדיוס 20 ס"מ מתחילה ב־<span class="m">\((20, 0)\)</span> ומסתובבת נגד כיוון השעון במהירות קבועה. אחרי 3 שניות היא מגיעה <strong>לראשונה</strong> לנקודה <span class="m">\((0, -20)\)</span>.
+<ol class="parts"><li>מהי המהירות הזוויתית?</li><li>איפה הנקודה אחרי 5 שניות?</li></ol>
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>א. <span class="m">\((0, -20) = (20,\ 270^\circ)\)</span>. זו הפעם הראשונה, ולכן הגלגל עבר <span class="m">\(270^\circ\)</span> בלי סיבוב שלם: <span class="m">\(\omega = 270/3 = 90^\circ/\text{s}\)</span>.</p>
+<p>ב. <span class="m">\(\theta = 450^\circ = 360^\circ + 90^\circ\)</span>. הנקודה ב־<span class="m">\((0, 20)\)</span>, בראש הגלגל.</p>
+</div></details></li>
+</ol>
+</section>
+
+<!-- ============ LEVEL 2 ============ -->
+<section class="ch level" id="lvl2">
+<h2>רמה ב׳: גלגל ענק, דרך ומהירות <small>שאלות 8–13</small></h2>
+<div class="meaning">
+<p class="lead">מרכז הגלגל כבר לא בראשית, ושואלים גם כמה דרך עברה הנקודה ובאיזו מהירות היא נעה.</p>
+<p><strong>כלי חדש: אורך קשת ומהירות קווית.</strong> כשהגלגל מסתובב בזווית <span class="m">\(\Delta\theta\)</span>, נקודה עליו עוברת חלק מהיקף המעגל. ההיקף הוא <span class="m">\(2\pi r\)</span>, והחלק הוא <span class="m">\(\dfrac{\Delta\theta}{360^\circ}\)</span>. לכן:</p>
+</div>
+<div class="formulas">
+  <div class="f"><b>אורך קשת (הדרך שהנקודה עברה)</b><span class="m">\(s = 2\pi r \cdot \dfrac{\Delta\theta}{360^\circ}\)</span></div>
+  <div class="f"><b>מהירות הנקודה (דרך בשנייה)</b><span class="m">\(v = 2\pi r \cdot \dfrac{\omega}{360^\circ}\)</span></div>
+  <div class="f"><b>גלגל שמתגלגל בלי החלקה</b>בכל סיבוב הרכב מתקדם היקף אחד, <span class="m">\(2\pi r\)</span></div>
+</div>
+<div class="meaning"><p>כיוון התנועה של הנקודה הוא תמיד <strong>משיק</strong> למעגל, כלומר מאונך לרדיוס.</p></div>
+<ol class="exercises" start="8">
+<li><strong>גלגל ענק.</strong> מרכז גלגל ענק נמצא בגובה 22 מ׳ מעל הקרקע, והרדיוס שלו 20 מ׳. הגלגל משלים סיבוב ב־4 דקות, נגד כיוון השעון. תא עולה לגלגל בנקודה הנמוכה ביותר.
+<ol class="parts"><li>מהי המהירות הזוויתית? מהי <span class="m">\(\theta_0\)</span>?</li><li>כתבו נוסחה לגובה התא מעל הקרקע <span class="m">\(h(t)\)</span>.</li><li>מה גובה התא אחרי 40 שניות? אחרי דקה? אחרי 2 דקות?</li><li>מה המרחק האופקי של התא מציר הגלגל אחרי 40 שניות?</li></ol>
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>א. <span class="m">\(\omega = 360/240 = 1.5^\circ/\text{s}\)</span>. הנקודה הנמוכה: <span class="m">\(\theta_0 = 270^\circ\)</span>.</p>
+<p>ב. מרכז הגלגל בגובה 22, ולכן <span class="m">\(h(t) = 22 + 20\sin(270^\circ + 1.5t)\)</span>.</p>
+<p>ג. <span class="m">\(t = 40\)</span>: <span class="m">\(\theta = 330^\circ\)</span>, <span class="m">\(\sin330^\circ = -\tfrac12\)</span>, <span class="m">\(h = 22 - 10 = 12\)</span> מ׳.<br>
+<span class="m">\(t = 60\)</span>: <span class="m">\(\theta = 360^\circ\)</span>, <span class="m">\(h = 22\)</span> מ׳ (בגובה הציר).<br>
+<span class="m">\(t = 120\)</span>: <span class="m">\(\theta = 450^\circ \equiv 90^\circ\)</span>, <span class="m">\(h = 42\)</span> מ׳ (בפסגה, אחרי חצי סיבוב).</p>
+<p>ד. <span class="m">\(x = 20\cos330^\circ = 20 \cdot \tfrac{\sqrt3}{2} = 10\sqrt3 \approx 17.32\)</span> מ׳ מימין לציר.</p>
+</div></details></li>
+
+<li>אותו גלגל ענק. במשך כמה זמן, בסיבוב הראשון, התא נמצא בגובה של יותר מ־32 מ׳?
+<details><summary>הצג פתרון</summary><div class="sol">
+<p><span class="m">\(22 + 20\sin\theta \gt 32 \iff \sin\theta \gt \tfrac12 \iff 30^\circ \lt \theta \lt 150^\circ\)</span> (בתוך סיבוב אחד).</p>
+<p>בסיבוב הראשון הזווית עולה מ־<span class="m">\(270^\circ\)</span> עד <span class="m">\(630^\circ\)</span>. בתחום הזה הקטע המתאים הוא <span class="m">\(390^\circ \lt \theta \lt 510^\circ\)</span> (הוספנו <span class="m">\(360^\circ\)</span>).</p>
+<p><span class="m">\(270 + 1.5t = 390 \Rightarrow t = 80\)</span>, &nbsp; <span class="m">\(270 + 1.5t = 510 \Rightarrow t = 160\)</span>.</p>
+<p>התא מעל 32 מ׳ בין שנייה 80 לשנייה 160, כלומר <strong>80 שניות</strong>, שליש מהסיבוב.</p>
+</div></details></li>
+
+<li>גלגל ברדיוס 30 ס"מ מסתובב ב־<span class="m">\(60^\circ/\text{s}\)</span>.
+<ol class="parts"><li>כמה דרך עובר הוונטיל בשנייה אחת? בסיבוב שלם?</li><li>מהי מהירות הוונטיל?</li><li>מהי מהירות נקודה על החישור, 10 ס"מ מהמרכז? מה משותף לשתי הנקודות ומה שונה?</li></ol>
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>א. בשנייה: <span class="m">\(s = 2\pi \cdot 30 \cdot \tfrac{60}{360} = 10\pi \approx 31.4\)</span> ס"מ. בסיבוב: <span class="m">\(2\pi \cdot 30 = 60\pi \approx 188.5\)</span> ס"מ.</p>
+<p>ב. <span class="m">\(v = 10\pi \approx 31.4\)</span> ס"מ לשנייה.</p>
+<p>ג. <span class="m">\(v = 2\pi \cdot 10 \cdot \tfrac{60}{360} = \tfrac{10\pi}{3} \approx 10.5\)</span> ס"מ לשנייה. <strong>המהירות הזוויתית שווה</strong> (שתיהן מסתובבות <span class="m">\(60^\circ\)</span> בשנייה), אבל <strong>המהירות הקווית שונה</strong>: היא פרופורציונית למרחק מהמרכז. נקודה רחוקה פי 3 נעה מהר פי 3.</p>
+</div></details></li>
+
+<li>מהי מהירות התא בגלגל הענק משאלה 8, במטרים לשנייה ובקמ"ש?
+<details><summary>הצג פתרון</summary><div class="sol">
+<p><span class="m">\(v = 2\pi \cdot 20 \cdot \tfrac{1.5}{360} = \tfrac{\pi}{6} \approx 0.524\)</span> מ׳ לשנייה.</p>
+<p>בקמ"ש: <span class="m">\(0.524 \cdot 3.6 \approx 1.9\)</span> קמ"ש, פחות מקצב הליכה.</p>
+</div></details></li>
+
+<li><strong>מהמכונית לגלגל.</strong> מכונית נוסעת ב־72 קמ"ש. רדיוס הגלגל (כולל הצמיג) 30 ס"מ, והגלגל מתגלגל בלי להחליק.
+<ol class="parts"><li>כמה מטרים מתקדמת המכונית בכל סיבוב של הגלגל?</li><li>כמה סיבובים בשנייה עושה הגלגל? כמה סיבובים לדקה?</li><li>מהי המהירות הזוויתית במעלות לשנייה?</li></ol>
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>א. היקף: <span class="m">\(2\pi \cdot 0.3 = 0.6\pi \approx 1.885\)</span> מ׳ לסיבוב.</p>
+<p>ב. <span class="m">\(72\)</span> קמ"ש <span class="m">\(= 72 / 3.6 = 20\)</span> מ׳ לשנייה. סיבובים בשנייה: <span class="m">\(20 / 1.885 \approx 10.61\)</span>. בדקה: <span class="m">\(\approx 637\)</span> סיבובים.</p>
+<p>ג. <span class="m">\(\omega = 10.61 \cdot 360 \approx 3820^\circ/\text{s}\)</span>. באופן כללי, מתוך <span class="m">\(v = 2\pi r \cdot \tfrac{\omega}{360}\)</span>: <span class="m">\(\omega = \dfrac{360\,v}{2\pi r}\)</span>.</p>
+</div></details></li>
+
+<li>גלגל אופניים ברדיוס 35 ס"מ מסתובב ב־180 סיבובים לדקה, בלי החלקה. מה מהירות האופניים בקמ"ש? כמה זמן לוקח לגלגל להסתובב <span class="m">\(90^\circ\)</span>, וכמה מתקדמות האופניים בזמן הזה?
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>180 סיבובים לדקה = 3 סיבובים בשנייה. בכל סיבוב <span class="m">\(2\pi \cdot 0.35 = 0.7\pi\)</span> מ׳. המהירות: <span class="m">\(3 \cdot 0.7\pi = 2.1\pi \approx 6.60\)</span> מ׳ לשנייה <span class="m">\(\approx 23.75\)</span> קמ"ש.</p>
+<p><span class="m">\(\omega = 180 \cdot 6 = 1080^\circ/\text{s}\)</span>, ולכן <span class="m">\(90^\circ\)</span> לוקחות <span class="m">\(90/1080 = \tfrac{1}{12}\)</span> שנייה. בזמן הזה האופניים מתקדמות רבע היקף: <span class="m">\(\tfrac{0.7\pi}{4} \approx 0.55\)</span> מ׳.</p>
+</div></details></li>
+</ol>
+
+</section>
+
+<!-- ============ LEVEL 3 ============ -->
+<section class="ch level" id="lvl3">
+<h2>רמה ג׳: גלגל שמתגלגל על הכביש <small>שאלות 14–21</small></h2>
+<div class="meaning">
+<p class="lead">עכשיו מרכז הגלגל זז. נשתמש בפירוק מסעיף 4 בדף ההסבר: <span class="tag-c">התקדמות</span> של המרכז ועוד <span class="tag-r">סיבוב</span> סביב המרכז. הדבר החדש: כשהגלגל מתגלגל בלי להחליק, המהירות שלו והסיבוב שלו כבר לא בלתי תלויים.</p>
+<h3>הבניה של המודל</h3>
+<p>הכביש הוא ציר <span class="m">\(x\)</span>. גלגל ברדיוס <span class="m">\(r\)</span> מתגלגל ימינה בלי להחליק. בהתחלה הוונטיל נוגע בכביש בראשית.</p>
+<p><strong>1. המרכז:</strong> הגלגל מסתובב בזווית <span class="m">\(\alpha\)</span> ("זווית הגלגול"). בלי החלקה, המרכז מתקדם בדיוק את אורך הקשת שנגעה בכביש: <span class="m">\(d = 2\pi r \cdot \dfrac{\alpha}{360^\circ}\)</span>. המרכז נמצא ב־<span class="m">\((d,\ r)\)</span>.</p>
+<p><strong>2. הסיבוב:</strong> גלגל שנוסע ימינה מסתובב <strong>עם כיוון השעון</strong>. הוונטיל התחיל למטה (<span class="m">\(\theta_0 = 270^\circ\)</span> ביחס למרכז), ולכן אחרי גלגול בזווית <span class="m">\(\alpha\)</span> הזווית שלו ביחס למרכז היא <span class="m">\(\theta = 270^\circ - \alpha\)</span>.</p>
+<p><strong>3. מחברים:</strong> <span class="m">\(X = d + r\cos(270^\circ - \alpha),\ \ Y = r + r\sin(270^\circ - \alpha)\)</span>.</p>
+<p><strong>4. מפשטים</strong> בעזרת <span class="m">\(\cos(270^\circ - \alpha) = -\sin\alpha\)</span> ו־<span class="m">\(\sin(270^\circ - \alpha) = -\cos\alpha\)</span> (בדקו עם <span class="m">\(\alpha = 0^\circ\)</span> ו־<span class="m">\(\alpha = 90^\circ\)</span>):</p>
+</div>
+<div class="formulas">
+  <div class="f"><b>מיקום הוונטיל אחרי גלגול בזווית α</b><span class="m">\(X = 2\pi r\dfrac{\alpha}{360^\circ} - r\sin\alpha\)</span><br><span class="m">\(Y = r - r\cos\alpha\)</span></div>
+  <div class="f"><b>לפי הזמן, במהירות נסיעה v</b><span class="m">\(\alpha = \omega t,\ \ \omega = \dfrac{360^\circ v}{2\pi r}\)</span><br><span class="m">\(X = vt - r\sin(\omega t),\ \ Y = r - r\cos(\omega t)\)</span></div>
+</div>
+<div class="meaning">
+<h3>המהירות ביחס לקרקע</h3>
+<p>מהירות היא גודל עם כיוון. נפרק אותה לרכיב אופקי ולרכיב אנכי, נחבר, ונחשב את הגודל לפי פיתגורס.</p>
+<p><strong>מהירות המרכז:</strong> <span class="m">\(v\)</span> ימינה, כלומר רכיבים <span class="m">\((v,\ 0)\)</span>.</p>
+<p><strong>מהירות הסיבוב סביב המרכז:</strong> לפי רמה ב׳ גודלה <span class="m">\(2\pi r \cdot \frac{\omega}{360}\)</span>, ובגלגול בלי החלקה זה בדיוק <span class="m">\(v\)</span>. הכיוון משיק למעגל, עם כיוון השעון. לנקודה בזווית <span class="m">\(\theta\)</span> ביחס למרכז הרכיבים הם <span class="m">\((v\sin\theta,\ -v\cos\theta)\)</span>. בדיקה: בראש הגלגל (<span class="m">\(\theta = 90^\circ\)</span>) מקבלים <span class="m">\((v, 0)\)</span>, ימינה. בתחתית (<span class="m">\(270^\circ\)</span>) מקבלים <span class="m">\((-v, 0)\)</span>, שמאלה.</p>
+<p><strong>סכום:</strong> <span class="m">\(V_x = v + v\sin\theta,\ \ V_y = -v\cos\theta\)</span>, ולכן</p>
+<p style="text-align:center"><span class="m">\(|V| = v\sqrt{(1+\sin\theta)^2 + \cos^2\theta} = v\sqrt{1 + 2\sin\theta + \sin^2\theta + \cos^2\theta} = v\sqrt{2 + 2\sin\theta}\)</span></p>
+<p>השתמשנו ב־<span class="m">\(\sin^2\theta + \cos^2\theta = 1\)</span>.</p>
+</div>
+<div class="formulas">
+  <div class="f"><b>מהירות נקודה בזווית θ (ביחס למרכז)</b><span class="m">\(|V| = v\sqrt{2 + 2\sin\theta}\)</span></div>
+  <div class="f"><b>מהירות הוונטיל לפי זווית הגלגול α</b><span class="m">\(|V| = v\sqrt{2 - 2\cos\alpha}\)</span></div>
+</div>
+
+<ol class="exercises" start="14">
+<li>גלגל ברדיוס 30 ס"מ מתגלגל ימינה. בהתחלה הוונטיל נוגע בכביש בראשית. מצאו את מיקום הוונטיל אחרי גלגול של <span class="m">\(90^\circ\)</span>, <span class="m">\(180^\circ\)</span>, <span class="m">\(270^\circ\)</span> ו־<span class="m">\(360^\circ\)</span>. שרטטו את הנקודות וחברו אותן בקו חלק.
+<details><summary>הצג פתרון</summary><div class="sol">
+<p><span class="m">\(\alpha = 90^\circ\)</span>: המרכז התקדם <span class="m">\(15\pi \approx 47.12\)</span>. <span class="m">\(X = 47.12 - 30 = 17.12,\ Y = 30\)</span>. הוונטיל בגובה המרכז, מאחוריו.</p>
+<p><span class="m">\(\alpha = 180^\circ\)</span>: <span class="m">\(X = 30\pi \approx 94.25,\ Y = 60\)</span>. בראש הגלגל.</p>
+<p><span class="m">\(\alpha = 270^\circ\)</span>: <span class="m">\(X = 45\pi + 30 \approx 171.37,\ Y = 30\)</span>. בגובה המרכז, לפניו.</p>
+<p><span class="m">\(\alpha = 360^\circ\)</span>: <span class="m">\(X = 60\pi \approx 188.50,\ Y = 0\)</span>. שוב על הכביש, היקף אחד קדימה.</p>
+<p>הקו שמתקבל הוא קשת של <strong>ציקלואידה</strong>, כמו בהמחשה בסעיף 6 בדף ההסבר. שימו לב שהמרחק בין 90° ל־180° (77 ס"מ) גדול בהרבה מהמרחק בין 0° ל־90° (17 ס"מ). כבר מכאן רואים שהוונטיל מהיר למעלה ואיטי למטה.</p>
+</div></details></li>
+
+<li>אופניים עם גלגל ברדיוס 0.3 מ׳ נוסעים במהירות <span class="m">\(v = 3\pi \approx 9.42\)</span> מ׳ לשנייה (כ־34 קמ"ש).
+<ol class="parts"><li>כמה זמן לוקח סיבוב אחד של הגלגל? מהי <span class="m">\(\omega\)</span>?</li><li>כתבו את <span class="m">\(X(t)\)</span> ו־<span class="m">\(Y(t)\)</span> של הוונטיל.</li><li>איפה הוונטיל אחרי 0.05 שנייה? אחרי 0.03 שנייה?</li></ol>
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>א. <span class="m">\(T = \dfrac{2\pi \cdot 0.3}{3\pi} = 0.2\)</span> שנייה. <span class="m">\(\omega = 360 / 0.2 = 1800^\circ/\text{s}\)</span>.</p>
+<p>ב. <span class="m">\(X = 3\pi t - 0.3\sin(1800t),\ \ Y = 0.3 - 0.3\cos(1800t)\)</span>.</p>
+<p>ג. <span class="m">\(t = 0.05\)</span>: <span class="m">\(\alpha = 90^\circ\)</span>. <span class="m">\(X = 0.15\pi - 0.3 \approx 0.171,\ Y = 0.3\)</span> מ׳.<br>
+<span class="m">\(t = 0.03\)</span>: <span class="m">\(\alpha = 54^\circ\)</span>. <span class="m">\(X = 0.09\pi - 0.3\sin54^\circ \approx 0.283 - 0.243 = 0.040\)</span>, <span class="m">\(Y = 0.3 - 0.3\cos54^\circ \approx 0.124\)</span> מ׳.</p>
+</div></details></li>
+
+<li>אותן אופניים. מתי לראשונה הוונטיל בגובה 45 ס"מ מעל הכביש? מתי בפעם השנייה?
+<details><summary>הצג פתרון</summary><div class="sol">
+<p><span class="m">\(0.3 - 0.3\cos\alpha = 0.45 \Rightarrow \cos\alpha = -\tfrac12 \Rightarrow \alpha = 120^\circ\)</span> או <span class="m">\(240^\circ\)</span>.</p>
+<p><span class="m">\(t = 120/1800 = \tfrac{1}{15} \approx 0.067\)</span> שנייה, ובפעם השנייה <span class="m">\(t = \tfrac{2}{15} \approx 0.133\)</span> שנייה.</p>
+</div></details></li>
+
+<li><strong>מהירות ביחס לקרקע.</strong> מכונית נוסעת ב־72 קמ"ש. בעזרת הנוסחה <span class="m">\(|V| = v\sqrt{2 + 2\sin\theta}\)</span>, מצאו את המהירות ביחס לכביש של:
+<ol class="parts"><li>הנקודה התחתונה של הצמיג (נוגעת בכביש).</li><li>הנקודה העליונה.</li><li>הנקודה הקדמית, בגובה הציר.</li><li>הנקודה האחורית, בגובה הציר.</li></ol>
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>א. <span class="m">\(\theta = 270^\circ\)</span>: <span class="m">\(\sqrt{2 - 2} = 0\)</span>. הנקודה <strong>עומדת לרגע</strong>. זה בדיוק "בלי החלקה": החלק שנוגע בכביש לא זז ביחס אליו.</p>
+<p>ב. <span class="m">\(\theta = 90^\circ\)</span>: <span class="m">\(\sqrt{2 + 2} = 2\)</span>. <span class="m">\(|V| = 2v = 144\)</span> קמ"ש.</p>
+<p>ג. <span class="m">\(\theta = 0^\circ\)</span>: <span class="m">\(|V| = \sqrt2\,v \approx 101.8\)</span> קמ"ש, בזווית <span class="m">\(45^\circ\)</span> כלפי מטה (<span class="m">\(V = (v, -v)\)</span>).</p>
+<p>ד. <span class="m">\(\theta = 180^\circ\)</span>: <span class="m">\(|V| = \sqrt2\,v \approx 101.8\)</span> קמ"ש, בזווית <span class="m">\(45^\circ\)</span> כלפי מעלה (<span class="m">\(V = (v, v)\)</span>).</p>
+<p>זו התשובה לשאלה שהצגנו <a class="back" href="trigonometry-01-polar-wheel.html#why">בסעיף 6 בדף ההסבר</a>. אפשר לראות את החיצים בהמחשה שם.</p>
+</div></details></li>
+
+<li>באילו נקודות על הגלגל המהירות ביחס לכביש שווה בדיוק למהירות המכונית? באיזה גובה מעל הכביש הן נמצאות? ואיפה המהירות היא <span class="m">\(1.5v\)</span>?
+<details><summary>הצג פתרון</summary><div class="sol">
+<p><span class="m">\(v\sqrt{2 + 2\sin\theta} = v \Rightarrow 2 + 2\sin\theta = 1 \Rightarrow \sin\theta = -\tfrac12\)</span>, כלומר <span class="m">\(\theta = 210^\circ\)</span> או <span class="m">\(330^\circ\)</span>.</p>
+<p>הגובה: <span class="m">\(r + r\sin\theta = r - \tfrac r2 = \tfrac r2\)</span>. שתי הנקודות בגובה <strong>חצי רדיוס</strong> מעל הכביש.</p>
+<p><span class="m">\(1.5v\)</span>: <span class="m">\(2 + 2\sin\theta = 2.25 \Rightarrow \sin\theta = 0.125 \Rightarrow \theta \approx 7.2^\circ\)</span> או <span class="m">\(\theta \approx 172.8^\circ\)</span>, קצת מעל גובה הציר.</p>
+</div></details></li>
+
+<li>האופניים משאלה 15 (<span class="m">\(v = 3\pi\)</span>, <span class="m">\(\omega = 1800^\circ/\text{s}\)</span>). מצאו את מהירות הוונטיל ביחס לכביש אחרי 0.03 שנייה. מתי היא מקסימלית ומה ערכה?
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>לפי זווית הגלגול: <span class="m">\(|V| = v\sqrt{2 - 2\cos\alpha}\)</span> (כי <span class="m">\(\sin(270^\circ - \alpha) = -\cos\alpha\)</span>).</p>
+<p><span class="m">\(t = 0.03\)</span>: <span class="m">\(\alpha = 54^\circ\)</span>, <span class="m">\(|V| = 3\pi\sqrt{2 - 2\cos54^\circ} \approx 9.42 \cdot 0.908 \approx 8.56\)</span> מ׳ לשנייה.</p>
+<p>מקסימום כש־<span class="m">\(\cos\alpha = -1\)</span>, כלומר <span class="m">\(\alpha = 180^\circ\)</span>, <span class="m">\(t = 0.1\)</span> שנייה (ובכל מחזור של 0.2 שנייה). הערך: <span class="m">\(2v = 6\pi \approx 18.85\)</span> מ׳ לשנייה.</p>
+</div></details></li>
+
+<li><strong>בדיקה מספרית (קשר לנגזרת).</strong> בעזרת הנוסחאות של <span class="m">\(X(t), Y(t)\)</span> משאלה 15, חשבו את מיקום הוונטיל ב־<span class="m">\(t = 0.1\)</span> וב־<span class="m">\(t = 0.101\)</span>. חשבו את המרחק בין שתי הנקודות וחלקו ב־0.001 שנייה. השוו לתשובה של שאלה 19. עשו את אותו חישוב בין <span class="m">\(t = 0\)</span> ל־<span class="m">\(t = 0.001\)</span>.
+<details><summary>הצג פתרון</summary><div class="sol">
+<p><span class="m">\(t = 0.1\)</span>: <span class="m">\((0.94248,\ 0.60000)\)</span>. &nbsp; <span class="m">\(t = 0.101\)</span> (<span class="m">\(\alpha = 181.8^\circ\)</span>): <span class="m">\((0.96133,\ 0.59985)\)</span>.</p>
+<p>מרחק <span class="m">\(\approx 0.018849\)</span> מ׳, ומהירות ממוצעת <span class="m">\(\approx 18.849\)</span> מ׳ לשנייה, כמעט בדיוק <span class="m">\(6\pi \approx 18.850\)</span>.</p>
+<p>בין 0 ל־0.001: <span class="m">\((0, 0) \to (0.0000016,\ 0.000148)\)</span>. מהירות ממוצעת <span class="m">\(\approx 0.15\)</span> מ׳ לשנייה, קרובה מאוד ל־0. בפרק זמן קצר יותר היא תהיה עוד יותר קרובה ל־0.</p>
+<p>זו בדיוק ההגדרה של מהירות רגעית: גבול של מהירות ממוצעת בפרקי זמן קטנים, כלומר נגזרת. כשנלמד לגזור את sin ו־cos נוכל לקבל את התוצאה ישירות.</p>
+</div></details></li>
+
+<li><strong>אתגר: הגלגל מסתובב סביב נקודת המגע.</strong> הראו שהמרחק מנקודה על הגלגל (בזווית <span class="m">\(\theta\)</span> ביחס למרכז) לנקודת המגע עם הכביש הוא <span class="m">\(r\sqrt{2 + 2\sin\theta}\)</span>. מה זה אומר על הקשר בין מהירות הנקודה למרחק שלה מנקודת המגע?
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>ביחס למרכז, הנקודה ב־<span class="m">\((r\cos\theta,\ r\sin\theta)\)</span> ונקודת המגע ב־<span class="m">\((0, -r)\)</span>.</p>
+<p><span class="m">\(d^2 = r^2\cos^2\theta + (r\sin\theta + r)^2 = r^2(\cos^2\theta + \sin^2\theta + 2\sin\theta + 1) = r^2(2 + 2\sin\theta)\)</span>.</p>
+<p>לכן <span class="m">\(|V| = v\sqrt{2 + 2\sin\theta} = \dfrac{v}{r} \cdot d\)</span>: המהירות של כל נקודה <strong>פרופורציונית למרחק שלה מנקודת המגע</strong>. בכל רגע הגלגל כולו מסתובב סביב נקודת המגע, כמו גלגל שמסתובב במקום סביב ציר שעובר בנקודה התחתונה. נקודת המגע עומדת, והנקודה העליונה, הרחוקה ביותר (<span class="m">\(d = 2r\)</span>), מהירה ביותר.</p>
+</div></details></li>
+</ol>
+</section>
+
+<footer>דף 2 בפרק הפונקציות הטריגונומטריות · <a class="back" href="trigonometry-01-polar-wheel.html">לדף ההסבר</a> · <a class="back" href="index.html">חזרה לדף הראשי</a></footer>
+</div>
+</body>
+</html>

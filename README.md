@@ -35,6 +35,8 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | Euclidean geometry | `geometry-01-loci-triangle-centers.html` | Deductive reasoning, loci, the four special points of a triangle, fourth congruence theorem, converse of Pythagoras |
 | | `geometry-02-circle.html` | The circle: chords, arcs, inscribed and central angles, cyclic quadrilaterals, tangents, constructions |
 | | `geometry-03-similarity.html` | Proportion and similarity: Thales, similarity theorems, angle-bisector theorem, similarity in right triangles and in the circle |
+| Trigonometric functions | `trigonometry-01-polar-wheel.html` | Explanation: polar coordinates (degrees), sin and cos for any angle, a point on a standing and on a moving wheel, angular velocity, and the guiding question (speed of a point on a rolling wheel); interactive simulations |
+| | `trigonometry-02-wheel-exercises.html` | 21 graded wheel problems with full solutions, up to the speed of a point on a rolling wheel relative to the ground |
 
 ## Structure of a study page
 
@@ -61,6 +63,7 @@ math11grade/
 ├── sequences-NN-<name>.html            sequences topic, pages 00–09
 ├── composite-derivatives-NN-<name>.html  derivatives of composite functions (01 rules, 02 exercises)
 ├── geometry-NN-<name>.html              Euclidean geometry (01 loci & triangle centers, 02 circle, 03 similarity)
+├── trigonometry-NN-<name>.html          trigonometric functions (01 polar coordinates & the wheel, 02 exercises)
 ├── font-size.js                       text-size control shown on every page
 ├── README.md
 └── LICENSE                             CC0 1.0 Universal

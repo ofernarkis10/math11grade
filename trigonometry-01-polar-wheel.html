@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מערכת קוטבית, sin ו־cos והגלגל · דף לימוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same worksheet column as the rest of the site; explanation chapters with interactive SVG figures, then three graded levels of wheel problems with folding solutions */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --green:#2f7d4a; --violet:#7a4fb3;
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05);
+  --green:#6fcf8f; --violet:#b796e8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05);
+  --green:#6fcf8f; --violet:#b796e8; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 72px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav.pagetoc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav.pagetoc ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav.pagetoc a{color:var(--accent);text-decoration:none;font-weight:600}
+nav.pagetoc a:hover,nav.pagetoc a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav.pagetoc ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:center;vertical-align:middle}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+.teacher{border:1px solid var(--line);border-inline-start:4px solid var(--green);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.95rem}
+.teacher strong{color:var(--green)}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:16px}
+ol.exercises li{break-inside:avoid}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+ol.parts{list-style:hebrew;margin:4px 0 0;padding-inline-start:22px}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0;display:flex;flex-direction:column;gap:4px}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+
+/* interactive figures */
+.fig{display:flex;flex-direction:column;gap:10px;align-items:stretch;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--bg)}
+.fig-cap{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.fig svg{width:100%;height:auto;display:block;direction:ltr}
+.fig-row{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:center}
+@media (max-width:640px){.fig-row{grid-template-columns:1fr}}
+.ctl{display:flex;flex-direction:column;gap:8px}
+.ctl label{display:grid;grid-template-columns:5.5rem 1fr 4.2rem;gap:8px;align-items:center;font-weight:600;font-size:.95rem}
+.ctl input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
+.tag-c,.tag-r,.tag-s{font-weight:700}
+.tag-c{color:var(--accent)} .tag-r{color:var(--mark)} .tag-s{color:var(--violet)}
+.f.f-c{border-inline-start:4px solid var(--accent)} .f.f-r{border-inline-start:4px solid var(--mark)} .f.f-s{border-inline-start:4px solid var(--violet)}
+.readout .c{color:var(--accent)} .readout .r{color:var(--mark)} .readout .s{color:var(--violet);font-weight:600}
+.ctl-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent);margin-top:4px}
+.ctl output{font-family:var(--f-math);font-size:.9rem;direction:ltr;text-align:left}
+.readout{font-family:var(--f-math);font-size:.9rem;direction:ltr;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 12px;line-height:1.8;white-space:pre-wrap;unicode-bidi:plaintext}
+.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btns button{font:inherit;font-weight:700;font-size:.9rem;padding:6px 14px;border-radius:99px;border:1px solid var(--accent);background:var(--paper);color:var(--accent);cursor:pointer}
+.btns button:hover,.btns button:focus-visible{background:var(--accent-soft);outline:none}
+.btns label{font-size:.92rem;display:flex;gap:6px;align-items:center}
+svg text{font-family:var(--f-math);font-size:12px;fill:var(--muted)}
+svg .ax{stroke:var(--muted);stroke-width:1.2}
+svg .gr{stroke:var(--line);stroke-width:1}
+svg .acc{stroke:var(--accent);fill:none;stroke-width:2.2}
+svg .mrk{stroke:var(--mark);fill:none;stroke-width:2.2}
+svg .dash{stroke-dasharray:5 4}
+svg .grn{stroke:var(--green);fill:none;stroke-width:2.2}
+svg .vio{stroke:var(--violet);fill:none;stroke-width:2.2}
+
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media print{details{display:block} details>summary{display:none} details .sol{display:flex} .btns{display:none}}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+.m .katex{font-size:1.14em;position:relative}
+.m:has(.katex){white-space:normal}
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.1em}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · פונקציות טריגונומטריות · דף 1</span>
+  <h1>מערכת צירים קוטבית, sin ו־cos, והגלגל המסתובב</h1>
+  <p class="lead">נתחיל בדרך חדשה לתאר נקודות במישור: מרחק מהמרכז וזווית, כלומר מערכת צירים קוטבית. בעזרתה נלמד לענות על שאלה מעשית: איפה תהיה נקודה על גלגל מסתובב אחרי כמה שניות, ובאיזו מהירות היא נעה ביחס לכביש. בדרך נגדיר sin ו־cos לכל זווית ונתאר סיבוב לאורך זמן. כל הזוויות במעלות.</p>
+</header>
+
+<nav class="pagetoc" aria-label="תוכן"><strong>תוכן</strong><ol>
+  <li><a href="#polar">מערכת צירים קוטבית</a></li>
+  <li><a href="#sincos">מקוטבי לקרטזי: sin ו־cos</a></li>
+  <li><a href="#standing">מיקום של נקודה על גלגל שלא זז</a></li>
+  <li><a href="#moving">מיקום של נקודה על גלגל שזז</a></li>
+  <li><a href="#rotation">סיבוב לאורך זמן</a></li>
+  <li><a href="#why">השאלה: מהירות של נקודה על גלגל שנוסע</a></li>
+  <li><a href="#practice">תרגול (בדף נפרד)</a></li>
+  <li><a href="#summary">סיכום נוסחאות</a></li>
+  <li><a href="#graphs">נספח: הגרפים של sin ו־cos</a></li>
+</ol></nav>
+
+<!-- ============ 1. POLAR ============ -->
+<section class="ch" id="polar">
+<h2>1. מערכת צירים קוטבית</h2>
+<div class="meaning">
+<p>במערכת הצירים הרגילה (הקרטזית) מתארים נקודה בשני מספרים <span class="m">\((x, y)\)</span>: כמה ללכת ימינה וכמה למעלה. יש דרך אחרת לתאר אותה נקודה, כמו שמסבירים למישהו דרך: <strong>"פנה לכיוון מסוים ולך מרחק מסוים"</strong>.</p>
+<p>במערכת צירים קוטבית בוחרים נקודת מוצא <span class="m">\(O\)</span> (הראשית, נקראת גם <strong>הקוטב</strong>) וקרן התחלה, החלק החיובי של ציר <span class="m">\(x\)</span>. כל נקודה <span class="m">\(P\)</span> מתוארת בשני מספרים:</p>
+<p>• <span class="m">\(r\)</span>: <strong>המרחק</strong> של <span class="m">\(P\)</span> מהראשית, <span class="m">\(r = OP \ge 0\)</span>.</p>
+<p>• <span class="m">\(\theta\)</span> (תטא): <strong>הזווית</strong> בין החלק החיובי של ציר <span class="m">\(x\)</span> לבין הקטע <span class="m">\(OP\)</span>, נמדדת <strong>נגד כיוון השעון</strong>, במעלות.</p>
+<p>נכתוב <span class="m">\(P = (r,\ \theta)\)</span>, ותמיד נוסיף את סימן המעלות לזווית, כדי לא להתבלבל עם <span class="m">\((x, y)\)</span>. למשל <span class="m">\((4,\ 30^\circ)\)</span> היא הנקודה שנמצאת במרחק 4 מהראשית, על קרן שיוצאת בזווית <span class="m">\(30^\circ\)</span> מעל ציר <span class="m">\(x\)</span> החיובי.</p>
+</div>
+
+<div class="fig">
+  <span class="fig-cap">נסו בעצמכם: הזיזו את r ואת θ וראו איך משתנים x ו־y, או הזיזו את x ואת y וראו איך משתנים r ו־θ</span>
+  <div class="fig-row">
+    <svg viewBox="0 0 320 320" role="img" aria-label="מערכת צירים עם נקודה בקואורדינטות קוטביות"><g id="polG"></g></svg>
+    <div class="ctl">
+      <span class="ctl-h">קואורדינטות קוטביות</span>
+      <label>r (מרחק) <input type="range" id="polR" min="0" max="7" step="0.1" value="4"><output id="polRo">4</output></label>
+      <label>θ (זווית) <input type="range" id="polT" min="0" max="360" step="1" value="30"><output id="polTo">30°</output></label>
+      <span class="ctl-h">קואורדינטות קרטזיות</span>
+      <label>x <input type="range" id="polX" min="-7" max="7" step="0.1" value="3.5"><output id="polXo">3.46</output></label>
+      <label>y <input type="range" id="polY" min="-7" max="7" step="0.1" value="2"><output id="polYo">2.00</output></label>
+      <div class="readout" id="polOut"></div>
+    </div>
+  </div>
+</div>
+
+<h3>למה זה מכסה את כל המישור?</h3>
+<div class="meaning">
+<p>דמיינו קרן שיוצאת מהראשית ומסתובבת סיבוב שלם, מ־<span class="m">\(0^\circ\)</span> עד <span class="m">\(360^\circ\)</span>. בדרך היא עוברת דרך כל נקודה במישור. על כל קרן, המרחק <span class="m">\(r\)</span> קובע איפה בדיוק הנקודה. לכן:</p>
+<p>• כל נקודה פרט לראשית מתוארת <strong>בדיוק פעם אחת</strong> על ידי <span class="m">\(r \gt 0\)</span> ו־<span class="m">\(0^\circ \le \theta \lt 360^\circ\)</span>.</p>
+<p>• הראשית היא <span class="m">\(r = 0\)</span>, עם כל זווית שהיא.</p>
+<p>• <strong>הוספת סיבוב שלם לא משנה את הנקודה:</strong> <span class="m">\((r,\ \theta)\)</span>, <span class="m">\((r,\ \theta + 360^\circ)\)</span> ו־<span class="m">\((r,\ \theta - 360^\circ)\)</span> הן אותה נקודה. למשל <span class="m">\((2,\ 400^\circ) = (2,\ 40^\circ)\)</span>.</p>
+<p>• <strong>זווית שלילית</strong> פירושה סיבוב עם כיוון השעון: <span class="m">\((3,\ -90^\circ) = (3,\ 270^\circ)\)</span>, נקודה על ציר <span class="m">\(y\)</span> השלילי.</p>
+<p>העובדה שסיבוב שלם מחזיר לאותה נקודה היא בדיוק מה שקורה לגלגל: אחרי סיבוב אחד, כל נקודה על הגלגל חוזרת למקומה. לכן מערכת קוטבית מתאימה כל כך לתיאור סיבוב.</p>
+</div>
+<div class="example"><span class="tag">דוגמה: נקודות על מעגל ברדיוס 3</span>
+<p><span class="m">\((3,\ 0^\circ)\)</span> על ציר <span class="m">\(x\)</span> החיובי, כלומר <span class="m">\((x,y) = (3, 0)\)</span>. &nbsp; <span class="m">\((3,\ 90^\circ)\)</span> למעלה: <span class="m">\((0, 3)\)</span>. &nbsp; <span class="m">\((3,\ 180^\circ)\)</span> משמאל: <span class="m">\((-3, 0)\)</span>. &nbsp; <span class="m">\((3,\ 270^\circ)\)</span> למטה: <span class="m">\((0, -3)\)</span>.</p>
+<p>כל הנקודות עם <span class="m">\(r = 3\)</span> יוצרות מעגל ברדיוס 3 סביב הראשית. במערכת קוטבית המשוואה של המעגל הזה פשוטה מאוד: <span class="m">\(r = 3\)</span>. בקרטזית היא <span class="m">\(x^2 + y^2 = 9\)</span>.</p>
+</div>
+</section>
+
+<!-- ============ 2. SIN COS ============ -->
+<section class="ch" id="sincos">
+<h2>2. מקוטבי לקרטזי: הגדרת sin ו־cos לכל זווית</h2>
+<div class="meaning">
+<p><strong>מה שכבר ידוע (זווית חדה):</strong> אם <span class="m">\(0^\circ \lt \theta \lt 90^\circ\)</span>, הנקודה <span class="m">\(P = (x, y)\)</span>, ההיטל שלה על ציר <span class="m">\(x\)</span> והראשית יוצרים משולש ישר זווית. היתר הוא <span class="m">\(r\)</span>, הניצב שליד הזווית הוא <span class="m">\(x\)</span>, והניצב שמול הזווית הוא <span class="m">\(y\)</span>. לכן:</p>
+<p style="text-align:center"><span class="m">\(\cos\theta = \dfrac{x}{r}, \qquad \sin\theta = \dfrac{y}{r}\)</span></p>
+<p><strong>ההרחבה:</strong> המשולש נעלם כשהזווית גדולה מ־<span class="m">\(90^\circ\)</span>, אבל הנוסחאות האלה ממשיכות להיות הגיוניות. לכן <strong>מגדירים</strong> אותן לכל זווית:</p>
+</div>
+<div class="formulas">
+  <div class="f"><b>הגדרה לכל זווית θ</b><span class="m">\(\cos\theta = \dfrac{x}{r},\quad \sin\theta = \dfrac{y}{r}\)</span></div>
+  <div class="f"><b>מקוטבי לקרטזי</b><span class="m">\(x = r\cos\theta,\quad y = r\sin\theta\)</span></div>
+  <div class="f"><b>מקרטזי לקוטבי</b><span class="m">\(r = \sqrt{x^2 + y^2},\quad \tan\theta = \dfrac{y}{x}\)</span></div>
+  <div class="f"><b>מעגל היחידה (r = 1)</b><span class="m">\(P = (\cos\theta,\ \sin\theta)\)</span></div>
+  <div class="f"><b>זהות פיתגורס</b><span class="m">\(\sin^2\theta + \cos^2\theta = 1\)</span></div>
+  <div class="f"><b>מחזוריות</b><span class="m">\(\sin(\theta + 360^\circ) = \sin\theta\)</span></div>
+</div>
+<div class="meaning">
+<p><strong>במילים:</strong> <span class="m">\(\cos\theta\)</span> הוא שיעור ה־<span class="m">\(x\)</span> של הנקודה על מעגל היחידה, ו־<span class="m">\(\sin\theta\)</span> הוא שיעור ה־<span class="m">\(y\)</span>. במעגל ברדיוס <span class="m">\(r\)</span> פשוט מכפילים ב־<span class="m">\(r\)</span>.</p>
+<p><strong>סימנים לפי רביע:</strong> הסימן של <span class="m">\(\cos\theta\)</span> הוא הסימן של <span class="m">\(x\)</span>, והסימן של <span class="m">\(\sin\theta\)</span> הוא הסימן של <span class="m">\(y\)</span>.</p>
+</div>
+<div class="tablebox"><table>
+  <tr><th>רביע</th><th>זוויות</th><th>x · cos</th><th>y · sin</th><th>קשר לזווית חדה α</th></tr>
+  <tr><td>I</td><td><span class="m">\(0^\circ\)</span>–<span class="m">\(90^\circ\)</span></td><td>+</td><td>+</td><td><span class="m">\(\theta = \alpha\)</span></td></tr>
+  <tr><td>II</td><td><span class="m">\(90^\circ\)</span>–<span class="m">\(180^\circ\)</span></td><td>−</td><td>+</td><td><span class="m">\(\sin(180^\circ - \alpha) = \sin\alpha,\ \cos(180^\circ - \alpha) = -\cos\alpha\)</span></td></tr>
+  <tr><td>III</td><td><span class="m">\(180^\circ\)</span>–<span class="m">\(270^\circ\)</span></td><td>−</td><td>−</td><td><span class="m">\(\sin(180^\circ + \alpha) = -\sin\alpha,\ \cos(180^\circ + \alpha) = -\cos\alpha\)</span></td></tr>
+  <tr><td>IV</td><td><span class="m">\(270^\circ\)</span>–<span class="m">\(360^\circ\)</span></td><td>+</td><td>−</td><td><span class="m">\(\sin(360^\circ - \alpha) = -\sin\alpha,\ \cos(360^\circ - \alpha) = \cos\alpha\)</span></td></tr>
+</table></div>
+<div class="meaning"><p><strong>ערכים שכדאי להכיר</strong> (בעזרתם וטבלת הרביעים מקבלים את כל הזוויות "העגולות"):</p></div>
+<div class="tablebox"><table>
+  <tr><th>θ</th><td><span class="m">\(0^\circ\)</span></td><td><span class="m">\(30^\circ\)</span></td><td><span class="m">\(45^\circ\)</span></td><td><span class="m">\(60^\circ\)</span></td><td><span class="m">\(90^\circ\)</span></td><td><span class="m">\(180^\circ\)</span></td><td><span class="m">\(270^\circ\)</span></td><td><span class="m">\(360^\circ\)</span></td></tr>
+  <tr><th>cos θ</th><td>1</td><td><span class="m">\(\frac{\sqrt3}{2}\)</span></td><td><span class="m">\(\frac{\sqrt2}{2}\)</span></td><td><span class="m">\(\frac12\)</span></td><td>0</td><td><span class="m">\(-1\)</span></td><td>0</td><td>1</td></tr>
+  <tr><th>sin θ</th><td>0</td><td><span class="m">\(\frac12\)</span></td><td><span class="m">\(\frac{\sqrt2}{2}\)</span></td><td><span class="m">\(\frac{\sqrt3}{2}\)</span></td><td>1</td><td>0</td><td><span class="m">\(-1\)</span></td><td>0</td></tr>
+</table></div>
+<div class="example"><span class="tag">דוגמה 1: מקוטבי לקרטזי</span>
+<p>מצאו את <span class="m">\((x, y)\)</span> של הנקודה <span class="m">\((6,\ 150^\circ)\)</span>.</p>
+<p><span class="m">\(x = 6\cos150^\circ = 6 \cdot (-\cos30^\circ) = -3\sqrt3 \approx -5.20\)</span>, &nbsp; <span class="m">\(y = 6\sin150^\circ = 6 \cdot \sin30^\circ = 3\)</span>.</p>
+<p>בדיקה: הזווית ברביע II, ובאמת <span class="m">\(x \lt 0,\ y \gt 0\)</span>.</p>
+</div>
+<div class="example"><span class="tag">דוגמה 2: מקרטזי לקוטבי</span>
+<p>מצאו את הקואורדינטות הקוטביות של <span class="m">\((-3, 3)\)</span> ושל <span class="m">\((1, -\sqrt3)\)</span>.</p>
+<p><span class="m">\((-3,3)\)</span>: <span class="m">\(r = \sqrt{9+9} = 3\sqrt2\)</span>. <span class="m">\(\tan\theta = \frac{3}{-3} = -1\)</span>. הנקודה ברביע II, ולכן <span class="m">\(\theta = 180^\circ - 45^\circ = 135^\circ\)</span>. התשובה: <span class="m">\((3\sqrt2,\ 135^\circ)\)</span>.</p>
+<p><span class="m">\((1,-\sqrt3)\)</span>: <span class="m">\(r = \sqrt{1+3} = 2\)</span>. <span class="m">\(\tan\theta = -\sqrt3\)</span>. הנקודה ברביע IV, ולכן <span class="m">\(\theta = 360^\circ - 60^\circ = 300^\circ\)</span>. התשובה: <span class="m">\((2,\ 300^\circ)\)</span>.</p>
+</div>
+<div class="note"><strong>טעות נפוצה:</strong> המחשבון נותן ל־<span class="m">\(\tan^{-1}(-1)\)</span> את התשובה <span class="m">\(-45^\circ\)</span>, כלומר זווית ברביע IV. אבל הנקודה <span class="m">\((-3,3)\)</span> ברביע II. תמיד קובעים קודם את הרביע לפי הסימנים של <span class="m">\(x\)</span> ו־<span class="m">\(y\)</span>, ורק אחר כך את הזווית. כמו כן, ודאו שהמחשבון במצב מעלות (DEG).</div>
+</section>
+
+<!-- ============ 3. POINT ON A STANDING WHEEL ============ -->
+<section class="ch" id="standing">
+<h2>3. מיקום של נקודה על גלגל שלא זז</h2>
+<div class="meaning">
+<p>נתחיל מהמקרה הפשוט: האופניים הפוכות, והציר של הגלגל קבוע במקום. נשים את הראשית בדיוק על הציר. הגלגל יכול להסתובב, אבל המרכז שלו לא זז.</p>
+<p><strong>הוונטיל בקואורדינטות קוטביות.</strong> המרחק של הוונטיל מהציר הוא תמיד הרדיוס <span class="m">\(r\)</span>, והזווית שלו <span class="m">\(\theta\)</span> נמדדת מהחלק החיובי של ציר <span class="m">\(x\)</span>, כמו בפרק 1. לכן הוונטיל הוא הנקודה <span class="m">\((r,\ \theta)\)</span>, ולפי פרק 2:</p>
+<p style="text-align:center"><span class="m">\(x = r\cos\theta, \qquad y = r\sin\theta\)</span></p>
+<p><strong>מה קורה כשמסובבים את הגלגל?</strong> אם הוונטיל התחיל בזווית <span class="m">\(\theta_0\)</span> ומסובבים את הגלגל בזווית <span class="m">\(\alpha\)</span> נגד כיוון השעון, הזווית שלו גדלה ב־<span class="m">\(\alpha\)</span>. סיבוב עם כיוון השעון מקטין אותה:</p>
+<p style="text-align:center"><span class="m">\(\theta = \theta_0 + \alpha\)</span> &nbsp; (נגד כיוון השעון) &nbsp;&nbsp;&nbsp; <span class="m">\(\theta = \theta_0 - \alpha\)</span> &nbsp; (עם כיוון השעון)</p>
+<p>הרדיוס לא משתנה: כל הנקודות על הגלגל מסתובבות באותה זווית, וכל אחת שומרת על המרחק שלה מהציר. נקודה על החישור, קרוב יותר למרכז, היא פשוט נקודה עם <span class="m">\(r\)</span> קטן יותר.</p>
+</div>
+<div class="fig" id="figStand">
+  <span class="fig-cap">סימולציה: גלגל ברדיוס 30 ס"מ שהציר שלו קבוע. בחרו איפה הנקודה מתחילה, וסובבו את הגלגל</span>
+  <div class="fig-row">
+    <svg viewBox="0 0 320 320" role="img" aria-label="גלגל עם ציר קבוע ונקודה מסומנת שמסתובבת איתו"><g id="stG"></g></svg>
+    <div class="ctl">
+      <label>θ₀ (התחלה) <input type="range" id="stT0" min="0" max="345" step="15" value="0"><output id="stT0o">0°</output></label>
+      <label>α (סיבוב) <input type="range" id="stA" min="-360" max="360" step="5" value="120"><output id="stAo">120°</output></label>
+      <label>מרחק מהציר <input type="range" id="stD" min="0" max="30" step="1" value="30"><output id="stDo">30</output></label>
+      <div class="readout" id="stOut"></div>
+    </div>
+  </div>
+  <p style="font-size:.9rem;color:var(--muted)">α חיובי: סיבוב נגד כיוון השעון. α שלילי: עם כיוון השעון. העיגול הריק מסמן את מקום ההתחלה, והקשת הכתומה את הסיבוב. "מרחק מהציר" 30 הוא הוונטיל; ערך קטן יותר הוא נקודה על החישור.</p>
+</div>
+<div class="example"><span class="tag">דוגמה פתורה</span>
+<p>גלגל ברדיוס 30 ס"מ, והוונטיל מתחיל ב־<span class="m">\((30, 0)\)</span>, כלומר <span class="m">\(\theta_0 = 0^\circ\)</span>.</p>
+<p><strong>א. מסובבים את הגלגל <span class="m">\(135^\circ\)</span> נגד כיוון השעון.</strong> <span class="m">\(\theta = 135^\circ\)</span> (רביע II). <span class="m">\(x = 30\cos135^\circ = -15\sqrt2 \approx -21.21\)</span>, <span class="m">\(y = 30\sin135^\circ = 15\sqrt2 \approx 21.21\)</span>.</p>
+<p><strong>ב. מסובבים <span class="m">\(90^\circ\)</span> עם כיוון השעון (מההתחלה).</strong> <span class="m">\(\theta = 0^\circ - 90^\circ = -90^\circ \equiv 270^\circ\)</span>. הוונטיל ב־<span class="m">\((0,\ -30)\)</span>, בתחתית הגלגל.</p>
+<p><strong>ג. מסובבים <span class="m">\(480^\circ\)</span> נגד כיוון השעון.</strong> <span class="m">\(480^\circ = 360^\circ + 120^\circ\)</span>: סיבוב שלם ועוד <span class="m">\(120^\circ\)</span>. <span class="m">\(x = 30\cos120^\circ = -15\)</span>, <span class="m">\(y = 30\sin120^\circ \approx 25.98\)</span>.</p>
+<p><strong>ד. נקודה על החישור, 10 ס"מ מהציר, באותו קו כמו הוונטיל, אחרי הסיבוב של סעיף א׳.</strong> אותה זווית, <span class="m">\(r = 10\)</span>: <span class="m">\((10\cos135^\circ,\ 10\sin135^\circ) \approx (-7.07,\ 7.07)\)</span>.</p>
+</div>
+<div class="note"><strong>שני דברים שעוד חסרים כדי לתאר גלגל של אופניים שנוסעות:</strong> המרכז של הגלגל נוסע (סעיף 4), והזווית משתנה עם הזמן (סעיף 5).</div>
+</section>
+
+<!-- ============ 4. POINT ON A MOVING WHEEL ============ -->
+<section class="ch" id="moving">
+<h2>4. מיקום של נקודה על גלגל שזז</h2>
+<div class="meaning">
+<p>בפרק 3 מצאנו את מיקום הנקודה כשמרכז הגלגל עומד במקום, בראשית. אבל הגלגל של האופניים לא עומד במקום: המרכז שלו נוסע. איך מוצאים את מיקום הנקודה כשהמרכז נמצא במקום אחר, ואפילו זז?</p>
+<p>הרעיון: <strong>מפרקים את הבעיה לשתי בעיות פשוטות</strong>, פותרים כל אחת לחוד, ומחברים.</p>
+<p><span class="tag-c">בעיה 1: איפה המרכז?</span> מרכז הגלגל של רכב שנוסע ישר נע בקו ישר, בגובה <span class="m">\(r\)</span> מעל הכביש. אם הוא התקדם מרחק <span class="m">\(d\)</span>, הוא נמצא ב־<span class="m">\((d,\ r)\)</span>. אם הוא נוסע במהירות קבועה <span class="m">\(v\)</span>, אחרי <span class="m">\(t\)</span> שניות <span class="m">\(d = vt\)</span> והמרכז ב־<span class="m">\((vt,\ r)\)</span>. זו תנועה לינארית רגילה, בלי טריגונומטריה בכלל.</p>
+<p><span class="tag-r">בעיה 2: איפה הנקודה ביחס למרכז?</span> מנקודת המבט של מי שיושב על הציר, הנקודה פשוט נמצאת על מעגל ברדיוס <span class="m">\(r\)</span> סביבו, בזווית <span class="m">\(\theta\)</span>. זה בדיוק מה שלמדנו בפרקים 2 ו־3, רק שעכשיו המרכז משמש "ראשית": הנקודה נמצאת ב־<span class="m">\((r\cos\theta,\ r\sin\theta)\)</span> <em>ביחס למרכז</em>.</p>
+<p><span class="tag-s">הסכום: המיקום במרחב.</span> כדי לקבל את מיקום הנקודה ביחס לקרקע, מחברים את שתי התוצאות: רכיב <span class="m">\(x\)</span> לרכיב <span class="m">\(x\)</span> ורכיב <span class="m">\(y\)</span> לרכיב <span class="m">\(y\)</span>.</p>
+</div>
+<div class="formulas">
+  <div class="f f-c"><b>בעיה 1: המרכז</b><span class="m">\(C = (d,\ r)\)</span>, ובמהירות קבועה <span class="m">\(d = vt\)</span></div>
+  <div class="f f-r"><b>בעיה 2: הנקודה ביחס למרכז</b><span class="m">\((r\cos\theta,\ r\sin\theta)\)</span></div>
+  <div class="f f-s"><b>סכום: הנקודה ביחס לקרקע</b><span class="m">\(P = (d + r\cos\theta,\ \ r + r\sin\theta)\)</span></div>
+</div>
+<div class="example"><span class="tag">דוגמה פתורה: מחברים שני חישובים</span>
+<p>גלגל ברדיוס 0.3 מ׳ התקדם 2 מ׳ על הכביש (המרכז התחיל מעל הראשית). נקודה על הגלגל נמצאת עכשיו בזווית <span class="m">\(150^\circ\)</span> ביחס למרכז. איפה היא?</p>
+<p><span class="tag-c">מרכז:</span> <span class="m">\(C = (2,\ 0.3)\)</span>.</p>
+<p><span class="tag-r">ביחס למרכז:</span> <span class="m">\((0.3\cos150^\circ,\ 0.3\sin150^\circ) = (-0.15\sqrt3,\ 0.15) \approx (-0.26,\ 0.15)\)</span>.</p>
+<p><span class="tag-s">סכום:</span> <span class="m">\(P \approx (2 - 0.26,\ 0.3 + 0.15) = (1.74,\ 0.45)\)</span>. הנקודה 45 ס"מ מעל הכביש, קצת מאחורי המרכז.</p>
+<p><strong>ואם המרכז נוסע ב־2 מ׳ לשנייה?</strong> אחרי 1.5 שניות <span class="m">\(d = 2 \cdot 1.5 = 3\)</span>. אם באותו רגע הנקודה בתחתית הגלגל (<span class="m">\(\theta = 270^\circ\)</span>), היא ב־<span class="m">\((3 + 0,\ 0.3 - 0.3) = (3,\ 0)\)</span>, על הכביש.</p>
+</div>
+<div class="fig" id="figSplit">
+  <span class="fig-cap">סימולציה: <span style="color:var(--accent)">כחול</span> = תנועת המרכז · <span style="color:var(--mark)">כתום</span> = הנקודה ביחס למרכז · <span style="color:var(--violet)">סגול</span> = הסכום, מיקום הנקודה ביחס לקרקע (והמסלול שלה)</span>
+  <svg viewBox="0 55 640 112" role="img" aria-label="גלגל שמרכזו נע בקו ישר ונקודה שמסתובבת עליו, עם וקטור המרכז, וקטור הסיבוב ווקטור הסכום"><g id="spG"></g></svg>
+  <div class="ctl">
+    <label><span style="color:var(--accent)">v (מרכז)</span> <input type="range" id="spV" min="0" max="1.2" step="0.05" value="0.8"><output id="spVo"></output></label>
+    <label><span style="color:var(--mark)">ω (סיבוב)</span> <input type="range" id="spW" min="-360" max="360" step="15" value="-90"><output id="spWo"></output></label>
+    <label><span style="color:var(--mark)">θ₀ (התחלה)</span> <input type="range" id="spT0" min="0" max="345" step="15" value="90"><output id="spT0o"></output></label>
+    <label>t (זמן) <input type="range" id="spT" min="0" max="12" step="0.05" value="0"><output id="spTo"></output></label>
+    <div class="btns">
+      <button type="button" id="spPlay">▶ הפעלה</button>
+      <button type="button" id="spReset">↺ t = 0</button>
+      <label><input type="checkbox" id="spRoll"> גלגול בלי החלקה (ω נקבע לפי v)</label>
+      <label><input type="checkbox" id="spTrace" checked> מסלול</label>
+    </div>
+    <div class="readout" id="spOut"></div>
+  </div>
+  <p style="font-size:.9rem;color:var(--muted)">רדיוס הגלגל 1 (יחידות אורך כלשהן). את מהירות הסיבוב ω נגדיר מסודר בסעיף 5; כאן היא קובעת כמה מעלות הגלגל מסתובב בכל שנייה. נסו: <strong>v = 0</strong> משאיר את המרכז במקום (רק סיבוב). <strong>ω = 0</strong> נותן תנועה לינארית בלבד: הנקודה נעה בקו ישר עם המרכז. ותיבת הסימון "גלגול בלי החלקה" מראה את המקרה של גלגל שמתגלגל על הכביש (רמה ג׳ בדף התרגול).</p>
+</div>
+<div class="note"><strong>מה חסר?</strong> בדוגמה נתנו את הזווית <span class="m">\(\theta\)</span> ישירות. כדי לדעת איפה הנקודה <em>בכל רגע</em> צריך לדעת איך הזווית משתנה עם הזמן. זה הנושא של סעיף 5.</div>
+</section>
+
+<!-- ============ 5. ROTATION ============ -->
+<section class="ch" id="rotation">
+<h2>5. סיבוב לאורך זמן: מהירות זוויתית</h2>
+<div class="meaning">
+<p>גלגל שמסתובב בקצב קבוע מוסיף לזווית אותו מספר מעלות בכל שנייה. הקצב הזה נקרא <strong>מהירות זוויתית</strong> ומסומן <span class="m">\(\omega\)</span> (אומגה). היחידה: מעלות לשנייה, <span class="m">\(^\circ/\text{s}\)</span>.</p>
+<p>בסעיף 3 ראינו שאחרי סיבוב בזווית <span class="m">\(\alpha\)</span> הזווית של הנקודה היא <span class="m">\(\theta_0 + \alpha\)</span>. כשהגלגל מסתובב בקצב קבוע, אחרי <span class="m">\(t\)</span> שניות הוא הסתובב <span class="m">\(\alpha = \omega t\)</span>.</p>
+<p>אם בזמן <span class="m">\(t = 0\)</span> הנקודה נמצאת בזווית <span class="m">\(\theta_0\)</span>, אחרי <span class="m">\(t\)</span> שניות היא נמצאת בזווית:</p>
+<p style="text-align:center"><span class="m">\(\theta(t) = \theta_0 + \omega t\)</span> &nbsp; (נגד כיוון השעון) &nbsp;&nbsp;&nbsp; <span class="m">\(\theta(t) = \theta_0 - \omega t\)</span> &nbsp; (עם כיוון השעון)</p>
+<p>והמיקום שלה, אם מרכז הגלגל בראשית:</p>
+<p style="text-align:center"><span class="m">\(x(t) = r\cos(\theta_0 + \omega t), \qquad y(t) = r\sin(\theta_0 + \omega t)\)</span></p>
+<p>אם מרכז הגלגל בנקודה <span class="m">\((a, b)\)</span>, מוסיפים את המרכז, כמו בסעיף 4: <span class="m">\(x = a + r\cos\theta,\ \ y = b + r\sin\theta\)</span>.</p>
+</div>
+<div class="formulas">
+  <div class="f"><b>זמן מחזור (סיבוב אחד)</b><span class="m">\(T = \dfrac{360^\circ}{\omega}\)</span></div>
+  <div class="f"><b>מסל"ד למעלות בשנייה</b><span class="m">\(1\ \text{rpm} = \dfrac{360^\circ}{60\ \text{s}} = 6^\circ/\text{s}\)</span></div>
+  <div class="f"><b>הזווית אחרי זמן t</b><span class="m">\(\theta = \theta_0 + \omega t\)</span>, ואז מורידים כפולות של <span class="m">\(360^\circ\)</span></div>
+</div>
+<div class="fig" id="figRot">
+  <span class="fig-cap">סימולציה: נקודה על גלגל ברדיוס 30 ס"מ שמסתובב במקום. קבעו מהירות וזווית התחלה, והזיזו את הזמן או הפעילו</span>
+  <div class="fig-row">
+    <svg viewBox="0 0 320 320" role="img" aria-label="גלגל מסתובב עם נקודה שזזה לפי הזמן"><g id="rotG"></g></svg>
+    <div class="ctl">
+      <label>ω (מהירות) <input type="range" id="rotW" min="-180" max="180" step="5" value="60"><output id="rotWo">60°/s</output></label>
+      <label>θ₀ (התחלה) <input type="range" id="rotT0" min="0" max="345" step="15" value="0"><output id="rotT0o">0°</output></label>
+      <label>t (זמן) <input type="range" id="rotTime" min="0" max="12" step="0.05" value="2"><output id="rotTimeo">2.00 s</output></label>
+      <div class="btns">
+        <button type="button" id="rotPlay">▶ הפעלה</button>
+        <button type="button" id="rotReset">↺ t = 0</button>
+      </div>
+      <div class="readout" id="rotOut"></div>
+    </div>
+  </div>
+  <p style="font-size:.9rem;color:var(--muted)">מהירות חיובית: נגד כיוון השעון. מהירות שלילית: עם כיוון השעון. הקשת הכתומה מראה את הזווית שהגלגל עבר מאז <span class="m">\(t = 0\)</span>. ערכי ההתחלה הם הנתונים של הדוגמה הפתורה שמתחת.</p>
+</div>
+<div class="example"><span class="tag">דוגמה פתורה: הבעיה הראשונה</span>
+<p>גלגל ברדיוס 30 ס"מ מסתובב במקום (האופניים הפוכים) נגד כיוון השעון במהירות <span class="m">\(60^\circ\)</span> לשנייה. בהתחלה הוונטיל בנקודה <span class="m">\((30, 0)\)</span>, כלומר <span class="m">\(\theta_0 = 0^\circ\)</span>. איפה הוא אחרי 2 שניות?</p>
+<p><strong>שלב 1, הזווית:</strong> <span class="m">\(\theta = 0^\circ + 60 \cdot 2 = 120^\circ\)</span>.</p>
+<p><strong>שלב 2, מקוטבי לקרטזי:</strong> <span class="m">\(x = 30\cos120^\circ = 30 \cdot (-\tfrac12) = -15\)</span>, &nbsp; <span class="m">\(y = 30\sin120^\circ = 30 \cdot \tfrac{\sqrt3}{2} = 15\sqrt3 \approx 25.98\)</span>.</p>
+<p><strong>תשובה:</strong> הוונטיל בנקודה <span class="m">\((-15,\ 25.98)\)</span>, כלומר 15 ס"מ משמאל למרכז וכ־26 ס"מ מעליו. בקוטבית: <span class="m">\((30,\ 120^\circ)\)</span>.</p>
+</div>
+<div class="note"><strong>שלושת השלבים בכל בעיה:</strong> (1) מחשבים את הזווית בזמן הנתון, (2) מורידים סיבובים שלמים (כפולות של <span class="m">\(360^\circ\)</span>), (3) מחשבים <span class="m">\(x = r\cos\theta\)</span> ו־<span class="m">\(y = r\sin\theta\)</span> ומוסיפים את מיקום המרכז אם הוא לא בראשית.</div>
+<div class="example"><span class="tag">דוגמה פתורה 2: מרכז זז וגלגל מסתובב (סעיף 4 + סעיף 5)</span>
+<p>מרכז של גלגל ברדיוס 0.3 מ׳ מתחיל ב־<span class="m">\((0,\ 0.3)\)</span> ונע ימינה במהירות 2 מ׳ לשנייה. הגלגל מסתובב עם כיוון השעון במהירות <span class="m">\(180^\circ/\text{s}\)</span>, ונקודה מסומנת מתחילה בראש הגלגל (<span class="m">\(\theta_0 = 90^\circ\)</span>). איפה הנקודה אחרי 0.5 שנייה ואחרי שנייה?</p>
+<p><strong>t = 0.5:</strong> <span class="tag-c">מרכז:</span> <span class="m">\((2 \cdot 0.5,\ 0.3) = (1,\ 0.3)\)</span>. <span class="tag-r">ביחס למרכז:</span> <span class="m">\(\theta = 90^\circ - 180 \cdot 0.5 = 0^\circ\)</span>, כלומר <span class="m">\((0.3,\ 0)\)</span>. <span class="tag-s">סכום:</span> <span class="m">\((1.3,\ 0.3)\)</span>.</p>
+<p><strong>t = 1:</strong> <span class="tag-c">מרכז:</span> <span class="m">\((2,\ 0.3)\)</span>. <span class="tag-r">ביחס למרכז:</span> <span class="m">\(\theta = 90^\circ - 180 = -90^\circ\)</span>, כלומר <span class="m">\((0,\ -0.3)\)</span>. <span class="tag-s">סכום:</span> <span class="m">\((2,\ 0)\)</span>: הנקודה נוגעת בקרקע.</p>
+<p>שימו לב: בדוגמה הזו הגלגל <strong>מחליק</strong>, כי המהירות והסיבוב נבחרו בנפרד. ברמה ג׳ בדף התרגול נוסיף את הקשר בין <span class="m">\(v\)</span> ל־<span class="m">\(\omega\)</span> שמתקבל כשהגלגל מתגלגל בלי להחליק.</p>
+</div>
+
+</section>
+
+<!-- ============ 6. THE QUESTION ============ -->
+<section class="ch" id="why">
+<h2>6. השאלה שנרצה ללמוד לענות עליה: באיזו מהירות נעה נקודה על גלגל שנוסע ומסתובב?</h2>
+<div class="meaning">
+<p>בסעיפים 3–5 למדנו למצוא, בכל רגע, את <strong>המיקום</strong> של נקודה על גלגל שנוסע ומסתובב: מפרקים לתנועת המרכז ולמיקום על הגלגל, והזווית משתנה לפי <span class="m">\(\theta = \theta_0 + \omega t\)</span>. נשארה השאלה המעניינת ביותר, ואותה נרצה ללמוד לפתור:</p>
+<p>על גלגל של אופניים יש ונטיל (הפתח שדרכו מנפחים את הצמיג). האופניים נוסעים ישר במהירות קבועה <span class="m">\(v\)</span>. <strong>באיזו מהירות הוונטיל נע <em>ביחס לכביש</em>?</strong> האם הוא נע באותה מהירות כמו האופניים? האם המהירות שלו קבועה?</p>
+<p>התשובה מפתיעה: כשהוונטיל נמצא למטה, צמוד לכביש, הוא <strong>עומד במקום</strong> לרגע. כשהוא למעלה, הוא נע <strong>פי 2</strong> ממהירות האופניים. הפעילו את ההמחשה ושימו לב: בתחתית המסלול הוונטיל כמעט נעצר, ובראש המסלול הוא "טס" קדימה.</p>
+<p><strong>הדרך לתשובה:</strong> בדיוק כמו במיקום, נפרק גם את המהירות לשני חלקים ונחבר: <span class="tag-c">מהירות המרכז</span> (<span class="m">\(v\)</span>, ימינה) ועוד <span class="tag-r">מהירות הסיבוב סביב המרכז</span> (משיקה למעגל). בדף התרגול: ברמה א׳ נתרגל מיקום על גלגל שמסתובב במקום, ברמה ב׳ נלמד לחשב את מהירות הסיבוב, וברמה ג׳ נחבר הכול ונענה על השאלה.</p>
+</div>
+<div class="fig" id="figRoll">
+  <span class="fig-cap">המחשה: גלגל מתגלגל ימינה. הנקודה הכתומה היא הוונטיל, והקו שהיא משרטטת נקרא ציקלואידה</span>
+  <svg viewBox="0 0 640 160" role="img" aria-label="גלגל מתגלגל על קו הקרקע עם מסלול הוונטיל וחיצי מהירות">
+    <g id="rollG"></g>
+  </svg>
+  <div class="btns">
+    <button type="button" id="rollPlay">▶ הפעלה</button>
+    <button type="button" id="rollReset">↺ מההתחלה</button>
+    <label><input type="checkbox" id="rollVec"> חיצי מהירות (מרכז, למעלה, בצדדים)</label>
+    <label><input type="checkbox" id="rollVvec"> חץ המהירות של הוונטיל</label>
+    <label><input type="checkbox" id="rollTrace" checked> מסלול</label>
+  </div>
+  <div class="ctl"><label>זווית גלגול <input type="range" id="rollA" min="0" max="720" step="1" value="0"><output id="rollAo">0°</output></label></div>
+  <div class="readout" id="rollOut"></div>
+</div>
+<div class="teacher"><strong>הצעה להוראה:</strong> לפני שמתחילים לתרגל, אפשר לשאול את הכיתה "מי זז מהר יותר ביחס לכביש: החלק העליון של הצמיג או החלק התחתון?", לאסוף ניחושים, ולחזור לשאלה בסוף רמה ג׳ בדף התרגול. סמנו את "חיצי מהירות" כדי לראות את המהירות של שלוש נקודות (למעלה, בצדדים ולמטה), ואת "חץ המהירות של הוונטיל" כדי לעקוב אחרי הוונטיל עצמו.</div>
+</section>
+
+<!-- ============ LINK TO EXERCISES ============ -->
+<section class="ch" id="practice">
+<h2>תרגול</h2>
+<div class="meaning">
+<p>השאלות לתרגול נמצאות בדף נפרד, בשלוש רמות: <strong>רמה א׳</strong> נקודה על גלגל שמסתובב במקום, <strong>רמה ב׳</strong> גלגל ענק, דרך ומהירות, ו<strong>רמה ג׳</strong> גלגל שמתגלגל על הכביש, שבה עונים על השאלה מסעיף 6.</p>
+<p><a class="back" href="trigonometry-02-wheel-exercises.html">← לדף התרגול: 21 שאלות עם פתרונות</a></p>
+</div>
+</section>
+
+<!-- ============ SUMMARY ============ -->
+<section class="ch" id="summary">
+<h2>סיכום נוסחאות</h2>
+<div class="formulas">
+  <div class="f"><b>קוטבי ← קרטזי</b><span class="m">\(x = r\cos\theta,\ y = r\sin\theta\)</span></div>
+  <div class="f"><b>קרטזי ← קוטבי</b><span class="m">\(r = \sqrt{x^2+y^2},\ \tan\theta = \frac{y}{x}\)</span> + בדיקת רביע</div>
+  <div class="f"><b>זווית בזמן t</b><span class="m">\(\theta = \theta_0 \pm \omega t\)</span></div>
+  <div class="f"><b>מרכז בנקודה (a, b)</b><span class="m">\(x = a + r\cos\theta,\ y = b + r\sin\theta\)</span></div>
+  <div class="f"><b>מחזור והמרה</b><span class="m">\(T = \frac{360^\circ}{\omega},\ 1\,\text{rpm} = 6^\circ/\text{s}\)</span></div>
+  <div class="f"><b>קשת ומהירות</b><span class="m">\(s = 2\pi r\frac{\Delta\theta}{360^\circ},\ v = 2\pi r\frac{\omega}{360^\circ}\)</span></div>
+  <div class="f"><b>גלגל מתגלגל (ונטיל מתחיל למטה)</b><span class="m">\(X = vt - r\sin\omega t,\ Y = r - r\cos\omega t\)</span></div>
+  <div class="f"><b>מהירות ביחס לכביש</b><span class="m">\(|V| = v\sqrt{2+2\sin\theta}\)</span>: 0 למטה, 2v למעלה</div>
+</div>
+</section>
+
+<!-- ============ APPENDIX: GRAPHS ============ -->
+<section class="ch" id="graphs">
+<h2>נספח: הגרפים של sin ו־cos</h2>
+<p class="lead">תוספת להעשרה. לא צריך אותה כדי לפתור את בעיות הגלגל.</p>
+<div class="meaning">
+<p>כשהזווית גדלה, הנקודה על מעגל היחידה מסתובבת. נשרטט את הגובה שלה (<span class="m">\(\sin\theta\)</span>) ואת המרחק האופקי שלה מהמרכז (<span class="m">\(\cos\theta\)</span>) כפונקציות של הזווית. כך מקבלים "גלים".</p>
+</div>
+<div class="fig">
+  <span class="fig-cap">הזיזו את θ: הנקודה על המעגל והנקודות על שני הגרפים זזות יחד</span>
+  <svg viewBox="0 0 640 220" role="img" aria-label="מעגל היחידה לצד הגרפים של סינוס וקוסינוס מ־0 עד 720 מעלות"><g id="grG"></g></svg>
+  <div class="ctl"><label>θ <input type="range" id="grT" min="0" max="720" step="1" value="60"><output id="grTo">60°</output></label></div>
+  <div class="readout" id="grOut"></div>
+</div>
+<div class="formulas">
+  <div class="f"><b>תחום</b>כל זווית (גם מעל 360° וגם שלילית)</div>
+  <div class="f"><b>טווח</b><span class="m">\(-1 \le \sin\theta \le 1,\ \ -1 \le \cos\theta \le 1\)</span></div>
+  <div class="f"><b>מחזור</b><span class="m">\(360^\circ\)</span>: אחרי סיבוב שלם הכול חוזר</div>
+  <div class="f"><b>הזזה</b><span class="m">\(\cos\theta = \sin(\theta + 90^\circ)\)</span></div>
+</div>
+<div class="meaning">
+<p><strong>המשמעות לגלגל:</strong> אם הנקודה על גלגל ברדיוס <span class="m">\(r\)</span>, הגובה שלה ביחס למרכז הוא <span class="m">\(r\sin\theta\)</span>. הוא משתנה בין <span class="m">\(-r\)</span> ל־<span class="m">\(r\)</span>, וחוזר על עצמו בכל סיבוב. זו הסיבה ש־sin ו־cos מופיעים בכל תופעה מחזורית: גלגלים, גלגל ענק, מטוטלת, גלי קול וזרם חילופין.</p>
+</div>
+</section>
+
+<footer>דף 1 בפרק הפונקציות הטריגונומטריות · <a class="back" href="trigonometry-02-wheel-exercises.html">לדף התרגול</a> · כל הזוויות במעלות · <a class="back" href="index.html">חזרה לדף הראשי</a></footer>
+</div>
+
+<script>
+(function(){
+  var NS='http://www.w3.org/2000/svg', D=Math.PI/180;
+  function el(tag,attrs,parent){var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+  function txt(s,x,y,parent,extra){var t=el('text',Object.assign({x:x,y:y},extra||{}),parent);t.textContent=s;return t;}
+  function f2(v){var s=(Math.abs(v)<0.005?0:v).toFixed(2);return s;}
+  function arrowHead(parent,x1,y1,x2,y2,cls){
+    var a=Math.atan2(y2-y1,x2-x1),L=8;
+    el('line',{x1:x1,y1:y1,x2:x2,y2:y2,'class':cls},parent);
+    el('path',{d:'M'+x2+','+y2+' L'+(x2-L*Math.cos(a-0.4))+','+(y2-L*Math.sin(a-0.4))+' M'+x2+','+y2+' L'+(x2-L*Math.cos(a+0.4))+','+(y2-L*Math.sin(a+0.4)),'class':cls},parent);
+  }
+  function quad(t){t=((t%360)+360)%360;if(t===0||t===90||t===180||t===270)return 'על ציר';return t<90?'I':t<180?'II':t<270?'III':'IV';}
+
+  /* ---------- polar explorer: r/θ sliders and x/y sliders stay in sync ---------- */
+  var pg=document.getElementById('polG'), pR=document.getElementById('polR'), pT=document.getElementById('polT'),
+      pX=document.getElementById('polX'), pY=document.getElementById('polY');
+  var P={r:4, th:30, src:'polar'};
+  function drawPolar(src){
+    var r,th,x,y;
+    if(src==='xy'){
+      x=+pX.value; y=+pY.value; r=Math.sqrt(x*x+y*y);
+      if(r>0){th=Math.atan2(y,x)/D; if(th<0)th+=360;} else th=P.th;
+      pR.value=r; pT.value=Math.round(th);
+    } else {
+      r=+pR.value; th=+pT.value; x=r*Math.cos(th*D); y=r*Math.sin(th*D);
+      pX.value=x; pY.value=y;
+    }
+    P={r:r,th:th,src:src};
+    var c=160, s=20, N=7;
+    pg.innerHTML='';
+    for(var i=-N;i<=N;i++){el('line',{x1:c+i*s,y1:c-N*s,x2:c+i*s,y2:c+N*s,'class':'gr'},pg);el('line',{x1:c-N*s,y1:c+i*s,x2:c+N*s,y2:c+i*s,'class':'gr'},pg);}
+    for(var k=1;k<=N;k++)el('circle',{cx:c,cy:c,r:k*s,fill:'none','class':'gr','stroke-dasharray':'2 3'},pg);
+    el('line',{x1:c-N*s-8,y1:c,x2:c+N*s+8,y2:c,'class':'ax'},pg);el('line',{x1:c,y1:c-N*s-8,x2:c,y2:c+N*s+8,'class':'ax'},pg);
+    txt('x',c+N*s+2,c-6,pg);txt('y',c+6,c-N*s-2,pg);txt('O',c-14,c+14,pg);
+    for(var t=-6;t<=6;t+=2){if(t){txt(String(t),c+t*s-5,c+14,pg,{'font-size':'10'});txt(String(t),c+4,c-t*s+4,pg,{'font-size':'10'});}}
+    var px=c+x*s, py=c-y*s;
+    el('circle',{cx:c,cy:c,r:Math.max(r*s,0.01),'class':'acc',opacity:.35},pg);
+    var ar=22, big=th>180?1:0;
+    if(r>0&&th>0&&th<360) el('path',{d:'M'+(c+ar)+','+c+' A'+ar+','+ar+' 0 '+big+' 0 '+(c+ar*Math.cos(th*D))+','+(c-ar*Math.sin(th*D)),'class':'mrk'},pg);
+    el('line',{x1:px,y1:py,x2:px,y2:c,'class':'grn dash'},pg);
+    el('line',{x1:px,y1:py,x2:c,y2:py,'class':'vio dash'},pg);
+    el('line',{x1:c,y1:c,x2:px,y2:py,'class':'acc'},pg);
+    el('circle',{cx:px,cy:py,r:5,fill:'var(--mark)'},pg);
+    txt('θ',c+ar+4,c-6,pg,{fill:'var(--mark)'});
+    txt('P',px+8,py-8,pg,{fill:'var(--ink)'});
+    var rs=(src==='xy')?r.toFixed(2):String(r), ts=(src==='xy')?th.toFixed(1):String(th);
+    document.getElementById('polRo').textContent=rs;
+    document.getElementById('polTo').textContent=ts+'°';
+    document.getElementById('polXo').textContent=f2(x);
+    document.getElementById('polYo').textContent=f2(y);
+    var q=quad(th), out='P = (r, θ) = ('+rs+', '+ts+'°)\nP = (x, y) = ('+f2(x)+', '+f2(y)+')\n'+(q==='על ציר'?'הנקודה על אחד הצירים':'הנקודה ברביע '+q);
+    if(src==='xy'){
+      out+='\nr = √(x² + y²) = √('+f2(x*x)+' + '+f2(y*y)+') = '+r.toFixed(2)+
+           (r>0?('\ntan θ = y / x = '+(x!==0?(y/x).toFixed(3):'לא מוגדר (x = 0)')+'  →  θ = '+th.toFixed(1)+'°  (לפי הרביע)'):'\nבראשית r = 0, והזווית לא מוגדרת');
+    } else {
+      out+='\ncos θ = '+Math.cos(th*D).toFixed(3)+'   sin θ = '+Math.sin(th*D).toFixed(3)+
+           '\nx = r·cos θ = '+f2(x)+'\ny = r·sin θ = '+f2(y);
+    }
+    document.getElementById('polOut').textContent=out;
+  }
+  pR.addEventListener('input',function(){drawPolar('polar')});pT.addEventListener('input',function(){drawPolar('polar')});
+  pX.addEventListener('input',function(){drawPolar('xy')});pY.addEventListener('input',function(){drawPolar('xy')});
+  drawPolar('polar');
+
+  /* ---------- sin/cos graphs ---------- */
+  var gg=document.getElementById('grG'), gT=document.getElementById('grT');
+  function drawGraphs(){
+    var th=+gT.value; gg.innerHTML='';
+    var cx=80,cy=110,R=60;
+    el('circle',{cx:cx,cy:cy,r:R,'class':'acc',opacity:.5},gg);
+    el('line',{x1:10,y1:cy,x2:150,y2:cy,'class':'ax'},gg);el('line',{x1:cx,y1:30,x2:cx,y2:190,'class':'ax'},gg);
+    var px=cx+R*Math.cos(th*D), py=cy-R*Math.sin(th*D);
+    el('line',{x1:cx,y1:cy,x2:px,y2:py,'class':'acc'},gg);
+    el('line',{x1:px,y1:py,x2:px,y2:cy,'class':'mrk'},gg);
+    el('line',{x1:cx,y1:cy,x2:px,y2:cy,'class':'grn'},gg);
+    el('circle',{cx:px,cy:py,r:5,fill:'var(--ink)'},gg);
+    // graph area
+    var gx0=180,gx1=630,sx=(gx1-gx0)/720,sy=R;
+    for(var a=90;a<=720;a+=90){el('line',{x1:gx0+a*sx,y1:30,x2:gx0+a*sx,y2:190,'class':'gr'},gg);txt(a+'°',gx0+a*sx-12,206,gg);}
+    el('line',{x1:gx0,y1:cy,x2:gx1+6,y2:cy,'class':'ax'},gg);el('line',{x1:gx0,y1:30,x2:gx0,y2:190,'class':'ax'},gg);
+    txt('1',gx0-14,cy-sy+4,gg);txt('-1',gx0-18,cy+sy+4,gg);txt('0',gx0-12,cy+14,gg);
+    var ds='',dc='';
+    for(var b=0;b<=720;b+=4){var X=gx0+b*sx;ds+=(b?'L':'M')+X.toFixed(1)+','+(cy-sy*Math.sin(b*D)).toFixed(1);dc+=(b?'L':'M')+X.toFixed(1)+','+(cy-sy*Math.cos(b*D)).toFixed(1);}
+    el('path',{d:ds,'class':'mrk'},gg);el('path',{d:dc,'class':'grn'},gg);
+    var X=gx0+th*sx;
+    el('line',{x1:px,y1:py,x2:X,y2:cy-sy*Math.sin(th*D),stroke:'var(--mark)','stroke-dasharray':'3 4',opacity:.6},gg);
+    el('line',{x1:X,y1:30,x2:X,y2:190,stroke:'var(--accent)','stroke-width':1,opacity:.6},gg);
+    el('circle',{cx:X,cy:cy-sy*Math.sin(th*D),r:5,fill:'var(--mark)'},gg);
+    el('circle',{cx:X,cy:cy-sy*Math.cos(th*D),r:5,fill:'var(--green)'},gg);
+    txt('sin θ',gx1-40,24,gg,{fill:'var(--mark)'});txt('cos θ',gx1-90,24,gg,{fill:'var(--green)'});
+    document.getElementById('grTo').textContent=th+'°';
+    document.getElementById('grOut').textContent='θ = '+th+'°  (≡ '+(th%360)+'°)   sin θ = '+Math.sin(th*D).toFixed(3)+'   cos θ = '+Math.cos(th*D).toFixed(3);
+  }
+  gT.addEventListener('input',drawGraphs);drawGraphs();
+
+
+
+  /* ---------- standing wheel (section 3): turn the wheel by α, the point keeps its distance ---------- */
+  var stG=document.getElementById('stG'), sT0b=document.getElementById('stT0'), sAb=document.getElementById('stA'), sDb=document.getElementById('stD');
+  function drawStand(){
+    var t0=+sT0b.value, al=+sAb.value, dd=+sDb.value, R=30, c=160, s=4;
+    var th=t0+al, thn=((th%360)+360)%360, x=dd*Math.cos(th*D), y=dd*Math.sin(th*D);
+    stG.innerHTML='';
+    for(var i=-30;i<=30;i+=10){el('line',{x1:c+i*s,y1:c-150,x2:c+i*s,y2:c+150,'class':'gr'},stG);el('line',{x1:c-150,y1:c+i*s,x2:c+150,y2:c+i*s,'class':'gr'},stG);}
+    el('line',{x1:c-150,y1:c,x2:c+150,y2:c,'class':'ax'},stG);el('line',{x1:c,y1:c-150,x2:c,y2:c+150,'class':'ax'},stG);
+    txt('x',c+144,c-6,stG);txt('y',c+6,c-142,stG);
+    [-30,30].forEach(function(v){txt(String(v),c+v*s-8,c+14,stG,{'font-size':'10'});txt(String(v),c+4,c-v*s+4,stG,{'font-size':'10'});});
+    el('circle',{cx:c,cy:c,r:R*s,'class':'acc'},stG);
+    for(var k=0;k<3;k++){var a=(th+k*60)*D;el('line',{x1:c-R*s*Math.cos(a),y1:c+R*s*Math.sin(a),x2:c+R*s*Math.cos(a),y2:c-R*s*Math.sin(a),'class':'gr'},stG);}
+    var ar=R*s+12;
+    if(Math.abs(al)>=360) el('circle',{cx:c,cy:c,r:ar,'class':'mrk',opacity:.6},stG);
+    else if(Math.abs(al)>0.5){
+      var a0=t0*D,a1=th*D,large=Math.abs(al)>180?1:0,sw=al>0?0:1;
+      el('path',{d:'M'+(c+ar*Math.cos(a0))+','+(c-ar*Math.sin(a0))+' A'+ar+','+ar+' 0 '+large+' '+sw+' '+(c+ar*Math.cos(a1))+','+(c-ar*Math.sin(a1)),'class':'mrk',opacity:.75},stG);
+    }
+    el('circle',{cx:c+dd*s*Math.cos(t0*D),cy:c-dd*s*Math.sin(t0*D),r:4,fill:'none',stroke:'var(--muted)','stroke-width':1.5},stG);
+    var px=c+x*s, py=c-y*s;
+    el('line',{x1:px,y1:py,x2:px,y2:c,'class':'grn dash'},stG);
+    el('line',{x1:px,y1:py,x2:c,y2:py,'class':'vio dash'},stG);
+    el('line',{x1:c,y1:c,x2:px,y2:py,'class':'acc'},stG);
+    el('circle',{cx:c,cy:c,r:3,fill:'var(--ink)'},stG);
+    el('circle',{cx:px,cy:py,r:6,fill:'var(--mark)'},stG);
+    document.getElementById('stT0o').textContent=t0+'°';
+    document.getElementById('stAo').textContent=al+'°';
+    document.getElementById('stDo').textContent=dd;
+    document.getElementById('stOut').textContent=
+      'θ = θ₀ + α = '+t0+' + ('+al+') = '+th+'°'+
+      '\nθ ≡ '+thn+'°'+
+      '\nP = (r, θ) = ('+dd+', '+thn+'°)'+
+      '\nx = '+dd+'·cos θ = '+f2(x)+'   y = '+dd+'·sin θ = '+f2(y);
+  }
+  [sT0b,sAb,sDb].forEach(function(e){e.addEventListener('input',drawStand);});
+  drawStand();
+
+  /* ---------- rotation simulation (section 5) ---------- */
+  var rotG=document.getElementById('rotG'), rW=document.getElementById('rotW'), rT0=document.getElementById('rotT0'), rTm=document.getElementById('rotTime');
+  var rotPlaying=false, rotLast=0;
+  function drawRot(){
+    var w=+rW.value, t0=+rT0.value, t=+rTm.value, R=30, c=160, s=4; // 1 cm = 4 px
+    var th=t0+w*t, thn=((th%360)+360)%360, x=R*Math.cos(th*D), y=R*Math.sin(th*D);
+    rotG.innerHTML='';
+    for(var i=-30;i<=30;i+=10){el('line',{x1:c+i*s,y1:c-150,x2:c+i*s,y2:c+150,'class':'gr'},rotG);el('line',{x1:c-150,y1:c+i*s,x2:c+150,y2:c+i*s,'class':'gr'},rotG);}
+    el('line',{x1:c-150,y1:c,x2:c+150,y2:c,'class':'ax'},rotG);el('line',{x1:c,y1:c-150,x2:c,y2:c+150,'class':'ax'},rotG);
+    txt('x',c+144,c-6,rotG);txt('y',c+6,c-142,rotG);
+    [-30,30].forEach(function(v){txt(String(v),c+v*s-8,c+14,rotG,{'font-size':'10'});txt(String(v),c+4,c-v*s+4,rotG,{'font-size':'10'});});
+    el('circle',{cx:c,cy:c,r:R*s,'class':'acc'},rotG);
+    // spokes rotate with the wheel
+    for(var k=0;k<3;k++){var a=(th+k*60)*D;el('line',{x1:c-R*s*Math.cos(a),y1:c+R*s*Math.sin(a),x2:c+R*s*Math.cos(a),y2:c-R*s*Math.sin(a),'class':'gr'},rotG);}
+    // travelled arc
+    var sweep=w*t, ar=R*s+12;
+    if(Math.abs(sweep)>=360) el('circle',{cx:c,cy:c,r:ar,'class':'mrk',opacity:.6},rotG);
+    else if(Math.abs(sweep)>0.5){
+      var a0=t0*D,a1=th*D,large=Math.abs(sweep)>180?1:0,sw=sweep>0?0:1;
+      el('path',{d:'M'+(c+ar*Math.cos(a0))+','+(c-ar*Math.sin(a0))+' A'+ar+','+ar+' 0 '+large+' '+sw+' '+(c+ar*Math.cos(a1))+','+(c-ar*Math.sin(a1)),'class':'mrk',opacity:.75},rotG);
+    }
+    // start position
+    el('circle',{cx:c+R*s*Math.cos(t0*D),cy:c-R*s*Math.sin(t0*D),r:4,fill:'none',stroke:'var(--muted)','stroke-width':1.5},rotG);
+    var px=c+x*s, py=c-y*s;
+    el('line',{x1:px,y1:py,x2:px,y2:c,'class':'grn dash'},rotG);
+    el('line',{x1:px,y1:py,x2:c,y2:py,'class':'vio dash'},rotG);
+    el('line',{x1:c,y1:c,x2:px,y2:py,'class':'acc'},rotG);
+    el('circle',{cx:c,cy:c,r:3,fill:'var(--ink)'},rotG);
+    el('circle',{cx:px,cy:py,r:6,fill:'var(--mark)'},rotG);
+    var T=w?360/Math.abs(w):Infinity, turns=Math.floor(Math.abs(sweep)/360);
+    document.getElementById('rotWo').textContent=w+'°/s';
+    document.getElementById('rotT0o').textContent=t0+'°';
+    document.getElementById('rotTimeo').textContent=t.toFixed(2)+' s';
+    document.getElementById('rotOut').textContent=
+      'θ = θ₀ + ω·t = '+t0+' + ('+w+')·'+t.toFixed(2)+' = '+th.toFixed(1)+'°'+
+      '\nθ ≡ '+thn.toFixed(1)+'°'+
+      '\nסיבובים שלמים שהגלגל השלים: '+turns+
+      '\nx = 30·cos θ = '+f2(x)+'   y = 30·sin θ = '+f2(y)+
+      '\n'+(isFinite(T)?'T = 360 / |ω| = '+T.toFixed(2)+' s   (זמן מחזור)':'ω = 0: הגלגל עומד');
+  }
+  function rotStep(ts){
+    if(!rotPlaying)return;
+    if(rotLast){var v=+rTm.value+(ts-rotLast)/1000;if(v>12)v=0;rTm.value=v;drawRot();}
+    rotLast=ts;requestAnimationFrame(rotStep);
+  }
+  var rotBtn=document.getElementById('rotPlay');
+  rotBtn.addEventListener('click',function(){rotPlaying=!rotPlaying;rotBtn.textContent=rotPlaying?'❚❚ עצירה':'▶ הפעלה';rotLast=0;if(rotPlaying)requestAnimationFrame(rotStep);});
+  document.getElementById('rotReset').addEventListener('click',function(){rTm.value=0;drawRot();});
+  [rW,rT0,rTm].forEach(function(e){e.addEventListener('input',drawRot);});
+  rTm.step='any';
+  drawRot();
+
+
+  /* ---------- split simulation (level 2): center motion + rotation about the center = position ---------- */
+  var spG=document.getElementById('spG'), sV=document.getElementById('spV'), sW=document.getElementById('spW'), sT0=document.getElementById('spT0'), sT=document.getElementById('spT'),
+      sRoll=document.getElementById('spRoll'), sTr=document.getElementById('spTrace'), spPlaying=false, spLast=0;
+  function spPos(v,w,t0,t){var th=t0+w*t;return {cx:v*t,cy:1,ox:Math.cos(th*D),oy:Math.sin(th*D),th:th};}
+  function drawSplit(){
+    if(sRoll.checked){sW.value=Math.round(-360*(+sV.value)/(2*Math.PI));sW.disabled=true;} else sW.disabled=false;
+    var v=+sV.value, w=sRoll.checked?-360*v/(2*Math.PI):+sW.value, t0=+sT0.value, t=+sT.value;
+    var U=36, ox0=56, gy=150; function X(u){return ox0+u*U;} function Y(u){return gy-u*U;}
+    spG.innerHTML='';
+    el('line',{x1:0,y1:gy,x2:640,y2:gy,'class':'ax'},spG);
+    for(var q=0;q<=640;q+=20)el('line',{x1:q,y1:gy,x2:q-8,y2:gy+8,'class':'gr'},spG);
+    el('circle',{cx:X(0),cy:Y(0),r:3,fill:'var(--ink)'},spG);txt('O',X(0)-14,gy-6,spG);
+    var p=spPos(v,w,t0,t);
+    // center path (problem 1)
+    el('line',{x1:X(0),y1:Y(1),x2:X(p.cx),y2:Y(1),'class':'acc dash',opacity:.7},spG);
+    if(sTr.checked){var d='';for(var k=0;k<=120;k++){var tt=t*k/120,pp=spPos(v,w,t0,tt);d+=(k?'L':'M')+X(pp.cx+pp.ox).toFixed(1)+','+Y(pp.cy+pp.oy).toFixed(1);}
+      el('path',{d:d,'class':'vio',opacity:.55},spG);}
+    el('circle',{cx:X(p.cx),cy:Y(1),r:U,fill:'none',stroke:'var(--line)','stroke-width':2},spG);
+    for(var sk=0;sk<3;sk++){var a=(p.th+sk*60)*D;el('line',{x1:X(p.cx-Math.cos(a)),y1:Y(1-Math.sin(a)),x2:X(p.cx+Math.cos(a)),y2:Y(1+Math.sin(a)),'class':'gr'},spG);}
+    arrowHead(spG,X(0),Y(0),X(p.cx),Y(1),'acc');                       // center vector
+    arrowHead(spG,X(p.cx),Y(1),X(p.cx+p.ox),Y(1+p.oy),'mrk');          // rotation vector
+    arrowHead(spG,X(0),Y(0),X(p.cx+p.ox),Y(1+p.oy),'vio');             // sum
+    el('circle',{cx:X(p.cx),cy:Y(1),r:4,fill:'var(--accent)'},spG);
+    el('circle',{cx:X(p.cx+p.ox),cy:Y(1+p.oy),r:6,fill:'var(--violet)'},spG);
+    var thn=((p.th%360)+360)%360;
+    document.getElementById('spVo').textContent=v.toFixed(2);
+    document.getElementById('spWo').textContent=Math.round(w)+'°/s';
+    document.getElementById('spT0o').textContent=t0+'°';
+    document.getElementById('spTo').textContent=t.toFixed(2)+' s';
+    document.getElementById('spOut').innerHTML=
+      '<span class="c">מרכז: C = (v·t, 1) = ('+f2(p.cx)+', 1.00)</span>\n'+
+      '<span class="r">ביחס למרכז: θ = '+t0+' + ('+Math.round(w)+')·'+t.toFixed(2)+' ≡ '+thn.toFixed(1)+'° → (cos θ, sin θ) = ('+f2(p.ox)+', '+f2(p.oy)+')</span>\n'+
+      '<span class="s">סכום: P = ('+f2(p.cx)+' + '+f2(p.ox)+', 1.00 + '+f2(p.oy)+') = ('+f2(p.cx+p.ox)+', '+f2(1+p.oy)+')</span>';
+  }
+  function spStep(ts){
+    if(!spPlaying)return;
+    if(spLast){var tv=+sT.value+(ts-spLast)/1000;if(tv>12)tv=0;sT.value=tv;drawSplit();}
+    spLast=ts;requestAnimationFrame(spStep);
+  }
+  var spBtn=document.getElementById('spPlay');
+  spBtn.addEventListener('click',function(){spPlaying=!spPlaying;spBtn.textContent=spPlaying?'❚❚ עצירה':'▶ הפעלה';spLast=0;if(spPlaying)requestAnimationFrame(spStep);});
+  document.getElementById('spReset').addEventListener('click',function(){sT.value=0;drawSplit();});
+  [sV,sW,sT0,sT].forEach(function(e){e.addEventListener('input',drawSplit);});
+  [sRoll,sTr].forEach(function(e){e.addEventListener('change',drawSplit);});
+  sT.step='any';
+  drawSplit();
+
+  /* ---------- rolling wheel ---------- */
+  var rg=document.getElementById('rollG'), rA=document.getElementById('rollA'), playing=false, last=0, raf=0;
+  var vecBox=document.getElementById('rollVec'), vvBox=document.getElementById('rollVvec'), trBox=document.getElementById('rollTrace');
+  function drawRoll(){
+    var a=+rA.value, R=36, x0=45, gy=145;
+    rg.innerHTML='';
+    el('line',{x1:0,y1:gy,x2:640,y2:gy,'class':'ax'},rg);
+    for(var q=0;q<=640;q+=20)el('line',{x1:q,y1:gy,x2:q-8,y2:gy+8,'class':'gr'},rg);
+    var d=2*Math.PI*R*a/360, cx=x0+d, cy=gy-R;
+    if(trBox.checked){
+      var p='';for(var b=0;b<=a;b+=3){var X=x0+2*Math.PI*R*b/360-R*Math.sin(b*D),Y=gy-(R-R*Math.cos(b*D));p+=(b?'L':'M')+X.toFixed(1)+','+Y.toFixed(1);}
+      if(p)el('path',{d:p,'class':'mrk',opacity:.7},rg);
+    }
+    el('circle',{cx:cx,cy:cy,r:R,'class':'acc'},rg);
+    for(var s=0;s<4;s++){var sa=(270-a+s*45)*D;el('line',{x1:cx-R*Math.cos(sa),y1:cy+R*Math.sin(sa),x2:cx+R*Math.cos(sa),y2:cy-R*Math.sin(sa),'class':'gr'},rg);}
+    el('circle',{cx:cx,cy:cy,r:3,fill:'var(--ink)'},rg);
+    var th=270-a, vx=cx+R*Math.cos(th*D), vy=cy-R*Math.sin(th*D);
+    if(vecBox.checked){
+      var k=26; // px per v
+      arrowHead(rg,cx,cy,cx+k,cy,'acc');
+      [[90,'grn'],[0,'vio'],[180,'vio']].forEach(function(pp){
+        var t=pp[0],X=cx+R*Math.cos(t*D),Y=cy-R*Math.sin(t*D),Vx=1+Math.sin(t*D),Vy=-Math.cos(t*D);
+        el('circle',{cx:X,cy:Y,r:3,fill:'var(--muted)'},rg);
+        arrowHead(rg,X,Y,X+k*Vx,Y-k*Vy,pp[1]);
+      });
+      el('circle',{cx:cx,cy:gy,r:3.5,fill:'var(--muted)'},rg);
+    }
+    if(vvBox.checked){
+      var Vx2=1+Math.sin(th*D),Vy2=-Math.cos(th*D);
+      if(Math.hypot(Vx2,Vy2)>0.05)arrowHead(rg,vx,vy,vx+26*Vx2,vy-26*Vy2,'mrk');
+    }
+    el('circle',{cx:vx,cy:vy,r:6,fill:'var(--mark)'},rg);
+    var X=2*Math.PI*a/360-Math.sin(a*D), Y=1-Math.cos(a*D), sp=Math.sqrt(Math.max(0,2-2*Math.cos(a*D)));
+    document.getElementById('rollAo').textContent=a+'°';
+    document.getElementById('rollOut').textContent='α = '+a+'°   (r = 1)\nמיקום הוונטיל: X = '+X.toFixed(3)+',  Y = '+Y.toFixed(3)+
+      '\nמהירות הוונטיל ביחס לכביש: '+sp.toFixed(3)+' · v'+
+      (vecBox.checked?'\nחץ כחול: מהירות המרכז (v) · ירוק: ראש הגלגל (2v) · סגול: צדדים (√2·v)':'')+(vvBox.checked?'\nחץ כתום: מהירות הוונטיל, משתנה עם הסיבוב':'');
+  }
+  function step(ts){
+    if(!playing)return;
+    if(last){var dt=(ts-last)/1000;var v=+rA.value+dt*60;if(v>720)v=0;rA.value=Math.round(v*10)/10;drawRoll();}
+    last=ts;raf=requestAnimationFrame(step);
+  }
+  var playBtn=document.getElementById('rollPlay');
+  playBtn.addEventListener('click',function(){playing=!playing;playBtn.textContent=playing?'❚❚ עצירה':'▶ הפעלה';last=0;if(playing)raf=requestAnimationFrame(step);});
+  document.getElementById('rollReset').addEventListener('click',function(){rA.value=0;drawRoll();});
+  rA.addEventListener('input',drawRoll);vecBox.addEventListener('change',drawRoll);vvBox.addEventListener('change',drawRoll);trBox.addEventListener('change',drawRoll);
+  rA.step='any';
+  drawRoll();
+})();
+</script>
+</body>
+</html>
