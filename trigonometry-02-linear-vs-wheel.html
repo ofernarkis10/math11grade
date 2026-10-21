@@ -372,7 +372,7 @@ td .m .katex{font-size:1.1em}
 <div class="note"><strong>ומה עם גלגל שנוסע?</strong> ב<a class="back" href="trigonometry-01-polar-wheel.html#moving">סעיף 4 בדף ההסבר</a> המרכז של הגלגל נע על ישר, והנקודה מסתובבת סביבו על מעגל. שם משתמשים בשתי הסדרות יחד: המרכז מחושב כמו תנועה לינארית, הנקודה ביחס למרכז מחושבת כמו תנועה על גלגל, ומחברים.</div>
 </section>
 
-<footer>דף 2 בפרק הפונקציות הטריגונומטריות · <a class="back" href="trigonometry-01-polar-wheel.html">לדף ההסבר</a> · <a class="back" href="trigonometry-03-wheel-exercises.html">לדף התרגול</a> · <a class="back" href="index.html">חזרה לדף הראשי</a></footer>
+<footer>דף 2 בפרק הפונקציות הטריגונומטריות · <a class="back" href="trigonometry-01-polar-wheel.html">לדף ההסבר</a> · <a class="back" href="trigonometry-04-linear-vs-wheel-exercises.html">לתרגול על הדף הזה</a> · <a class="back" href="trigonometry-03-wheel-exercises.html">לדף התרגול על הגלגל</a> · <a class="back" href="index.html">חזרה לדף הראשי</a></footer>
 </div>
 
 <script>
@@ -517,7 +517,8 @@ td .m .katex{font-size:1.1em}
       el(svg,'line',{x1:cx,y1:cy,x2:P[0],y2:P[1],stroke:'var(--mark)','stroke-width':1.2,opacity:.7});
       el(svg,'circle',{cx:P[0],cy:P[1],r:6,fill:'var(--mark)'});
       var right=P[0]>=cx; txt(svg,P[0]+(right?8:-8),P[1]-9,'('+fmt(X)+', '+fmt(Yv)+')',{'text-anchor':right?'start':'end',fill:'var(--mark)'});});
-    var eq=(C[0]===0?'x²':'(x − '+fmt(C[0])+')²')+' + (y − '+fmt(C[1])+')² = '+fmt(R*R);
+    var sq=function(v,c){return c===0?v+'²':'('+v+(c>0?' − ':' + ')+fmt(Math.abs(c))+')²';};
+    var eq=sq('x',C[0])+' + '+sq('y',C[1])+' = '+fmt(R*R);
     txt(svg,8,16,eq,{fill:'var(--mark)'});
   }
   document.querySelectorAll('svg.mini').forEach(function(svg){

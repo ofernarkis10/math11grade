@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<title>עבודת בית: תנועה על גלגל</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a worksheet-style single column on graph-paper ground; each sequence type is a "chapter" with meaning, formulas, worked example, exercises with folding solutions */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.num{font-family:var(--f-math);color:var(--muted);font-size:.85rem}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag,.ex-head{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<style>
+.level{display:flex;flex-direction:column;gap:14px}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+.method{display:flex;flex-direction:column;gap:6px}
+ol.exercises li{break-inside:avoid}
+</style>
+<style>.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}.back:hover,.back:focus-visible{text-decoration:underline}</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+<script src="font-size.js"></script>
+<style>
+/* Detailed explanation under each learning-level solution */
+.why{margin-top:10px;padding:12px 16px;background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;display:flex;flex-direction:column;gap:8px}
+.why-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.why p{margin:0}
+.why strong{color:var(--accent)}
+</style>
+<style>
+/* homework / test pages */
+.meta{display:flex;flex-wrap:wrap;gap:10px 28px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.meta span{min-width:12rem;border-bottom:1px solid var(--muted);padding-bottom:2px;color:var(--muted)}
+.rules{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.rules ul{margin:6px 0 0;padding-inline-start:20px}
+.part-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.part-h small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+ol.hw{margin:0;padding-inline-start:28px;display:flex;flex-direction:column;gap:16px}
+ol.hw > li::marker{font-weight:700;color:var(--accent)}
+ol.sub{list-style:hebrew;margin:6px 0 0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+.pts{font-size:.82rem;font-weight:700;color:var(--mark);white-space:nowrap}
+.ans{margin-top:6px;padding:8px 12px;background:var(--mark-soft);border-radius:6px;display:flex;flex-direction:column;gap:4px}
+.ans b{color:var(--mark)}
+.ans .final{font-weight:600}
+.ref{font-size:.82rem;color:var(--muted)}
+.private{background:var(--mark-soft);border:1px solid var(--mark);border-radius:10px;padding:10px 14px;font-weight:600;color:var(--mark)}
+@media print{
+  :root:not([data-p1]):not([data-p2]){--bg:#fff;--paper:#fff;--ink:#1c2633;--muted:#5b6878;--line:#d9dfe6;--accent:#1f6f8b;--accent-soft:#e3f0f5;--mark:#b4561e;--mark-soft:#fbeee5;--grid:transparent;color-scheme:light}
+  body{background:#fff}
+  .back,.no-print,#font-size-control,.fs-control{display:none!important}
+  section.ch{border:0;padding:0;box-shadow:none}
+  ol.hw > li{break-inside:avoid}
+  .work ol.hw > li{padding-bottom:2.2cm}
+  .test ol.hw > li{padding-bottom:4cm}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header><span class="eyebrow">מתמטיקה · 5 יחידות · פונקציות טריגונומטריות · עבודת בית</span>
+<h1>עבודת בית: נקודה על גלגל מסתובב</h1>
+<p class="lead">12 שאלות על תנועה על גלגל. כתבו את דרך הפתרון המלאה, ולא רק את התשובה. כל הזוויות במעלות.</p></header>
+<div class="meta"><span>שם:</span><span>כיתה:</span><span>תאריך הגשה:</span></div>
+<div class="rules no-print"><strong>לפני שמתחילים</strong><ul><li>חזרה על החומר: <a href="trigonometry-01-polar-wheel.html">דף ההסבר על הגלגל המסתובב</a>, ו<a href="trigonometry-02-linear-vs-wheel.html">דף ההשוואה לתנועה לינארית</a> עם חמשת השלבים.</li><li>בכל שאלה כתבו את חמשת השלבים: נתונים, משוואת המסלול, הזווית לפי הזמן, x לפי הזווית, ו־y מהמסלול.</li><li>שימו לב לזווית ההתחלה ולכיוון הסיבוב, ובדקו את הרביע לפי הסימנים של x ו־y.</li></ul></div>
+<section class="ch work" id="partA"><div class="part-h"><h2>חלק א׳: מיקום אחרי זמן נתון</h2><small>שאלות 1–6</small></div><ol class="hw" start="1">
+<li>גלגל ברדיוס 6 מ׳ ומרכזו בנקודה <span class="m">\((0,8)\)</span>. נקודה על הגלגל מתחילה ב־<span class="m">\((6,8)\)</span>, והגלגל מסתובב נגד כיוון השעון ומשלים סיבוב ב־24 שניות. מצאו את מיקום הנקודה אחרי 4 שניות.</li>
+<li>באותו גלגל של שאלה 1, מצאו את מיקום הנקודה אחרי 14 שניות.</li>
+<li>גלגל ענק: רדיוסו 15 מ׳ ומרכזו בגובה 18 מ׳, מעל הראשית. קרונית עולה לגלגל בנקודה הנמוכה ביותר, <span class="m">\((0,3)\)</span>. הגלגל מסתובב נגד כיוון השעון, סיבוב בכל 90 שניות.<ol class="sub"><li>מצאו את מיקום הקרונית אחרי 15 שניות.</li><li>מצאו את מיקום הקרונית אחרי 60 שניות.</li><li>אחרי כמה שניות תגיע הקרונית לראשונה לנקודה הגבוהה ביותר?</li></ol></li>
+<li>מרכז גלגל ב־<span class="m">\((2,3)\)</span> ורדיוסו 5. נקודה מתחילה בראש הגלגל, והגלגל מסתובב <strong>עם כיוון השעון</strong>, סיבוב בכל 10 שניות. מצאו את מיקום הנקודה אחרי 4 שניות.</li>
+<li>מרכז גלגל בראשית ורדיוסו 10. נקודה על הגלגל מתחילה בזווית <span class="m">\(45^\circ\)</span>, והגלגל מסתובב נגד כיוון השעון, סיבוב בכל 8 שניות. מצאו את מיקום הנקודה אחרי 30 שניות.</li>
+<li>גלגל של אופניים הפוכות מסתובב במקום, והציר שלו בראשית. רדיוס הגלגל 0.35 מ׳, והוא מסתובב נגד כיוון השעון במהירות של 30 סיבובים לדקה. הוונטיל מתחיל ב־<span class="m">\((0.35,\ 0)\)</span>.<ol class="sub"><li>מצאו את זמן המחזור <span class="m">\(T\)</span> ואת המהירות הזוויתית <span class="m">\(\omega\)</span> במעלות לשנייה.</li><li>מצאו את מיקום הוונטיל אחרי 3.25 שניות.</li></ol></li>
+</ol></section>
+<section class="ch work" id="partB"><div class="part-h"><h2>חלק ב׳: הבעיה ההפוכה ושאלות משולבות</h2><small>שאלות 7–12</small></div><ol class="hw" start="7">
+<li>מרכז גלגל ענק ב־<span class="m">\((0,20)\)</span> ורדיוסו 15 מ׳. קרונית מתחילה ב־<span class="m">\((15,20)\)</span>, והגלגל מסתובב נגד כיוון השעון, סיבוב בכל 60 שניות. מתי תהיה הקרונית בגובה 27.5 מ׳? מצאו את כל הזמנים.</li>
+<li>מרכז גלגל ב־<span class="m">\((0,12)\)</span> ורדיוסו 10. נקודה מתחילה בתחתית הגלגל, והגלגל מסתובב נגד כיוון השעון, סיבוב בכל 40 שניות. מתי תהיה הנקודה בגובה 7? מצאו את שני הזמנים הראשונים.</li>
+<li>בגלגל של שאלה 7: כמה זמן בכל סיבוב נמצאת הקרונית גבוה מ־27.5 מ׳?</li>
+<li>מרכז גלגל בראשית ורדיוסו 4. בזמן <span class="m">\(t = 0\)</span> נקודה על הגלגל נמצאת ב־<span class="m">\((-2,\ 2\sqrt3)\)</span>. הגלגל מסתובב נגד כיוון השעון, סיבוב בכל 12 שניות.<ol class="sub"><li>מצאו את זווית ההתחלה <span class="m">\(\theta_0\)</span>.</li><li>אחרי כמה שניות תגיע הנקודה לראשונה ל־<span class="m">\((4,\ 0)\)</span>?</li></ol></li>
+<li>על גלגל ענק שמרכזו ב־<span class="m">\((0,30)\)</span> ורדיוסו 25 מ׳ יש שתי קרוניות סמוכות. בזמן <span class="m">\(t = 0\)</span> קרונית א׳ בזווית <span class="m">\(0^\circ\)</span> וקרונית ב׳ בזווית <span class="m">\(30^\circ\)</span>. הגלגל מסתובב נגד כיוון השעון, סיבוב בכל 120 שניות.<ol class="sub"><li>מצאו את מיקום שתי הקרוניות אחרי 45 שניות.</li><li>חשבו את המרחק בין הקרוניות ברגע זה.</li><li>האם המרחק ביניהן משתנה עם הזמן? הסבירו.</li></ol></li>
+<li>גלגל ענק: מרכזו בגובה 30 מ׳ ורדיוסו 25 מ׳. קרונית עולה בתחתית הגלגל, והגלגל מסתובב נגד כיוון השעון, סיבוב בכל 120 שניות.<ol class="sub"><li>מהי המהירות הזוויתית במעלות לשנייה?</li><li>כתבו ביטוי לגובה הקרונית <span class="m">\(h(t)\)</span> אחרי <span class="m">\(t\)</span> שניות.</li><li>חשבו את גובה הקרונית אחרי 40 שניות.</li><li>אחרי כמה שניות תגיע הקרונית לראשונה לגובה 55 מ׳?</li></ol></li>
+</ol></section>
+<footer>בהצלחה! פתרונות יפורסמו בכיתה אחרי מועד ההגשה.</footer>
+</div>
+</body>
+</html>

@@ -38,6 +38,8 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | Trigonometric functions | `trigonometry-01-polar-wheel.html` | Explanation: polar coordinates (degrees), sin and cos for any angle, a point on a standing and on a moving wheel, angular velocity, and the guiding question (speed of a point on a rolling wheel); interactive simulations |
 | | `trigonometry-02-linear-vs-wheel.html` | Explanation: linear motion from A to B and motion on a wheel solved with the same five steps (data, the path equation: line y = mx + b or circle, the parameter from the time, x from the parameter, y by substituting x in the path equation), with a figure of the path for every example; parallel term map, a side-by-side simulation and four pairs of parallel solved examples |
 | | `trigonometry-03-wheel-exercises.html` | 21 graded wheel problems with full solutions, up to the speed of a point on a rolling wheel relative to the ground |
+| | `trigonometry-04-linear-vs-wheel-exercises.html` | 4 pairs of parallel questions (a straight line beside a wheel) for page 02, solved with the same five steps; folding solutions with a figure of the path |
+| | `trigonometry-05-wheel-homework.html` | Homework to hand in: 12 questions on a point on a rotating wheel (position after a time; inverse and combined questions), questions only, print-ready |
 
 ## Structure of a study page
 
@@ -64,7 +66,7 @@ math11grade/
 ├── sequences-NN-<name>.html            sequences topic, pages 00–09
 ├── composite-derivatives-NN-<name>.html  derivatives of composite functions (01 rules, 02 exercises)
 ├── geometry-NN-<name>.html              Euclidean geometry (01 loci & triangle centers, 02 circle, 03 similarity)
-├── trigonometry-NN-<name>.html          trigonometric functions (01 polar coordinates & the wheel, 02 linear vs wheel, 03 exercises)
+├── trigonometry-NN-<name>.html          trigonometric functions (01 polar coordinates & the wheel, 02 linear vs wheel, 03 wheel exercises, 04 linear-vs-wheel exercises, 05 wheel homework)
 ├── font-size.js                       text-size control shown on every page
 ├── README.md
 └── LICENSE                             CC0 1.0 Universal
