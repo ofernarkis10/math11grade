@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>תנועה לינארית ותנועה על גלגל · אותה סדרת פעולות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same worksheet column as the rest of the site; a step table and a term map, one interactive side-by-side figure, then four pairs of parallel solved examples (linear on one side, wheel on the other, steps numbered alike) */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --green:#2f7d4a; --violet:#7a4fb3;
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05);
+  --green:#6fcf8f; --violet:#b796e8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05);
+  --green:#6fcf8f; --violet:#b796e8; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:32px 72px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:68ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav.pagetoc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav.pagetoc ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav.pagetoc a{color:var(--accent);text-decoration:none;font-weight:600}
+nav.pagetoc a:hover,nav.pagetoc a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav.pagetoc ol{columns:1}}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:70ch;display:flex;flex-direction:column;gap:10px}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+.teacher{border:1px solid var(--line);border-inline-start:4px solid var(--green);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.95rem}
+.teacher strong{color:var(--green)}
+.key{font-family:var(--f-display);font-size:1.25rem;font-weight:700;text-align:center;padding:14px 16px;border:2px solid var(--accent);border-radius:10px;background:var(--accent-soft);text-wrap:balance}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:center;vertical-align:middle}
+th{background:var(--accent-soft);font-weight:700}
+th.lin{color:var(--accent)} th.circ{color:var(--mark)}
+td:first-child{font-weight:700;text-align:start;white-space:nowrap}
+td .m{white-space:normal}
+tr:last-child td{border-bottom:0}
+tr.diff td{background:var(--mark-soft)}
+
+/* parallel example pairs */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:680px){.pair{grid-template-columns:1fr}}
+.side{border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0;background:var(--bg)}
+.side.lin{border-top:4px solid var(--accent)}
+.side.circ{border-top:4px solid var(--mark)}
+.side .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700}
+.side.lin .tag{color:var(--accent)} .side.circ .tag{color:var(--mark)}
+.q{font-weight:600}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:1.7rem minmax(0,1fr);gap:8px;align-items:start}
+ol.steps li::before{content:counter(s);width:1.7rem;height:1.7rem;border-radius:99px;display:grid;place-items:center;font-weight:700;font-size:.85rem;background:var(--paper);border:1px solid var(--line);margin-top:2px}
+.side.lin ol.steps li::before{color:var(--accent);border-color:var(--accent)}
+.side.circ ol.steps li::before{color:var(--mark);border-color:var(--mark)}
+ol.steps li > div{min-width:0}
+ol.steps b{display:block;font-size:.85rem;color:var(--muted)}
+ol.steps .m{white-space:normal}
+.ml{display:flex;flex-direction:column;align-items:flex-end;gap:8px;margin:6px 0;direction:ltr}
+.ml .m{display:block;text-align:left}
+.ans{font-weight:700;border-top:1px dashed var(--line);padding-top:8px}
+
+/* interactive figure */
+.fig{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--bg)}
+.fig-cap{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.fig svg{width:100%;height:auto;display:block;direction:ltr}
+.ctl{display:flex;flex-direction:column;gap:8px}
+.ctl label{display:grid;grid-template-columns:7.5rem 1fr 4.5rem;gap:8px;align-items:center;font-weight:600;font-size:.95rem}
+.ctl input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
+.ctl output{font-family:var(--f-math);font-size:.9rem;direction:ltr;text-align:left}
+.readouts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:680px){.readouts{grid-template-columns:1fr}}
+.readout{font-family:var(--f-math);font-size:.85rem;direction:ltr;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 12px;line-height:1.8;white-space:pre-wrap;unicode-bidi:plaintext;min-width:0;overflow-x:auto}
+.readout.lin{border-top:3px solid var(--accent)} .readout.circ{border-top:3px solid var(--mark)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btns button{font:inherit;font-weight:700;font-size:.9rem;padding:6px 14px;border-radius:99px;border:1px solid var(--accent);background:var(--paper);color:var(--accent);cursor:pointer}
+.btns button:hover,.btns button:focus-visible{background:var(--accent-soft);outline:none}
+svg text{font-family:var(--f-math);font-size:15px;fill:var(--muted)}
+svg .ax{stroke:var(--muted);stroke-width:1.2}
+svg .gr{stroke:var(--line);stroke-width:1}
+svg .acc{stroke:var(--accent);fill:none;stroke-width:2.4}
+svg .mrk{stroke:var(--mark);fill:none;stroke-width:2.4}
+svg .faint{stroke:var(--muted);fill:none;stroke-width:1.2;stroke-dasharray:5 4;opacity:.7}
+svg .lbl{font-family:var(--f-body);font-weight:700;font-size:17px}
+svg.mini{width:100%;max-width:340px;height:auto;display:block;margin-inline:auto;direction:ltr;background:var(--paper);border:1px solid var(--line);border-radius:8px}
+svg.mini text{font-size:11px}
+svg.mini .lbl{font-size:12px}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media print{.btns,.fig{display:none} .pair{grid-template-columns:1fr 1fr} section.ch{break-inside:avoid}}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+.m .katex{font-size:1.14em;position:relative}
+.m:has(.katex){white-space:normal}
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.1em}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · פונקציות טריגונומטריות · דף 2</span>
+  <h1>תנועה לינארית ותנועה על גלגל: אותה סדרת פעולות</h1>
+  <p class="lead">בעיית נקודה על גלגל מסתובב נראית חדשה בגלל המושגים: זווית, זמן מחזור, sin ו־cos. אבל סדרת הפעולות לפתרון היא בדיוק זו של תנועה בקו ישר בין שתי נקודות: כותבים את משוואת המסלול (ישר או מעגל), מוצאים את x לפי הפרמטר (אחוז מהדרך או זווית), ומציבים במשוואת המסלול כדי למצוא את y. בדף הזה פותרים את שני סוגי הבעיות זה לצד זה, באותם חמישה שלבים. ממשיך את <a class="back" href="trigonometry-01-polar-wheel.html">דף ההסבר על הגלגל המסתובב</a>. כל הזוויות במעלות.</p>
+</header>
+
+<nav class="pagetoc" aria-label="תוכן"><strong>תוכן</strong><ol>
+  <li><a href="#steps">חמשת השלבים</a></li>
+  <li><a href="#terms">מילון מקביל: אותו תפקיד, שם אחר</a></li>
+  <li><a href="#sim">סימולציה: אותו אחוז, שתי תנועות</a></li>
+  <li><a href="#ex1">דוגמה 1: אחוז פשוט מהדרך</a></li>
+  <li><a href="#ex2">דוגמה 2: מרכז כללי וכיוון הפוך</a></li>
+  <li><a href="#ex3">דוגמה 3: יותר מ־100%</a></li>
+  <li><a href="#ex4">דוגמה 4: הבעיה ההפוכה, מתי?</a></li>
+  <li><a href="#summary">מה דומה ומה שונה</a></li>
+</ol></nav>
+
+<!-- ============ 1. STEPS ============ -->
+<section class="ch" id="steps">
+<h2>1. חמשת השלבים</h2>
+<div class="meaning">
+<p>בשני סוגי הבעיות שואלים את אותה שאלה: <strong>איפה הנקודה אחרי זמן t?</strong> ובשניהם עובדים באותה דרך:</p>
+<p><strong>קודם כותבים את משוואת המסלול</strong>, כלומר את הקו שעליו הנקודה נעה. בתנועה לינארית זה ישר, <span class="m">\(y = mx + b\)</span>, ובגלגל זה מעגל, <span class="m">\((x - x_C)^2 + (y - y_C)^2 = R^2\)</span>.</p>
+<p><strong>אחר כך מוצאים את x לפי הפרמטר.</strong> בתנועה לינארית הפרמטר הוא האחוז p מהדרך. בגלגל הפרמטר הוא הזווית θ במעלות, שהיא "אחוז מסיבוב".</p>
+<p><strong>לבסוף מציבים את x במשוואת המסלול ומקבלים את y.</strong></p>
+</div>
+<div class="tablebox"><table>
+  <thead><tr><th>שלב</th><th class="lin">תנועה לינארית (מ־A ל־B)</th><th class="circ">תנועה על גלגל</th></tr></thead>
+  <tbody>
+    <tr><td>1. נתונים</td><td>נקודת התחלה <span class="m">\(A\)</span>, נקודת סוף <span class="m">\(B\)</span>, זמן הדרך <span class="m">\(T\)</span></td><td>מרכז <span class="m">\(C\)</span>, רדיוס <span class="m">\(R\)</span>, זווית התחלה <span class="m">\(\theta_0\)</span>, זמן מחזור <span class="m">\(T\)</span></td></tr>
+    <tr class="diff"><td>2. משוואת המסלול</td><td>הישר דרך A ו־B:<br><span class="m">\(m = \dfrac{y_B - y_A}{x_B - x_A}\)</span><br><span class="m">\(y = m(x - x_A) + y_A\)</span></td><td>המעגל סביב המרכז:<br><span class="m">\((x - x_C)^2 + (y - y_C)^2 = R^2\)</span></td></tr>
+    <tr><td>3. ערך הפרמטר לפי הזמן</td><td><span class="m">\(p = \dfrac{t}{T}\)</span></td><td><span class="m">\(\theta = \theta_0 + 360^\circ\cdot\dfrac{t}{T}\)</span></td></tr>
+    <tr class="diff"><td>4. x לפי הפרמטר</td><td><span class="m">\(x = x_A + p\,(x_B - x_A)\)</span></td><td><span class="m">\(x = x_C + R\cos\theta\)</span></td></tr>
+    <tr class="diff"><td>5. y ממשוואת המסלול</td><td>מציבים את x בישר: תשובה אחת</td><td>מציבים את x במעגל: שתי אפשרויות, והזווית בוחרת. בפועל זה <span class="m">\(y = y_C + R\sin\theta\)</span></td></tr>
+  </tbody>
+</table></div>
+<p class="key">בשני המקרים: משוואת המסלול, הפרמטר לפי הזמן, x לפי הפרמטר, ו־y מהמסלול.<br>ההבדל הוא רק בצורת המסלול: ישר או מעגל.</p>
+<div class="teacher"><strong>הערה למורה:</strong> כדאי לפתור קודם את הבעיה הלינארית על הלוח, עם שרטוט של הישר. משוואת הישר דרך שתי נקודות כבר מוכרת לתלמידים, וגם ההצבה של x כדי לקבל y. את בעיית הגלגל פותרים אחר כך באותה מסגרת: משוואת המעגל היא המסלול, ו־x מחושב לפי הזווית. כשמציבים את x במשוואת המעגל יוצאות שתי תשובות ל־y, ומשם מגיע הצורך ב־sin: הוא בוחר את התשובה הנכונה לפי הזווית.</div>
+</section>
+
+<!-- ============ 2. TERMS ============ -->
+<section class="ch" id="terms">
+<h2>2. מילון מקביל: אותו תפקיד, שם אחר</h2>
+<div class="meaning">
+<p>רוב הקושי בבעיות הגלגל הוא במושגים, לא בעבודה. לכל מושג בבעיית הגלגל יש "בן זוג" בבעיה הלינארית שממלא את אותו תפקיד:</p>
+</div>
+<div class="tablebox"><table>
+  <thead><tr><th>תפקיד</th><th class="lin">תנועה לינארית</th><th class="circ">תנועה על גלגל</th></tr></thead>
+  <tbody>
+    <tr><td>המסלול</td><td>ישר: <span class="m">\(y = mx + b\)</span></td><td>מעגל: <span class="m">\((x - x_C)^2 + (y - y_C)^2 = R^2\)</span></td></tr>
+    <tr><td>מה קובע את המסלול</td><td>שתי נקודות: A ו־B</td><td>מרכז ורדיוס: C ו־R</td></tr>
+    <tr><td>הפרמטר</td><td>האחוז מהדרך <span class="m">\(p\)</span></td><td>הזווית <span class="m">\(\theta\)</span> במעלות</td></tr>
+    <tr><td>מה זה 100%</td><td><span class="m">\(p = 1\)</span>: הגעה ל־<span class="m">\(B\)</span></td><td>סיבוב שלם: <span class="m">\(360^\circ\)</span></td></tr>
+    <tr><td>הזמן ל־100%</td><td><span class="m">\(T\)</span>: זמן הדרך</td><td><span class="m">\(T\)</span>: זמן מחזור</td></tr>
+    <tr><td>הפרמטר לפי הזמן</td><td><span class="m">\(p = \dfrac{t}{T}\)</span></td><td><span class="m">\(\theta = \theta_0 + \omega t,\ \ \omega = \dfrac{360^\circ}{T}\)</span></td></tr>
+    <tr><td>x לפי הפרמטר</td><td><span class="m">\(x = x_A + p\,(x_B - x_A)\)</span></td><td><span class="m">\(x = x_C + R\cos\theta\)</span></td></tr>
+    <tr><td>y מהמסלול</td><td>הצבה בישר: ערך אחד</td><td>הצבה במעגל: שני ערכים, הזווית בוחרת (<span class="m">\(\sin\theta\)</span>)</td></tr>
+    <tr><td>כיוון</td><td>מ־A לכיוון B</td><td>נגד כיוון השעון: <span class="m">\(+\)</span> · עם כיוון השעון: <span class="m">\(-\)</span></td></tr>
+    <tr class="diff"><td>יותר מ־100%</td><td>ממשיכים על הישר אל מעבר ל־B</td><td>חוזרים על המעגל: אותם מקומות</td></tr>
+  </tbody>
+</table></div>
+<div class="note"><strong>שימו לב:</strong> הזווית היא בעצם האחוז בסקאלה אחרת: <span class="m">\(\theta = \theta_0 + 360^\circ\cdot p\)</span>. אחוז אחד מהסיבוב הוא <span class="m">\(3.6^\circ\)</span>.</div>
+</section>
+
+<!-- ============ 3. SIMULATION ============ -->
+<section class="ch" id="sim">
+<h2>3. סימולציה: אותו אחוז, שתי תנועות</h2>
+<div class="meaning">
+<p>משנים אחוז אחד, <span class="m">\(p\)</span>, ורואים את שתי הנקודות זזות. מימין נקודה שנעה מ־<span class="m">\(A(2,1)\)</span> ל־<span class="m">\(B(10,7)\)</span>. משמאל נקודה על גלגל ברדיוס 10 שמרכזו בראשית, שמתחילה ב־<span class="m">\(\theta_0 = 0^\circ\)</span> ומסתובבת נגד כיוון השעון. מתחת לכל אחת מופיעים חמשת השלבים עם המספרים.</p>
+</div>
+<div class="fig">
+  <span class="fig-cap">סימולציה: <span style="color:var(--accent)">כחול</span> = תנועה לינארית · <span style="color:var(--mark)">כתום</span> = תנועה על גלגל</span>
+  <svg id="simSvg" viewBox="0 0 660 260" role="img" aria-label="נקודה על קטע ונקודה על מעגל באותו אחוז מהדרך"></svg>
+  <div class="ctl">
+    <label>p (אחוז מהדרך) <input type="range" id="simP" min="0" max="200" step="1" value="25"><output id="simPo">25%</output></label>
+    <div class="btns">
+      <button type="button" id="simPlay">▶ הפעלה</button>
+      <button type="button" id="simReset">↺ p = 0</button>
+      <button type="button" data-p="25">25%</button>
+      <button type="button" data-p="50">50%</button>
+      <button type="button" data-p="100">100%</button>
+      <button type="button" data-p="150">150%</button>
+    </div>
+    <div class="readouts">
+      <div class="readout lin" id="simLin"></div>
+      <div class="readout circ" id="simCirc"></div>
+    </div>
+  </div>
+  <p style="font-size:.9rem;color:var(--muted)">נסו את 100%: הנקודה הלינארית מגיעה ל־B, והנקודה על הגלגל חוזרת למקום ההתחלה. נסו את 150%: הלינארית ממשיכה הלאה על הקו (הקו המקווקו), ואילו על הגלגל 150% נותן בדיוק את אותו מקום כמו 50%.</p>
+</div>
+</section>
+
+<!-- ============ 4. EXAMPLE 1 ============ -->
+<section class="ch" id="ex1">
+<h2>דוגמה 1: אחוז פשוט מהדרך</h2>
+<div class="pair">
+  <div class="side lin"><span class="tag">תנועה לינארית</span>
+    <p class="q">הולך יוצא מ־<span class="m">\(A(2,1)\)</span> ומגיע ל־<span class="m">\(B(10,7)\)</span> בתנועה קצובה תוך 20 שניות. איפה הוא אחרי 5 שניות?</p>
+    <svg class="mini" data-kind="line" data-a="2,1" data-b="10,7" data-p="0.25" role="img" aria-label="הישר דרך A ו-B והנקודה אחרי 25% מהדרך"></svg>
+    <ol class="steps">
+      <li><div><b>נתונים</b><span class="m">\(A(2,1),\ B(10,7),\ T = 20,\ t = 5\)</span></div></li>
+      <li><div><b>משוואת המסלול</b><span class="ml"><span class="m">\(m = \dfrac{7 - 1}{10 - 2} = \dfrac{6}{8} = 0.75\)</span><span class="m">\(y = 0.75(x - 2) + 1\)</span><span class="m">\(y = 0.75x - 0.5\)</span></span></div></li>
+      <li><div><b>ערך הפרמטר</b><span class="m">\(p = \dfrac{5}{20} = 0.25 = 25\%\)</span></div></li>
+      <li><div><b>x לפי הפרמטר</b><span class="ml"><span class="m">\(x = 2 + 0.25\cdot(10 - 2) = 4\)</span></span></div></li>
+      <li><div><b>y ממשוואת המסלול</b><span class="ml"><span class="m">\(y = 0.75\cdot 4 - 0.5 = 2.5\)</span></span></div></li>
+    </ol>
+    <p class="ans">התשובה: <span class="m">\((4,\ 2.5)\)</span></p>
+  </div>
+  <div class="side circ"><span class="tag">תנועה על גלגל</span>
+    <p class="q">מרכז גלגל ב־<span class="m">\((0,12)\)</span> ורדיוסו 10. נקודה מתחילה ב־<span class="m">\((10,12)\)</span>, והגלגל משלים סיבוב נגד כיוון השעון ב־60 שניות. איפה הנקודה אחרי 15 שניות?</p>
+    <svg class="mini" data-kind="circle" data-c="0,12" data-r="10" data-th0="0" data-th="90" role="img" aria-label="המעגל והנקודה אחרי סיבוב של 90 מעלות"></svg>
+    <ol class="steps">
+      <li><div><b>נתונים</b><span class="m">\(C(0,12),\ R = 10,\ \theta_0 = 0^\circ,\ T = 60,\ t = 15\)</span></div></li>
+      <li><div><b>משוואת המסלול</b><span class="ml"><span class="m">\(x^2 + (y - 12)^2 = 100\)</span></span></div></li>
+      <li><div><b>ערך הפרמטר</b><span class="m">\(\theta = 0^\circ + 360^\circ\cdot\dfrac{15}{60} = 90^\circ\)</span></div></li>
+      <li><div><b>x לפי הפרמטר</b><span class="ml"><span class="m">\(x = 0 + 10\cos 90^\circ = 0\)</span></span></div></li>
+      <li><div><b>y ממשוואת המסלול</b><span class="ml"><span class="m">\(0^2 + (y - 12)^2 = 100\)</span><span class="m">\(y = 22\ \ \text{or}\ \ y = 2\)</span></span>הזווית <span class="m">\(90^\circ\)</span> היא בחצי העליון, ולכן <span class="m">\(y = 22\)</span>. זה בדיוק <span class="m">\(12 + 10\sin90^\circ\)</span>.</div></li>
+    </ol>
+    <p class="ans">התשובה: <span class="m">\((0,\ 22)\)</span>, בראש הגלגל</p>
+  </div>
+</div>
+<div class="note"><strong>מה שונה?</strong> צורת המסלול. ישר חותך כל קו אנכי בנקודה אחת, ולכן ההצבה של x נותנת y אחד. מעגל חותך קו אנכי בשתי נקודות, ולכן ההצבה נותנת שני ערכים, והזווית קובעת איזה מהם. בגלל זה בגלגל מחשבים את y ישר עם sin.</div>
+</section>
+
+<!-- ============ 5. EXAMPLE 2 ============ -->
+<section class="ch" id="ex2">
+<h2>דוגמה 2: מרכז כללי וכיוון הפוך</h2>
+<div class="pair">
+  <div class="side lin"><span class="tag">תנועה לינארית</span>
+    <p class="q">רחפן טס בקו ישר מ־<span class="m">\(A(-4,3)\)</span> ל־<span class="m">\(B(8,-6)\)</span> במהירות קבועה, ב־30 שניות. איפה הוא אחרי 10 שניות?</p>
+    <svg class="mini" data-kind="line" data-a="-4,3" data-b="8,-6" data-p="0.3333" role="img" aria-label="הישר דרך A ו-B והנקודה אחרי שליש מהדרך"></svg>
+    <ol class="steps">
+      <li><div><b>נתונים</b><span class="m">\(A(-4,3),\ B(8,-6),\ T = 30,\ t = 10\)</span></div></li>
+      <li><div><b>משוואת המסלול</b>הישר יורד, ולכן השיפוע שלילי:<span class="ml"><span class="m">\(m = \dfrac{-6 - 3}{8 - (-4)} = \dfrac{-9}{12} = -0.75\)</span><span class="m">\(y = -0.75(x + 4) + 3\)</span><span class="m">\(y = -0.75x\)</span></span></div></li>
+      <li><div><b>ערך הפרמטר</b><span class="m">\(p = \dfrac{10}{30} = \dfrac{1}{3} \approx 33.3\%\)</span></div></li>
+      <li><div><b>x לפי הפרמטר</b><span class="ml"><span class="m">\(x = -4 + \tfrac13\cdot(8 - (-4)) = -4 + 4 = 0\)</span></span></div></li>
+      <li><div><b>y ממשוואת המסלול</b><span class="ml"><span class="m">\(y = -0.75\cdot 0 = 0\)</span></span></div></li>
+    </ol>
+    <p class="ans">התשובה: <span class="m">\((0,\ 0)\)</span></p>
+  </div>
+  <div class="side circ"><span class="tag">תנועה על גלגל</span>
+    <p class="q">גלגל ענק: מרכזו ב־<span class="m">\((0,20)\)</span> ורדיוסו 15. קרונית מתחילה בראש הגלגל, והגלגל מסתובב <strong>עם כיוון השעון</strong>, סיבוב בכל 120 שניות. איפה הקרונית אחרי 40 שניות?</p>
+    <svg class="mini" data-kind="circle" data-c="0,20" data-r="15" data-th0="90" data-th="-30" role="img" aria-label="המעגל והקרונית אחרי סיבוב של 120 מעלות עם כיוון השעון"></svg>
+    <ol class="steps">
+      <li><div><b>נתונים</b><span class="m">\(C(0,20),\ R = 15,\ \theta_0 = 90^\circ,\ T = 120,\ t = 40\)</span></div></li>
+      <li><div><b>משוואת המסלול</b><span class="ml"><span class="m">\(x^2 + (y - 20)^2 = 225\)</span></span></div></li>
+      <li><div><b>ערך הפרמטר</b>עם כיוון השעון הזווית קטנה, ולכן סימן מינוס:<span class="ml"><span class="m">\(\theta = 90^\circ - 360^\circ\cdot\dfrac{40}{120} = -30^\circ\)</span></span></div></li>
+      <li><div><b>x לפי הפרמטר</b><span class="ml"><span class="m">\(x = 15\cos(-30^\circ) = 7.5\sqrt3 \approx 12.99\)</span></span></div></li>
+      <li><div><b>y ממשוואת המסלול</b><span class="ml"><span class="m">\((y - 20)^2 = 225 - 168.75 = 56.25\)</span><span class="m">\(y = 27.5\ \ \text{or}\ \ y = 12.5\)</span></span>הזווית <span class="m">\(-30^\circ\)</span> מתחת למרכז, ולכן <span class="m">\(y = 12.5\)</span>. זה <span class="m">\(20 + 15\sin(-30^\circ)\)</span>.</div></li>
+    </ol>
+    <p class="ans">התשובה: <span class="m">\((12.99,\ 12.5)\)</span>, בגובה 12.5 מ׳</p>
+  </div>
+</div>
+<div class="note"><strong>מה דומה?</strong> בשני המקרים <strong>הכיוון הוא סימן</strong>. בלינארי הוא יושב בשיפוע של הישר ובהפרש <span class="m">\(x_B - x_A\)</span>; בגלגל הוא הפלוס או המינוס בחישוב הזווית.</div>
+</section>
+
+<!-- ============ 6. EXAMPLE 3 ============ -->
+<section class="ch" id="ex3">
+<h2>דוגמה 3: יותר מ־100%</h2>
+<div class="pair">
+  <div class="side lin"><span class="tag">תנועה לינארית</span>
+    <p class="q">גוף נע במהירות קבועה מ־<span class="m">\(A(1,2)\)</span> ומגיע ל־<span class="m">\(B(4,6)\)</span> אחרי 5 שניות, וממשיך באותו כיוון ובאותה מהירות. איפה הוא אחרי 12 שניות?</p>
+    <svg class="mini" data-kind="line" data-a="1,2" data-b="4,6" data-p="2.4" role="img" aria-label="הישר דרך A ו-B והנקודה אחרי 240% מהדרך, מעבר ל-B"></svg>
+    <ol class="steps">
+      <li><div><b>נתונים</b><span class="m">\(A(1,2),\ B(4,6),\ T = 5,\ t = 12\)</span></div></li>
+      <li><div><b>משוואת המסלול</b><span class="ml"><span class="m">\(m = \dfrac{6 - 2}{4 - 1} = \dfrac43\)</span><span class="m">\(y = \tfrac43(x - 1) + 2 = \tfrac43x + \tfrac23\)</span></span></div></li>
+      <li><div><b>ערך הפרמטר</b><span class="m">\(p = \dfrac{12}{5} = 2.4 = 240\%\)</span>. הגוף עבר יותר מפעמיים את הדרך מ־A ל־B.</div></li>
+      <li><div><b>x לפי הפרמטר</b><span class="ml"><span class="m">\(x = 1 + 2.4\cdot(4 - 1) = 8.2\)</span></span></div></li>
+      <li><div><b>y ממשוואת המסלול</b><span class="ml"><span class="m">\(y = \tfrac43\cdot 8.2 + \tfrac23 = 11.6\)</span></span></div></li>
+    </ol>
+    <p class="ans">התשובה: <span class="m">\((8.2,\ 11.6)\)</span>, על הישר, הרחק מעבר ל־B</p>
+  </div>
+  <div class="side circ"><span class="tag">תנועה על גלגל</span>
+    <p class="q">מרכז גלגל ב־<span class="m">\((3,4)\)</span> ורדיוסו 5. נקודה מתחילה ב־<span class="m">\(\theta_0 = 0^\circ\)</span>, והגלגל מסתובב נגד כיוון השעון, סיבוב בכל 8 שניות. איפה הנקודה אחרי 19 שניות?</p>
+    <svg class="mini" data-kind="circle" data-c="3,4" data-r="5" data-th0="0" data-th="855" role="img" aria-label="המעגל והנקודה אחרי שני סיבובים ועוד 135 מעלות"></svg>
+    <ol class="steps">
+      <li><div><b>נתונים</b><span class="m">\(C(3,4),\ R = 5,\ \theta_0 = 0^\circ,\ T = 8,\ t = 19\)</span></div></li>
+      <li><div><b>משוואת המסלול</b><span class="ml"><span class="m">\((x - 3)^2 + (y - 4)^2 = 25\)</span></span></div></li>
+      <li><div><b>ערך הפרמטר</b><span class="m">\(\dfrac{19}{8} = 2.375 = 237.5\%\)</span> מסיבוב:<span class="ml"><span class="m">\(\theta = 360^\circ\cdot2.375 = 855^\circ\)</span><span class="m">\(855^\circ = 2\cdot360^\circ + 135^\circ \equiv 135^\circ\)</span></span></div></li>
+      <li><div><b>x לפי הפרמטר</b><span class="ml"><span class="m">\(x = 3 + 5\cos135^\circ \approx -0.54\)</span></span></div></li>
+      <li><div><b>y ממשוואת המסלול</b><span class="ml"><span class="m">\((y - 4)^2 = 25 - 12.5 = 12.5\)</span><span class="m">\(y \approx 7.54\ \ \text{or}\ \ y \approx 0.46\)</span></span>הזווית <span class="m">\(135^\circ\)</span> בחצי העליון, ולכן <span class="m">\(y \approx 7.54\)</span>, כלומר <span class="m">\(4 + 5\sin135^\circ\)</span>.</div></li>
+    </ol>
+    <p class="ans">התשובה: <span class="m">\((-0.54,\ 7.54)\)</span></p>
+  </div>
+</div>
+<div class="note"><strong>כאן ההבדל המהותי, והוא נובע מצורת המסלול:</strong> ישר ממשיך לאינסוף, ולכן <span class="m">\(p = 2.4\)</span> נותן מקום חדש ורחוק. מעגל נסגר על עצמו, ולכן אחרי 100% חוזרים על אותם מקומות: 237.5% על הגלגל הוא אותו מקום כמו 37.5%. מותר להוריד סיבובים שלמים לפני החישוב.</div>
+</section>
+
+<!-- ============ 7. EXAMPLE 4 ============ -->
+<section class="ch" id="ex4">
+<h2>דוגמה 4: הבעיה ההפוכה, מתי?</h2>
+<div class="meaning"><p>עכשיו נתון המקום, ושואלים מתי הנקודה נמצאת שם. שוב מתחילים ממשוואת המסלול, אבל הולכים בכיוון ההפוך: מהמקום לפרמטר, ומהפרמטר לזמן.</p></div>
+<div class="pair">
+  <div class="side lin"><span class="tag">תנועה לינארית</span>
+    <p class="q">נקודה נעה מ־<span class="m">\(A(0,0)\)</span> ל־<span class="m">\(B(12,9)\)</span> ב־6 שניות. מתי היא נמצאת ב־<span class="m">\((8,6)\)</span>?</p>
+    <svg class="mini" data-kind="line" data-a="0,0" data-b="12,9" data-p="0.6667" role="img" aria-label="הישר דרך A ו-B והנקודה (8,6) עליו"></svg>
+    <ol class="steps">
+      <li><div><b>נתונים</b><span class="m">\(A(0,0),\ B(12,9),\ T = 6\)</span>, המקום המבוקש <span class="m">\((8,6)\)</span></div></li>
+      <li><div><b>משוואת המסלול</b><span class="ml"><span class="m">\(m = \dfrac{9}{12} = 0.75,\quad y = 0.75x\)</span></span></div></li>
+      <li><div><b>האם הנקודה על המסלול?</b>מציבים את x במשוואה:<span class="ml"><span class="m">\(0.75\cdot 8 = 6\ \checkmark\)</span></span>יש נקודה אחת על הישר עם <span class="m">\(x = 8\)</span>.</div></li>
+      <li><div><b>הפרמטר לפי x</b><span class="ml"><span class="m">\(8 = 0 + p\cdot 12 \ \Rightarrow\ p = \tfrac23\)</span></span></div></li>
+      <li><div><b>מהפרמטר לזמן</b><span class="ml"><span class="m">\(t = p\cdot T = \tfrac23\cdot 6 = 4\)</span></span></div></li>
+    </ol>
+    <p class="ans">התשובה: אחרי 4 שניות, ורק פעם אחת</p>
+  </div>
+  <div class="side circ"><span class="tag">תנועה על גלגל</span>
+    <p class="q">מרכז גלגל ב־<span class="m">\((0,12)\)</span> ורדיוסו 10. נקודה מתחילה בתחתית הגלגל, בגובה 2, והגלגל מסתובב נגד כיוון השעון, סיבוב בכל 60 שניות. מתי הנקודה בגובה 17?</p>
+    <svg class="mini" data-kind="circle" data-c="0,12" data-r="10" data-th0="270" data-th="390,510" role="img" aria-label="המעגל ושתי הנקודות בגובה 17"></svg>
+    <ol class="steps">
+      <li><div><b>נתונים</b><span class="m">\(C(0,12),\ R = 10,\ \theta_0 = 270^\circ,\ T = 60\)</span>, הגובה המבוקש <span class="m">\(y = 17\)</span></div></li>
+      <li><div><b>משוואת המסלול</b><span class="ml"><span class="m">\(x^2 + (y - 12)^2 = 100\)</span></span></div></li>
+      <li><div><b>איפה על המסלול?</b>מציבים את y במשוואה:<span class="ml"><span class="m">\(x^2 + 25 = 100 \ \Rightarrow\ x = \pm\sqrt{75} \approx \pm 8.66\)</span></span>יש <strong>שתי</strong> נקודות על המעגל בגובה 17: אחת מימין למרכז ואחת משמאל.</div></li>
+      <li><div><b>הפרמטר לפי המקום</b><span class="ml"><span class="m">\(\sin\theta = \dfrac{17 - 12}{10} = 0.5\)</span><span class="m">\(\theta = 30^\circ\ (x \gt 0)\ \ \text{or}\ \ \theta = 150^\circ\ (x \lt 0)\)</span></span>הזווית גדלה החל מ־<span class="m">\(270^\circ\)</span>, ולכן מגיעים קודם ל־<span class="m">\(390^\circ\)</span> ואחר כך ל־<span class="m">\(510^\circ\)</span>.</div></li>
+      <li><div><b>מהפרמטר לזמן</b><span class="ml"><span class="m">\(t = \dfrac{\theta - \theta_0}{360^\circ}\cdot T\)</span><span class="m">\(t_1 = \dfrac{390^\circ - 270^\circ}{360^\circ}\cdot60 = 20\)</span><span class="m">\(t_2 = \dfrac{510^\circ - 270^\circ}{360^\circ}\cdot60 = 40\)</span></span></div></li>
+    </ol>
+    <p class="ans">התשובה: אחרי 20 ואחרי 40 שניות, ושוב כל 60 שניות.<span class="ml"><span class="m">\(t = 20 + 60k\ \ \text{or}\ \ t = 40 + 60k,\quad k = 0, 1, 2, \dots\)</span></span></p>
+  </div>
+</div>
+<div class="note"><strong>מה שונה?</strong> המהלך זהה, וההבדל שוב נובע מצורת המסלול. קו אופקי בגובה מסוים חותך ישר (משופע) בנקודה אחת, ולכן יש תשובה אחת. אותו קו חותך מעגל בשתי נקודות, ולכן יש שתי תשובות בכל סיבוב: פעם בעלייה ופעם בירידה.</div>
+</section>
+
+<!-- ============ 8. SUMMARY ============ -->
+<section class="ch" id="summary">
+<h2>מה דומה ומה שונה</h2>
+<div class="tablebox"><table>
+  <thead><tr><th></th><th class="lin">תנועה לינארית</th><th class="circ">תנועה על גלגל</th></tr></thead>
+  <tbody>
+    <tr><td>סדרת הפעולות</td><td colspan="2">זהה: נתונים ← משוואת המסלול ← הפרמטר לפי הזמן ← x לפי הפרמטר ← y מהמסלול</td></tr>
+    <tr><td>המסלול</td><td>ישר: <span class="m">\(y = mx + b\)</span></td><td>מעגל: <span class="m">\((x - x_C)^2 + (y - y_C)^2 = R^2\)</span></td></tr>
+    <tr><td>הפרמטר</td><td>אחוז מהדרך <span class="m">\(p\)</span></td><td>זווית <span class="m">\(\theta\)</span> במעלות (אחוז מסיבוב כפול 360)</td></tr>
+    <tr><td>x לפי הפרמטר</td><td><span class="m">\(x_A + p\,(x_B - x_A)\)</span></td><td><span class="m">\(x_C + R\cos\theta\)</span></td></tr>
+    <tr><td>y מהמסלול</td><td>ערך אחד</td><td>שני ערכים; הזווית בוחרת, וזה <span class="m">\(y_C + R\sin\theta\)</span></td></tr>
+    <tr><td>אחרי 100%</td><td>ממשיכים על הישר</td><td>חוזרים על אותם מקומות (מחזוריות)</td></tr>
+    <tr><td>הבעיה ההפוכה</td><td>תשובה אחת</td><td>שתי תשובות בכל סיבוב, ושוב כל T</td></tr>
+  </tbody>
+</table></div>
+<div class="note"><strong>ומה עם גלגל שנוסע?</strong> ב<a class="back" href="trigonometry-01-polar-wheel.html#moving">סעיף 4 בדף ההסבר</a> המרכז של הגלגל נע על ישר, והנקודה מסתובבת סביבו על מעגל. שם משתמשים בשתי הסדרות יחד: המרכז מחושב כמו תנועה לינארית, הנקודה ביחס למרכז מחושבת כמו תנועה על גלגל, ומחברים.</div>
+</section>
+
+<footer>דף 2 בפרק הפונקציות הטריגונומטריות · <a class="back" href="trigonometry-01-polar-wheel.html">לדף ההסבר</a> · <a class="back" href="trigonometry-03-wheel-exercises.html">לדף התרגול</a> · <a class="back" href="index.html">חזרה לדף הראשי</a></footer>
+</div>
+
+<script>
+// Side-by-side simulation: one fraction p drives a point on segment AB and a point on a circle
+(function(){
+  var svg=document.getElementById('simSvg'); if(!svg) return;
+  var NS='http://www.w3.org/2000/svg';
+  var A={x:2,y:1}, B={x:10,y:7}, R=10;
+  // linear panel (right side, matching the right-to-left reading order): math x 0..20, y 0..14 -> svg x 350..630, y 230..34
+  var LX=function(x){return 350+x*14;}, LY=function(y){return 230-y*14;};
+  // circle panel (left side): center (150,130), radius 90 px for R=10
+  var CX=150, CY=130, CR=90;
+  function el(t,a,parent){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);(parent||svg).appendChild(e);return e;}
+  function txt(x,y,s,a){var e=el('text',Object.assign({x:x,y:y},a||{}));e.textContent=s;return e;}
+  // static: linear grid and axes
+  for(var i=0;i<=20;i+=2){el('line',{x1:LX(i),y1:LY(0),x2:LX(i),y2:LY(14),'class':'gr'});}
+  for(var j=0;j<=14;j+=2){el('line',{x1:LX(0),y1:LY(j),x2:LX(20),y2:LY(j),'class':'gr'});}
+  el('line',{x1:LX(0),y1:LY(0),x2:LX(20),y2:LY(0),'class':'ax'});
+  el('line',{x1:LX(0),y1:LY(0),x2:LX(0),y2:LY(14),'class':'ax'});
+  [0,5,10,15,20].forEach(function(v){txt(LX(v)-4,LY(0)+16,String(v));});
+  [5,10].forEach(function(v){txt(LX(0)-22,LY(v)+4,String(v));});
+  el('line',{x1:LX(A.x),y1:LY(A.y),x2:LX(18),y2:LY(13),'class':'faint'});
+  el('line',{x1:LX(A.x),y1:LY(A.y),x2:LX(B.x),y2:LY(B.y),stroke:'var(--accent)','stroke-width':1.2,opacity:.5});
+  el('circle',{cx:LX(A.x),cy:LY(A.y),r:4,fill:'var(--muted)'}); txt(LX(A.x)-6,LY(A.y)+18,'A',{'class':'lbl'});
+  el('circle',{cx:LX(B.x),cy:LY(B.y),r:4,fill:'var(--muted)'}); txt(LX(B.x)+8,LY(B.y)+14,'B',{'class':'lbl'});
+  var linPath=el('line',{'class':'acc'});
+  var linDot=el('circle',{r:7,fill:'var(--accent)'});
+  // static: circle panel
+  el('line',{x1:CX-120,y1:CY,x2:CX+120,y2:CY,'class':'ax'});
+  el('line',{x1:CX,y1:CY-120,x2:CX,y2:CY+120,'class':'ax'});
+  el('circle',{cx:CX,cy:CY,r:CR,fill:'none',stroke:'var(--line)','stroke-width':2});
+  txt(CX+CR+6,CY+16,'10'); txt(CX+6,CY-CR-6,'10');
+  el('circle',{cx:CX+CR,cy:CY,r:5,fill:'none',stroke:'var(--muted)','stroke-width':1.5});
+  var arc=el('path',{'class':'mrk'});
+  var ray=el('line',{stroke:'var(--mark)','stroke-width':1.2,opacity:.6});
+  var circDot=el('circle',{r:7,fill:'var(--mark)'});
+  var lapTxt=txt(CX+118,CY+118,'',{'class':'lbl',fill:'var(--mark)',direction:'rtl','unicode-bidi':'embed'});
+  txt(LX(0),20,'תנועה לינארית',{'class':'lbl',fill:'var(--accent)'});
+  txt(CX-118,20,'תנועה על גלגל',{'class':'lbl',fill:'var(--mark)'});
+
+  var range=document.getElementById('simP'), out=document.getElementById('simPo');
+  var rl=document.getElementById('simLin'), rc=document.getElementById('simCirc');
+  function f(n,d){var s=n.toFixed(d===undefined?2:d);return s==='-0.00'?'0.00':s;}
+  function draw(){
+    var pct=+range.value, p=pct/100;
+    out.textContent=pct+'%';
+    // linear
+    var x=A.x+p*(B.x-A.x), y=A.y+p*(B.y-A.y);
+    linPath.setAttribute('x1',LX(A.x));linPath.setAttribute('y1',LY(A.y));linPath.setAttribute('x2',LX(x));linPath.setAttribute('y2',LY(y));
+    linDot.setAttribute('cx',LX(x));linDot.setAttribute('cy',LY(y));
+    // circle
+    var th=p*360, laps=Math.floor(th/360+1e-9), rem=th-laps*360;
+    var rad=th*Math.PI/180, px=CX+CR*Math.cos(rad), py=CY-CR*Math.sin(rad);
+    circDot.setAttribute('cx',px);circDot.setAttribute('cy',py);
+    ray.setAttribute('x1',CX);ray.setAttribute('y1',CY);ray.setAttribute('x2',px);ray.setAttribute('y2',py);
+    var ar=CR*0.35, d='';
+    if(laps>=1){d='M '+(CX+ar)+' '+CY+' A '+ar+' '+ar+' 0 1 0 '+(CX-ar)+' '+CY+' A '+ar+' '+ar+' 0 1 0 '+(CX+ar)+' '+CY+' ';}
+    if(rem>0.01){var e=rem*Math.PI/180;d+='M '+(CX+ar)+' '+CY+' A '+ar+' '+ar+' 0 '+(rem>180?1:0)+' 0 '+(CX+ar*Math.cos(e))+' '+(CY-ar*Math.sin(e));}
+    arc.setAttribute('d',d||'M 0 0');
+    lapTxt.textContent=laps>=1?('סיבובים שלמים: '+laps):'';
+    var cx=R*Math.cos(rad), cy=R*Math.sin(rad);
+    rl.textContent='1. A(2, 1), B(10, 7)\n'+
+      '2. m = 6/8 = 0.75,  y = 0.75x − 0.5\n'+
+      '3. p = t/T = '+f(p)+'\n'+
+      '4. x = 2 + '+f(p)+'·8 = '+f(x)+'\n'+
+      '5. y = 0.75·'+f(x)+' − 0.5 = '+f(y);
+    var root=Math.sqrt(Math.max(0,100-cx*cx));
+    rc.textContent='1. C(0, 0), R = 10, θ₀ = 0°\n'+
+      '2. x² + y² = 100\n'+
+      '3. θ = 0° + 360°·'+f(p)+' = '+f(th,1)+'°'+(laps>=1?(' ≡ '+f(rem,1)+'°'):'')+'\n'+
+      '4. x = 10·cos θ = '+f(cx)+'\n'+
+      '5. y = ±'+f(root)+' → sin θ '+(cy>=-1e-9?'≥':'<')+' 0 → y = '+f(cy);
+  }
+  range.addEventListener('input',draw);
+  var timer=null, play=document.getElementById('simPlay');
+  function stop(){if(timer){clearInterval(timer);timer=null;play.textContent='▶ הפעלה';}}
+  play.addEventListener('click',function(){
+    if(timer){stop();return;}
+    if(+range.value>=200) range.value=0;
+    play.textContent='❚❚ עצירה';
+    timer=setInterval(function(){var v=+range.value+1; if(v>200){stop();return;} range.value=v; draw();},40);
+  });
+  document.getElementById('simReset').addEventListener('click',function(){stop();range.value=0;draw();});
+  document.querySelectorAll('.btns button[data-p]').forEach(function(b){b.addEventListener('click',function(){stop();range.value=b.getAttribute('data-p');draw();});});
+  draw();
+})();
+</script>
+
+<script>
+// Small static figures for the examples: <svg class="mini" data-kind="line|circle" ...> drawn from their data attributes
+(function(){
+  var NS='http://www.w3.org/2000/svg', W=300, H=210, PAD=26;
+  function el(svg,t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e;}
+  function txt(svg,x,y,s,a){var e=el(svg,'text',Object.assign({x:x,y:y},a||{}));e.textContent=s;return e;}
+  function nums(s){return s.split(',').map(Number);}
+  function fmt(v){var r=Math.round(v*100)/100;return String(r===0?0:r);}
+  function frame(svg,xmin,xmax,ymin,ymax){
+    var s=Math.min((W-2*PAD)/(xmax-xmin),(H-2*PAD)/(ymax-ymin));
+    var ox=(W-(xmax-xmin)*s)/2, oy=(H-(ymax-ymin)*s)/2;
+    var X=function(x){return ox+(x-xmin)*s;}, Y=function(y){return H-oy-(y-ymin)*s;};
+    // axes through the origin when it is in view, otherwise along the frame edge
+    var ax=(xmin<=0&&xmax>=0)?X(0):X(xmin), ay=(ymin<=0&&ymax>=0)?Y(0):Y(ymin);
+    el(svg,'line',{x1:X(xmin),y1:ay,x2:X(xmax),y2:ay,'class':'ax'});
+    el(svg,'line',{x1:ax,y1:Y(ymin),x2:ax,y2:Y(ymax),'class':'ax'});
+    txt(svg,X(xmax)-8,ay-6,'x'); txt(svg,ax+6,Y(ymax)+10,'y');
+    return {X:X,Y:Y,s:s};
+  }
+  function drawLine(svg){
+    var A=nums(svg.dataset.a), B=nums(svg.dataset.b), p=+svg.dataset.p;
+    var P=[A[0]+p*(B[0]-A[0]),A[1]+p*(B[1]-A[1])];
+    var xs=[A[0],B[0],P[0],0], ys=[A[1],B[1],P[1],0];
+    var xmin=Math.min.apply(0,xs)-1.5, xmax=Math.max.apply(0,xs)+1.5, ymin=Math.min.apply(0,ys)-1.5, ymax=Math.max.apply(0,ys)+1.5;
+    var f=frame(svg,xmin,xmax,ymin,ymax), m=(B[1]-A[1])/(B[0]-A[0]);
+    var yAt=function(x){return A[1]+m*(x-A[0]);};
+    // the whole straight path (dashed), the stretch A→B, and the stretch actually travelled
+    el(svg,'line',{x1:f.X(xmin),y1:f.Y(yAt(xmin)),x2:f.X(xmax),y2:f.Y(yAt(xmax)),'class':'faint'});
+    el(svg,'line',{x1:f.X(A[0]),y1:f.Y(A[1]),x2:f.X(P[0]),y2:f.Y(P[1]),'class':'acc'});
+    // dotted guides from P to the axes: x found from p, then y from the line
+    el(svg,'line',{x1:f.X(P[0]),y1:f.Y(P[1]),x2:f.X(P[0]),y2:f.Y(ymin<=0&&ymax>=0?0:ymin),stroke:'var(--accent)','stroke-width':1,'stroke-dasharray':'2 3'});
+    [[A,'A'],[B,'B']].forEach(function(q){el(svg,'circle',{cx:f.X(q[0][0]),cy:f.Y(q[0][1]),r:4,fill:'var(--muted)'});txt(svg,f.X(q[0][0])+7,f.Y(q[0][1])+15,q[1],{'class':'lbl'});});
+    el(svg,'circle',{cx:f.X(P[0]),cy:f.Y(P[1]),r:6,fill:'var(--accent)'});
+    txt(svg,f.X(P[0])+(P[0]>(xmin+xmax)/2?-8:8),f.Y(P[1])-10,'('+fmt(P[0])+', '+fmt(P[1])+')',{'text-anchor':P[0]>(xmin+xmax)/2?'end':'start',fill:'var(--accent)'});
+    var b=A[1]-m*A[0], eq='y = '+fmt(m)+'x'+(Math.abs(b)<1e-9?'':(b>0?' + ':' − ')+fmt(Math.abs(b)));
+    txt(svg,8,16,eq,{fill:'var(--accent)'});
+  }
+  function drawCircle(svg){
+    var C=nums(svg.dataset.c), R=+svg.dataset.r, t0=+svg.dataset.th0, ths=nums(svg.dataset.th);
+    var xs=[C[0]-R,C[0]+R,0], ys=[C[1]-R,C[1]+R,0];
+    var xmin=Math.min.apply(0,xs)-R*0.25, xmax=Math.max.apply(0,xs)+R*0.25, ymin=Math.min.apply(0,ys)-R*0.15, ymax=Math.max.apply(0,ys)+R*0.15;
+    var f=frame(svg,xmin,xmax,ymin,ymax), r=R*f.s, cx=f.X(C[0]), cy=f.Y(C[1]);
+    el(svg,'circle',{cx:cx,cy:cy,r:r,'class':'faint'});
+    el(svg,'line',{x1:cx-r-6,y1:cy,x2:cx+r+6,y2:cy,stroke:'var(--line)','stroke-width':1});
+    el(svg,'circle',{cx:cx,cy:cy,r:3,fill:'var(--muted)'}); txt(svg,cx+5,cy+15,'C',{'class':'lbl'});
+    var pt=function(a,rr){var q=a*Math.PI/180;return [cx+rr*Math.cos(q),cy-rr*Math.sin(q)];};
+    var s0=pt(t0,r); el(svg,'circle',{cx:s0[0],cy:s0[1],r:4.5,fill:'none',stroke:'var(--muted)','stroke-width':1.5});
+    // arc of the actual turn (whole turns removed), from θ0 in the direction of motion
+    var last=ths[ths.length-1], d=last-t0, sign=d<0?-1:1, rem=Math.abs(d)%360, ar=r*0.32;
+    if(rem>0.5){var a=pt(t0,ar), b=pt(t0+sign*rem,ar);
+      el(svg,'path',{d:'M '+a[0]+' '+a[1]+' A '+ar+' '+ar+' 0 '+(rem>180?1:0)+' '+(sign>0?0:1)+' '+b[0]+' '+b[1],'class':'mrk'});}
+    if(Math.abs(d)>=360) txt(svg,W-8,H-8,'ועוד '+Math.floor(Math.abs(d)/360)+' סיבובים שלמים',{fill:'var(--mark)','class':'lbl',direction:'rtl','unicode-bidi':'embed'});
+    ths.forEach(function(th){var P=pt(th,r), X=C[0]+R*Math.cos(th*Math.PI/180), Yv=C[1]+R*Math.sin(th*Math.PI/180);
+      el(svg,'line',{x1:cx,y1:cy,x2:P[0],y2:P[1],stroke:'var(--mark)','stroke-width':1.2,opacity:.7});
+      el(svg,'circle',{cx:P[0],cy:P[1],r:6,fill:'var(--mark)'});
+      var right=P[0]>=cx; txt(svg,P[0]+(right?8:-8),P[1]-9,'('+fmt(X)+', '+fmt(Yv)+')',{'text-anchor':right?'start':'end',fill:'var(--mark)'});});
+    var eq=(C[0]===0?'x²':'(x − '+fmt(C[0])+')²')+' + (y − '+fmt(C[1])+')² = '+fmt(R*R);
+    txt(svg,8,16,eq,{fill:'var(--mark)'});
+  }
+  document.querySelectorAll('svg.mini').forEach(function(svg){
+    svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    if(svg.dataset.kind==='line') drawLine(svg); else drawCircle(svg);
+  });
+})();
+</script>
+</body>
+</html>
