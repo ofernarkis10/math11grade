@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>פתרון בעיות וצמצום יחידות</title>
+<meta name="description" content="שיטת עבודה: נתונים עם יחידות, המרה למערכת אחת, הצבה, צמצום עד היחידה המבוקשת — כולל משוואה ריבועית ובעיות מפגש.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{--bg:#f3f5f7;--grid:rgba(31,111,139,.06);--paper:#ffffff;--ink:#1c2633;--muted:#5b6878;--line:#d9dfe6;--accent:#1f6f8b;--accent-soft:#e3f0f5;--orange:#b4561e;--orange-soft:#fbeee5;--green:#2f7d4a;--green-soft:#e6f3ea;--code:#f6f8fa}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12171d;--grid:rgba(108,188,214,.05);--paper:#1a2129;--ink:#e4e9ef;--muted:#9aa7b6;--line:#2c3642;--accent:#6cbcd6;--accent-soft:#1b313b;--orange:#f0a46f;--orange-soft:#3a2a1f;--green:#6fcf8f;--green-soft:#17301f;--code:#151b22;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12171d;--grid:rgba(108,188,214,.05);--paper:#1a2129;--ink:#e4e9ef;--muted:#9aa7b6;--line:#2c3642;--accent:#6cbcd6;--accent-soft:#1b313b;--orange:#f0a46f;--orange-soft:#3a2a1f;--green:#6fcf8f;--green-soft:#17301f;--code:#151b22;color-scheme:dark}
+*{box-sizing:border-box}html,body{overflow-x:clip}
+body{margin:0;background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+background-size:24px 24px;color:var(--ink);font-family:"Assistant","Arial Hebrew",Arial,sans-serif;font-size:17px;line-height:1.7}
+.wrap{max-width:900px;margin:0 auto;padding:16px}
+nav.top{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:15px;margin-bottom:12px}
+nav.top a,a{color:var(--accent)}
+header.hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 22px 16px;margin-bottom:18px}
+.eyebrow{font-size:14px;color:var(--muted);letter-spacing:.02em}
+h1{font-family:"Frank Ruhl Libre",serif;font-size:2.1rem;line-height:1.2;margin:.25em 0 .3em}
+h2{font-family:"Frank Ruhl Libre",serif;font-size:1.5rem;margin:.2em 0 .6em}
+h3{font-size:1.1rem;margin:1.1em 0 .4em}
+.lead{color:var(--muted);font-size:1.08rem;margin:0}
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:0 0 18px}
+.num{display:inline-block;min-width:1.9em;height:1.9em;line-height:1.9em;text-align:center;border-radius:50%;background:var(--accent);color:var(--paper);font-size:.85em;margin-inline-end:.4em}
+.toc ol{margin:0;padding-inline-start:1.4em}
+.big{background:var(--accent-soft);border-radius:10px;padding:12px 14px;margin:12px 0;text-align:center;overflow-x:auto;font-size:1.08rem}
+.ex{border:2px dashed var(--line);border-radius:12px;padding:12px 16px;margin:14px 0}
+.ex .t{font-weight:700;color:var(--accent)}
+.note{background:var(--orange-soft);border-inline-start:4px solid var(--orange);border-radius:8px;padding:10px 14px;margin:14px 0}
+.good{background:var(--green-soft);border-inline-start:4px solid var(--green);border-radius:8px;padding:10px 14px;margin:14px 0}
+.tablebox{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:center}
+th{background:var(--accent-soft)}
+details{margin:8px 0}
+summary{cursor:pointer;color:var(--accent);font-weight:600}
+details .sol{border-inline-start:4px solid var(--orange);padding:6px 14px;margin-top:6px;background:var(--code);border-radius:6px}
+ol.check>li,ol.qs>li{margin-bottom:12px}
+.q{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:12px 0}
+.q .qh{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.q .qh b{color:var(--accent)}
+.tick{font-size:15px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.toolbar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:16px}
+button{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--accent-soft);color:var(--ink);border-radius:8px;padding:5px 12px;cursor:pointer}
+.prog{margin-inline-start:auto;color:var(--muted);font-size:15px}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:6px 0 30px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
+.card .tag{font-size:13px;color:var(--muted)}
+.card a{font-weight:700;text-decoration:none}
+.katex{direction:ltr;unicode-bidi:isolate}
+.sol,.ex,ol.check>li,.q p,td{line-height:2.15}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0}
+.ltr{direction:ltr;unicode-bidi:isolate}
+footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
+@media (max-width:600px){body{font-size:17px}.wrap{padding:12px 16px}section.ch,header.hero{padding:16px}h1{font-size:1.7rem}}
+@media print{body{background:#fff}.toolbar,nav.top,.pager{display:none}details{display:block}details>.sol{display:block}section.ch,.q{break-inside:avoid}}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body><div class="wrap">
+<nav class="top"><a href="index.html">→ דף הבית של האתר</a></nav>
+<nav class="top series" aria-label="דפי הנושא"><a href="units-00-overview.html">דף הקבוצה</a> · <a href="units-01-quantities-and-units.html">גדלים ויחידות</a> · <a href="units-02-unit-conversion.html">המרות</a> · <a href="units-03-motion-equations.html">משוואות תנועה</a> · <b>פתרון בעיות</b> · <a href="units-05-workbook.html">חוברת</a></nav>
+<header class="hero"><div class="eyebrow">מתמטיקה · כיתה י״א · 5 יח״ל · יחידות ומשוואות תנועה</div><h1>פתרון בעיות וצמצום יחידות</h1><p class="lead">מדוגמה מילולית ועד תשובה: רושמים יחידות, ממירים למערכת אחת, מציבים, מצמצמים — ובודקים שנשארה בדיוק היחידה של מה שנשאל.</p></header>
+<section class="ch toc"><h2>תוכן</h2><ol><li><a href="#s1">שיטת עבודה בחמישה שלבים</a></li><li><a href="#s2">דוגמה מלאה: האצה</a></li><li><a href="#s3">משוואה ריבועית בזמן</a></li><li><a href="#s4">בעיות מפגש ורדיפה</a></li><li><a href="#s5">יחידות של קצב: דלק, מים, כסף</a></li><li><a href="#s6">בדיקת סבירות</a></li><li><a href="#mist">טעויות נפוצות</a></li><li><a href="#chk">בדקו את עצמכם</a></li></ol></section>
+<section class="ch" id="s1"><h2><span class="num">1</span>שיטת עבודה בחמישה שלבים</h2>
+
+<ol>
+<li><b>רושמים נתונים עם יחידות</b> — כל מספר מקבל את היחידה שלו. מסמנים מה נשאל ובאיזו יחידה רוצים את התשובה.</li>
+<li><b>מאחדים מערכת יחידות</b> — בוחרים מערכת אחת (\(\mathrm{m},\mathrm{s}\) או \(\mathrm{km},\mathrm{h}\)) וממירים אליה הכול, לפי <a href="units-02-unit-conversion.html">המרת יחידות</a>.</li>
+<li><b>בוחרים נוסחה ומבודדים</b> את הנעלם — קודם באותיות.</li>
+<li><b>מציבים מספרים יחד עם היחידות</b> ומצמצמים.</li>
+<li><b>בודקים</b>: האם היחידה שנשארה היא היחידה המבוקשת? האם המספר סביר?</li>
+</ol>
+<div class="good"><b>כלל זהב:</b> אם בשלב 5 נשארה יחידה “מוזרה” — אל תמשיכו. חזרו לשלבים 2–4: כמעט תמיד חסרה המרה או שהנוסחה הופכה לא נכון.</div>
+</section>
+<section class="ch" id="s2"><h2><span class="num">2</span>דוגמה מלאה: האצה</h2>
+<div class="ex"><span class="t">דוגמה 1.</span> רכב נוסע ב־\(36\,\kmh\) ומתחיל להאיץ באופן קבוע. אחרי \(5\u{s}\) מהירותו \(72\,\kmh\). מצאו את התאוצה ואת המרחק שעבר בזמן ההאצה.<details><summary>פתרון</summary><div class="sol"><b>1. נתונים:</b> \(v_0=36\,\kmh,\ v=72\,\kmh,\ t=5\u{s}\). נשאל: \(a\) (ב־\(\mpss\)), \(x\) (ב־\(\mathrm{m}\)).<br>
+<b>2. איחוד:</b> הזמן בשניות, לכן עוברים ל־\(\mps\): \(v_0=10\,\mps,\ v=20\,\mps\).<br>
+<b>3. נוסחה:</b> \(a=\dfrac{v-v_0}{t}\).<br>
+<b>4. הצבה:</b> \(a=\dfrac{20\,\mps-10\,\mps}{5\u{s}}=\dfrac{10}{5}\cdot\dfrac{\mathrm{m}/\mathrm{s}}{\mathrm{s}}=2\,\mpss\).<br>
+מרחק: \(x=v_0t+\tfrac12at^2=10\,\dfrac{\mathrm{m}}{\cx{\mathrm{s}}}\cdot5\u{\cx{s}}+\tfrac12\cdot2\,\dfrac{\mathrm{m}}{\cx{\mathrm{s}^2}}\cdot25\u{\cx{s}^2}=50\u{m}+25\u{m}=75\u{m}\).<br>
+<b>5. בדיקה:</b> שני האיברים יצאו במטרים, ולכן מותר לחבר אותם ✓. מהירות ממוצעת \(15\,\mps\) כפול \(5\u{s}\) = \(75\u{m}\) ✓.</div></details></div>
+</section>
+<section class="ch" id="s3"><h2><span class="num">3</span>משוואה ריבועית בזמן</h2>
+
+<p>כשהנעלם הוא הזמן במשוואה \(x=v_0t+\tfrac12at^2\), מתקבלת <b>משוואה ריבועית</b> ב־\(t\). כאן יש שתי נקודות חשובות לגבי יחידות:</p>
+<ul>
+<li>לכל מקדם במשוואה יש יחידה. ב־\(\tfrac12at^2+v_0t-x=0\): המקדם של \(t^2\) ב־\(\mpss\), של \(t\) ב־\(\mps\), והאיבר החופשי ב־\(\mathrm{m}\). כל איבר שלם יוצא \(\mathrm{m}\).</li>
+<li>אחרי שמוודאים שהכול באותה מערכת, מותר לפתור את המשוואה על המספרים בלבד — הפתרון יוצא אוטומטית ביחידת הזמן של המערכת (\(\mathrm{s}\)).</li>
+</ul>
+<div class="ex"><span class="t">דוגמה 2.</span> גוף נע במהירות התחלתית \(5\,\mps\) ומאיץ ב־\(2\,\mpss\). כמה זמן ייקח לו לעבור \(50\u{m}\)?<details><summary>פתרון</summary><div class="sol">\(50\u{m}=5\,\mps\cdot t+\tfrac12\cdot2\,\mpss\cdot t^2\).<br>
+במערכת \(\mathrm{m},\mathrm{s}\): \(t^2+5t-50=0\Rightarrow(t+10)(t-5)=0\).<br>
+\(t=5\u{s}\) או \(t=-10\u{s}\). זמן שלילי נפסל (התנועה מתחילה ב־\(t=0\)), לכן \(t=5\u{s}\).<br>
+בדיקה עם יחידות: \(5\,\dfrac{\mathrm{m}}{\cx{\mathrm{s}}}\cdot5\u{\cx{s}}+\tfrac12\cdot2\,\dfrac{\mathrm{m}}{\cx{\mathrm{s}^2}}\cdot25\u{\cx{s}^2}=25\u{m}+25\u{m}=50\u{m}\) ✓.</div></details></div><div class="note"><b>שימו לב:</b> פתרון שלילי של זמן אינו “שגוי מתמטית” — הוא פשוט מחוץ לתחום ההגדרה של הבעיה (\(t\ge0\)). תמיד ציינו למה פסלתם אותו.</div>
+</section>
+<section class="ch" id="s4"><h2><span class="num">4</span>בעיות מפגש ורדיפה</h2>
+
+<p>בבעיות תנועה מילוליות (כמו בבגרות) כדאי לעבוד ב־\(\mathrm{km}\) ו־\(\mathrm{h}\). שני רעיונות מרכזיים:</p>
+<ul>
+<li><b>נעים זה לקראת זה:</b> המרחק ביניהם קטן בקצב \(v_1+v_2\) (מהירות התקרבות).</li>
+<li><b>נעים באותו כיוון:</b> המרחק ביניהם משתנה בקצב \(|v_1-v_2|\).</li>
+</ul>
+<div class="big">\[t_{\text{מפגש}}=\frac{\text{מרחק התחלתי}}{\text{מהירות התקרבות}}\qquad\Rightarrow\qquad \frac{\mathrm{km}}{\mathrm{km}/\mathrm{h}}=\mathrm{h}\]</div><div class="ex"><span class="t">דוגמה 3.</span> שתי מכוניות יוצאות באותו רגע משתי ערים המרוחקות \(210\u{km}\), זו לקראת זו, במהירויות \(60\,\kmh\) ו־\(80\,\kmh\). מתי ואיפה ייפגשו?<details><summary>פתרון</summary><div class="sol">מהירות התקרבות: \(60+80=140\,\kmh\).<br>
+\(t=\dfrac{210\u{km}}{140\,\kmh}=\dfrac{210}{140}\cdot\cx{\mathrm{km}}\cdot\dfrac{\mathrm{h}}{\cx{\mathrm{km}}}=1.5\u{h}\) — שעה וחצי.<br>
+המכונית הראשונה עברה \(60\,\dfrac{\mathrm{km}}{\cx{\mathrm{h}}}\cdot1.5\u{\cx{h}}=90\u{km}\) מהעיר שלה. בדיקה: השנייה עברה \(120\u{km}\), ו־\(90+120=210\) ✓.</div></details></div><div class="ex"><span class="t">דוגמה 4.</span> רוכב יוצא מנקודה A ב־\(20\,\kmh\). חצי שעה אחריו יוצא מאותה נקודה רוכב שני, באותו כיוון, ב־\(30\,\kmh\). מתי ישיג השני את הראשון?<details><summary>פתרון</summary><div class="sol">בחצי השעה הראשונה הראשון התרחק: \(20\,\kmh\cdot0.5\u{h}=10\u{km}\).<br>
+השני סוגר את הפער בקצב \(30-20=10\,\kmh\): \(t=\dfrac{10\u{km}}{10\,\kmh}=1\u{h}\) אחרי יציאת השני.<br>
+מקום: \(30\cdot1=30\u{km}\) מ־A. בדיקה: הראשון רכב \(1.5\u{h}\cdot20\,\kmh=30\u{km}\) ✓.</div></details></div>
+</section>
+<section class="ch" id="s5"><h2><span class="num">5</span>יחידות של קצב: דלק, מים, כסף</h2>
+
+<p>מהירות היא דוגמה אחת ל<b>קצב</b> — “כמה ממשהו ליחידה של משהו אחר”. אותה שיטת צמצום עובדת לכל קצב:</p>
+<div class="tablebox"><table><tr><th>קצב</th><th>יחידה</th><th>כפל בזמן / כמות נותן</th></tr><tr><td>מהירות</td><td>\(\kmh\)</td><td>\(\kmh\cdot\mathrm{h}=\mathrm{km}\)</td></tr><tr><td>ספיקת ברז</td><td>\(\mathrm{L}/\mathrm{min}\)</td><td>\(\dfrac{\mathrm{L}}{\mathrm{min}}\cdot\mathrm{min}=\mathrm{L}\)</td></tr><tr><td>צריכת דלק</td><td>\(\mathrm{L}/\mathrm{km}\)</td><td>\(\dfrac{\mathrm{L}}{\mathrm{km}}\cdot\mathrm{km}=\mathrm{L}\)</td></tr><tr><td>שכר</td><td>\(₪/\mathrm{h}\)</td><td>\(\dfrac{₪}{\mathrm{h}}\cdot\mathrm{h}=₪\)</td></tr></table></div><div class="ex"><span class="t">דוגמה 5.</span> בריכה בנפח \(3\u{m}^3\) מתמלאת מברז שספיקתו \(15\,\mathrm{L}/\mathrm{min}\). כמה זמן תימשך המילוי?<details><summary>פתרון</summary><div class="sol">קודם מאחדים: \(3\u{m}^3=3000\u{L}\).<br>
+\(t=\dfrac{3000\u{L}}{15\,\mathrm{L}/\mathrm{min}}=200\u{min}=3\u{h}\ 20\u{min}\).</div></details></div>
+</section>
+<section class="ch" id="s6"><h2><span class="num">6</span>בדיקת סבירות</h2>
+
+<p>היחידה הנכונה היא תנאי הכרחי, אבל צריך גם מספר הגיוני. כמה ערכים להשוואה:</p>
+<div class="tablebox"><table><tr><th>מצב</th><th>סדר גודל</th></tr><tr><td>הליכה</td><td>\(1.5\,\mps\approx5\,\kmh\)</td></tr><tr><td>רכב בעיר / בכביש מהיר</td><td>\(14\,\mps\approx50\,\kmh\) / \(28\,\mps\approx100\,\kmh\)</td></tr><tr><td>תאוצת נפילה חופשית</td><td>\(g\approx 9.8\,\mpss\approx10\,\mpss\)</td></tr><tr><td>האצה של רכב רגיל</td><td>\(2\text{–}4\,\mpss\)</td></tr></table></div><div class="note"><b>שימו לב:</b> אם יצא לכם שרכב נוסע \(300\,\mps\), או שמשאית האיצה ב־\(50\,\mpss\) — כמעט בטוח שחסרה המרה בין קמ״ש למ/ש.</div>
+</section>
+<section class="ch" id="mist"><h2><span class="num">!</span>טעויות נפוצות</h2>
+<ul><li>מהירות בקמ״ש וזמן בשניות באותה הצבה: \(72\,\kmh\cdot10\u{s}=720\) ✗ — היחידה \(\tfrac{\mathrm{km}\cdot\mathrm{s}}{\mathrm{h}}\) אינה מרחק.</li><li>חיבור מהירויות כשהגופים נעים באותו כיוון (צריך חיסור).</li><li>שכחה של הפרש זמני היציאה בבעיית רדיפה.</li><li>השארת פתרון שלילי של זמן בלי לפסול אותו.</li></ul>
+</section>
+<section class="ch" id="chk"><h2><span class="num">✓</span>בדקו את עצמכם</h2>
+<ol class="check"><li>רכבת נוסעת ב־\(120\,\kmh\). כמה דקות ייקח לה לעבור \(9\u{km}\)?<details><summary>פתרון</summary><div class="sol">\(t=\dfrac{9}{120}\u{h}=0.075\u{h}=4.5\u{min}\).</div></details></li><li>רצה עוברת \(400\u{m}\) ב־\(50\u{s}\). מה מהירותה בקמ״ש?<details><summary>פתרון</summary><div class="sol">\(8\,\mps\cdot3.6=28.8\,\kmh\).</div></details></li><li>גוף עם \(v_0=6\,\mps\), \(a=2\,\mpss\). כמה זמן לעבור \(40\u{m}\)?<details><summary>פתרון</summary><div class="sol">\(t^2+6t-40=0\Rightarrow(t+10)(t-4)=0\Rightarrow t=4\u{s}\).</div></details></li><li>באותה שאלה — מה המהירות בסוף?<details><summary>פתרון</summary><div class="sol">\(v=6+2\cdot4=14\,\mps\). בדיקה: \(v^2=36+2\cdot2\cdot40=196\) ✓.</div></details></li><li>שני הולכי רגל מרוחקים \(9\u{km}\), הולכים זה לקראת זה ב־\(4\,\kmh\) וב־\(5\,\kmh\). מתי ייפגשו?<details><summary>פתרון</summary><div class="sol">\(\dfrac{9\u{km}}{9\,\kmh}=1\u{h}\).</div></details></li><li>רכבת באורך \(200\u{m}\) נוסעת ב־\(72\,\kmh\) על גשר באורך \(400\u{m}\). כמה זמן מהרגע שהקטר עולה על הגשר ועד שהקרון האחרון יורד ממנו?<details><summary>פתרון</summary><div class="sol">מרחק כולל \(600\u{m}\), מהירות \(20\,\mps\): \(t=30\u{s}\).</div></details></li><li>רכב צורך \(6\u{L}\) ל־\(100\u{km}\). כמה ליטרים לנסיעה של \(350\u{km}\)?<details><summary>פתרון</summary><div class="sol">\(350\u{\cx{km}}\cdot\dfrac{6\u{L}}{100\u{\cx{km}}}=21\u{L}\).</div></details></li><li>תלמיד קיבל ש“זמן הנסיעה” הוא \(40\,\dfrac{\mathrm{km}^2}{\mathrm{h}}\). מה כנראה עשה?<details><summary>פתרון</summary><div class="sol">כפל מרחק במהירות במקום לחלק: \(\mathrm{km}\cdot\dfrac{\mathrm{km}}{\mathrm{h}}\). הנכון: \(t=\dfrac{x}{v}\).</div></details></li></ol>
+</section>
+<div class="pager"><a href="units-03-motion-equations.html">→ משוואות תנועה ויחידות</a><a href="units-05-workbook.html">חוברת תרגול — יחידות ותנועה ←</a></div>
+<footer>אתר המתמטיקה של כיתה י״א · קבוצת "יחידות ומשוואות תנועה"</footer>
+</div>
+<script>
+const KMACROS={"\\u":"\\,\\mathrm{#1}","\\mps":"\\tfrac{\\mathrm{m}}{\\mathrm{s}}","\\mpss":"\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}","\\kmh":"\\tfrac{\\mathrm{km}}{\\mathrm{h}}","\\cx":"\\cancel{#1}"};
+document.addEventListener("DOMContentLoaded",()=>{
+ if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],macros:KMACROS,throwOnError:false});}
+ const KEY="math11-units-"+location.pathname.split("/").pop();
+ let saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+ const boxes=[...document.querySelectorAll("input.done")];
+ const prog=document.querySelector(".prog");
+ const upd=()=>{if(prog)prog.textContent="פתרתי "+boxes.filter(b=>b.checked).length+" מתוך "+boxes.length;};
+ boxes.forEach(b=>{b.checked=!!saved[b.dataset.q];b.addEventListener("change",()=>{saved[b.dataset.q]=b.checked;try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){};upd();});});
+ upd();
+ const all=document.getElementById("showall");
+ if(all)all.addEventListener("click",()=>{const ds=[...document.querySelectorAll("details")];const open=!ds.every(d=>d.open);ds.forEach(d=>d.open=open);all.textContent=open?"הסתר את כל הפתרונות":"הצג את כל הפתרונות";});
+ const clr=document.getElementById("clear");
+ if(clr)clr.addEventListener("click",()=>{boxes.forEach(b=>b.checked=false);saved={};try{localStorage.removeItem(KEY)}catch(e){};upd();});
+ window.addEventListener("beforeprint",()=>document.querySelectorAll("details").forEach(d=>d.open=true));
+});
+</script>
+</body></html>

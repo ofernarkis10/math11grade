@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>גדלים ויחידות</title>
+<meta name="description" content="מהו גודל, יחידות יסוד ויחידות נגזרות, קידומות, ואיך יחידות מתנהגות כמו משתנים — כפל, חילוק וצמצום.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{--bg:#f3f5f7;--grid:rgba(31,111,139,.06);--paper:#ffffff;--ink:#1c2633;--muted:#5b6878;--line:#d9dfe6;--accent:#1f6f8b;--accent-soft:#e3f0f5;--orange:#b4561e;--orange-soft:#fbeee5;--green:#2f7d4a;--green-soft:#e6f3ea;--code:#f6f8fa}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12171d;--grid:rgba(108,188,214,.05);--paper:#1a2129;--ink:#e4e9ef;--muted:#9aa7b6;--line:#2c3642;--accent:#6cbcd6;--accent-soft:#1b313b;--orange:#f0a46f;--orange-soft:#3a2a1f;--green:#6fcf8f;--green-soft:#17301f;--code:#151b22;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12171d;--grid:rgba(108,188,214,.05);--paper:#1a2129;--ink:#e4e9ef;--muted:#9aa7b6;--line:#2c3642;--accent:#6cbcd6;--accent-soft:#1b313b;--orange:#f0a46f;--orange-soft:#3a2a1f;--green:#6fcf8f;--green-soft:#17301f;--code:#151b22;color-scheme:dark}
+*{box-sizing:border-box}html,body{overflow-x:clip}
+body{margin:0;background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+background-size:24px 24px;color:var(--ink);font-family:"Assistant","Arial Hebrew",Arial,sans-serif;font-size:17px;line-height:1.7}
+.wrap{max-width:900px;margin:0 auto;padding:16px}
+nav.top{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:15px;margin-bottom:12px}
+nav.top a,a{color:var(--accent)}
+header.hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 22px 16px;margin-bottom:18px}
+.eyebrow{font-size:14px;color:var(--muted);letter-spacing:.02em}
+h1{font-family:"Frank Ruhl Libre",serif;font-size:2.1rem;line-height:1.2;margin:.25em 0 .3em}
+h2{font-family:"Frank Ruhl Libre",serif;font-size:1.5rem;margin:.2em 0 .6em}
+h3{font-size:1.1rem;margin:1.1em 0 .4em}
+.lead{color:var(--muted);font-size:1.08rem;margin:0}
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:0 0 18px}
+.num{display:inline-block;min-width:1.9em;height:1.9em;line-height:1.9em;text-align:center;border-radius:50%;background:var(--accent);color:var(--paper);font-size:.85em;margin-inline-end:.4em}
+.toc ol{margin:0;padding-inline-start:1.4em}
+.big{background:var(--accent-soft);border-radius:10px;padding:12px 14px;margin:12px 0;text-align:center;overflow-x:auto;font-size:1.08rem}
+.ex{border:2px dashed var(--line);border-radius:12px;padding:12px 16px;margin:14px 0}
+.ex .t{font-weight:700;color:var(--accent)}
+.note{background:var(--orange-soft);border-inline-start:4px solid var(--orange);border-radius:8px;padding:10px 14px;margin:14px 0}
+.good{background:var(--green-soft);border-inline-start:4px solid var(--green);border-radius:8px;padding:10px 14px;margin:14px 0}
+.tablebox{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:center}
+th{background:var(--accent-soft)}
+details{margin:8px 0}
+summary{cursor:pointer;color:var(--accent);font-weight:600}
+details .sol{border-inline-start:4px solid var(--orange);padding:6px 14px;margin-top:6px;background:var(--code);border-radius:6px}
+ol.check>li,ol.qs>li{margin-bottom:12px}
+.q{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:12px 0}
+.q .qh{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.q .qh b{color:var(--accent)}
+.tick{font-size:15px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.toolbar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:16px}
+button{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--accent-soft);color:var(--ink);border-radius:8px;padding:5px 12px;cursor:pointer}
+.prog{margin-inline-start:auto;color:var(--muted);font-size:15px}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:6px 0 30px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
+.card .tag{font-size:13px;color:var(--muted)}
+.card a{font-weight:700;text-decoration:none}
+.katex{direction:ltr;unicode-bidi:isolate}
+.sol,.ex,ol.check>li,.q p,td{line-height:2.15}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0}
+.ltr{direction:ltr;unicode-bidi:isolate}
+footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
+@media (max-width:600px){body{font-size:17px}.wrap{padding:12px 16px}section.ch,header.hero{padding:16px}h1{font-size:1.7rem}}
+@media print{body{background:#fff}.toolbar,nav.top,.pager{display:none}details{display:block}details>.sol{display:block}section.ch,.q{break-inside:avoid}}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body><div class="wrap">
+<nav class="top"><a href="index.html">→ דף הבית של האתר</a></nav>
+<nav class="top series" aria-label="דפי הנושא"><a href="units-00-overview.html">דף הקבוצה</a> · <b>גדלים ויחידות</b> · <a href="units-02-unit-conversion.html">המרות</a> · <a href="units-03-motion-equations.html">משוואות תנועה</a> · <a href="units-04-solving-with-units.html">פתרון בעיות</a> · <a href="units-05-workbook.html">חוברת</a></nav>
+<header class="hero"><div class="eyebrow">מתמטיקה · כיתה י״א · 5 יח״ל · יחידות ומשוואות תנועה</div><h1>גדלים ויחידות</h1><p class="lead">מה זה גודל, מאיפה מגיעות היחידות, ולמה מותר לכפול, לחלק ולצמצם יחידות כמו אותיות באלגברה.</p></header>
+<section class="ch toc"><h2>תוכן</h2><ol><li><a href="#s1">גודל = מספר × יחידה</a></li><li><a href="#s2">יחידות יסוד וקידומות</a></li><li><a href="#s3">יחידות נגזרות</a></li><li><a href="#s4">יחידות מתנהגות כמו משתנים: כפל, חילוק וצמצום</a></li><li><a href="#s5">חוק ההתאמה: חיבור, חיסור ושוויון</a></li><li><a href="#mist">טעויות נפוצות</a></li><li><a href="#chk">בדקו את עצמכם</a></li></ol></section>
+<section class="ch" id="s1"><h2><span class="num">1</span>גודל = מספר × יחידה</h2>
+
+<p><b>גודל</b> (גודל פיזיקלי) הוא כל דבר שאפשר למדוד: מרחק, זמן, מהירות, מסה, שטח, מחיר. כל גודל נכתב כ<b>מספר</b> כפול <b>יחידה</b>:</p>
+<div class="big">\[x = 120\u{m}\qquad t = 8\u{s}\qquad v = 15\,\mps\]</div>
+<p>המספר לבדו אינו תשובה. “המרחק הוא 120” יכול להיות 120 מטר או 120 קילומטר — פער של פי 1000. לכן בכל תרגיל עם משמעות מעשית <b>היחידה היא חלק מהתשובה</b>.</p>
+<p>הרעיון המרכזי של כל הקבוצה: <b>היחידה מתנהגת כמו משתנה אלגברי</b>. כמו שכותבים \(3a\) ומבינים "3 כפול \(a\)", כך \(120\u{m}\) פירושו "120 כפול מטר". לכן אפשר לכפול יחידות, לחלק אותן ולצמצם אותן — בדיוק כמו אותיות.</p>
+<div class="note"><b>שימו לב:</b> בין המספר ליחידה יש <b>כפל</b>. זו הסיבה שמותר לכתוב \(\dfrac{120\u{m}}{8\u{s}} = \dfrac{120}{8}\cdot\dfrac{\mathrm{m}}{\mathrm{s}} = 15\,\mps\).</div>
+</section>
+<section class="ch" id="s2"><h2><span class="num">2</span>יחידות יסוד וקידומות</h2>
+
+<p>במערכת היחידות הבין־לאומית (SI) יש כמה <b>יחידות יסוד</b>. בקבוצה הזו נשתמש בשלוש:</p>
+<div class="tablebox"><table><tr><th>גודל</th><th>סימון הגודל</th><th>יחידת יסוד</th><th>סימון היחידה</th></tr><tr><td>אורך / מרחק</td><td>\(x,\ d,\ s\)</td><td>מטר</td><td>\(\mathrm{m}\)</td></tr><tr><td>זמן</td><td>\(t\)</td><td>שנייה</td><td>\(\mathrm{s}\)</td></tr><tr><td>מסה</td><td>\(m\)</td><td>קילוגרם</td><td>\(\mathrm{kg}\)</td></tr></table></div>
+<p>כדי לא לכתוב מספרים ענקיים או זעירים, מוסיפים ליחידה <b>קידומת</b> — מכפיל שהוא חזקה של 10:</p>
+<div class="tablebox"><table><tr><th>קידומת</th><th>סימון</th><th>פירוש</th><th>דוגמה</th></tr><tr><td>קילו</td><td>\(\mathrm{k}\)</td><td>\(10^{3}\)</td><td>\(1\u{km} = 1000\u{m}\)</td></tr><tr><td>סנטי</td><td>\(\mathrm{c}\)</td><td>\(10^{-2}\)</td><td>\(1\u{cm} = 0.01\u{m}\)</td></tr><tr><td>מילי</td><td>\(\mathrm{m}\)</td><td>\(10^{-3}\)</td><td>\(1\u{mm} = 0.001\u{m}\)</td></tr><tr><td>מיקרו</td><td>\(\mu\)</td><td>\(10^{-6}\)</td><td>\(1\,\mu\mathrm{m} = 10^{-6}\u{m}\)</td></tr></table></div>
+<p>יחידות זמן שאינן עשרוניות: \(1\u{min} = 60\u{s}\), \(1\u{h} = 60\u{min} = 3600\u{s}\).</p>
+<div class="note"><b>שימו לב:</b> האות \(\mathrm{m}\) משמשת גם ל“מטר” וגם לקידומת “מילי”. לפי המיקום מבינים: \(\mathrm{mm}\) = מילימטר, \(\mathrm{m}\) לבד = מטר. ובנוסחאות האות \(m\) (נטויה) היא בדרך כלל מסה.</div>
+</section>
+<section class="ch" id="s3"><h2><span class="num">3</span>יחידות נגזרות</h2>
+
+<p><b>יחידה נגזרת</b> נבנית מיחידות היסוד לפי הנוסחה שמגדירה את הגודל. היחידה “יוצאת מהנוסחה”:</p>
+<div class="tablebox"><table><tr><th>גודל</th><th>נוסחה מגדירה</th><th>חישוב היחידה</th><th>יחידה</th></tr><tr><td>מהירות</td><td>\(v=\dfrac{\Delta x}{\Delta t}\)</td><td>\(\dfrac{\mathrm{m}}{\mathrm{s}}\)</td><td>\(\mps\) (מטר לשנייה)</td></tr><tr><td>תאוצה</td><td>\(a=\dfrac{\Delta v}{\Delta t}\)</td><td>\(\dfrac{\mathrm{m}/\mathrm{s}}{\mathrm{s}}=\dfrac{\mathrm{m}}{\mathrm{s}\cdot\mathrm{s}}\)</td><td>\(\mpss\) (מטר לשנייה בריבוע)</td></tr><tr><td>שטח</td><td>\(S=a\cdot b\)</td><td>\(\mathrm{m}\cdot\mathrm{m}\)</td><td>\(\mathrm{m}^2\)</td></tr><tr><td>נפח</td><td>\(V=a\cdot b\cdot c\)</td><td>\(\mathrm{m}\cdot\mathrm{m}\cdot\mathrm{m}\)</td><td>\(\mathrm{m}^3\)</td></tr><tr><td>צפיפות</td><td>\(\rho=\dfrac{m}{V}\)</td><td>\(\dfrac{\mathrm{kg}}{\mathrm{m}^3}\)</td><td>\(\mathrm{kg}/\mathrm{m}^3\)</td></tr></table></div>
+<p>הסימן \(\Delta\) (דלתא) פירושו “שינוי”: \(\Delta x = x_2 - x_1\). לשינוי יש אותה יחידה כמו לגודל עצמו — הפרש של שני מרחקים הוא מרחק.</p>
+<p>יחידה נגזרת אומרת לנו <b>מה הגודל עושה</b>: \(15\,\mps\) — בכל שנייה עוברים 15 מטר. \(2\,\mpss\) — בכל שנייה המהירות גדלה ב־\(2\,\mps\).</p>
+<div class="ex"><span class="t">דוגמה 1.</span> מה היחידה של “תעריף נסיעה” שמחושב כ\(\dfrac{\text{מחיר}}{\text{מרחק}}\), כשהמחיר ב־₪ והמרחק ב־km?<details><summary>פתרון</summary><div class="sol">מחלקים יחידה ביחידה: \(\dfrac{₪}{\mathrm{km}}\) — “שקלים לקילומטר”. למשל \(\dfrac{42\,₪}{12\u{km}} = 3.5\,\dfrac{₪}{\mathrm{km}}\).</div></details></div>
+</section>
+<section class="ch" id="s4"><h2><span class="num">4</span>יחידות מתנהגות כמו משתנים: כפל, חילוק וצמצום</h2>
+
+<p>כל חוקי האלגברה של אותיות חלים גם על יחידות:</p>
+<div class="tablebox"><table><tr><th>פעולה</th><th>באותיות</th><th>ביחידות</th></tr><tr><td>כפל אותה יחידה</td><td>\(a\cdot a=a^2\)</td><td>\(\mathrm{m}\cdot\mathrm{m}=\mathrm{m}^2\)</td></tr><tr><td>חילוק אותה יחידה</td><td>\(\dfrac{a}{a}=1\)</td><td>\(\dfrac{\mathrm{m}}{\mathrm{m}}=1\) (חסר יחידות)</td></tr><tr><td>צמצום בשבר</td><td>\(\dfrac{a}{b}\cdot b=a\)</td><td>\(\dfrac{\mathrm{m}}{\mathrm{s}}\cdot\mathrm{s}=\mathrm{m}\)</td></tr><tr><td>חילוק בשבר</td><td>\(\dfrac{a}{a/b}=a\cdot\dfrac{b}{a}=b\)</td><td>\(\dfrac{\mathrm{m}}{\mathrm{m}/\mathrm{s}}=\mathrm{m}\cdot\dfrac{\mathrm{s}}{\mathrm{m}}=\mathrm{s}\)</td></tr><tr><td>שבר מקונן</td><td>\(\dfrac{a/b}{b}=\dfrac{a}{b^2}\)</td><td>\(\dfrac{\mathrm{m}/\mathrm{s}}{\mathrm{s}}=\dfrac{\mathrm{m}}{\mathrm{s}^2}\)</td></tr></table></div>
+<p>כשמבצעים חישוב, כותבים את היחידות <b>לאורך כל הדרך</b> ומוחקים יחידה שמופיעה גם במונה וגם במכנה — בדיוק כמו צמצום שבר:</p>
+<div class="big">\[20\,\frac{\mathrm{m}}{\cx{\mathrm{s}}}\cdot 45\u{\cx{s}} = 900\u{m}\]</div>
+<p>היחידה שנשארת אחרי הצמצום אומרת לנו <b>מה חישבנו</b>. אם רצינו מרחק וקיבלנו \(\mathrm{m}\) — סימן טוב. אם קיבלנו \(\mathrm{m}\cdot\mathrm{s}\) — יש טעות בנוסחה או בהצבה.</p>
+<div class="ex"><span class="t">דוגמה 2.</span> פשטו את היחידה: \(\dfrac{\mathrm{m}/\mathrm{s}^2 \cdot \mathrm{s}^2}{\mathrm{s}}\).<details><summary>פתרון</summary><div class="sol">במונה: \(\dfrac{\mathrm{m}}{\cx{\mathrm{s}^2}}\cdot\cx{\mathrm{s}^2} = \mathrm{m}\). נשאר \(\dfrac{\mathrm{m}}{\mathrm{s}} = \mps\) — יחידה של מהירות.</div></details></div><div class="ex"><span class="t">דוגמה 3.</span> רכב נוסע \(150\u{m}\) במהירות \(25\,\mps\). כמה זמן נמשכת הנסיעה? כתבו את היחידות בכל שלב.<details><summary>פתרון</summary><div class="sol">\(t=\dfrac{x}{v}=\dfrac{150\u{m}}{25\,\mps}=\dfrac{150}{25}\cdot\mathrm{m}\cdot\dfrac{\mathrm{s}}{\mathrm{m}}=6\cdot\dfrac{\cx{\mathrm{m}}\cdot\mathrm{s}}{\cx{\mathrm{m}}}=6\u{s}\). חילוק בשבר = כפל בהופכי — גם ביחידות.</div></details></div>
+</section>
+<section class="ch" id="s5"><h2><span class="num">5</span>חוק ההתאמה: חיבור, חיסור ושוויון</h2>
+
+<p>בכפל ובחילוק אפשר לשלב כל יחידות. בחיבור ובחיסור — <b>לא</b>:</p>
+<div class="good"><b>כלל זהב:</b> מחברים, מחסרים ומשווים רק גדלים <b>באותה יחידה</b>. \(3\u{m} + 2\u{m} = 5\u{m}\) ✓. אבל \(3\u{m} + 2\,\mps\) — אין לזה משמעות, כמו \(3a+2b\) שלא אפשר לכנס.</div>
+<p>מכאן שני כללים חשובים:</p>
+<ol>
+<li><b>כל האיברים בסכום</b> חייבים להיות באותה יחידה. אם יש \(2\u{km} + 300\u{m}\), קודם ממירים: \(2000\u{m}+300\u{m}=2300\u{m}\).</li>
+<li><b>שני צדי משוואה</b> חייבים להיות באותה יחידה. אם בצד שמאל מרחק במטרים, גם בצד ימין צריך לצאת מטר.</li>
+</ol>
+<p>כלל זה הוא כלי בדיקה עוצמתי: אפשר לגלות טעות בנוסחה בלי לחשב מספר אחד — רק לפי היחידות. נשתמש בו הרבה במאמר על <a href="units-03-motion-equations.html">משוואות תנועה</a>.</p>
+<div class="note"><b>שימו לב:</b> מספרים כמו \(\tfrac12\), \(2\) או \(\pi\) בנוסחה הם <b>חסרי יחידות</b>. הם משנים את המספר אך לא את היחידה.</div>
+</section>
+<section class="ch" id="mist"><h2><span class="num">!</span>טעויות נפוצות</h2>
+<ul><li>כתיבת תשובה בלי יחידה (\(x=900\) במקום \(x=900\u{m}\)).</li><li>חיבור גדלים ביחידות שונות: \(1\u{h}+20\u{min}=21\) ✗. נכון: \(60\u{min}+20\u{min}=80\u{min}\).</li><li>שכחה שחילוק בשבר הוא כפל בהופכי: \(\dfrac{\mathrm{m}}{\mathrm{m}/\mathrm{s}}\) אינו \(\dfrac{\mathrm{m}^2}{\mathrm{s}}\) אלא \(\mathrm{s}\).</li><li>בלבול בין \(\mathrm{s}\) לבין \(\mathrm{s}^2\) בתאוצה: \(\mpss\) פירושו “מטר לשנייה, לשנייה”.</li></ul>
+</section>
+<section class="ch" id="chk"><h2><span class="num">✓</span>בדקו את עצמכם</h2>
+<ol class="check"><li>פשטו: \(\mps\cdot\mathrm{s}\).<details><summary>פתרון</summary><div class="sol">\(\mathrm{m}\).</div></details></li><li>פשטו: \(\dfrac{\mathrm{m}}{\mathrm{m}/\mathrm{s}}\).<details><summary>פתרון</summary><div class="sol">\(\mathrm{m}\cdot\dfrac{\mathrm{s}}{\mathrm{m}} = \mathrm{s}\).</div></details></li><li>פשטו: \(\mpss\cdot\mathrm{s}\).<details><summary>פתרון</summary><div class="sol">\(\dfrac{\mathrm{m}}{\mathrm{s}^{\cx{2}}}\cdot\mathrm{s}=\mps\) (נשארת שנייה אחת במכנה).</div></details></li><li>פשטו: \(\mpss\cdot\mathrm{s}^2\).<details><summary>פתרון</summary><div class="sol">\(\mathrm{m}\).</div></details></li><li>פשטו: \(\left(\mps\right)^2\).<details><summary>פתרון</summary><div class="sol">\(\dfrac{\mathrm{m}^2}{\mathrm{s}^2}\).</div></details></li><li>האם מותר לחשב \(5\u{m}+3\u{m}^2\)? נמקו.<details><summary>פתרון</summary><div class="sol">לא. \(\mathrm{m}\) הוא אורך ו־\(\mathrm{m}^2\) הוא שטח — גדלים שונים, כמו \(5a+3a^2\).</div></details></li><li>מה יחידת התוצאה של \(\dfrac{72\u{km}}{0.8\u{h}}\)? חשבו.<details><summary>פתרון</summary><div class="sol">\(90\,\kmh\).</div></details></li><li>צפיפות היא \(\rho=\dfrac{m}{V}\). מה היחידה של \(\rho\cdot V\)?<details><summary>פתרון</summary><div class="sol">\(\dfrac{\mathrm{kg}}{\cx{\mathrm{m}^3}}\cdot\cx{\mathrm{m}^3}=\mathrm{kg}\) — מסה, כמצופה.</div></details></li></ol>
+</section>
+<div class="pager"><a href="units-00-overview.html">→ יחידות ומשוואות תנועה — דף הקבוצה</a><a href="units-02-unit-conversion.html">המרת יחידות ←</a></div>
+<footer>אתר המתמטיקה של כיתה י״א · קבוצת "יחידות ומשוואות תנועה"</footer>
+</div>
+<script>
+const KMACROS={"\\u":"\\,\\mathrm{#1}","\\mps":"\\tfrac{\\mathrm{m}}{\\mathrm{s}}","\\mpss":"\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}","\\kmh":"\\tfrac{\\mathrm{km}}{\\mathrm{h}}","\\cx":"\\cancel{#1}"};
+document.addEventListener("DOMContentLoaded",()=>{
+ if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],macros:KMACROS,throwOnError:false});}
+ const KEY="math11-units-"+location.pathname.split("/").pop();
+ let saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+ const boxes=[...document.querySelectorAll("input.done")];
+ const prog=document.querySelector(".prog");
+ const upd=()=>{if(prog)prog.textContent="פתרתי "+boxes.filter(b=>b.checked).length+" מתוך "+boxes.length;};
+ boxes.forEach(b=>{b.checked=!!saved[b.dataset.q];b.addEventListener("change",()=>{saved[b.dataset.q]=b.checked;try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){};upd();});});
+ upd();
+ const all=document.getElementById("showall");
+ if(all)all.addEventListener("click",()=>{const ds=[...document.querySelectorAll("details")];const open=!ds.every(d=>d.open);ds.forEach(d=>d.open=open);all.textContent=open?"הסתר את כל הפתרונות":"הצג את כל הפתרונות";});
+ const clr=document.getElementById("clear");
+ if(clr)clr.addEventListener("click",()=>{boxes.forEach(b=>b.checked=false);saved={};try{localStorage.removeItem(KEY)}catch(e){};upd();});
+ window.addEventListener("beforeprint",()=>document.querySelectorAll("details").forEach(d=>d.open=true));
+});
+</script>
+</body></html>

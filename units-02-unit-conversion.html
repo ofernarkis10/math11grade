@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>המרת יחידות</title>
+<meta name="description" content="שיטת &quot;הכפל באחד&quot;: המרת אורך, זמן ומהירות (קמ״ש ↔ מ/ש), יחידות בריבוע ובחזקה שלישית, ותאוצה.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{--bg:#f3f5f7;--grid:rgba(31,111,139,.06);--paper:#ffffff;--ink:#1c2633;--muted:#5b6878;--line:#d9dfe6;--accent:#1f6f8b;--accent-soft:#e3f0f5;--orange:#b4561e;--orange-soft:#fbeee5;--green:#2f7d4a;--green-soft:#e6f3ea;--code:#f6f8fa}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12171d;--grid:rgba(108,188,214,.05);--paper:#1a2129;--ink:#e4e9ef;--muted:#9aa7b6;--line:#2c3642;--accent:#6cbcd6;--accent-soft:#1b313b;--orange:#f0a46f;--orange-soft:#3a2a1f;--green:#6fcf8f;--green-soft:#17301f;--code:#151b22;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12171d;--grid:rgba(108,188,214,.05);--paper:#1a2129;--ink:#e4e9ef;--muted:#9aa7b6;--line:#2c3642;--accent:#6cbcd6;--accent-soft:#1b313b;--orange:#f0a46f;--orange-soft:#3a2a1f;--green:#6fcf8f;--green-soft:#17301f;--code:#151b22;color-scheme:dark}
+*{box-sizing:border-box}html,body{overflow-x:clip}
+body{margin:0;background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+background-size:24px 24px;color:var(--ink);font-family:"Assistant","Arial Hebrew",Arial,sans-serif;font-size:17px;line-height:1.7}
+.wrap{max-width:900px;margin:0 auto;padding:16px}
+nav.top{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:15px;margin-bottom:12px}
+nav.top a,a{color:var(--accent)}
+header.hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 22px 16px;margin-bottom:18px}
+.eyebrow{font-size:14px;color:var(--muted);letter-spacing:.02em}
+h1{font-family:"Frank Ruhl Libre",serif;font-size:2.1rem;line-height:1.2;margin:.25em 0 .3em}
+h2{font-family:"Frank Ruhl Libre",serif;font-size:1.5rem;margin:.2em 0 .6em}
+h3{font-size:1.1rem;margin:1.1em 0 .4em}
+.lead{color:var(--muted);font-size:1.08rem;margin:0}
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:0 0 18px}
+.num{display:inline-block;min-width:1.9em;height:1.9em;line-height:1.9em;text-align:center;border-radius:50%;background:var(--accent);color:var(--paper);font-size:.85em;margin-inline-end:.4em}
+.toc ol{margin:0;padding-inline-start:1.4em}
+.big{background:var(--accent-soft);border-radius:10px;padding:12px 14px;margin:12px 0;text-align:center;overflow-x:auto;font-size:1.08rem}
+.ex{border:2px dashed var(--line);border-radius:12px;padding:12px 16px;margin:14px 0}
+.ex .t{font-weight:700;color:var(--accent)}
+.note{background:var(--orange-soft);border-inline-start:4px solid var(--orange);border-radius:8px;padding:10px 14px;margin:14px 0}
+.good{background:var(--green-soft);border-inline-start:4px solid var(--green);border-radius:8px;padding:10px 14px;margin:14px 0}
+.tablebox{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:center}
+th{background:var(--accent-soft)}
+details{margin:8px 0}
+summary{cursor:pointer;color:var(--accent);font-weight:600}
+details .sol{border-inline-start:4px solid var(--orange);padding:6px 14px;margin-top:6px;background:var(--code);border-radius:6px}
+ol.check>li,ol.qs>li{margin-bottom:12px}
+.q{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:12px 0}
+.q .qh{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.q .qh b{color:var(--accent)}
+.tick{font-size:15px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.toolbar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:16px}
+button{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--accent-soft);color:var(--ink);border-radius:8px;padding:5px 12px;cursor:pointer}
+.prog{margin-inline-start:auto;color:var(--muted);font-size:15px}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:6px 0 30px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
+.card .tag{font-size:13px;color:var(--muted)}
+.card a{font-weight:700;text-decoration:none}
+.katex{direction:ltr;unicode-bidi:isolate}
+.sol,.ex,ol.check>li,.q p,td{line-height:2.15}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0}
+.ltr{direction:ltr;unicode-bidi:isolate}
+footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
+@media (max-width:600px){body{font-size:17px}.wrap{padding:12px 16px}section.ch,header.hero{padding:16px}h1{font-size:1.7rem}}
+@media print{body{background:#fff}.toolbar,nav.top,.pager{display:none}details{display:block}details>.sol{display:block}section.ch,.q{break-inside:avoid}}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body><div class="wrap">
+<nav class="top"><a href="index.html">→ דף הבית של האתר</a></nav>
+<nav class="top series" aria-label="דפי הנושא"><a href="units-00-overview.html">דף הקבוצה</a> · <a href="units-01-quantities-and-units.html">גדלים ויחידות</a> · <b>המרות</b> · <a href="units-03-motion-equations.html">משוואות תנועה</a> · <a href="units-04-solving-with-units.html">פתרון בעיות</a> · <a href="units-05-workbook.html">חוברת</a></nav>
+<header class="hero"><div class="eyebrow">מתמטיקה · כיתה י״א · 5 יח״ל · יחידות ומשוואות תנועה</div><h1>המרת יחידות</h1><p class="lead">איך עוברים מיחידה ליחידה בלי לזכור טבלאות: כופלים ב“אחד” שנבנה כך שהיחידה הישנה מצטמצמת.</p></header>
+<section class="ch toc"><h2>תוכן</h2><ol><li><a href="#s1">הרעיון: כפל באחד</a></li><li><a href="#s2">המרת אורך וזמן</a></li><li><a href="#s3">המרת מהירות: קמ״ש ↔ מ/ש</a></li><li><a href="#s4">יחידות בריבוע ובחזקה שלישית</a></li><li><a href="#s5">המרת תאוצה ושרשרת המרות</a></li><li><a href="#mist">טעויות נפוצות</a></li><li><a href="#chk">בדקו את עצמכם</a></li></ol></section>
+<section class="ch" id="s1"><h2><span class="num">1</span>הרעיון: כפל באחד</h2>
+
+<p>כפל ב־1 אינו משנה את הערך. הטריק: לכתוב את 1 כשבר של שני גדלים שווים ביחידות שונות. למשל \(1\u{km}=1000\u{m}\), ולכן:</p>
+<div class="big">\[\frac{1000\u{m}}{1\u{km}} = 1 \qquad\text{וגם}\qquad \frac{1\u{km}}{1000\u{m}} = 1\]</div>
+<p>שבר כזה נקרא <b>מקדם המרה</b>. בוחרים את הגרסה שבה היחידה <b>שרוצים להיפטר ממנה</b> נמצאת בצד הנגדי (מונה מול מכנה), כדי שתצטמצם:</p>
+<div class="big">\[3.2\u{\cx{km}}\cdot\frac{1000\u{m}}{1\u{\cx{km}}} = 3200\u{m}\]</div><div class="good"><b>כלל זהב:</b> היחידה הישנה צריכה להופיע פעם במונה ופעם במכנה — ואז היא נמחקת. אם היא לא נמחקת, הפכתם את מקדם ההמרה.</div>
+</section>
+<section class="ch" id="s2"><h2><span class="num">2</span>המרת אורך וזמן</h2>
+<div class="ex"><span class="t">דוגמה 1.</span> המירו \(2.5\u{h}\) לשניות.<details><summary>פתרון</summary><div class="sol">\(2.5\u{\cx{h}}\cdot\dfrac{3600\u{s}}{1\u{\cx{h}}}=9000\u{s}\).</div></details></div><div class="ex"><span class="t">דוגמה 2.</span> המירו \(4500\u{m}\) לקילומטרים.<details><summary>פתרון</summary><div class="sol">\(4500\u{\cx{m}}\cdot\dfrac{1\u{km}}{1000\u{\cx{m}}}=4.5\u{km}\).</div></details></div><div class="ex"><span class="t">דוגמה 3.</span> המירו \(18\u{min}\) לשעות.<details><summary>פתרון</summary><div class="sol">\(18\u{\cx{min}}\cdot\dfrac{1\u{h}}{60\u{\cx{min}}}=0.3\u{h}\).</div></details></div><div class="note"><b>שימו לב:</b> בדיקת היגיון: יחידה גדולה יותר ← מספר קטן יותר. \(4500\u{m}\) הפכו ל־\(4.5\u{km}\) — המספר קטן, כי קילומטר גדול ממטר.</div>
+</section>
+<section class="ch" id="s3"><h2><span class="num">3</span>המרת מהירות: קמ״ש ↔ מ/ש</h2>
+
+<p>במהירות יש שתי יחידות — אחת במונה ואחת במכנה — ולכן ממירים <b>את שתיהן</b>, עם שני מקדמי המרה:</p>
+<div class="big">\[1\,\frac{\mathrm{km}}{\mathrm{h}} = 1\,\frac{\cx{\mathrm{km}}}{\cx{\mathrm{h}}}\cdot\frac{1000\u{m}}{1\u{\cx{km}}}\cdot\frac{1\u{\cx{h}}}{3600\u{s}} = \frac{1000}{3600}\,\mps=\frac{1}{3.6}\,\mps\]</div>
+<p>מכאן כלל קיצור שכדאי לזכור:</p>
+<div class="big">\[\kmh \xrightarrow{\ \div 3.6\ } \mps \qquad\qquad \mps \xrightarrow{\ \times 3.6\ } \kmh\]</div><div class="ex"><span class="t">דוגמה 4.</span> המירו \(72\,\kmh\) ל־\(\mps\).<details><summary>פתרון</summary><div class="sol">\(72\div3.6=20\,\mps\). בדרך המלאה: \(72\,\dfrac{\cx{\mathrm{km}}}{\cx{\mathrm{h}}}\cdot\dfrac{1000\u{m}}{1\u{\cx{km}}}\cdot\dfrac{1\u{\cx{h}}}{3600\u{s}}=\dfrac{72000}{3600}\,\mps=20\,\mps\).</div></details></div><div class="ex"><span class="t">דוגמה 5.</span> מהירות של רץ היא \(8\,\mps\). מה מהירותו בקמ״ש?<details><summary>פתרון</summary><div class="sol">\(8\times3.6=28.8\,\kmh\).</div></details></div><div class="tablebox"><table><tr><th>קמ״ש</th><th>36</th><th>54</th><th>72</th><th>90</th><th>108</th></tr><tr><td>מ/ש</td><td>10</td><td>15</td><td>20</td><td>25</td><td>30</td></tr></table></div>
+</section>
+<section class="ch" id="s4"><h2><span class="num">4</span>יחידות בריבוע ובחזקה שלישית</h2>
+
+<p>\(\mathrm{m}^2\) פירושו \(\mathrm{m}\cdot\mathrm{m}\), ולכן מקדם ההמרה מופיע <b>פעמיים</b> (ובנפח — שלוש פעמים):</p>
+<div class="big">\[1\u{m}^2 = 1\u{\cx{m}}\cdot1\u{\cx{m}}\cdot\frac{100\u{cm}}{1\u{\cx{m}}}\cdot\frac{100\u{cm}}{1\u{\cx{m}}} = 10\,000\u{cm}^2\]</div><div class="big">\[1\u{m}^3 = (100\u{cm})^3 = 1\,000\,000\u{cm}^3 = 1000\u{L}\]</div><div class="note"><b>שימו לב:</b> הטעות הנפוצה ביותר: “\(1\u{m}^2=100\u{cm}^2\)”. זה שגוי — מטר רבוע הוא ריבוע של \(100\times100\) סנטימטר.</div><div class="ex"><span class="t">דוגמה 6.</span> המירו \(3\u{m}^2\) לסמ״ר.<details><summary>פתרון</summary><div class="sol">\(3\cdot 10\,000=30\,000\u{cm}^2\).</div></details></div>
+</section>
+<section class="ch" id="s5"><h2><span class="num">5</span>המרת תאוצה ושרשרת המרות</h2>
+
+<p>בתאוצה יש \(\mathrm{s}^2\) במכנה, ולכן ממירים שעות לשניות <b>פעמיים</b>:</p>
+<div class="big">\[1\,\frac{\mathrm{km}}{\mathrm{h}^2} = \frac{1000\u{m}}{(3600\u{s})^2} = \frac{1000}{12\,960\,000}\,\mpss = \frac{1}{12\,960}\,\mpss\]</div><div class="ex"><span class="t">דוגמה 7.</span> המירו \(1\,\mpss\) ל־\(\mathrm{km}/\mathrm{h}^2\).<details><summary>פתרון</summary><div class="sol">\(1\,\dfrac{\mathrm{m}}{\mathrm{s}^2}\cdot\dfrac{1\u{km}}{1000\u{m}}\cdot\left(\dfrac{3600\u{s}}{1\u{h}}\right)^2=\dfrac{3600^2}{1000}\,\dfrac{\mathrm{km}}{\mathrm{h}^2}=12\,960\,\dfrac{\mathrm{km}}{\mathrm{h}^2}\).</div></details></div>
+<p><b>שרשרת המרות</b>: כשצריך לעבור דרך כמה יחידות, כותבים כמה מקדמי המרה ברצף ומצמצמים הכול בבת אחת:</p>
+<div class="ex"><span class="t">דוגמה 8.</span> רכב צורך \(7\u{L}\) לכל \(100\u{km}\). הדלק עולה \(7.5\,₪\) לליטר. כמה עולה נסיעה של \(260\u{km}\)?<details><summary>פתרון</summary><div class="sol">\(260\u{\cx{km}}\cdot\dfrac{7\u{\cx{L}}}{100\u{\cx{km}}}\cdot\dfrac{7.5\,₪}{1\u{\cx{L}}}=136.5\,₪\). כל יחידת ביניים נמחקה ונשארו שקלים — בדיוק מה שנשאל.</div></details></div>
+</section>
+<section class="ch" id="mist"><h2><span class="num">!</span>טעויות נפוצות</h2>
+<ul><li>המרה של המונה בלבד: \(72\,\kmh=72\,000\,\dfrac{\mathrm{m}}{\mathrm{h}}\) ונעצרים — שוכחים להמיר את השעה.</li><li>כפל ב־3.6 במקום חילוק (ולהפך). בדיקה: \(\mps\) היא יחידה “גדולה” יותר, לכן המספר במ/ש קטן יותר.</li><li>\(1\u{m}^2=100\u{cm}^2\) ✗ — נכון: \(10\,000\u{cm}^2\).</li><li>זמן עשרוני: \(1.5\u{h}\) הם שעה ו־30 דקות, לא שעה ו־50 דקות.</li></ul>
+</section>
+<section class="ch" id="chk"><h2><span class="num">✓</span>בדקו את עצמכם</h2>
+<ol class="check"><li>\(54\,\kmh\) = ? \(\mps\)<details><summary>פתרון</summary><div class="sol">\(54\div3.6=15\,\mps\).</div></details></li><li>\(25\,\mps\) = ? \(\kmh\)<details><summary>פתרון</summary><div class="sol">\(25\times3.6=90\,\kmh\).</div></details></li><li>\(0.75\u{h}\) = ? דקות<details><summary>פתרון</summary><div class="sol">\(0.75\cdot60=45\u{min}\).</div></details></li><li>\(2\u{L}\) = ? \(\mathrm{cm}^3\)<details><summary>פתרון</summary><div class="sol">\(1\u{L}=1000\u{cm}^3\), לכן \(2000\u{cm}^3\).</div></details></li><li>\(5\u{cm}^2\) = ? \(\mathrm{m}^2\)<details><summary>פתרון</summary><div class="sol">\(5\cdot\left(\dfrac{1}{100}\right)^2=0.0005\u{m}^2\).</div></details></li><li>\(120\,\dfrac{\mathrm{m}}{\mathrm{min}}\) = ? \(\mps\)<details><summary>פתרון</summary><div class="sol">\(120\,\dfrac{\mathrm{m}}{\cx{\mathrm{min}}}\cdot\dfrac{1\u{\cx{min}}}{60\u{s}}=2\,\mps\).</div></details></li><li>\(3\,\mpss\) = ? \(\mathrm{km}/\mathrm{h}^2\)<details><summary>פתרון</summary><div class="sol">\(3\cdot12\,960=38\,880\,\mathrm{km}/\mathrm{h}^2\).</div></details></li><li>ברז ממלא \(15\) ליטר לדקה. כמה ליטרים בשעה?<details><summary>פתרון</summary><div class="sol">\(15\,\dfrac{\mathrm{L}}{\cx{\mathrm{min}}}\cdot\dfrac{60\u{\cx{min}}}{1\u{h}}=900\,\dfrac{\mathrm{L}}{\mathrm{h}}\).</div></details></li></ol>
+</section>
+<div class="pager"><a href="units-01-quantities-and-units.html">→ גדלים ויחידות</a><a href="units-03-motion-equations.html">משוואות תנועה ויחידות ←</a></div>
+<footer>אתר המתמטיקה של כיתה י״א · קבוצת "יחידות ומשוואות תנועה"</footer>
+</div>
+<script>
+const KMACROS={"\\u":"\\,\\mathrm{#1}","\\mps":"\\tfrac{\\mathrm{m}}{\\mathrm{s}}","\\mpss":"\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}","\\kmh":"\\tfrac{\\mathrm{km}}{\\mathrm{h}}","\\cx":"\\cancel{#1}"};
+document.addEventListener("DOMContentLoaded",()=>{
+ if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],macros:KMACROS,throwOnError:false});}
+ const KEY="math11-units-"+location.pathname.split("/").pop();
+ let saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+ const boxes=[...document.querySelectorAll("input.done")];
+ const prog=document.querySelector(".prog");
+ const upd=()=>{if(prog)prog.textContent="פתרתי "+boxes.filter(b=>b.checked).length+" מתוך "+boxes.length;};
+ boxes.forEach(b=>{b.checked=!!saved[b.dataset.q];b.addEventListener("change",()=>{saved[b.dataset.q]=b.checked;try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){};upd();});});
+ upd();
+ const all=document.getElementById("showall");
+ if(all)all.addEventListener("click",()=>{const ds=[...document.querySelectorAll("details")];const open=!ds.every(d=>d.open);ds.forEach(d=>d.open=open);all.textContent=open?"הסתר את כל הפתרונות":"הצג את כל הפתרונות";});
+ const clr=document.getElementById("clear");
+ if(clr)clr.addEventListener("click",()=>{boxes.forEach(b=>b.checked=false);saved={};try{localStorage.removeItem(KEY)}catch(e){};upd();});
+ window.addEventListener("beforeprint",()=>document.querySelectorAll("details").forEach(d=>d.open=true));
+});
+</script>
+</body></html>

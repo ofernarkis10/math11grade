@@ -46,6 +46,12 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | | `analytic-03-parabola.html` | The parabola: focus and directrix (lab), y² = 2px, meaning of p, four orientations, link to y = ax², shifting, reflective property |
 | | `analytic-04-ellipse.html` | The ellipse: sum of distances (lab), x²/a² + y²/b² = 1, a² = b² + c², squashed circle, vertical ellipse, eccentricity, completing the square |
 | | `analytic-05-hyperbola.html` | The hyperbola: difference of distances (lab), x²/a² − y²/b² = 1, auxiliary rectangle and asymptotes, conjugate hyperbola, rectangular hyperbola and y = k/x, completing the square |
+| Units and motion equations | `units-00-overview.html` | Group overview: reading order, links to all pages, key formulas with the units of each term |
+| | `units-01-quantities-and-units.html` | Quantities and units: base and derived units, prefixes, multiplying, dividing and cancelling units like variables, adding only like units |
+| | `units-02-unit-conversion.html` | Unit conversion: multiplying by one, km/h ↔ m/s (÷3.6), squared and cubed units, acceleration, conversion chains |
+| | `units-03-motion-equations.html` | Motion equations: x = vt and the three constant-acceleration equations, unit check of every term, link to the derivative, checking a formula by its units |
+| | `units-04-solving-with-units.html` | Solving with units: five-step method, quadratic equation in time, meeting and chase problems, rates, sanity checks |
+| | `units-05-workbook.html` | Workbook: 24 questions in three levels, full solutions with units cancelled in every line, progress ticks |
 
 ## Structure of a study page
 
@@ -74,6 +80,7 @@ math11grade/
 ├── geometry-NN-<name>.html              Euclidean geometry (01 loci & triangle centers, 02 circle, 03 similarity)
 ├── trigonometry-NN-<name>.html          trigonometric functions (01 polar coordinates & the wheel, 02 linear vs wheel, 03 wheel exercises, 04 linear-vs-wheel exercises, 05 wheel homework)
 ├── analytic-NN-<name>.html              analytic geometry: equations of curves (00 overview, 01 line, 02 circle, 03 parabola, 04 ellipse, 05 hyperbola); figures drawn in SVG by a small inline script, with interactive labs
+├── units-NN-<name>.html                 units and motion equations (00 overview, 01 quantities, 02 conversion, 03 motion equations, 04 solving with units, 05 workbook)
 ├── font-size.js                       text-size control shown on every page
 ├── README.md
 └── LICENSE                             CC0 1.0 Universal
