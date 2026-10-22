@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>משוואת המעגל · הנדסה אנליטית</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: the site's worksheet column. Each section explains one idea: the geometric meaning (a locus), the derivation, the parameters and what they do on the graph,
+   with coordinate-plane figures drawn by the Plot script and interactive labs (sliders). Practice questions with folding solutions at the end. */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --green:#2f7d4a; --violet:#7a4fb3;
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05);
+  --green:#6fcf8f; --violet:#b796e8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05);
+  --green:#6fcf8f; --violet:#b796e8; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+.wrap{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:32px 72px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem}
+p{margin:0}
+a{color:var(--accent)}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:70ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+nav.pagetoc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav.pagetoc ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav.pagetoc a{text-decoration:none;font-weight:600}
+nav.pagetoc a:hover,nav.pagetoc a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav.pagetoc ol{columns:1}}
+nav.series{display:flex;flex-wrap:wrap;gap:6px}
+nav.series a{font-size:.88rem;font-weight:600;text-decoration:none;border:1px solid var(--line);background:var(--paper);border-radius:99px;padding:3px 12px}
+nav.series a[aria-current]{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+nav.series a:hover,nav.series a:focus-visible{border-color:var(--accent)}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+section.ch > h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600;margin-inline-start:8px}
+.meaning{max-width:72ch;display:flex;flex-direction:column;gap:10px}
+.key{font-family:var(--f-display);font-size:1.2rem;font-weight:700;text-align:center;padding:14px 16px;border:2px solid var(--accent);border-radius:10px;background:var(--accent-soft);text-wrap:balance}
+.key .m{font-size:1.05em}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+.teacher{border:1px solid var(--line);border-inline-start:4px solid var(--green);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.95rem}
+.teacher strong{color:var(--green)}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.dm{direction:ltr;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+.fig-row>*,.figs>*,.meaning>*,section.ch>*,.example>*,ol.derive>li,.f{min-width:0}
+.dm{max-width:100%}
+ol.derive{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:8px}
+ol.derive li::marker{font-weight:700;color:var(--accent)}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+ul.mist{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:8px}
+ul.mist li::marker{color:var(--mark)}
+
+.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:center;vertical-align:middle}
+th{background:var(--accent-soft);font-weight:700}
+td:first-child{font-weight:700;text-align:start}
+td .m{white-space:normal}
+tr:last-child td{border-bottom:0}
+
+/* figures */
+svg.plot{width:100%;height:auto;display:block;direction:ltr;background:var(--paper);border:1px solid var(--line);border-radius:8px}
+figure{margin:0;display:flex;flex-direction:column;gap:6px;min-width:0}
+figcaption{font-size:.9rem;color:var(--muted)}
+figcaption b{color:var(--ink)}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:14px}
+.figs.four{grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr))}
+.figs.two{grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))}
+.fig-1{max-width:620px;width:100%;margin-inline:auto}
+.fig{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--bg)}
+.fig-cap{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.fig-row{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:680px){.fig-row{grid-template-columns:1fr}}
+.ctl{display:flex;flex-direction:column;gap:8px}
+.ctl label{display:grid;grid-template-columns:6.5rem 1fr 3.8rem;gap:8px;align-items:center;font-weight:600;font-size:.95rem}
+.ctl input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
+.ctl output{font-family:var(--f-math);font-size:.9rem;direction:ltr;text-align:left}
+.readout{font-family:var(--f-math);font-size:.88rem;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 12px;line-height:1.8;min-width:0;overflow-x:auto}
+.readout div[dir=auto]{unicode-bidi:plaintext;text-align:start}
+.readout .heb{font-family:var(--f-body);font-size:.95rem}
+.readout .acc{color:var(--accent);font-weight:600} .readout .mrk{color:var(--mark);font-weight:600} .readout .grn{color:var(--green);font-weight:600} .readout .vio{color:var(--violet);font-weight:600}
+.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btns button{font:inherit;font-weight:700;font-size:.9rem;padding:6px 14px;border-radius:99px;border:1px solid var(--accent);background:var(--paper);color:var(--accent);cursor:pointer}
+.btns button:hover,.btns button:focus-visible{background:var(--accent-soft);outline:none}
+svg text{font-family:var(--f-math);font-size:14px;fill:var(--ink)}
+svg text.tick{font-size:12px;fill:var(--muted)}
+svg text.heb{font-family:var(--f-body);font-weight:700;font-size:15px}
+svg text.big{font-size:17px;font-weight:600}
+svg text.lab{paint-order:stroke;stroke:var(--paper);stroke-width:4px;stroke-linejoin:round}
+svg .ax{stroke:var(--muted);stroke-width:1.2}
+svg .axh{fill:var(--muted)}
+svg .gr{stroke:var(--line);stroke-width:1}
+svg .cv{fill:none;stroke-width:2.6;stroke-linecap:round}
+svg .cv.acc{stroke:var(--accent)} svg .cv.mrk{stroke:var(--mark)} svg .cv.grn{stroke:var(--green)} svg .cv.vio{stroke:var(--violet)} svg .cv.ink{stroke:var(--ink)}
+svg .cv.aux{stroke:var(--muted);stroke-width:1.4}
+svg .cv.faint{stroke:var(--muted);stroke-width:1.3;stroke-dasharray:5 4;opacity:.8}
+svg .cv.dash{stroke-dasharray:7 5}
+svg .cv.thin{stroke-width:1.6}
+svg .head{stroke:none} svg .head.acc{fill:var(--accent)} svg .head.mrk{fill:var(--mark)} svg .head.grn{fill:var(--green)} svg .head.vio{fill:var(--violet)} svg .head.ink{fill:var(--ink)}
+
+/* practice */
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:16px}
+ol.exercises li{break-inside:avoid}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+ol.parts{list-style:hebrew;margin:4px 0 0;padding-inline-start:22px}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0;display:flex;flex-direction:column;gap:6px}
+details .sol svg.plot{max-width:380px;margin-inline:auto}
+.lvl{font-family:var(--f-display);font-size:1.15rem;color:var(--mark);margin-top:6px}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media print{details{display:block} details>summary{display:none} details .sol{display:flex} .btns,.ctl,nav.series{display:none} section.ch{break-inside:auto} figure,.fig{break-inside:avoid}}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) and \[ ... \] (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],ignoredClasses:['readout'],throwOnError:false})"></script>
+<style>
+.m .katex{font-size:1.14em;position:relative}
+.m:has(.katex){white-space:normal}
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.1em}
+.dm .katex-display{margin:.4em 0}
+</style>
+<script src="font-size.js"></script>
+<script>
+/* Plot: draws coordinate-plane figures into <svg class="plot"> from a plain spec.
+   Plot.draw(svg, {view:[xmin,xmax,ymin,ymax], w:600, step:1, items:[...]})
+   Items: {fn:f,dom:[a,b]} {par:f,t:[a,b]} {circle:[a,b],r} {ell:[h,k],a,b} {hyp:[h,k],a,b,vert}
+          {abc:[A,B,C]} (Ax+By+C=0)  {line:[P,Q]}  {seg:[P,Q],lbl}  {arrow:[P,Q]}  {poly:[...],closed,fill}
+          {pt:P,lbl,col,hollow,dx,dy,anchor}  {txt:'..',at:P,col,anchor,dx,dy}  {ra:P,u:[..],v:[..]} (right angle)
+   Common: c = stroke class ('acc','mrk','grn','vio','ink','aux','faint', optionally + ' dash'), w = stroke width.
+   Plot.lab(figEl, {sliders:[{id,label,min,max,step,val}], spec:function(v){}, read:function(v){return [lines]}, play:'t'}) */
+var Plot = (function () {
+  var NS = 'http://www.w3.org/2000/svg', uid = 0;
+  var COL = { acc: 'var(--accent)', mrk: 'var(--mark)', grn: 'var(--green)', vio: 'var(--violet)', ink: 'var(--ink)', mut: 'var(--muted)' };
+  function el(p, n, a, t) {
+    var e = document.createElementNS(NS, n);
+    for (var k in a) if (a[k] != null) e.setAttribute(k, a[k]);
+    if (t != null) e.textContent = t;
+    p.appendChild(e); return e;
+  }
+  function r2(v) { return Math.round(v * 100) / 100; }
+  function fmt(v, d) { var p = Math.pow(10, d == null ? 2 : d); v = Math.round(v * p) / p; if (Object.is(v, -0)) v = 0; return (v < 0 ? '−' : '') + Math.abs(v); }
+  function nice(range) { var raw = range / 12, c = [0.5, 1, 2, 5, 10, 20]; for (var i = 0; i < c.length; i++) if (c[i] >= raw) return c[i]; return 50; }
+  var HEB = /[֐-׿]/;
+
+  function text(p, x, y, s, o) {
+    o = o || {};
+    var heb = HEB.test(s), anc = o.anchor || 'start';
+    if (heb) anc = anc === 'start' ? 'end' : anc === 'end' ? 'start' : 'middle';
+    var a = { x: x, y: y, 'text-anchor': anc, 'class': 'lab' + (heb ? ' heb' : '') + (o.big ? ' big' : '') };
+    if (heb) { a.direction = 'rtl'; a['unicode-bidi'] = 'embed'; }
+    if (o.col) a.style = 'fill:' + (COL[o.col] || o.col);
+    return el(p, 'text', a, s);
+  }
+
+  function draw(svg, S) {
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var v = S.view, W = S.w || 600, sc = W / (v[1] - v[0]), H = Math.round((v[3] - v[2]) * sc);
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    var X = function (x) { return (x - v[0]) * sc; }, Y = function (y) { return (v[3] - y) * sc; };
+    var id = 'clp' + (++uid), defs = el(svg, 'defs', {}), cp = el(defs, 'clipPath', { id: id });
+    el(cp, 'rect', { x: 0, y: 0, width: W, height: H });
+    var st = S.step || nice(Math.max(v[1] - v[0], v[3] - v[2])), k;
+    if (S.grid !== false) {
+      for (k = Math.ceil(v[0] / st); k * st <= v[1] + 1e-9; k++) el(svg, 'line', { x1: X(k * st), y1: 0, x2: X(k * st), y2: H, 'class': 'gr' });
+      for (k = Math.ceil(v[2] / st); k * st <= v[3] + 1e-9; k++) el(svg, 'line', { x1: 0, y1: Y(k * st), x2: W, y2: Y(k * st), 'class': 'gr' });
+    }
+    if (S.axes !== false) {
+      var ay = (v[2] <= 0 && v[3] >= 0) ? Y(0) : null, ax = (v[0] <= 0 && v[1] >= 0) ? X(0) : null;
+      if (ay != null) { el(svg, 'line', { x1: 0, y1: ay, x2: W, y2: ay, 'class': 'ax' }); el(svg, 'path', { d: 'M ' + W + ' ' + ay + ' l -9 -4 v 8 z', 'class': 'axh' }); text(svg, W - 6, ay - 8, 'x', { anchor: 'end' }); }
+      if (ax != null) { el(svg, 'line', { x1: ax, y1: 0, x2: ax, y2: H, 'class': 'ax' }); el(svg, 'path', { d: 'M ' + ax + ' 0 l -4 9 h 8 z', 'class': 'axh' }); text(svg, ax + 8, 14, 'y'); }
+      if (S.ticks !== false) {
+        var ts = S.tickStep || st * (S.tickEvery || 1);
+        if (ay != null) for (k = Math.ceil(v[0] / ts); k * ts <= v[1] - ts * 0.3; k++) { if (k === 0) continue; el(svg, 'line', { x1: X(k * ts), y1: ay - 3, x2: X(k * ts), y2: ay + 3, 'class': 'ax' }); text(svg, X(k * ts), ay + 15, fmt(k * ts), { anchor: 'middle' }).setAttribute('class', 'lab tick'); }
+        if (ax != null) for (k = Math.ceil(v[2] / ts); k * ts <= v[3] - ts * 0.3; k++) { if (k === 0) continue; el(svg, 'line', { x1: ax - 3, y1: Y(k * ts), x2: ax + 3, y2: Y(k * ts), 'class': 'ax' }); text(svg, ax - 6, Y(k * ts) + 4, fmt(k * ts), { anchor: 'end' }).setAttribute('class', 'lab tick'); }
+        if (ax != null && ay != null) text(svg, ax - 6, ay + 15, '0', { anchor: 'end' }).setAttribute('class', 'lab tick');
+      }
+    }
+    var g = el(svg, 'g', { 'clip-path': 'url(#' + id + ')' }), top = el(svg, 'g', {});
+    var ctx = { X: X, Y: Y, sc: sc, v: v, W: W, H: H };
+    (S.items || []).forEach(function (it) { if (it) item(ctx, g, top, it); });
+  }
+
+  function cls(it, def) { return 'cv ' + (it.c || def || 'acc'); }
+  function sw(it) { return it.w ? 'stroke-width:' + it.w : null; }
+  function pathFrom(ctx, pts) {
+    var d = '', pen = false, lim = 4 * (ctx.W + ctx.H);
+    pts.forEach(function (p) {
+      if (!p || !isFinite(p[0]) || !isFinite(p[1])) { pen = false; return; }
+      var x = ctx.X(p[0]), y = ctx.Y(p[1]);
+      if (Math.abs(x) > lim || Math.abs(y) > lim) { pen = false; return; }
+      d += (pen ? ' L ' : ' M ') + x.toFixed(2) + ' ' + y.toFixed(2); pen = true;
+    });
+    return d;
+  }
+  function sample(f, a, b, n) { var out = []; for (var i = 0; i <= n; i++) out.push(f(a + (b - a) * i / n)); return out; }
+
+  function item(ctx, g, top, it) {
+    var X = ctx.X, Y = ctx.Y, v = ctx.v, big = 3 * Math.max(v[1] - v[0], v[3] - v[2]);
+    if (it.fn) {
+      var dom = it.dom || [v[0], v[1]], n = it.n || 600, prev = null;
+      var pts = sample(function (x) { var y = it.fn(x); return [x, y]; }, dom[0], dom[1], n).map(function (p) {
+        var q = p; if (prev && isFinite(prev[1]) && isFinite(p[1]) && Math.abs(p[1] - prev[1]) > (v[3] - v[2]) * 1.5) q = null; prev = p; return q; });
+      el(g, 'path', { d: pathFrom(ctx, pts), 'class': cls(it), style: sw(it) });
+    } else if (it.par) {
+      el(g, 'path', { d: pathFrom(ctx, sample(it.par, it.t[0], it.t[1], it.n || 600)), 'class': cls(it), style: sw(it) });
+    } else if (it.circle) {
+      el(g, 'circle', { cx: X(it.circle[0]), cy: Y(it.circle[1]), r: it.r * ctx.sc, 'class': cls(it), style: sw(it) });
+    } else if (it.ell) {
+      el(g, 'ellipse', { cx: X(it.ell[0]), cy: Y(it.ell[1]), rx: it.a * ctx.sc, ry: it.b * ctx.sc, 'class': cls(it), style: sw(it) });
+    } else if (it.hyp) {
+      var h = it.hyp[0], kk = it.hyp[1], a = it.a, b = it.b, T = Math.log(2 * big / Math.min(a, b) + 1) + 0.5;
+      [1, -1].forEach(function (s) {
+        var f = it.vert ? function (t) { return [h + a * Math.sinh(t), kk + s * b * Math.cosh(t)]; }
+                        : function (t) { return [h + s * a * Math.cosh(t), kk + b * Math.sinh(t)]; };
+        el(g, 'path', { d: pathFrom(ctx, sample(f, -T, T, it.n || 800)), 'class': cls(it), style: sw(it) });
+      });
+    } else if (it.abc || it.line) {
+      var P, Q;
+      if (it.line) { P = it.line[0]; Q = it.line[1]; }
+      else { var A = it.abc[0], B = it.abc[1], C = it.abc[2];
+        if (Math.abs(B) > 1e-12) { P = [v[0] - big, -(A * (v[0] - big) + C) / B]; Q = [v[1] + big, -(A * (v[1] + big) + C) / B]; }
+        else { P = [-C / A, v[2] - big]; Q = [-C / A, v[3] + big]; } }
+      var dx = Q[0] - P[0], dy = Q[1] - P[1], L = Math.hypot(dx, dy) || 1, ux = dx / L, uy = dy / L;
+      el(g, 'line', { x1: X(P[0] - ux * big), y1: Y(P[1] - uy * big), x2: X(Q[0] + ux * big), y2: Y(Q[1] + uy * big), 'class': cls(it), style: sw(it) });
+    } else if (it.seg || it.arrow) {
+      var s = it.seg || it.arrow;
+      el(g, 'line', { x1: X(s[0][0]), y1: Y(s[0][1]), x2: X(s[1][0]), y2: Y(s[1][1]), 'class': cls(it), style: sw(it) });
+      if (it.arrow) {
+        var ex = X(s[1][0]), ey = Y(s[1][1]), ang = Math.atan2(ey - Y(s[0][1]), ex - X(s[0][0])), z = 10;
+        el(g, 'path', { d: 'M ' + ex + ' ' + ey + ' L ' + (ex - z * Math.cos(ang - 0.4)) + ' ' + (ey - z * Math.sin(ang - 0.4)) + ' L ' + (ex - z * Math.cos(ang + 0.4)) + ' ' + (ey - z * Math.sin(ang + 0.4)) + ' z', 'class': 'head ' + (it.c || 'acc').split(' ')[0] });
+      }
+      if (it.lbl) { var mx = (X(s[0][0]) + X(s[1][0])) / 2 + (it.dx || 0), my = (Y(s[0][1]) + Y(s[1][1])) / 2 + (it.dy || -6);
+        text(top, mx, my, it.lbl, { anchor: it.anchor || 'middle', col: it.col || (it.c || 'acc').split(' ')[0] }); }
+    } else if (it.poly) {
+      var d = it.poly.map(function (p, i) { return (i ? 'L ' : 'M ') + X(p[0]) + ' ' + Y(p[1]); }).join(' ') + (it.closed ? ' z' : '');
+      el(g, 'path', { d: d, 'class': cls(it, 'aux'), style: (it.fill ? 'fill:' + it.fill + ';' : '') + (sw(it) || '') });
+    } else if (it.ra) {
+      var z2 = 9 / ctx.sc, p0 = it.ra, u = it.u, w = it.v, nu = Math.hypot(u[0], u[1]), nw = Math.hypot(w[0], w[1]);
+      var a1 = [p0[0] + u[0] / nu * z2, p0[1] + u[1] / nu * z2], c2 = [a1[0] + w[0] / nw * z2, a1[1] + w[1] / nw * z2], b1 = [p0[0] + w[0] / nw * z2, p0[1] + w[1] / nw * z2];
+      el(g, 'path', { d: 'M ' + X(a1[0]) + ' ' + Y(a1[1]) + ' L ' + X(c2[0]) + ' ' + Y(c2[1]) + ' L ' + X(b1[0]) + ' ' + Y(b1[1]), 'class': 'cv ' + (it.c || 'aux') });
+    } else if (it.pt) {
+      var col = COL[it.col || 'ink'] || it.col;
+      el(top, 'circle', { cx: X(it.pt[0]), cy: Y(it.pt[1]), r: it.r || 4.5, style: it.hollow ? 'fill:var(--paper);stroke:' + col + ';stroke-width:2' : 'fill:' + col });
+      if (it.lbl) text(top, X(it.pt[0]) + (it.dx == null ? 8 : it.dx), Y(it.pt[1]) + (it.dy == null ? -8 : it.dy), it.lbl, { anchor: it.anchor || 'start', col: it.col || 'ink' });
+    } else if (it.txt != null) {
+      text(top, X(it.at[0]) + (it.dx || 0), Y(it.at[1]) + (it.dy || 0), it.txt, { anchor: it.anchor || 'middle', col: it.col, big: it.big });
+    }
+  }
+
+  /* static figures: <svg class="plot" data-fig="name"></svg>, specs registered in Plot.figs */
+  var figs = {};
+  function renderAll() { document.querySelectorAll('svg.plot[data-fig]').forEach(function (s) { var f = figs[s.dataset.fig]; if (f) draw(s, typeof f === 'function' ? f() : f); }); }
+
+  function lab(root, cfg) {
+    if (typeof root === 'string') root = document.getElementById(root);
+    var svg = root.querySelector('svg.plot'), ctl = root.querySelector('.ctl'), out = root.querySelector('.readout'), inputs = {};
+    cfg.sliders.forEach(function (s) {
+      var L = document.createElement('label');
+      L.innerHTML = '<span></span><input type="range"><output></output>';
+      L.firstChild.textContent = s.label;
+      var inp = L.querySelector('input'); inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.val;
+      inp.setAttribute('aria-label', s.label);
+      inp.addEventListener('input', upd); inputs[s.id] = { inp: inp, out: L.querySelector('output'), s: s };
+      if (out && out.parentNode === ctl) ctl.insertBefore(L, out); else ctl.appendChild(L);
+    });
+    var playing = false, raf = 0;
+    if (cfg.play) {
+      var b = document.createElement('div'); b.className = 'btns';
+      b.innerHTML = '<button type="button">▶ הפעל תנועה</button>';
+      var btn = b.firstChild; if (out && out.parentNode === ctl) ctl.insertBefore(b, out); else ctl.appendChild(b);
+      btn.addEventListener('click', function () {
+        playing = !playing; btn.textContent = playing ? '❚❚ עצור' : '▶ הפעל תנועה';
+        if (playing) { var last = 0; var step = function (ts) {
+            if (!playing) return; if (!last) last = ts; var dt = Math.min(0.05, (ts - last) / 1000); last = ts;
+            var I = inputs[cfg.play], s = I.s, val = +I.inp.value + (s.max - s.min) * dt / (cfg.period || 8);
+            if (val > s.max) val = s.min + (val - s.max); I.inp.value = val; upd(); raf = requestAnimationFrame(step); };
+          raf = requestAnimationFrame(step); } else cancelAnimationFrame(raf);
+      });
+    }
+    function upd() {
+      var v = {}; for (var k in inputs) { v[k] = +inputs[k].inp.value; inputs[k].out.textContent = fmt(v[k], inputs[k].s.dec == null ? 2 : inputs[k].s.dec) + (inputs[k].s.unit || ''); }
+      draw(svg, cfg.spec(v));
+      if (out && cfg.read) { out.innerHTML = ''; cfg.read(v).forEach(function (line) { var d = document.createElement('div'); d.dir = 'auto'; d.innerHTML = line; out.appendChild(d); }); }
+    }
+    upd();
+    return { update: upd, inputs: inputs };
+  }
+
+  /* text helpers for equations shown in readouts: poly([[2,'x²'],[-4,'x'],[1,'']]) -> "2x² − 4x + 1" */
+  function poly(terms) {
+    var s = '';
+    terms.forEach(function (t) {
+      var c = r2(t[0]), m = t[1]; if (Math.abs(c) < 1e-9) return;
+      var a = Math.abs(c), body = (m && a === 1) ? m : fmt(a) + m;
+      s += s ? (c < 0 ? ' − ' : ' + ') + body : (c < 0 ? '−' : '') + body;
+    });
+    return s || '0';
+  }
+  function sq(vn, c) { c = r2(c); return Math.abs(c) < 1e-9 ? vn + '²' : '(' + vn + (c > 0 ? ' − ' : ' + ') + fmt(Math.abs(c)) + ')²'; }
+  function dist(P, Q) { return Math.hypot(P[0] - Q[0], P[1] - Q[1]); }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderAll); else setTimeout(renderAll, 0);
+  return { draw: draw, lab: lab, figs: figs, fmt: fmt, poly: poly, sq: sq, dist: dist, renderAll: renderAll };
+})();
+
+</script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · הנדסה אנליטית · דף 2</span>
+  <h1>משוואת המעגל</h1>
+  <p class="lead">מעגל הוא כל הנקודות שנמצאות באותו מרחק ממרכז אחד. מהמשפט הפשוט הזה, ומנוסחת המרחק, יוצאת המשוואה <span class="m">\((x-a)^2+(y-b)^2=R^2\)</span>. בדף הזה רואים מאיפה היא באה, מה המשמעות של כל אות בשרטוט, איך מזהים מעגל כשהמשוואה "פתוחה", ואיך עונים על השאלות הקלאסיות: נקודה ביחס למעגל, ישר ומעגל, ומשיק.</p>
+  <nav class="series" aria-label="דפי הנושא"><a href="analytic-00-overview.html">מבט כללי</a><a href="analytic-01-line.html">ישר</a><a href="analytic-02-circle.html" aria-current="page">מעגל</a><a href="analytic-03-parabola.html">פרבולה</a><a href="analytic-04-ellipse.html">אליפסה</a><a href="analytic-05-hyperbola.html">היפרבולה</a></nav>
+</header>
+
+<nav class="pagetoc" aria-label="תוכן"><strong>תוכן</strong><ol>
+  <li><a href="#def">המעגל כמקום גאומטרי</a></li>
+  <li><a href="#derive">מאיפה באה המשוואה</a></li>
+  <li><a href="#params">מה כל פרמטר עושה בשרטוט</a></li>
+  <li><a href="#general">המשוואה הכללית והשלמה לריבוע</a></li>
+  <li><a href="#point">נקודה ביחס למעגל</a></li>
+  <li><a href="#line">ישר ומעגל</a></li>
+  <li><a href="#tangent">משיק למעגל</a></li>
+  <li><a href="#mist">טעויות נפוצות</a></li>
+  <li><a href="#practice">תרגול</a></li>
+</ol></nav>
+
+<section class="ch" id="def">
+<h2>1. המעגל כמקום גאומטרי</h2>
+<div class="meaning">
+<p><strong>מעגל</strong> הוא המקום הגאומטרי של כל הנקודות במישור שהמרחק שלהן מנקודה קבועה <span class="m">\(M\)</span> שווה למספר קבוע <span class="m">\(R\)</span>. הנקודה <span class="m">\(M\)</span> היא <strong>מרכז המעגל</strong>, והמרחק <span class="m">\(R\)</span> הוא <strong>הרדיוס</strong>.</p>
+<p>משמעות המילים "מקום גאומטרי": כל נקודה שמקיימת את התנאי נמצאת על המעגל, וכל נקודה על המעגל מקיימת את התנאי. המשוואה של המעגל היא בדיוק התנאי הזה, כתוב באותיות <span class="m">\(x\)</span> ו־<span class="m">\(y\)</span>.</p>
+</div>
+<figure class="fig-1"><svg class="plot" data-fig="def" aria-label="מעגל שמרכזו M ושלוש נקודות עליו, מכל אחת רדיוס באורך R"></svg>
+<figcaption>כל הנקודות <span class="m">\(P_1, P_2, P_3, \ldots\)</span> נמצאות במרחק <span class="m">\(R = 3\)</span> מהמרכז <span class="m">\(M(2, 1)\)</span>. אין נקודה אחרת במישור עם התכונה הזו.</figcaption></figure>
+</section>
+
+<section class="ch" id="derive">
+<h2>2. מאיפה באה המשוואה</h2>
+<div class="meaning">
+<p>נסמן את המרכז <span class="m">\(M(a, b)\)</span> ונקודה כלשהי על המעגל <span class="m">\(P(x, y)\)</span>. התנאי הוא <span class="m">\(PM = R\)</span>.</p>
+</div>
+<div class="fig-row">
+<ol class="derive">
+  <li>נוסחת המרחק בין שתי נקודות (משפט פיתגורס במשולש ישר הזווית שבשרטוט):
+  <div class="dm">\[PM=\sqrt{(x-a)^2+(y-b)^2}\]</div></li>
+  <li>התנאי <span class="m">\(PM = R\)</span>:
+  <div class="dm">\[\sqrt{(x-a)^2+(y-b)^2}=R\]</div></li>
+  <li>מעלים בריבוע (שני האגפים חיוביים, ולכן לא מוסיפים פתרונות):
+  <div class="dm">\[(x-a)^2+(y-b)^2=R^2\]</div></li>
+</ol>
+<figure><svg class="plot" data-fig="pyth" aria-label="משולש ישר זווית בין המרכז לנקודה על המעגל"></svg>
+<figcaption>הניצב האופקי הוא <span class="m">\(x-a\)</span>, הניצב האנכי הוא <span class="m">\(y-b\)</span>, והיתר הוא הרדיוס <span class="m">\(R\)</span>.</figcaption></figure>
+</div>
+<div class="key">משוואת מעגל שמרכזו <span class="m">\(M(a, b)\)</span> ורדיוסו <span class="m">\(R\)</span>: <span class="m">\((x-a)^2+(y-b)^2=R^2\)</span></div>
+<p>מקרה פרטי: מעגל שמרכזו בראשית הצירים: <span class="m">\(x^2+y^2=R^2\)</span>.</p>
+<div class="teacher"><strong>קשר לטריגונומטריה.</strong> הנקודה <span class="m">\((a+R\cos\theta,\ b+R\sin\theta)\)</span> נמצאת על המעגל לכל זווית <span class="m">\(\theta\)</span>, כי <span class="m">\((R\cos\theta)^2+(R\sin\theta)^2=R^2\)</span>. זה בדיוק המיקום של נקודה על גלגל מסתובב, כמו ב<a href="trigonometry-02-linear-vs-wheel.html">דף על תנועה לינארית ותנועה על גלגל</a>.</div>
+</section>
+
+<section class="ch" id="params">
+<h2>3. מה כל פרמטר עושה בשרטוט</h2>
+<div class="tablebox"><table>
+<tr><th>במשוואה</th><th>המשמעות</th><th>מה קורה בשרטוט כשמשנים אותו</th></tr>
+<tr><td><span class="m">\(a\)</span></td><td>שיעור ה־<span class="m">\(x\)</span> של המרכז</td><td>המעגל זז ימינה (a גדל) או שמאלה, בלי לשנות גודל</td></tr>
+<tr><td><span class="m">\(b\)</span></td><td>שיעור ה־<span class="m">\(y\)</span> של המרכז</td><td>המעגל זז למעלה (b גדל) או למטה</td></tr>
+<tr><td><span class="m">\(R\)</span></td><td>הרדיוס (באגף ימין מופיע <span class="m">\(R^2\)</span>)</td><td>המעגל גדל או קטן סביב אותו מרכז</td></tr>
+</table></div>
+<p class="note"><strong>שימו לב לסימן.</strong> בתוך הסוגריים מופיע <span class="m">\(x-a\)</span>. לכן <span class="m">\((x+3)^2\)</span> פירושו <span class="m">\(a=-3\)</span>: המרכז משמאל לציר <span class="m">\(y\)</span>. החיבור "מזיז" שמאלה, כמו בהזזת גרפים של פונקציות.</p>
+
+<div class="fig" id="lab-circle">
+  <span class="fig-cap">מעבדה: הזיזו את המרכז ושנו את הרדיוס</span>
+  <div class="fig-row">
+    <svg class="plot" aria-label="מעגל שמשתנה לפי המחוונים"></svg>
+    <div class="ctl"><div class="readout"></div></div>
+  </div>
+</div>
+</section>
+
+<section class="ch" id="general">
+<h2>4. המשוואה הכללית והשלמה לריבוע</h2>
+<div class="meaning">
+<p>אם פותחים את הסוגריים במשוואת המעגל, מקבלים משוואה "פתוחה":</p>
+<div class="dm">\[(x-a)^2+(y-b)^2=R^2\ \Longrightarrow\ x^2+y^2\,\underbrace{-2a}_{D}\,x\,\underbrace{-2b}_{E}\,y+\underbrace{a^2+b^2-R^2}_{F}=0\]</div>
+<p>זו <strong>המשוואה הכללית של מעגל</strong>: <span class="m">\(x^2+y^2+Dx+Ey+F=0\)</span>. ממנה אפשר לחזור למרכז ולרדיוס:</p>
+</div>
+<div class="formulas">
+  <div class="f"><b>המרכז</b><span class="m">\(M\left(-\dfrac{D}{2},\ -\dfrac{E}{2}\right)\)</span></div>
+  <div class="f"><b>ריבוע הרדיוס</b><span class="m">\(R^2=\left(\dfrac{D}{2}\right)^2+\left(\dfrac{E}{2}\right)^2-F\)</span></div>
+</div>
+<div class="meaning">
+<p><strong>איך מזהים שמשוואה ממעלה שנייה היא מעגל?</strong></p>
+<ol class="derive">
+  <li>המקדמים של <span class="m">\(x^2\)</span> ושל <span class="m">\(y^2\)</span> <strong>שווים</strong> (אם הם שווים אבל לא 1, מחלקים בהם את כל המשוואה).</li>
+  <li>אין איבר <span class="m">\(xy\)</span>.</li>
+  <li>אחרי השלמה לריבוע, אגף ימין חיובי. אם הוא 0 מקבלים נקודה אחת בלבד, ואם הוא שלילי אין אף נקודה.</li>
+</ol>
+<p>אם המקדמים של <span class="m">\(x^2\)</span> ו־<span class="m">\(y^2\)</span> שונים אבל באותו סימן, זו <a href="analytic-04-ellipse.html">אליפסה</a>. אם הסימנים הפוכים, זו <a href="analytic-05-hyperbola.html">היפרבולה</a>.</p>
+</div>
+
+<div class="example"><span class="tag">דוגמה 1 · השלמה לריבוע</span>
+<p>מצאו את המרכז והרדיוס של <span class="m">\(x^2+y^2-6x+4y-12=0\)</span>.</p>
+<div class="fig-row">
+<div>
+<p>מקבצים את איברי <span class="m">\(x\)</span> ואת איברי <span class="m">\(y\)</span>, ומשלימים כל זוג לריבוע. מה שמוסיפים באגף שמאל, מוסיפים גם באגף ימין:</p>
+<div class="dm">\[(x^2-6x+\color{#b4561e}{9})+(y^2+4y+\color{#b4561e}{4})=12+\color{#b4561e}{9}+\color{#b4561e}{4}\]</div>
+<div class="dm">\[(x-3)^2+(y+2)^2=25\]</div>
+<p>המרכז <span class="m">\(M(3, -2)\)</span>, הרדיוס <span class="m">\(R=5\)</span>.</p>
+<p>בדיקה בנוסחה: <span class="m">\(D=-6,\ E=4,\ F=-12\)</span>, ולכן <span class="m">\(M(3,-2)\)</span> ו־<span class="m">\(R^2=9+4+12=25\)</span>.</p>
+</div>
+<figure><svg class="plot" data-fig="ex1" aria-label="המעגל שמרכזו 3, מינוס 2 ורדיוסו 5"></svg></figure>
+</div>
+</div>
+
+<div class="example"><span class="tag">דוגמה 2 · מקדם שונה מ־1</span>
+<p><span class="m">\(2x^2+2y^2+8x-4y+2=0\)</span>. מחלקים ב־2: <span class="m">\(x^2+y^2+4x-2y+1=0\)</span>.</p>
+<p><span class="m">\((x+2)^2-4+(y-1)^2-1+1=0\ \Rightarrow\ (x+2)^2+(y-1)^2=4\)</span>. המרכז <span class="m">\((-2, 1)\)</span>, הרדיוס 2.</p>
+</div>
+
+<div class="example"><span class="tag">דוגמה 3 · משוואה שנראית כמו מעגל אבל אינה מעגל</span>
+<p><span class="m">\(x^2+y^2-2x+4y+10=0\ \Rightarrow\ (x-1)^2+(y+2)^2=1+4-10=-5\)</span>.</p>
+<p>סכום של שני ריבועים לא יכול להיות שלילי, ולכן אין אף נקודה שמקיימת את המשוואה. אם היה יוצא 0, הנקודה היחידה הייתה <span class="m">\((1, -2)\)</span>.</p>
+</div>
+</section>
+
+<section class="ch" id="point">
+<h2>5. נקודה ביחס למעגל</h2>
+<div class="fig-row">
+<div class="meaning">
+<p>מציבים את הנקודה <span class="m">\((x_0, y_0)\)</span> באגף שמאל של המשוואה הקנונית. מה שיוצא הוא <strong>ריבוע המרחק</strong> של הנקודה מהמרכז, ומשווים אותו ל־<span class="m">\(R^2\)</span>:</p>
+<div class="tablebox"><table>
+<tr><th>התוצאה</th><th>מיקום הנקודה</th></tr>
+<tr><td><span class="m">\((x_0-a)^2+(y_0-b)^2 \lt R^2\)</span></td><td>בתוך המעגל</td></tr>
+<tr><td><span class="m">\((x_0-a)^2+(y_0-b)^2 = R^2\)</span></td><td>על המעגל</td></tr>
+<tr><td><span class="m">\((x_0-a)^2+(y_0-b)^2 \gt R^2\)</span></td><td>מחוץ למעגל</td></tr>
+</table></div>
+<p>בדוגמה שבשרטוט, <span class="m">\(x^2+y^2=25\)</span>: הנקודה <span class="m">\((2, 3)\)</span> נותנת <span class="m">\(13 \lt 25\)</span> (בפנים), <span class="m">\((3, 4)\)</span> נותנת <span class="m">\(25\)</span> (על המעגל), ו־<span class="m">\((5, 4)\)</span> נותנת <span class="m">\(41 \gt 25\)</span> (בחוץ).</p>
+</div>
+<figure><svg class="plot" data-fig="point" aria-label="שלוש נקודות: בתוך המעגל, עליו ומחוצה לו"></svg></figure>
+</div>
+</section>
+
+<section class="ch" id="line">
+<h2>6. ישר ומעגל</h2>
+<div class="meaning">
+<p>ישר ומעגל יכולים להיפגש בשתי נקודות (הישר <strong>חותך</strong>), בנקודה אחת (הישר <strong>משיק</strong>) או לא להיפגש בכלל. יש שתי דרכים לבדוק:</p>
+</div>
+<div class="formulas">
+  <div class="f"><b>דרך א׳: הצבה</b>מציבים את <span class="m">\(y\)</span> מהישר במשוואת המעגל ומקבלים משוואה ריבועית ב־<span class="m">\(x\)</span>. לפי הדיסקרימיננטה: <span class="m">\(\Delta\gt0\)</span> שתי נקודות, <span class="m">\(\Delta=0\)</span> נקודה אחת, <span class="m">\(\Delta\lt0\)</span> אין נקודות. הדרך הזו נותנת גם את נקודות החיתוך עצמן.</div>
+  <div class="f"><b>דרך ב׳: מרחק מהמרכז</b>מחשבים את המרחק <span class="m">\(d\)</span> של המרכז מהישר (ראו <a href="analytic-01-line.html#dist">מרחק נקודה מישר</a>): <span class="m">\(d\lt R\)</span> חותך, <span class="m">\(d=R\)</span> משיק, <span class="m">\(d\gt R\)</span> לא נפגשים.</div>
+</div>
+<div class="fig" id="lab-line">
+  <span class="fig-cap">מעבדה: ישר <span class="m">y = mx + k</span> ומעגל שמרכזו (1, 1) ורדיוסו 3</span>
+  <div class="fig-row">
+    <svg class="plot" aria-label="ישר ומעגל, עם המרחק מהמרכז לישר"></svg>
+    <div class="ctl"><div class="readout"></div></div>
+  </div>
+</div>
+<div class="example"><span class="tag">דוגמה · נקודות החיתוך</span>
+<p>מצאו את נקודות החיתוך של הישר <span class="m">\(y=x+1\)</span> עם המעגל <span class="m">\(x^2+y^2=13\)</span>.</p>
+<p>הצבה: <span class="m">\(x^2+(x+1)^2=13 \Rightarrow 2x^2+2x-12=0 \Rightarrow x^2+x-6=0 \Rightarrow (x+3)(x-2)=0\)</span>.</p>
+<p><span class="m">\(x=2 \Rightarrow y=3\)</span>, ו־<span class="m">\(x=-3 \Rightarrow y=-2\)</span>. נקודות החיתוך: <span class="m">\((2, 3)\)</span> ו־<span class="m">\((-3, -2)\)</span>.</p>
+</div>
+</section>
+
+<section class="ch" id="tangent">
+<h2>7. משיק למעגל</h2>
+<div class="fig-row">
+<div class="meaning">
+<p>המשפט מהגאומטריה (ראו <a href="geometry-02-circle.html">דף המעגל בגאומטריה</a>): <strong>המשיק מאונך לרדיוס בנקודת ההשקה</strong>. בהנדסה אנליטית זה אומר: מכפלת השיפועים של הרדיוס ושל המשיק היא <span class="m">\(-1\)</span>.</p>
+<ol class="derive">
+  <li>שיפוע הרדיוס מהמרכז <span class="m">\(M(a,b)\)</span> לנקודת ההשקה <span class="m">\(P(x_1,y_1)\)</span>: <span class="m">\(m_{MP}=\dfrac{y_1-b}{x_1-a}\)</span>.</li>
+  <li>שיפוע המשיק: <span class="m">\(m=-\dfrac{1}{m_{MP}}\)</span>.</li>
+  <li>משוואת הישר דרך <span class="m">\(P\)</span>: <span class="m">\(y-y_1=m(x-x_1)\)</span>.</li>
+</ol>
+</div>
+<figure><svg class="plot" data-fig="tangent" aria-label="משיק למעגל מאונך לרדיוס"></svg></figure>
+</div>
+<div class="example"><span class="tag">דוגמה</span>
+<p>מצאו את המשיק למעגל <span class="m">\((x-1)^2+(y-2)^2=25\)</span> בנקודה <span class="m">\(P(4, 6)\)</span>.</p>
+<p>בדיקה שהנקודה על המעגל: <span class="m">\(3^2+4^2=25\)</span> ✓. שיפוע הרדיוס: <span class="m">\(\dfrac{6-2}{4-1}=\dfrac43\)</span>. שיפוע המשיק: <span class="m">\(-\dfrac34\)</span>.</p>
+<p><span class="m">\(y-6=-\dfrac34(x-4)\ \Rightarrow\ y=-\dfrac34x+9\)</span>.</p>
+</div>
+<div class="teacher"><strong>נוסחה מקוצרת.</strong> המשיק למעגל <span class="m">\((x-a)^2+(y-b)^2=R^2\)</span> בנקודה <span class="m">\((x_1,y_1)\)</span> שעליו הוא <span class="m">\((x_1-a)(x-a)+(y_1-b)(y-b)=R^2\)</span>. בדוגמה: <span class="m">\(3(x-1)+4(y-2)=25 \Rightarrow 3x+4y=36\)</span>, אותו ישר. הנוסחה נוחה במיוחד כשהמשיק אנכי, ואז אין לו שיפוע.</div>
+</section>
+
+<section class="ch" id="mist">
+<h2>8. טעויות נפוצות</h2>
+<ul class="mist">
+  <li><strong>סימן המרכז.</strong> מ־<span class="m">\((x+3)^2+(y-1)^2=4\)</span> המרכז הוא <span class="m">\((-3, 1)\)</span>, לא <span class="m">\((3, -1)\)</span>.</li>
+  <li><strong>רדיוס או ריבוע הרדיוס.</strong> באגף ימין מופיע <span class="m">\(R^2\)</span>. במשוואה <span class="m">\(x^2+y^2=16\)</span> הרדיוס הוא 4, ובמשוואה <span class="m">\(x^2+y^2=7\)</span> הרדיוס הוא <span class="m">\(\sqrt7\)</span>.</li>
+  <li><strong>השלמה לריבוע באגף אחד בלבד.</strong> כשמוסיפים 9 ו־4 באגף שמאל, חייבים להוסיף אותם גם באגף ימין (או להחסיר אותם באותו אגף).</li>
+  <li><strong>שוכחים לחלק במקדם.</strong> ב־<span class="m">\(3x^2+3y^2-12x=0\)</span> מחלקים קודם ב־3, ורק אז משלימים לריבוע.</li>
+  <li><strong>מסיקים "מעגל" בלי לבדוק את אגף ימין.</strong> אם אחרי ההשלמה אגף ימין שלילי או 0, אין מעגל.</li>
+</ul>
+</section>
+
+<section class="ch" id="practice">
+<h2>9. תרגול <small>9 שאלות</small></h2>
+<p class="lvl">רמה א׳</p>
+<ol class="exercises" start="1">
+<li>מצאו את המרכז ואת הרדיוס של המעגל <span class="m">\((x+1)^2+(y-4)^2=7\)</span>.
+<details><summary>הצג פתרון</summary><div class="sol">
+<p><span class="m">\(x+1=x-(-1)\)</span>, ולכן <span class="m">\(a=-1\)</span>; <span class="m">\(b=4\)</span>. המרכז <span class="m">\((-1, 4)\)</span>, הרדיוס <span class="m">\(\sqrt7 \approx 2.65\)</span>.</p>
+</div></details></li>
+<li>כתבו את משוואת המעגל שמרכזו <span class="m">\((-2, 3)\)</span> והוא עובר בנקודה <span class="m">\((1, 7)\)</span>.
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>הרדיוס הוא המרחק בין המרכז לנקודה: <span class="m">\(R=\sqrt{3^2+4^2}=5\)</span>.</p>
+<p><span class="m">\((x+2)^2+(y-3)^2=25\)</span>.</p>
+</div></details></li>
+<li>מצאו את המרכז ואת הרדיוס של <span class="m">\(x^2+y^2+10x-6y+18=0\)</span>.
+<details><summary>הצג פתרון</summary><div class="sol">
+<p><span class="m">\((x+5)^2-25+(y-3)^2-9+18=0 \Rightarrow (x+5)^2+(y-3)^2=16\)</span>.</p>
+<p>המרכז <span class="m">\((-5, 3)\)</span>, הרדיוס 4.</p>
+</div></details></li>
+<li>האם הנקודה <span class="m">\((1, -1)\)</span> נמצאת בתוך המעגל <span class="m">\(x^2+y^2-4x+2y-4=0\)</span>, עליו או מחוצה לו?
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>השלמה לריבוע: <span class="m">\((x-2)^2+(y+1)^2=9\)</span>.</p>
+<p>הצבה: <span class="m">\((1-2)^2+(-1+1)^2=1 \lt 9\)</span>. הנקודה בתוך המעגל (במרחק 1 מהמרכז, והרדיוס 3).</p>
+</div></details></li>
+</ol>
+<p class="lvl">רמה ב׳</p>
+<ol class="exercises" start="5">
+<li>נתונה המשוואה <span class="m">\(x^2+y^2-2x+6y+k=0\)</span>.
+<ol class="parts"><li>לאילו ערכים של <span class="m">\(k\)</span> זו משוואה של מעגל?</li><li>מצאו את <span class="m">\(k\)</span> שעבורו המעגל עובר בראשית הצירים, ואת הרדיוס במקרה זה.</li></ol>
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>א. <span class="m">\((x-1)^2+(y+3)^2=1+9-k=10-k\)</span>. צריך <span class="m">\(10-k\gt0\)</span>, כלומר <span class="m">\(k\lt10\)</span>.</p>
+<p>ב. מציבים <span class="m">\((0,0)\)</span>: <span class="m">\(k=0\)</span>. הרדיוס <span class="m">\(\sqrt{10}\)</span>.</p>
+</div></details></li>
+<li>מצאו את נקודות החיתוך של הישר <span class="m">\(x+y=7\)</span> עם המעגל <span class="m">\((x-2)^2+(y-1)^2=10\)</span>.
+<details><summary>הצג פתרון</summary><div class="sol">
+<p><span class="m">\(y=7-x\)</span>. הצבה: <span class="m">\((x-2)^2+(6-x)^2=10 \Rightarrow 2x^2-16x+40=10 \Rightarrow x^2-8x+15=0\)</span>.</p>
+<p><span class="m">\(x=3\)</span> או <span class="m">\(x=5\)</span>. נקודות החיתוך: <span class="m">\((3, 4)\)</span> ו־<span class="m">\((5, 2)\)</span>.</p>
+<svg class="plot" data-fig="q6" aria-label="הישר חותך את המעגל בשתי נקודות"></svg>
+</div></details></li>
+<li>מצאו את משוואת המשיק למעגל <span class="m">\((x-2)^2+(y+1)^2=25\)</span> בנקודה <span class="m">\((5, 3)\)</span>.
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>בדיקה: <span class="m">\(3^2+4^2=25\)</span> ✓. שיפוע הרדיוס: <span class="m">\(\dfrac{3-(-1)}{5-2}=\dfrac43\)</span>, ולכן שיפוע המשיק <span class="m">\(-\dfrac34\)</span>.</p>
+<p><span class="m">\(y-3=-\dfrac34(x-5) \Rightarrow y=-\dfrac34x+\dfrac{27}{4}\)</span>, או <span class="m">\(3x+4y=27\)</span>.</p>
+</div></details></li>
+</ol>
+<p class="lvl">רמה ג׳ (בגרות)</p>
+<ol class="exercises" start="8">
+<li>מרכז מעגל נמצא על הישר <span class="m">\(y=x\)</span>, והמעגל עובר בנקודות <span class="m">\(A(1, 0)\)</span> ו־<span class="m">\(B(5, 4)\)</span>. מצאו את משוואת המעגל.
+<details><summary>הצג פתרון</summary><div class="sol">
+<p>המרכז נמצא במרחק שווה מ־<span class="m">\(A\)</span> ומ־<span class="m">\(B\)</span>, ולכן הוא על <strong>האנך האמצעי</strong> של <span class="m">\(AB\)</span>. אמצע <span class="m">\(AB\)</span>: <span class="m">\((3, 2)\)</span>. שיפוע <span class="m">\(AB\)</span> הוא 1, ולכן שיפוע האנך האמצעי <span class="m">\(-1\)</span>: <span class="m">\(y=-x+5\)</span>.</p>
+<p>חיתוך עם <span class="m">\(y=x\)</span>: <span class="m">\(x=2.5\)</span>. המרכז <span class="m">\((2.5,\ 2.5)\)</span>.</p>
+<p><span class="m">\(R^2=(2.5-1)^2+2.5^2=8.5\)</span>. המשוואה: <span class="m">\((x-2.5)^2+(y-2.5)^2=8.5\)</span>.</p>
+<svg class="plot" data-fig="q8" aria-label="המרכז הוא חיתוך האנך האמצעי עם הישר y=x"></svg>
+</div></details></li>
+<li>לאילו ערכים של <span class="m">\(m\)</span> הישר <span class="m">\(y=mx+5\)</span> משיק למעגל <span class="m">\(x^2+y^2=5\)</span>? פתרו בשתי הדרכים.
+<details><summary>הצג פתרון</summary><div class="sol">
+<p><strong>הצבה:</strong> <span class="m">\(x^2+(mx+5)^2=5 \Rightarrow (1+m^2)x^2+10mx+20=0\)</span>. משיק כשיש פתרון אחד: <span class="m">\(\Delta=100m^2-80(1+m^2)=20m^2-80=0\)</span>, ולכן <span class="m">\(m=\pm2\)</span>.</p>
+<p><strong>מרחק:</strong> הישר <span class="m">\(mx-y+5=0\)</span>. המרחק מהראשית <span class="m">\(d=\dfrac{5}{\sqrt{m^2+1}}\)</span>. משיק כש־<span class="m">\(d=\sqrt5\)</span>: <span class="m">\(m^2+1=5\)</span>, <span class="m">\(m=\pm2\)</span>.</p>
+<svg class="plot" data-fig="q9" aria-label="שני משיקים מהנקודה 0,5 למעגל"></svg>
+</div></details></li>
+</ol>
+</section>
+
+<footer>הנדסה אנליטית · דף 2 מתוך 6 · <a href="analytic-03-parabola.html">לדף הבא: משוואת הפרבולה ←</a></footer>
+</div>
+
+<script>
+(function(){
+  var F=Plot.figs, fmt=Plot.fmt, pi=Math.PI;
+  var pts=[[2+3*Math.cos(.7),1+3*Math.sin(.7)],[2+3*Math.cos(2.6),1+3*Math.sin(2.6)],[2+3*Math.cos(4.6),1+3*Math.sin(4.6)]];
+  F.def={view:[-3,7,-3.5,5],w:520,items:[
+    {circle:[2,1],r:3,c:'acc'},
+    {seg:[[2,1],pts[0]],c:'mrk thin',lbl:'R',dy:-6},{seg:[[2,1],pts[1]],c:'mrk thin',lbl:'R',dy:-6},{seg:[[2,1],pts[2]],c:'mrk thin',lbl:'R',dx:10},
+    {pt:[2,1],lbl:'M(2, 1)',dx:6,dy:16,col:'ink'},
+    {pt:pts[0],lbl:'P₁',col:'mrk'},{pt:pts[1],lbl:'P₂',col:'mrk',anchor:'end',dx:-8},{pt:pts[2],lbl:'P₃',col:'mrk',dy:18}]};
+  var P=[2+3*Math.cos(.9),1+3*Math.sin(.9)];
+  F.pyth={view:[-1,6.5,-1,5.5],w:420,ticks:false,items:[
+    {circle:[2,1],r:3,c:'faint'},
+    {seg:[[2,1],[P[0],1]],c:'grn',lbl:'x − a',dy:18},{seg:[[P[0],1],P],c:'vio',lbl:'y − b',dx:30,dy:4},
+    {seg:[[2,1],P],c:'mrk',lbl:'R',dx:-10,dy:-4},{ra:[P[0],1],u:[-1,0],v:[0,1]},
+    {seg:[[2,0],[2,1]],c:'faint'},{seg:[[0,1],[2,1]],c:'faint'},{seg:[[P[0],0],[P[0],1]],c:'faint'},{seg:[[0,P[1]],[P[0],P[1]]],c:'faint'},
+    {txt:'a',at:[2,0],dy:16,col:'grn'},{txt:'x',at:[P[0],0],dy:16,col:'grn'},{txt:'b',at:[0,1],dx:-10,dy:5,col:'vio'},{txt:'y',at:[0,P[1]],dx:-10,dy:5,col:'vio'},
+    {pt:[2,1],lbl:'M(a, b)',anchor:'end',dx:-6,dy:-8},{pt:P,lbl:'P(x, y)',col:'mrk'}]};
+  F.ex1={view:[-3,9,-8.5,4],w:380,items:[{circle:[3,-2],r:5,c:'acc'},{seg:[[3,-2],[8,-2]],c:'mrk thin',lbl:'R = 5'},{pt:[3,-2],lbl:'M(3, −2)',anchor:'end',dx:-6,dy:16}]};
+  F.point={view:[-6.5,6.5,-6,6],w:380,items:[{circle:[0,0],r:5,c:'acc'},
+    {pt:[2,3],lbl:'(2, 3)',col:'grn'},{pt:[3,4],lbl:'(3, 4)',col:'acc',anchor:'end',dx:-8},{pt:[5,4],lbl:'(5, 4)',col:'mrk',dy:-10,anchor:'end'},
+    {seg:[[0,0],[5,4]],c:'faint'},{txt:'x² + y² = 25',at:[-3.2,4.6],col:'acc'}]};
+  F.tangent={view:[-5,9,-4,10],w:380,items:[{circle:[1,2],r:5,c:'acc'},{abc:[3,4,-36],c:'mrk'},
+    {seg:[[1,2],[4,6]],c:'ink thin'},{ra:[4,6],u:[-3,-4],v:[4,-3]},{pt:[1,2],lbl:'M(1, 2)',dy:18,dx:4},{pt:[4,6],lbl:'P(4, 6)',col:'mrk'},
+    {txt:'y = −0.75x + 9',at:[3.4,7.9],col:'mrk',anchor:'end'}]};
+  F.q6={view:[-2,7,-2.5,6],w:380,items:[{circle:[2,1],r:Math.sqrt(10),c:'acc'},{abc:[1,1,-7],c:'mrk'},{pt:[3,4],lbl:'(3, 4)',col:'mrk'},{pt:[5,2],lbl:'(5, 2)',col:'mrk'},{pt:[2,1],lbl:'(2, 1)',dy:16}]};
+  F.q8={view:[-2,7,-2,7],w:380,items:[{circle:[2.5,2.5],r:Math.sqrt(8.5),c:'acc'},{abc:[1,-1,0],c:'grn thin'},{abc:[1,1,-5],c:'vio dash thin'},{seg:[[1,0],[5,4]],c:'ink thin'},
+    {pt:[1,0],lbl:'A',dy:18,dx:-14},{pt:[5,4],lbl:'B'},{pt:[3,2],lbl:'',r:3},{pt:[2.5,2.5],lbl:'M',col:'acc',anchor:'end',dx:-8},{txt:'y = x',at:[6,6],col:'grn',dx:-30},{txt:'y = −x + 5',at:[1.3,6.3],col:'vio',anchor:'start'}]};
+  F.q9={view:[-4.5,4.5,-3,6],w:380,items:[{circle:[0,0],r:Math.sqrt(5),c:'acc'},{abc:[2,-1,5],c:'mrk'},{abc:[-2,-1,5],c:'mrk'},
+    {pt:[0,5],lbl:'(0, 5)',dx:8},{pt:[-2,1],col:'mrk'},{pt:[2,1],col:'mrk'},{txt:'m = 2',at:[-3.2,0.6],col:'mrk'},{txt:'m = −2',at:[3.3,0.6],col:'mrk'}]};
+
+  Plot.lab('lab-circle',{
+    sliders:[{id:'a',label:'a (מרכז x)',min:-5,max:5,step:.5,val:2},{id:'b',label:'b (מרכז y)',min:-4,max:4,step:.5,val:1},{id:'R',label:'R (רדיוס)',min:.5,max:5,step:.5,val:3}],
+    spec:function(v){return {view:[-9,9,-7,7],w:420,items:[
+      {circle:[v.a,v.b],r:v.R,c:'acc'},
+      {seg:[[v.a,0],[v.a,v.b]],c:'faint'},{seg:[[0,v.b],[v.a,v.b]],c:'faint'},
+      {seg:[[v.a,v.b],[v.a+v.R*Math.cos(.6),v.b+v.R*Math.sin(.6)]],c:'mrk thin',lbl:'R'},
+      {pt:[v.a,v.b],lbl:'M('+fmt(v.a)+', '+fmt(v.b)+')',dy:18,dx:4}]};},
+    read:function(v){var D=-2*v.a,E=-2*v.b,Fc=v.a*v.a+v.b*v.b-v.R*v.R;
+      return ['<span class="heb">הצורה הקנונית:</span>','<span class="acc">'+Plot.sq('x',v.a)+' + '+Plot.sq('y',v.b)+' = '+fmt(v.R*v.R)+'</span>',
+        '<span class="heb">הצורה הכללית (אחרי פתיחת סוגריים):</span>','<span class="mrk">'+Plot.poly([[1,'x²'],[1,'y²'],[D,'x'],[E,'y'],[Fc,'']])+' = 0</span>',
+        'D = '+fmt(D)+',  E = '+fmt(E)+',  F = '+fmt(Fc),
+        '−D/2 = '+fmt(-D/2)+',  −E/2 = '+fmt(-E/2)];}
+  });
+
+  var A=1,B=1,R=3;
+  Plot.lab('lab-line',{
+    sliders:[{id:'m',label:'m (שיפוע)',min:-3,max:3,step:.1,val:.5},{id:'k',label:'k (חיתוך y)',min:-8,max:8,step:.1,val:2}],
+    spec:function(v){
+      var d=Math.abs(v.m*A-B+v.k)/Math.hypot(v.m,1);
+      var t=-(v.m*A-B+v.k)/(v.m*v.m+1), foot=[A+v.m*t,B-t];
+      var it=[{circle:[A,B],r:R,c:'acc'},{abc:[v.m,-1,v.k],c:'mrk'},{seg:[[A,B],foot],c:'grn dash thin',lbl:'d',dx:8},{pt:[A,B],lbl:'M',dy:16},{pt:foot,r:3,col:'grn'}];
+      var qa=1+v.m*v.m,qb=2*(v.m*(v.k-B)-A),qc=A*A+(v.k-B)*(v.k-B)-R*R,D=qb*qb-4*qa*qc;
+      if(D>=0){[1,-1].forEach(function(s){var x=(-qb+s*Math.sqrt(D))/(2*qa);it.push({pt:[x,v.m*x+v.k],col:'mrk'});});}
+      return {view:[-7,9,-6,8],w:420,items:it};},
+    read:function(v){var d=Math.abs(v.m*A-B+v.k)/Math.hypot(v.m,1),qa=1+v.m*v.m,qb=2*(v.m*(v.k-B)-A),qc=A*A+(v.k-B)*(v.k-B)-R*R,D=qb*qb-4*qa*qc;
+      var st=Math.abs(d-R)<0.06?'משיק (נקודה אחת)':d<R?'חותך (שתי נקודות)':'לא נפגשים';
+      return ['<span class="mrk">y = '+Plot.poly([[v.m,'x'],[v.k,'']])+'</span>','<span class="acc">'+Plot.sq('x',A)+' + '+Plot.sq('y',B)+' = 9</span>',
+        '<span class="grn">d = '+fmt(d)+'</span>   R = 3','<span class="heb">הצבה: '+'</span>'+Plot.poly([[qa,'x²'],[qb,'x'],[qc,'']])+' = 0','Δ = '+fmt(D),
+        '<span class="heb"><b>'+st+'</b></span>'];}
+  });
+})();
+</script>
+
+</body>
+</html>

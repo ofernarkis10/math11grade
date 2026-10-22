@@ -40,6 +40,12 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | | `trigonometry-03-wheel-exercises.html` | 21 graded wheel problems with full solutions, up to the speed of a point on a rolling wheel relative to the ground |
 | | `trigonometry-04-linear-vs-wheel-exercises.html` | 4 pairs of parallel questions (a straight line beside a wheel) for page 02, solved with the same five steps; folding solutions with a figure of the path |
 | | `trigonometry-05-wheel-homework.html` | Homework to hand in: 12 questions on a point on a rotating wheel (position after a time; inverse and combined questions), questions only, print-ready |
+| Analytic geometry: equations of curves | `analytic-00-overview.html` | Overview: what the equation of a curve means, the five curves as loci, conic sections, one definition for all by focus, directrix and eccentricity (interactive lab), recognizing a curve from Ax² + Cy² + Dx + Ey + F = 0, summary table |
+| | `analytic-01-line.html` | The line: slope and m = tan α, y = mx + b (lab), other forms, parallel and perpendicular lines, intersection, distance from a point to a line |
+| | `analytic-02-circle.html` | The circle: derivation, meaning of a, b, R (lab), general form and completing the square, point vs circle, line and circle (lab), tangent |
+| | `analytic-03-parabola.html` | The parabola: focus and directrix (lab), y² = 2px, meaning of p, four orientations, link to y = ax², shifting, reflective property |
+| | `analytic-04-ellipse.html` | The ellipse: sum of distances (lab), x²/a² + y²/b² = 1, a² = b² + c², squashed circle, vertical ellipse, eccentricity, completing the square |
+| | `analytic-05-hyperbola.html` | The hyperbola: difference of distances (lab), x²/a² − y²/b² = 1, auxiliary rectangle and asymptotes, conjugate hyperbola, rectangular hyperbola and y = k/x, completing the square |
 
 ## Structure of a study page
 
@@ -67,6 +73,7 @@ math11grade/
 ├── composite-derivatives-NN-<name>.html  derivatives of composite functions (01 rules, 02 exercises)
 ├── geometry-NN-<name>.html              Euclidean geometry (01 loci & triangle centers, 02 circle, 03 similarity)
 ├── trigonometry-NN-<name>.html          trigonometric functions (01 polar coordinates & the wheel, 02 linear vs wheel, 03 wheel exercises, 04 linear-vs-wheel exercises, 05 wheel homework)
+├── analytic-NN-<name>.html              analytic geometry: equations of curves (00 overview, 01 line, 02 circle, 03 parabola, 04 ellipse, 05 hyperbola); figures drawn in SVG by a small inline script, with interactive labs
 ├── font-size.js                       text-size control shown on every page
 ├── README.md
 └── LICENSE                             CC0 1.0 Universal
