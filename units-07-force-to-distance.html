@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מכוח למרחק: אינטגרלים ונגזרות</title>
+<meta name="description" content="השרשרת כוח ומסה ← תאוצה ← מהירות ← מרחק: F = ma והניוטון, אינטגרל (שטח מתחת לגרף) מתאוצה למהירות וממהירות למיקום, ובכיוון ההפוך נגזרות (שיפוע) עד הכוח — עם מעקב יחידות בכל צעד.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{--bg:#f3f5f7;--grid:rgba(31,111,139,.06);--paper:#ffffff;--ink:#1c2633;--muted:#5b6878;--line:#d9dfe6;--accent:#1f6f8b;--accent-soft:#e3f0f5;--orange:#b4561e;--orange-soft:#fbeee5;--green:#2f7d4a;--green-soft:#e6f3ea;--code:#f6f8fa}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12171d;--grid:rgba(108,188,214,.05);--paper:#1a2129;--ink:#e4e9ef;--muted:#9aa7b6;--line:#2c3642;--accent:#6cbcd6;--accent-soft:#1b313b;--orange:#f0a46f;--orange-soft:#3a2a1f;--green:#6fcf8f;--green-soft:#17301f;--code:#151b22;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12171d;--grid:rgba(108,188,214,.05);--paper:#1a2129;--ink:#e4e9ef;--muted:#9aa7b6;--line:#2c3642;--accent:#6cbcd6;--accent-soft:#1b313b;--orange:#f0a46f;--orange-soft:#3a2a1f;--green:#6fcf8f;--green-soft:#17301f;--code:#151b22;color-scheme:dark}
+*{box-sizing:border-box}html,body{overflow-x:clip}
+body{margin:0;background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+background-size:24px 24px;color:var(--ink);font-family:"Assistant","Arial Hebrew",Arial,sans-serif;font-size:17px;line-height:1.7}
+.wrap{max-width:900px;margin:0 auto;padding:16px}
+nav.top{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:15px;margin-bottom:12px}
+nav.top a,a{color:var(--accent)}
+header.hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 22px 16px;margin-bottom:18px}
+.eyebrow{font-size:14px;color:var(--muted);letter-spacing:.02em}
+h1{font-family:"Frank Ruhl Libre",serif;font-size:2.1rem;line-height:1.2;margin:.25em 0 .3em}
+h2{font-family:"Frank Ruhl Libre",serif;font-size:1.5rem;margin:.2em 0 .6em}
+h3{font-size:1.1rem;margin:1.1em 0 .4em}
+.lead{color:var(--muted);font-size:1.08rem;margin:0}
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:0 0 18px}
+.num{display:inline-block;min-width:1.9em;height:1.9em;line-height:1.9em;text-align:center;border-radius:50%;background:var(--accent);color:var(--paper);font-size:.85em;margin-inline-end:.4em}
+.toc ol{margin:0;padding-inline-start:1.4em}
+.big{background:var(--accent-soft);border-radius:10px;padding:12px 14px;margin:12px 0;text-align:center;overflow-x:auto;font-size:1.08rem}
+.ex{border:2px dashed var(--line);border-radius:12px;padding:12px 16px;margin:14px 0}
+.ex .t{font-weight:700;color:var(--accent)}
+.note{background:var(--orange-soft);border-inline-start:4px solid var(--orange);border-radius:8px;padding:10px 14px;margin:14px 0}
+.good{background:var(--green-soft);border-inline-start:4px solid var(--green);border-radius:8px;padding:10px 14px;margin:14px 0}
+.tablebox{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:center}
+th{background:var(--accent-soft)}
+details{margin:8px 0}
+summary{cursor:pointer;color:var(--accent);font-weight:600}
+details .sol{border-inline-start:4px solid var(--orange);padding:6px 14px;margin-top:6px;background:var(--code);border-radius:6px}
+ol.check>li,ol.qs>li{margin-bottom:12px}
+.q{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:12px 0}
+.q .qh{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.q .qh b{color:var(--accent)}
+.tick{font-size:15px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.toolbar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:16px}
+button{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--accent-soft);color:var(--ink);border-radius:8px;padding:5px 12px;cursor:pointer}
+.prog{margin-inline-start:auto;color:var(--muted);font-size:15px}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:6px 0 30px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
+.card .tag{font-size:13px;color:var(--muted)}
+.card a{font-weight:700;text-decoration:none}
+.katex{direction:ltr;unicode-bidi:isolate;position:relative}
+.sol,.ex,ol.check>li,.q p,td{line-height:2.15}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0}
+.ltr{direction:ltr;unicode-bidi:isolate}
+footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
+@media (max-width:600px){body{font-size:17px}.wrap{padding:12px 16px}section.ch,header.hero{padding:16px}h1{font-size:1.7rem}}
+@media print{body{background:#fff}.toolbar,nav.top,.pager{display:none}details{display:block}details>.sol{display:block}section.ch,.q{break-inside:avoid}}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body><div class="wrap">
+<nav class="top"><a href="topic-units.html">→ חזרה לנושא: יחידות ומשוואות תנועה</a> · <a href="index.html">כל הנושאים</a></nav>
+<nav class="top series" aria-label="דפי הנושא"><a href="units-00-overview.html">דף הקבוצה</a> · <a href="units-01-quantities-and-units.html">גדלים ויחידות</a> · <a href="units-02-unit-conversion.html">המרות</a> · <a href="units-03-motion-equations.html">משוואות תנועה</a> · <a href="units-04-solving-with-units.html">פתרון בעיות</a> · <a href="units-06-circular-motion.html">תנועה מעגלית</a> · <b>מכוח למרחק</b> · <a href="units-08-pool-filling.html">מילוי בריכה</a> · <a href="units-05-workbook.html">חוברת</a></nav>
+<header class="hero"><div class="eyebrow">מתמטיקה · כיתה י״א · 5 יח״ל · יחידות ומשוואות תנועה</div><h1>מכוח למרחק: אינטגרלים ונגזרות</h1><p class="lead">מהכוח אל המרחק ובחזרה: כוח ומסה נותנים תאוצה, אינטגרל נותן מהירות ואז מרחק — ונגזרות מחזירות את הדרך כולה. בכל צעד היחידות מראות לאן הגענו.</p></header>
+<section class="ch toc"><h2>תוכן</h2><ol><li><a href="#s1">כוח ומסה קובעים את התאוצה</a></li><li><a href="#s2">השרשרת: ארבעה גדלים ושתי פעולות</a></li><li><a href="#s3">מתאוצה למהירות: אינטגרל ראשון</a></li><li><a href="#s4">ממהירות למרחק: אינטגרל שני</a></li><li><a href="#s5">בכיוון ההפוך: נגזרות</a></li><li><a href="#s6">דוגמה מלאה הלוך וחזור</a></li><li><a href="#s7">כוח שמשתנה עם הזמן</a></li><li><a href="#s8">טבלת סיכום</a></li><li><a href="#mist">טעויות נפוצות</a></li><li><a href="#chk">בדקו את עצמכם</a></li></ol></section>
+<section class="ch" id="s1"><h2><span class="num">1</span>כוח ומסה קובעים את התאוצה</h2>
+
+<p>בתחילת השרשרת עומד <b>החוק השני של ניוטון</b>: הכוח השקול \(F\) הפועל על גוף שמסתו \(m\) גורם לתאוצה \(a\):</p>
+<div class="big">\[F=m\,a\qquad\Longleftrightarrow\qquad a=\frac{F}{m}\]</div>
+<p>יחידת הכוח היא <b>ניוטון</b> (\(\mathrm{N}\)), והיא יחידה נגזרת — היא מוגדרת מתוך הנוסחה עצמה:</p>
+<div class="big">\[1\u{N}=1\u{kg}\cdot1\,\mpss\qquad\Rightarrow\qquad \mathrm{N}=\frac{\mathrm{kg}\cdot\mathrm{m}}{\mathrm{s}^2}\]</div>
+<p>ולכן, כשמחלקים כוח במסה, הקילוגרם מצטמצם ונשארת יחידת תאוצה:</p>
+<div class="big">\[\frac{\mathrm{N}}{\mathrm{kg}}=\frac{\cx{\mathrm{kg}}\cdot\mathrm{m}/\mathrm{s}^2}{\cx{\mathrm{kg}}}=\mpss\]</div><div class="ex"><span class="t">דוגמה 1.</span> על מכונית שמסתה \(1200\u{kg}\) פועל כוח שקול של \(600\u{N}\). מה תאוצתה?<details><summary>פתרון</summary><div class="sol">\(a=\dfrac{600\u{N}}{1200\u{kg}}=0.5\,\dfrac{\mathrm{N}}{\mathrm{kg}}=0.5\,\mpss\).</div></details></div><div class="note"><b>שימו לב:</b> \(F\) הוא הכוח <b>השקול</b> — סכום כל הכוחות עם הסימנים שלהם (כוח המנוע פחות החיכוך, למשל). כוח נגד כיוון התנועה נותן תאוצה שלילית — בלימה.</div>
+</section>
+<section class="ch" id="s2"><h2><span class="num">2</span>השרשרת: ארבעה גדלים ושתי פעולות</h2>
+
+<p>מרגע שיודעים את התאוצה, אפשר להתקדם הלאה: מתאוצה למהירות, וממהירות למיקום. ובכיוון ההפוך — ממיקום למהירות ולתאוצה, ומשם לכוח:</p>
+<figure style="margin:14px auto;max-width:640px"><svg viewBox="0 0 640 210" width="100%" role="img" aria-label="שרשרת: כוח ומסה, תאוצה, מהירות, מרחק — אינטגרל קדימה ונגזרת אחורה" style="direction:ltr">
+<defs><marker id="fa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--accent)"/></marker>
+<marker id="fb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--orange)"/></marker></defs>
+<g font-family="inherit" text-anchor="middle">
+<rect x="6" y="70" width="120" height="70" rx="12" fill="var(--accent-soft)" stroke="var(--line)"/><text x="66" y="98" font-size="17" fill="var(--ink)" font-weight="700">F , m</text><text x="66" y="122" font-size="14" fill="var(--muted)">N , kg</text>
+<rect x="178" y="70" width="120" height="70" rx="12" fill="var(--accent-soft)" stroke="var(--line)"/><text x="238" y="98" font-size="17" fill="var(--ink)" font-weight="700">a(t)</text><text x="238" y="122" font-size="14" fill="var(--muted)">m/s²</text>
+<rect x="350" y="70" width="120" height="70" rx="12" fill="var(--accent-soft)" stroke="var(--line)"/><text x="410" y="98" font-size="17" fill="var(--ink)" font-weight="700">v(t)</text><text x="410" y="122" font-size="14" fill="var(--muted)">m/s</text>
+<rect x="514" y="70" width="120" height="70" rx="12" fill="var(--accent-soft)" stroke="var(--line)"/><text x="574" y="98" font-size="17" fill="var(--ink)" font-weight="700">x(t)</text><text x="574" y="122" font-size="14" fill="var(--muted)">m</text>
+<line x1="128" y1="62" x2="176" y2="62" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#fa)"/><text x="152" y="50" font-size="13" fill="var(--accent)">÷ m</text>
+<line x1="300" y1="62" x2="348" y2="62" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#fa)"/><text x="324" y="38" font-size="13" fill="var(--accent)">∫ dt</text><text x="324" y="53" font-size="12" fill="var(--accent)">× s</text>
+<line x1="472" y1="62" x2="512" y2="62" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#fa)"/><text x="492" y="38" font-size="13" fill="var(--accent)">∫ dt</text><text x="492" y="53" font-size="12" fill="var(--accent)">× s</text>
+<line x1="176" y1="150" x2="128" y2="150" stroke="var(--orange)" stroke-width="2.5" marker-end="url(#fb)"/><text x="152" y="172" font-size="13" fill="var(--orange)">× m</text>
+<line x1="348" y1="150" x2="300" y2="150" stroke="var(--orange)" stroke-width="2.5" marker-end="url(#fb)"/><text x="324" y="172" font-size="13" fill="var(--orange)">d/dt</text><text x="324" y="188" font-size="12" fill="var(--orange)">÷ s</text>
+<line x1="512" y1="150" x2="472" y2="150" stroke="var(--orange)" stroke-width="2.5" marker-end="url(#fb)"/><text x="492" y="172" font-size="13" fill="var(--orange)">d/dt</text><text x="492" y="188" font-size="12" fill="var(--orange)">÷ s</text>
+<text x="320" y="18" font-size="14" fill="var(--accent)" font-weight="700">קדימה: אינטגרל (שטח) — כופלים בשניות</text>
+<text x="320" y="206" font-size="14" fill="var(--orange)" font-weight="700">אחורה: נגזרת (שיפוע) — מחלקים בשניות</text>
+</g></svg><figcaption style="text-align:center;color:var(--muted);font-size:15px">כל חץ ימינה מוסיף שנייה ליחידה, וכל חץ שמאלה מוריד שנייה.</figcaption></figure>
+<p>שתי הפעולות המתמטיות הן:</p>
+<ul>
+<li><b>נגזרת</b> (שמאלה): קצב השינוי — <b>שיפוע</b> הגרף. \(v=x'(t)\), \(a=v'(t)\). היחידה מתחלקת בשנייה: \(\dfrac{\mathrm{m}}{\mathrm{s}}\), ואחר כך \(\dfrac{\mathrm{m}/\mathrm{s}}{\mathrm{s}}\).</li>
+<li><b>אינטגרל</b> (ימינה): הצטברות — <b>השטח</b> מתחת לגרף. השינוי במהירות הוא השטח מתחת לגרף התאוצה, והשינוי במיקום הוא השטח מתחת לגרף המהירות. היחידה מוכפלת בשנייה.</li>
+</ul>
+<div class="good"><b>כלל זהב:</b> נגזרת לפי הזמן = <b>חילוק</b> היחידה ב־\(\mathrm{s}\). אינטגרל לפי הזמן = <b>כפל</b> היחידה ב־\(\mathrm{s}\). זה בדיוק מה שראינו ב<a href=\"units-01-quantities-and-units.html#s4\">צמצום יחידות</a>, רק בשפה של חשבון דיפרנציאלי ואינטגרלי.</div><div class="note"><b>שימו לב:</b> את הנגזרת אתם כבר מכירים. האינטגרל נלמד לעומק בהמשך; כאן מספיקים שני רעיונות: (1) <b>פונקציה קדומה</b> — הפונקציה שהנגזרת שלה היא הפונקציה הנתונה, כלומר הפעולה ההפוכה לגזירה; (2) <b>שטח מתחת לגרף</b> — כמה הצטבר. מכיוון שבגזירה קבוע נעלם, באינטגרל צריך להוסיף אותו בחזרה: זה ערך ההתחלה (\(v_0\) או \(x_0\)).</div>
+</section>
+<section class="ch" id="s3"><h2><span class="num">3</span>מתאוצה למהירות: אינטגרל ראשון</h2>
+
+<p>נניח תאוצה קבועה \(a\). איזו פונקציה \(v(t)\) נותנת בגזירה את \(a\)? פונקציה קווית:</p>
+<div class="big">\[v(t)=\int a\,dt = a\,t + C,\qquad v(0)=v_0\ \Rightarrow\ C=v_0\]</div><div class="big">\[v(t)=v_0+a\,t\qquad\Big[\mps\Big]=\Big[\mps\Big]+\Big[\mpss\Big]\cdot[\mathrm{s}]\]</div>
+<p>יצאה בדיוק <a href="units-03-motion-equations.html#s3">משוואת התנועה הראשונה</a>. ובשפת השטחים: השטח מתחת לגרף התאוצה (מלבן בגובה \(a\) וברוחב \(t\)) הוא \(a\cdot t\) — הגידול במהירות. יחידת השטח: גובה כפול רוחב, \(\mpss\cdot\mathrm{s}=\mps\).</p>
+<div class="cards" style="margin:12px 0">
+<div class="card" style="text-align:center"><svg viewBox="0 0 300 170" width="100%" style="direction:ltr;max-width:300px" role="img" aria-label="גרף תאוצה קבועה 2"><line x1="44.0" y1="140.0" x2="44.0" y2="144.0" stroke="var(--muted)"/><text x="44.0" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">0</text><line x1="92.4" y1="140.0" x2="92.4" y2="144.0" stroke="var(--muted)"/><text x="92.4" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">2</text><line x1="140.8" y1="140.0" x2="140.8" y2="144.0" stroke="var(--muted)"/><text x="140.8" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">4</text><line x1="189.2" y1="140.0" x2="189.2" y2="144.0" stroke="var(--muted)"/><text x="189.2" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">6</text><line x1="237.6" y1="140.0" x2="237.6" y2="144.0" stroke="var(--muted)"/><text x="237.6" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">8</text><line x1="286.0" y1="140.0" x2="286.0" y2="144.0" stroke="var(--muted)"/><text x="286.0" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">10</text><line x1="44" y1="43.1" x2="286" y2="43.1" stroke="var(--line)" stroke-dasharray="3 3"/><text x="39" y="47.1" font-size="11" fill="var(--muted)" text-anchor="end">2</text><path d="M44.0,43.1 L48.0,43.1 L52.1,43.1 L56.1,43.1 L60.1,43.1 L64.2,43.1 L68.2,43.1 L72.2,43.1 L76.3,43.1 L80.3,43.1 L84.3,43.1 L88.4,43.1 L92.4,43.1 L96.4,43.1 L100.5,43.1 L104.5,43.1 L108.5,43.1 L112.6,43.1 L116.6,43.1 L120.6,43.1 L124.7,43.1 L128.7,43.1 L132.7,43.1 L136.8,43.1 L140.8,43.1 L144.8,43.1 L148.9,43.1 L152.9,43.1 L156.9,43.1 L161.0,43.1 L165.0,43.1 L169.0,43.1 L173.1,43.1 L177.1,43.1 L181.1,43.1 L185.2,43.1 L189.2,43.1 L193.2,43.1 L197.3,43.1 L201.3,43.1 L205.3,43.1 L209.4,43.1 L213.4,43.1 L217.4,43.1 L221.5,43.1 L225.5,43.1 L229.5,43.1 L233.6,43.1 L237.6,43.1 L241.6,43.1 L245.7,43.1 L249.7,43.1 L253.7,43.1 L257.8,43.1 L261.8,43.1 L265.8,43.1 L269.9,43.1 L273.9,43.1 L277.9,43.1 L282.0,43.1 L286.0,43.1 L286.0,140.0 L44.0,140.0 Z" fill="var(--green)" opacity=".18"/><line x1="44" y1="140.0" x2="290" y2="140.0" stroke="var(--ink)"/><line x1="44" y1="140.0" x2="44" y2="8" stroke="var(--ink)"/><path d="M44.0,43.1 L48.0,43.1 L52.1,43.1 L56.1,43.1 L60.1,43.1 L64.2,43.1 L68.2,43.1 L72.2,43.1 L76.3,43.1 L80.3,43.1 L84.3,43.1 L88.4,43.1 L92.4,43.1 L96.4,43.1 L100.5,43.1 L104.5,43.1 L108.5,43.1 L112.6,43.1 L116.6,43.1 L120.6,43.1 L124.7,43.1 L128.7,43.1 L132.7,43.1 L136.8,43.1 L140.8,43.1 L144.8,43.1 L148.9,43.1 L152.9,43.1 L156.9,43.1 L161.0,43.1 L165.0,43.1 L169.0,43.1 L173.1,43.1 L177.1,43.1 L181.1,43.1 L185.2,43.1 L189.2,43.1 L193.2,43.1 L197.3,43.1 L201.3,43.1 L205.3,43.1 L209.4,43.1 L213.4,43.1 L217.4,43.1 L221.5,43.1 L225.5,43.1 L229.5,43.1 L233.6,43.1 L237.6,43.1 L241.6,43.1 L245.7,43.1 L249.7,43.1 L253.7,43.1 L257.8,43.1 L261.8,43.1 L265.8,43.1 L269.9,43.1 L273.9,43.1 L277.9,43.1 L282.0,43.1 L286.0,43.1" fill="none" stroke="var(--green)" stroke-width="3"/><text x="50" y="18" font-size="13" fill="var(--green)" font-weight="700">a (m/s²)</text><text x="286" y="134.0" font-size="12" fill="var(--muted)" text-anchor="end">t (s)</text></svg><p style="font-size:15px">\(a=2\,\mpss\). השטח הצבוע עד \(t=10\u{s}\): \(2\cdot10=20\,\mps\).</p></div>
+<div class="card" style="text-align:center"><svg viewBox="0 0 300 170" width="100%" style="direction:ltr;max-width:300px" role="img" aria-label="גרף מהירות קווית"><line x1="44.0" y1="140.0" x2="44.0" y2="144.0" stroke="var(--muted)"/><text x="44.0" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">0</text><line x1="92.4" y1="140.0" x2="92.4" y2="144.0" stroke="var(--muted)"/><text x="92.4" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">2</text><line x1="140.8" y1="140.0" x2="140.8" y2="144.0" stroke="var(--muted)"/><text x="140.8" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">4</text><line x1="189.2" y1="140.0" x2="189.2" y2="144.0" stroke="var(--muted)"/><text x="189.2" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">6</text><line x1="237.6" y1="140.0" x2="237.6" y2="144.0" stroke="var(--muted)"/><text x="237.6" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">8</text><line x1="286.0" y1="140.0" x2="286.0" y2="144.0" stroke="var(--muted)"/><text x="286.0" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">10</text><line x1="44" y1="87.5" x2="286" y2="87.5" stroke="var(--line)" stroke-dasharray="3 3"/><text x="39" y="91.5" font-size="11" fill="var(--muted)" text-anchor="end">10</text><line x1="44" y1="35.0" x2="286" y2="35.0" stroke="var(--line)" stroke-dasharray="3 3"/><text x="39" y="39.0" font-size="11" fill="var(--muted)" text-anchor="end">20</text><line x1="44" y1="140.0" x2="290" y2="140.0" stroke="var(--ink)"/><line x1="44" y1="140.0" x2="44" y2="8" stroke="var(--ink)"/><path d="M44.0,140.0 L48.0,138.2 L52.1,136.5 L56.1,134.8 L60.1,133.0 L64.2,131.2 L68.2,129.5 L72.2,127.8 L76.3,126.0 L80.3,124.2 L84.3,122.5 L88.4,120.8 L92.4,119.0 L96.4,117.2 L100.5,115.5 L104.5,113.8 L108.5,112.0 L112.6,110.2 L116.6,108.5 L120.6,106.8 L124.7,105.0 L128.7,103.2 L132.7,101.5 L136.8,99.8 L140.8,98.0 L144.8,96.2 L148.9,94.5 L152.9,92.8 L156.9,91.0 L161.0,89.3 L165.0,87.5 L169.0,85.8 L173.1,84.0 L177.1,82.3 L181.1,80.5 L185.2,78.8 L189.2,77.0 L193.2,75.2 L197.3,73.5 L201.3,71.8 L205.3,70.0 L209.4,68.2 L213.4,66.5 L217.4,64.8 L221.5,63.0 L225.5,61.2 L229.5,59.5 L233.6,57.8 L237.6,56.0 L241.6,54.3 L245.7,52.5 L249.7,50.7 L253.7,49.0 L257.8,47.2 L261.8,45.5 L265.8,43.8 L269.9,42.0 L273.9,40.2 L277.9,38.5 L282.0,36.7 L286.0,35.0" fill="none" stroke="var(--accent)" stroke-width="3"/><text x="50" y="18" font-size="13" fill="var(--accent)" font-weight="700">v (m/s)</text><text x="286" y="134.0" font-size="12" fill="var(--muted)" text-anchor="end">t (s)</text></svg><p style="font-size:15px">\(v(t)=2t\): אחרי \(10\u{s}\) המהירות \(20\,\mps\) — שווה לשטח הצבוע בגרף הקודם.</p></div>
+</div>
+</section>
+<section class="ch" id="s4"><h2><span class="num">4</span>ממהירות למרחק: אינטגרל שני</h2>
+
+<p>עכשיו מחפשים \(x(t)\) שהנגזרת שלה היא \(v_0+at\). הנגזרת של \(t^2\) היא \(2t\), ולכן הפונקציה הקדומה של \(at\) היא \(\tfrac12at^2\):</p>
+<div class="big">\[x(t)=\int\big(v_0+a t\big)\,dt = v_0t+\tfrac12 a t^2 + C,\qquad x(0)=x_0\ \Rightarrow\ C=x_0\]</div><div class="big">\[x(t)=x_0+v_0t+\tfrac12 a t^2\]</div>
+<p>זו <a href="units-03-motion-equations.html#s3">משוואת התנועה השנייה</a> — עכשיו רואים מאיפה היא באה, ומאיפה ה־\(\tfrac12\): הוא נוצר כשמחפשים פונקציה קדומה ל־\(t\).</p>
+<p>בשפת השטחים: מתחת לגרף המהירות יש <b>טרפז</b> (או משולש כש־\(v_0=0\)). השטח שלו הוא המרחק:</p>
+<div class="big">\[\Delta x=\frac{v_0+v}{2}\cdot t=\frac{v_0+(v_0+at)}{2}\cdot t=v_0t+\tfrac12 a t^2\qquad\Big[\mps\cdot\mathrm{s}=\mathrm{m}\Big]\]</div>
+<div class="cards" style="margin:12px 0">
+<div class="card" style="text-align:center"><svg viewBox="0 0 300 170" width="100%" style="direction:ltr;max-width:300px" role="img" aria-label="שטח מתחת לגרף המהירות"><line x1="44.0" y1="140.0" x2="44.0" y2="144.0" stroke="var(--muted)"/><text x="44.0" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">0</text><line x1="92.4" y1="140.0" x2="92.4" y2="144.0" stroke="var(--muted)"/><text x="92.4" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">2</text><line x1="140.8" y1="140.0" x2="140.8" y2="144.0" stroke="var(--muted)"/><text x="140.8" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">4</text><line x1="189.2" y1="140.0" x2="189.2" y2="144.0" stroke="var(--muted)"/><text x="189.2" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">6</text><line x1="237.6" y1="140.0" x2="237.6" y2="144.0" stroke="var(--muted)"/><text x="237.6" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">8</text><line x1="286.0" y1="140.0" x2="286.0" y2="144.0" stroke="var(--muted)"/><text x="286.0" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">10</text><line x1="44" y1="87.5" x2="286" y2="87.5" stroke="var(--line)" stroke-dasharray="3 3"/><text x="39" y="91.5" font-size="11" fill="var(--muted)" text-anchor="end">10</text><line x1="44" y1="35.0" x2="286" y2="35.0" stroke="var(--line)" stroke-dasharray="3 3"/><text x="39" y="39.0" font-size="11" fill="var(--muted)" text-anchor="end">20</text><path d="M44.0,140.0 L48.0,138.2 L52.1,136.5 L56.1,134.8 L60.1,133.0 L64.2,131.2 L68.2,129.5 L72.2,127.8 L76.3,126.0 L80.3,124.2 L84.3,122.5 L88.4,120.8 L92.4,119.0 L96.4,117.2 L100.5,115.5 L104.5,113.8 L108.5,112.0 L112.6,110.2 L116.6,108.5 L120.6,106.8 L124.7,105.0 L128.7,103.2 L132.7,101.5 L136.8,99.8 L140.8,98.0 L144.8,96.2 L148.9,94.5 L152.9,92.8 L156.9,91.0 L161.0,89.3 L165.0,87.5 L169.0,85.8 L173.1,84.0 L177.1,82.3 L181.1,80.5 L185.2,78.8 L189.2,77.0 L193.2,75.2 L197.3,73.5 L201.3,71.8 L205.3,70.0 L209.4,68.2 L213.4,66.5 L217.4,64.8 L221.5,63.0 L225.5,61.2 L229.5,59.5 L233.6,57.8 L237.6,56.0 L241.6,54.3 L245.7,52.5 L249.7,50.7 L253.7,49.0 L257.8,47.2 L261.8,45.5 L265.8,43.8 L269.9,42.0 L273.9,40.2 L277.9,38.5 L282.0,36.7 L286.0,35.0 L286.0,140.0 L44.0,140.0 Z" fill="var(--accent)" opacity=".18"/><line x1="44" y1="140.0" x2="290" y2="140.0" stroke="var(--ink)"/><line x1="44" y1="140.0" x2="44" y2="8" stroke="var(--ink)"/><path d="M44.0,140.0 L48.0,138.2 L52.1,136.5 L56.1,134.8 L60.1,133.0 L64.2,131.2 L68.2,129.5 L72.2,127.8 L76.3,126.0 L80.3,124.2 L84.3,122.5 L88.4,120.8 L92.4,119.0 L96.4,117.2 L100.5,115.5 L104.5,113.8 L108.5,112.0 L112.6,110.2 L116.6,108.5 L120.6,106.8 L124.7,105.0 L128.7,103.2 L132.7,101.5 L136.8,99.8 L140.8,98.0 L144.8,96.2 L148.9,94.5 L152.9,92.8 L156.9,91.0 L161.0,89.3 L165.0,87.5 L169.0,85.8 L173.1,84.0 L177.1,82.3 L181.1,80.5 L185.2,78.8 L189.2,77.0 L193.2,75.2 L197.3,73.5 L201.3,71.8 L205.3,70.0 L209.4,68.2 L213.4,66.5 L217.4,64.8 L221.5,63.0 L225.5,61.2 L229.5,59.5 L233.6,57.8 L237.6,56.0 L241.6,54.3 L245.7,52.5 L249.7,50.7 L253.7,49.0 L257.8,47.2 L261.8,45.5 L265.8,43.8 L269.9,42.0 L273.9,40.2 L277.9,38.5 L282.0,36.7 L286.0,35.0" fill="none" stroke="var(--accent)" stroke-width="3"/><text x="50" y="18" font-size="13" fill="var(--accent)" font-weight="700">v (m/s)</text><text x="286" y="134.0" font-size="12" fill="var(--muted)" text-anchor="end">t (s)</text></svg><p style="font-size:15px">שטח המשולש עד \(t=10\u{s}\): \(\tfrac12\cdot10\u{s}\cdot20\,\mps=100\u{m}\).</p></div>
+<div class="card" style="text-align:center"><svg viewBox="0 0 300 170" width="100%" style="direction:ltr;max-width:300px" role="img" aria-label="גרף מיקום פרבולי"><line x1="44.0" y1="140.0" x2="44.0" y2="144.0" stroke="var(--muted)"/><text x="44.0" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">0</text><line x1="92.4" y1="140.0" x2="92.4" y2="144.0" stroke="var(--muted)"/><text x="92.4" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">2</text><line x1="140.8" y1="140.0" x2="140.8" y2="144.0" stroke="var(--muted)"/><text x="140.8" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">4</text><line x1="189.2" y1="140.0" x2="189.2" y2="144.0" stroke="var(--muted)"/><text x="189.2" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">6</text><line x1="237.6" y1="140.0" x2="237.6" y2="144.0" stroke="var(--muted)"/><text x="237.6" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">8</text><line x1="286.0" y1="140.0" x2="286.0" y2="144.0" stroke="var(--muted)"/><text x="286.0" y="157.0" font-size="11" fill="var(--muted)" text-anchor="middle">10</text><line x1="44" y1="85.2" x2="286" y2="85.2" stroke="var(--line)" stroke-dasharray="3 3"/><text x="39" y="89.2" font-size="11" fill="var(--muted)" text-anchor="end">50</text><line x1="44" y1="30.4" x2="286" y2="30.4" stroke="var(--line)" stroke-dasharray="3 3"/><text x="39" y="34.4" font-size="11" fill="var(--muted)" text-anchor="end">100</text><line x1="44" y1="140.0" x2="290" y2="140.0" stroke="var(--ink)"/><line x1="44" y1="140.0" x2="44" y2="8" stroke="var(--ink)"/><path d="M44.0,140.0 L48.0,140.0 L52.1,139.9 L56.1,139.7 L60.1,139.5 L64.2,139.2 L68.2,138.9 L72.2,138.5 L76.3,138.1 L80.3,137.5 L84.3,137.0 L88.4,136.3 L92.4,135.6 L96.4,134.9 L100.5,134.0 L104.5,133.2 L108.5,132.2 L112.6,131.2 L116.6,130.1 L120.6,129.0 L124.7,127.8 L128.7,126.6 L132.7,125.3 L136.8,123.9 L140.8,122.5 L144.8,121.0 L148.9,119.4 L152.9,117.8 L156.9,116.1 L161.0,114.4 L165.0,112.6 L169.0,110.8 L173.1,108.8 L177.1,106.9 L181.1,104.8 L185.2,102.7 L189.2,100.6 L193.2,98.3 L197.3,96.1 L201.3,93.7 L205.3,91.3 L209.4,88.8 L213.4,86.3 L217.4,83.7 L221.5,81.1 L225.5,78.4 L229.5,75.6 L233.6,72.8 L237.6,69.9 L241.6,66.9 L245.7,63.9 L249.7,60.8 L253.7,57.7 L257.8,54.5 L261.8,51.3 L265.8,47.9 L269.9,44.6 L273.9,41.1 L277.9,37.6 L282.0,34.1 L286.0,30.4" fill="none" stroke="var(--orange)" stroke-width="3"/><text x="50" y="18" font-size="13" fill="var(--orange)" font-weight="700">x (m)</text><text x="286" y="134.0" font-size="12" fill="var(--muted)" text-anchor="end">t (s)</text></svg><p style="font-size:15px">\(x(t)=t^2\): אחרי \(10\u{s}\) עברו \(100\u{m}\) — שווה לשטח הצבוע בגרף הקודם.</p></div>
+</div>
+</section>
+<section class="ch" id="s5"><h2><span class="num">5</span>בכיוון ההפוך: נגזרות</h2>
+
+<p>אם ידועה פונקציית המיקום \(x(t)\), גוזרים פעם אחת ומקבלים מהירות, גוזרים שוב ומקבלים תאוצה, וכופלים במסה ומקבלים את הכוח:</p>
+<div class="big">\[\begin{aligned}
+x(t)&=x_0+v_0t+\tfrac12 a t^2 &&[\mathrm{m}]\\[3pt]
+v(t)=x'(t)&=v_0+a t &&\Big[\tfrac{\mathrm{m}}{\mathrm{s}}\Big]\\[3pt]
+a(t)=v'(t)=x''(t)&=a &&\Big[\tfrac{\mathrm{m}}{\mathrm{s}^2}\Big]\\[3pt]
+F&=m\cdot a &&\Big[\mathrm{kg}\cdot\tfrac{\mathrm{m}}{\mathrm{s}^2}=\mathrm{N}\Big]
+\end{aligned}\]</div>
+<p>שימו לב מה קורה בכל גזירה: <b>ערך ההתחלה הקבוע נעלם</b> (\(x_0\) בגזירה הראשונה, \(v_0\) בשנייה). זו הסיבה שבכיוון ההפוך — באינטגרל — צריך לקבל אותם כנתון.</p>
+<p>ויחידות הנגזרת תמיד מתקבלות כך:</p>
+<div class="big">\[\big[f'(t)\big]=\frac{[f]}{[t]}=\frac{\text{יחידת הפונקציה}}{\mathrm{s}}\]</div>
+<p>כי הנגזרת היא גבול של מנה \(\dfrac{\Delta f}{\Delta t}\) — שינוי בפונקציה חלקי שינוי בזמן.</p>
+</section>
+<section class="ch" id="s6"><h2><span class="num">6</span>דוגמה מלאה הלוך וחזור</h2>
+<div class="ex"><span class="t">דוגמה 2.</span> מכונית שמסתה \(1000\u{kg}\) עומדת. המנוע מפעיל עליה כוח שקול קבוע של \(2000\u{N}\) במשך \(10\u{s}\).<br>א. מצאו את \(a\), \(v(t)\) ו־\(x(t)\).<br>ב. מה המהירות (גם בקמ״ש) והמרחק אחרי \(10\u{s}\)?<br>ג. בדקו את התוצאה בכיוון ההפוך, בעזרת נגזרות.<details><summary>פתרון</summary><div class="sol"><b>א. כוח ← תאוצה:</b> \(a=\dfrac{2000\u{N}}{1000\u{kg}}=2\,\mpss\).<br>
+<b>תאוצה ← מהירות (אינטגרל):</b> \(v(t)=\int2\,dt=2t+C\); בהתחלה עומדת, \(v(0)=0\Rightarrow C=0\). לכן \(v(t)=2t\) (\(\mps\)).<br>
+<b>מהירות ← מיקום (אינטגרל):</b> \(x(t)=\int2t\,dt=t^2+C\); \(x(0)=0\Rightarrow x(t)=t^2\) (\(\mathrm{m}\)).<br>
+<b>ב.</b> \(v(10)=20\,\mps=72\,\kmh\); \(x(10)=100\u{m}\) (בדיוק השטחים בגרפים שלמעלה).<br>
+<b>ג. בחזרה:</b> \(x'(t)=2t=v(t)\) ✓; \(v'(t)=2=a\) ✓; \(F=1000\u{kg}\cdot2\,\mpss=2000\u{N}\) ✓.</div></details></div><div class="ex"><span class="t">דוגמה 3.</span> מכונית שמסתה \(1200\u{kg}\) נוסעת ב־\(108\,\kmh\) ובולמת. כוח הבלימה השקול \(6000\u{N}\). כמה זמן ואיזה מרחק נדרשים עד לעצירה?<details><summary>פתרון</summary><div class="sol">\(v_0=30\,\mps\). הכוח נגד התנועה: \(a=\dfrac{-6000\u{N}}{1200\u{kg}}=-5\,\mpss\).<br>
+\(v(t)=30-5t\). עצירה: \(v=0\Rightarrow t=6\u{s}\).<br>
+\(x(t)=30t-2.5t^2\Rightarrow x(6)=180-90=90\u{m}\).<br>
+בדיקה בשטח: משולש מתחת לגרף המהירות, \(\tfrac12\cdot6\u{s}\cdot30\,\mps=90\u{m}\) ✓. ובנוסחה ללא זמן: \(\dfrac{v_0^2}{2|a|}=\dfrac{900}{10}=90\u{m}\) ✓.</div></details></div>
+</section>
+<section class="ch" id="s7"><h2><span class="num">7</span>כוח שמשתנה עם הזמן</h2>
+
+<p>כשהכוח לא קבוע, גם התאוצה לא קבועה — ומשוואות התנועה הרגילות כבר לא מתאימות. אבל השרשרת עובדת בדיוק אותו דבר: מחלקים במסה, ומבצעים אינטגרל פעמיים (או גזירה פעמיים בכיוון ההפוך).</p>
+<div class="ex"><span class="t">דוגמה 4.</span> על גוף שמסתו \(500\u{kg}\), שנמצא במנוחה, פועל כוח \(F(t)=1000\,t\) (ניוטון, \(t\) בשניות) במשך \(3\u{s}\). מצאו את מהירותו ואת המרחק שעבר בסוף.<details><summary>פתרון</summary><div class="sol">\(a(t)=\dfrac{F(t)}{m}=\dfrac{1000t}{500}=2t\) (\(\mpss\)). בדיקת יחידות של המקדם: \(1000\) הוא ב־\(\tfrac{\mathrm{N}}{\mathrm{s}}\), ולכן \(2\) הוא ב־\(\tfrac{\mathrm{m}}{\mathrm{s}^3}\) — וכפול \(t\) בשניות נותן \(\mpss\) ✓.<br>
+\(v(t)=\int2t\,dt=t^2\) (מנוחה, \(C=0\)); \(v(3)=9\,\mps\).<br>
+\(x(t)=\int t^2\,dt=\dfrac{t^3}{3}\); \(x(3)=9\u{m}\).<br>
+בחזרה: \(x'=t^2=v\) ✓, \(v'=2t=a\) ✓, \(500\cdot2t=1000t=F\) ✓.</div></details></div><div class="ex"><span class="t">דוגמה 5.</span> מיקומו של גוף שמסתו \(2\u{kg}\) הוא \(x(t)=0.5\,t^3\) (מטרים, שניות). מצאו את המהירות, התאוצה והכוח ברגע \(t=2\u{s}\).<details><summary>פתרון</summary><div class="sol">\(v(t)=x'(t)=1.5t^2\Rightarrow v(2)=6\,\mps\).<br>
+\(a(t)=v'(t)=3t\Rightarrow a(2)=6\,\mpss\).<br>
+\(F(2)=m\,a(2)=2\u{kg}\cdot6\,\mpss=12\u{N}\).<br>
+המקדם \(0.5\) ב־\(x(t)\) הוא ביחידות \(\tfrac{\mathrm{m}}{\mathrm{s}^3}\), כדי ש־\(0.5t^3\) יצא במטרים.</div></details></div>
+</section>
+<section class="ch" id="s8"><h2><span class="num">8</span>טבלת סיכום</h2>
+<div class="tablebox"><table><tr><th>גודל</th><th>יחידה</th><th>מקבלים מהשמאלי (נגזרת / כפל)</th><th>מקבלים מהימני (אינטגרל / חילוק)</th><th>בגרף</th></tr><tr><td>כוח \(F\)</td><td>\(\mathrm{N}=\mathrm{kg}\cdot\mpss\)</td><td>—</td><td>\(F=m\,a\)</td><td>—</td></tr><tr><td>תאוצה \(a\)</td><td>\(\mpss\)</td><td>\(a=v'(t)=x''(t)\)</td><td>\(a=\dfrac{F}{m}\)</td><td>שיפוע גרף המהירות</td></tr><tr><td>מהירות \(v\)</td><td>\(\mps\)</td><td>\(v=x'(t)\)</td><td>\(v=v_0+\int a\,dt\)</td><td>שיפוע גרף המיקום; שטח מתחת לגרף התאוצה = שינוי ב־\(v\)</td></tr><tr><td>מיקום \(x\)</td><td>\(\mathrm{m}\)</td><td>—</td><td>\(x=x_0+\int v\,dt\)</td><td>שטח מתחת לגרף המהירות = שינוי ב־\(x\)</td></tr></table></div>
+</section>
+<section class="ch" id="mist"><h2><span class="num">!</span>טעויות נפוצות</h2>
+<ul><li>שכחת הקבוע באינטגרל: \(\int2\,dt=2t\) בלבד נכון רק כשמתחילים ממנוחה. במקרה הכללי \(2t+v_0\).</li><li>שימוש ב־\(x=\tfrac12at^2\) כשהתאוצה <b>משתנה</b> — הנוסחה נכונה רק לתאוצה קבועה. אחרת עושים אינטגרל.</li><li>שימוש בכוח אחד במקום בכוח השקול (שוכחים לחסר חיכוך).</li><li>בלבול בכיוון: נגזרת מורידה שנייה מהיחידה (\(\mathrm{m}\to\mps\)), אינטגרל מוסיף שנייה (\(\mps\to\mathrm{m}\)).</li><li>עבודה בקמ״ש בתוך \(F=ma\) — הניוטון מוגדר במטרים ושניות.</li></ul>
+</section>
+<section class="ch" id="chk"><h2><span class="num">✓</span>בדקו את עצמכם</h2>
+<ol class="check"><li>הראו ש־\(\dfrac{\mathrm{N}}{\mathrm{kg}}=\mpss\).<details><summary>פתרון</summary><div class="sol">\(\mathrm{N}=\mathrm{kg}\cdot\dfrac{\mathrm{m}}{\mathrm{s}^2}\); מחלקים ב־\(\mathrm{kg}\) והוא מצטמצם.</div></details></li><li>כוח שקול \(150\u{N}\) פועל על גוף של \(50\u{kg}\). מה התאוצה?<details><summary>פתרון</summary><div class="sol">\(3\,\mpss\).</div></details></li><li>מה היחידה של השטח מתחת לגרף התאוצה (ציר \(t\) בשניות)? מה הוא מייצג?<details><summary>פתרון</summary><div class="sol">\(\mpss\cdot\mathrm{s}=\mps\) — השינוי במהירות.</div></details></li><li>מה היחידה של השיפוע של גרף המיקום \(x(t)\)? מה הוא מייצג?<details><summary>פתרון</summary><div class="sol">\(\dfrac{\mathrm{m}}{\mathrm{s}}\) — המהירות.</div></details></li><li>גוף ממנוחה עם \(a=4\,\mpss\). מצאו את \(v(t)\) ו־\(x(t)\) בעזרת אינטגרל, ואת \(x(5)\).<details><summary>פתרון</summary><div class="sol">\(v=4t\), \(x=2t^2\), \(x(5)=50\u{m}\).</div></details></li><li>\(x(t)=3+4t+t^2\) (מטרים). מה \(x_0\), \(v_0\) ו־\(a\)? (גזרו.)<details><summary>פתרון</summary><div class="sol">\(x_0=3\u{m}\); \(v=x'=4+2t\Rightarrow v_0=4\,\mps\); \(a=v'=2\,\mpss\).</div></details></li><li>לגוף בסעיף הקודם מסה \(5\u{kg}\). מה הכוח השקול עליו?<details><summary>פתרון</summary><div class="sol">\(F=5\cdot2=10\u{N}\).</div></details></li><li>\(a(t)=6t\) (\(\mpss\)), מתחילים ממנוחה בראשית. מצאו את \(v(2)\) ו־\(x(2)\).<details><summary>פתרון</summary><div class="sol">\(v=3t^2\Rightarrow v(2)=12\,\mps\); \(x=t^3\Rightarrow x(2)=8\u{m}\).</div></details></li></ol>
+</section>
+<div class="pager"><a href="units-06-circular-motion.html">→ תנועה מעגלית: מהירות זוויתית ומהירות קווית</a><a href="units-08-pool-filling.html">מילוי בריכה: נפח, ספיקה, נגזרת ואינטגרל ←</a></div>
+<footer>אתר המתמטיקה של כיתה י״א · קבוצת "יחידות ומשוואות תנועה"</footer>
+</div>
+<script>
+const KMACROS={"\\u":"\\,\\mathrm{#1}","\\mps":"\\tfrac{\\mathrm{m}}{\\mathrm{s}}","\\mpss":"\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}","\\kmh":"\\tfrac{\\mathrm{km}}{\\mathrm{h}}","\\cx":"\\cancel{#1}","\\rads":"\\tfrac{\\mathrm{rad}}{\\mathrm{s}}"};
+document.addEventListener("DOMContentLoaded",()=>{
+ if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],macros:KMACROS,throwOnError:false});}
+ const KEY="math11-units-"+location.pathname.split("/").pop();
+ let saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+ const boxes=[...document.querySelectorAll("input.done")];
+ const prog=document.querySelector(".prog");
+ const upd=()=>{if(prog)prog.textContent="פתרתי "+boxes.filter(b=>b.checked).length+" מתוך "+boxes.length;};
+ boxes.forEach(b=>{b.checked=!!saved[b.dataset.q];b.addEventListener("change",()=>{saved[b.dataset.q]=b.checked;try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){};upd();});});
+ upd();
+ const all=document.getElementById("showall");
+ if(all)all.addEventListener("click",()=>{const ds=[...document.querySelectorAll("details")];const open=!ds.every(d=>d.open);ds.forEach(d=>d.open=open);all.textContent=open?"הסתר את כל הפתרונות":"הצג את כל הפתרונות";});
+ const clr=document.getElementById("clear");
+ if(clr)clr.addEventListener("click",()=>{boxes.forEach(b=>b.checked=false);saved={};try{localStorage.removeItem(KEY)}catch(e){};upd();});
+ window.addEventListener("beforeprint",()=>document.querySelectorAll("details").forEach(d=>d.open=true));
+});
+</script>
+</body></html>
