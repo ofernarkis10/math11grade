@@ -9,7 +9,7 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 - **Locally:** open `index.html` in any browser. No build step, server or installation is needed. Formulas are typeset by KaTeX, which loads from a CDN, so an internet connection is needed for them to display.
 - **Online:** the repository is set up for GitHub Pages. When Pages is enabled for the `main` branch, the site is served at `https://ofernarkis10.github.io/math11grade/`.
 
-`index.html` is the home page. It lists every document, grouped by topic, and starts with a table of contents that jumps to each main topic.
+`index.html` is the home page. It shows one card per topic. Each card opens a topic page, `topic-<id>.html`, which lists that topic's documents in order with a short description of each, and links to the previous and next topic.
 
 ## Contents
 
@@ -57,7 +57,7 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 
 Most study pages combine explanation and practice. A topic can also split them into an explanation page and a separate exercises page (as in the derivatives topic). Every page follows the same layout:
 
-1. **Back link** to `index.html` and a header with the topic name.
+1. **Back link** to the topic page (`topic-<id>.html`) and a header with the topic name.
 2. **Table of contents** for the page.
 3. **Explanation:** meaning, formulas, derivations, worked examples and common mistakes.
 4. **Practice in three levels:** רמה א׳ (basic), רמה ב׳ (consolidation) and רמה ג׳ (matriculation / בגרות level).
@@ -67,7 +67,8 @@ Most study pages combine explanation and practice. A topic can also split them i
 
 ```
 math11grade/
-├── index.html                          home page: table of contents + list of all documents
+├── index.html                          home page: one card per topic
+├── topic-<id>.html                     topic pages: the documents of one topic (curriculum, glossary, summer-work, sequences, composite-derivatives, geometry, trigonometry, analytic, units)
 ├── curriculum-5units-grade10-11.html   curriculum reference
 ├── glossary.html                       glossary of every term used on the site
 ├── summer-work-grade10-5units.pdf    summer assignment from the end of grade 10 (PDF)
@@ -94,9 +95,10 @@ Every page is a single self-contained HTML file: styles are inline, there is no 
 2. **Copy the layout** of an existing study page (for example `composite-derivatives-01-rules.html`) so the design stays consistent: same `:root` color tokens, fonts, `section.ch` blocks, `ol.exercises` with `<details>` solutions, and the back link to `index.html`.
 3. **Write math** in LaTeX inside `<span class="m">\( … \)</span>`, for example `<span class="m">\(S_{n} = \dfrac{n(a_{1} + a_{n})}{2}\)</span>`. The span keeps the formula left-to-right inside the Hebrew text, and [KaTeX](https://katex.org) typesets it in the browser. Copy the KaTeX block from the `<head>` of an existing page (stylesheet, two scripts and a short `<style>`). Use `\dfrac` for fractions in running text so they stay readable.
 4. **Add the text-size control** by putting `<script src="font-size.js"></script>` just before `</head>`. Set the page's body text size in `px` on `body` and other sizes in `rem`/`em` so they all scale with it.
-5. **Register the page in `index.html`:**
-   - For an existing topic, add an `<li>` to that topic's `ul.docs`, with number, title, question count and a short description, and update the count in the topic's header.
-   - For a new topic, add a new `<section class="topic" id="<topic-id>">` before the `<footer>`. The table of contents at the top of `index.html` is built automatically from these sections, so the new topic appears there without further changes.
+5. **Register the page on its topic page:**
+   - For an existing topic, add an `<li>` to the `ul.docs` in `topic-<id>.html`, with number, title, question count and a short description. Update the count under the topic title there and in the topic's card in `index.html`.
+   - For a new topic, copy an existing topic page to `topic-<new-id>.html`, replace its title, description and list, fix the previous/next links of the neighbouring topic pages, and add a card for it to `ul.topics` in `index.html`.
+   - Point the page's back link to its topic page: `<a class="back" href="topic-<id>.html">→ חזרה לנושא: …</a>`.
 6. **Commit and push** to `main`.
 
 ## Answer keys and tests

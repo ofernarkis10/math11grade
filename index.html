@@ -77,6 +77,24 @@ nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);background:va
 td .m .katex{font-size:1.2em}
 </style>
 <script src="font-size.js"></script>
+<style>
+/* Home page: one card per topic. Topic pages: breadcrumb back to the home page, the topic's documents, and links to the previous/next topic */
+ul.topics{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:14px}
+ul.topics li{display:flex;min-width:0}
+ul.topics a{display:flex;flex-direction:column;gap:8px;width:100%;background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:10px;padding:16px 18px;color:inherit;text-decoration:none;transition:border-color .15s}
+ul.topics a:hover,ul.topics a:focus-visible{border-color:var(--accent);outline:none}
+ul.topics a:focus-visible{box-shadow:0 0 0 3px var(--accent-soft)}
+ul.topics .tt{font-family:var(--f-display);font-weight:700;font-size:1.3rem;line-height:1.25}
+ul.topics .tc{font-size:.82rem;font-weight:700;color:var(--mark)}
+ul.topics .td{color:var(--muted);font-size:.95rem}
+ul.topics .go{margin-top:auto;color:var(--accent);font-weight:700;font-size:.92rem}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+.count{font-size:.95rem;font-weight:700;color:var(--mark)}
+nav.topicnav{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+nav.topicnav a{color:var(--accent);font-weight:700;text-decoration:none;border:1px solid var(--line);background:var(--paper);border-radius:99px;padding:6px 14px}
+nav.topicnav a:hover,nav.topicnav a:focus-visible{border-color:var(--accent);outline:none}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -86,143 +104,29 @@ td .m .katex{font-size:1.2em}
   <p class="lead">אוסף דפי לימוד ותרגול במתמטיקה לתלמידי כיתה יא׳ ברמת 5 יחידות, לפי תוכנית הלימודים בישראל. כל דף מסביר נושא אחד לעומק: מה המשמעות שלו, הנוסחאות ומאיפה הן באות, דרכי פתרון וטעויות נפוצות. אחרי ההסבר יש שאלות תרגול מדורגות עם פתרונות מלאים.</p>
 </header>
 
-<!-- TABLE OF CONTENTS: rebuilt automatically by the script at the bottom from every section.topic (its id, h2 and count). The static links below are a fallback; a new topic section appears here on its own. -->
-<nav class="toc" id="toc" aria-label="תוכן עניינים">
-  <h2>תוכן עניינים</h2>
-  <ol>
-    <li><a href="#curriculum">תוכנית הלימודים</a></li>
-    <li><a href="#glossary">מילון מושגים</a></li>
-    <li><a href="#sequences">סדרות</a></li>
-    <li><a href="#composite-derivatives">נגזרות של פונקציות מורכבות</a></li>
-    <li><a href="#geometry">גאומטריה אוקלידית</a></li>
-    <li><a href="#trigonometry">פונקציות טריגונומטריות</a></li>
-    <li><a href="#analytic">הנדסה אנליטית: משוואות של עקומים</a></li>
-    <li><a href="#units">יחידות ומשוואות תנועה</a></li>
-  </ol>
-</nav>
-
 <div class="about">
   <div><h3>מבנה כל דף</h3><p>הסבר ונוסחאות, ואחריו שאלות בשלוש רמות: בסיס, ביסוס ורמת בגרות.</p></div>
   <div><h3>איך לתרגל</h3><p>הפתרונות מוסתרים. פתרו קודם לבד, ואז לחצו על "הצג פתרון" כדי לבדוק את הדרך ואת התשובה. בדפי הסדרות, בשאלות של רמות א׳ ו־ב׳, יש מתחת לפתרון גם הסבר מפורט.</p></div>
   <div><h3>סדר מומלץ</h3><p>בכל נושא כדאי ללמוד את הדפים לפי המספור, כי כל דף נשען על הקודמים.</p></div>
 </div>
 
-<!-- TOPIC: curriculum reference. Listed first on purpose -->
-<section class="topic" id="curriculum">
-  <div class="topic-head"><h2>תוכנית הלימודים</h2><span>3 מסמכי עזר</span></div>
-  <ul class="docs">
-    <li><a href="curriculum-5units-grade10-11.html"><span class="no">00</span><span class="t">תוכנית הלימודים: כיתות י׳–י״א</span><span class="q">מסמך עזר</span><span class="d">רשימה משולבת ומפורטת של נושאי הלימוד ב־5 יחידות לפי משרד החינוך: מה נלמד בכיתה י׳ ומה בכיתה י״א בכל תחום (הנדסה אנליטית, פונקציות, חשבון דיפרנציאלי ואינטגרלי, סדרות ואינדוקציה, טריגונומטריה, גאומטריה והסתברות).</span></a></li>
-    <li><a href="curriculum-checklist-grade11.html"><span class="no">01</span><span class="t">רשימת מעקב: תוכנית הלימודים לכיתה י״א</span><span class="q">55 סעיפים</span><span class="d">שבעה נושאים ראשיים, ולכל נושא רשימת סעיפים לסימון. מיועדת לתלמידים ולהורים, כדי לעקוב אחרי ביצוע התוכנית ולדעת מה ההיקף הנדרש. הסימונים נשמרים בדפדפן, ואפשר להדפיס.</span></a></li>
-    <li><a href="curriculum-checklist-grade10-11.html"><span class="no">02</span><span class="t">רשימת מעקב: תוכנית הלימודים לכיתות י׳–י״א</span><span class="q">110 סעיפים</span><span class="d">מרכזת במקום אחד את נושאי כיתה י׳ וכיתה י״א: 15 נושאים ראשיים, ולכל נושא רשימת סעיפים לסימון. מיועדת לתלמידים ולהורים, כדי לעקוב אחרי ביצוע התוכנית בשתי השנים. הסימונים נשמרים בדפדפן, ואפשר להדפיס.</span></a></li>
-  </ul>
-</section>
-
-<!-- TOPIC: reference glossary of every term used across the site -->
-<section class="topic" id="glossary">
-  <div class="topic-head"><h2>מילון מושגים</h2><span>מסמך עזר · 111 מושגים</span></div>
-  <ul class="docs">
-    <li><a href="glossary.html"><span class="no">00</span><span class="t">מילון מושגים</span><span class="q">111 מושגים</span><span class="d">כל המושגים שמופיעים באתר במקום אחד, לפי נושאים: לוגיקה והוכחה, סדרות, פונקציות וחשבון דיפרנציאלי, וגאומטריה (משולשים, המעגל, דמיון). לכל מושג הגדרה קצרה, נוסחה כשיש, השם באנגלית וקישורים לדפים שבהם הוא מוסבר. כולל חיפוש בעברית ובאנגלית.</span></a></li>
-  </ul>
-</section>
-
-<!-- TOPIC: summer work and external materials (PDF files open in a new tab) -->
-<section class="topic" id="summer-work">
-  <div class="topic-head"><h2>עבודות קיץ</h2><span>PDF ושני דפי פתרונות · 29 שאלות</span></div>
-  <ul class="docs">
-    <li><a href="summer-work-grade10-5units.pdf" target="_blank" rel="noopener"><span class="no">01</span><span class="t">עבודת קיץ למסיימי י׳ (5 יחידות)</span><span class="q">PDF · 29 שאלות</span><span class="d">העבודה שניתנה בסיום כיתה י׳ לקראת כיתה יא׳. פרקים: חשבון דיפרנציאלי של פולינומים (7 שאלות) ושל פונקציות רציונליות (7), גאומטריה ללא מעגל: דמיון משולשים, יחסי קטעים ושטחים (10), ופונקציה מורכבת (5). ליד כל שאלה יש קישור לתשובה, ובשאלות הגאומטריה גם המחשה בגאוגברה.</span></a></li>
-    <li><a href="summer-work-geometry-solutions.html"><span class="no">02</span><span class="t">פתרונות מפורטים: פרק הגאומטריה</span><span class="q">10 שאלות</span><span class="d">פתרון מלא לכל 10 שאלות הגאומטריה ללא מעגל בעבודת הקיץ: לכל סעיף דרך הפתרון, התשובה והמשפטים שבהם משתמשים (דמיון ז.ז וצ.ז.צ, תאלס, חוצה הזווית, מפגש התיכונים, תכונות מקבילית ומעוין ויחסי שטחים). כולל ארגז כלים של המשפטים וטבלת תשובות.</span></a></li>
-    <li><a href="summer-work-calculus-solutions.html"><span class="no">03</span><span class="t">פתרונות מפורטים: פרק החשבון הדיפרנציאלי</span><span class="q">14 שאלות</span><span class="d">פתרון מלא ל־14 שאלות החשבון הדיפרנציאלי בעבודת הקיץ: 7 על פולינומים ו־7 על פונקציות רציונליות. לכל סעיף דרך הפתרון, טבלת סימנים, התשובה והכללים שבהם משתמשים (גזירה, קיצון, עלייה וירידה, אסימפטוטות, נקודות אי־רציפות, הזזות ושיקופים), עם גרף מדויק לכל סעיף שרטוט. כולל ארגז כלים וטבלת תשובות.</span></a></li>
-  </ul>
-</section>
-
-<!-- TOPIC: sequences. New documents: add an <li> inside the matching ul.docs, or a new section.topic for a new subject -->
-<section class="topic" id="sequences">
-  <div class="topic-head"><h2>סדרות</h2><span>10 דפים · 297 שאלות</span></div>
-  <ul class="docs">
-    <li><a href="sequences-00-overview.html"><span class="no">00</span><span class="t">סדרות: מבט כללי</span><span class="q">27 שאלות</span><span class="d">סקירה של כל סוגי הסדרות בדף אחד: טבלת השוואה, המשמעות של כל סוג, דוגמה פתורה ו־3–4 תרגילים לכל סוג. נקודת פתיחה טובה לנושא ולחזרה לפני מבחן.</span></a></li>
-    <li><a href="sequences-01-arithmetic.html"><span class="no">01</span><span class="t">סדרה חשבונית</span><span class="q">30 שאלות</span><span class="d">הפרש קבוע וגדילה לינארית. האיבר הכללי, נוסחת הסכום של גאוס, תכונת האמצע, ובעיות של שני נעלמים ובעיות מילוליות.</span></a></li>
-    <li><a href="sequences-02-geometric.html"><span class="no">02</span><span class="t">סדרה הנדסית</span><span class="q">30 שאלות</span><span class="d">מנה קבועה וגדילה מעריכית. נוסחת הסכום, הקשר בין אחוזים למנה, ובעיות של ריבית דריבית, גידול אוכלוסייה ודעיכה.</span></a></li>
-    <li><a href="sequences-03-infinite-series.html"><span class="no">03</span><span class="t">טור הנדסי אינסופי מתכנס</span><span class="q">30 שאלות</span><span class="d">סכום של אינסוף איברים ותנאי ההתכנסות <span class="m">\(|q| \lt 1\)</span>. שברים מחזוריים, טורים עם פרמטר, וטורים גאומטריים של שטחים ומרחקים.</span></a></li>
-    <li><a href="sequences-04-recursive.html"><span class="no">04</span><span class="t">סדרות בכלל נסיגה</span><span class="q">30 שאלות</span><span class="d">סדרות שמוגדרות צעד אחר צעד. סדרות עזר חשבוניות והנדסיות, סכימה טלסקופית, הופכיים וסדרות מחזוריות.</span></a></li>
-    <li><a href="sequences-05-general-term.html"><span class="no">05</span><span class="t">סדרה לפי נוסחת איבר כללי</span><span class="q">30 שאלות</span><span class="d">סדרה כפונקציה של n. בדיקה אם מספר הוא איבר, מונוטוניות, איבר מקסימלי ומינימלי, והמעבר מ־<span class="m">\(S_{n}\)</span> ל־<span class="m">\(a_{n}\)</span>.</span></a></li>
-    <li><a href="sequences-06-mixed.html"><span class="no">06</span><span class="t">סדרות מעורבות ומשולבות</span><span class="q">30 שאלות</span><span class="d">סדרות שזורות, סדרות נגזרות (לוגריתם וחזקה), ושאלות שמשלבות סדרה חשבונית והנדסית באותה בעיה.</span></a></li>
-    <li><a href="sequences-07-induction.html"><span class="no">07</span><span class="t">אינדוקציה מתמטית</span><span class="q">30 שאלות</span><span class="d">הוכחה לכל n טבעי בשיטת הדומינו. נוסחאות סכום, התחלקות, אי־שוויונות והוכחת נוסחה מפורשת לכלל נסיגה.</span></a></li>
-    <li><a href="sequences-08-summary-table.html"><span class="no">08</span><span class="t">טבלת סיכום: סוגי הסדרות</span><span class="q">דף סיכום</span><span class="d">כל סוגי הסדרות בטבלה אחת: שורה לכל סוג (חשבונית, הנדסית, טור הנדסי אינסופי, כלל נסיגה, נוסחת איבר כללי ושזורה) ועמודות לאותם נושאים בכולם: הגדרה, כלל נסיגה, איבר כללי, סכום, קשר בין שני איברים, שלושה איברים עוקבים, עלייה וירידה, איך מוכיחים, איך מוצאים את n וטעויות נפוצות. בסוף: כלים משותפים לכל הסדרות ומעברים בין סוגים.</span></a></li>
-    <li><a href="sequences-09-homework.html"><span class="no">09</span><span class="t">עבודת בית: סדרה חשבונית, הנדסית וטור מתכנס</span><span class="q">60 שאלות</span><span class="d">עבודה להגשה ברמת ביסוס: 20 שאלות על סדרה חשבונית, 20 על סדרה הנדסית ו־20 על טור הנדסי אינסופי מתכנס. בלי פתרונות באתר; כתבו את דרך הפתרון המלאה. מותאמת להדפסה, עם מקום לשם ולכיתה.</span></a></li>
-  </ul>
-</section>
-
-<!-- TOPIC: derivatives of composite functions -->
-<section class="topic" id="composite-derivatives">
-  <div class="topic-head"><h2>נגזרות של פונקציות מורכבות</h2><span>2 דפים · 42 שאלות</span></div>
-  <ul class="docs">
-    <li><a href="composite-derivatives-01-rules.html"><span class="no">01</span><span class="t">כללי הגזירה של פונקציה מורכבת</span><span class="q">דף הסבר</span><span class="d">פונקציה פנימית וחיצונית, כלל השרשרת והאינטואיציה מאחוריו, טבלת כללים (חזקה, שורש, הופכי, sin, cos, tan), שילוב עם כלל המכפלה והמנה, הרכבה של כמה שכבות וטעויות נפוצות, עם דוגמאות פתורות.</span></a></li>
-    <li><a href="composite-derivatives-02-exercises.html"><span class="no">02</span><span class="t">תרגילים: נגזרות של פונקציות מורכבות</span><span class="q">42 שאלות</span><span class="d">תרגול מדורג עם פתרונות מלאים: בסיס (הפעלה ישירה של הכללים), ביסוס (שילוב עם מכפלה ומנה, כמה שכבות של הרכבה) ורמת בגרות (משיקים, נקודות קיצון, פרמטרים ונגזרת בנקודה).</span></a></li>
-  </ul>
-</section>
-
-<!-- TOPIC: Euclidean geometry (three curriculum sub-topics, one explanation page each) -->
-<section class="topic" id="geometry">
-  <div class="topic-head"><h2>גאומטריה אוקלידית</h2><span>3 דפי הסבר</span></div>
-  <ul class="docs">
-    <li><a href="geometry-01-loci-triangle-centers.html"><span class="no">01</span><span class="t">מקומות גאומטריים ונקודות מיוחדות במשולש</span><span class="q">דף הסבר</span><span class="d">מערכת היסקית (משפט ומשפט הפוך, תנאי הכרחי ומספיק, הוכחה בדרך השלילה), מקום גאומטרי והוכחה בשני כיוונים, ארבע הנקודות המיוחדות במשולש (מרכזי המעגל החוסם והחסום, מרכז הכובד ומפגש הגבהים), משפט החפיפה הרביעי ומשפט פיתגורס ההפוך. עם שרטוטים ודוגמאות פתורות.</span></a></li>
-    <li><a href="geometry-02-circle.html"><span class="no">02</span><span class="t">המעגל</span><span class="q">דף הסבר</span><span class="d">מושגי יסוד, מיתרים וקשתות, זווית היקפית וזווית מרכזית, מרובע חסום במעגל, משיקים ומרובע חוסם, הזווית בין משיק למיתר, זוויות בין מיתרים וחותכים, ובניות במחוגה ובסרגל.</span></a></li>
-    <li><a href="geometry-03-similarity.html"><span class="no">03</span><span class="t">פרופורציה ודמיון משולשים</span><span class="q">דף הסבר</span><span class="d">תכונות פרופורציה, משפט תאלס וההפוך לו, קטע אמצעים, משפטי הדמיון (ז.ז, צ.ז.צ, צ.צ.צ), יחסי היקפים ושטחים, משפט חוצה הזווית, דמיון במשולש ישר זווית ובמעגל (מיתרים, משיק וחותך), ובניות של חלוקת קטע.</span></a></li>
-  </ul>
-</section>
-
-<!-- TOPIC: trigonometric functions (degrees first, radians later) -->
-<section class="topic" id="trigonometry">
-  <div class="topic-head"><h2>פונקציות טריגונומטריות</h2><span>5 דפים · 41 שאלות</span></div>
-  <ul class="docs">
-    <li><a href="trigonometry-01-polar-wheel.html"><span class="no">01</span><span class="t">מערכת צירים קוטבית, sin ו־cos, והגלגל המסתובב</span><span class="q">דף הסבר</span><span class="d">מערכת צירים קוטבית (מרחק וזווית במעלות) והמעבר לקרטזי, הגדרת sin ו־cos לכל זווית ורביעים. אחר כך, שלב אחר שלב: מיקום נקודה על גלגל שלא זז, על גלגל שזז (תנועת המרכז ועוד מיקום על הגלגל), ומהירות זוויתית לאורך זמן. השלב האחרון הוא השאלה: באיזו מהירות נעה נקודה על גלגל שנוסע ומסתובב ביחס לכביש? כולל סימולציות אינטראקטיביות ונספח על הגרפים של sin ו־cos.</span></a></li>
-    <li><a href="trigonometry-02-linear-vs-wheel.html"><span class="no">02</span><span class="t">תנועה לינארית ותנועה על גלגל: אותה סדרת פעולות</span><span class="q">דף הסבר</span><span class="d">השוואה צמודה בין תנועה בקו ישר מ־A ל־B לבין תנועה על גלגל: אותם חמישה שלבים: נתונים, משוואת המסלול (הישר y = mx + b דרך A ו־B, או משוואת המעגל), הפרמטר לפי הזמן (אחוז מהדרך או זווית), x לפי הפרמטר, ו־y מהצבה במשוואת המסלול. ההבדל הוא רק בצורת המסלול: ישר או מעגל. לכל דוגמה שרטוט של המסלול. כולל מילון מושגים מקביל, סימולציה של אחוז אחד שמניע את שתי התנועות, וארבעה זוגות של דוגמאות פתורות זו לצד זו: אחוז פשוט, מרכז כללי וכיוון הפוך, יותר מ־100% (מחזוריות), והבעיה ההפוכה (מתי?).</span></a></li>
-    <li><a href="trigonometry-03-wheel-exercises.html"><span class="no">03</span><span class="t">תרגול: נקודה על גלגל מסתובב</span><span class="q">21 שאלות</span><span class="d">שאלות מדורגות עם פתרונות מלאים, ומתחת לכל פתרון הסבר להיגיון של דרך הפתרון: רמה א׳ נקודה על גלגל שמסתובב במקום (מיקום אחרי זמן, מחזוריות, בעיה הפוכה), רמה ב׳ גלגל ענק, אורך קשת ומהירות קווית, ורמה ג׳ גלגל שמתגלגל על הכביש (ציקלואידה ומהירות כל נקודה ביחס לקרקע: 0 למטה, 2v למעלה).</span></a></li>
-    <li><a href="trigonometry-04-linear-vs-wheel-exercises.html"><span class="no">04</span><span class="t">תרגול: תנועה לינארית ותנועה על גלגל</span><span class="q">8 שאלות</span><span class="d">ארבעה זוגות של שאלות מקבילות לדף 02, שאלה בקו ישר ושאלה על גלגל בכל זוג, שנפתרות באותם חמישה שלבים: שליש מהדרך, כיוון הפוך, יותר מ־100%, והבעיה ההפוכה (מתי?). פתרונות מוסתרים עם שרטוט המסלול.</span></a></li>
-    <li><a href="trigonometry-05-wheel-homework.html"><span class="no">05</span><span class="t">עבודת בית: נקודה על גלגל מסתובב</span><span class="q">12 שאלות</span><span class="d">עבודה להגשה על תנועה על גלגל, לפי חמשת השלבים. חלק א׳: מיקום אחרי זמן נתון (זווית התחלה, כיוון השעון, יותר מסיבוב אחד, סיבובים לדקה). חלק ב׳: הבעיה ההפוכה ושאלות משולבות (מתי מגיעים לגובה, זמן מעל גובה, מציאת זווית ההתחלה, מרחק בין קרוניות, ביטוי לגובה h(t)). בלי פתרונות באתר; מותאמת להדפסה, עם מקום לשם ולכיתה.</span></a></li>
-  </ul>
-</section>
-
-<!-- TOPIC: analytic geometry: equations of curves (line, circle, parabola, ellipse, hyperbola) with figures and interactive labs -->
-<section class="topic" id="analytic">
-  <div class="topic-head"><h2>הנדסה אנליטית: משוואות של עקומים</h2><span>6 דפים · 47 שאלות</span></div>
-  <ul class="docs">
-    <li><a href="analytic-00-overview.html"><span class="no">00</span><span class="t">משוואות של עקומים: מבט כללי</span><span class="q">6 שאלות</span><span class="d">התמונה הכוללת: מה זו משוואה של עקום, חמשת העקומים וההגדרה של כל אחד כמקום גאומטרי (מרחק מנקודה, מנקודה ומישר, סכום והפרש מרחקים), למה הם נקראים חתכי חרוט, הגדרה אחת לכולם בעזרת מוקד, מדריך ואקסצנטריות (עם מעבדה אינטראקטיבית), זיהוי העקום מהמשוואה הכללית Ax² + Cy² + Dx + Ey + F = 0, ארבע דוגמאות פתורות וטבלת סיכום.</span></a></li>
-    <li><a href="analytic-01-line.html"><span class="no">01</span><span class="t">משוואת הישר</span><span class="q">8 שאלות</span><span class="d">השיפוע כקצב קבוע והקשר m = tan α, הצורה y = mx + b ומשמעות כל פרמטר בשרטוט (מעבדה עם מחוונים), צורות נוספות (שיפוע ונקודה, שתי נקודות, צורה כללית, משוואת קטעים), ישרים מקבילים ומאונכים ולמה מכפלת השיפועים היא −1, נקודת חיתוך, ומרחק נקודה מישר.</span></a></li>
-    <li><a href="analytic-02-circle.html"><span class="no">02</span><span class="t">משוואת המעגל</span><span class="q">9 שאלות</span><span class="d">המעגל כמקום גאומטרי וגזירת (x − a)² + (y − b)² = R² מפיתגורס, מה כל פרמטר עושה בשרטוט (מעבדה), המשוואה הכללית והשלמה לריבוע, נקודה ביחס למעגל, ישר ומעגל בשתי דרכים (הצבה ומרחק מהמרכז, עם מעבדה), ומשיק למעגל.</span></a></li>
-    <li><a href="analytic-03-parabola.html"><span class="no">03</span><span class="t">משוואת הפרבולה</span><span class="q">8 שאלות</span><span class="d">הפרבולה כמקום גאומטרי (מוקד ומדריך, עם מעבדה שבה PF = Pd), גזירת y² = 2px, המשמעות של p כמרחק וכרוחב, ארבעה כיווני פתיחה, הקשר לפונקציה y = ax² (המוקד ב־1/4a), הזזה והשלמה לריבוע, ותכונת ההחזרה של צלחת לוויין.</span></a></li>
-    <li><a href="analytic-04-ellipse.html"><span class="no">04</span><span class="t">משוואת האליפסה</span><span class="q">8 שאלות</span><span class="d">סכום מרחקים קבוע משני מוקדים ושיטת הגנן (מעבדה), גזירת x²/a² + y²/b² = 1, המשמעות של a, b ו־c ולמה a² = b² + c², אליפסה כמעגל מכווץ (a cos θ, b sin θ), אליפסה עומדת, אקסצנטריות, הזזה והשלמה לריבוע.</span></a></li>
-    <li><a href="analytic-05-hyperbola.html"><span class="no">05</span><span class="t">משוואת ההיפרבולה</span><span class="q">8 שאלות</span><span class="d">הפרש מרחקים קבוע ושני ענפים (מעבדה), x²/a² − y²/b² = 1 ו־c² = a² + b², מלבן העזר והאסימפטוטות y = ±(b/a)x ולמה הענפים מתקרבים אליהן, היפרבולה שנפתחת למעלה ולמטה, היפרבולה שווה צלעות והגרף של y = k/x, הזזה והשלמה לריבוע.</span></a></li>
-  </ul>
-</section>
-
-<section class="topic" id="units">
-  <div class="topic-head"><h2>יחידות ומשוואות תנועה</h2><span>6 דפים · 56 שאלות</span></div>
-  <ul class="docs">
-    <li><a href="units-00-overview.html"><span class="no">00</span><span class="t">יחידות ומשוואות תנועה: דף הקבוצה</span><span class="q">דף פתיחה</span><span class="d">מה לומדים בקבוצה ובאיזה סדר, קישור לכל המאמרים, וטבלת הנוסחאות המרכזיות עם היחידות של כל איבר.</span></a></li>
-    <li><a href="units-01-quantities-and-units.html"><span class="no">01</span><span class="t">גדלים ויחידות</span><span class="q">דף הסבר · 8 תרגילים</span><span class="d">גודל = מספר × יחידה, יחידות יסוד (מטר, שנייה, קילוגרם) ויחידות נגזרות (מ/ש, מ/ש²), קידומות, ואיך יחידות מתנהגות כמו משתנים: כפל, חילוק וצמצום. חוק ההתאמה: מחברים ומשווים רק גדלים באותה יחידה.</span></a></li>
-    <li><a href="units-02-unit-conversion.html"><span class="no">02</span><span class="t">המרת יחידות</span><span class="q">דף הסבר · 8 תרגילים</span><span class="d">שיטת "כפל באחד" עם מקדמי המרה שבהם היחידה הישנה מצטמצמת: אורך וזמן, קמ״ש ↔ מ/ש (חלוקה וכפל ב־3.6), יחידות בריבוע ובחזקה שלישית, המרת תאוצה ושרשרת המרות (דלק, מחיר).</span></a></li>
-    <li><a href="units-03-motion-equations.html"><span class="no">03</span><span class="t">משוואות תנועה ויחידות</span><span class="q">דף הסבר · 8 תרגילים</span><span class="d">תנועה קצובה x = vt ושלוש משוואות התאוצה הקבועה, עם בדיקת יחידות בכל איבר (למה ½at² יוצא במטרים), הקשר לנגזרת (מקום, מהירות, תאוצה), וזיהוי נוסחה שגויה בעזרת ניתוח יחידות.</span></a></li>
-    <li><a href="units-04-solving-with-units.html"><span class="no">04</span><span class="t">פתרון בעיות וצמצום יחידות</span><span class="q">דף הסבר · 8 תרגילים</span><span class="d">שיטת עבודה בחמישה שלבים: נתונים עם יחידות, המרה למערכת אחת, נוסחה, הצבה וצמצום עד היחידה המבוקשת, ובדיקה. כולל משוואה ריבועית בזמן, בעיות מפגש ורדיפה, יחידות של קצב (ספיקה, צריכת דלק) ובדיקת סבירות.</span></a></li>
-    <li><a href="units-05-workbook.html"><span class="no">05</span><span class="t">חוברת תרגול: יחידות ותנועה</span><span class="q">24 שאלות</span><span class="d">שאלות בשלוש רמות עם פתרון מלא שבו היחידות כתובות ומצטמצמות בכל שורה: בסיס (המרות וצמצום), תרגול (משוואות התנועה ושרשרת המרות) ורמת בגרות (מפגש ורדיפה, סירה בזרם, זריקה כלפי מעלה, רכבת על גשר). סימון "פתרתי" נשמר בדפדפן.</span></a></li>
-  </ul>
-</section>
+<!-- TOPICS: one card per topic; each card opens topic-<id>.html with that topic's documents.
+     New topic: create topic-<id>.html (copy an existing topic page) and add a card here, in the order of study. -->
+<nav aria-label="נושאים">
+<ul class="topics">
+  <li><a href="topic-curriculum.html"><span class="tt">תוכנית הלימודים</span><span class="tc">3 מסמכי עזר</span><span class="td">תוכנית הלימודים של 5 יחידות לכיתות י׳–י״א, ורשימות מעקב לסימון ההתקדמות בתוכנית.</span><span class="go">לדפי הנושא ←</span></a></li>
+  <li><a href="topic-glossary.html"><span class="tt">מילון מושגים</span><span class="tc">מסמך עזר · 111 מושגים</span><span class="td">כל המושגים שמופיעים באתר במקום אחד: הגדרה, נוסחה, שם באנגלית וקישור לדפים, עם חיפוש.</span><span class="go">לדפי הנושא ←</span></a></li>
+  <li><a href="topic-summer-work.html"><span class="tt">עבודות קיץ</span><span class="tc">PDF ושני דפי פתרונות · 29 שאלות</span><span class="td">עבודת הקיץ למסיימי י׳, ופתרונות מפורטים לפרקי הגאומטריה והחשבון הדיפרנציאלי.</span><span class="go">לדפי הנושא ←</span></a></li>
+  <li><a href="topic-sequences.html"><span class="tt">סדרות</span><span class="tc">10 דפים · 297 שאלות</span><span class="td">סדרה חשבונית והנדסית, טור הנדסי מתכנס, כלל נסיגה, נוסחת איבר כללי, אינדוקציה, טבלת סיכום ועבודת בית.</span><span class="go">לדפי הנושא ←</span></a></li>
+  <li><a href="topic-composite-derivatives.html"><span class="tt">נגזרות של פונקציות מורכבות</span><span class="tc">2 דפים · 42 שאלות</span><span class="td">כלל השרשרת והכללים שנגזרים ממנו, ותרגול מדורג עד רמת בגרות.</span><span class="go">לדפי הנושא ←</span></a></li>
+  <li><a href="topic-geometry.html"><span class="tt">גאומטריה אוקלידית</span><span class="tc">3 דפי הסבר</span><span class="td">מקומות גאומטריים ונקודות מיוחדות במשולש, המעגל, ופרופורציה ודמיון משולשים.</span><span class="go">לדפי הנושא ←</span></a></li>
+  <li><a href="topic-trigonometry.html"><span class="tt">פונקציות טריגונומטריות</span><span class="tc">5 דפים · 41 שאלות</span><span class="td">מערכת צירים קוטבית, sin ו־cos והגלגל המסתובב, תנועה לינארית מול תנועה על גלגל, תרגול ועבודת בית.</span><span class="go">לדפי הנושא ←</span></a></li>
+  <li><a href="topic-analytic.html"><span class="tt">הנדסה אנליטית: משוואות של עקומים</span><span class="tc">6 דפים · 47 שאלות</span><span class="td">ישר, מעגל, פרבולה, אליפסה והיפרבולה: מאיפה באה כל משוואה ומה המשמעות שלה, עם שרטוטים ומעבדות אינטראקטיביות.</span><span class="go">לדפי הנושא ←</span></a></li>
+  <li><a href="topic-units.html"><span class="tt">יחידות ומשוואות תנועה</span><span class="tc">6 דפים · 56 שאלות</span><span class="td">גדלים ויחידות, המרת יחידות, משוואות תנועה ופתרון בעיות עם צמצום יחידות.</span><span class="go">לדפי הנושא ←</span></a></li>
+</ul>
+</nav>
 
 <footer>האתר נבנה בהדרגה, ודפים חדשים יתווספו לרשימה זו. חלוקת הנושאים בין שאלונים ושנים עשויה להשתנות, ולכן כדאי לוודא מול תוכנית הלימודים העדכנית של משרד החינוך.</footer>
 </div>
-<a class="to-top" href="#toc">↑ תוכן עניינים</a>
-<script>
-// Build the table of contents from the topic sections, so new topics are listed automatically
-(function(){
-  var ol=document.querySelector('#toc ol'); if(!ol) return;
-  var html='';
-  document.querySelectorAll('section.topic[id]').forEach(function(sec){
-    var h=sec.querySelector('h2'); if(!h) return;
-    var c=sec.querySelector('.topic-head span');
-    html+='<li><a href="#'+sec.id+'">'+h.textContent+(c?'<small>'+c.textContent+'</small>':'')+'</a></li>';
-  });
-  if(html) ol.innerHTML=html;
-})();
-</script>
 </body>
 </html>
