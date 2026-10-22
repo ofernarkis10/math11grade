@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>חוברת תרגול — יחידות ותנועה</title>
-<meta name="description" content="24 שאלות בשלוש רמות (בסיס, תרגול, רמת בגרות) עם פתרון מלא לכל שאלה ומעקב התקדמות.">
+<meta name="description" content="30 שאלות בארבעה חלקים (בסיס, תרגול, רמת בגרות ותנועה מעגלית) עם פתרון מלא לכל שאלה ומעקב התקדמות.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
@@ -54,7 +54,7 @@ button{font:inherit;font-size:15px;border:1px solid var(--line);background:var(-
 .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
 .card .tag{font-size:13px;color:var(--muted)}
 .card a{font-weight:700;text-decoration:none}
-.katex{direction:ltr;unicode-bidi:isolate}
+.katex{direction:ltr;unicode-bidi:isolate;position:relative}
 .sol,.ex,ol.check>li,.q p,td{line-height:2.15}
 .katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0}
 .ltr{direction:ltr;unicode-bidi:isolate}
@@ -65,11 +65,11 @@ footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
 <script src="font-size.js"></script>
 </head>
 <body><div class="wrap">
-<nav class="top"><a href="topic-units.html">→ חזרה לנושא: יחידות ומשוואות תנועה</a></nav>
-<nav class="top series" aria-label="דפי הנושא"><a href="units-00-overview.html">דף הקבוצה</a> · <a href="units-01-quantities-and-units.html">גדלים ויחידות</a> · <a href="units-02-unit-conversion.html">המרות</a> · <a href="units-03-motion-equations.html">משוואות תנועה</a> · <a href="units-04-solving-with-units.html">פתרון בעיות</a> · <b>חוברת</b></nav>
-<header class="hero"><div class="eyebrow">מתמטיקה · כיתה י״א · 5 יח״ל · יחידות ומשוואות תנועה · חוברת</div><h1>חוברת תרגול — יחידות ותנועה</h1><p class="lead">24 שאלות בשלוש רמות. בכל פתרון היחידות כתובות לאורך כל הדרך ומצטמצמות עד היחידה המבוקשת.</p></header>
+<nav class="top"><a href="topic-units.html">→ חזרה לנושא: יחידות ומשוואות תנועה</a> · <a href="index.html">כל הנושאים</a></nav>
+<nav class="top series" aria-label="דפי הנושא"><a href="units-00-overview.html">דף הקבוצה</a> · <a href="units-01-quantities-and-units.html">גדלים ויחידות</a> · <a href="units-02-unit-conversion.html">המרות</a> · <a href="units-03-motion-equations.html">משוואות תנועה</a> · <a href="units-04-solving-with-units.html">פתרון בעיות</a> · <a href="units-06-circular-motion.html">תנועה מעגלית</a> · <b>חוברת</b></nav>
+<header class="hero"><div class="eyebrow">מתמטיקה · כיתה י״א · 5 יח״ל · יחידות ומשוואות תנועה · חוברת</div><h1>חוברת תרגול — יחידות ותנועה</h1><p class="lead">30 שאלות בארבעה חלקים. בכל פתרון היחידות כתובות לאורך כל הדרך ומצטמצמות עד היחידה המבוקשת.</p></header>
 <div class="toolbar"><button id="showall">הצג את כל הפתרונות</button><button id="clear">נקה סימונים</button><span class="prog"></span></div>
-<section class="ch"><h2>איך לעבוד עם החוברת</h2><p>פתרו כל שאלה במחברת, <b>עם יחידות בכל שורה</b>, ורק אחר כך פתחו את הפתרון. סמנו “פתרתי” — הסימון נשמר בדפדפן. לפני שמתחילים כדאי לקרוא את <a href="units-04-solving-with-units.html#s1">שיטת העבודה בחמישה שלבים</a>.</p></section>
+<section class="ch"><h2>איך לעבוד עם החוברת</h2><p>פתרו כל שאלה במחברת, <b>עם יחידות בכל שורה</b>, ורק אחר כך פתחו את הפתרון. סמנו “פתרתי” — הסימון נשמר בדפדפן. לפני שמתחילים כדאי לקרוא את <a href="units-04-solving-with-units.html#s1">שיטת העבודה בחמישה שלבים</a>. חלק ד׳ מתאים אחרי המאמר <a href="units-06-circular-motion.html">תנועה מעגלית</a>.</p></section>
 <section class="ch" id="levelA"><h2>רמה א׳ — בסיס: המרות וצמצום ישיר</h2>
 <div class="q" id="q1"><div class="qh"><b>שאלה 1</b><label class="tick"><input type="checkbox" class="done" data-q="1">פתרתי</label></div><p>המירו \(54\,\kmh\) ל־\(\mps\).</p><details><summary>הצג פתרון</summary><div class="sol">\(54\,\dfrac{\cx{\mathrm{km}}}{\cx{\mathrm{h}}}\cdot\dfrac{1000\u{m}}{1\u{\cx{km}}}\cdot\dfrac{1\u{\cx{h}}}{3600\u{s}}=15\,\mps\) (או \(54\div3.6\)).</div></details></div>
 <div class="q" id="q2"><div class="qh"><b>שאלה 2</b><label class="tick"><input type="checkbox" class="done" data-q="2">פתרתי</label></div><p>המירו \(25\,\mps\) ל־\(\kmh\).</p><details><summary>הצג פתרון</summary><div class="sol">\(25\times3.6=90\,\kmh\).</div></details></div>
@@ -100,11 +100,19 @@ footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
 <div class="q" id="q23"><div class="qh"><b>שאלה 23</b><label class="tick"><input type="checkbox" class="done" data-q="23">פתרתי</label></div><p>כדור נזרק כלפי מעלה במהירות \(20\,\mps\). גובהו (מטרים) הוא \(h(t)=20t-5t^2\) (\(t\) בשניות, \(g=10\,\mpss\)).<br>א. מה היחידה של המקדם \(5\)? הסבירו.<br>ב. מתי הכדור בגובה \(15\u{m}\)?<br>ג. מהו הגובה המרבי?</p><details><summary>הצג פתרון</summary><div class="sol">א. \(5=\tfrac12g\), יחידתו \(\mpss\) — כך ש־\(5t^2\) יוצא במטרים.<br>ב. \(20t-5t^2=15\Rightarrow t^2-4t+3=0\Rightarrow t=1\u{s}\) (בעלייה) או \(t=3\u{s}\) (בירידה).<br>ג. \(h'(t)=20-10t=0\Rightarrow t=2\u{s}\); \(h(2)=40-20=20\u{m}\).</div></details></div>
 <div class="q" id="q24"><div class="qh"><b>שאלה 24</b><label class="tick"><input type="checkbox" class="done" data-q="24">פתרתי</label></div><p>רכבת באורך \(200\u{m}\) נוסעת ב־\(72\,\kmh\) ועוברת גשר באורך \(400\u{m}\).<br>א. כמה זמן מרגע שהקטר עולה על הגשר ועד שהקרון האחרון יורד ממנו?<br>ב. כמה זמן כל הרכבת נמצאת על הגשר בשלמותה?</p><details><summary>הצג פתרון</summary><div class="sol">\(72\,\kmh=20\,\mps\).<br>א. הקטר צריך לעבור \(400+200=600\u{m}\): \(t=\dfrac{600\u{m}}{20\,\mps}=30\u{s}\).<br>ב. הרכבת כולה על הגשר כשהקרון האחרון עלה והקטר עוד לא ירד: \(400-200=200\u{m}\), כלומר \(10\u{s}\).</div></details></div>
 </section>
-<div class="pager"><a href="units-04-solving-with-units.html">→ פתרון בעיות וצמצום יחידות</a><span></span></div>
+<section class="ch" id="levelD"><h2>חלק ד׳ — תנועה מעגלית: מהירות זוויתית ומהירות קווית</h2>
+<div class="q" id="q25"><div class="qh"><b>שאלה 25</b><label class="tick"><input type="checkbox" class="done" data-q="25">פתרתי</label></div><p>המירו לרדיאנים לשנייה: א. \(30\) סל״ד. ב. \(180^\circ\) לשנייה.</p><details><summary>הצג פתרון</summary><div class="sol">א. \(30\cdot\dfrac{2\pi}{60}=\pi\,\dfrac{\mathrm{rad}}{\mathrm{s}}\).<br>ב. \(180^\circ=\pi\u{rad}\), לכן \(\pi\,\dfrac{\mathrm{rad}}{\mathrm{s}}\).</div></details></div>
+<div class="q" id="q26"><div class="qh"><b>שאלה 26</b><label class="tick"><input type="checkbox" class="done" data-q="26">פתרתי</label></div><p>גלגל ענק ברדיוס \(20\u{m}\) משלים סיבוב ב־\(4\u{min}\). מצאו את \(\omega\) ואת מהירות הקרונית.</p><details><summary>הצג פתרון</summary><div class="sol">\(T=240\u{s}\): \(\omega=\dfrac{2\pi}{240}=\dfrac{\pi}{120}\,\dfrac{\mathrm{rad}}{\mathrm{s}}\approx0.026\,\dfrac{\mathrm{rad}}{\mathrm{s}}\).<br>\(v=\omega r=\dfrac{\pi}{120}\cdot20=\dfrac{\pi}{6}\,\mps\approx0.52\,\mps\).</div></details></div>
+<div class="q" id="q27"><div class="qh"><b>שאלה 27</b><label class="tick"><input type="checkbox" class="done" data-q="27">פתרתי</label></div><p>גלגל ברדיוס \(0.35\u{m}\) עושה \(8\) סיבובים בשנייה. מצאו את \(\omega\) ואת מהירות נקודה על השפה. הראו את צמצום היחידות.</p><details><summary>הצג פתרון</summary><div class="sol">\(\omega=2\pi f=2\pi\cdot8\,\dfrac{1}{\mathrm{s}}=16\pi\,\dfrac{\mathrm{rad}}{\mathrm{s}}\approx50.3\,\dfrac{\mathrm{rad}}{\mathrm{s}}\).<br>\(v=16\pi\,\dfrac{\cx{\mathrm{rad}}}{\mathrm{s}}\cdot0.35\u{m}=5.6\pi\,\mps\approx17.6\,\mps\).</div></details></div>
+<div class="q" id="q28"><div class="qh"><b>שאלה 28</b><label class="tick"><input type="checkbox" class="done" data-q="28">פתרתי</label></div><p>רכב נוסע ב־\(72\,\kmh\) על גלגלים ברדיוס \(0.32\u{m}\), בלי החלקה. כמה סל״ד עושה הגלגל?</p><details><summary>הצג פתרון</summary><div class="sol">\(v=20\,\mps\); \(\omega=\dfrac{20}{0.32}=62.5\,\dfrac{\mathrm{rad}}{\mathrm{s}}\).<br>\(62.5\cdot\dfrac{60}{2\pi}\approx597\) סל״ד.</div></details></div>
+<div class="q" id="q29"><div class="qh"><b>שאלה 29</b><label class="tick"><input type="checkbox" class="done" data-q="29">פתרתי</label></div><p>באופניים, גלגל השיניים של הדוושות ברדיוס \(10\u{cm}\) וגלגל השיניים האחורי ברדיוס \(4\u{cm}\), מחוברים בשרשרת. הרוכב מדווש ב־\(60\) סל״ד, ורדיוס הגלגל האחורי \(0.35\u{m}\).<br>א. כמה סל״ד עושה הגלגל האחורי?<br>ב. מה מהירות האופניים בקמ״ש?</p><details><summary>הצג פתרון</summary><div class="sol">א. השרשרת: \(\omega_1r_1=\omega_2r_2\Rightarrow\omega_2=60\cdot\dfrac{10}{4}=150\) סל״ד (גלגל השיניים האחורי והגלגל על אותו ציר — אותו \(\omega\)).<br>ב. \(\omega=150\cdot\dfrac{2\pi}{60}=5\pi\,\dfrac{\mathrm{rad}}{\mathrm{s}}\); \(v=5\pi\cdot0.35\approx5.50\,\mps\approx19.8\,\kmh\).</div></details></div>
+<div class="q" id="q30"><div class="qh"><b>שאלה 30</b><label class="tick"><input type="checkbox" class="done" data-q="30">פתרתי</label></div><p>אבן קשורה לחוט באורך \(0.5\u{m}\) ומסובבת במעגל אופקי, \(2\) סיבובים בשנייה.<br>א. מה \(\omega\) ומה \(v\)?<br>ב. מה התאוצה הצנטריפטלית? חשבו בשתי הדרכים \(\tfrac{v^2}{r}\) ו־\(\omega^2r\) והראו שהיחידות זהות.<br>ג. אם מקצרים את החוט ל־\(0.25\u{m}\) ושומרים על אותה \(\omega\), פי כמה משתנות \(v\) ו־\(a_c\)?</p><details><summary>הצג פתרון</summary><div class="sol">א. \(\omega=4\pi\approx12.57\,\dfrac{\mathrm{rad}}{\mathrm{s}}\); \(v=4\pi\cdot0.5=2\pi\approx6.28\,\mps\).<br>ב. \(\dfrac{(2\pi)^2}{0.5}=8\pi^2\approx79\,\mpss\); \((4\pi)^2\cdot0.5=8\pi^2\) ✓. שתיהן \(\mpss\).<br>ג. \(v=\omega r\) ו־\(a_c=\omega^2r\) קטנות שתיהן פי 2 (יחס ישר ל־\(r\)).</div></details></div>
+</section>
+<div class="pager"><a href="units-06-circular-motion.html">→ תנועה מעגלית: מהירות זוויתית ומהירות קווית</a><span></span></div>
 <footer>אתר המתמטיקה של כיתה י״א · קבוצת "יחידות ומשוואות תנועה"</footer>
 </div>
 <script>
-const KMACROS={"\\u":"\\,\\mathrm{#1}","\\mps":"\\tfrac{\\mathrm{m}}{\\mathrm{s}}","\\mpss":"\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}","\\kmh":"\\tfrac{\\mathrm{km}}{\\mathrm{h}}","\\cx":"\\cancel{#1}"};
+const KMACROS={"\\u":"\\,\\mathrm{#1}","\\mps":"\\tfrac{\\mathrm{m}}{\\mathrm{s}}","\\mpss":"\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}","\\kmh":"\\tfrac{\\mathrm{km}}{\\mathrm{h}}","\\cx":"\\cancel{#1}","\\rads":"\\tfrac{\\mathrm{rad}}{\\mathrm{s}}"};
 document.addEventListener("DOMContentLoaded",()=>{
  if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],macros:KMACROS,throwOnError:false});}
  const KEY="math11-units-"+location.pathname.split("/").pop();

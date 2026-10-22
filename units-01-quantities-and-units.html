@@ -54,7 +54,7 @@ button{font:inherit;font-size:15px;border:1px solid var(--line);background:var(-
 .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
 .card .tag{font-size:13px;color:var(--muted)}
 .card a{font-weight:700;text-decoration:none}
-.katex{direction:ltr;unicode-bidi:isolate}
+.katex{direction:ltr;unicode-bidi:isolate;position:relative}
 .sol,.ex,ol.check>li,.q p,td{line-height:2.15}
 .katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0}
 .ltr{direction:ltr;unicode-bidi:isolate}
@@ -65,8 +65,8 @@ footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
 <script src="font-size.js"></script>
 </head>
 <body><div class="wrap">
-<nav class="top"><a href="topic-units.html">→ חזרה לנושא: יחידות ומשוואות תנועה</a></nav>
-<nav class="top series" aria-label="דפי הנושא"><a href="units-00-overview.html">דף הקבוצה</a> · <b>גדלים ויחידות</b> · <a href="units-02-unit-conversion.html">המרות</a> · <a href="units-03-motion-equations.html">משוואות תנועה</a> · <a href="units-04-solving-with-units.html">פתרון בעיות</a> · <a href="units-05-workbook.html">חוברת</a></nav>
+<nav class="top"><a href="topic-units.html">→ חזרה לנושא: יחידות ומשוואות תנועה</a> · <a href="index.html">כל הנושאים</a></nav>
+<nav class="top series" aria-label="דפי הנושא"><a href="units-00-overview.html">דף הקבוצה</a> · <b>גדלים ויחידות</b> · <a href="units-02-unit-conversion.html">המרות</a> · <a href="units-03-motion-equations.html">משוואות תנועה</a> · <a href="units-04-solving-with-units.html">פתרון בעיות</a> · <a href="units-06-circular-motion.html">תנועה מעגלית</a> · <a href="units-05-workbook.html">חוברת</a></nav>
 <header class="hero"><div class="eyebrow">מתמטיקה · כיתה י״א · 5 יח״ל · יחידות ומשוואות תנועה</div><h1>גדלים ויחידות</h1><p class="lead">מה זה גודל, מאיפה מגיעות היחידות, ולמה מותר לכפול, לחלק ולצמצם יחידות כמו אותיות באלגברה.</p></header>
 <section class="ch toc"><h2>תוכן</h2><ol><li><a href="#s1">גודל = מספר × יחידה</a></li><li><a href="#s2">יחידות יסוד וקידומות</a></li><li><a href="#s3">יחידות נגזרות</a></li><li><a href="#s4">יחידות מתנהגות כמו משתנים: כפל, חילוק וצמצום</a></li><li><a href="#s5">חוק ההתאמה: חיבור, חיסור ושוויון</a></li><li><a href="#mist">טעויות נפוצות</a></li><li><a href="#chk">בדקו את עצמכם</a></li></ol></section>
 <section class="ch" id="s1"><h2><span class="num">1</span>גודל = מספר × יחידה</h2>
@@ -125,7 +125,7 @@ footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
 <footer>אתר המתמטיקה של כיתה י״א · קבוצת "יחידות ומשוואות תנועה"</footer>
 </div>
 <script>
-const KMACROS={"\\u":"\\,\\mathrm{#1}","\\mps":"\\tfrac{\\mathrm{m}}{\\mathrm{s}}","\\mpss":"\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}","\\kmh":"\\tfrac{\\mathrm{km}}{\\mathrm{h}}","\\cx":"\\cancel{#1}"};
+const KMACROS={"\\u":"\\,\\mathrm{#1}","\\mps":"\\tfrac{\\mathrm{m}}{\\mathrm{s}}","\\mpss":"\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}","\\kmh":"\\tfrac{\\mathrm{km}}{\\mathrm{h}}","\\cx":"\\cancel{#1}","\\rads":"\\tfrac{\\mathrm{rad}}{\\mathrm{s}}"};
 document.addEventListener("DOMContentLoaded",()=>{
  if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],macros:KMACROS,throwOnError:false});}
  const KEY="math11-units-"+location.pathname.split("/").pop();
