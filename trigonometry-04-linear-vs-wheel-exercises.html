@@ -151,8 +151,8 @@ td .m .katex{font-size:1.1em}
     <tr><td>1. נתונים</td><td><span class="m">\(A,\ B,\ T\)</span></td><td><span class="m">\(C,\ R,\ \theta_0,\ T\)</span></td></tr>
     <tr><td>2. משוואת המסלול</td><td><span class="m">\(y = m(x - x_A) + y_A\)</span></td><td><span class="m">\((x - x_C)^2 + (y - y_C)^2 = R^2\)</span></td></tr>
     <tr><td>3. הפרמטר לפי הזמן</td><td><span class="m">\(p = \dfrac{t}{T}\)</span></td><td><span class="m">\(\theta = \theta_0 \pm 360^\circ\cdot\dfrac{t}{T}\)</span></td></tr>
-    <tr><td>4. x לפי הפרמטר</td><td><span class="m">\(x = x_A + p\,(x_B - x_A)\)</span></td><td><span class="m">\(x = x_C + R\cos\theta\)</span></td></tr>
-    <tr><td>5. y מהמסלול</td><td>הצבה בישר: ערך אחד</td><td>הצבה במעגל: שני ערכים, הזווית בוחרת</td></tr>
+    <tr><td>4. x</td><td><span class="m">\(x = x_A + p\,(x_B - x_A)\)</span></td><td><span class="m">\(x = x_C + R\cos\theta\)</span></td></tr>
+    <tr><td>5. y</td><td>הצבה בישר: ערך אחד</td><td><span class="m">\(y = y_C + R\sin\theta\)</span></td></tr>
   </tbody>
 </table></div>
 
@@ -179,11 +179,11 @@ td .m .katex{font-size:1.1em}
     <details><summary>הצג פתרון</summary><div class="sol">
       <svg class="mini" data-kind="circle" data-c="0,10" data-r="8" data-th0="0" data-th="120" role="img" aria-label="המעגל והנקודה אחרי סיבוב של 120 מעלות"></svg>
       <ol class="steps">
-        <li><div><b>נתונים</b><span class="m">\(C(0,10),\ R = 8,\ \theta_0 = 0^\circ,\ T = 30,\ t = 10\)</span></div></li>
-        <li><div><b>משוואת המסלול</b><span class="m">\(x^2 + (y - 10)^2 = 64\)</span></div></li>
-        <li><div><b>הפרמטר לפי הזמן</b><span class="m">\(\theta = 0^\circ + 360^\circ\cdot\dfrac{10}{30} = 120^\circ\)</span></div></li>
-        <li><div><b>x לפי הפרמטר</b><span class="m">\(x = 8\cos120^\circ = -4\)</span></div></li>
-        <li><div><b>y מהמסלול</b><span class="ml"><span class="m">\((y - 10)^2 = 64 - 16 = 48\)</span><span class="m">\(y = 10 \pm 4\sqrt3 \approx 16.93\ \ \text{or}\ \ 3.07\)</span></span>הזווית <span class="m">\(120^\circ\)</span> בחצי העליון, ולכן <span class="m">\(y = 10 + 4\sqrt3\)</span>, כלומר <span class="m">\(10 + 8\sin120^\circ\)</span>.</div></li>
+        <li><div><b>נתונים</b><span class="m">\(C(0,10),\ R = 8,\ T = 30,\ t = 10\)</span></div></li>
+        <li><div><b>זווית ההתחלה</b>הנקודה מתחילה ב־<span class="m">\((8,10)\)</span>, 8 ימינה מהמרכז <span class="m">\((0,10)\)</span> ובאותו גובה, ולכן <span class="m">\(\theta_0 = 0^\circ\)</span>.</div></li>
+        <li><div><b>הזווית לפי הזמן</b><span class="m">\(\theta = 0^\circ + 360^\circ\cdot\dfrac{10}{30} = 120^\circ\)</span></div></li>
+        <li><div><b>x בעזרת cos</b><span class="m">\(x = 0 + 8\cos120^\circ = 8\cdot\left(-\tfrac12\right) = -4\)</span></div></li>
+        <li><div><b>y בעזרת sin</b><span class="m">\(y = 10 + 8\sin120^\circ = 10 + 8\cdot\tfrac{\sqrt3}{2} = 10 + 4\sqrt3 \approx 16.93\)</span></div></li>
       </ol>
       <p class="ans">התשובה: <span class="m">\((-4,\ 16.93)\)</span></p>
     </div></details>
@@ -214,11 +214,11 @@ td .m .katex{font-size:1.1em}
     <details><summary>הצג פתרון</summary><div class="sol">
       <svg class="mini" data-kind="circle" data-c="0,25" data-r="20" data-th0="90" data-th="-126" role="img" aria-label="המעגל והקרונית אחרי סיבוב של 216 מעלות עם כיוון השעון"></svg>
       <ol class="steps">
-        <li><div><b>נתונים</b><span class="m">\(C(0,25),\ R = 20,\ \theta_0 = 90^\circ,\ T = 50,\ t = 30\)</span></div></li>
-        <li><div><b>משוואת המסלול</b><span class="m">\(x^2 + (y - 25)^2 = 400\)</span></div></li>
-        <li><div><b>הפרמטר לפי הזמן</b>עם כיוון השעון, ולכן מינוס:<span class="ml"><span class="m">\(\theta = 90^\circ - 360^\circ\cdot\dfrac{30}{50} = 90^\circ - 216^\circ = -126^\circ\)</span><span class="m">\(-126^\circ \equiv 234^\circ\)</span></span></div></li>
-        <li><div><b>x לפי הפרמטר</b><span class="m">\(x = 20\cos234^\circ \approx -11.76\)</span></div></li>
-        <li><div><b>y מהמסלול</b><span class="ml"><span class="m">\((y - 25)^2 \approx 400 - 138.2 = 261.8\)</span><span class="m">\(y \approx 25 \pm 16.18 = 41.18\ \ \text{or}\ \ 8.82\)</span></span>הזווית <span class="m">\(234^\circ\)</span> (רביע III) בחצי התחתון, ולכן <span class="m">\(y \approx 8.82\)</span>, כלומר <span class="m">\(25 + 20\sin234^\circ\)</span>.</div></li>
+        <li><div><b>נתונים</b><span class="m">\(C(0,25),\ R = 20,\ T = 50,\ t = 30\)</span></div></li>
+        <li><div><b>זווית ההתחלה</b>הקרונית מתחילה בראש הגלגל, בדיוק מעל המרכז, ולכן <span class="m">\(\theta_0 = 90^\circ\)</span>.</div></li>
+        <li><div><b>הזווית לפי הזמן</b>עם כיוון השעון, ולכן מינוס:<span class="ml"><span class="m">\(\theta = 90^\circ - 360^\circ\cdot\dfrac{30}{50} = -126^\circ \equiv 234^\circ\)</span></span></div></li>
+        <li><div><b>x בעזרת cos</b><span class="m">\(x = 0 + 20\cos234^\circ \approx 20\cdot(-0.588) = -11.76\)</span></div></li>
+        <li><div><b>y בעזרת sin</b><span class="m">\(y = 25 + 20\sin234^\circ \approx 25 + 20\cdot(-0.809) = 8.82\)</span></div></li>
       </ol>
       <p class="ans">התשובה: <span class="m">\((-11.76,\ 8.82)\)</span>, בגובה כ־8.8 מ׳</p>
     </div></details>
@@ -249,11 +249,11 @@ td .m .katex{font-size:1.1em}
     <details><summary>הצג פתרון</summary><div class="sol">
       <svg class="mini" data-kind="circle" data-c="2,-1" data-r="4" data-th0="30" data-th="1230" role="img" aria-label="המעגל והנקודה אחרי שלושה סיבובים ועוד 120 מעלות"></svg>
       <ol class="steps">
-        <li><div><b>נתונים</b><span class="m">\(C(2,-1),\ R = 4,\ \theta_0 = 30^\circ,\ T = 6,\ t = 20\)</span></div></li>
-        <li><div><b>משוואת המסלול</b><span class="m">\((x - 2)^2 + (y + 1)^2 = 16\)</span></div></li>
-        <li><div><b>הפרמטר לפי הזמן</b><span class="m">\(\tfrac{20}{6} = 3\tfrac13\)</span> סיבובים, כלומר כ־333%:<span class="ml"><span class="m">\(\theta = 30^\circ + 360^\circ\cdot\tfrac{20}{6} = 30^\circ + 1200^\circ = 1230^\circ\)</span><span class="m">\(1230^\circ = 3\cdot360^\circ + 150^\circ \equiv 150^\circ\)</span></span></div></li>
-        <li><div><b>x לפי הפרמטר</b><span class="m">\(x = 2 + 4\cos150^\circ = 2 - 2\sqrt3 \approx -1.46\)</span></div></li>
-        <li><div><b>y מהמסלול</b><span class="ml"><span class="m">\((y + 1)^2 = 16 - 12 = 4\)</span><span class="m">\(y = 1\ \ \text{or}\ \ y = -3\)</span></span>הזווית <span class="m">\(150^\circ\)</span> בחצי העליון, ולכן <span class="m">\(y = 1\)</span>, כלומר <span class="m">\(-1 + 4\sin150^\circ\)</span>.</div></li>
+        <li><div><b>נתונים</b><span class="m">\(C(2,-1),\ R = 4,\ T = 6,\ t = 20\)</span></div></li>
+        <li><div><b>זווית ההתחלה</b>נתונה בשאלה: <span class="m">\(\theta_0 = 30^\circ\)</span>.</div></li>
+        <li><div><b>הזווית לפי הזמן</b><span class="m">\(\tfrac{20}{6} = 3\tfrac13\)</span> סיבובים:<span class="ml"><span class="m">\(\theta = 30^\circ + 360^\circ\cdot\tfrac{20}{6} = 1230^\circ\)</span><span class="m">\(1230^\circ = 3\cdot360^\circ + 150^\circ \equiv 150^\circ\)</span></span></div></li>
+        <li><div><b>x בעזרת cos</b><span class="m">\(x = 2 + 4\cos150^\circ = 2 + 4\cdot\left(-\tfrac{\sqrt3}{2}\right) = 2 - 2\sqrt3 \approx -1.46\)</span></div></li>
+        <li><div><b>y בעזרת sin</b><span class="m">\(y = -1 + 4\sin150^\circ = -1 + 4\cdot\tfrac12 = 1\)</span></div></li>
       </ol>
       <p class="ans">התשובה: <span class="m">\((-1.46,\ 1)\)</span>. שלושת הסיבובים השלמים לא משנים את המקום.</p>
     </div></details>
@@ -284,11 +284,12 @@ td .m .katex{font-size:1.1em}
     <details><summary>הצג פתרון</summary><div class="sol">
       <svg class="mini" data-kind="circle" data-c="0,15" data-r="12" data-th0="0" data-th="30,150" role="img" aria-label="המעגל ושתי הנקודות בגובה 21"></svg>
       <ol class="steps">
-        <li><div><b>נתונים</b><span class="m">\(C(0,15),\ R = 12,\ \theta_0 = 0^\circ,\ T = 36\)</span>, הגובה המבוקש <span class="m">\(y = 21\)</span></div></li>
-        <li><div><b>משוואת המסלול</b><span class="m">\(x^2 + (y - 15)^2 = 144\)</span></div></li>
-        <li><div><b>איפה על המסלול?</b>מציבים את y:<span class="ml"><span class="m">\(x^2 + 36 = 144 \ \Rightarrow\ x = \pm\sqrt{108} \approx \pm10.39\)</span></span>שתי נקודות: מימין למרכז ומשמאל לו.</div></li>
-        <li><div><b>הפרמטר לפי המקום</b><span class="ml"><span class="m">\(\sin\theta = \dfrac{21 - 15}{12} = 0.5\)</span><span class="m">\(\theta = 30^\circ\ (x \gt 0)\ \ \text{or}\ \ \theta = 150^\circ\ (x \lt 0)\)</span></span></div></li>
-        <li><div><b>מהפרמטר לזמן</b><span class="ml"><span class="m">\(t = \dfrac{\theta - \theta_0}{360^\circ}\cdot T\)</span><span class="m">\(t_1 = \dfrac{30^\circ}{360^\circ}\cdot36 = 3\)</span><span class="m">\(t_2 = \dfrac{150^\circ}{360^\circ}\cdot36 = 15\)</span></span></div></li>
+        <li><div><b>נתונים</b><span class="m">\(C(0,15),\ R = 12,\ T = 36\)</span>, הגובה המבוקש <span class="m">\(y = 21\)</span></div></li>
+        <li><div><b>זווית ההתחלה</b>הנקודה מתחילה ב־<span class="m">\((12,15)\)</span>, ימינה מהמרכז <span class="m">\((0,15)\)</span> ובאותו גובה, ולכן <span class="m">\(\theta_0 = 0^\circ\)</span>.</div></li>
+        <li><div><b>הגובה בעזרת sin</b><span class="ml"><span class="m">\(y = 15 + 12\sin\theta = 21\)</span><span class="m">\(\sin\theta = \tfrac{21 - 15}{12} = 0.5\)</span></span></div></li>
+        <li><div><b>הזוויות</b>בסיבוב אחד יש שתי זוויות כאלה:<span class="ml"><span class="m">\(\theta = 30^\circ\ \ \text{or}\ \ \theta = 150^\circ\)</span></span></div></li>
+        <li><div><b>x בעזרת cos</b><span class="ml"><span class="m">\(x = 12\cos30^\circ \approx 10.39\)</span><span class="m">\(x = 12\cos150^\circ \approx -10.39\)</span></span>שתי נקודות: מימין למרכז ומשמאל לו.</div></li>
+        <li><div><b>מהזווית לזמן</b><span class="ml"><span class="m">\(t = \dfrac{\theta - \theta_0}{360^\circ}\cdot T\)</span><span class="m">\(t_1 = \dfrac{30^\circ}{360^\circ}\cdot36 = 3\)</span><span class="m">\(t_2 = \dfrac{150^\circ}{360^\circ}\cdot36 = 15\)</span></span></div></li>
       </ol>
       <p class="ans">התשובה: אחרי 3 ואחרי 15 שניות, ושוב כל 36 שניות.<span class="ml"><span class="m">\(t = 3 + 36k\ \ \text{or}\ \ t = 15 + 36k,\quad k = 0, 1, 2, \dots\)</span></span></p>
     </div></details>
@@ -356,7 +357,8 @@ td .m .katex{font-size:1.1em}
       el(svg,'line',{x1:cx,y1:cy,x2:P[0],y2:P[1],stroke:'var(--mark)','stroke-width':1.2,opacity:.7});
       el(svg,'circle',{cx:P[0],cy:P[1],r:6,fill:'var(--mark)'});
       var right=P[0]>=cx; txt(svg,P[0]+(right?8:-8),P[1]-9,'('+fmt(X)+', '+fmt(Yv)+')',{'text-anchor':right?'start':'end',fill:'var(--mark)'});});
-    var eq=(C[0]===0?'x²':'(x − '+fmt(C[0])+')²')+' + (y − '+fmt(C[1])+')² = '+fmt(R*R);
+    var sq=function(v,c){return c===0?v+'²':'('+v+(c>0?' − ':' + ')+fmt(Math.abs(c))+')²';};
+    var eq=sq('x',C[0])+' + '+sq('y',C[1])+' = '+fmt(R*R);
     txt(svg,8,16,eq,{fill:'var(--mark)'});
   }
   document.querySelectorAll('svg.mini').forEach(function(svg){

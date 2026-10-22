@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>רשימת מעקב · תוכנית הלימודים כיתות י׳–י״א · 5 יחידות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a reference page on graph-paper ground; one chapter card per subject domain, each grade a labelled block of topics */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:420px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+td:nth-child(n+2),th:nth-child(n+2){text-align:center;width:6.5rem}
+tr:last-child td{border-bottom:0}
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.num{font-family:var(--f-math);color:var(--muted);font-size:.85rem}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.grade{display:flex;flex-direction:column;gap:10px;border-inline-start:4px solid var(--accent);padding-inline-start:16px}
+.grade.g11{border-inline-start-color:var(--mark)}
+.grade h3 small{font-family:var(--f-body);font-size:.82rem;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:2px 10px;margin-inline-start:8px;white-space:nowrap}
+.grade.g11 h3 small{color:var(--mark);background:var(--mark-soft)}
+ul.topics{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:10px}
+ul.topics li::marker{color:var(--accent)}
+.grade.g11 ul.topics li::marker{color:var(--mark)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;margin-inline-end:6px;vertical-align:-1px;background:var(--accent)}
+.legend span.l11::before{background:var(--mark)}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+a.inline{color:var(--accent);font-weight:600}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+<style>
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.tile{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+.tile b{display:block;font-family:var(--f-display);font-size:1.9rem;line-height:1.2;color:var(--accent)}
+.tile span{color:var(--muted);font-size:.9rem}
+.overall{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 20px;display:flex;flex-direction:column;gap:10px;position:sticky;top:0;z-index:5;box-shadow:0 6px 10px -8px rgba(0,0,0,.25)}
+.overall .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.overall strong{font-family:var(--f-display);font-size:1.15rem}
+.bar{height:8px;border-radius:99px;background:var(--accent-soft);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .2s}
+button{font:inherit;font-size:.9rem;font-weight:600;color:var(--accent);background:var(--paper);border:1px solid var(--accent);border-radius:8px;padding:4px 14px;cursor:pointer}
+button:hover,button:focus-visible{background:var(--accent-soft);outline:none}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.ch-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.meta{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:.82rem;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:2px 12px;white-space:nowrap}
+.chip.prog{color:var(--mark);background:var(--mark-soft)}
+ul.check{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:2px}
+ul.check label{display:flex;gap:12px;align-items:flex-start;padding:8px 10px;border-radius:8px;cursor:pointer}
+ul.check label:hover{background:var(--accent-soft)}
+ul.check input{flex:none;width:22px;height:22px;margin:3px 0 0;accent-color:var(--accent);cursor:pointer}
+ul.check input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+ul.check input:focus-visible{outline:2px solid var(--mark);outline-offset:2px}
+.ch.complete{border-color:var(--accent)}
+.ch.complete .chip.prog{color:var(--accent);background:var(--accent-soft)}
+@media print{
+  body{background:#fff;font-size:12.5pt;background-image:none}
+  .overall,.actions,nav,.back{display:none!important}
+  section.ch{break-inside:avoid;border-color:#999;box-shadow:none}
+  .bar{display:none}
+  ul.check input{width:16px;height:16px}
+  ul.check input:checked + span{text-decoration:none;color:inherit}
+}
+
+h2.gtitle{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--accent);padding-bottom:8px;margin-top:8px}
+h2.gtitle.g11{color:var(--mark);border-bottom-color:var(--mark)}
+section.ch h3{font-family:var(--f-display);font-size:1.5rem;line-height:1.25;margin:0;color:var(--accent)}
+section.ch.g11 h3{color:var(--mark)}
+nav li.gtitle{font-weight:700;list-style:none;margin-inline-start:-22px}
+nav li.gtitle ol{columns:1;margin:2px 0 8px;padding-inline-start:44px;font-weight:400}
+.overall .gline{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem;color:var(--muted)}
+@media print{h2.gtitle{break-after:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap" dir="rtl" lang="he">
+<a class="back" href="index.html">→ חזרה לדף הראשי</a>
+<header><span class="eyebrow">מתמטיקה · 5 יחידות · כיתות י׳–י״א · רשימת מעקב</span><h1>רשימת מעקב: תוכנית הלימודים בשתי השנים</h1><p class="lead">הרשימה מרכזת את נושאי כיתה י׳ וכיתה י״א במקום אחד. לכל נושא ראשי יש רשימה של מה שצריך לדעת ולעשות. מסמנים סעיף כשהוא נלמד ונתרגל, וכך התלמידים וההורים רואים מה ההיקף הנדרש ומה כבר בוצע.</p></header>
+
+<div class="tiles">
+<div class="tile"><b>2</b><span>שנות לימוד</span></div>
+<div class="tile"><b>15</b><span>נושאים ראשיים</span></div>
+<div class="tile"><b>110</b><span>סעיפים לביצוע</span></div>
+</div>
+
+<div class="overall" role="status" aria-live="polite">
+<div class="row"><strong>ההתקדמות הכללית: <span id="o-pct">0%</span></strong><span><span id="o-done">0</span> מתוך 110 סעיפים</span></div>
+<div class="bar"><i id="o-bar"></i></div>
+<div class="actions"><button type="button" id="print">הדפסה</button><button type="button" id="reset">ניקוי כל הסימונים</button></div>
+</div>
+
+<nav aria-label="נושאים"><strong>נושאים</strong><ol style="columns:1;padding-inline-start:0;list-style:none">
+<li class="gtitle">כיתה י׳<ol>
+<li><a href="#g10-1">מבוא להנדסה אנליטית</a></li>
+<li><a href="#g10-2">מבוא לאנליזה: פונקציות</a></li>
+<li><a href="#g10-3">חשבון דיפרנציאלי: יסודות</a></li>
+<li><a href="#g10-4">מקומות גאומטריים ונקודות מיוחדות במשולש</a></li>
+<li><a href="#g10-5">המעגל</a></li>
+<li><a href="#g10-6">פרופורציה ודמיון משולשים</a></li>
+<li><a href="#g10-7">פונקציות טריגונומטריות</a></li>
+<li><a href="#g10-8">טריגונומטריה במישור</a></li>
+</ol></li>
+<li class="gtitle">כיתה י״א<ol>
+<li><a href="#c1">אינדוקציה מתמטית וסדרות</a></li>
+<li><a href="#c2">השתנות קצב השינוי של הפונקציה</a></li>
+<li><a href="#c3">פונקציות עם שורשים ריבועיים</a></li>
+<li><a href="#c4">זהויות טריגונומטריות ויישומן בגאומטריה</a></li>
+<li><a href="#c5">חשבון אינטגרלי</a></li>
+<li><a href="#c6">הסתברות</a></li>
+<li><a href="#c7">פונקציות טריגונומטריות: נגזרות וחקירה</a></li>
+</ol></li></ol></nav>
+
+<div class="note"><strong>איך משתמשים:</strong> הסימונים נשמרים בדפדפן הזה בלבד, ולכן בטלפון ובמחשב אחר הרשימה תתחיל ריקה. אפשר להדפיס את הדף ולסמן על הנייר. סדר הלימוד בפועל נקבע על ידי המורה. הסימונים בסעיפי כיתה י״א מסונכרנים עם דף <a class="inline" href="curriculum-checklist-grade11.html">רשימת המעקב לכיתה י״א</a>.</div>
+
+<h2 class="gtitle g10" id="g10">כיתה י׳ <span class="chip prog gprog" data-g="g10"><b class="gd">0</b> מתוך <span class="gt">0</span></span></h2>
+<section class="ch g10" id="g10-1" data-grade="g10">
+<div class="ch-head"><div><span class="num">י׳ · 01</span><h3>מבוא להנדסה אנליטית</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 6</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="g10-1-1"><span>כותבים משוואת ישר לפי שתי נקודות ולפי שיפוע ונקודה</span></label></li>
+<li><label><input type="checkbox" data-id="g10-1-2"><span>משתמשים בתנאי הקבלה וניצבות, ומוצאים אמצע קטע ומרחק בין שתי נקודות</span></label></li>
+<li><label><input type="checkbox" data-id="g10-1-3"><span>מבחינים בין גרף של פונקציה לקבוצת נקודות שאינה גרף, למשל <span class="m">x = k</span></span></label></li>
+<li><label><input type="checkbox" data-id="g10-1-4"><span>פותרים מערכת משוואות לינאריות, גם בעזרת גרף ופרמטרים</span></label></li>
+<li><label><input type="checkbox" data-id="g10-1-5"><span>פותרים מערכת של משוואה ריבועית ומשוואה לינארית</span></label></li>
+<li><label><input type="checkbox" data-id="g10-1-6"><span>כותבים משוואת מעגל שמרכזו בראשית, ומעגל שהוזז ממנה</span></label></li>
+</ul></section>
+<section class="ch g10" id="g10-2" data-grade="g10">
+<div class="ch-head"><div><span class="num">י׳ · 02</span><h3>מבוא לאנליזה: פונקציות</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 7</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="g10-2-1"><span>מכירים פונקציות חזקה <span class="m">xⁿ</span>: זוגיות ואי-זוגיות והשפעת הריבוי של שורש על הגרף</span></label></li>
+<li><label><input type="checkbox" data-id="g10-2-2"><span>חוקרים פולינום איכותנית: גורמים לינאריים וריבועיים, חיוביות ושליליות, התנהגות באינסוף ומספר נקודות קיצון</span></label></li>
+<li><label><input type="checkbox" data-id="g10-2-3"><span>מכירים את הפונקציות <span class="m">|x|</span>, <span class="m">√x</span>, <span class="m">1/x</span> ו־<span class="m">1/x²</span></span></label></li>
+<li><label><input type="checkbox" data-id="g10-2-4"><span>מסרטטים שיקוף, הזזה ומתיחה של פונקציה</span></label></li>
+<li><label><input type="checkbox" data-id="g10-2-5"><span>מבצעים סכום, הפרש, מכפלה ומנה של פונקציות, ומסרטטים את <span class="m">1/f</span> לפי הגרף של <span class="m">f</span></span></label></li>
+<li><label><input type="checkbox" data-id="g10-2-6"><span>מרכיבים פונקציות (<span class="m">|f|</span>, <span class="m">f²</span>, <span class="m">√f</span>) ומוצאים פונקציה הפוכה ותנאי לקיומה</span></label></li>
+<li><label><input type="checkbox" data-id="g10-2-7"><span>מסבירים למה <span class="m">√x</span> היא ההפוכה של <span class="m">x²</span> ומה הקשר הגרפי ביניהן (סימטריה ביחס ל־<span class="m">y = x</span>)</span></label></li>
+</ul></section>
+<section class="ch g10" id="g10-3" data-grade="g10">
+<div class="ch-head"><div><span class="num">י׳ · 03</span><h3>חשבון דיפרנציאלי: יסודות</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 10</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="g10-3-1"><span>מסבירים קצב שינוי אחיד ומשתנה, בעזרת מדרגות ו־ΔY/ΔX</span></label></li>
+<li><label><input type="checkbox" data-id="g10-3-2"><span>מסבירים את המשיק כקירוב לינארי ואת שיפועו כערך הנגזרת</span></label></li>
+<li><label><input type="checkbox" data-id="g10-3-3"><span>מגדירים נגזרת כגבול: <span class="m">f′(x₀) = lim [f(x₀+Δx) − f(x₀)] / Δx</span></span></label></li>
+<li><label><input type="checkbox" data-id="g10-3-4"><span>מוכיחים ומפעילים כללי גזירה: כפל בקבוע, סכום והפרש, מכפלה ופונקציה מורכבת</span></label></li>
+<li><label><input type="checkbox" data-id="g10-3-5"><span>חוקרים פונקציה פולינומיאלית: תחומי עלייה וירידה, קיצון, זוגיות, חיתוך עם הצירים וסרטוט</span></label></li>
+<li><label><input type="checkbox" data-id="g10-3-6"><span>כותבים משוואת משיק בנקודה על הגרף וחוקרים בתחום סגור</span></label></li>
+<li><label><input type="checkbox" data-id="g10-3-7"><span>מוצאים פונקציה קדומה של פולינום</span></label></li>
+<li><label><input type="checkbox" data-id="g10-3-8"><span>פותרים בעיות קיצון בתחום פתוח וסגור, בגאומטריה, בפיזיקה ובכלכלה</span></label></li>
+<li><label><input type="checkbox" data-id="g10-3-9"><span>חוקרים פונקציות רציונליות: אסימפטוטות אנכיות ואופקיות, נקודת אי-רציפות סליקה ונגזרת של מנה</span></label></li>
+<li><label><input type="checkbox" data-id="g10-3-10"><span>גוזרים את <span class="m">√x</span> וחוקרים פונקציית שורש של פונקציה לינארית</span></label></li>
+</ul></section>
+<section class="ch g10" id="g10-4" data-grade="g10">
+<div class="ch-head"><div><span class="num">י׳ · 04</span><h3>מקומות גאומטריים ונקודות מיוחדות במשולש</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 7</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="g10-4-1"><span>מגדירים מקום גאומטרי (מעגל, אנך אמצעי, חוצה זווית) ומוכיחים בשני כיוונים</span></label></li>
+<li><label><input type="checkbox" data-id="g10-4-2"><span>מוכיחים שהאנכים האמצעיים נפגשים במרכז המעגל החוסם</span></label></li>
+<li><label><input type="checkbox" data-id="g10-4-3"><span>מוכיחים שחוצי הזוויות נפגשים במרכז המעגל החסום</span></label></li>
+<li><label><input type="checkbox" data-id="g10-4-4"><span>מוכיחים שהתיכונים נפגשים במרכז הכובד ומתחלקים ביחס 2:1</span></label></li>
+<li><label><input type="checkbox" data-id="g10-4-5"><span>מכירים שהגבהים נפגשים בנקודה אחת</span></label></li>
+<li><label><input type="checkbox" data-id="g10-4-6"><span>מנסחים ומשתמשים במשפט חפיפה רביעי, ומכירים את המקרה שבו אין חפיפה</span></label></li>
+<li><label><input type="checkbox" data-id="g10-4-7"><span>מכירים את משפט פיתגורס ההפוך</span></label></li>
+</ul></section>
+<section class="ch g10" id="g10-5" data-grade="g10">
+<div class="ch-head"><div><span class="num">י׳ · 05</span><h3>המעגל</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 7</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="g10-5-1"><span>מגדירים רדיוס, מיתר, קוטר, קשת, זווית מרכזית וזווית היקפית</span></label></li>
+<li><label><input type="checkbox" data-id="g10-5-2"><span>מוכיחים משפטים על קשתות, זוויות ומיתרים, כולל אנך ממרכז המעגל למיתר</span></label></li>
+<li><label><input type="checkbox" data-id="g10-5-3"><span>מוכיחים שזווית היקפית שווה למחצית הזווית המרכזית, ומסיקים על זווית הנשענת על קוטר</span></label></li>
+<li><label><input type="checkbox" data-id="g10-5-4"><span>מוכיחים משפטים על מרובע חסום במעגל ועל ההפוך לו</span></label></li>
+<li><label><input type="checkbox" data-id="g10-5-5"><span>משתמשים במשיק למעגל: ניצבות לרדיוס ושני משיקים מאותה נקודה</span></label></li>
+<li><label><input type="checkbox" data-id="g10-5-6"><span>משתמשים בזווית שבין משיק למיתר</span></label></li>
+<li><label><input type="checkbox" data-id="g10-5-7"><span>מבצעים בניות: מציאת מרכז מעגל והעברת משיק מנקודה על המעגל ומחוצה לו</span></label></li>
+</ul></section>
+<section class="ch g10" id="g10-6" data-grade="g10">
+<div class="ch-head"><div><span class="num">י׳ · 06</span><h3>פרופורציה ודמיון משולשים</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 7</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="g10-6-1"><span>מנסחים ומשתמשים במשפט תאלס ובמשפט ההפוך לו</span></label></li>
+<li><label><input type="checkbox" data-id="g10-6-2"><span>מזהים משולשים דומים לפי משפטי הדמיון ומוכיחים דמיון</span></label></li>
+<li><label><input type="checkbox" data-id="g10-6-3"><span>משתמשים ביחס הדמיון עבור היקפים, תיכונים, חוצי זווית, גבהים ורדיוסי מעגלים חוסמים וחסומים</span></label></li>
+<li><label><input type="checkbox" data-id="g10-6-4"><span>מחשבים יחס שטחים ויחס היקפים במצולעים דומים</span></label></li>
+<li><label><input type="checkbox" data-id="g10-6-5"><span>משתמשים במשפט חוצה הזווית הפנימית</span></label></li>
+<li><label><input type="checkbox" data-id="g10-6-6"><span>משתמשים בדמיון במעגל: מיתרים נחתכים, משיק וחותך, שני חותכים</span></label></li>
+<li><label><input type="checkbox" data-id="g10-6-7"><span>מבצעים בניות: חלוקת קטע ל־n חלקים שווים ולפי יחס נתון</span></label></li>
+</ul></section>
+<section class="ch g10" id="g10-7" data-grade="g10">
+<div class="ch-head"><div><span class="num">י׳ · 07</span><h3>פונקציות טריגונומטריות</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 6</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="g10-7-1"><span>מתאימים לכל מספר ממשי נקודה על מעגל היחידה לפי אורך קשת</span></label></li>
+<li><label><input type="checkbox" data-id="g10-7-2"><span>מגדירים <span class="m">sin</span> ו־<span class="m">cos</span> על מעגל היחידה ו־<span class="m">tan</span> בעזרת המשיק בנקודה <span class="m">(1,0)</span></span></label></li>
+<li><label><input type="checkbox" data-id="g10-7-3"><span>גוזרים מחזוריות וסימטריה מההגדרות, ומסרטטים גרפים עם הזזות ומתיחות</span></label></li>
+<li><label><input type="checkbox" data-id="g10-7-4"><span>מוכיחים ומשתמשים בזהויות <span class="m">sin²x + cos²x = 1</span> ו־<span class="m">tan x = sin x / cos x</span></span></label></li>
+<li><label><input type="checkbox" data-id="g10-7-5"><span>מכירים ערכים של <span class="m">π/6</span>, <span class="m">π/3</span> ו־<span class="m">π/2</span></span></label></li>
+<li><label><input type="checkbox" data-id="g10-7-6"><span>פותרים משוואות טריגונומטריות מהצורה <span class="m">a·sin(x+b)+c = 0</span>, כולל פתרון כללי ופתרון בתחום חלקי</span></label></li>
+</ul></section>
+<section class="ch g10" id="g10-8" data-grade="g10">
+<div class="ch-head"><div><span class="num">י׳ · 08</span><h3>טריגונומטריה במישור</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 5</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="g10-8-1"><span>מוכיחים ומשתמשים בנוסחת שטח משולש <span class="m">S = ½·a·b·sin C</span></span></label></li>
+<li><label><input type="checkbox" data-id="g10-8-2"><span>מנסחים ומשתמשים במשפט הסינוסים, כולל הקשר לרדיוס המעגל החוסם <span class="m">2R</span></span></label></li>
+<li><label><input type="checkbox" data-id="g10-8-3"><span>מנסחים ומשתמשים במשפט הקוסינוסים</span></label></li>
+<li><label><input type="checkbox" data-id="g10-8-4"><span>משתמשים במשפטים להוכחות ולחישוב גדלים בגאומטריה</span></label></li>
+<li><label><input type="checkbox" data-id="g10-8-5"><span>בודקים ממדים ויחידות ומבחינים בין חישוב מקורב להוכחה</span></label></li>
+</ul></section>
+<h2 class="gtitle g11" id="g11">כיתה י״א <span class="chip prog gprog" data-g="g11"><b class="gd">0</b> מתוך <span class="gt">0</span></span></h2>
+<section class="ch g11" id="c1" data-grade="g11">
+<div class="ch-head"><div><span class="num">י״א · 01</span><h3>אינדוקציה מתמטית וסדרות</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 12</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="c1-1"><span>מגדירים סדרה כפונקציה על המספרים הטבעיים ומציגים אותה במילים, בנוסחה לפי מקום, בנוסחת נסיגה, בגרף ובטבלה</span></label></li>
+<li><label><input type="checkbox" data-id="c1-2"><span>מזהים סדרה עולה, יורדת, מחזורית או בעלת סימן מתחלף</span></label></li>
+<li><label><input type="checkbox" data-id="c1-3"><span>סדרה חשבונית: כותבים איבר כללי ונוסחת נסיגה ועוברים בין שתי ההגדרות</span></label></li>
+<li><label><input type="checkbox" data-id="c1-4"><span>מוכיחים ומשתמשים בנוסחת סכום האיברים הראשונים בסדרה חשבונית</span></label></li>
+<li><label><input type="checkbox" data-id="c1-5"><span>פותרים בעיות עם סדרות חשבוניות (שתי משוואות, לכל היותר אחת ריבועית) ובעיות מילוליות</span></label></li>
+<li><label><input type="checkbox" data-id="c1-6"><span>סדרה הנדסית: איבר כללי, נוסחת נסיגה וחוקי חזקות, כולל מעריך שלם שלילי</span></label></li>
+<li><label><input type="checkbox" data-id="c1-7"><span>מתארים סדרות הנדסיות בגרף ומשווים את קצב הגדילה שלהן לסדרה חשבונית</span></label></li>
+<li><label><input type="checkbox" data-id="c1-8"><span>מחשבים סכום סופי וסכום אינסופי של סדרה הנדסית מתכנסת (<span class="m">|q| &lt; 1</span>), כולל הצגת שבר מחזורי כסכום אינסופי</span></label></li>
+<li><label><input type="checkbox" data-id="c1-9"><span>פותרים בעיות יישומיות: ריבית בנקאית, גדילה ודעיכה, ספירה בינארית</span></label></li>
+<li><label><input type="checkbox" data-id="c1-10"><span>מוכיחים באינדוקציה (שלב הבסיס ושלב הצעד) נוסחאות סכום וטענות על התחלקות</span></label></li>
+<li><label><input type="checkbox" data-id="c1-11"><span>מזהים הוכחה באינדוקציה שגויה, למשל כשחסר שלב הבסיס</span></label></li>
+<li><label><input type="checkbox" data-id="c1-12"><span>מוכיחים באינדוקציה שנוסחת נסיגה ונוסחה לפי מקום שקולות בסדרה חשבונית ובסדרה הנדסית</span></label></li>
+</ul></section>
+<section class="ch g11" id="c2" data-grade="g11">
+<div class="ch-head"><div><span class="num">י״א · 02</span><h3>השתנות קצב השינוי של הפונקציה</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 8</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="c2-1"><span>מסבירים שהנגזרת הראשונה היא קצב השינוי של הפונקציה והנגזרת השנייה היא קצב השינוי של הנגזרת</span></label></li>
+<li><label><input type="checkbox" data-id="c2-2"><span>מזהים קעירות כלפי מעלה או מטה לפי סימן הנגזרת השנייה <span class="m">f″</span></span></label></li>
+<li><label><input type="checkbox" data-id="c2-3"><span>מוצאים נקודות פיתול ומזהים את סוגן (אופקית, משופעת, אנכית)</span></label></li>
+<li><label><input type="checkbox" data-id="c2-4"><span>קובעים סוג נקודת קיצון בכמה דרכים: טבלת נגזרת, גרף הנגזרת ונגזרת שנייה</span></label></li>
+<li><label><input type="checkbox" data-id="c2-5"><span>יודעים מתי הנגזרת השנייה אינה מכריעה (<span class="m">f″ = 0</span>)</span></label></li>
+<li><label><input type="checkbox" data-id="c2-6"><span>חוקרים פונקציה שלמה: תחום הגדרה, חיתוך עם הצירים, עלייה וירידה, קיצון, פיתול, קעירות, אסימפטוטות וסרטוט</span></label></li>
+<li><label><input type="checkbox" data-id="c2-7"><span>פותרים בעיות מציאותיות על השתנות קצב שינוי (דרך, מהירות ותאוצה)</span></label></li>
+<li><label><input type="checkbox" data-id="c2-8"><span>פותרים בעיות קיצון בתחום פתוח ובתחום סגור: נפח וגופים, תנועה וכלכלה</span></label></li>
+</ul></section>
+<section class="ch g11" id="c3" data-grade="g11">
+<div class="ch-head"><div><span class="num">י״א · 03</span><h3>פונקציות עם שורשים ריבועיים</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 7</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="c3-1"><span>מוצאים תחום הגדרה של פונקציה עם שורש ריבועי</span></label></li>
+<li><label><input type="checkbox" data-id="c3-2"><span>חוקרים ומסרטטים פונקציה מהצורה <span class="m">√f(x)</span> בהינתן הגרף של <span class="m">f(x)</span></span></label></li>
+<li><label><input type="checkbox" data-id="c3-3"><span>מוצאים נקודות קיצון בקצה תחום ההגדרה</span></label></li>
+<li><label><input type="checkbox" data-id="c3-4"><span>מוצאים אסימפטוטות אופקיות שונות ב־<span class="m">∞</span> וב־<span class="m">−∞</span></span></label></li>
+<li><label><input type="checkbox" data-id="c3-5"><span>מבחינים בין <span class="m">√(x²) = |x|</span> לבין <span class="m">x</span></span></label></li>
+<li><label><input type="checkbox" data-id="c3-6"><span>יודעים שב־<span class="m">x = 0</span> יש לפונקציה <span class="m">√x</span> משיק אנכי והנגזרת אינה מוגדרת</span></label></li>
+<li><label><input type="checkbox" data-id="c3-7"><span>פותרים משוואות עם שורש ובודקים כל פתרון בהצבה במשוואה המקורית</span></label></li>
+</ul></section>
+<section class="ch g11" id="c4" data-grade="g11">
+<div class="ch-head"><div><span class="num">י״א · 04</span><h3>זהויות טריגונומטריות ויישומן בגאומטריה</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 6</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="c4-1"><span>מכירים את הזהויות <span class="m">sin(α ± β)</span>, <span class="m">cos(α ± β)</span>, <span class="m">sin 2α</span> ו־<span class="m">cos 2α</span></span></label></li>
+<li><label><input type="checkbox" data-id="c4-2"><span>מכירים את הזהויות לסכום והפרש של סינוסים וקוסינוסים: <span class="m">sin α ± sin β</span> ו־<span class="m">cos α ± cos β</span></span></label></li>
+<li><label><input type="checkbox" data-id="c4-3"><span>מוכיחים אחת מארבע זהויות הסכום וההפרש ומסיקים ממנה את האחרות</span></label></li>
+<li><label><input type="checkbox" data-id="c4-4"><span>פותרים משוואות טריגונומטריות בעזרת זהויות</span></label></li>
+<li><label><input type="checkbox" data-id="c4-5"><span>משתמשים בזהויות ובמשפטי הסינוסים והקוסינוסים בהוכחות ובחישובים בגאומטריה</span></label></li>
+<li><label><input type="checkbox" data-id="c4-6"><span>מחשבים אורכים, שטחים ונפחים של גופים פשוטים: כדור, מנסרה ישרה, פירמידה ישרה, גליל וחרוט ישרים</span></label></li>
+</ul></section>
+<section class="ch g11" id="c5" data-grade="g11">
+<div class="ch-head"><div><span class="num">י״א · 05</span><h3>חשבון אינטגרלי</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 11</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="c5-1"><span>מסבירים אינטגרל כהצטברות: פונקציה קבועה ופונקציית מדרגות (למשל מהירות והעתק)</span></label></li>
+<li><label><input type="checkbox" data-id="c5-2"><span>מקרבים הצטברות בעזרת מלבנים ומסבירים מה קורה כשמספר הקטעים גדל</span></label></li>
+<li><label><input type="checkbox" data-id="c5-3"><span>מגדירים פונקציית הצטברות <span class="m">F(x) = ∫ₐˣ f(u)du</span> ומתארים את תכונותיה</span></label></li>
+<li><label><input type="checkbox" data-id="c5-4"><span>מנסחים ומסבירים את המשפט היסודי: <span class="m">F′(x) = f(x)</span> ו־<span class="m">∫ₐᵇ f = F(b) − F(a)</span></span></label></li>
+<li><label><input type="checkbox" data-id="c5-5"><span>מוצאים פונקציה קדומה לפולינום, ל־<span class="m">xⁿ</span>, ל־<span class="m">1/x</span>, ל־<span class="m">1/(2√x)</span> ולפונקציות טריגונומטריות</span></label></li>
+<li><label><input type="checkbox" data-id="c5-6"><span>משתמשים בכללי האינטגרציה: כפל בקבוע, סכום והפרש, ופונקציה מורכבת שהפנימית בה לינארית</span></label></li>
+<li><label><input type="checkbox" data-id="c5-7"><span>מחשבים שטח בין גרף לציר x ושטח בין שני גרפים, כולל פונקציה שמשנה סימן</span></label></li>
+<li><label><input type="checkbox" data-id="c5-8"><span>מחשבים נפח של גוף סיבוב סביב ציר x</span></label></li>
+<li><label><input type="checkbox" data-id="c5-9"><span>מחשבים ערך ממוצע של פונקציה</span></label></li>
+<li><label><input type="checkbox" data-id="c5-10"><span>מוצאים פונקציה לפי נגזרתה ונקודה שעליה</span></label></li>
+<li><label><input type="checkbox" data-id="c5-11"><span>פותרים בעיות הצטברות יישומיות: תנועה, מים בבריכה ותזרים כספי</span></label></li>
+</ul></section>
+<section class="ch g11" id="c6" data-grade="g11">
+<div class="ch-head"><div><span class="num">י״א · 06</span><h3>הסתברות</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 5</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="c6-1"><span>מגדירים מרחב מדגם ומאורעות ומשתמשים בחוקי ההסתברות הבסיסיים</span></label></li>
+<li><label><input type="checkbox" data-id="c6-2"><span>מבחינים בין מאורעות תלויים לבלתי תלויים</span></label></li>
+<li><label><input type="checkbox" data-id="c6-3"><span>מחשבים הסתברות מותנית</span></label></li>
+<li><label><input type="checkbox" data-id="c6-4"><span>פותרים ניסויים רב-שלביים בעזרת טבלאות ועצי הסתברות</span></label></li>
+<li><label><input type="checkbox" data-id="c6-5"><span>משתמשים בנוסחת הבינום ביישומים</span></label></li>
+</ul></section>
+<section class="ch g11" id="c7" data-grade="g11">
+<div class="ch-head"><div><span class="num">י״א · 07</span><h3>פונקציות טריגונומטריות: נגזרות וחקירה</h3></div>
+<div class="meta"><span class="chip prog"><b class="done">0</b> מתוך 6</span></div></div>
+<div class="bar"><i></i></div>
+<ul class="check">
+<li><label><input type="checkbox" data-id="c7-1"><span>משתמשים במחזוריות ובסימטריה כדי לחקור פונקציה בתחום מצומצם</span></label></li>
+<li><label><input type="checkbox" data-id="c7-2"><span>חוקרים פונקציה מהצורה <span class="m">a·sin(b(x − c)) + d</span> ומסבירים את תפקיד הפרמטרים</span></label></li>
+<li><label><input type="checkbox" data-id="c7-3"><span>מוצאים את הנגזרת של <span class="m">sin x</span> (ברדיאנים) ומבינים את תפקיד הגבול <span class="m">lim sin x / x = 1</span></span></label></li>
+<li><label><input type="checkbox" data-id="c7-4"><span>מוצאים נגזרות של קוסינוס וטנגנס</span></label></li>
+<li><label><input type="checkbox" data-id="c7-5"><span>חוקרים פונקציות טריגונומטריות מורכבות: סכום, מכפלה, מנה והרכבה עם פולינום או שורש</span></label></li>
+<li><label><input type="checkbox" data-id="c7-6"><span>פותרים בעיות קיצון עם פונקציות טריגונומטריות</span></label></li>
+</ul></section>
+
+<footer>מקור: פירוט תוכנית הלימודים של משרד החינוך, מתמטיקה 5 יח״ל, כיתה י׳ וכיתה י״א. פירוט תכני ההסתברות לא אומת מול המסמך הרשמי. לפירוט מלא ראו <a class="inline" href="curriculum-5units-grade10-11.html">תוכנית הלימודים: כיתות י׳–י״א</a>.</footer>
+</div>
+<script>
+(function(){
+  var KEY='math11-curriculum-checklist-v1', saved={};
+  try{ saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ saved={}; }
+  var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-id]'));
+  function persist(){
+    var o={};
+    try{ o=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ o={}; }
+    boxes.forEach(function(b){ if(b.checked) o[b.dataset.id]=1; else delete o[b.dataset.id]; });
+    try{ localStorage.setItem(KEY,JSON.stringify(o)); }catch(e){}
+  }
+  function update(){
+    var all=0, done=0, gt={g10:0,g11:0}, gd={g10:0,g11:0};
+    [].forEach.call(document.querySelectorAll('section.ch'),function(s){
+      var bs=s.querySelectorAll('input[type=checkbox]'), d=0;
+      [].forEach.call(bs,function(b){ if(b.checked) d++; });
+      s.querySelector('.done').textContent=d;
+      s.querySelector('.bar i').style.width=(100*d/bs.length)+'%';
+      s.classList.toggle('complete', d===bs.length);
+      all+=bs.length; done+=d; gt[s.dataset.grade]+=bs.length; gd[s.dataset.grade]+=d;
+    });
+    [].forEach.call(document.querySelectorAll('.gprog'),function(e){ var g=e.dataset.g; e.querySelector('.gd').textContent=gd[g]; e.querySelector('.gt').textContent=gt[g]; });
+    document.getElementById('o-done').textContent=done;
+    document.getElementById('o-pct').textContent=Math.round(100*done/all)+'%';
+    document.getElementById('o-bar').style.width=(100*done/all)+'%';
+  }
+  boxes.forEach(function(b){
+    if(saved[b.dataset.id]) b.checked=true;
+    b.addEventListener('change',function(){ persist(); update(); });
+  });
+  document.getElementById('reset').addEventListener('click',function(){
+    if(confirm('לנקות את כל הסימונים?')){ boxes.forEach(function(b){ b.checked=false; }); persist(); update(); }
+  });
+  document.getElementById('print').addEventListener('click',function(){ window.print(); });
+  update();
+})();
+</script>
+</body>
+</html>

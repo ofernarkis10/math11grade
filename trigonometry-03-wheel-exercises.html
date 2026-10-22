@@ -123,6 +123,13 @@ html{scroll-behavior:smooth}
 td .m .katex{font-size:1.1em}
 </style>
 <script src="font-size.js"></script>
+<style>
+/* "ההיגיון של הפתרון": why the solution goes the way it does, under every solution */
+.why{margin-top:10px;padding:12px 16px;background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;display:flex;flex-direction:column;gap:8px}
+.why-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.why p{margin:0}
+.why strong{color:var(--accent)}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -149,7 +156,10 @@ td .m .katex{font-size:1.1em}
 <p>אחרי 1 שנייה: <span class="m">\(\theta = 60^\circ\)</span>. <span class="m">\(x = 30\cos60^\circ = 15,\ y = 30\sin60^\circ = 15\sqrt3 \approx 25.98\)</span>. כלומר <span class="m">\((30,\ 60^\circ) = (15,\ 25.98)\)</span>.</p>
 <p>אחרי 3 שניות: <span class="m">\(\theta = 180^\circ\)</span>. <span class="m">\((30,\ 180^\circ) = (-30,\ 0)\)</span>. חצי סיבוב: הוונטיל בצד השני.</p>
 <p>אחרי 4 שניות: <span class="m">\(\theta = 240^\circ\)</span> (רביע III, <span class="m">\(240^\circ = 180^\circ + 60^\circ\)</span>). <span class="m">\(x = -30\cos60^\circ = -15,\ y = -30\sin60^\circ \approx -25.98\)</span>.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>מה מחפשים?</strong> מיקום אחרי זמן נתון. המיקום על הגלגל נקבע לגמרי לפי הזווית, ולכן כל השאלה היא: באיזו זווית הוונטיל נמצא?</p>
+<p><strong>הזווית:</strong> הוונטיל מתחיל ב־<span class="m">\((30,0)\)</span>, ימינה מהמרכז ובאותו גובה, ולכן <span class="m">\(\theta_0 = 0^\circ\)</span>. בכל שנייה הזווית גדלה ב־<span class="m">\(60^\circ\)</span>, ולכן <span class="m">\(\theta = 0^\circ + 60^\circ\cdot t\)</span>.</p>
+<p><strong>מהזווית לנקודה:</strong> הנקודה במרחק 30 מהמרכז ובזווית θ, ולכן <span class="m">\(x = 30\cos\theta\)</span> ו־<span class="m">\(y = 30\sin\theta\)</span>. זו בדיוק ההגדרה של cos ו־sin: היחס בין הקואורדינטה לרדיוס.</p>
+<p><strong>בדיקה:</strong> הרביע של הזווית קובע את הסימנים. ב־<span class="m">\(240^\circ\)</span> (רביע III) גם x וגם y שליליים.</p></div></div></details></li>
 
 <li>אותו גלגל. מהו זמן המחזור? איפה הוונטיל אחרי 7 שניות? ואחרי 100 שניות?
 <details><summary>הצג פתרון</summary><div class="sol">
@@ -157,7 +167,9 @@ td .m .katex{font-size:1.1em}
 <p>אחרי 7 שניות: <span class="m">\(\theta = 420^\circ = 360^\circ + 60^\circ\)</span>, כלומר סיבוב שלם ועוד <span class="m">\(60^\circ\)</span>. המיקום כמו אחרי שנייה אחת: <span class="m">\((15,\ 25.98)\)</span>.</p>
 <p>אחרי 100 שניות: <span class="m">\(\theta = 6000^\circ\)</span>. <span class="m">\(6000 = 16 \cdot 360 + 240\)</span>, כלומר 16 סיבובים שלמים ועוד <span class="m">\(240^\circ\)</span>. המיקום: <span class="m">\((-15,\ -25.98)\)</span>.</p>
 <p>דרך נוספת: <span class="m">\(100 = 16 \cdot 6 + 4\)</span>, ולכן המיקום כמו אחרי 4 שניות.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>הרעיון המרכזי: מחזוריות.</strong> אחרי סיבוב שלם (<span class="m">\(360^\circ\)</span>) הוונטיל חוזר בדיוק לאותו מקום. לכן כל זווית גדולה אפשר להקטין: מורידים ממנה סיבובים שלמים, ומה שנשאר קובע את המקום.</p>
+<p><strong>זמן המחזור:</strong> כמה שניות לוקח לעבור <span class="m">\(360^\circ\)</span> בקצב של <span class="m">\(60^\circ\)</span> בשנייה: <span class="m">\(T = 360/60\)</span>.</p>
+<p><strong>שתי דרכים שקולות:</strong> אפשר להוריד סיבובים מהזווית (<span class="m">\(6000^\circ = 16\cdot360^\circ + 240^\circ\)</span>), או להוריד מחזורים מהזמן (<span class="m">\(100 = 16\cdot 6 + 4\)</span>). שתיהן אומרות אותו דבר: הנקודה נמצאת איפה שהייתה אחרי 4 שניות.</p></div></div></details></li>
 
 <li>גלגל ברדיוס 40 ס"מ מסתובב נגד כיוון השעון במהירות <span class="m">\(45^\circ/\text{s}\)</span>. בהתחלה הנקודה המסומנת נמצאת בראש הגלגל.
 <ol class="parts"><li>מהי <span class="m">\(\theta_0\)</span>?</li><li>איפה הנקודה אחרי 5 שניות?</li><li>כמה סיבובים עושה הגלגל בדקה?</li></ol>
@@ -165,7 +177,9 @@ td .m .katex{font-size:1.1em}
 <p>א. ראש הגלגל נמצא על ציר <span class="m">\(y\)</span> החיובי: <span class="m">\(\theta_0 = 90^\circ\)</span>.</p>
 <p>ב. <span class="m">\(\theta = 90^\circ + 45 \cdot 5 = 315^\circ\)</span> (רביע IV). <span class="m">\(x = 40\cos315^\circ = 40 \cdot \tfrac{\sqrt2}{2} = 20\sqrt2 \approx 28.28\)</span>, <span class="m">\(y = 40\sin315^\circ = -20\sqrt2 \approx -28.28\)</span>.</p>
 <p>ג. בדקה: <span class="m">\(45 \cdot 60 = 2700^\circ\)</span>, ו־<span class="m">\(2700 / 360 = 7.5\)</span> סיבובים.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>למה <span class="m">\(\theta_0 = 90^\circ\)</span>?</strong> הזווית נמדדת מהקרן שיוצאת ימינה מהמרכז. ראש הגלגל נמצא בדיוק מעל המרכז, רבע סיבוב נגד כיוון השעון מהקרן הזו. תמיד מתחילים בהצהרה על זווית ההתחלה, ומנמקים אותה לפי מיקום נקודת ההתחלה ביחס למרכז.</p>
+<p><strong>הזווית אחרי זמן:</strong> מתחילים מ־<span class="m">\(90^\circ\)</span>, ולא מ־0, ומוסיפים את מה שהגלגל הסתובב: <span class="m">\(45\cdot5 = 225^\circ\)</span>.</p>
+<p><strong>סיבובים בדקה:</strong> מחשבים כמה מעלות הגלגל עובר בדקה, ומחלקים ב־360. שאלה של יחידות: מעלות לשנייה ← מעלות לדקה ← סיבובים לדקה.</p></div></div></details></li>
 
 <li>כנף של מאוורר מסתובבת ב־120 סיבובים לדקה (rpm) נגד כיוון השעון. הקצה שלה במרחק 25 ס"מ מהציר, ובהתחלה הוא ב־<span class="m">\(\theta_0 = 0^\circ\)</span>.
 <ol class="parts"><li>מהי המהירות הזוויתית במעלות לשנייה? מהו זמן המחזור?</li><li>איפה הקצה אחרי 0.1 שנייה? אחרי <span class="m">\(\tfrac13\)</span> שנייה?</li></ol>
@@ -173,14 +187,18 @@ td .m .katex{font-size:1.1em}
 <p>א. <span class="m">\(\omega = 120 \cdot 6 = 720^\circ/\text{s}\)</span> (שני סיבובים בשנייה). <span class="m">\(T = 360/720 = 0.5\)</span> שנייה.</p>
 <p>ב. אחרי 0.1 שנייה: <span class="m">\(\theta = 72^\circ\)</span>. <span class="m">\(x = 25\cos72^\circ \approx 7.73,\ y = 25\sin72^\circ \approx 23.78\)</span> (במחשבון).</p>
 <p>אחרי <span class="m">\(\tfrac13\)</span> שנייה: <span class="m">\(\theta = 240^\circ\)</span>. <span class="m">\(x = 25\cos240^\circ = -12.5,\ y = 25\sin240^\circ \approx -21.65\)</span>.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>הקושי הוא ביחידות.</strong> הנתון בסיבובים לדקה, והנוסחה צריכה מעלות לשנייה. סיבוב אחד הוא <span class="m">\(360^\circ\)</span> ודקה היא 60 שניות, ולכן כל סיבוב לדקה שווה ל־<span class="m">\(360/60 = 6^\circ\)</span> בשנייה.</p>
+<p><strong>אחרי שיש ω:</strong> ממשיכים כרגיל. הזווית היא <span class="m">\(\theta = 0^\circ + 720^\circ\cdot t\)</span>, ואת הנקודה מקבלים מ־<span class="m">\(x = 25\cos\theta\)</span> ו־<span class="m">\(y = 25\sin\theta\)</span>.</p>
+<p><strong>שימו לב:</strong> <span class="m">\(\tfrac13\)</span> שנייה היא <span class="m">\(\tfrac23\)</span> מזמן המחזור, ולכן הקצה עבר <span class="m">\(\tfrac23\)</span> סיבוב, <span class="m">\(240^\circ\)</span>. כך אפשר לבדוק את התוצאה בלי ω.</p></div></div></details></li>
 
 <li>גלגל ברדיוס 30 ס"מ מסתובב <strong>עם</strong> כיוון השעון במהירות <span class="m">\(60^\circ/\text{s}\)</span>, ובהתחלה הוונטיל ב־<span class="m">\((30, 0)\)</span>. איפה הוא אחרי 2 שניות? השוו לדוגמה הפתורה בסעיף 5 בדף ההסבר.
 <details><summary>הצג פתרון</summary><div class="sol">
 <p>עם כיוון השעון הזווית קטנה: <span class="m">\(\theta = 0^\circ - 60 \cdot 2 = -120^\circ\)</span>, וזו אותה זווית כמו <span class="m">\(-120^\circ + 360^\circ = 240^\circ\)</span>.</p>
 <p><span class="m">\(x = 30\cos240^\circ = -15,\ y = 30\sin240^\circ \approx -25.98\)</span>.</p>
 <p>בדוגמה הפתורה קיבלנו <span class="m">\((-15,\ 25.98)\)</span>. התוצאה היא שיקוף שלה ביחס לציר <span class="m">\(x\)</span>: אותו <span class="m">\(x\)</span>, ו־<span class="m">\(y\)</span> הפוך. זה מתאים לזהויות <span class="m">\(\cos(-\alpha) = \cos\alpha\)</span> ו־<span class="m">\(\sin(-\alpha) = -\sin\alpha\)</span>.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>כיוון הסיבוב הוא סימן.</strong> הזווית נמדדת נגד כיוון השעון. כשהגלגל מסתובב עם כיוון השעון, הזווית קטנה, ולכן מחסירים: <span class="m">\(\theta = \theta_0 - \omega t\)</span>.</p>
+<p><strong>זווית שלילית:</strong> <span class="m">\(-120^\circ\)</span> היא אותה נקודה כמו <span class="m">\(240^\circ\)</span>, כי ההבדל ביניהן הוא סיבוב שלם. cos ו־sin נותנים את אותן תוצאות לשתיהן.</p>
+<p><strong>למה התוצאה היא שיקוף?</strong> סיבוב באותה זווית לכיוון ההפוך נותן נקודה סימטרית ביחס לקרן ההתחלה, כלומר ביחס לציר x. ה־x נשאר, וה־y מחליף סימן.</p></div></div></details></li>
 
 <li><strong>בעיה הפוכה.</strong> הגלגל מהדוגמה הפתורה בסעיף 5 בדף ההסבר (רדיוס 30, <span class="m">\(60^\circ/\text{s}\)</span> נגד כיוון השעון, מתחיל ב־<span class="m">\(0^\circ\)</span>).
 <ol class="parts"><li>מתי לראשונה הוונטיל נמצא 15 ס"מ מעל המרכז? מתי בפעם השנייה?</li><li>מצאו את כל הזמנים שבהם זה קורה.</li><li>מתי לראשונה הוונטיל נמצא 15 ס"מ משמאל למרכז?</li></ol>
@@ -189,14 +207,19 @@ td .m .katex{font-size:1.1em}
 <p>ב. זמן המחזור 6 שניות, ולכן <span class="m">\(t = 0.5 + 6k\)</span> או <span class="m">\(t = 2.5 + 6k\)</span>, כאשר <span class="m">\(k = 0, 1, 2, \ldots\)</span></p>
 <p>ג. צריך <span class="m">\(x = 30\cos\theta = -15\)</span>, כלומר <span class="m">\(\cos\theta = -\tfrac12\)</span>: <span class="m">\(\theta = 120^\circ\)</span> (או <span class="m">\(240^\circ\)</span>). לראשונה ב־<span class="m">\(t = 2\)</span> שניות.</p>
 <p>שימו לב: למשוואה <span class="m">\(\sin\theta = \tfrac12\)</span> יש <strong>שני</strong> פתרונות בכל סיבוב. זה הבסיס לפתרון משוואות טריגונומטריות.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>בעיה הפוכה: מהמקום לזמן.</strong> עוברים על אותם שלבים בסדר הפוך: מהמקום לזווית, ומהזווית לזמן.</p>
+<p><strong>מהמקום לזווית:</strong> "15 ס"מ מעל המרכז" זה תנאי על y בלבד. כותבים <span class="m">\(y = 30\sin\theta = 15\)</span> ומקבלים <span class="m">\(\sin\theta = \tfrac12\)</span>. לנקודה "משמאל למרכז" התנאי הוא על x, ולכן משתמשים ב־cos.</p>
+<p><strong>למה שתי תשובות?</strong> קו אופקי בגובה 15 חותך את המעגל בשתי נקודות: אחת בעלייה (ימינה מהמרכז) ואחת בירידה (שמאלה). לכן בכל סיבוב יש שתי זוויות: <span class="m">\(30^\circ\)</span> ו־<span class="m">\(180^\circ - 30^\circ\)</span>.</p>
+<p><strong>מהזווית לזמן:</strong> <span class="m">\(t = \dfrac{\theta - \theta_0}{\omega}\)</span>, ובגלל המחזוריות מוסיפים כל פעם זמן מחזור.</p></div></div></details></li>
 
 <li>נקודה על גלגל ברדיוס 20 ס"מ מתחילה ב־<span class="m">\((20, 0)\)</span> ומסתובבת נגד כיוון השעון במהירות קבועה. אחרי 3 שניות היא מגיעה <strong>לראשונה</strong> לנקודה <span class="m">\((0, -20)\)</span>.
 <ol class="parts"><li>מהי המהירות הזוויתית?</li><li>איפה הנקודה אחרי 5 שניות?</li></ol>
 <details><summary>הצג פתרון</summary><div class="sol">
 <p>א. <span class="m">\((0, -20) = (20,\ 270^\circ)\)</span>. זו הפעם הראשונה, ולכן הגלגל עבר <span class="m">\(270^\circ\)</span> בלי סיבוב שלם: <span class="m">\(\omega = 270/3 = 90^\circ/\text{s}\)</span>.</p>
 <p>ב. <span class="m">\(\theta = 450^\circ = 360^\circ + 90^\circ\)</span>. הנקודה ב־<span class="m">\((0, 20)\)</span>, בראש הגלגל.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>הפעם הנעלם הוא ω.</strong> נתונים ההתחלה, הסוף והזמן, ומחפשים את הקצב. זה כמו לחשב מהירות מדרך וזמן: <span class="m">\(\omega = \dfrac{\Delta\theta}{t}\)</span>.</p>
+<p><strong>כמה הגלגל הסתובב?</strong> הנקודה <span class="m">\((0,-20)\)</span> נמצאת בדיוק מתחת למרכז, ולכן הזווית שלה <span class="m">\(270^\circ\)</span>. ההתחלה ב־<span class="m">\(0^\circ\)</span>. "לראשונה" אומר שלא הושלם סיבוב בדרך, ולכן <span class="m">\(\Delta\theta = 270^\circ\)</span> ולא <span class="m">\(270^\circ + 360^\circ\)</span>.</p>
+<p><strong>אחרי שיש ω</strong> חוזרים לבעיה רגילה: זווית לפי הזמן, ומשם הנקודה.</p></div></div></details></li>
 </ol>
 </section>
 
@@ -223,7 +246,10 @@ td .m .katex{font-size:1.1em}
 <span class="m">\(t = 60\)</span>: <span class="m">\(\theta = 360^\circ\)</span>, <span class="m">\(h = 22\)</span> מ׳ (בגובה הציר).<br>
 <span class="m">\(t = 120\)</span>: <span class="m">\(\theta = 450^\circ \equiv 90^\circ\)</span>, <span class="m">\(h = 42\)</span> מ׳ (בפסגה, אחרי חצי סיבוב).</p>
 <p>ד. <span class="m">\(x = 20\cos330^\circ = 20 \cdot \tfrac{\sqrt3}{2} = 10\sqrt3 \approx 17.32\)</span> מ׳ מימין לציר.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>המרכז לא בראשית.</strong> מחשבים את הנקודה ביחס למרכז בעזרת cos ו־sin, ומוסיפים את המרכז. הגובה של התא הוא גובה הציר ועוד <span class="m">\(20\sin\theta\)</span>: <span class="m">\(h = 22 + 20\sin\theta\)</span>.</p>
+<p><strong>זווית ההתחלה:</strong> התא עולה בנקודה הנמוכה ביותר, בדיוק מתחת למרכז, ולכן <span class="m">\(\theta_0 = 270^\circ\)</span>. זו ההחלטה החשובה בשאלה. מי שמתחיל מ־0 מקבל תא שמתחיל בגובה הציר.</p>
+<p><strong>הנוסחה h(t):</strong> מציבים את הזווית לפי הזמן בתוך ה־sin: <span class="m">\(\theta = 270^\circ + 1.5t\)</span>. מכאן כל סעיף הוא הצבה של זמן.</p>
+<p><strong>המרחק האופקי</strong> הוא x ביחס לציר, ולכן cos: <span class="m">\(x = 20\cos\theta\)</span>.</p></div></div></details></li>
 
 <li>אותו גלגל ענק. במשך כמה זמן, בסיבוב הראשון, התא נמצא בגובה של יותר מ־32 מ׳?
 <details><summary>הצג פתרון</summary><div class="sol">
@@ -231,7 +257,9 @@ td .m .katex{font-size:1.1em}
 <p>בסיבוב הראשון הזווית עולה מ־<span class="m">\(270^\circ\)</span> עד <span class="m">\(630^\circ\)</span>. בתחום הזה הקטע המתאים הוא <span class="m">\(390^\circ \lt \theta \lt 510^\circ\)</span> (הוספנו <span class="m">\(360^\circ\)</span>).</p>
 <p><span class="m">\(270 + 1.5t = 390 \Rightarrow t = 80\)</span>, &nbsp; <span class="m">\(270 + 1.5t = 510 \Rightarrow t = 160\)</span>.</p>
 <p>התא מעל 32 מ׳ בין שנייה 80 לשנייה 160, כלומר <strong>80 שניות</strong>, שליש מהסיבוב.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>מתנאי על גובה לתנאי על sin.</strong> <span class="m">\(h \gt 32\)</span> פירושו <span class="m">\(20\sin\theta \gt 10\)</span>, כלומר <span class="m">\(\sin\theta \gt \tfrac12\)</span>. על המעגל זה החלק העליון, בין <span class="m">\(30^\circ\)</span> ל־<span class="m">\(150^\circ\)</span>.</p>
+<p><strong>להתאים את הזוויות לסיבוב הראשון:</strong> הזווית של התא מתחילה ב־<span class="m">\(270^\circ\)</span> ועולה. הקטע <span class="m">\(30^\circ\)</span>–<span class="m">\(150^\circ\)</span> מופיע בסיבוב הזה כ־<span class="m">\(390^\circ\)</span>–<span class="m">\(510^\circ\)</span>.</p>
+<p><strong>קיצור דרך:</strong> הקטע הוא <span class="m">\(120^\circ\)</span> מתוך <span class="m">\(360^\circ\)</span>, כלומר שליש מהסיבוב, ולכן שליש מזמן המחזור: <span class="m">\(\tfrac13\cdot240 = 80\)</span> שניות.</p></div></div></details></li>
 
 <li>גלגל ברדיוס 30 ס"מ מסתובב ב־<span class="m">\(60^\circ/\text{s}\)</span>.
 <ol class="parts"><li>כמה דרך עובר הוונטיל בשנייה אחת? בסיבוב שלם?</li><li>מהי מהירות הוונטיל?</li><li>מהי מהירות נקודה על החישור, 10 ס"מ מהמרכז? מה משותף לשתי הנקודות ומה שונה?</li></ol>
@@ -239,13 +267,17 @@ td .m .katex{font-size:1.1em}
 <p>א. בשנייה: <span class="m">\(s = 2\pi \cdot 30 \cdot \tfrac{60}{360} = 10\pi \approx 31.4\)</span> ס"מ. בסיבוב: <span class="m">\(2\pi \cdot 30 = 60\pi \approx 188.5\)</span> ס"מ.</p>
 <p>ב. <span class="m">\(v = 10\pi \approx 31.4\)</span> ס"מ לשנייה.</p>
 <p>ג. <span class="m">\(v = 2\pi \cdot 10 \cdot \tfrac{60}{360} = \tfrac{10\pi}{3} \approx 10.5\)</span> ס"מ לשנייה. <strong>המהירות הזוויתית שווה</strong> (שתיהן מסתובבות <span class="m">\(60^\circ\)</span> בשנייה), אבל <strong>המהירות הקווית שונה</strong>: היא פרופורציונית למרחק מהמרכז. נקודה רחוקה פי 3 נעה מהר פי 3.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>דרך היא חלק מההיקף.</strong> בסיבוב שלם הנקודה עוברת את ההיקף, <span class="m">\(2\pi r\)</span>. בחלק מסיבוב היא עוברת את אותו חלק מההיקף: <span class="m">\(s = 2\pi r\cdot\dfrac{\Delta\theta}{360^\circ}\)</span>. זה שוב "אחוז מהסיבוב".</p>
+<p><strong>מהירות</strong> היא הדרך בשנייה אחת, כלומר ה־<span class="m">\(\Delta\theta\)</span> של שנייה אחת, שהוא ω.</p>
+<p><strong>סעיף ג׳:</strong> כל הנקודות על הגלגל מסתובבות באותה זווית, ולכן ω שווה לכולן. אבל נקודה רחוקה מהמרכז נמצאת על מעגל גדול יותר, ולכן עוברת יותר דרך באותו זמן.</p></div></div></details></li>
 
 <li>מהי מהירות התא בגלגל הענק משאלה 8, במטרים לשנייה ובקמ"ש?
 <details><summary>הצג פתרון</summary><div class="sol">
 <p><span class="m">\(v = 2\pi \cdot 20 \cdot \tfrac{1.5}{360} = \tfrac{\pi}{6} \approx 0.524\)</span> מ׳ לשנייה.</p>
 <p>בקמ"ש: <span class="m">\(0.524 \cdot 3.6 \approx 1.9\)</span> קמ"ש, פחות מקצב הליכה.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>אותו חישוב כמו בשאלה 10,</strong> רק עם נתוני הגלגל הענק: <span class="m">\(r = 20\)</span> מ׳ ו־<span class="m">\(\omega = 1.5^\circ/\text{s}\)</span>.</p>
+<p><strong>מעבר יחידות:</strong> מ׳ לשנייה ← קמ"ש: כופלים ב־3.6, כי בשעה יש 3600 שניות ובקילומטר 1000 מטר.</p>
+<p><strong>בדיקת היגיון:</strong> סיבוב של 4 דקות על היקף של כ־126 מ׳ הוא בערך חצי מטר בשנייה. התשובה מתאימה.</p></div></div></details></li>
 
 <li><strong>מהמכונית לגלגל.</strong> מכונית נוסעת ב־72 קמ"ש. רדיוס הגלגל (כולל הצמיג) 30 ס"מ, והגלגל מתגלגל בלי להחליק.
 <ol class="parts"><li>כמה מטרים מתקדמת המכונית בכל סיבוב של הגלגל?</li><li>כמה סיבובים בשנייה עושה הגלגל? כמה סיבובים לדקה?</li><li>מהי המהירות הזוויתית במעלות לשנייה?</li></ol>
@@ -253,13 +285,16 @@ td .m .katex{font-size:1.1em}
 <p>א. היקף: <span class="m">\(2\pi \cdot 0.3 = 0.6\pi \approx 1.885\)</span> מ׳ לסיבוב.</p>
 <p>ב. <span class="m">\(72\)</span> קמ"ש <span class="m">\(= 72 / 3.6 = 20\)</span> מ׳ לשנייה. סיבובים בשנייה: <span class="m">\(20 / 1.885 \approx 10.61\)</span>. בדקה: <span class="m">\(\approx 637\)</span> סיבובים.</p>
 <p>ג. <span class="m">\(\omega = 10.61 \cdot 360 \approx 3820^\circ/\text{s}\)</span>. באופן כללי, מתוך <span class="m">\(v = 2\pi r \cdot \tfrac{\omega}{360}\)</span>: <span class="m">\(\omega = \dfrac{360\,v}{2\pi r}\)</span>.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>גלגול בלי החלקה:</strong> כל נקודה על ההיקף נוגעת בכביש פעם אחת בכל סיבוב. לכן בכל סיבוב הרכב מתקדם בדיוק היקף אחד. זה הקשר בין מהירות הנסיעה למהירות הסיבוב.</p>
+<p><strong>מכאן הסדר:</strong> מהירות במטר לשנייה ← כמה היקפים זה בשנייה (סיבובים בשנייה) ← כפול 360 (מעלות בשנייה).</p>
+<p><strong>הנוסחה הכללית</strong> <span class="m">\(\omega = \dfrac{360\,v}{2\pi r}\)</span> היא אותה נוסחה של שאלה 10, אחרי שמבודדים את ω.</p></div></div></details></li>
 
 <li>גלגל אופניים ברדיוס 35 ס"מ מסתובב ב־180 סיבובים לדקה, בלי החלקה. מה מהירות האופניים בקמ"ש? כמה זמן לוקח לגלגל להסתובב <span class="m">\(90^\circ\)</span>, וכמה מתקדמות האופניים בזמן הזה?
 <details><summary>הצג פתרון</summary><div class="sol">
 <p>180 סיבובים לדקה = 3 סיבובים בשנייה. בכל סיבוב <span class="m">\(2\pi \cdot 0.35 = 0.7\pi\)</span> מ׳. המהירות: <span class="m">\(3 \cdot 0.7\pi = 2.1\pi \approx 6.60\)</span> מ׳ לשנייה <span class="m">\(\approx 23.75\)</span> קמ"ש.</p>
 <p><span class="m">\(\omega = 180 \cdot 6 = 1080^\circ/\text{s}\)</span>, ולכן <span class="m">\(90^\circ\)</span> לוקחות <span class="m">\(90/1080 = \tfrac{1}{12}\)</span> שנייה. בזמן הזה האופניים מתקדמות רבע היקף: <span class="m">\(\tfrac{0.7\pi}{4} \approx 0.55\)</span> מ׳.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>שני שימושים באותו קשר.</strong> סיבובים לדקה ← סיבובים בשנייה ← דרך בשנייה (כפול היקף) ← קמ"ש.</p>
+<p><strong><span class="m">\(90^\circ\)</span> הם רבע סיבוב.</strong> לכן הזמן הוא רבע מזמן המחזור, והדרך היא רבע היקף. אין צורך בנוסחה חדשה: אותו "אחוז מהסיבוב" קובע גם את הזמן וגם את הדרך.</p></div></div></details></li>
 </ol>
 
 </section>
@@ -302,7 +337,10 @@ td .m .katex{font-size:1.1em}
 <p><span class="m">\(\alpha = 270^\circ\)</span>: <span class="m">\(X = 45\pi + 30 \approx 171.37,\ Y = 30\)</span>. בגובה המרכז, לפניו.</p>
 <p><span class="m">\(\alpha = 360^\circ\)</span>: <span class="m">\(X = 60\pi \approx 188.50,\ Y = 0\)</span>. שוב על הכביש, היקף אחד קדימה.</p>
 <p>הקו שמתקבל הוא קשת של <strong>ציקלואידה</strong>, כמו בהמחשה בסעיף 6 בדף ההסבר. שימו לב שהמרחק בין 90° ל־180° (77 ס"מ) גדול בהרבה מהמרחק בין 0° ל־90° (17 ס"מ). כבר מכאן רואים שהוונטיל מהיר למעלה ואיטי למטה.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>פירוק לשתי תנועות.</strong> המיקום של הוונטיל הוא סכום של שני חלקים: איפה המרכז, ואיפה הוונטיל ביחס למרכז.</p>
+<p><strong>המרכז:</strong> נע בקו ישר בגובה r. בלי החלקה הוא מתקדם בדיוק אורך הקשת שהתגלגלה: <span class="m">\(d = 2\pi r\cdot\dfrac{\alpha}{360^\circ}\)</span>.</p>
+<p><strong>הוונטיל ביחס למרכז:</strong> הוא מתחיל למטה (<span class="m">\(\theta_0 = 270^\circ\)</span>), והגלגל שנוסע ימינה מסתובב עם כיוון השעון, ולכן <span class="m">\(\theta = 270^\circ - \alpha\)</span>. משם <span class="m">\(x = r\cos\theta\)</span> ו־<span class="m">\(y = r\sin\theta\)</span>.</p>
+<p><strong>מחברים:</strong> <span class="m">\(X = d + x\)</span> ו־<span class="m">\(Y = r + y\)</span>. בכל סעיף מחשבים את שני החלקים ומחברים.</p></div></div></details></li>
 
 <li>אופניים עם גלגל ברדיוס 0.3 מ׳ נוסעים במהירות <span class="m">\(v = 3\pi \approx 9.42\)</span> מ׳ לשנייה (כ־34 קמ"ש).
 <ol class="parts"><li>כמה זמן לוקח סיבוב אחד של הגלגל? מהי <span class="m">\(\omega\)</span>?</li><li>כתבו את <span class="m">\(X(t)\)</span> ו־<span class="m">\(Y(t)\)</span> של הוונטיל.</li><li>איפה הוונטיל אחרי 0.05 שנייה? אחרי 0.03 שנייה?</li></ol>
@@ -311,13 +349,17 @@ td .m .katex{font-size:1.1em}
 <p>ב. <span class="m">\(X = 3\pi t - 0.3\sin(1800t),\ \ Y = 0.3 - 0.3\cos(1800t)\)</span>.</p>
 <p>ג. <span class="m">\(t = 0.05\)</span>: <span class="m">\(\alpha = 90^\circ\)</span>. <span class="m">\(X = 0.15\pi - 0.3 \approx 0.171,\ Y = 0.3\)</span> מ׳.<br>
 <span class="m">\(t = 0.03\)</span>: <span class="m">\(\alpha = 54^\circ\)</span>. <span class="m">\(X = 0.09\pi - 0.3\sin54^\circ \approx 0.283 - 0.243 = 0.040\)</span>, <span class="m">\(Y = 0.3 - 0.3\cos54^\circ \approx 0.124\)</span> מ׳.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>מהזווית לזמן.</strong> בשאלה 14 עבדנו לפי זווית הגלגול α. כאן נתונה מהירות, ולכן קודם מוצאים את ω, ואז <span class="m">\(\alpha = \omega t\)</span>.</p>
+<p><strong>זמן המחזור:</strong> הזמן שלוקח לנסוע היקף אחד: <span class="m">\(T = \dfrac{2\pi r}{v}\)</span>. ממנו <span class="m">\(\omega = 360/T\)</span>.</p>
+<p><strong>הנוסחאות לפי הזמן</strong> הן הנוסחאות של המודל, עם <span class="m">\(\omega t\)</span> במקום α. כל סעיף הוא הצבה: מחשבים את α ומציבים ב־sin וב־cos.</p></div></div></details></li>
 
 <li>אותן אופניים. מתי לראשונה הוונטיל בגובה 45 ס"מ מעל הכביש? מתי בפעם השנייה?
 <details><summary>הצג פתרון</summary><div class="sol">
 <p><span class="m">\(0.3 - 0.3\cos\alpha = 0.45 \Rightarrow \cos\alpha = -\tfrac12 \Rightarrow \alpha = 120^\circ\)</span> או <span class="m">\(240^\circ\)</span>.</p>
 <p><span class="m">\(t = 120/1800 = \tfrac{1}{15} \approx 0.067\)</span> שנייה, ובפעם השנייה <span class="m">\(t = \tfrac{2}{15} \approx 0.133\)</span> שנייה.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>בעיה הפוכה על הגובה.</strong> הגובה תלוי רק ב־cos של זווית הגלגול: <span class="m">\(Y = r - r\cos\alpha\)</span>. משווים לגובה הנתון, ומקבלים משוואה ב־<span class="m">\(\cos\alpha\)</span>.</p>
+<p><strong>שתי תשובות:</strong> הוונטיל עולה לגובה 45 ס"מ ויורד ממנו פעם אחת בכל סיבוב. לכן יש שתי זוויות, <span class="m">\(120^\circ\)</span> ו־<span class="m">\(240^\circ\)</span>, שסימטריות סביב <span class="m">\(180^\circ\)</span>, הנקודה העליונה.</p>
+<p><strong>מהזווית לזמן:</strong> <span class="m">\(t = \alpha/\omega\)</span>.</p></div></div></details></li>
 
 <li><strong>מהירות ביחס לקרקע.</strong> מכונית נוסעת ב־72 קמ"ש. בעזרת הנוסחה <span class="m">\(|V| = v\sqrt{2 + 2\sin\theta}\)</span>, מצאו את המהירות ביחס לכביש של:
 <ol class="parts"><li>הנקודה התחתונה של הצמיג (נוגעת בכביש).</li><li>הנקודה העליונה.</li><li>הנקודה הקדמית, בגובה הציר.</li><li>הנקודה האחורית, בגובה הציר.</li></ol>
@@ -327,21 +369,27 @@ td .m .katex{font-size:1.1em}
 <p>ג. <span class="m">\(\theta = 0^\circ\)</span>: <span class="m">\(|V| = \sqrt2\,v \approx 101.8\)</span> קמ"ש, בזווית <span class="m">\(45^\circ\)</span> כלפי מטה (<span class="m">\(V = (v, -v)\)</span>).</p>
 <p>ד. <span class="m">\(\theta = 180^\circ\)</span>: <span class="m">\(|V| = \sqrt2\,v \approx 101.8\)</span> קמ"ש, בזווית <span class="m">\(45^\circ\)</span> כלפי מעלה (<span class="m">\(V = (v, v)\)</span>).</p>
 <p>זו התשובה לשאלה שהצגנו <a class="back" href="trigonometry-01-polar-wheel.html#why">בסעיף 6 בדף ההסבר</a>. אפשר לראות את החיצים בהמחשה שם.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>מהירות ביחס לכביש היא סכום של שתי מהירויות:</strong> המהירות של המרכז (<span class="m">\(v\)</span> ימינה) ועוד המהירות של הסיבוב סביב המרכז (<span class="m">\(v\)</span> בכיוון המשיק). הגודל של הסכום תלוי בזווית ביניהן.</p>
+<p><strong>למטה</strong> שתי המהירויות הפוכות ומבטלות זו את זו: 0. <strong>למעלה</strong> הן באותו כיוון ומתחברות: <span class="m">\(2v\)</span>. <strong>בגובה הציר</strong> הן מאונכות, ולפי פיתגורס הסכום הוא <span class="m">\(\sqrt2\,v\)</span>.</p>
+<p>הנוסחה <span class="m">\(v\sqrt{2 + 2\sin\theta}\)</span> מסכמת את כל המקרים, וכל סעיף הוא הצבה של הזווית של הנקודה.</p></div></div></details></li>
 
 <li>באילו נקודות על הגלגל המהירות ביחס לכביש שווה בדיוק למהירות המכונית? באיזה גובה מעל הכביש הן נמצאות? ואיפה המהירות היא <span class="m">\(1.5v\)</span>?
 <details><summary>הצג פתרון</summary><div class="sol">
 <p><span class="m">\(v\sqrt{2 + 2\sin\theta} = v \Rightarrow 2 + 2\sin\theta = 1 \Rightarrow \sin\theta = -\tfrac12\)</span>, כלומר <span class="m">\(\theta = 210^\circ\)</span> או <span class="m">\(330^\circ\)</span>.</p>
 <p>הגובה: <span class="m">\(r + r\sin\theta = r - \tfrac r2 = \tfrac r2\)</span>. שתי הנקודות בגובה <strong>חצי רדיוס</strong> מעל הכביש.</p>
 <p><span class="m">\(1.5v\)</span>: <span class="m">\(2 + 2\sin\theta = 2.25 \Rightarrow \sin\theta = 0.125 \Rightarrow \theta \approx 7.2^\circ\)</span> או <span class="m">\(\theta \approx 172.8^\circ\)</span>, קצת מעל גובה הציר.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>שוב בעיה הפוכה:</strong> נתונה המהירות, ומחפשים את הזווית. משווים את הנוסחה למהירות הנתונה, מבודדים את <span class="m">\(\sin\theta\)</span>, ומוצאים שתי זוויות.</p>
+<p><strong>מהזווית לגובה:</strong> הגובה מעל הכביש הוא <span class="m">\(r + r\sin\theta\)</span>, ולכן אפשר להציב ישר את ה־sin שמצאנו, בלי לחשב את הזווית.</p>
+<p><strong>היגיון:</strong> המהירות גדלה ככל שהנקודה גבוהה יותר. נקודה שמהירותה <span class="m">\(v\)</span> נמצאת נמוך מהציר, ונקודה שמהירותה <span class="m">\(1.5v\)</span> קצת מעליו.</p></div></div></details></li>
 
 <li>האופניים משאלה 15 (<span class="m">\(v = 3\pi\)</span>, <span class="m">\(\omega = 1800^\circ/\text{s}\)</span>). מצאו את מהירות הוונטיל ביחס לכביש אחרי 0.03 שנייה. מתי היא מקסימלית ומה ערכה?
 <details><summary>הצג פתרון</summary><div class="sol">
 <p>לפי זווית הגלגול: <span class="m">\(|V| = v\sqrt{2 - 2\cos\alpha}\)</span> (כי <span class="m">\(\sin(270^\circ - \alpha) = -\cos\alpha\)</span>).</p>
 <p><span class="m">\(t = 0.03\)</span>: <span class="m">\(\alpha = 54^\circ\)</span>, <span class="m">\(|V| = 3\pi\sqrt{2 - 2\cos54^\circ} \approx 9.42 \cdot 0.908 \approx 8.56\)</span> מ׳ לשנייה.</p>
 <p>מקסימום כש־<span class="m">\(\cos\alpha = -1\)</span>, כלומר <span class="m">\(\alpha = 180^\circ\)</span>, <span class="m">\(t = 0.1\)</span> שנייה (ובכל מחזור של 0.2 שנייה). הערך: <span class="m">\(2v = 6\pi \approx 18.85\)</span> מ׳ לשנייה.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>עוברים לזווית הגלגול:</strong> הוונטיל נמצא בזווית <span class="m">\(\theta = 270^\circ - \alpha\)</span>, ולכן <span class="m">\(\sin\theta = -\cos\alpha\)</span>. כך הנוסחה תלויה ישירות בזמן דרך <span class="m">\(\alpha = \omega t\)</span>.</p>
+<p><strong>המקסימום:</strong> הביטוי <span class="m">\(2 - 2\cos\alpha\)</span> הכי גדול כש־<span class="m">\(\cos\alpha = -1\)</span>, כלומר בחצי סיבוב, כשהוונטיל בראש הגלגל. זה מתאים לשאלה 17: הנקודה העליונה מהירה ביותר.</p>
+<p><strong>מחזוריות:</strong> המקסימום חוזר בכל סיבוב, כלומר כל זמן מחזור.</p></div></div></details></li>
 
 <li><strong>בדיקה מספרית (קשר לנגזרת).</strong> בעזרת הנוסחאות של <span class="m">\(X(t), Y(t)\)</span> משאלה 15, חשבו את מיקום הוונטיל ב־<span class="m">\(t = 0.1\)</span> וב־<span class="m">\(t = 0.101\)</span>. חשבו את המרחק בין שתי הנקודות וחלקו ב־0.001 שנייה. השוו לתשובה של שאלה 19. עשו את אותו חישוב בין <span class="m">\(t = 0\)</span> ל־<span class="m">\(t = 0.001\)</span>.
 <details><summary>הצג פתרון</summary><div class="sol">
@@ -349,14 +397,18 @@ td .m .katex{font-size:1.1em}
 <p>מרחק <span class="m">\(\approx 0.018849\)</span> מ׳, ומהירות ממוצעת <span class="m">\(\approx 18.849\)</span> מ׳ לשנייה, כמעט בדיוק <span class="m">\(6\pi \approx 18.850\)</span>.</p>
 <p>בין 0 ל־0.001: <span class="m">\((0, 0) \to (0.0000016,\ 0.000148)\)</span>. מהירות ממוצעת <span class="m">\(\approx 0.15\)</span> מ׳ לשנייה, קרובה מאוד ל־0. בפרק זמן קצר יותר היא תהיה עוד יותר קרובה ל־0.</p>
 <p>זו בדיוק ההגדרה של מהירות רגעית: גבול של מהירות ממוצעת בפרקי זמן קטנים, כלומר נגזרת. כשנלמד לגזור את sin ו־cos נוכל לקבל את התוצאה ישירות.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>מהירות ממוצעת:</strong> דרך חלקי זמן. כשפרק הזמן קצר מאוד, הנקודה כמעט לא מספיקה לשנות כיוון, והמהירות הממוצעת קרובה למהירות ברגע ההתחלה.</p>
+<p><strong>הדרך:</strong> מחשבים את המיקום בשני זמנים קרובים בעזרת הנוסחאות, ואת המרחק ביניהם לפי פיתגורס.</p>
+<p><strong>מה רואים:</strong> בראש הגלגל המספר קרוב ל־<span class="m">\(2v\)</span>, וליד הכביש הוא קרוב ל־0, כמו בשאלות 17 ו־19. זה הרעיון של נגזרת: מהירות רגעית היא הגבול של מהירות ממוצעת.</p></div></div></details></li>
 
 <li><strong>אתגר: הגלגל מסתובב סביב נקודת המגע.</strong> הראו שהמרחק מנקודה על הגלגל (בזווית <span class="m">\(\theta\)</span> ביחס למרכז) לנקודת המגע עם הכביש הוא <span class="m">\(r\sqrt{2 + 2\sin\theta}\)</span>. מה זה אומר על הקשר בין מהירות הנקודה למרחק שלה מנקודת המגע?
 <details><summary>הצג פתרון</summary><div class="sol">
 <p>ביחס למרכז, הנקודה ב־<span class="m">\((r\cos\theta,\ r\sin\theta)\)</span> ונקודת המגע ב־<span class="m">\((0, -r)\)</span>.</p>
 <p><span class="m">\(d^2 = r^2\cos^2\theta + (r\sin\theta + r)^2 = r^2(\cos^2\theta + \sin^2\theta + 2\sin\theta + 1) = r^2(2 + 2\sin\theta)\)</span>.</p>
 <p>לכן <span class="m">\(|V| = v\sqrt{2 + 2\sin\theta} = \dfrac{v}{r} \cdot d\)</span>: המהירות של כל נקודה <strong>פרופורציונית למרחק שלה מנקודת המגע</strong>. בכל רגע הגלגל כולו מסתובב סביב נקודת המגע, כמו גלגל שמסתובב במקום סביב ציר שעובר בנקודה התחתונה. נקודת המגע עומדת, והנקודה העליונה, הרחוקה ביותר (<span class="m">\(d = 2r\)</span>), מהירה ביותר.</p>
-</div></details></li>
+<div class="why"><span class="why-h">ההיגיון של הפתרון</span><p><strong>המרחק מנקודת המגע:</strong> שמים את שתי הנקודות באותה מערכת, ביחס למרכז. נקודת המגע ב־<span class="m">\((0,-r)\)</span>, והנקודה על הגלגל ב־<span class="m">\((r\cos\theta,\ r\sin\theta)\)</span>, ומחשבים מרחק לפי פיתגורס.</p>
+<p><strong>הפישוט:</strong> <span class="m">\(\cos^2\theta + \sin^2\theta = 1\)</span> מעלים את הזווית מחלק מהביטוי.</p>
+<p><strong>המשמעות:</strong> המהירות של כל נקודה פרופורציונית למרחק שלה מנקודת המגע, בדיוק כמו בגלגל שמסתובב סביב ציר קבוע (שאלה 10). לכן בכל רגע הגלגל כולו מסתובב סביב נקודת המגע.</p></div></div></details></li>
 </ol>
 </section>
 
