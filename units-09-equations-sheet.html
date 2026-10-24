@@ -62,46 +62,47 @@ footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
 @media (max-width:600px){body{font-size:17px}.wrap{padding:12px 16px}section.ch,header.hero{padding:16px}h1{font-size:1.7rem}}
 @media print{body{background:#fff}.toolbar,nav.top,.pager{display:none}details{display:block}details>.sol{display:block}section.ch,.q{break-inside:avoid}}
 
-.sheet{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
-.sheet h1{font-size:1.55rem;margin:0}
-.sheet .sub{color:var(--muted);font-size:14px;margin:2px 0 10px}
-.namebar{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin-bottom:10px}
-.namebar span{flex:1;min-width:140px;border-bottom:1px solid var(--line);padding-bottom:2px}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.box{border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;min-width:0}
-.box h2{font-size:1.08rem;margin:0 0 4px;color:var(--accent)}
-.box.bridge{border-color:var(--orange);background:var(--orange-soft);margin-top:12px}
+.sheet{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.sheet h1{font-size:1.7rem;margin:0;line-height:1.2}
+.sheet .sub{color:var(--muted);font-size:15px;margin:0 0 6px}
+.namebar{display:flex;gap:14px;flex-wrap:wrap;font-size:16px;color:var(--muted);margin-bottom:6px}
+.namebar span{flex:1;min-width:140px;border-bottom:1px solid var(--line);padding-bottom:1px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.box{border:1.5px solid var(--line);border-radius:10px;padding:5px 10px;min-width:0}
+.box h2{font-size:1.2rem;margin:0 0 2px;color:var(--accent);line-height:1.25}
+.box.bridge{border-color:var(--orange);background:var(--orange-soft);margin-top:8px}
 .box.bridge h2{color:var(--orange)}
-.sheet table{font-size:14px}
-.sheet th,.sheet td{padding:3px 6px}
+.sheet table{font-size:16.5px}
+.sheet th,.sheet td{padding:1px 6px}
 .sheet td.l{text-align:right}
-.sheet ul{margin:2px 0;padding-inline-start:1.1em;font-size:14px;line-height:1.55}
-.sheet .big{margin:6px 0;padding:6px 8px;font-size:1rem}
-.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:12px}
-.sheet .katex{font-size:1.02em}
+.sheet .tablebox{margin:3px 0}
+.sheet ul{margin:1px 0;padding-inline-start:1.1em;font-size:16.5px;line-height:1.45}
+.sheet .big{margin:3px 0;padding:2px 8px;font-size:1.12rem}
+.sheet .katex-display{margin:0;padding:1px 0}
+.sheet p{margin-top:3px!important;line-height:1.3}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
+.sheet .katex{font-size:1.04em}
 @media (max-width:700px){.cols,.row3{grid-template-columns:1fr}}
-@page{size:A4;margin:10mm}
+@page{size:A4;margin:8mm}
 @media print{
- html,body{background:#fff!important;font-size:11.5pt}
+ html,body{background:#fff!important;font-size:13.5pt;line-height:1.3}
  :root{--paper:#fff;--bg:#fff}
  .wrap{max-width:none;padding:0}
  nav.top,.pager,footer,.noprint{display:none!important}
  .sheet{border:none;padding:0}
  .cols{grid-template-columns:1fr 1fr}.row3{grid-template-columns:1fr 1fr 1fr}
- .box{break-inside:avoid}
- .sheet table,.sheet ul{font-size:10.5pt}
- .sheet .big{font-size:11.5pt;padding:4px 6px;margin:4px 0}
- .sheet h1{font-size:17pt}
- html,body{line-height:1.4}
- .sheet .katex-display{margin:0;padding:1px 0}
- .sheet .big{padding:3px 6px;margin:3px 0}
- .sheet th,.sheet td{padding:1px 5px}
- .sheet .tablebox{margin:4px 0}
- .box{padding:6px 10px}
- .box h2{font-size:12pt;margin:0 0 2px}
- .sheet p{margin-top:3px!important}
- .cols,.row3{gap:8px}.box.bridge,.row3{margin-top:8px}
- .namebar{margin-bottom:6px}.sheet .sub{margin:0 0 6px}
+ .box{break-inside:avoid;padding:3px 8px}
+ .sheet table,.sheet ul{font-size:13.0pt}
+ .sheet ul{line-height:1.32}
+ .sheet .big{font-size:14.5pt;padding:1px 6px;margin:2px 0}
+ .sheet .katex-display{margin:0;padding:0}
+ .sheet th,.sheet td{padding:0 5px}
+ .sheet .tablebox{margin:2px 0}
+ .sheet h1{font-size:19.0pt}
+ .box h2{font-size:14.5pt;margin:0 0 1px}
+ .sheet p{margin-top:2px!important;font-size:13.0pt}
+ .cols,.row3{gap:5px}.box.bridge,.row3{margin-top:5px}
+ .namebar{margin-bottom:4px;font-size:13.0pt}.sheet .sub{margin:0 0 3px;font-size:12.0pt}
  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
@@ -119,12 +120,12 @@ footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
 <tr><td class="l">מהירות</td><td>\(v\)</td><td>\(\mps\)</td></tr>
 <tr><td class="l">תאוצה</td><td>\(a\)</td><td>\(\mpss\)</td></tr>
 </table></div>
-<p style="margin:6px 0 0;font-weight:700;font-size:14px">מהירות קבועה</p>
+<p style="margin:3px 0 0;font-weight:700">מהירות קבועה</p>
 <div class="big">\[v=\frac{\Delta x}{\Delta t}\qquad x=v\,t\qquad t=\frac{x}{v}\]</div>
-<p style="margin:6px 0 0;font-weight:700;font-size:14px">תאוצה קבועה</p>
+<p style="margin:3px 0 0;font-weight:700">תאוצה קבועה</p>
 <div class="big">\[a=\frac{v-v_0}{t}\]</div>
 <div class="big">\[\begin{aligned}&v=v_0+a\,t\\ &x=v_0t+\tfrac12 a\,t^2\\ &v^2=v_0^2+2a\,x\end{aligned}\]</div>
-<p style="margin:6px 0 0;font-weight:700;font-size:14px">נגזרות</p>
+<p style="margin:3px 0 0;font-weight:700">נגזרות</p>
 <div class="big">\[v(t)=x'(t)\qquad a(t)=v'(t)=x''(t)\]</div>
 </div><div class="box"><h2>תנועה מעגלית</h2>
 <div class="tablebox"><table>
@@ -134,12 +135,12 @@ footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
 <tr><td class="l">תדירות</td><td>\(f=\tfrac1T\)</td><td>\(\tfrac1{\mathrm{s}}=\mathrm{Hz}\)</td></tr>
 <tr><td class="l">מהירות זוויתית</td><td>\(\omega\)</td><td>\(\tfrac{\mathrm{rad}}{\mathrm{s}}\)</td></tr>
 </table></div>
-<p style="margin:6px 0 0;font-weight:700;font-size:14px">מהירות זוויתית קבועה</p>
+<p style="margin:3px 0 0;font-weight:700">מהירות זוויתית קבועה</p>
 <div class="big">\[\omega=\frac{\Delta\theta}{\Delta t}\qquad \theta=\omega\,t\qquad t=\frac{\theta}{\omega}\]</div>
-<p style="margin:6px 0 0;font-weight:700;font-size:14px">סיבוב שלם</p>
+<p style="margin:3px 0 0;font-weight:700">סיבוב שלם</p>
 <div class="big">\[\omega=\frac{2\pi}{T}=2\pi f\]</div>
 <div class="big">\[\begin{aligned}&\text{מעלות}\to\text{רדיאנים:}\ \ \alpha\cdot\tfrac{\pi}{180^\circ}\\ &\text{סל״ד}\to\tfrac{\mathrm{rad}}{\mathrm{s}}:\ \ n\cdot\tfrac{2\pi}{60}\end{aligned}\]</div>
-<p style="margin:6px 0 0;font-weight:700;font-size:14px">מיקום נקודה על המעגל</p>
+<p style="margin:3px 0 0;font-weight:700">מיקום נקודה על המעגל</p>
 <div class="big">\[x=r\cos(\omega t)\qquad y=r\sin(\omega t)\]</div>
 </div></div><div class="box bridge"><h2>הגשר בין השתיים: רדיוס \(r\) מתרגם זווית לאורך</h2>
 <div class="cols" style="gap:8px">
@@ -155,8 +156,9 @@ footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
 <li>מ־\(\kmh\) ל־\(\mps\): חלוקה ב־\(3.6\)</li>
 <li>מ־\(\mps\) ל־\(\kmh\): כפל ב־\(3.6\)</li>
 <li>\(1\u{h}=60\u{min}=3600\u{s}\)</li>
-<li>\(1\u{km}=1000\u{m}\), \(\ 1\u{m}=100\u{cm}\)</li>
-<li>\(360^\circ=2\pi\u{rad}\), \(\ 180^\circ=\pi\u{rad}\)</li>
+<li>\(1\u{km}=1000\u{m}\)</li>
+<li>\(1\u{m}=100\u{cm}\)</li>
+<li>\(180^\circ=\pi\u{rad}\)</li>
 <li>סיבוב שלם: \(2\pi\u{rad}\)</li>
 </ul></div>
 <div class="box"><h2>כללי יחידות</h2><ul>
