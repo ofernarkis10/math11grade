@@ -55,6 +55,7 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | | `units-06-circular-motion.html` | Circular motion: the radian as a dimensionless unit, angular velocity ω, period, frequency and rpm, v = ωr and why rad/s × m = m/s, same ω vs same v (rigid body, belt, gears), centripetal acceleration, x = r cos(ωt), rolling wheel |
 | | `units-07-force-to-distance.html` | From force to distance: F = ma and the newton, integrals from acceleration to velocity to position (antiderivative and area under the graph), derivatives back to the force, units × s forward and ÷ s back, time-varying force, summary table |
 | | `units-08-pool-filling.html` | Pool filling, parallel to page 07: volume (m³, L), flow rate and its conversions, filling time and rate of rise of the water, flow rate as the derivative of volume and volume as its integral, changing and net flow rate, comparison table with motion |
+| | `units-09-equations-sheet.html` | Printable equations sheet (one A4 page, no exercises): linear motion and circular motion side by side with units, the bridge s = rθ, v = ωr and centripetal acceleration, conversions and unit rules |
 
 ## Structure of a study page
 
@@ -84,7 +85,7 @@ math11grade/
 ├── geometry-NN-<name>.html              Euclidean geometry (01 loci & triangle centers, 02 circle, 03 similarity)
 ├── trigonometry-NN-<name>.html          trigonometric functions (01 polar coordinates & the wheel, 02 linear vs wheel, 03 wheel exercises, 04 linear-vs-wheel exercises, 05 wheel homework)
 ├── analytic-NN-<name>.html              analytic geometry: equations of curves (00 overview, 01 line, 02 circle, 03 parabola, 04 ellipse, 05 hyperbola); figures drawn in SVG by a small inline script, with interactive labs
-├── units-NN-<name>.html                 units and motion equations (00 overview, 01 quantities, 02 conversion, 03 motion equations, 04 solving with units, 05 workbook, 06 circular motion, 07 force to distance, 08 pool filling)
+├── units-NN-<name>.html                 units and motion equations (00 overview, 01 quantities, 02 conversion, 03 motion equations, 04 solving with units, 05 workbook, 06 circular motion, 07 force to distance, 08 pool filling, 09 equations sheet)
 ├── font-size.js                       text-size control shown on every page
 ├── README.md
 └── LICENSE                             CC0 1.0 Universal

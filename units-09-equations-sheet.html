@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>דף משוואות להדפסה: תנועה בקו ישר ותנועה מעגלית</title>
+<meta name="description" content="עמוד A4 אחד לתלמידים: משוואות התנועה בקו ישר ובתנועה מעגלית זו לצד זו, עם יחידות, הגשר ביניהן (s = rθ, v = ωr, תאוצה צנטריפטלית), המרות וכללי יחידות. בלי תרגילים.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{--bg:#f3f5f7;--grid:rgba(31,111,139,.06);--paper:#ffffff;--ink:#1c2633;--muted:#5b6878;--line:#d9dfe6;--accent:#1f6f8b;--accent-soft:#e3f0f5;--orange:#b4561e;--orange-soft:#fbeee5;--green:#2f7d4a;--green-soft:#e6f3ea;--code:#f6f8fa}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12171d;--grid:rgba(108,188,214,.05);--paper:#1a2129;--ink:#e4e9ef;--muted:#9aa7b6;--line:#2c3642;--accent:#6cbcd6;--accent-soft:#1b313b;--orange:#f0a46f;--orange-soft:#3a2a1f;--green:#6fcf8f;--green-soft:#17301f;--code:#151b22;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12171d;--grid:rgba(108,188,214,.05);--paper:#1a2129;--ink:#e4e9ef;--muted:#9aa7b6;--line:#2c3642;--accent:#6cbcd6;--accent-soft:#1b313b;--orange:#f0a46f;--orange-soft:#3a2a1f;--green:#6fcf8f;--green-soft:#17301f;--code:#151b22;color-scheme:dark}
+*{box-sizing:border-box}html,body{overflow-x:clip}
+body{margin:0;background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+background-size:24px 24px;color:var(--ink);font-family:"Assistant","Arial Hebrew",Arial,sans-serif;font-size:17px;line-height:1.7}
+.wrap{max-width:900px;margin:0 auto;padding:16px}
+nav.top{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:15px;margin-bottom:12px}
+nav.top a,a{color:var(--accent)}
+header.hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 22px 16px;margin-bottom:18px}
+.eyebrow{font-size:14px;color:var(--muted);letter-spacing:.02em}
+h1{font-family:"Frank Ruhl Libre",serif;font-size:2.1rem;line-height:1.2;margin:.25em 0 .3em}
+h2{font-family:"Frank Ruhl Libre",serif;font-size:1.5rem;margin:.2em 0 .6em}
+h3{font-size:1.1rem;margin:1.1em 0 .4em}
+.lead{color:var(--muted);font-size:1.08rem;margin:0}
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:0 0 18px}
+.num{display:inline-block;min-width:1.9em;height:1.9em;line-height:1.9em;text-align:center;border-radius:50%;background:var(--accent);color:var(--paper);font-size:.85em;margin-inline-end:.4em}
+.toc ol{margin:0;padding-inline-start:1.4em}
+.big{background:var(--accent-soft);border-radius:10px;padding:12px 14px;margin:12px 0;text-align:center;overflow-x:auto;font-size:1.08rem}
+.ex{border:2px dashed var(--line);border-radius:12px;padding:12px 16px;margin:14px 0}
+.ex .t{font-weight:700;color:var(--accent)}
+.note{background:var(--orange-soft);border-inline-start:4px solid var(--orange);border-radius:8px;padding:10px 14px;margin:14px 0}
+.good{background:var(--green-soft);border-inline-start:4px solid var(--green);border-radius:8px;padding:10px 14px;margin:14px 0}
+.tablebox{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:center}
+th{background:var(--accent-soft)}
+details{margin:8px 0}
+summary{cursor:pointer;color:var(--accent);font-weight:600}
+details .sol{border-inline-start:4px solid var(--orange);padding:6px 14px;margin-top:6px;background:var(--code);border-radius:6px}
+ol.check>li,ol.qs>li{margin-bottom:12px}
+.q{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:12px 0}
+.q .qh{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.q .qh b{color:var(--accent)}
+.tick{font-size:15px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.toolbar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:16px}
+button{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--accent-soft);color:var(--ink);border-radius:8px;padding:5px 12px;cursor:pointer}
+.prog{margin-inline-start:auto;color:var(--muted);font-size:15px}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:6px 0 30px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
+.card .tag{font-size:13px;color:var(--muted)}
+.card a{font-weight:700;text-decoration:none}
+.katex{direction:ltr;unicode-bidi:isolate;position:relative}
+.sol,.ex,ol.check>li,.q p,td{line-height:2.15}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0}
+.ltr{direction:ltr;unicode-bidi:isolate}
+footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
+@media (max-width:600px){body{font-size:17px}.wrap{padding:12px 16px}section.ch,header.hero{padding:16px}h1{font-size:1.7rem}}
+@media print{body{background:#fff}.toolbar,nav.top,.pager{display:none}details{display:block}details>.sol{display:block}section.ch,.q{break-inside:avoid}}
+
+.sheet{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.sheet h1{font-size:1.55rem;margin:0}
+.sheet .sub{color:var(--muted);font-size:14px;margin:2px 0 10px}
+.namebar{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin-bottom:10px}
+.namebar span{flex:1;min-width:140px;border-bottom:1px solid var(--line);padding-bottom:2px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.box{border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;min-width:0}
+.box h2{font-size:1.08rem;margin:0 0 4px;color:var(--accent)}
+.box.bridge{border-color:var(--orange);background:var(--orange-soft);margin-top:12px}
+.box.bridge h2{color:var(--orange)}
+.sheet table{font-size:14px}
+.sheet th,.sheet td{padding:3px 6px}
+.sheet td.l{text-align:right}
+.sheet ul{margin:2px 0;padding-inline-start:1.1em;font-size:14px;line-height:1.55}
+.sheet .big{margin:6px 0;padding:6px 8px;font-size:1rem}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:12px}
+.sheet .katex{font-size:1.02em}
+@media (max-width:700px){.cols,.row3{grid-template-columns:1fr}}
+@page{size:A4;margin:10mm}
+@media print{
+ html,body{background:#fff!important;font-size:11.5pt}
+ :root{--paper:#fff;--bg:#fff}
+ .wrap{max-width:none;padding:0}
+ nav.top,.pager,footer,.noprint{display:none!important}
+ .sheet{border:none;padding:0}
+ .cols{grid-template-columns:1fr 1fr}.row3{grid-template-columns:1fr 1fr 1fr}
+ .box{break-inside:avoid}
+ .sheet table,.sheet ul{font-size:10.5pt}
+ .sheet .big{font-size:11.5pt;padding:4px 6px;margin:4px 0}
+ .sheet h1{font-size:17pt}
+ html,body{line-height:1.4}
+ .sheet .katex-display{margin:0;padding:1px 0}
+ .sheet .big{padding:3px 6px;margin:3px 0}
+ .sheet th,.sheet td{padding:1px 5px}
+ .sheet .tablebox{margin:4px 0}
+ .box{padding:6px 10px}
+ .box h2{font-size:12pt;margin:0 0 2px}
+ .sheet p{margin-top:3px!important}
+ .cols,.row3{gap:8px}.box.bridge,.row3{margin-top:8px}
+ .namebar{margin-bottom:6px}.sheet .sub{margin:0 0 6px}
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body><div class="wrap">
+<nav class="top"><a href="topic-units.html">→ חזרה לנושא: יחידות ומשוואות תנועה</a> · <a href="index.html">כל הנושאים</a></nav>
+<nav class="top series" aria-label="דפי הנושא"><a href="units-00-overview.html">דף הקבוצה</a> · <a href="units-01-quantities-and-units.html">גדלים ויחידות</a> · <a href="units-02-unit-conversion.html">המרות</a> · <a href="units-03-motion-equations.html">משוואות תנועה</a> · <a href="units-04-solving-with-units.html">פתרון בעיות</a> · <a href="units-06-circular-motion.html">תנועה מעגלית</a> · <a href="units-07-force-to-distance.html">מכוח למרחק</a> · <a href="units-08-pool-filling.html">מילוי בריכה</a> · <b>דף משוואות</b> · <a href="units-05-workbook.html">חוברת</a></nav>
+<div class="noprint" style="margin:0 0 12px"><button onclick="window.print()">הדפסה</button> <span style="color:var(--muted);font-size:15px">דף משוואות לתלמידים, עמוד A4 אחד.</span></div>
+<div class="sheet"><h1>דף משוואות: תנועה בקו ישר ותנועה מעגלית</h1><div class="sub">מתמטיקה · כיתה י״א · 5 יח״ל · יחידות ומשוואות תנועה</div><div class="namebar"><span>שם:</span><span>כיתה:</span><span>תאריך:</span></div><div class="cols"><div class="box"><h2>תנועה בקו ישר</h2>
+<div class="tablebox"><table>
+<tr><th>גודל</th><th>סימון</th><th>יחידה</th></tr>
+<tr><td class="l">מיקום / מרחק</td><td>\(x\)</td><td>\(\mathrm{m}\)</td></tr>
+<tr><td class="l">זמן</td><td>\(t\)</td><td>\(\mathrm{s}\)</td></tr>
+<tr><td class="l">מהירות</td><td>\(v\)</td><td>\(\mps\)</td></tr>
+<tr><td class="l">תאוצה</td><td>\(a\)</td><td>\(\mpss\)</td></tr>
+</table></div>
+<p style="margin:6px 0 0;font-weight:700;font-size:14px">מהירות קבועה</p>
+<div class="big">\[v=\frac{\Delta x}{\Delta t}\qquad x=v\,t\qquad t=\frac{x}{v}\]</div>
+<p style="margin:6px 0 0;font-weight:700;font-size:14px">תאוצה קבועה</p>
+<div class="big">\[a=\frac{v-v_0}{t}\]</div>
+<div class="big">\[\begin{aligned}&v=v_0+a\,t\\ &x=v_0t+\tfrac12 a\,t^2\\ &v^2=v_0^2+2a\,x\end{aligned}\]</div>
+<p style="margin:6px 0 0;font-weight:700;font-size:14px">נגזרות</p>
+<div class="big">\[v(t)=x'(t)\qquad a(t)=v'(t)=x''(t)\]</div>
+</div><div class="box"><h2>תנועה מעגלית</h2>
+<div class="tablebox"><table>
+<tr><th>גודל</th><th>סימון</th><th>יחידה</th></tr>
+<tr><td class="l">זווית</td><td>\(\theta\)</td><td>\(\mathrm{rad}\) (חסר ממד)</td></tr>
+<tr><td class="l">זמן מחזור</td><td>\(T\)</td><td>\(\mathrm{s}\)</td></tr>
+<tr><td class="l">תדירות</td><td>\(f=\tfrac1T\)</td><td>\(\tfrac1{\mathrm{s}}=\mathrm{Hz}\)</td></tr>
+<tr><td class="l">מהירות זוויתית</td><td>\(\omega\)</td><td>\(\tfrac{\mathrm{rad}}{\mathrm{s}}\)</td></tr>
+</table></div>
+<p style="margin:6px 0 0;font-weight:700;font-size:14px">מהירות זוויתית קבועה</p>
+<div class="big">\[\omega=\frac{\Delta\theta}{\Delta t}\qquad \theta=\omega\,t\qquad t=\frac{\theta}{\omega}\]</div>
+<p style="margin:6px 0 0;font-weight:700;font-size:14px">סיבוב שלם</p>
+<div class="big">\[\omega=\frac{2\pi}{T}=2\pi f\]</div>
+<div class="big">\[\begin{aligned}&\text{מעלות}\to\text{רדיאנים:}\ \ \alpha\cdot\tfrac{\pi}{180^\circ}\\ &\text{סל״ד}\to\tfrac{\mathrm{rad}}{\mathrm{s}}:\ \ n\cdot\tfrac{2\pi}{60}\end{aligned}\]</div>
+<p style="margin:6px 0 0;font-weight:700;font-size:14px">מיקום נקודה על המעגל</p>
+<div class="big">\[x=r\cos(\omega t)\qquad y=r\sin(\omega t)\]</div>
+</div></div><div class="box bridge"><h2>הגשר בין השתיים: רדיוס \(r\) מתרגם זווית לאורך</h2>
+<div class="cols" style="gap:8px">
+<div class="big">\[s=r\,\theta\qquad v=\omega\,r=\frac{2\pi r}{T}\]</div>
+<div class="big">\[a_c=\frac{v^2}{r}=\omega^2 r\quad\text{(אל המרכז)}\]</div>
+</div>
+<ul>
+<li>יחידות: \(\dfrac{\cx{\mathrm{rad}}}{\mathrm{s}}\cdot\mathrm{m}=\mps\) — רדיאן הוא \(\tfrac{\mathrm{m}}{\mathrm{m}}\), מספר טהור, ולכן נמחק.</li>
+<li>על אותו גוף מסתובב: לכל הנקודות אותה \(\omega\); \(v\) גדלה עם \(r\). על אותה רצועה / גלגלי שיניים: אותה \(v\), ולכן \(\omega_1r_1=\omega_2r_2\).</li>
+<li>גלגל מתגלגל בלי החלקה: \(v_{\text{רכב}}=\omega\,r\).</li>
+</ul></div><div class="row3">
+<div class="box"><h2>המרות</h2><ul>
+<li>מ־\(\kmh\) ל־\(\mps\): חלוקה ב־\(3.6\)</li>
+<li>מ־\(\mps\) ל־\(\kmh\): כפל ב־\(3.6\)</li>
+<li>\(1\u{h}=60\u{min}=3600\u{s}\)</li>
+<li>\(1\u{km}=1000\u{m}\), \(\ 1\u{m}=100\u{cm}\)</li>
+<li>\(360^\circ=2\pi\u{rad}\), \(\ 180^\circ=\pi\u{rad}\)</li>
+<li>סיבוב שלם: \(2\pi\u{rad}\)</li>
+</ul></div>
+<div class="box"><h2>כללי יחידות</h2><ul>
+<li>יחידה מתנהגת כמו משתנה: כופלים, מחלקים, מצמצמים.</li>
+<li>מחברים ומשווים רק גדלים באותה יחידה.</li>
+<li>כל איבר במשוואה — באותה יחידה.</li>
+<li>נגזרת לפי \(t\): היחידה \(\div\mathrm{s}\).</li>
+<li>היחידה שנשארת בסוף = בדיקת התשובה.</li>
+</ul></div>
+<div class="box"><h2>לפני שמציבים</h2><ul>
+<li>ממירים הכול למערכת אחת: \(\mathrm{m},\ \mathrm{s},\ \mathrm{rad}\).</li>
+<li>\(v=\omega r\) ו־\(s=r\theta\) — רק ברדיאנים.</li>
+<li>\(\omega=2\pi f\), לא \(\omega=f\).</li>
+<li>בבלימה \(a\lt 0\).</li>
+<li>\(\sin(\omega t)\) — מחשבון במצב RAD.</li>
+</ul></div>
+</div></div>
+<div class="pager"><a href="units-08-pool-filling.html">→ מילוי בריכה: נפח, ספיקה, נגזרת ואינטגרל</a><a href="units-05-workbook.html">חוברת תרגול — יחידות ותנועה ←</a></div>
+<footer>אתר המתמטיקה של כיתה י״א · קבוצת "יחידות ומשוואות תנועה"</footer>
+</div>
+<script>
+const KMACROS={"\\u":"\\,\\mathrm{#1}","\\mps":"\\tfrac{\\mathrm{m}}{\\mathrm{s}}","\\mpss":"\\tfrac{\\mathrm{m}}{\\mathrm{s}^2}","\\kmh":"\\tfrac{\\mathrm{km}}{\\mathrm{h}}","\\cx":"\\cancel{#1}","\\rads":"\\tfrac{\\mathrm{rad}}{\\mathrm{s}}"};
+document.addEventListener("DOMContentLoaded",()=>{
+ if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:"\\[",right:"\\]",display:true},{left:"\\(",right:"\\)",display:false}],macros:KMACROS,throwOnError:false});}
+ const KEY="math11-units-"+location.pathname.split("/").pop();
+ let saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+ const boxes=[...document.querySelectorAll("input.done")];
+ const prog=document.querySelector(".prog");
+ const upd=()=>{if(prog)prog.textContent="פתרתי "+boxes.filter(b=>b.checked).length+" מתוך "+boxes.length;};
+ boxes.forEach(b=>{b.checked=!!saved[b.dataset.q];b.addEventListener("change",()=>{saved[b.dataset.q]=b.checked;try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){};upd();});});
+ upd();
+ const all=document.getElementById("showall");
+ if(all)all.addEventListener("click",()=>{const ds=[...document.querySelectorAll("details")];const open=!ds.every(d=>d.open);ds.forEach(d=>d.open=open);all.textContent=open?"הסתר את כל הפתרונות":"הצג את כל הפתרונות";});
+ const clr=document.getElementById("clear");
+ if(clr)clr.addEventListener("click",()=>{boxes.forEach(b=>b.checked=false);saved={};try{localStorage.removeItem(KEY)}catch(e){};upd();});
+ window.addEventListener("beforeprint",()=>document.querySelectorAll("details").forEach(d=>d.open=true));
+});
+</script>
+</body></html>
