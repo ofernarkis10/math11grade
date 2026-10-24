@@ -85,24 +85,24 @@ footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
 @media (max-width:700px){.cols,.row3{grid-template-columns:1fr}}
 @page{size:A4;margin:8mm}
 @media print{
- html,body{background:#fff!important;font-size:13.5pt;line-height:1.3}
+ html,body{background:#fff!important;font-size:13.0pt;line-height:1.3}
  :root{--paper:#fff;--bg:#fff}
  .wrap{max-width:none;padding:0}
  nav.top,.pager,footer,.noprint{display:none!important}
  .sheet{border:none;padding:0}
  .cols{grid-template-columns:1fr 1fr}.row3{grid-template-columns:1fr 1fr 1fr}
  .box{break-inside:avoid;padding:3px 8px}
- .sheet table,.sheet ul{font-size:13.0pt}
+ .sheet table,.sheet ul{font-size:12.5pt}
  .sheet ul{line-height:1.32}
- .sheet .big{font-size:14.5pt;padding:1px 6px;margin:2px 0}
+ .sheet .big{font-size:14.0pt;padding:1px 6px;margin:2px 0}
  .sheet .katex-display{margin:0;padding:0}
  .sheet th,.sheet td{padding:0 5px}
  .sheet .tablebox{margin:2px 0}
  .sheet h1{font-size:19.0pt}
- .box h2{font-size:14.5pt;margin:0 0 1px}
- .sheet p{margin-top:2px!important;font-size:13.0pt}
+ .box h2{font-size:14.0pt;margin:0 0 1px}
+ .sheet p{margin-top:2px!important;font-size:12.5pt}
  .cols,.row3{gap:5px}.box.bridge,.row3{margin-top:5px}
- .namebar{margin-bottom:4px;font-size:13.0pt}.sheet .sub{margin:0 0 3px;font-size:12.0pt}
+ .namebar{margin-bottom:4px;font-size:12.5pt}.sheet .sub{margin:0 0 3px;font-size:11.5pt}
  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
@@ -130,22 +130,21 @@ footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
 </div><div class="box"><h2>תנועה מעגלית</h2>
 <div class="tablebox"><table>
 <tr><th>גודל</th><th>סימון</th><th>יחידה</th></tr>
-<tr><td class="l">זווית</td><td>\(\theta\)</td><td>\(\mathrm{rad}\) (חסר ממד)</td></tr>
+<tr><td class="l">זווית</td><td>\(\theta\)</td><td>\(\mathrm{rad}\) או \(^\circ\)</td></tr>
 <tr><td class="l">זמן מחזור</td><td>\(T\)</td><td>\(\mathrm{s}\)</td></tr>
 <tr><td class="l">תדירות</td><td>\(f=\tfrac1T\)</td><td>\(\tfrac1{\mathrm{s}}=\mathrm{Hz}\)</td></tr>
-<tr><td class="l">מהירות זוויתית</td><td>\(\omega\)</td><td>\(\tfrac{\mathrm{rad}}{\mathrm{s}}\)</td></tr>
+<tr><td class="l">מהירות זוויתית</td><td>\(\omega\)</td><td>\(\tfrac{\mathrm{rad}}{\mathrm{s}}\) או \(\tfrac{^\circ}{\mathrm{s}}\)</td></tr>
 </table></div>
-<p style="margin:3px 0 0;font-weight:700">מהירות זוויתית קבועה</p>
+<p style="margin:3px 0 0;font-weight:700">מהירות זוויתית קבועה <span style="font-weight:400;color:var(--muted)">(ב־rad או במעלות)</span></p>
 <div class="big">\[\omega=\frac{\Delta\theta}{\Delta t}\qquad \theta=\omega\,t\qquad t=\frac{\theta}{\omega}\]</div>
 <p style="margin:3px 0 0;font-weight:700">סיבוב שלם</p>
-<div class="big">\[\omega=\frac{2\pi}{T}=2\pi f\]</div>
-<div class="big">\[\begin{aligned}&\text{מעלות}\to\text{רדיאנים:}\ \ \alpha\cdot\tfrac{\pi}{180^\circ}\\ &\text{סל״ד}\to\tfrac{\mathrm{rad}}{\mathrm{s}}:\ \ n\cdot\tfrac{2\pi}{60}\end{aligned}\]</div>
-<p style="margin:3px 0 0;font-weight:700">מיקום נקודה על המעגל</p>
+<div class="big">\[\begin{aligned}\omega&=\frac{2\pi}{T}=2\pi f &&\Big[\tfrac{\mathrm{rad}}{\mathrm{s}}\Big]\\ \omega&=\frac{360^\circ}{T}=360^\circ f &&\Big[\tfrac{^\circ}{\mathrm{s}}\Big]\end{aligned}\]</div>
+<p style="margin:3px 0 0;font-weight:700">מיקום נקודה על המעגל <span style="font-weight:400;color:var(--muted)">(ב־rad או במעלות)</span></p>
 <div class="big">\[x=r\cos(\omega t)\qquad y=r\sin(\omega t)\]</div>
 </div></div><div class="box bridge"><h2>הגשר בין השתיים: רדיוס \(r\) מתרגם זווית לאורך</h2>
 <div class="cols" style="gap:8px">
-<div class="big">\[s=r\,\theta\qquad v=\omega\,r=\frac{2\pi r}{T}\]</div>
-<div class="big">\[a_c=\frac{v^2}{r}=\omega^2 r\quad\text{(אל המרכז)}\]</div>
+<div class="big">\[s=r\,\theta\qquad v=\omega\,r=\frac{2\pi r}{T}\]<div style="font-size:.85em;color:var(--muted)">רק ברדיאנים. במעלות: \(s=\dfrac{\pi r\,\alpha^\circ}{180^\circ}\)</div></div>
+<div class="big">\[a_c=\frac{v^2}{r}=\omega^2 r\quad\text{(אל המרכז)}\]<div style="font-size:.85em;color:var(--muted)">רק ברדיאנים</div></div>
 </div>
 <ul>
 <li>יחידות: \(\dfrac{\cx{\mathrm{rad}}}{\mathrm{s}}\cdot\mathrm{m}=\mps\) — רדיאן הוא \(\tfrac{\mathrm{m}}{\mathrm{m}}\), מספר טהור, ולכן נמחק.</li>
@@ -158,8 +157,11 @@ footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
 <li>\(1\u{h}=60\u{min}=3600\u{s}\)</li>
 <li>\(1\u{km}=1000\u{m}\)</li>
 <li>\(1\u{m}=100\u{cm}\)</li>
-<li>\(180^\circ=\pi\u{rad}\)</li>
-<li>סיבוב שלם: \(2\pi\u{rad}\)</li>
+<li>סיבוב שלם: \(360^\circ=2\pi\u{rad}\)</li>
+<li>מעלות ל־rad: \(\times\tfrac{\pi}{180^\circ}\)</li>
+<li>מ־rad למעלות: \(\times\tfrac{180^\circ}{\pi}\)</li>
+<li>סל״ד ל־\(\tfrac{\mathrm{rad}}{\mathrm{s}}\): \(\times\tfrac{2\pi}{60}\)</li>
+<li>סל״ד ל־\(\tfrac{^\circ}{\mathrm{s}}\): \(\times6^\circ\)</li>
 </ul></div>
 <div class="box"><h2>כללי יחידות</h2><ul>
 <li>יחידה מתנהגת כמו משתנה: כופלים, מחלקים, מצמצמים.</li>
@@ -173,7 +175,7 @@ footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
 <li>\(v=\omega r\) ו־\(s=r\theta\) — רק ברדיאנים.</li>
 <li>\(\omega=2\pi f\), לא \(\omega=f\).</li>
 <li>בבלימה \(a\lt 0\).</li>
-<li>\(\sin(\omega t)\) — מחשבון במצב RAD.</li>
+<li>\(\sin(\omega t)\): מצב RAD לרדיאנים, DEG למעלות.</li>
 </ul></div>
 </div></div>
 <div class="pager"><a href="units-08-pool-filling.html">→ מילוי בריכה: נפח, ספיקה, נגזרת ואינטגרל</a><a href="units-05-workbook.html">חוברת תרגול — יחידות ותנועה ←</a></div>
