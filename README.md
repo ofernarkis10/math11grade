@@ -17,6 +17,7 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 |---|---|---|
 | Curriculum | `curriculum-5units-grade10-11.html` | Reference: the 5-unit syllabus for grades 10–11, by subject |
 | Glossary | `glossary.html` | Reference: all 111 terms used on the site, by topic, with definitions, formulas, English names, links to the pages that use them, and a search box |
+| Homework | `topic-homework.html` | List of every homework / assignment on the site, grouped by topic, with a link to each one and to its topic page |
 | Summer work | `summer-work-grade10-5units.pdf` | PDF: summer assignment given at the end of grade 10 (29 questions: polynomials, rational functions, geometry without circles, composite functions), with links to answers |
 | | `summer-work-geometry-solutions.html` | Worked solutions to the 10 geometry questions of the summer work, with the theorems used in each step |
 | | `summer-work-calculus-solutions.html` | Worked solutions to the 14 calculus questions of the summer work (polynomials and rational functions), with sign tables and graphs |
@@ -82,11 +83,20 @@ Most study pages combine explanation and practice. A topic can also split them i
 
 The composite-derivatives exercises (`composite-derivatives-02-exercises.html`) and the units workbook (`units-05-workbook.html`) are reference examples of this structure. Pages written before this rule should be brought up to it when they are next edited. Homework pages are published without solutions, as before (see below).
 
+## Rule: every homework is also listed in the homework list
+
+**This rule applies to the whole site.** `topic-homework.html` is the central list of all homework (עבודות בית) and assignments. When a new homework page is created:
+
+1. Register it on its own topic page as usual (an `<li>` in `ul.docs` of `topic-<id>.html`, and update the counts there and on `index.html`).
+2. **Also** add it to `topic-homework.html`: an `<li>` in the `section.hw-group` of its topic (create a group for the topic, with a link to the topic page, if it does not exist yet), continuing the running number, with title, question count and short description.
+3. Update the count under the title of `topic-homework.html` and on the "עבודות בית" card in `index.html`.
+
 ## Repository layout
 
 ```
 math11grade/
 ├── index.html                          home page: one card per topic
+├── topic-homework.html                 list of all homework on the site, by topic
 ├── topic-<id>.html                     topic pages: the documents of one topic (curriculum, glossary, summer-work, sequences, composite-derivatives, geometry, trigonometry, analytic, units)
 ├── curriculum-5units-grade10-11.html   curriculum reference
 ├── glossary.html                       glossary of every term used on the site
