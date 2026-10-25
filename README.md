@@ -9,7 +9,12 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 - **Locally:** open `index.html` in any browser. No build step, server or installation is needed. Formulas are typeset by KaTeX, which loads from a CDN, so an internet connection is needed for them to display.
 - **Online:** the repository is set up for GitHub Pages. When Pages is enabled for the `main` branch, the site is served at `https://ofernarkis10.github.io/math11grade/`.
 
-`index.html` is the home page. It shows one card per topic. Each card opens a topic page, `topic-<id>.html`, which lists that topic's documents in order with a short description of each, and links to the previous and next topic.
+`index.html` is the whole navigation of the site, in one file. It holds the list of every topic and document (the `TOPICS` data at the bottom of the file) and shows one view at a time, chosen by the part of the URL after `#`:
+
+- `index.html` — the home page: one card per topic, plus a card for the homework list.
+- `index.html#<topic-id>` — one topic (for example `#sequences`): its documents in order, with a short description of each, and links to the previous and next topic.
+- `index.html#homework` — every homework on the site, grouped by topic.
+- `index.html#q=<text>` — search results: every document, from all topics, whose title or description contains the text. The search box at the top of every view searches as you type; it ignores niqqud, geresh/gershayim and quote marks, and highlights the matches. It searches only the titles and descriptions, not the content of the pages.
 
 ## Contents
 
@@ -17,7 +22,7 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 |---|---|---|
 | Curriculum | `curriculum-5units-grade10-11.html` | Reference: the 5-unit syllabus for grades 10–11, by subject |
 | Glossary | `glossary.html` | Reference: all 111 terms used on the site, by topic, with definitions, formulas, English names, links to the pages that use them, and a search box |
-| Homework | `topic-homework.html` | List of every homework / assignment on the site, grouped by topic, with a link to each one and to its topic page |
+| Homework | `index.html#homework` | List of every homework / assignment on the site, grouped by topic, built automatically from the documents marked `homework:true` |
 | Summer work | `summer-work-grade10-5units.pdf` | PDF: summer assignment given at the end of grade 10 (29 questions: polynomials, rational functions, geometry without circles, composite functions), with links to answers |
 | | `summer-work-geometry-solutions.html` | Worked solutions to the 10 geometry questions of the summer work, with the theorems used in each step |
 | | `summer-work-calculus-solutions.html` | Worked solutions to the 14 calculus questions of the summer work (polynomials and rational functions), with sign tables and graphs |
@@ -66,7 +71,7 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 
 Most study pages combine explanation and practice. A topic can also split them into an explanation page and a separate exercises page (as in the derivatives topic). Every page follows the same layout:
 
-1. **Back link** to the topic page (`topic-<id>.html`) and a header with the topic name.
+1. **Back link** to the topic's view on the home page (`index.html#<topic-id>`) and a header with the topic name.
 2. **Table of contents** for the page.
 3. **Explanation:** meaning, formulas, derivations, worked examples and common mistakes.
 4. **Practice in three levels:** רמה א׳ (basic), רמה ב׳ (consolidation) and רמה ג׳ (matriculation / בגרות level).
@@ -85,19 +90,88 @@ The composite-derivatives exercises (`composite-derivatives-02-exercises.html`) 
 
 ## Rule: every homework is also listed in the homework list
 
-**This rule applies to the whole site.** `topic-homework.html` is the central list of all homework (עבודות בית) and assignments. When a new homework page is created:
+**This rule applies to the whole site.** Every homework (עבודת בית) and assignment must appear both in the list of its own topic and in the homework list (`index.html#homework`). This happens automatically: when you add the homework's line to its topic in the `TOPICS` data in `index.html`, mark it with `homework:true`. The homework list, its numbering and its counts (on the list and on the home-page card) are computed from these marks, so there is nothing else to update.
 
-1. Register it on its own topic page as usual (an `<li>` in `ul.docs` of `topic-<id>.html`, and update the counts there and on `index.html`).
-2. **Also** add it to `topic-homework.html`: an `<li>` in the `section.hw-group` of its topic (create a group for the topic, with a link to the topic page, if it does not exist yet), continuing the running number, with title, question count and short description.
-3. Update the count under the title of `topic-homework.html` and on the "עבודות בית" card in `index.html`.
+## Building and updating index.html
+
+`index.html` is the only navigation file of the site. These rules apply every time it is created or changed.
+
+### Principles
+
+1. **One file for all lists.** Every list of documents (home page, topic lists, homework list, search results) is shown by `index.html`. Do not create separate list pages such as `topic-<id>.html`.
+2. **Data and code are separate.** The content is in one place: the `TOPICS` data in the `<script>` at the bottom of the file. The code under it builds every view from that data. Adding, changing or removing a document means editing `TOPICS` only; the code is changed only when the behaviour of the site changes.
+3. **Each document is listed once.** A document has exactly one line in `TOPICS`, inside its topic. Every other place it appears (the homework list, search results, counts on the cards) is computed from that line, never copied by hand.
+4. **Search covers only the lists.** The search looks in the title (`t`) and description (`d`) of each document and in the topic name, not in the content of the pages. Whatever should be findable must be written in the title or the description.
+
+### Views
+
+The part of the URL after `#` chooses the view:
+
+| URL | View |
+|---|---|
+| `index.html` | Home page: introduction, the "about" boxes and one card per topic, plus the homework card |
+| `index.html#<topic-id>` | One topic: title, lead, count, its documents in order, previous/next topic links |
+| `index.html#homework` | Every document marked `homework:true`, grouped by topic, numbered 01, 02, … across the whole list |
+| `index.html#q=<text>` | Search results from all topics, grouped by topic, with the matches highlighted |
+
+`homework` and `q` are reserved and must never be used as a topic id. Any other or unknown value after `#` shows the home page. The homework list sits after the glossary in the order of the cards and of the previous/next links (set by `CHAIN` in the code).
+
+### The data: topics
+
+Topics are listed in `TOPICS` in the order of study; this order is the order of the cards and of the previous/next links.
+
+| Field | Meaning | Rules |
+|---|---|---|
+| `id` | Topic id, used in the URL (`#sequences`) and in the back links of the topic's pages | Lowercase English letters and hyphens. The same as the file-name prefix of the topic's pages. **Never change it after it is published**: the pages, bookmarks and shared links depend on it |
+| `title` | Topic name, in Hebrew | Shown on the card, as the title of the topic view and in search groups. It is also searched |
+| `count` | Summary under the title, for example `"10 דפים · 297 שאלות"` | Written by hand. **Update it whenever a document is added or removed, or a question count changes** |
+| `desc` | Text of the card on the home page | One or two short sentences |
+| `lead` | Text under the title of the topic view | May be longer than `desc` |
+| `items` | The topic's documents | See below |
+
+### The data: documents
+
+Each document is one entry in its topic's `items`, in the order of study:
+
+| Field | Meaning | Rules |
+|---|---|---|
+| `no` | Number shown beside the title | Two digits as a string (`"03"`), equal to the `NN` in the file name |
+| `href` | The file | File name relative to the site root. A `.pdf` opens in a new tab automatically |
+| `t` | Title | Hebrew, as on the page itself. Searched |
+| `q` | Chip on the right: the question count or the kind of page | `"12 שאלות"` for practice and homework (the homework total is calculated from the number before `שאלות`), otherwise a short label such as `"דף הסבר"`, `"דף סיכום"`, `"3 סימולטורים"` |
+| `d` | Description | One to three sentences on what the page covers. Plain text; the only HTML allowed is math in `<span class="m">…</span>`. Searched (the text, not the math) |
+| `homework` | `homework:true` marks a homework or assignment | Leave it out for any other page. See the rule on homework above |
+
+### Writing the strings
+
+- Every value is a JavaScript string in double quotes, and every entry ends with a comma. **A single missing comma or quote stops the whole page from showing**, so check the page after every change.
+- Inside a string use the Hebrew marks ׳ (geresh) and ״ (gershayim), for example `"י״א"`, never a plain `"`. If a plain double quote is unavoidable, write it as `\"`.
+- Do not use `&`, `<` or `>` outside a math span; write "ו" instead of `&`.
+- Math inside `d`: the span's quotes are escaped and every backslash is doubled, because the text is inside a JavaScript string. Write `<span class=\"m\">\\(S_{n}\\)</span>` for \(S_{n}\). Copy an existing entry (for example `sequences-03-infinite-series.html`) as a model.
+
+### Procedures
+
+- **New page in an existing topic:** add its entry to the topic's `items` in its place, update the topic's `count`, and set the page's back link to `index.html#<topic-id>`.
+- **New homework:** as a new page, plus `homework:true`. Nothing else: the homework list, its numbering and the counts on the homework card update themselves.
+- **New topic:** add a topic block in its place in the order of study, with all six fields. The card, the topic view and the previous/next links of it and its neighbours are created automatically.
+- **Renaming or moving a file:** update its `href` and every link to it in other pages (the glossary links to many pages).
+- **Removing a page:** delete its entry and update the topic's `count`.
+- **Changing the order:** move the entries; keep `no` equal to the number in the file name.
+- **Back link on every page:** `<a class="back" href="index.html#<topic-id>">→ חזרה לנושא: <topic title></a>`.
+
+### Check after every change
+
+1. Open `index.html` and see that the page appears (a blank page means a syntax error in `TOPICS`: look for a missing comma or quote).
+2. Check the topic's card and count on the home page, and the new entry in the topic view.
+3. For homework: open `index.html#homework` and check the new entry and the total.
+4. Search for a word from the new description and see that the entry is found.
+5. Open the new page and click its back link: it must return to the topic view.
 
 ## Repository layout
 
 ```
 math11grade/
-├── index.html                          home page: one card per topic
-├── topic-homework.html                 list of all homework on the site, by topic
-├── topic-<id>.html                     topic pages: the documents of one topic (curriculum, glossary, summer-work, sequences, composite-derivatives, geometry, trigonometry, analytic, units)
+├── index.html                          all navigation: home page, topic lists (#<topic-id>), homework list (#homework) and search (#q=…); topic ids: curriculum, glossary, summer-work, sequences, composite-derivatives, geometry, trigonometry, analytic, units
 ├── curriculum-5units-grade10-11.html   curriculum reference
 ├── glossary.html                       glossary of every term used on the site
 ├── summer-work-grade10-5units.pdf    summer assignment from the end of grade 10 (PDF)
@@ -124,10 +198,7 @@ Every page is a single self-contained HTML file: styles are inline, there is no 
 2. **Copy the layout** of an existing study page (for example `composite-derivatives-01-rules.html`) so the design stays consistent: same `:root` color tokens, fonts, `section.ch` blocks, `ol.exercises` with `<details>` solutions, and the back link to `index.html`.
 3. **Write math** in LaTeX inside `<span class="m">\( … \)</span>`, for example `<span class="m">\(S_{n} = \dfrac{n(a_{1} + a_{n})}{2}\)</span>`. The span keeps the formula left-to-right inside the Hebrew text, and [KaTeX](https://katex.org) typesets it in the browser. Copy the KaTeX block from the `<head>` of an existing page (stylesheet, two scripts and a short `<style>`). Use `\dfrac` for fractions in running text so they stay readable.
 4. **Add the text-size control** by putting `<script src="font-size.js"></script>` just before `</head>`. Set the page's body text size in `px` on `body` and other sizes in `rem`/`em` so they all scale with it.
-5. **Register the page on its topic page:**
-   - For an existing topic, add an `<li>` to the `ul.docs` in `topic-<id>.html`, with number, title, question count and a short description. Update the count under the topic title there and in the topic's card in `index.html`.
-   - For a new topic, copy an existing topic page to `topic-<new-id>.html`, replace its title, description and list, fix the previous/next links of the neighbouring topic pages, and add a card for it to `ul.topics` in `index.html`.
-   - Point the page's back link to its topic page: `<a class="back" href="topic-<id>.html">→ חזרה לנושא: …</a>`.
+5. **Register the page in `index.html`**: add its entry to `TOPICS` and set its back link, following [Building and updating index.html](#building-and-updating-indexhtml).
 6. **Write every solution with a detailed explanation**, following the rule above: the thinking, numbered steps, the answer and a check.
 7. **Commit and push** to `main`.
 

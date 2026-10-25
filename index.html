@@ -95,40 +95,361 @@ nav.topicnav{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 nav.topicnav a{color:var(--accent);font-weight:700;text-decoration:none;border:1px solid var(--line);background:var(--paper);border-radius:99px;padding:6px 14px}
 nav.topicnav a:hover,nav.topicnav a:focus-visible{border-color:var(--accent);outline:none}
 </style>
+<style>
+/* Single-page site: every list lives in this file. The part of the URL after # picks the view:
+   (empty) topic cards · #<topic-id> one topic · #homework all homework · #q=<text> search results */
+:root{--hl:#ffe9a8}
+@media (prefers-color-scheme: dark){:root{--hl:#5a4a1c}}
+mark{background:var(--hl);color:inherit;border-radius:3px;padding:0 1px}
+.search{position:sticky;top:0;z-index:5;background:var(--bg);padding-block:10px;margin-block:-10px}
+.search label{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:6px 8px 6px 16px}
+.search label:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.search .ico{color:var(--muted);font-size:1.1rem;padding-inline-start:4px}
+.search input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;font-size:1rem;outline:none;padding:4px 0}
+.search input::-webkit-search-cancel-button{display:none}
+.search button{border:0;background:var(--accent-soft);color:var(--accent);font:inherit;font-weight:700;font-size:.85rem;border-radius:99px;padding:4px 12px;cursor:pointer}
+.search button[hidden]{display:none}
+#view{display:flex;flex-direction:column;gap:32px}
+.group{display:flex;flex-direction:column;gap:10px}
+.group h2{font-size:1.25rem;display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--accent);padding-bottom:6px}
+.group h2 a{font-family:var(--f-body);font-size:.9rem;font-weight:700;color:var(--accent);text-decoration:none}
+.group h2 a:hover,.group h2 a:focus-visible{text-decoration:underline}
+.note{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 18px;color:var(--muted);font-size:.97rem}
+.hwtag{font-size:.75rem;font-weight:700;color:var(--paper);background:var(--mark);border-radius:99px;padding:1px 8px;margin-inline-start:8px;vertical-align:middle;font-family:var(--f-body)}
+ul.topics .tt mark{font-size:inherit}
+.about{grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr))}
+.hwlist .hwtag{display:none}
+</style>
 </head>
 <body>
 <div class="wrap">
-<header>
-  <span class="eyebrow">אתר לימוד · מתמטיקה · כיתה יא׳ · 5 יחידות לימוד</span>
-  <h1>מתמטיקה לכיתה יא׳</h1>
-  <p class="lead">אוסף דפי לימוד ותרגול במתמטיקה לתלמידי כיתה יא׳ ברמת 5 יחידות, לפי תוכנית הלימודים בישראל. כל דף מסביר נושא אחד לעומק: מה המשמעות שלו, הנוסחאות ומאיפה הן באות, דרכי פתרון וטעויות נפוצות. אחרי ההסבר יש שאלות תרגול מדורגות עם פתרונות מלאים.</p>
-</header>
+<div class="search" role="search">
+  <label><span class="ico" aria-hidden="true">⌕</span>
+  <input id="q" type="search" placeholder="חיפוש בכל הנושאים, למשל: טור, גלגל, נגזרת" aria-label="חיפוש בכותרות ובתיאורים של כל הדפים" autocomplete="off">
+  <button id="clear" type="button" hidden>ניקוי</button></label>
+</div>
 
+<main id="view" aria-live="polite"></main>
+
+<footer>האתר נבנה בהדרגה, ודפים חדשים יתווספו לרשימות. חלוקת הנושאים בין שאלונים ושנים עשויה להשתנות, ולכן כדאי לוודא מול תוכנית הלימודים העדכנית של משרד החינוך.</footer>
+</div>
+
+<script>
+/* ================================================================
+   DATA: every topic and document of the site, in the order of study.
+   The full rules are in README.md, section "Building and updating index.html". In short:
+   - Edit only this data to add, change or remove a document; the code below builds every view.
+   - New page:     one line in its topic's items { no, href, t, q, d }, and update the topic's count.
+   - New homework: the same, plus  homework:true  (it then also appears in #homework by itself).
+   - New topic:    a block { id, title, count, desc, lead, items } in the order of study.
+                   Never change an id once published; "homework" and "q" are reserved.
+   - Strings: double quotes, a comma after every entry, Hebrew ׳ and ״ instead of plain quotes.
+     Math only inside <span class=\"m\">\\( ... \\)</span>: quotes escaped, backslashes doubled.
+   - Pages link back with  href="index.html#<topic-id>".
+   - After every change: open the page; a blank page means a missing comma or quote here.
+   ================================================================ */
+const TOPICS = [
+{ id:"curriculum", title:"תוכנית הלימודים", count:"3 מסמכי עזר",
+  desc:"תוכנית הלימודים של 5 יחידות לכיתות י׳–י״א, ורשימות מעקב לסימון ההתקדמות בתוכנית.",
+  lead:"תוכנית הלימודים של 5 יחידות לכיתות י׳–י״א, ורשימות מעקב לסימון ההתקדמות בתוכנית.",
+  items:[
+    { no:"00", href:"curriculum-5units-grade10-11.html", t:"תוכנית הלימודים: כיתות י׳–י״א", q:"מסמך עזר",
+      d:"רשימה משולבת ומפורטת של נושאי הלימוד ב־5 יחידות לפי משרד החינוך: מה נלמד בכיתה י׳ ומה בכיתה י״א בכל תחום (הנדסה אנליטית, פונקציות, חשבון דיפרנציאלי ואינטגרלי, סדרות ואינדוקציה, טריגונומטריה, גאומטריה והסתברות)." },
+    { no:"01", href:"curriculum-checklist-grade11.html", t:"רשימת מעקב: תוכנית הלימודים לכיתה י״א", q:"55 סעיפים",
+      d:"שבעה נושאים ראשיים, ולכל נושא רשימת סעיפים לסימון. מיועדת לתלמידים ולהורים, כדי לעקוב אחרי ביצוע התוכנית ולדעת מה ההיקף הנדרש. הסימונים נשמרים בדפדפן, ואפשר להדפיס." },
+    { no:"02", href:"curriculum-checklist-grade10-11.html", t:"רשימת מעקב: תוכנית הלימודים לכיתות י׳–י״א", q:"110 סעיפים",
+      d:"מרכזת במקום אחד את נושאי כיתה י׳ וכיתה י״א: 15 נושאים ראשיים, ולכל נושא רשימת סעיפים לסימון. מיועדת לתלמידים ולהורים, כדי לעקוב אחרי ביצוע התוכנית בשתי השנים. הסימונים נשמרים בדפדפן, ואפשר להדפיס." },
+  ]},
+{ id:"glossary", title:"מילון מושגים", count:"מסמך עזר · 111 מושגים",
+  desc:"כל המושגים שמופיעים באתר במקום אחד: הגדרה, נוסחה, שם באנגלית וקישור לדפים, עם חיפוש.",
+  lead:"כל המושגים שמופיעים באתר במקום אחד: הגדרה, נוסחה, שם באנגלית וקישור לדפים, עם חיפוש.",
+  items:[
+    { no:"00", href:"glossary.html", t:"מילון מושגים", q:"111 מושגים",
+      d:"כל המושגים שמופיעים באתר במקום אחד, לפי נושאים: לוגיקה והוכחה, סדרות, פונקציות וחשבון דיפרנציאלי, וגאומטריה (משולשים, המעגל, דמיון). לכל מושג הגדרה קצרה, נוסחה כשיש, השם באנגלית וקישורים לדפים שבהם הוא מוסבר. כולל חיפוש בעברית ובאנגלית." },
+  ]},
+{ id:"summer-work", title:"עבודות קיץ", count:"PDF ושני דפי פתרונות · 29 שאלות",
+  desc:"עבודת הקיץ למסיימי י׳, ופתרונות מפורטים לפרקי הגאומטריה והחשבון הדיפרנציאלי.",
+  lead:"עבודת הקיץ למסיימי י׳, ופתרונות מפורטים לפרקי הגאומטריה והחשבון הדיפרנציאלי.",
+  items:[
+    { no:"01", href:"summer-work-grade10-5units.pdf", t:"עבודת קיץ למסיימי י׳ (5 יחידות)", q:"PDF · 29 שאלות", homework:true,
+      d:"העבודה שניתנה בסיום כיתה י׳ לקראת כיתה יא׳. פרקים: חשבון דיפרנציאלי של פולינומים (7 שאלות) ושל פונקציות רציונליות (7), גאומטריה ללא מעגל: דמיון משולשים, יחסי קטעים ושטחים (10), ופונקציה מורכבת (5). ליד כל שאלה יש קישור לתשובה, ובשאלות הגאומטריה גם המחשה בגאוגברה." },
+    { no:"02", href:"summer-work-geometry-solutions.html", t:"פתרונות מפורטים: פרק הגאומטריה", q:"10 שאלות",
+      d:"פתרון מלא לכל 10 שאלות הגאומטריה ללא מעגל בעבודת הקיץ: לכל סעיף דרך הפתרון, התשובה והמשפטים שבהם משתמשים (דמיון ז.ז וצ.ז.צ, תאלס, חוצה הזווית, מפגש התיכונים, תכונות מקבילית ומעוין ויחסי שטחים). כולל ארגז כלים של המשפטים וטבלת תשובות." },
+    { no:"03", href:"summer-work-calculus-solutions.html", t:"פתרונות מפורטים: פרק החשבון הדיפרנציאלי", q:"14 שאלות",
+      d:"פתרון מלא ל־14 שאלות החשבון הדיפרנציאלי בעבודת הקיץ: 7 על פולינומים ו־7 על פונקציות רציונליות. לכל סעיף דרך הפתרון, טבלת סימנים, התשובה והכללים שבהם משתמשים (גזירה, קיצון, עלייה וירידה, אסימפטוטות, נקודות אי־רציפות, הזזות ושיקופים), עם גרף מדויק לכל סעיף שרטוט. כולל ארגז כלים וטבלת תשובות." },
+  ]},
+{ id:"sequences", title:"סדרות", count:"10 דפים · 297 שאלות",
+  desc:"סדרה חשבונית והנדסית, טור הנדסי מתכנס, כלל נסיגה, נוסחת איבר כללי, אינדוקציה, טבלת סיכום ועבודת בית.",
+  lead:"סדרה חשבונית והנדסית, טור הנדסי מתכנס, כלל נסיגה, נוסחת איבר כללי, אינדוקציה, טבלת סיכום ועבודת בית.",
+  items:[
+    { no:"00", href:"sequences-00-overview.html", t:"סדרות: מבט כללי", q:"27 שאלות",
+      d:"סקירה של כל סוגי הסדרות בדף אחד: טבלת השוואה, המשמעות של כל סוג, דוגמה פתורה ו־3–4 תרגילים לכל סוג. נקודת פתיחה טובה לנושא ולחזרה לפני מבחן." },
+    { no:"01", href:"sequences-01-arithmetic.html", t:"סדרה חשבונית", q:"30 שאלות",
+      d:"הפרש קבוע וגדילה לינארית. האיבר הכללי, נוסחת הסכום של גאוס, תכונת האמצע, ובעיות של שני נעלמים ובעיות מילוליות." },
+    { no:"02", href:"sequences-02-geometric.html", t:"סדרה הנדסית", q:"30 שאלות",
+      d:"מנה קבועה וגדילה מעריכית. נוסחת הסכום, הקשר בין אחוזים למנה, ובעיות של ריבית דריבית, גידול אוכלוסייה ודעיכה." },
+    { no:"03", href:"sequences-03-infinite-series.html", t:"טור הנדסי אינסופי מתכנס", q:"30 שאלות",
+      d:"סכום של אינסוף איברים ותנאי ההתכנסות <span class=\"m\">\\(|q| \\lt 1\\)</span>. שברים מחזוריים, טורים עם פרמטר, וטורים גאומטריים של שטחים ומרחקים." },
+    { no:"04", href:"sequences-04-recursive.html", t:"סדרות בכלל נסיגה", q:"30 שאלות",
+      d:"סדרות שמוגדרות צעד אחר צעד. סדרות עזר חשבוניות והנדסיות, סכימה טלסקופית, הופכיים וסדרות מחזוריות." },
+    { no:"05", href:"sequences-05-general-term.html", t:"סדרה לפי נוסחת איבר כללי", q:"30 שאלות",
+      d:"סדרה כפונקציה של n. בדיקה אם מספר הוא איבר, מונוטוניות, איבר מקסימלי ומינימלי, והמעבר מ־<span class=\"m\">\\(S_{n}\\)</span> ל־<span class=\"m\">\\(a_{n}\\)</span>." },
+    { no:"06", href:"sequences-06-mixed.html", t:"סדרות מעורבות ומשולבות", q:"30 שאלות",
+      d:"סדרות שזורות, סדרות נגזרות (לוגריתם וחזקה), ושאלות שמשלבות סדרה חשבונית והנדסית באותה בעיה." },
+    { no:"07", href:"sequences-07-induction.html", t:"אינדוקציה מתמטית", q:"30 שאלות",
+      d:"הוכחה לכל n טבעי בשיטת הדומינו. נוסחאות סכום, התחלקות, אי־שוויונות והוכחת נוסחה מפורשת לכלל נסיגה." },
+    { no:"08", href:"sequences-08-summary-table.html", t:"טבלת סיכום: סוגי הסדרות", q:"דף סיכום",
+      d:"כל סוגי הסדרות בטבלה אחת: שורה לכל סוג (חשבונית, הנדסית, טור הנדסי אינסופי, כלל נסיגה, נוסחת איבר כללי ושזורה) ועמודות לאותם נושאים בכולם: הגדרה, כלל נסיגה, איבר כללי, סכום, קשר בין שני איברים, שלושה איברים עוקבים, עלייה וירידה, איך מוכיחים, איך מוצאים את n וטעויות נפוצות. בסוף: כלים משותפים לכל הסדרות ומעברים בין סוגים." },
+    { no:"09", href:"sequences-09-homework.html", t:"עבודת בית: סדרה חשבונית, הנדסית וטור מתכנס", q:"60 שאלות", homework:true,
+      d:"עבודה להגשה ברמת ביסוס: 20 שאלות על סדרה חשבונית, 20 על סדרה הנדסית ו־20 על טור הנדסי אינסופי מתכנס. בלי פתרונות באתר; כתבו את דרך הפתרון המלאה. מותאמת להדפסה, עם מקום לשם ולכיתה." },
+  ]},
+{ id:"composite-derivatives", title:"נגזרות של פונקציות מורכבות", count:"2 דפים · 42 שאלות",
+  desc:"כלל השרשרת והכללים שנגזרים ממנו, ותרגול מדורג עד רמת בגרות.",
+  lead:"כלל השרשרת והכללים שנגזרים ממנו, ותרגול מדורג עד רמת בגרות.",
+  items:[
+    { no:"01", href:"composite-derivatives-01-rules.html", t:"כללי הגזירה של פונקציה מורכבת", q:"דף הסבר",
+      d:"פונקציה פנימית וחיצונית, כלל השרשרת והאינטואיציה מאחוריו, טבלת כללים (חזקה, שורש, הופכי, sin, cos, tan), שילוב עם כלל המכפלה והמנה, הרכבה של כמה שכבות וטעויות נפוצות, עם דוגמאות פתורות." },
+    { no:"02", href:"composite-derivatives-02-exercises.html", t:"תרגילים: נגזרות של פונקציות מורכבות", q:"42 שאלות",
+      d:"תרגול מדורג עם פתרונות מלאים: בסיס (הפעלה ישירה של הכללים), ביסוס (שילוב עם מכפלה ומנה, כמה שכבות של הרכבה) ורמת בגרות (משיקים, נקודות קיצון, פרמטרים ונגזרת בנקודה)." },
+  ]},
+{ id:"geometry", title:"גאומטריה אוקלידית", count:"3 דפי הסבר",
+  desc:"מקומות גאומטריים ונקודות מיוחדות במשולש, המעגל, ופרופורציה ודמיון משולשים.",
+  lead:"מקומות גאומטריים ונקודות מיוחדות במשולש, המעגל, ופרופורציה ודמיון משולשים.",
+  items:[
+    { no:"01", href:"geometry-01-loci-triangle-centers.html", t:"מקומות גאומטריים ונקודות מיוחדות במשולש", q:"דף הסבר",
+      d:"מערכת היסקית (משפט ומשפט הפוך, תנאי הכרחי ומספיק, הוכחה בדרך השלילה), מקום גאומטרי והוכחה בשני כיוונים, ארבע הנקודות המיוחדות במשולש (מרכזי המעגל החוסם והחסום, מרכז הכובד ומפגש הגבהים), משפט החפיפה הרביעי ומשפט פיתגורס ההפוך. עם שרטוטים ודוגמאות פתורות." },
+    { no:"02", href:"geometry-02-circle.html", t:"המעגל", q:"דף הסבר",
+      d:"מושגי יסוד, מיתרים וקשתות, זווית היקפית וזווית מרכזית, מרובע חסום במעגל, משיקים ומרובע חוסם, הזווית בין משיק למיתר, זוויות בין מיתרים וחותכים, ובניות במחוגה ובסרגל." },
+    { no:"03", href:"geometry-03-similarity.html", t:"פרופורציה ודמיון משולשים", q:"דף הסבר",
+      d:"תכונות פרופורציה, משפט תאלס וההפוך לו, קטע אמצעים, משפטי הדמיון (ז.ז, צ.ז.צ, צ.צ.צ), יחסי היקפים ושטחים, משפט חוצה הזווית, דמיון במשולש ישר זווית ובמעגל (מיתרים, משיק וחותך), ובניות של חלוקת קטע." },
+  ]},
+{ id:"trigonometry", title:"פונקציות טריגונומטריות", count:"7 דפים · 66 שאלות",
+  desc:"סינוס וקוסינוס במעגל היחידה, מעלות ורדיאנים, מערכת צירים קוטבית, sin ו־cos והגלגל המסתובב, תנועה לינארית מול תנועה על גלגל, תרגול ועבודת בית.",
+  lead:"סינוס וקוסינוס במעגל היחידה, מעלות ורדיאנים וטבלת הזוויות החשובות, מערכת צירים קוטבית, sin ו־cos והגלגל המסתובב, תנועה לינארית מול תנועה על גלגל, תרגול ועבודת בית.",
+  items:[
+    { no:"00", href:"trigonometry-00-unit-circle.html", t:"סינוס וקוסינוס במעגל היחידה", q:"13 שאלות",
+      d:"מה זה סינוס וקוסינוס: מעגל היחידה, איך מודדים זווית במעגל, וההגדרה — הנקודה של הזווית היא (cos α, sin α), כלומר cos הוא ה־x שלה ו־sin הוא ה־y. הקשר למשולש ישר זווית, הערכים של 0°, 30°, 45°, 60°, 90° ושל הזוויות על הצירים, סימנים לפי רביע וטווח הערכים. עם מעבדה אינטראקטיבית ותרגול עם דרך החשיבה בכל פתרון." },
+    { no:"01", href:"trigonometry-01-polar-wheel.html", t:"מערכת צירים קוטבית, sin ו־cos, והגלגל המסתובב", q:"דף הסבר",
+      d:"מערכת צירים קוטבית (מרחק וזווית במעלות) והמעבר לקרטזי, הגדרת sin ו־cos לכל זווית ורביעים. אחר כך, שלב אחר שלב: מיקום נקודה על גלגל שלא זז, על גלגל שזז (תנועת המרכז ועוד מיקום על הגלגל), ומהירות זוויתית לאורך זמן. השלב האחרון הוא השאלה: באיזו מהירות נעה נקודה על גלגל שנוסע ומסתובב ביחס לכביש? כולל סימולציות אינטראקטיביות ונספח על הגרפים של sin ו־cos." },
+    { no:"02", href:"trigonometry-02-linear-vs-wheel.html", t:"תנועה לינארית ותנועה על גלגל: אותה סדרת פעולות", q:"דף הסבר",
+      d:"השוואה צמודה בין תנועה בקו ישר מ־A ל־B לבין תנועה על גלגל: אותם חמישה שלבים: נתונים, משוואת המסלול (הישר y = mx + b דרך A ו־B, או משוואת המעגל), הפרמטר לפי הזמן (אחוז מהדרך או זווית), x לפי הפרמטר, ו־y מהצבה במשוואת המסלול. ההבדל הוא רק בצורת המסלול: ישר או מעגל. לכל דוגמה שרטוט של המסלול. כולל מילון מושגים מקביל, סימולציה של אחוז אחד שמניע את שתי התנועות, וארבעה זוגות של דוגמאות פתורות זו לצד זו: אחוז פשוט, מרכז כללי וכיוון הפוך, יותר מ־100% (מחזוריות), והבעיה ההפוכה (מתי?)." },
+    { no:"03", href:"trigonometry-03-wheel-exercises.html", t:"תרגול: נקודה על גלגל מסתובב", q:"21 שאלות",
+      d:"שאלות מדורגות עם פתרונות מלאים, ומתחת לכל פתרון הסבר להיגיון של דרך הפתרון: רמה א׳ נקודה על גלגל שמסתובב במקום (מיקום אחרי זמן, מחזוריות, בעיה הפוכה), רמה ב׳ גלגל ענק, אורך קשת ומהירות קווית, ורמה ג׳ גלגל שמתגלגל על הכביש (ציקלואידה ומהירות כל נקודה ביחס לקרקע: 0 למטה, 2v למעלה)." },
+    { no:"04", href:"trigonometry-04-linear-vs-wheel-exercises.html", t:"תרגול: תנועה לינארית ותנועה על גלגל", q:"8 שאלות",
+      d:"ארבעה זוגות של שאלות מקבילות לדף 02, שאלה בקו ישר ושאלה על גלגל בכל זוג, שנפתרות באותם חמישה שלבים: שליש מהדרך, כיוון הפוך, יותר מ־100%, והבעיה ההפוכה (מתי?). פתרונות מוסתרים עם שרטוט המסלול." },
+    { no:"05", href:"trigonometry-05-wheel-homework.html", t:"עבודת בית: נקודה על גלגל מסתובב", q:"12 שאלות", homework:true,
+      d:"עבודה להגשה על תנועה על גלגל, לפי חמשת השלבים. חלק א׳: מיקום אחרי זמן נתון (זווית התחלה, כיוון השעון, יותר מסיבוב אחד, סיבובים לדקה). חלק ב׳: הבעיה ההפוכה ושאלות משולבות (מתי מגיעים לגובה, זמן מעל גובה, מציאת זווית ההתחלה, מרחק בין קרוניות, ביטוי לגובה h(t)). בלי פתרונות באתר; מותאמת להדפסה, עם מקום לשם ולכיתה." },
+    { no:"06", href:"trigonometry-06-radians.html", t:"מעלות ורדיאנים, וערכי sin ו־cos של הזוויות החשובות", q:"12 שאלות",
+      d:"מה זה רדיאן (קשת באורך הרדיוס), 180° = π והמעבר בין מעלות לרדיאנים, וחלקי מעגל: רבע, חצי, שמינית, שישית ושתים־עשרה. העיקר: טבלה של כל הכפולות של 30° ו־45° בסיבוב אחד, עם רדיאנים, רביע והערכים המדויקים של cos ו־sin, ושרטוט של כל הזוויות על מעגל אחד. כולל מעבדה, דרך לזכור את הטבלה, ומצב DEG/RAD במחשבון." },
+  ]},
+{ id:"analytic", title:"הנדסה אנליטית: משוואות של עקומים", count:"6 דפים · 47 שאלות",
+  desc:"ישר, מעגל, פרבולה, אליפסה והיפרבולה: מאיפה באה כל משוואה ומה המשמעות שלה, עם שרטוטים ומעבדות אינטראקטיביות.",
+  lead:"ישר, מעגל, פרבולה, אליפסה והיפרבולה: מאיפה באה כל משוואה ומה המשמעות שלה, עם שרטוטים ומעבדות אינטראקטיביות.",
+  items:[
+    { no:"00", href:"analytic-00-overview.html", t:"משוואות של עקומים: מבט כללי", q:"6 שאלות",
+      d:"התמונה הכוללת: מה זו משוואה של עקום, חמשת העקומים וההגדרה של כל אחד כמקום גאומטרי (מרחק מנקודה, מנקודה ומישר, סכום והפרש מרחקים), למה הם נקראים חתכי חרוט, הגדרה אחת לכולם בעזרת מוקד, מדריך ואקסצנטריות (עם מעבדה אינטראקטיבית), זיהוי העקום מהמשוואה הכללית Ax² + Cy² + Dx + Ey + F = 0, ארבע דוגמאות פתורות וטבלת סיכום." },
+    { no:"01", href:"analytic-01-line.html", t:"משוואת הישר", q:"8 שאלות",
+      d:"השיפוע כקצב קבוע והקשר m = tan α, הצורה y = mx + b ומשמעות כל פרמטר בשרטוט (מעבדה עם מחוונים), צורות נוספות (שיפוע ונקודה, שתי נקודות, צורה כללית, משוואת קטעים), ישרים מקבילים ומאונכים ולמה מכפלת השיפועים היא −1, נקודת חיתוך, ומרחק נקודה מישר." },
+    { no:"02", href:"analytic-02-circle.html", t:"משוואת המעגל", q:"9 שאלות",
+      d:"המעגל כמקום גאומטרי וגזירת (x − a)² + (y − b)² = R² מפיתגורס, מה כל פרמטר עושה בשרטוט (מעבדה), המשוואה הכללית והשלמה לריבוע, נקודה ביחס למעגל, ישר ומעגל בשתי דרכים (הצבה ומרחק מהמרכז, עם מעבדה), ומשיק למעגל." },
+    { no:"03", href:"analytic-03-parabola.html", t:"משוואת הפרבולה", q:"8 שאלות",
+      d:"הפרבולה כמקום גאומטרי (מוקד ומדריך, עם מעבדה שבה PF = Pd), גזירת y² = 2px, המשמעות של p כמרחק וכרוחב, ארבעה כיווני פתיחה, הקשר לפונקציה y = ax² (המוקד ב־1/4a), הזזה והשלמה לריבוע, ותכונת ההחזרה של צלחת לוויין." },
+    { no:"04", href:"analytic-04-ellipse.html", t:"משוואת האליפסה", q:"8 שאלות",
+      d:"סכום מרחקים קבוע משני מוקדים ושיטת הגנן (מעבדה), גזירת x²/a² + y²/b² = 1, המשמעות של a, b ו־c ולמה a² = b² + c², אליפסה כמעגל מכווץ (a cos θ, b sin θ), אליפסה עומדת, אקסצנטריות, הזזה והשלמה לריבוע." },
+    { no:"05", href:"analytic-05-hyperbola.html", t:"משוואת ההיפרבולה", q:"8 שאלות",
+      d:"הפרש מרחקים קבוע ושני ענפים (מעבדה), x²/a² − y²/b² = 1 ו־c² = a² + b², מלבן העזר והאסימפטוטות y = ±(b/a)x ולמה הענפים מתקרבים אליהן, היפרבולה שנפתחת למעלה ולמטה, היפרבולה שווה צלעות והגרף של y = k/x, הזזה והשלמה לריבוע." },
+  ]},
+{ id:"units", title:"יחידות ומשוואות תנועה", count:"12 דפים · 86 שאלות",
+  desc:"גדלים ויחידות, המרת יחידות, משוואות תנועה, פתרון בעיות עם צמצום יחידות, תנועה מעגלית, ומכוח למרחק ומילוי בריכה: נגזרות ואינטגרלים בין הגדלים.",
+  lead:"גדלים ויחידות, המרת יחידות, משוואות תנועה, פתרון בעיות עם צמצום יחידות, תנועה מעגלית, ומכוח למרחק ומילוי בריכה: נגזרות ואינטגרלים בין הגדלים.",
+  items:[
+    { no:"00", href:"units-00-overview.html", t:"יחידות ומשוואות תנועה: דף הקבוצה", q:"דף פתיחה",
+      d:"מה לומדים בקבוצה ובאיזה סדר, קישור לכל המאמרים, וטבלת הנוסחאות המרכזיות עם היחידות של כל איבר." },
+    { no:"01", href:"units-01-quantities-and-units.html", t:"גדלים ויחידות", q:"דף הסבר · 8 תרגילים",
+      d:"גודל = מספר × יחידה, יחידות יסוד (מטר, שנייה, קילוגרם) ויחידות נגזרות (מ/ש, מ/ש²), קידומות, ואיך יחידות מתנהגות כמו משתנים: כפל, חילוק וצמצום. חוק ההתאמה: מחברים ומשווים רק גדלים באותה יחידה." },
+    { no:"02", href:"units-02-unit-conversion.html", t:"המרת יחידות", q:"דף הסבר · 8 תרגילים",
+      d:"שיטת \"כפל באחד\" עם מקדמי המרה שבהם היחידה הישנה מצטמצמת: אורך וזמן, קמ״ש ↔ מ/ש (חלוקה וכפל ב־3.6), יחידות בריבוע ובחזקה שלישית, המרת תאוצה ושרשרת המרות (דלק, מחיר)." },
+    { no:"03", href:"units-03-motion-equations.html", t:"משוואות תנועה ויחידות", q:"דף הסבר · 8 תרגילים",
+      d:"תנועה קצובה x = vt ושלוש משוואות התאוצה הקבועה, עם בדיקת יחידות בכל איבר (למה ½at² יוצא במטרים), הקשר לנגזרת (מקום, מהירות, תאוצה), וזיהוי נוסחה שגויה בעזרת ניתוח יחידות." },
+    { no:"04", href:"units-04-solving-with-units.html", t:"פתרון בעיות וצמצום יחידות", q:"דף הסבר · 8 תרגילים",
+      d:"שיטת עבודה בחמישה שלבים: נתונים עם יחידות, המרה למערכת אחת, נוסחה, הצבה וצמצום עד היחידה המבוקשת, ובדיקה. כולל משוואה ריבועית בזמן, בעיות מפגש ורדיפה, יחידות של קצב (ספיקה, צריכת דלק) ובדיקת סבירות." },
+    { no:"05", href:"units-05-workbook.html", t:"חוברת תרגול: יחידות ותנועה", q:"30 שאלות",
+      d:"שאלות בארבעה חלקים עם פתרון מלא שבו היחידות כתובות ומצטמצמות בכל שורה: בסיס (המרות וצמצום), תרגול (משוואות התנועה ושרשרת המרות) ורמת בגרות (מפגש ורדיפה, סירה בזרם, זריקה כלפי מעלה, רכבת על גשר) ותנועה מעגלית (סל״ד, v = ωr, רצועה ושרשרת אופניים, תאוצה צנטריפטלית). סימון \"פתרתי\" נשמר בדפדפן." },
+    { no:"06", href:"units-06-circular-motion.html", t:"תנועה מעגלית: מהירות זוויתית ומהירות קווית", q:"דף הסבר · 8 תרגילים",
+      d:"רדיאן כיחידה חסרת ממד (s = rθ), מהירות זוויתית ω ביחידות rad/s, זמן מחזור, תדירות והמרת סל״ד, והקשר v = ωr: למה rad/s כפול מטר נותן מ/ש. כל הנקודות על גוף מסתובב חולקות את אותה ω אבל לא את אותה v; ברצועה ובגלגלי שיניים — להפך. תאוצה צנטריפטלית v²/r = ω²r, מיקום x = r cos(ωt), וגלגל מתגלגל." },
+    { no:"07", href:"units-07-force-to-distance.html", t:"מכוח למרחק: אינטגרלים ונגזרות", q:"דף הסבר · 8 תרגילים",
+      d:"השרשרת כוח ומסה ← תאוצה ← מהירות ← מרחק. F = ma והניוטון (N = kg·m/s²); מתאוצה למהירות וממהירות למיקום באינטגרל (פונקציה קדומה ושטח מתחת לגרף), ומשם המקור של משוואות התנועה; ובכיוון ההפוך נגזרות (שיפוע) עד הכוח. בכל צעד: אינטגרל כופל את היחידה בשניות, נגזרת מחלקת. כולל כוח שמשתנה עם הזמן וטבלת סיכום." },
+    { no:"08", href:"units-08-pool-filling.html", t:"מילוי בריכה: נפח, ספיקה, נגזרת ואינטגרל", q:"דף הסבר · 8 תרגילים",
+      d:"דף מקביל לדף 07: נפח במ״ק ובליטרים, קצב מילוי (ספיקה) והמרותיו, זמן מילוי וקצב עליית המים (m³/h חלקי m² = m/h). הספיקה היא הנגזרת של הנפח, והנפח הוא האינטגרל של הספיקה (שטח מתחת לגרף); ספיקה שגדלה בקצב קבוע (L/min²), ספיקה שקולה של כניסה ויציאה, וטבלת השוואה לתנועה." },
+    { no:"09", href:"units-09-equations-sheet.html", t:"דף משוואות להדפסה: תנועה בקו ישר ותנועה מעגלית", q:"עמוד A4 אחד",
+      d:"דף משוואות לתלמידים, בלי תרגילים: בצד אחד תנועה בקו ישר (מהירות קבועה, שלוש משוואות התאוצה הקבועה, נגזרות) ובצד שני תנועה מעגלית (ω = Δθ/Δt, ω = 2π/T = 2πf, המרת מעלות וסל״ד, x = r cos ωt), עם טבלת יחידות לכל גודל. באמצע הגשר: s = rθ, v = ωr ותאוצה צנטריפטלית. בתחתית: המרות, כללי יחידות ומה לבדוק לפני הצבה. מותאם להדפסה בעמוד אחד." },
+    { no:"10", href:"units-10-simulators.html", t:"סימולטורים: שטח מתחת לגרף המהירות ושיפוע גרף הדרך", q:"3 סימולטורים",
+      d:"שלושה סימולטורים אינטראקטיביים. (1) גרף מהירות–זמן וגרף דרך–זמן של אותה תנועה זה לצד זה, עם מחוונים ל־v₀, a ו־t והפעלה: השטח מתחת לגרף המהירות מצטבר ושווה לדרך, והישר המשיק לגרף הדרך מראה שהשיפוע הוא המהירות; כולל מכונית על כביש ומהירות שלילית. (2) השטח כסכום מלבנים v·Δt שמתקרב לאינטגרל. (3) בניית מהירות בחמישה קטעים וצפייה בגרף הדרך השבור, ששיפוע כל קטע בו הוא המהירות." },
+    { no:"11", href:"units-11-pool-simulators.html", t:"סימולטורים: נפח וספיקה בבריכה", q:"3 סימולטורים",
+      d:"שלושה סימולטורים מקבילים לדף 10, בעולם של בריכה. (1) גרף ספיקה–זמן וגרף נפח–זמן זה לצד זה, עם מחוונים ל־Q₀, לשינוי הספיקה ולזמן, והפעלה: השטח מתחת לגרף הספיקה מצטבר ושווה לנפח, והישר המשיק לגרף הנפח מראה שהשיפוע הוא הספיקה; מצבים מוכנים של ברז קבוע, ברז שנפתח, ברז שנסגר ומילוי ואז ריקון, ומד מים. (2) הנפח כסכום מלבנים Q·Δt שמתקרב לאינטגרל. (3) קביעת ספיקה בחמישה קטעים (כולל משאבה שמוציאה מים) וצפייה בגרף הנפח השבור." },
+  ]},
+];
+
+/* ---------- views ---------- */
+const SITE = 'מתמטיקה יא׳';
+const HW_ID = 'homework';
+const view = document.getElementById('view');
+const qInput = document.getElementById('q');
+const clearBtn = document.getElementById('clear');
+const byId = Object.fromEntries(TOPICS.map(t => [t.id, t]));
+// order used for the previous/next links: the homework list sits after the glossary
+const CHAIN = TOPICS.map(t => t.id);
+CHAIN.splice(CHAIN.indexOf('glossary') + 1, 0, HW_ID);
+
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const homeworkItems = () => TOPICS.flatMap(t => t.items.filter(i => i.homework).map(i => ({...i, topic: t})));
+const qCount = q => { const m = q.match(/(\d+)\s*שאלות/); return m ? +m[1] : 0; };
+function hwCount(){ const h = homeworkItems(); return `${h.length} עבודות · ${h.reduce((s, i) => s + qCount(i.q), 0)} שאלות`; }
+const HW_TOPIC = () => ({ id: HW_ID, title: 'עבודות בית', count: hwCount(),
+  desc: 'רשימה מרוכזת של כל עבודות הבית וההגשה באתר, לפי נושא.',
+  lead: 'כל עבודות הבית וההגשה שבאתר במקום אחד, מסודרות לפי נושא. כל עבודה מופיעה גם ברשימה של הנושא שלה.' });
+const titleOf = id => id === HW_ID ? 'עבודות בית' : byId[id].title;
+
+/* ---------- search: ignore niqqud, geresh/gershayim/quotes, maqaf and case ---------- */
+function norm(s){
+  let out = '', map = [];
+  for (let i = 0; i < s.length; i++){
+    let c = s[i];
+    if (c === '\u05BE' || c === '-') c = ' ';
+    else if (/[\u0591-\u05C7'"\u05F3\u05F4`\u2018\u2019\u201C\u201D]/.test(c)) continue;
+    out += c.toLowerCase(); map.push(i);
+  }
+  return { out, map };
+}
+const terms = q => norm(q).out.split(/\s+/).filter(Boolean);
+const plain = html => html.replace(/<span class="m">[\s\S]*?<\/span>/g, ' ');
+function matches(item, topic, ts){
+  const hay = norm(item.t + ' ' + plain(item.d) + ' ' + topic.title + (item.homework ? ' עבודת בית' : '')).out;
+  return ts.every(t => hay.includes(t));
+}
+// highlight the terms in a plain-text string (returns escaped HTML)
+function hl(text, ts){
+  if (!ts.length) return esc(text);
+  const { out, map } = norm(text), r = [];
+  for (const t of ts){ let p = out.indexOf(t); while (p !== -1){ r.push([map[p], map[p + t.length - 1] + 1]); p = out.indexOf(t, p + 1); } }
+  if (!r.length) return esc(text);
+  r.sort((a, b) => a[0] - b[0]);
+  const m = [r[0]]; for (const x of r.slice(1)){ const l = m[m.length - 1]; if (x[0] <= l[1]) l[1] = Math.max(l[1], x[1]); else m.push(x); }
+  let html = '', at = 0;
+  for (const [a, b] of m){ html += esc(text.slice(at, a)) + '<mark>' + esc(text.slice(a, b)) + '</mark>'; at = b; }
+  return html + esc(text.slice(at));
+}
+// description: highlight only the text, keep the math spans as they are
+const hlDesc = (d, ts) => d.split(/(<span class="m">[\s\S]*?<\/span>)/).map((p, k) => k % 2 ? p : hl(p, ts)).join('');
+
+/* ---------- rendering ---------- */
+function itemHTML(i, ts = [], no = i.no){
+  const ext = /\.pdf$/i.test(i.href) ? ' target="_blank" rel="noopener"' : '';
+  const tag = i.homework ? '<span class="hwtag">עבודת בית</span>' : '';
+  return `<li><a href="${esc(i.href)}"${ext}><span class="no">${no}</span><span class="t">${hl(i.t, ts)}${tag}</span><span class="q">${esc(i.q)}</span><span class="d">${hlDesc(i.d, ts)}</span></a></li>`;
+}
+const header = (title, lead, count) => `<header>
+  <span class="eyebrow">אתר לימוד · מתמטיקה · כיתה יא׳ · 5 יחידות לימוד</span>
+  <h1>${title}</h1>${lead ? `\n  <p class="lead">${lead}</p>` : ''}${count ? `\n  <span class="count">${count}</span>` : ''}
+</header>`;
+function topicNav(id){
+  const k = CHAIN.indexOf(id), p = CHAIN[k - 1], n = CHAIN[k + 1];
+  return `<nav class="topicnav" aria-label="נושאים סמוכים">${p ? `<a href="#${p}" rel="prev">→ ${titleOf(p)}</a>` : '<span></span>'}${n ? `<a href="#${n}" rel="next">${titleOf(n)} ←</a>` : ''}</nav>`;
+}
+const card = t => `<li><a href="#${t.id}"><span class="tt">${t.title}</span><span class="tc">${t.count}</span><span class="td">${t.desc}</span><span class="go">${t.id === HW_ID ? 'לרשימת העבודות' : 'לדפי הנושא'} ←</span></a></li>`;
+
+function renderHome(){
+  const cards = CHAIN.map(id => card(id === HW_ID ? HW_TOPIC() : byId[id])).join('\n');
+  return header('מתמטיקה לכיתה יא׳', 'אוסף דפי לימוד ותרגול במתמטיקה לתלמידי כיתה יא׳ ברמת 5 יחידות, לפי תוכנית הלימודים בישראל. כל דף מסביר נושא אחד לעומק: מה המשמעות שלו, הנוסחאות ומאיפה הן באות, דרכי פתרון וטעויות נפוצות. אחרי ההסבר יש שאלות תרגול מדורגות עם פתרונות מלאים.') + `
 <div class="about">
   <div><h3>מבנה כל דף</h3><p>הסבר ונוסחאות, ואחריו שאלות בשלוש רמות: בסיס, ביסוס ורמת בגרות.</p></div>
-  <div><h3>איך לתרגל</h3><p>הפתרונות מוסתרים. פתרו קודם לבד, ואז לחצו על "הצג פתרון" כדי לבדוק את הדרך ואת התשובה. בדפי הסדרות, בשאלות של רמות א׳ ו־ב׳, יש מתחת לפתרון גם הסבר מפורט.</p></div>
+  <div><h3>איך לתרגל</h3><p>הפתרונות מוסתרים. פתרו קודם לבד, ואז לחצו על "הצג פתרון" כדי לבדוק את הדרך ואת התשובה.</p></div>
   <div><h3>סדר מומלץ</h3><p>בכל נושא כדאי ללמוד את הדפים לפי המספור, כי כל דף נשען על הקודמים.</p></div>
+  <div><h3>חיפוש</h3><p>בשורת החיפוש למעלה אפשר לחפש מילה בכותרות ובתיאורים של כל הדפים, מכל הנושאים.</p></div>
 </div>
+<nav aria-label="נושאים"><ul class="topics">
+${cards}
+</ul></nav>`;
+}
+function renderTopic(t){
+  return `<a class="back" href="#">→ לכל הנושאים</a>
+${header(t.title, t.lead, t.count)}
+<section class="topic" id="list-${t.id}"><ul class="docs">
+${t.items.map(i => itemHTML(i)).join('\n')}
+</ul></section>
+${topicNav(t.id)}`;
+}
+function renderHomework(){
+  const h = HW_TOPIC(); let n = 0;
+  const groups = TOPICS.filter(t => t.items.some(i => i.homework)).map(t => `<section class="group hwlist">
+  <h2>${t.title} <a href="#${t.id}">לדף הנושא ←</a></h2>
+  <ul class="docs">
+${t.items.filter(i => i.homework).map(i => itemHTML(i, [], String(++n).padStart(2, '0'))).join('\n')}
+  </ul>
+</section>`).join('\n');
+  return `<a class="back" href="#">→ לכל הנושאים</a>
+${header(h.title, h.lead, h.count)}
+<p class="note">עבודות הבית מתפרסמות בלי פתרונות. כתבו את דרך הפתרון המלאה ולא רק את התשובה. כל העבודות מותאמות להדפסה.</p>
+${groups}
+${topicNav(HW_ID)}`;
+}
+function renderSearch(q){
+  const ts = terms(q);
+  let total = 0;
+  const groups = TOPICS.map(t => {
+    const hits = t.items.filter(i => matches(i, t, ts));
+    total += hits.length;
+    return hits.length ? `<section class="group">
+  <h2>${t.title} <a href="#${t.id}">לדף הנושא ←</a></h2>
+  <ul class="docs">
+${hits.map(i => itemHTML(i, ts)).join('\n')}
+  </ul>
+</section>` : '';
+  }).join('\n');
+  const summary = total ? `נמצאו ${total} דפים עבור "${esc(q.trim())}"` : `לא נמצאו דפים עבור "${esc(q.trim())}". נסו מילה אחרת או חלק ממילה.`;
+  return `<a class="back" href="#">→ לכל הנושאים</a>
+${header('תוצאות חיפוש', '', '')}
+<p class="note" role="status">${summary}</p>
+${groups}`;
+}
 
-<!-- TOPICS: one card per topic; each card opens topic-<id>.html with that topic's documents.
-     New topic: create topic-<id>.html (copy an existing topic page) and add a card here, in the order of study.
-     New homework: list it in topic-homework.html too (in its topic's group) and update the homework card's count here. -->
-<nav aria-label="נושאים">
-<ul class="topics">
-  <li><a href="topic-curriculum.html"><span class="tt">תוכנית הלימודים</span><span class="tc">3 מסמכי עזר</span><span class="td">תוכנית הלימודים של 5 יחידות לכיתות י׳–י״א, ורשימות מעקב לסימון ההתקדמות בתוכנית.</span><span class="go">לדפי הנושא ←</span></a></li>
-  <li><a href="topic-glossary.html"><span class="tt">מילון מושגים</span><span class="tc">מסמך עזר · 111 מושגים</span><span class="td">כל המושגים שמופיעים באתר במקום אחד: הגדרה, נוסחה, שם באנגלית וקישור לדפים, עם חיפוש.</span><span class="go">לדפי הנושא ←</span></a></li>
-  <li><a href="topic-homework.html"><span class="tt">עבודות בית</span><span class="tc">3 עבודות · 101 שאלות</span><span class="td">רשימה מרוכזת של כל עבודות הבית וההגשה באתר, לפי נושא: עבודת הקיץ, סדרות ותנועה על גלגל.</span><span class="go">לרשימת העבודות ←</span></a></li>
-  <li><a href="topic-summer-work.html"><span class="tt">עבודות קיץ</span><span class="tc">PDF ושני דפי פתרונות · 29 שאלות</span><span class="td">עבודת הקיץ למסיימי י׳, ופתרונות מפורטים לפרקי הגאומטריה והחשבון הדיפרנציאלי.</span><span class="go">לדפי הנושא ←</span></a></li>
-  <li><a href="topic-sequences.html"><span class="tt">סדרות</span><span class="tc">10 דפים · 297 שאלות</span><span class="td">סדרה חשבונית והנדסית, טור הנדסי מתכנס, כלל נסיגה, נוסחת איבר כללי, אינדוקציה, טבלת סיכום ועבודת בית.</span><span class="go">לדפי הנושא ←</span></a></li>
-  <li><a href="topic-composite-derivatives.html"><span class="tt">נגזרות של פונקציות מורכבות</span><span class="tc">2 דפים · 42 שאלות</span><span class="td">כלל השרשרת והכללים שנגזרים ממנו, ותרגול מדורג עד רמת בגרות.</span><span class="go">לדפי הנושא ←</span></a></li>
-  <li><a href="topic-geometry.html"><span class="tt">גאומטריה אוקלידית</span><span class="tc">3 דפי הסבר</span><span class="td">מקומות גאומטריים ונקודות מיוחדות במשולש, המעגל, ופרופורציה ודמיון משולשים.</span><span class="go">לדפי הנושא ←</span></a></li>
-  <li><a href="topic-trigonometry.html"><span class="tt">פונקציות טריגונומטריות</span><span class="tc">7 דפים · 66 שאלות</span><span class="td">סינוס וקוסינוס במעגל היחידה, מעלות ורדיאנים, מערכת צירים קוטבית, sin ו־cos והגלגל המסתובב, תנועה לינארית מול תנועה על גלגל, תרגול ועבודת בית.</span><span class="go">לדפי הנושא ←</span></a></li>
-  <li><a href="topic-analytic.html"><span class="tt">הנדסה אנליטית: משוואות של עקומים</span><span class="tc">6 דפים · 47 שאלות</span><span class="td">ישר, מעגל, פרבולה, אליפסה והיפרבולה: מאיפה באה כל משוואה ומה המשמעות שלה, עם שרטוטים ומעבדות אינטראקטיביות.</span><span class="go">לדפי הנושא ←</span></a></li>
-  <li><a href="topic-units.html"><span class="tt">יחידות ומשוואות תנועה</span><span class="tc">12 דפים · 86 שאלות</span><span class="td">גדלים ויחידות, המרת יחידות, משוואות תנועה, פתרון בעיות עם צמצום יחידות, תנועה מעגלית, ומכוח למרחק ומילוי בריכה: נגזרות ואינטגרלים בין הגדלים.</span><span class="go">לדפי הנושא ←</span></a></li>
-</ul>
-</nav>
-
-<footer>האתר נבנה בהדרגה, ודפים חדשים יתווספו לרשימה זו. חלוקת הנושאים בין שאלונים ושנים עשויה להשתנות, ולכן כדאי לוודא מול תוכנית הלימודים העדכנית של משרד החינוך.</footer>
-</div>
+/* ---------- routing by the URL hash ---------- */
+function route(){
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (h.startsWith('q=')) return { kind: 'search', q: h.slice(2) };
+  if (h === HW_ID) return { kind: 'homework' };
+  if (byId[h]) return { kind: 'topic', id: h };
+  return { kind: 'home' };
+}
+let lastNonSearch = '';
+function typeset(){ if (window.renderMathInElement) renderMathInElement(view, {delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}], throwOnError:false}); }
+function render(scroll){
+  const r = route();
+  if (r.kind === 'search' && !r.q.trim()){ history.replaceState(null, '', lastNonSearch || location.pathname); return render(scroll); }
+  if (r.kind !== 'search'){ lastNonSearch = location.hash || ''; if (document.activeElement !== qInput) qInput.value = ''; }
+  else if (qInput.value !== r.q) qInput.value = r.q;
+  clearBtn.hidden = !qInput.value;
+  view.innerHTML = r.kind === 'search' ? renderSearch(r.q) : r.kind === 'homework' ? renderHomework() : r.kind === 'topic' ? renderTopic(byId[r.id]) : renderHome();
+  document.title = (r.kind === 'home' ? 'מתמטיקה יא׳ · 5 יחידות' : r.kind === 'search' ? `חיפוש: ${r.q.trim()} · ${SITE}` : `${titleOf(r.kind === 'homework' ? HW_ID : r.id)} · ${SITE}`);
+  typeset();
+  if (scroll) window.scrollTo(0, 0);
+}
+qInput.addEventListener('input', () => {
+  const v = qInput.value;
+  const inSearch = route().kind === 'search';
+  if (v.trim()){
+    const url = '#q=' + encodeURIComponent(v);
+    inSearch ? history.replaceState(null, '', url) : history.pushState(null, '', url);
+  } else {
+    history.replaceState(null, '', lastNonSearch || location.pathname);
+  }
+  render(false);
+});
+qInput.addEventListener('keydown', e => { if (e.key === 'Escape'){ qInput.value = ''; qInput.dispatchEvent(new Event('input')); } });
+clearBtn.addEventListener('click', () => { qInput.value = ''; qInput.dispatchEvent(new Event('input')); qInput.focus(); });
+window.addEventListener('hashchange', () => render(true));
+window.addEventListener('popstate', () => render(true));
+render(false);
+</script>
 </body>
 </html>
