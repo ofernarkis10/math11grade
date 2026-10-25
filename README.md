@@ -69,7 +69,18 @@ Most study pages combine explanation and practice. A topic can also split them i
 2. **Table of contents** for the page.
 3. **Explanation:** meaning, formulas, derivations, worked examples and common mistakes.
 4. **Practice in three levels:** רמה א׳ (basic), רמה ב׳ (consolidation) and רמה ג׳ (matriculation / בגרות level).
-5. **Hidden solutions:** each question has a "הצג פתרון" (show solution) toggle, built with `<details>`, so students try first and check afterwards. When a page is printed, all solutions are shown. In the sequences pages, every solution in the first two levels (and every exercise on the overview page) also has a **הסבר מפורט** (detailed explanation) box: what is given, which formula to use and why, the computation, and a check. Matriculation-level solutions stay concise.
+5. **Hidden solutions:** each question has a "הצג פתרון" (show solution) toggle, built with `<details>`, so students try first and check afterwards. When a page is printed, all solutions are shown.
+
+## Rule: every solution explains how it is solved
+
+**This rule applies to the whole site.** Every solution to every question, on every page and at every level (including matriculation level), must include a detailed explanation of how the question is solved, not only the final answer:
+
+- **דרך החשיבה (the thinking):** how to recognise what is asked and what is given, which formula, rule or theorem fits and why, and what to watch out for (units to convert, values to reject, special cases).
+- **Numbered steps:** each step with a short bold label (for example נתונים, נוסחה, הצבה, חישוב, בדיקה) and the full working, with units where relevant.
+- **תשובה (answer):** the final answer on its own line.
+- **A check** of the answer whenever there is a natural one (another method, substitution back, a sanity check of the number).
+
+The composite-derivatives exercises (`composite-derivatives-02-exercises.html`) and the units workbook (`units-05-workbook.html`) are reference examples of this structure. Pages written before this rule should be brought up to it when they are next edited. Homework pages are published without solutions, as before (see below).
 
 ## Repository layout
 
@@ -107,7 +118,8 @@ Every page is a single self-contained HTML file: styles are inline, there is no 
    - For an existing topic, add an `<li>` to the `ul.docs` in `topic-<id>.html`, with number, title, question count and a short description. Update the count under the topic title there and in the topic's card in `index.html`.
    - For a new topic, copy an existing topic page to `topic-<new-id>.html`, replace its title, description and list, fix the previous/next links of the neighbouring topic pages, and add a card for it to `ul.topics` in `index.html`.
    - Point the page's back link to its topic page: `<a class="back" href="topic-<id>.html">→ חזרה לנושא: …</a>`.
-6. **Commit and push** to `main`.
+6. **Write every solution with a detailed explanation**, following the rule above: the thinking, numbered steps, the answer and a check.
+7. **Commit and push** to `main`.
 
 ## Answer keys and tests
 
