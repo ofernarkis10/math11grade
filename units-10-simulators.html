@@ -66,7 +66,7 @@ footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
 </head>
 <body><div class="wrap">
 <nav class="top"><a href="topic-units.html">→ חזרה לנושא: יחידות ומשוואות תנועה</a> · <a href="index.html">כל הנושאים</a></nav>
-<nav class="top series" aria-label="דפי הנושא"><a href="units-00-overview.html">דף הקבוצה</a> · <a href="units-01-quantities-and-units.html">גדלים ויחידות</a> · <a href="units-02-unit-conversion.html">המרות</a> · <a href="units-03-motion-equations.html">משוואות תנועה</a> · <a href="units-04-solving-with-units.html">פתרון בעיות</a> · <a href="units-06-circular-motion.html">תנועה מעגלית</a> · <a href="units-07-force-to-distance.html">מכוח למרחק</a> · <a href="units-08-pool-filling.html">מילוי בריכה</a> · <a href="units-09-equations-sheet.html">דף משוואות</a> · <b>סימולטורים</b> · <a href="units-05-workbook.html">חוברת</a></nav>
+<nav class="top series" aria-label="דפי הנושא"><a href="units-00-overview.html">דף הקבוצה</a> · <a href="units-01-quantities-and-units.html">גדלים ויחידות</a> · <a href="units-02-unit-conversion.html">המרות</a> · <a href="units-03-motion-equations.html">משוואות תנועה</a> · <a href="units-04-solving-with-units.html">פתרון בעיות</a> · <a href="units-06-circular-motion.html">תנועה מעגלית</a> · <a href="units-07-force-to-distance.html">מכוח למרחק</a> · <a href="units-08-pool-filling.html">מילוי בריכה</a> · <a href="units-09-equations-sheet.html">דף משוואות</a> · <b>סימולטורים: תנועה</b> · <a href="units-11-pool-simulators.html">סימולטורים: בריכה</a> · <a href="units-05-workbook.html">חוברת</a></nav>
 <header class="hero"><div class="eyebrow">מתמטיקה · כיתה י״א · 5 יח״ל · יחידות ומשוואות תנועה</div><h1>סימולטורים: שטח מתחת לגרף המהירות ושיפוע גרף הדרך</h1><p class="lead">שלושה סימולטורים שמחברים בין שני הגרפים של אותה תנועה: הדרך מצטברת כשטח מתחת לגרף המהירות, והמהירות היא השיפוע של גרף הדרך.</p></header>
 
 <style>
@@ -143,12 +143,22 @@ footer{color:var(--muted);font-size:14px;text-align:center;margin:20px 0}
 </div></section>
 <section class="ch" id="s4"><h2><span class="num">4</span>מה רואים בכל הסימולטורים</h2>
 <div class="tablebox"><table><tr><th></th><th>מגרף המהירות לגרף הדרך</th><th>מגרף הדרך לגרף המהירות</th></tr><tr><td>פעולה</td><td>שטח מתחת לגרף (אינטגרל)</td><td>שיפוע הגרף (נגזרת)</td></tr><tr><td>נוסחה</td><td>\(x(t)=x_0+\int_0^t v\,dt\)</td><td>\(v(t)=x'(t)=\dfrac{\Delta x}{\Delta t}\)</td></tr><tr><td>יחידות</td><td>\(\mps\cdot\mathrm{s}=\mathrm{m}\)</td><td>\(\dfrac{\mathrm{m}}{\mathrm{s}}\)</td></tr><tr><td>מהירות שלילית</td><td>שטח מתחת לציר — נספר במינוס</td><td>גרף הדרך יורד</td></tr><tr><td>מהירות אפס</td><td>אין שטח — הדרך לא גדלה</td><td>גרף הדרך אופקי</td></tr></table></div>
-<p>ההסבר המלא, עם הנוסחאות והדוגמאות, נמצא בדף <a href="units-07-force-to-distance.html">מכוח למרחק: אינטגרלים ונגזרות</a>. אותה תמונה בדיוק — עם נפח וספיקה — בדף <a href="units-08-pool-filling.html">מילוי בריכה</a>.</p>
+<p>ההסבר המלא, עם הנוסחאות והדוגמאות, נמצא בדף <a href="units-07-force-to-distance.html">מכוח למרחק: אינטגרלים ונגזרות</a>. אותה תמונה בדיוק — עם נפח וספיקה — בדף <a href="units-08-pool-filling.html">מילוי בריכה</a>, ובסימולטורים שלו: <a href="units-11-pool-simulators.html">סימולטורים: נפח וספיקה בבריכה</a>.</p>
 </section>
 
 <script>
+window.SIMCFG={tl:"t (s)",tu:"s",ru:"m/s",au:"m/s²",qu:"m",rl:"v (m/s)",ql:"x (m)",dq:"Δx",rs:"v",qs:"x",visual:"car",
+ presets:{"const":[6,0],"acc":[0,1.5],"brake":[12,-1.2],"back":[6,-1.5]},
+ area:"השטח מתחת לגרף המהירות",slope:"השיפוע של גרף הדרך",qname:"המיקום",
+ signYes:p=>`<b>שימו לב:</b> המהירות החליפה סימן. שטח מתחת לציר (כתום) נספר <b>במינוס</b>, ולכן המיקום ירד. הדרך שעבר בפועל (סכום השטחים בלי סימן) היא <span class="nv">${p} m</span>.`,
+ signNo:p=>`כל השטח מעל הציר, ולכן הדרך שעבר שווה למיקום: <span class="nv">${p} m</span>.`,
+ funcs:{lin:{f:t=>2+t,F:t=>2*t+t*t/2,label:"v(t) = 2 + t"},quad:{f:t=>1+0.15*t*t,F:t=>t+0.05*t*t*t,label:"v(t) = 1 + 0.15t²"},brake:{f:t=>12-1.2*t,F:t=>12*t-0.6*t*t,label:"v(t) = 12 − 1.2t"}},
+ s2unit:"(m/s)·s = m",s2piece:"קטע דרך קטן",seg:[4,8,8,0,-4],
+ s3sum:(f,p)=>`מיקום סופי (סכום השטחים עם סימן): <span class="nv">${f} m</span> · דרך שעבר בפועל (בלי סימן): <span class="nv">${p} m</span>`};
+</script>
+<script>
 (function(){
-const NS="http://www.w3.org/2000/svg";
+const NS="http://www.w3.org/2000/svg";const C=window.SIMCFG;
 let clipN=0;
 function el(tag,a,p){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
 function niceStep(r,n){const raw=r/n,p=Math.pow(10,Math.floor(Math.log10(raw))),f=raw/p;return (f<1.5?1:f<3?2:f<7?5:10)*p;}
@@ -174,7 +184,7 @@ function frame(svg,o){
   else el("line",{x1:L,x2:W-R,y1:Y(o.ymin),y2:Y(o.ymin),stroke:"var(--ink)","stroke-width":1.5},g);
   el("line",{x1:L,x2:L,y1:T,y2:H-B,stroke:"var(--ink)","stroke-width":1.5},g);
   const yl=el("text",{x:L+6,y:T+12,"font-size":13,fill:o.color,"font-weight":700},g);yl.textContent=o.ylabel;
-  const xl=el("text",{x:W-R,y:H-6,"font-size":12,fill:"var(--muted)","text-anchor":"end"},g);xl.textContent="t (s)";
+  const xl=el("text",{x:W-R,y:H-6,"font-size":12,fill:"var(--muted)","text-anchor":"end"},g);xl.textContent=C.tl;
   const id="clip"+(++clipN);const cp=el("clipPath",{id},svg);el("rect",{x:L,y:T,width:W-L-R,height:H-T-B},cp);
   const plot=el("g",{"clip-path":`url(#${id})`},svg);
   return {X,Y,plot,svg,W,H,L,R,T,B};
@@ -193,7 +203,7 @@ function txt(p,x,y,s,a){const t=el("text",Object.assign({x,y,"font-size":13},a||
   const TM=10;
   const q=s=>root.querySelector(s);
   const iv0=q("#s1v0"),ia=q("#s1a"),it=q("#s1t"),play=q("#s1play");
-  const presets={"const":[6,0],"acc":[0,1.5],"brake":[12,-1.2],"back":[6,-1.5]};
+  const presets=C.presets;
   root.querySelectorAll("[data-p]").forEach(b=>b.addEventListener("click",()=>{const [v0,a]=presets[b.dataset.p];iv0.value=v0;ia.value=a;it.value=0;draw();}));
   let timer=null,last=0;
   const stop=()=>{clearInterval(timer);timer=null;play.textContent="▶ הפעלה";};
@@ -205,40 +215,41 @@ function txt(p,x,y,s,a){const t=el("text",Object.assign({x,y,"font-size":13},a||
   [iv0,ia,it].forEach(i=>i.addEventListener("input",draw));
   function draw(){
     const v0=+iv0.value,a=+ia.value,t=+it.value;
-    q("#s1v0o").textContent=fmt(v0)+" m/s";q("#s1ao").textContent=fmt(a)+" m/s²";q("#s1to").textContent=fmt(t,2)+" s";
+    q("#s1v0o").textContent=fmt(v0)+" "+C.ru;q("#s1ao").textContent=fmt(a)+" "+C.au;q("#s1to").textContent=fmt(t,2)+" "+C.tu;
     const v=s=>v0+a*s,x=s=>v0*s+0.5*a*s*s;
     const vs=[],xs=[];for(let i=0;i<=100;i++){const s=TM*i/100;vs.push(v(s));xs.push(x(s));}
     const [vlo,vhi]=range(vs),[xlo,xhi]=range(xs);
     // velocity graph
-    const F=frame(q("#s1gv"),{tmax:TM,ymin:vlo,ymax:vhi,ylabel:"v (m/s)",color:"var(--accent)"});
+    const F=frame(q("#s1gv"),{tmax:TM,ymin:vlo,ymax:vhi,ylabel:C.rl,color:"var(--accent)"});
     if(t>0){shade(F,v,0,t,1,"var(--green)");shade(F,v,0,t,-1,"var(--orange)");}
     el("path",{d:pathOf(v,0,TM,F.X,F.Y),fill:"none",stroke:"var(--accent)","stroke-width":3},F.plot);
     el("line",{x1:F.X(t),x2:F.X(t),y1:F.T,y2:F.H-F.B,stroke:"var(--ink)","stroke-dasharray":"4 4"},F.svg);
     el("circle",{cx:F.X(t),cy:F.Y(v(t)),r:5,fill:"var(--accent)"},F.svg);
     // distance graph
-    const G=frame(q("#s1gx"),{tmax:TM,ymin:xlo,ymax:xhi,ylabel:"x (m)",color:"var(--orange)"});
+    const G=frame(q("#s1gx"),{tmax:TM,ymin:xlo,ymax:xhi,ylabel:C.ql,color:"var(--orange)"});
     el("path",{d:pathOf(x,0,TM,G.X,G.Y),fill:"none",stroke:"var(--orange)","stroke-width":3},G.plot);
     const a1=Math.max(0,t-2),b1=Math.min(TM,t+2);
     el("line",{x1:G.X(a1),y1:G.Y(x(t)+v(t)*(a1-t)),x2:G.X(b1),y2:G.Y(x(t)+v(t)*(b1-t)),stroke:"var(--accent)","stroke-width":2.5},G.plot);
     const dir=t+1<=TM?1:-1,t2=t+dir;
     el("path",{d:`M${G.X(t)},${G.Y(x(t))} L${G.X(t2)},${G.Y(x(t))} L${G.X(t2)},${G.Y(x(t)+dir*v(t))}`,fill:"none",stroke:"var(--accent)","stroke-dasharray":"3 3","stroke-width":1.5},G.plot);
-    txt(G.plot,(G.X(t)+G.X(t2))/2,G.Y(x(t))+(v(t)>=0?15:-6),"Δt = 1 s",{"text-anchor":"middle",fill:"var(--muted)","font-size":12});
-    txt(G.plot,G.X(t2)+(dir>0?4:-4),(G.Y(x(t))+G.Y(x(t)+dir*v(t)))/2+4,"Δx = "+fmt(v(t))+" m",{"text-anchor":dir>0?"start":"end",fill:"var(--accent)","font-size":12});
+    txt(G.plot,(G.X(t)+G.X(t2))/2,G.Y(x(t))+(v(t)>=0?15:-6),"Δt = 1 "+C.tu,{"text-anchor":"middle",fill:"var(--muted)","font-size":12});
+    txt(G.plot,G.X(t2)+(dir>0?4:-4),(G.Y(x(t))+G.Y(x(t)+dir*v(t)))/2+4,C.dq+" = "+fmt(v(t))+" "+C.qu,{"text-anchor":dir>0?"start":"end",fill:"var(--accent)","font-size":12});
     el("line",{x1:G.X(t),x2:G.X(t),y1:G.T,y2:G.H-G.B,stroke:"var(--ink)","stroke-dasharray":"4 4"},G.svg);
     el("circle",{cx:G.X(t),cy:G.Y(x(t)),r:5,fill:"var(--orange)"},G.svg);
     // path length (sum of |area|)
     let path=0;const n=400;for(let i=0;i<n;i++){const s=t*(i+0.5)/n;path+=Math.abs(v(s))*t/n;}
-    q("#s1area").innerHTML=`השטח מתחת לגרף המהירות, מ־0 עד t:<br><span class="nv">${fp(v0)}·${fmt(t,2)} + ½·${fp(a)}·${fmt(t,2)}² = ${fmt(x(t),2)} m</span><br>= המיקום <span class="nv">x(${fmt(t,2)})</span> בגרף השני`;
-    q("#s1slope").innerHTML=`השיפוע של גרף הדרך ברגע t (הישר הכחול):<br><span class="nv">Δx/Δt = ${fmt(v(t),2)} m ÷ 1 s = ${fmt(v(t),2)} m/s</span><br>= הגובה <span class="nv">v(${fmt(t,2)})</span> בגרף הראשון`;
-    q("#s1path").innerHTML=Math.abs(path-Math.abs(x(t)))>0.01?`<b>שימו לב:</b> המהירות החליפה סימן. שטח מתחת לציר (כתום) נספר <b>במינוס</b>, ולכן המיקום ירד. הדרך שעבר בפועל (סכום השטחים בלי סימן) היא <span class="nv">${fmt(path,2)} m</span>.`:`כל השטח מעל הציר, ולכן הדרך שעבר שווה למיקום: <span class="nv">${fmt(path,2)} m</span>.`;
+    q("#s1area").innerHTML=`${C.area}, מ־0 עד t:<br><span class="nv">${fp(v0)}·${fmt(t,2)} + ½·${fp(a)}·${fmt(t,2)}² = ${fmt(x(t),2)} ${C.qu}</span><br>= ${C.qname} <span class="nv">${C.qs}(${fmt(t,2)})</span> בגרף השני`;
+    q("#s1slope").innerHTML=`${C.slope} ברגע t (הישר הכחול):<br><span class="nv">${C.dq}/Δt = ${fmt(v(t),2)} ${C.qu} ÷ 1 ${C.tu} = ${fmt(v(t),2)} ${C.ru}</span><br>= הגובה <span class="nv">${C.rs}(${fmt(t,2)})</span> בגרף הראשון`;
+    q("#s1path").innerHTML=Math.abs(path-Math.abs(x(t)))>0.01?C.signYes(fmt(path,2)):C.signNo(fmt(path,2));
     const car=q("#s1car");car.innerHTML="";
     const W=sizeOf(car)[0],L=46,R=12,XX=p=>L+(W-L-R)*(p-xlo)/(xhi-xlo);
     car.setAttribute("viewBox",`0 0 ${W} 46`);
     el("line",{x1:L,x2:W-R,y1:30,y2:30,stroke:"var(--muted)","stroke-width":2},car);
     for(let p=Math.ceil(xlo/niceStep(xhi-xlo,5))*niceStep(xhi-xlo,5);p<=xhi;p+=niceStep(xhi-xlo,5)){el("line",{x1:XX(p),x2:XX(p),y1:26,y2:34,stroke:"var(--muted)"},car);txt(car,XX(p),45,fmt(p),{"text-anchor":"middle",fill:"var(--muted)","font-size":11});}
-    el("rect",{x:XX(x(t))-14,y:12,width:28,height:14,rx:4,fill:"var(--orange)"},car);
-    el("circle",{cx:XX(x(t))-8,cy:27,r:3.5,fill:"var(--ink)"},car);el("circle",{cx:XX(x(t))+8,cy:27,r:3.5,fill:"var(--ink)"},car);
-    txt(car,W-R,12,"x (m)",{"text-anchor":"end",fill:"var(--muted)","font-size":11});
+    if(C.visual==="car"){el("rect",{x:XX(x(t))-14,y:12,width:28,height:14,rx:4,fill:"var(--orange)"},car);
+    el("circle",{cx:XX(x(t))-8,cy:27,r:3.5,fill:"var(--ink)"},car);el("circle",{cx:XX(x(t))+8,cy:27,r:3.5,fill:"var(--ink)"},car);}
+    else{el("rect",{x:Math.min(XX(0),XX(x(t))),y:8,width:Math.abs(XX(x(t))-XX(0)),height:20,rx:3,fill:"var(--accent)",opacity:0.5},car);el("line",{x1:XX(x(t)),x2:XX(x(t)),y1:4,y2:30,stroke:"var(--accent)","stroke-width":3},car);}
+    txt(car,W-R,12,C.ql,{"text-anchor":"end",fill:"var(--muted)","font-size":11});
   }
   draw();redraws.push(draw);
 })();
@@ -247,11 +258,7 @@ function txt(p,x,y,s,a){const t=el("text",Object.assign({x,y,"font-size":13},a||
 (function(){
   const root=document.getElementById("sim2");if(!root)return;
   const TM=10,q=s=>root.querySelector(s);
-  const funcs={
-    lin:{f:t=>2+t,F:t=>2*t+t*t/2,label:"v(t) = 2 + t"},
-    quad:{f:t=>1+0.15*t*t,F:t=>t+0.05*t*t*t,label:"v(t) = 1 + 0.15t²"},
-    brake:{f:t=>12-1.2*t,F:t=>12*t-0.6*t*t,label:"v(t) = 12 − 1.2t"}
-  };
+  const funcs=C.funcs;
   let cur="lin",mode="left";
   root.querySelectorAll("[data-f]").forEach(b=>b.addEventListener("click",()=>{cur=b.dataset.f;root.querySelectorAll("[data-f]").forEach(x=>x.classList.toggle("on",x===b));draw();}));
   root.querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>{mode=b.dataset.m;root.querySelectorAll("[data-m]").forEach(x=>x.classList.toggle("on",x===b));draw();}));
@@ -259,15 +266,15 @@ function txt(p,x,y,s,a){const t=el("text",Object.assign({x,y,"font-size":13},a||
   function draw(){
     const n=+inn.value,{f,F,label}=funcs[cur],dt=TM/n;q("#s2no").textContent=n+" (Δt = "+fmt(dt,3)+" s)";
     const vs=[];for(let i=0;i<=100;i++)vs.push(f(TM*i/100));const [lo,hi]=range(vs);
-    const G=frame(q("#s2g"),{tmax:TM,ymin:lo,ymax:hi,ylabel:"v (m/s)",color:"var(--accent)"});
+    const G=frame(q("#s2g"),{tmax:TM,ymin:lo,ymax:hi,ylabel:C.rl,color:"var(--accent)"});
     let sum=0;
     for(let i=0;i<n;i++){const a=i*dt,s=mode==="left"?a:mode==="mid"?a+dt/2:a+dt;const h=f(s);sum+=h*dt;
       el("rect",{x:G.X(a),y:Math.min(G.Y(h),G.Y(0)),width:G.X(a+dt)-G.X(a),height:Math.abs(G.Y(h)-G.Y(0)),fill:"var(--green)",opacity:0.3,stroke:"var(--green)","stroke-width":n>30?0.5:1.2},G.plot);}
     el("path",{d:pathOf(f,0,TM,G.X,G.Y),fill:"none",stroke:"var(--accent)","stroke-width":3},G.plot);
     txt(G.svg,G.W-G.R-4,G.T+14,label,{"text-anchor":"end",fill:"var(--accent)","font-weight":700});
     const ex=F(TM)-F(0);
-    q("#s2sum").innerHTML=`סכום ${n} המלבנים:<br><span class="nv">Σ v·Δt = ${fmt(sum,2)} m</span><br>כל מלבן: <span class="nv">(m/s)·s = m</span> — קטע דרך קטן`;
-    q("#s2ex").innerHTML=`השטח המדויק (אינטגרל):<br><span class="nv">${fmt(ex,2)} m</span><br>הפרש: <span class="nv">${fmt(Math.abs(sum-ex),3)} m</span>`;
+    q("#s2sum").innerHTML=`סכום ${n} המלבנים:<br><span class="nv">Σ ${C.rs}·Δt = ${fmt(sum,2)} ${C.qu}</span><br>כל מלבן: <span class="nv">${C.s2unit}</span> — ${C.s2piece}`;
+    q("#s2ex").innerHTML=`השטח המדויק (אינטגרל):<br><span class="nv">${fmt(ex,2)} ${C.qu}</span><br>הפרש: <span class="nv">${fmt(Math.abs(sum-ex),3)} ${C.qu}</span>`;
   }
   draw();redraws.push(draw);
 })();
@@ -278,19 +285,19 @@ function txt(p,x,y,s,a){const t=el("text",Object.assign({x,y,"font-size":13},a||
   const q=s=>root.querySelector(s),NSEG=5,D=2,TM=NSEG*D;
   const ins=[...root.querySelectorAll("input.seg")];
   ins.forEach(i=>i.addEventListener("input",draw));
-  q("#s3reset").addEventListener("click",()=>{[4,8,8,0,-4].forEach((v,k)=>ins[k].value=v);draw();});
+  q("#s3reset").addEventListener("click",()=>{C.seg.forEach((v,k)=>ins[k].value=v);draw();});
   function draw(){
-    const vs=ins.map(i=>+i.value);ins.forEach((i,k)=>root.querySelector("#s3o"+k).textContent=fmt(vs[k])+" m/s");
+    const vs=ins.map(i=>+i.value);ins.forEach((i,k)=>root.querySelector("#s3o"+k).textContent=fmt(vs[k])+" "+C.ru);
     const xs=[0];vs.forEach(v=>xs.push(xs[xs.length-1]+v*D));
     const [vlo,vhi]=range(vs),[xlo,xhi]=range(xs);
-    const F=frame(q("#s3gv"),{tmax:TM,ymin:vlo,ymax:vhi,ylabel:"v (m/s)",color:"var(--accent)"});
+    const F=frame(q("#s3gv"),{tmax:TM,ymin:vlo,ymax:vhi,ylabel:C.rl,color:"var(--accent)"});
     let d="";
     vs.forEach((v,k)=>{const a=k*D,b=a+D;
       el("rect",{x:F.X(a),y:Math.min(F.Y(v),F.Y(0)),width:F.X(b)-F.X(a),height:Math.abs(F.Y(v)-F.Y(0)),fill:v>=0?"var(--green)":"var(--orange)",opacity:0.32},F.plot);
-      if(Math.abs(v*D)>0.01)txt(F.plot,(F.X(a)+F.X(b))/2,(F.Y(v)+F.Y(0))/2+4,(v*D>0?"+":"")+fmt(v*D)+" m",{"text-anchor":"middle",fill:"var(--ink)","font-weight":700});
+      if(Math.abs(v*D)>0.01)txt(F.plot,(F.X(a)+F.X(b))/2,(F.Y(v)+F.Y(0))/2+4,(v*D>0?"+":"")+fmt(v*D)+" "+C.qu,{"text-anchor":"middle",fill:"var(--ink)","font-weight":700});
       d+=(k?"L":"M")+F.X(a)+","+F.Y(v)+"L"+F.X(b)+","+F.Y(v);});
     el("path",{d,fill:"none",stroke:"var(--accent)","stroke-width":3},F.plot);
-    const G=frame(q("#s3gx"),{tmax:TM,ymin:xlo,ymax:xhi,ylabel:"x (m)",color:"var(--orange)"});
+    const G=frame(q("#s3gx"),{tmax:TM,ymin:xlo,ymax:xhi,ylabel:C.ql,color:"var(--orange)"});
     let dx="";xs.forEach((x,k)=>{dx+=(k?"L":"M")+G.X(k*D)+","+G.Y(x);});
     el("path",{d:dx,fill:"none",stroke:"var(--orange)","stroke-width":3},G.plot);
     xs.forEach((x,k)=>el("circle",{cx:G.X(k*D),cy:G.Y(x),r:3.5,fill:"var(--orange)"},G.plot));
@@ -299,12 +306,12 @@ function txt(p,x,y,s,a){const t=el("text",Object.assign({x,y,"font-size":13},a||
     let rows="";let path=0;
     vs.forEach((v,k)=>{path+=Math.abs(v*D);rows+=`<tr><td>${k*D}–${k*D+D}</td><td class="nv">${fmt(v)}</td><td class="nv">${D}</td><td class="nv">${fmt(v*D)}</td><td class="nv">${fmt(xs[k+1])}</td></tr>`;});
     q("#s3tb").innerHTML=rows;
-    q("#s3sum").innerHTML=`מיקום סופי (סכום השטחים עם סימן): <span class="nv">${fmt(xs[NSEG])} m</span> · דרך שעבר בפועל (בלי סימן): <span class="nv">${fmt(path)} m</span>`;
+    q("#s3sum").innerHTML=C.s3sum(fmt(xs[NSEG]),fmt(path));
   }
   draw();redraws.push(draw);
 })();
 })();
-</script><div class="pager"><a href="units-09-equations-sheet.html">→ דף משוואות להדפסה: תנועה בקו ישר ותנועה מעגלית</a><a href="units-05-workbook.html">חוברת תרגול — יחידות ותנועה ←</a></div>
+</script><div class="pager"><a href="units-09-equations-sheet.html">→ דף משוואות להדפסה: תנועה בקו ישר ותנועה מעגלית</a><a href="units-11-pool-simulators.html">סימולטורים: נפח וספיקה בבריכה ←</a></div>
 <footer>אתר המתמטיקה של כיתה י״א · קבוצת "יחידות ומשוואות תנועה"</footer>
 </div>
 <script>
