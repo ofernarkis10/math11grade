@@ -116,6 +116,7 @@ details.sol summary{cursor:pointer;color:var(--accent);font-weight:700;width:fit
 details.sol > div{margin-top:8px;display:flex;flex-direction:column;gap:8px}
 .ex{border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
 .ex .qno{font-weight:700;color:var(--accent)}
+.small{color:var(--muted);font-size:.88rem;margin-top:-8px}
 </style>
 <!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
@@ -137,11 +138,11 @@ td .m .katex{font-size:1.2em}
 <div class="wrap">
 <a class="back" href="index.html#geometry">→ חזרה לנושא: גאומטריה אוקלידית</a>
 <header>
-  <span class="eyebrow">מתמטיקה · 5 יחידות · גאומטריה אוקלידית · נושא 1 מתוך 4</span>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · גאומטריה אוקלידית · נושא 2 מתוך 6</span>
   <h1>חפיפת משולשים</h1>
-  <p class="lead">נקודת ההתחלה של רוב ההוכחות בגאומטריה. מה פירוש "משולשים חופפים", שלושת משפטי החפיפה (צ.ז.צ, ז.צ.ז, צ.צ.צ), מה לא מספיק כדי להוכיח חפיפה, ואיך כותבים הוכחה מסודרת בטבלה של טענה ונימוק. בסוף: ארבע דוגמאות פתורות ושמונה תרגילים עם פתרון מפורט. לפני הדף הזה כדאי לקרוא את <a href="geometry-00-deductive-system.html">מערכת היסקית</a>.</p>
+  <p class="lead">נקודת ההתחלה של רוב ההוכחות בגאומטריה. מה פירוש "משולשים חופפים", שלושת משפטי החפיפה (צלע זווית צלע, זווית צלע זווית, צלע צלע צלע), מה לא מספיק כדי להוכיח חפיפה, ואיך כותבים הוכחה מסודרת בטבלה של טענה ונימוק. בסוף: ארבע דוגמאות פתורות ושמונה תרגילים עם פתרון מפורט. לפני הדף הזה כדאי לקרוא את <a href="geometry-00-deductive-system.html">מערכת היסקית</a> ואת <a href="geometry-00a-angles-parallels.html">זוויות וישרים מקבילים</a>.</p>
 </header>
-<nav class="pages" aria-label="דפי הנושא"><a href="geometry-00-deductive-system.html">0. מערכת היסקית</a><span aria-current="page">1. חפיפת משולשים</span><a href="geometry-00c-congruence-simulations.html">2. סימולציות חפיפה</a><a href="geometry-01-loci-triangle-centers.html">3. מקומות גאומטריים ונקודות מיוחדות</a><a href="geometry-02-circle.html">4. המעגל</a><a href="geometry-03-similarity.html">5. פרופורציה ודמיון</a><a href="geometry-04-concepts-theorems.html">6. מושגים ומשפטים</a><a href="geometry-05-formula-sheet.html">7. דף נוסחאות</a><a href="geometry-06-formula-questions.html">8. שאלות על דף הנוסחאות</a></nav>
+<nav class="pages" aria-label="דפי הנושא"><a href="geometry-00-deductive-system.html">0. מערכת היסקית</a><a href="geometry-00a-angles-parallels.html">1. זוויות וישרים מקבילים</a><span aria-current="page">2. חפיפת משולשים</span><a href="geometry-00b2-congruence-questions.html">3. שאלות על חפיפה</a><a href="geometry-00c-congruence-simulations.html">4. סימולציות חפיפה ודמיון</a><a href="geometry-00d-quadrilaterals.html">5. מרובעים</a><a href="geometry-01-loci-triangle-centers.html">6. מקומות גאומטריים ונקודות מיוחדות</a><a href="geometry-02-circle.html">7. המעגל</a><a href="geometry-03-similarity.html">8. פרופורציה ודמיון</a><a href="geometry-04-concepts-theorems.html">9. מושגים ומשפטים</a><a href="geometry-05-formula-sheet.html">10. דף נוסחאות</a><a href="geometry-06-formula-questions.html">11. שאלות על דף הנוסחאות</a></nav>
 <nav class="toc" aria-label="תוכן"><strong>תוכן</strong><ol>
   <li><a href="#def">מהי חפיפה</a></li>
   <li><a href="#theorems">שלושת משפטי החפיפה</a></li>
@@ -174,29 +175,33 @@ td .m .katex{font-size:1.2em}
 
 <section class="ch" id="theorems">
   <h2>2. שלושת משפטי החפיפה</h2>
-  <p class="note"><strong>המחשה:</strong> בדף <a href="geometry-00c-congruence-simulations.html">סימולציות חפיפה</a> בונים את המשולש מהנתונים של כל משפט, צעד אחר צעד, ורואים שאפשר לבנות משולש אחד בלבד. שם רואים גם למה צ.צ.ז מול הצלע הקטנה וז.ז.ז לא מספיקים.</p>
+  <p class="note"><strong>קיצורים:</strong> את שמות המשפטים מקצרים לפי סדר הנתונים לאורך המשולש: צ.ז.צ = צלע זווית צלע, ז.צ.ז = זווית צלע זווית, צ.צ.צ = צלע צלע צלע. בהוכחות כותבים בדרך כלל את הקיצור.</p>
+  <p class="note"><strong>המחשה:</strong> בדף <a href="geometry-00c-congruence-simulations.html">סימולציות חפיפה ודמיון</a> בונים את המשולש מהנתונים של כל משפט, צעד אחר צעד, ורואים שאפשר לבנות משולש אחד בלבד. שם רואים גם למה צלע צלע זווית (כשהזווית מול הצלע הקטנה) וזווית זווית זווית לא מספיקים.</p>
   <p>בשרטוטים: קווים קטנים מסמנים צלעות שוות (אותו מספר קווים = אותו אורך), וקשתות מסמנות זוויות שוות.</p>
 
-  <h3>צ.ז.צ: צלע, זווית, צלע</h3>
+  <h3>צלע זווית צלע</h3>
+  <p class="small">בקיצור: צ.ז.צ</p>
   <div class="figcol"><div>
     <div class="thm"><span class="tag">משפט</span><p>אם שתי צלעות <strong>והזווית שביניהן</strong> במשולש אחד שוות לשתי צלעות ולזווית שביניהן במשולש אחר, המשולשים חופפים.</p></div>
     <p>כאן: <span class="m">\(AB = DE\)</span>, <span class="m">\(AC = DF\)</span> ו־<span class="m">\(\angle A = \angle D\)</span>. הזווית חייבת להיות <strong>כלואה</strong> בין שתי הצלעות.</p>
-  </div><figure class="fig"><svg viewBox="0 45 400 175" style="max-width:380px" role="img" aria-label="חפיפה לפי צלע זווית צלע"><polygon class="ln" points="30,190 170,190 75,70"/><circle class="pt" cx="30" cy="190" r="3"/><text class="" x="16.6" y="203.7">A</text><circle class="pt" cx="170" cy="190" r="3"/><text class="" x="184.2" y="202.3">B</text><circle class="pt" cx="75" cy="70" r="3"/><text class="" x="71.7" y="59.3">C</text><polygon class="ln" points="230,190 370,190 275,70"/><circle class="pt" cx="230" cy="190" r="3"/><text class="" x="216.6" y="203.7">D</text><circle class="pt" cx="370" cy="190" r="3"/><text class="" x="384.2" y="202.3">E</text><circle class="pt" cx="275" cy="70" r="3"/><text class="" x="271.7" y="59.3">F</text><line class="mk" x1="100.0" y1="184.0" x2="100.0" y2="196.0"/><line class="mk" x1="300.0" y1="184.0" x2="300.0" y2="196.0"/><line class="mk" x1="46.0" y1="130.2" x2="57.2" y2="134.4"/><line class="mk" x1="47.8" y1="125.6" x2="59.0" y2="129.8"/><line class="mk" x1="246.0" y1="130.2" x2="257.2" y2="134.4"/><line class="mk" x1="247.8" y1="125.6" x2="259.0" y2="129.8"/><path class="mk" d="M52.0,190.0 A22,22 0 0 0 37.7,169.4"/><path class="mk" d="M252.0,190.0 A22,22 0 0 0 237.7,169.4"/></svg><figcaption>צ.ז.צ</figcaption></figure></div>
+  </div><figure class="fig"><svg viewBox="0 45 400 175" style="max-width:380px" role="img" aria-label="חפיפה לפי צלע זווית צלע"><polygon class="ln" points="30,190 170,190 75,70"/><circle class="pt" cx="30" cy="190" r="3"/><text class="" x="16.6" y="203.7">A</text><circle class="pt" cx="170" cy="190" r="3"/><text class="" x="184.2" y="202.3">B</text><circle class="pt" cx="75" cy="70" r="3"/><text class="" x="71.7" y="59.3">C</text><polygon class="ln" points="230,190 370,190 275,70"/><circle class="pt" cx="230" cy="190" r="3"/><text class="" x="216.6" y="203.7">D</text><circle class="pt" cx="370" cy="190" r="3"/><text class="" x="384.2" y="202.3">E</text><circle class="pt" cx="275" cy="70" r="3"/><text class="" x="271.7" y="59.3">F</text><line class="mk" x1="100.0" y1="184.0" x2="100.0" y2="196.0"/><line class="mk" x1="300.0" y1="184.0" x2="300.0" y2="196.0"/><line class="mk" x1="46.0" y1="130.2" x2="57.2" y2="134.4"/><line class="mk" x1="47.8" y1="125.6" x2="59.0" y2="129.8"/><line class="mk" x1="246.0" y1="130.2" x2="257.2" y2="134.4"/><line class="mk" x1="247.8" y1="125.6" x2="259.0" y2="129.8"/><path class="mk" d="M52.0,190.0 A22,22 0 0 0 37.7,169.4"/><path class="mk" d="M252.0,190.0 A22,22 0 0 0 237.7,169.4"/></svg><figcaption>צלע זווית צלע</figcaption></figure></div>
 
-  <h3>ז.צ.ז: זווית, צלע, זווית</h3>
+  <h3>זווית צלע זווית</h3>
+  <p class="small">בקיצור: ז.צ.ז</p>
   <div class="figcol"><div>
     <div class="thm"><span class="tag">משפט</span><p>אם צלע <strong>ושתי הזוויות שלידה</strong> במשולש אחד שוות לצלע ולשתי הזוויות שלידה במשולש אחר, המשולשים חופפים.</p></div>
     <p>כאן: <span class="m">\(AB = DE\)</span>, <span class="m">\(\angle A = \angle D\)</span> ו־<span class="m">\(\angle B = \angle E\)</span>. אם ידועות שתי זוויות כלשהן ועוד צלע, אפשר לחשב את הזווית השלישית ולהגיע למבנה של ז.צ.ז, בתנאי שהצלעות מתאימות (מול אותן זוויות).</p>
-  </div><figure class="fig"><svg viewBox="0 45 400 175" style="max-width:380px" role="img" aria-label="חפיפה לפי זווית צלע זווית"><polygon class="ln" points="30,190 170,190 75,70"/><circle class="pt" cx="30" cy="190" r="3"/><text class="" x="16.6" y="203.7">A</text><circle class="pt" cx="170" cy="190" r="3"/><text class="" x="184.2" y="202.3">B</text><circle class="pt" cx="75" cy="70" r="3"/><text class="" x="71.7" y="59.3">C</text><polygon class="ln" points="230,190 370,190 275,70"/><circle class="pt" cx="230" cy="190" r="3"/><text class="" x="216.6" y="203.7">D</text><circle class="pt" cx="370" cy="190" r="3"/><text class="" x="384.2" y="202.3">E</text><circle class="pt" cx="275" cy="70" r="3"/><text class="" x="271.7" y="59.3">F</text><line class="mk" x1="100.0" y1="184.0" x2="100.0" y2="196.0"/><line class="mk" x1="300.0" y1="184.0" x2="300.0" y2="196.0"/><path class="mk" d="M52.0,190.0 A22,22 0 0 0 37.7,169.4"/><path class="mk" d="M252.0,190.0 A22,22 0 0 0 237.7,169.4"/><path class="mk" d="M148.0,190.0 A22,22 0 0 1 156.3,172.8"/><path class="mk" d="M143.0,190.0 A27,27 0 0 1 153.2,168.8"/><path class="mk" d="M348.0,190.0 A22,22 0 0 1 356.3,172.8"/><path class="mk" d="M343.0,190.0 A27,27 0 0 1 353.2,168.8"/></svg><figcaption>ז.צ.ז</figcaption></figure></div>
+  </div><figure class="fig"><svg viewBox="0 45 400 175" style="max-width:380px" role="img" aria-label="חפיפה לפי זווית צלע זווית"><polygon class="ln" points="30,190 170,190 75,70"/><circle class="pt" cx="30" cy="190" r="3"/><text class="" x="16.6" y="203.7">A</text><circle class="pt" cx="170" cy="190" r="3"/><text class="" x="184.2" y="202.3">B</text><circle class="pt" cx="75" cy="70" r="3"/><text class="" x="71.7" y="59.3">C</text><polygon class="ln" points="230,190 370,190 275,70"/><circle class="pt" cx="230" cy="190" r="3"/><text class="" x="216.6" y="203.7">D</text><circle class="pt" cx="370" cy="190" r="3"/><text class="" x="384.2" y="202.3">E</text><circle class="pt" cx="275" cy="70" r="3"/><text class="" x="271.7" y="59.3">F</text><line class="mk" x1="100.0" y1="184.0" x2="100.0" y2="196.0"/><line class="mk" x1="300.0" y1="184.0" x2="300.0" y2="196.0"/><path class="mk" d="M52.0,190.0 A22,22 0 0 0 37.7,169.4"/><path class="mk" d="M252.0,190.0 A22,22 0 0 0 237.7,169.4"/><path class="mk" d="M148.0,190.0 A22,22 0 0 1 156.3,172.8"/><path class="mk" d="M143.0,190.0 A27,27 0 0 1 153.2,168.8"/><path class="mk" d="M348.0,190.0 A22,22 0 0 1 356.3,172.8"/><path class="mk" d="M343.0,190.0 A27,27 0 0 1 353.2,168.8"/></svg><figcaption>זווית צלע זווית</figcaption></figure></div>
 
-  <h3>צ.צ.צ: צלע, צלע, צלע</h3>
+  <h3>צלע צלע צלע</h3>
+  <p class="small">בקיצור: צ.צ.צ</p>
   <div class="figcol"><div>
     <div class="thm"><span class="tag">משפט</span><p>אם שלוש הצלעות של משולש אחד שוות לשלוש הצלעות של משולש אחר, המשולשים חופפים.</p></div>
     <p>כאן: <span class="m">\(AB = DE\)</span>, <span class="m">\(AC = DF\)</span> ו־<span class="m">\(BC = EF\)</span>. שלוש צלעות קובעות את המשולש באופן יחיד, וזו הסיבה שמשולש הוא צורה "קשיחה".</p>
-  </div><figure class="fig"><svg viewBox="0 45 400 175" style="max-width:380px" role="img" aria-label="חפיפה לפי שלוש צלעות"><polygon class="ln" points="30,190 170,190 75,70"/><circle class="pt" cx="30" cy="190" r="3"/><text class="" x="16.6" y="203.7">A</text><circle class="pt" cx="170" cy="190" r="3"/><text class="" x="184.2" y="202.3">B</text><circle class="pt" cx="75" cy="70" r="3"/><text class="" x="71.7" y="59.3">C</text><polygon class="ln" points="230,190 370,190 275,70"/><circle class="pt" cx="230" cy="190" r="3"/><text class="" x="216.6" y="203.7">D</text><circle class="pt" cx="370" cy="190" r="3"/><text class="" x="384.2" y="202.3">E</text><circle class="pt" cx="275" cy="70" r="3"/><text class="" x="271.7" y="59.3">F</text><line class="mk" x1="100.0" y1="184.0" x2="100.0" y2="196.0"/><line class="mk" x1="300.0" y1="184.0" x2="300.0" y2="196.0"/><line class="mk" x1="46.0" y1="130.2" x2="57.2" y2="134.4"/><line class="mk" x1="47.8" y1="125.6" x2="59.0" y2="129.8"/><line class="mk" x1="246.0" y1="130.2" x2="257.2" y2="134.4"/><line class="mk" x1="247.8" y1="125.6" x2="259.0" y2="129.8"/><line class="mk" x1="120.9" y1="137.6" x2="130.3" y2="130.2"/><line class="mk" x1="117.8" y1="133.7" x2="127.2" y2="126.3"/><line class="mk" x1="114.7" y1="129.8" x2="124.1" y2="122.4"/><line class="mk" x1="320.9" y1="137.6" x2="330.3" y2="130.2"/><line class="mk" x1="317.8" y1="133.7" x2="327.2" y2="126.3"/><line class="mk" x1="314.7" y1="129.8" x2="324.1" y2="122.4"/></svg><figcaption>צ.צ.צ</figcaption></figure></div>
+  </div><figure class="fig"><svg viewBox="0 45 400 175" style="max-width:380px" role="img" aria-label="חפיפה לפי שלוש צלעות"><polygon class="ln" points="30,190 170,190 75,70"/><circle class="pt" cx="30" cy="190" r="3"/><text class="" x="16.6" y="203.7">A</text><circle class="pt" cx="170" cy="190" r="3"/><text class="" x="184.2" y="202.3">B</text><circle class="pt" cx="75" cy="70" r="3"/><text class="" x="71.7" y="59.3">C</text><polygon class="ln" points="230,190 370,190 275,70"/><circle class="pt" cx="230" cy="190" r="3"/><text class="" x="216.6" y="203.7">D</text><circle class="pt" cx="370" cy="190" r="3"/><text class="" x="384.2" y="202.3">E</text><circle class="pt" cx="275" cy="70" r="3"/><text class="" x="271.7" y="59.3">F</text><line class="mk" x1="100.0" y1="184.0" x2="100.0" y2="196.0"/><line class="mk" x1="300.0" y1="184.0" x2="300.0" y2="196.0"/><line class="mk" x1="46.0" y1="130.2" x2="57.2" y2="134.4"/><line class="mk" x1="47.8" y1="125.6" x2="59.0" y2="129.8"/><line class="mk" x1="246.0" y1="130.2" x2="257.2" y2="134.4"/><line class="mk" x1="247.8" y1="125.6" x2="259.0" y2="129.8"/><line class="mk" x1="120.9" y1="137.6" x2="130.3" y2="130.2"/><line class="mk" x1="117.8" y1="133.7" x2="127.2" y2="126.3"/><line class="mk" x1="114.7" y1="129.8" x2="124.1" y2="122.4"/><line class="mk" x1="320.9" y1="137.6" x2="330.3" y2="130.2"/><line class="mk" x1="317.8" y1="133.7" x2="327.2" y2="126.3"/><line class="mk" x1="314.7" y1="129.8" x2="324.1" y2="122.4"/></svg><figcaption>צלע צלע צלע</figcaption></figure></div>
 
-  <h3>ומשפט רביעי</h3>
-  <p>יש גם משפט חפיפה רביעי, <strong>צ.צ.ז</strong>: שתי צלעות והזווית שמול הגדולה מביניהן. לומדים אותו בדף <a href="geometry-01-loci-triangle-centers.html#congruence">מקומות גאומטריים ונקודות מיוחדות</a>. מקרה פרטי שלו: שני משולשים ישרי זווית עם יתר וניצב שווים חופפים.</p>
+  <h3>ומשפט רביעי: צלע צלע זווית</h3>
+  <p>יש גם משפט חפיפה רביעי, <strong>צלע צלע זווית</strong> (בקיצור צ.צ.ז): שתי צלעות והזווית שמול הגדולה מביניהן. לומדים אותו בדף <a href="geometry-01-loci-triangle-centers.html#congruence">מקומות גאומטריים ונקודות מיוחדות</a>. מקרה פרטי שלו: שני משולשים ישרי זווית עם יתר וניצב שווים חופפים.</p>
 </section>
 
 <section class="ch" id="notenough">
@@ -204,9 +209,9 @@ td .m .katex{font-size:1.2em}
   <div class="tablebox"><table>
     <thead><tr><th>נתונים</th><th>מספיק לחפיפה?</th><th>למה</th></tr></thead>
     <tbody>
-      <tr><td><strong>ז.ז.ז</strong> (שלוש זוויות)</td><td>לא</td><td>משולשים עם אותן זוויות יכולים להיות בגדלים שונים. הם דומים, לא בהכרח חופפים.</td></tr>
-      <tr><td><strong>צ.צ.ז</strong> כשהזווית מול הצלע <strong>הקטנה</strong></td><td>לא</td><td>ייתכנו שני משולשים שונים עם אותם נתונים.</td></tr>
-      <tr><td><strong>צ.ז.צ</strong> כשהזווית <strong>לא</strong> בין הצלעות</td><td>לא כמשפט צ.ז.צ</td><td>זה בעצם המבנה של צ.צ.ז, ותלוי איזו צלע גדולה יותר.</td></tr>
+      <tr><td><strong>זווית זווית זווית</strong> (שלוש זוויות)</td><td>לא</td><td>משולשים עם אותן זוויות יכולים להיות בגדלים שונים. הם דומים, לא בהכרח חופפים.</td></tr>
+      <tr><td><strong>צלע צלע זווית</strong> כשהזווית מול הצלע <strong>הקטנה</strong></td><td>לא</td><td>ייתכנו שני משולשים שונים עם אותם נתונים.</td></tr>
+      <tr><td><strong>צלע זווית צלע</strong> כשהזווית <strong>לא</strong> בין הצלעות</td><td>לא כמשפט צלע זווית צלע</td><td>זה בעצם המבנה של צלע צלע זווית, ותלוי איזו צלע גדולה יותר.</td></tr>
       <tr><td>שני נתונים בלבד</td><td>לא</td><td>כל משפטי החפיפה דורשים שלושה נתונים מתאימים, ולפחות אחד מהם צלע.</td></tr>
     </tbody>
   </table></div>
@@ -228,7 +233,7 @@ td .m .katex{font-size:1.2em}
 
 <section class="ch" id="examples">
   <h2>5. דוגמאות פתורות</h2>
-  <div class="example"><span class="tag">דוגמה 1 (צ.ז.צ): זוויות הבסיס במשולש שווה שוקיים</span>
+  <div class="example"><span class="tag">דוגמה 1 (צלע זווית צלע): זוויות הבסיס במשולש שווה שוקיים</span>
   <div class="figrow"><div>
     <p><strong>נתון:</strong> <span class="m">\(AB = AC\)</span>, ו־<span class="m">\(AD\)</span> חוצה את הזווית <span class="m">\(A\)</span> (<span class="m">\(D\)</span> על <span class="m">\(BC\)</span>).</p>
     <p><strong>צריך להוכיח:</strong> <span class="m">\(\angle B = \angle C\)</span>.</p>
@@ -237,7 +242,7 @@ td .m .katex{font-size:1.2em}
   <p>מאותה חפיפה נובע גם <span class="m">\(BD = DC\)</span>, כלומר <span class="m">\(AD\)</span> הוא גם תיכון. בנוסף <span class="m">\(\angle ADB = \angle ADC\)</span>, והן צמודות, ולכן כל אחת מהן <span class="m">\(90^\circ\)</span>: <span class="m">\(AD\)</span> הוא גם גובה.</p>
 </div>
 
-  <div class="example"><span class="tag">דוגמה 2 (צ.ז.צ): קטעים שחוצים זה את זה</span>
+  <div class="example"><span class="tag">דוגמה 2 (צלע זווית צלע): קטעים שחוצים זה את זה</span>
   <div class="figrow"><div>
     <p><strong>נתון:</strong> הקטעים <span class="m">\(AB\)</span> ו־<span class="m">\(CD\)</span> נחתכים בנקודה <span class="m">\(O\)</span>, ו־<span class="m">\(O\)</span> אמצע של שניהם.</p>
     <p><strong>צריך להוכיח:</strong> <span class="m">\(AC = BD\)</span> ו־<span class="m">\(AC \parallel BD\)</span>.</p>
@@ -246,7 +251,7 @@ td .m .katex{font-size:1.2em}
   
 </div>
 
-  <div class="example"><span class="tag">דוגמה 3 (ז.צ.ז): ישרים מקבילים</span>
+  <div class="example"><span class="tag">דוגמה 3 (זווית צלע זווית): ישרים מקבילים</span>
   <div class="figrow"><div>
     <p><strong>נתון:</strong> <span class="m">\(AB \parallel CD\)</span>. הקטעים <span class="m">\(AD\)</span> ו־<span class="m">\(BC\)</span> נחתכים בנקודה <span class="m">\(M\)</span>, ו־<span class="m">\(M\)</span> אמצע <span class="m">\(AD\)</span>.</p>
     <p><strong>צריך להוכיח:</strong> <span class="m">\(M\)</span> אמצע <span class="m">\(BC\)</span>.</p>
@@ -255,7 +260,7 @@ td .m .katex{font-size:1.2em}
   <p>בדקו את ההתאמה: <span class="m">\(BM\)</span> נמצאת מול <span class="m">\(\angle A\)</span>, ו־<span class="m">\(MC\)</span> מול <span class="m">\(\angle D\)</span>. הזוויות האלה שוות (טענה 2), ולכן הצלעות מתאימות.</p>
 </div>
 
-  <div class="example"><span class="tag">דוגמה 4 (צ.צ.צ): האלכסון הראשי בדלתון</span>
+  <div class="example"><span class="tag">דוגמה 4 (צלע צלע צלע): האלכסון הראשי בדלתון</span>
   <div class="figrow"><div>
     <p><strong>נתון:</strong> במרובע <span class="m">\(ABCD\)</span>: <span class="m">\(AB = AD\)</span> ו־<span class="m">\(CB = CD\)</span> (דלתון).</p>
     <p><strong>צריך להוכיח:</strong> <span class="m">\(AC\)</span> חוצה את הזווית <span class="m">\(A\)</span> ואת הזווית <span class="m">\(C\)</span>.</p>
@@ -268,6 +273,7 @@ td .m .katex{font-size:1.2em}
 <section class="ch" id="practice">
   <h2>6. תרגול</h2>
   <p>נסו לפתור לבד, ורק אחר כך פתחו את הפתרון. בכל פתרון מופיעים התשובה ודרך הפתרון המלאה.</p>
+  <p class="note"><strong>עוד תרגול:</strong> בדף <a href="geometry-00b2-congruence-questions.html">שאלות על חפיפת משולשים</a> יש 26 שאלות בחמש רמות קושי, מזיהוי משפט ועד שאלות אתגר.</p>
   <div class="ex" id="p1"><p><span class="qno">1.</span> במשולשים <span class="m">\(ABC\)</span> ו־<span class="m">\(DEF\)</span> נתון <span class="m">\(AB = DE = 5\)</span>, <span class="m">\(BC = EF = 7\)</span> ו־<span class="m">\(\angle B = \angle E = 40^\circ\)</span>. האם המשולשים חופפים? אם כן, לפי איזה משפט, ואיזו צלע שווה ל־<span class="m">\(AC\)</span>?</p>
   <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p>כן, לפי צ.ז.צ. <span class="m">\(AC = DF\)</span>.</p></div><p><strong>דרך הפתרון:</strong></p><p>הזווית <span class="m">\(\angle B\)</span> כלואה בין הצלעות <span class="m">\(AB\)</span> ו־<span class="m">\(BC\)</span>, והזווית <span class="m">\(\angle E\)</span> כלואה בין <span class="m">\(DE\)</span> ו־<span class="m">\(EF\)</span>. לכן יש שתי צלעות והזווית שביניהן: צ.ז.צ.</p><p>ההתאמה היא <span class="m">\(A \leftrightarrow D,\ B \leftrightarrow E,\ C \leftrightarrow F\)</span>, וכותבים <span class="m">\(\triangle ABC \cong \triangle DEF\)</span>.</p><p><span class="m">\(AC\)</span> נמצאת מול <span class="m">\(\angle B\)</span>, ולכן היא מתאימה לצלע שמול <span class="m">\(\angle E\)</span>, כלומר <span class="m">\(DF\)</span>.</p></div></details></div>
 <div class="ex" id="p2"><p><span class="qno">2.</span> נתון <span class="m">\(AB = DE\)</span>, <span class="m">\(\angle A = \angle D\)</span> ו־<span class="m">\(\angle B = \angle E\)</span>. לפי איזה משפט המשולשים <span class="m">\(ABC\)</span> ו־<span class="m">\(DEF\)</span> חופפים, ואילו עוד שוויונות נובעים מכך?</p>
@@ -299,12 +305,12 @@ td .m .katex{font-size:1.2em}
 </section>
 
 <section class="ch" id="next">
-  <h2>הנושא הבא: מקומות גאומטריים ונקודות מיוחדות במשולש</h2>
-  <p>בעזרת משפטי החפיפה נוכיח את התכונות של האנך האמצעי ושל חוצה הזווית, ומהן נגיע לארבע הנקודות המיוחדות במשולש.</p>
-  <a class="btn" href="geometry-01-loci-triangle-centers.html">← לדף מקומות גאומטריים</a>
+  <h2>הנושא הבא: מרובעים</h2>
+  <p>בעזרת משפטי החפיפה נוכיח את התכונות של מקבילית, מלבן, מעוין, ריבוע, טרפז ודלתון. לפני כן אפשר לראות בדף <a href="geometry-00c-congruence-simulations.html">סימולציות חפיפה ודמיון</a> למה משפטי החפיפה עובדים.</p>
+  <a class="btn" href="geometry-00d-quadrilaterals.html">← לדף מרובעים</a>
 </section>
 
-<footer>גאומטריה אוקלידית · נושא 1: חפיפת משולשים</footer>
+<footer>גאומטריה אוקלידית · נושא 2: חפיפת משולשים</footer>
 </div>
 </body>
 </html>

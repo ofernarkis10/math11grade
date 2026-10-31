@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>סימולציות: למה משפטי החפיפה עובדים · המחשה</title>
+<title>סימולציות: חפיפה ודמיון משולשים · המחשה</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
@@ -180,18 +180,26 @@ td .m .katex{font-size:1.2em}
 <a class="back" href="index.html#geometry">→ חזרה לנושא: גאומטריה אוקלידית</a>
 <header>
   <span class="eyebrow">מתמטיקה · 5 יחידות · גאומטריה אוקלידית · המחשה למשפטי החפיפה</span>
-  <h1>סימולציות: למה משפטי החפיפה עובדים</h1>
-  <p class="lead">בכל סימולציה מתחילים מהנתונים של משפט חפיפה, ובונים מהם משולש צעד אחר צעד. אם יש רק דרך אחת לבנות את המשולש, כל שני משולשים עם אותם נתונים זהים, כלומר חופפים. אם אפשר לבנות יותר ממשולש אחד, הנתונים לא מספיקים לחפיפה. שנו את הנתונים במחוונים וראו מה קורה. ההסברים והמשפטים עצמם נמצאים בדף <a href="geometry-00b-congruence.html">חפיפת משולשים</a>.</p>
+  <h1>סימולציות: חפיפה ודמיון משולשים</h1>
+  <p class="lead">הדף בנוי משני חלקים. <strong>חלק א: חפיפה.</strong> בכל סימולציה מתחילים מהנתונים של משפט חפיפה, ובונים מהם משולש צעד אחר צעד. אם יש רק דרך אחת לבנות את המשולש, כל שני משולשים עם אותם נתונים זהים, כלומר חופפים. אם אפשר לבנות יותר ממשולש אחד, הנתונים לא מספיקים לחפיפה. שנו את הנתונים במחוונים וראו מה קורה. ההסברים והמשפטים עצמם נמצאים בדף <a href="geometry-00b-congruence.html">חפיפת משולשים</a>. <strong>חלק ב: דמיון.</strong> מגדילים ומקטינים משולשים, בונים משולש מנתוני משפטי הדמיון ורואים שכל הצלעות גדלות באותו יחס, ובודקים את משפט תאלס ואת הדמיון במשולש ישר זווית. ההסברים בדף <a href="geometry-03-similarity.html">פרופורציה ודמיון משולשים</a>.</p>
 </header>
-<nav class="pages" aria-label="דפי הנושא"><a href="geometry-00-deductive-system.html">0. מערכת היסקית</a><a href="geometry-00b-congruence.html">1. חפיפת משולשים</a><span aria-current="page">2. סימולציות חפיפה</span><a href="geometry-01-loci-triangle-centers.html">3. מקומות גאומטריים ונקודות מיוחדות</a><a href="geometry-02-circle.html">4. המעגל</a><a href="geometry-03-similarity.html">5. פרופורציה ודמיון</a><a href="geometry-04-concepts-theorems.html">6. מושגים ומשפטים</a><a href="geometry-05-formula-sheet.html">7. דף נוסחאות</a><a href="geometry-06-formula-questions.html">8. שאלות על דף הנוסחאות</a></nav>
+<nav class="pages" aria-label="דפי הנושא"><a href="geometry-00-deductive-system.html">0. מערכת היסקית</a><a href="geometry-00a-angles-parallels.html">1. זוויות וישרים מקבילים</a><a href="geometry-00b-congruence.html">2. חפיפת משולשים</a><a href="geometry-00b2-congruence-questions.html">3. שאלות על חפיפה</a><span aria-current="page">4. סימולציות חפיפה ודמיון</span><a href="geometry-00d-quadrilaterals.html">5. מרובעים</a><a href="geometry-01-loci-triangle-centers.html">6. מקומות גאומטריים ונקודות מיוחדות</a><a href="geometry-02-circle.html">7. המעגל</a><a href="geometry-03-similarity.html">8. פרופורציה ודמיון</a><a href="geometry-04-concepts-theorems.html">9. מושגים ומשפטים</a><a href="geometry-05-formula-sheet.html">10. דף נוסחאות</a><a href="geometry-06-formula-questions.html">11. שאלות על דף הנוסחאות</a></nav>
 <nav class="toc" aria-label="תוכן"><strong>תוכן</strong><ol>
   <li><a href="#idea">הרעיון</a></li>
-  <li><a href="#sim-sas">צ.ז.צ</a></li>
-  <li><a href="#sim-asa">ז.צ.ז</a></li>
-  <li><a href="#sim-sss">צ.צ.צ</a></li>
-  <li><a href="#sim-ssa">צ.צ.ז: מול הגדולה ומול הקטנה</a></li>
-  <li><a href="#sim-aaa">ז.ז.ז: למה זה לא מספיק</a></li>
-  <li><a href="#summary">סיכום</a></li>
+  <li><a href="#sim-sas">צלע זווית צלע</a></li>
+  <li><a href="#sim-asa">זווית צלע זווית</a></li>
+  <li><a href="#sim-sss">צלע צלע צלע</a></li>
+  <li><a href="#sim-ssa">צלע צלע זווית: מול הגדולה ומול הקטנה</a></li>
+  <li><a href="#sim-aaa">זווית זווית זווית: למה זה לא מספיק</a></li>
+  <li><a href="#summary">סיכום: חפיפה</a></li>
+  <li><a href="#part-b">חלק ב: מהו דמיון</a></li>
+  <li><a href="#sim-scale">הגדלה והקטנה</a></li>
+  <li><a href="#sim-aa">דמיון זווית זווית</a></li>
+  <li><a href="#sim-sas2">דמיון צלע זווית צלע</a></li>
+  <li><a href="#sim-sss2">דמיון צלע צלע צלע</a></li>
+  <li><a href="#sim-thales">משפט תאלס</a></li>
+  <li><a href="#sim-right">דמיון במשולש ישר זווית</a></li>
+  <li><a href="#summary-sim">סיכום: דמיון</a></li>
 </ol></nav>
 
 <section class="ch" id="idea">
@@ -205,51 +213,113 @@ td .m .katex{font-size:1.2em}
     </ul>
     <p>הקודקוד השלישי נמצא בחיתוך. <strong>כמה נקודות חיתוך יש, כך כמה משולשים אפשר לבנות.</strong></p>
   </div>
+  <p class="note"><strong>קיצורים:</strong> בטקסט נשתמש לפעמים בקיצורים המקובלים: צ.ז.צ = צלע זווית צלע, ז.צ.ז = זווית צלע זווית, צ.צ.צ = צלע צלע צלע, צ.צ.ז = צלע צלע זווית, ז.ז.ז = זווית זווית זווית. הסדר באותיות הוא הסדר של הנתונים לאורך המשולש.</p>
   <p class="note"><strong>איך משתמשים:</strong> לחצו "הצעד הבא" כדי לבנות שלב אחר שלב, או "כל הבנייה" כדי לראות הכול. אפשר להזיז את המחוונים בכל שלב, והשרטוט מתעדכן.</p>
 </section>
 
 <section class="ch sim" id="sim-sas" data-sim="sas">
-  <h2>צ.ז.צ: שתי צלעות והזווית שביניהן</h2>
+  <h2>צלע זווית צלע: שתי צלעות והזווית שביניהן</h2>
   <p class="given">נתונים: הצלע <b class="v">AB</b>, הצלע <b class="v">AC</b> והזווית <b class="v">A</b> שביניהן.</p>
 </section>
 
 <section class="ch sim" id="sim-asa" data-sim="asa">
-  <h2>ז.צ.ז: צלע ושתי הזוויות שלידה</h2>
+  <h2>זווית צלע זווית: צלע ושתי הזוויות שלידה</h2>
   <p class="given">נתונים: הצלע <b class="v">AB</b>, והזוויות <b class="v">A</b> ו־<b class="v">B</b> שבקצותיה.</p>
 </section>
 
 <section class="ch sim" id="sim-sss" data-sim="sss">
-  <h2>צ.צ.צ: שלוש צלעות</h2>
+  <h2>צלע צלע צלע: שלוש צלעות</h2>
   <p class="given">נתונים: <b class="v">AB</b>, <b class="v">AC</b> ו־<b class="v">BC</b>. נסו גם צלעות שלא מקיימות את אי־שוויון המשולש, למשל 2, 3 ו־8.</p>
 </section>
 
 <section class="ch sim" id="sim-ssa" data-sim="ssa">
-  <h2>צ.צ.ז: שתי צלעות וזווית שאינה ביניהן</h2>
+  <h2>צלע צלע זווית: שתי צלעות וזווית שאינה ביניהן</h2>
   <p class="given">נתונים: הצלע <b class="v">AB</b>, הצלע <b class="v">BC</b> והזווית <b class="v">A</b>. הזווית <b class="v">A</b> נמצאת <strong>מול</strong> הצלע <b class="v">BC</b>. השאלה החשובה: האם <b class="v">BC</b> היא הצלע הגדולה מבין השתיים? נסו את שני המצבים בכפתורים.</p>
 </section>
 
 <section class="ch sim" id="sim-aaa" data-sim="aaa">
-  <h2>ז.ז.ז: שלוש זוויות</h2>
+  <h2>זווית זווית זווית: שלוש זוויות</h2>
   <p class="given">נתונים: הזוויות <b class="v">A</b> ו־<b class="v">B</b>. הזווית השלישית נקבעת מעצמה, כי סכום הזוויות הוא 180°. אבל אף צלע לא נתונה.</p>
 </section>
 
 <section class="ch" id="summary">
-  <h2>סיכום: כמה משולשים אפשר לבנות?</h2>
+  <h2>סיכום חלק א: כמה משולשים אפשר לבנות?</h2>
   <div class="tablebox"><table>
     <thead><tr><th>נתונים</th><th>החיתוך שקובע את הקודקוד השלישי</th><th>מספר המשולשים</th><th>מספיק לחפיפה?</th></tr></thead>
     <tbody>
-      <tr><td><strong>צ.ז.צ</strong></td><td>קרן ומעגל שמרכזו בראשית הקרן</td><td>תמיד אחד</td><td class="ok">כן</td></tr>
-      <tr><td><strong>ז.צ.ז</strong></td><td>שתי קרניים</td><td>אחד (כשסכום הזוויות קטן מ־180°)</td><td class="ok">כן</td></tr>
-      <tr><td><strong>צ.צ.צ</strong></td><td>שני מעגלים</td><td>אחד, עד כדי שיקוף (כשמתקיים אי־שוויון המשולש)</td><td class="ok">כן</td></tr>
-      <tr><td><strong>צ.צ.ז</strong>, הזווית מול הצלע <strong>הגדולה</strong></td><td>קרן ומעגל שמרכזו מחוץ לקרן</td><td>תמיד אחד</td><td class="ok">כן (משפט החפיפה הרביעי)</td></tr>
-      <tr><td><strong>צ.צ.ז</strong>, הזווית מול הצלע <strong>הקטנה</strong></td><td>קרן ומעגל שמרכזו מחוץ לקרן</td><td>אפס, אחד או שניים</td><td class="no">לא</td></tr>
-      <tr><td><strong>ז.ז.ז</strong></td><td>שתי קרניים, אבל המרחק בין הקודקודים לא נתון</td><td>אינסוף (בגדלים שונים)</td><td class="no">לא (רק דמיון)</td></tr>
+      <tr><td><strong>צלע זווית צלע</strong></td><td>קרן ומעגל שמרכזו בראשית הקרן</td><td>תמיד אחד</td><td class="ok">כן</td></tr>
+      <tr><td><strong>זווית צלע זווית</strong></td><td>שתי קרניים</td><td>אחד (כשסכום הזוויות קטן מ־180°)</td><td class="ok">כן</td></tr>
+      <tr><td><strong>צלע צלע צלע</strong></td><td>שני מעגלים</td><td>אחד, עד כדי שיקוף (כשמתקיים אי־שוויון המשולש)</td><td class="ok">כן</td></tr>
+      <tr><td><strong>צלע צלע זווית</strong>, הזווית מול הצלע <strong>הגדולה</strong></td><td>קרן ומעגל שמרכזו מחוץ לקרן</td><td>תמיד אחד</td><td class="ok">כן (משפט החפיפה הרביעי)</td></tr>
+      <tr><td><strong>צלע צלע זווית</strong>, הזווית מול הצלע <strong>הקטנה</strong></td><td>קרן ומעגל שמרכזו מחוץ לקרן</td><td>אפס, אחד או שניים</td><td class="no">לא</td></tr>
+      <tr><td><strong>זווית זווית זווית</strong></td><td>שתי קרניים, אבל המרחק בין הקודקודים לא נתון</td><td>אינסוף (בגדלים שונים)</td><td class="no">לא (רק דמיון)</td></tr>
     </tbody>
   </table></div>
-  <a class="btn" href="geometry-00b-congruence.html">← חזרה לדף חפיפת משולשים</a>
 </section>
 
-<footer>גאומטריה אוקלידית · סימולציות למשפטי החפיפה</footer>
+<section class="ch" id="part-b">
+  <h2>חלק ב: מהו דמיון</h2>
+  <div class="meaning">
+    <p>בחפיפה ראינו שמשולש נקבע באופן יחיד מהנתונים. בדמיון שואלים שאלה אחרת: מתי שני משולשים הם <strong>אותה צורה</strong>, גם אם הגודל שונה? משולשים <strong>דומים</strong> אם הזוויות המתאימות שוות והצלעות המתאימות פרופורציוניות, כלומר כל צלע במשולש אחד גדולה פי <b class="v">k</b> מהצלע המתאימה במשולש השני. המספר <b class="v">k</b> נקרא <strong>יחס הדמיון</strong>.</p>
+    <p>בסימולציות שבהמשך המשולש המקורי <b class="v">ABC</b> מופיע משמאל, והמשולש החדש <b class="v">A'B'C'</b> מימין. בכל אחת בונים את המשולש החדש מנתונים חלקיים, ובודקים שכל הצלעות שלו גדלו פי אותו <b class="v">k</b>.</p>
+    <p>ז.ז.ז, שלא הספיק לחפיפה, הוא בדיוק משפט הדמיון: זוויות קובעות את הצורה, ולא את הגודל.</p>
+  </div>
+</section>
+
+<section class="ch sim" id="sim-scale" data-sim="scale">
+  <h2>הגדלה והקטנה: מה משתנה ומה לא</h2>
+  <p class="given">מגדילים את המשולש <b class="v">ABC</b> פי <b class="v">k</b>. שנו את <b class="v">k</b> וראו מה קורה לצלעות, לזוויות ולשטח.</p>
+</section>
+
+<section class="ch sim" id="sim-aa" data-sim="aa">
+  <h2>דמיון זווית זווית: שתי זוויות שוות</h2>
+  <p class="given">נתונות שתי הזוויות <b class="v">A</b> ו־<b class="v">B</b>. בונים אותן על בסיס <b class="v">A'B'</b> באורך כלשהו, ובודקים את היחס בין הצלעות.</p>
+</section>
+
+<section class="ch sim" id="sim-sas2" data-sim="sas2">
+  <h2>דמיון צלע זווית צלע: שתי צלעות פרופורציוניות והזווית שביניהן</h2>
+  <p class="given">במשולש המקורי <b class="v">AB = 4</b> ו־<b class="v">AC = 3</b>. במשולש החדש כל אחת מהן גדלה פי <b class="v">k</b>, והזווית <b class="v">A</b> שביניהן נשארת. האם גם הצלע השלישית גדלה פי <b class="v">k</b>?</p>
+</section>
+
+<section class="ch sim" id="sim-sss2" data-sim="sss2">
+  <h2>דמיון צלע צלע צלע: שלוש צלעות פרופורציוניות</h2>
+  <p class="given">במשולש המקורי <b class="v">AB = 4</b>, <b class="v">AC = 3</b>, <b class="v">BC = 3.5</b>. במשולש החדש כל הצלעות גדלות פי <b class="v">k</b>. האם הזוויות נשארות?</p>
+</section>
+
+<section class="ch sim" id="sim-thales" data-sim="thales">
+  <h2>משפט תאלס: ישר מקביל לצלע</h2>
+  <p class="given">הנקודה <b class="v">D</b> זזה על <b class="v">AB</b>, ודרכה עובר ישר שמקביל ל־<b class="v">BC</b> וחותך את <b class="v">AC</b> בנקודה <b class="v">E</b>. הזיזו את <b class="v">D</b> ועקבו אחרי היחסים.</p>
+</section>
+
+<section class="ch sim" id="sim-right" data-sim="right">
+  <h2>דמיון במשולש ישר זווית</h2>
+  <p class="given">במשולש <b class="v">ABC</b> הזווית <b class="v">C</b> ישרה, והיתר <b class="v">AB = 10</b>. מורידים את הגובה <b class="v">CD</b> ליתר. שנו את הזווית <b class="v">A</b> ובדקו את הקשרים.</p>
+</section>
+
+<section class="ch" id="summary-sim">
+  <h2>סיכום חלק ב: דמיון</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>נתונים</th><th>מה ראינו בסימולציה</th><th>מספיק לדמיון?</th></tr></thead>
+    <tbody>
+      <tr><td><strong>זווית זווית</strong> (שתי זוויות שוות)</td><td>על כל בסיס מתקבל משולש שכל צלעותיו גדלו באותו יחס</td><td class="ok">כן</td></tr>
+      <tr><td><strong>צלע זווית צלע</strong> (שתי צלעות פרופורציוניות והזווית שביניהן)</td><td>הצלע השלישית גדלה באותו יחס, והזוויות האחרות נשארו</td><td class="ok">כן</td></tr>
+      <tr><td><strong>צלע צלע צלע</strong> (שלוש צלעות פרופורציוניות)</td><td>כל הזוויות נשארו כמו במקור</td><td class="ok">כן</td></tr>
+      <tr><td>ישר מקביל לצלע במשולש</td><td>חותך משולש קטן שדומה למשולש כולו (תאלס)</td><td class="ok">כן, לפי ז.ז</td></tr>
+      <tr><td>הגובה ליתר במשולש ישר זווית</td><td>שלושה משולשים דומים, ומהם <b class="v">h² = p·q</b></td><td class="ok">כן, לפי ז.ז</td></tr>
+    </tbody>
+  </table></div>
+  <div class="tablebox"><table>
+    <thead><tr><th>במשולשים דומים ביחס k</th><th>היחס</th></tr></thead>
+    <tbody>
+      <tr><td>צלעות מתאימות, גבהים מתאימים</td><td><b class="v">k</b></td></tr>
+      <tr><td>זוויות מתאימות</td><td>שוות</td></tr>
+      <tr><td>שטחים</td><td><b class="v">k²</b></td></tr>
+    </tbody>
+  </table></div>
+  <div class="buttons"><a class="btn" href="geometry-00b-congruence.html">← לדף חפיפת משולשים</a><a class="btn ghost" href="geometry-03-similarity.html">← לדף פרופורציה ודמיון</a></div>
+</section>
+
+<footer>גאומטריה אוקלידית · סימולציות: חפיפה ודמיון משולשים</footer>
 </div>
 
 <template id="simTpl">
@@ -275,6 +345,7 @@ td .m .katex{font-size:1.2em}
 (function(){
 const DEG = Math.PI/180;
 const f1 = x => (Math.round(x*10)/10).toString();
+const f2 = x => (Math.round(x*100)/100).toString();
 const P = (x,y) => ({x,y});
 const dir = a => P(Math.cos(a*DEG), Math.sin(a*DEG));
 const add = (p,q,t=1) => P(p.x+q.x*t, p.y+q.y*t);
@@ -292,6 +363,11 @@ function ctx(o){
     poly:(pts,c='fill')=>`<polygon class="${c}" points="${pts.map(p=>X(p)+','+Y(p)).join(' ')}"/>`,
     pt:(p,lab,c='pt',dx=0,dy=0)=>`<circle class="${c}" cx="${X(p)}" cy="${Y(p)}" r="4"/>`+(lab?`<text class="lb ${c}" x="${(+X(p)+dx).toFixed(1)}" y="${(+Y(p)+dy).toFixed(1)}">${lab}</text>`:''),
     len:(p,q,t,c='lenl',off=14)=>{const mx=(p.x+q.x)/2,my=(p.y+q.y)/2,L=dist(p,q)||1,nx=-(q.y-p.y)/L,ny=(q.x-p.x)/L;const m=P(mx+nx*off/K,my+ny*off/K);return `<text class="${c}" x="${X(m)}" y="${(+Y(m)+5).toFixed(1)}">${t}</text>`;},
+    lenOut:(p,q,t,G,c='lenl',off=14)=>{const mx=(p.x+q.x)/2,my=(p.y+q.y)/2,L=dist(p,q)||1;let nx=-(q.y-p.y)/L,ny=(q.x-p.x)/L;if(nx*(mx-G.x)+ny*(my-G.y)<0){nx=-nx;ny=-ny;}const m=P(mx+nx*off/K,my+ny*off/K);return `<text class="${c}" x="${X(m)}" y="${(+Y(m)+5).toFixed(1)}">${t}</text>`;},
+    angAt2:(V,p,q,r,lab,c='ang')=>{let a1=Math.atan2(p.y-V.y,p.x-V.x)/DEG,a2=Math.atan2(q.y-V.y,q.x-V.x)/DEG;if(((a2-a1+360)%360)>180){const t=a1;a1=a2;a2=t;}
+      const rr=r/K,p1=add(V,dir(a1),rr),p2=add(V,dir(a2),rr),mid=a1+((a2-a1+360)%360)/2,lp=add(V,dir(mid),rr+15/K);
+      return `<path class="${c}" d="M${X(p1)},${Y(p1)} A${r},${r} 0 0 0 ${X(p2)},${Y(p2)}"/>`+(lab?`<text class="angl" x="${X(lp)}" y="${(+Y(lp)+5).toFixed(1)}">${lab}</text>`:'');},
+    right:(V,p,q,sz=10,c='ang')=>{const u=dir(Math.atan2(p.y-V.y,p.x-V.x)/DEG),w=dir(Math.atan2(q.y-V.y,q.x-V.x)/DEG),s1=sz/K;const a=add(V,u,s1),b=add(a,w,s1),e=add(V,w,s1);return `<path class="${c}" d="M${X(a)},${Y(a)} L${X(b)},${Y(b)} L${X(e)},${Y(e)}"/>`;},
     arc:(V,a1,a2,r,lab,c='ang')=>{ // ccw from a1 to a2 (degrees, math)
       const rr=r/K, p1=add(V,dir(a1),rr), p2=add(V,dir(a2),rr), large=((a2-a1+360)%360)>180?1:0;
       const mid=a1+((a2-a1+360)%360)/2, lp=add(V,dir(mid),rr+16/K);
@@ -299,6 +375,13 @@ function ctx(o){
     }
   };
 }
+
+// triangle helpers for the similarity part
+const mk=(A,B,C)=>({A,B,C,a:dist(B,C),b:dist(A,C),c:dist(A,B),S:Math.abs((B.x-A.x)*(C.y-A.y)-(C.x-A.x)*(B.y-A.y))/2,G:P((A.x+B.x+C.x)/3,(A.y+B.y+C.y)/3)});
+const TRI=(c,al,be)=>{const A=P(0,0),B=P(c,0),b=c*Math.sin(be*DEG)/Math.sin((al+be)*DEG);return mk(A,B,add(A,dir(al),b));};
+const drawTri=(d,t,cl,n)=>d.poly([t.A,t.B,t.C],cl[0])+d.seg(t.A,t.B,cl[1])+d.seg(t.B,t.C,cl[1])+d.seg(t.A,t.C,cl[1])+d.pt(t.A,n[0],'pt',-14,10)+d.pt(t.B,n[1],'pt',14,10)+d.pt(t.C,n[2],'pt',0,-12);
+const lens=(d,t)=>d.lenOut(t.A,t.B,f1(t.c),t.G)+d.lenOut(t.B,t.C,f1(t.a),t.G)+d.lenOut(t.A,t.C,f1(t.b),t.G);
+const angs=(d,t)=>d.angAt2(t.A,t.B,t.C,18,f1(angAt(t.A,t.B,t.C))+'°')+d.angAt2(t.B,t.A,t.C,18,f1(angAt(t.B,t.A,t.C))+'°')+d.angAt2(t.C,t.A,t.B,18,f1(angAt(t.C,t.A,t.B))+'°');
 
 const SIMS = {
  sas:{ params:[{k:'c',l:'AB',min:3,max:10,step:0.5,v:7},{k:'b',l:'AC',min:2,max:9,step:0.5,v:5},{k:'al',l:'∠A',min:15,max:150,step:5,v:50,u:'°'}],
@@ -312,7 +395,7 @@ const SIMS = {
      {t:`מחברים את B ל־C. לא היה לנו שום מקום לבחירה, ולכן גם השאר נקבע: BC ≈ ${f1(a)}, ∠B ≈ ${f1(angB)}°, ∠C ≈ ${f1(angC)}°. כל משולש עם הנתונים האלה הוא אותו משולש, ולכן כל שני משולשים כאלה חופפים.`, g:d.poly([A,B,C])+d.seg(B,C,'ac')+d.seg(A,C,'ac')+d.seg(A,B)+d.pt(A,'','pt')+d.pt(B,'','pt')+d.pt(C,'','pta')},
     ];
   },
-  status:()=>({c:'one',t:'אפשר לבנות משולש אחד בלבד → צ.ז.צ הוא משפט חפיפה'})
+  status:()=>({c:'one',t:'אפשר לבנות משולש אחד בלבד → צלע זווית צלע הוא משפט חפיפה'})
  },
  asa:{ params:[{k:'c',l:'AB',min:3,max:10,step:0.5,v:7},{k:'al',l:'∠A',min:10,max:160,step:5,v:50,u:'°'},{k:'be',l:'∠B',min:10,max:160,step:5,v:60,u:'°'}],
   build(s){
@@ -330,7 +413,7 @@ const SIMS = {
     }
     return steps;
   },
-  status:s=>s.al+s.be<180?{c:'one',t:'אפשר לבנות משולש אחד בלבד → ז.צ.ז הוא משפט חפיפה'}:{c:'none',t:'אין משולש: סכום שתי הזוויות חייב להיות קטן מ־180°'}
+  status:s=>s.al+s.be<180?{c:'one',t:'אפשר לבנות משולש אחד בלבד → זווית צלע זווית הוא משפט חפיפה'}:{c:'none',t:'אין משולש: סכום שתי הזוויות חייב להיות קטן מ־180°'}
  },
  sss:{ params:[{k:'c',l:'AB',min:2,max:9,step:0.5,v:7},{k:'b',l:'AC',min:1,max:9,step:0.5,v:5},{k:'a',l:'BC',min:1,max:9,step:0.5,v:6}],
   build(s){
@@ -352,7 +435,7 @@ const SIMS = {
     }
     return steps;
   },
-  status:s=>{const x=(s.c*s.c+s.b*s.b-s.a*s.a)/(2*s.c),h2=s.b*s.b-x*x;return h2>1e-9?{c:'one',t:'משולש אחד בלבד (עד כדי שיקוף) → צ.צ.צ הוא משפט חפיפה'}:{c:'none',t:'אין משולש: אי־שוויון המשולש לא מתקיים'};}
+  status:s=>{const x=(s.c*s.c+s.b*s.b-s.a*s.a)/(2*s.c),h2=s.b*s.b-x*x;return h2>1e-9?{c:'one',t:'משולש אחד בלבד (עד כדי שיקוף) → צלע צלע צלע הוא משפט חפיפה'}:{c:'none',t:'אין משולש: אי־שוויון המשולש לא מתקיים'};}
  },
  ssa:{ params:[{k:'c',l:'AB',min:3,max:10,step:0.5,v:8},{k:'a',l:'BC',min:1,max:10,step:0.5,v:5},{k:'al',l:'∠A',min:10,max:150,step:5,v:35,u:'°'}],
   presets:[{l:'הזווית מול הצלע הקטנה (שני משולשים)',v:{c:8,a:5,al:35}},{l:'הזווית מול הצלע הגדולה (משולש אחד)',v:{c:6,a:8,al:40}},{l:'מול הקטנה, אין משולש',v:{c:8,a:3.5,al:35}}],
@@ -377,7 +460,7 @@ const SIMS = {
       g+=d.seg(A,B)+d.ray(A,s.al,15)+d.pt(A,'','pt')+d.pt(B,'','pt');
       if(ts.length===1 && big){ // show the second intersection, behind A on the extension of the ray
         const t2=s.c*Math.cos(s.al*DEG)-Math.sqrt(s.a*s.a-Math.pow(s.c*Math.sin(s.al*DEG),2));
-        if(t2<0){const G=add(A,dir(s.al),t2); g+=d.seg(A,G,'ghost')+d.pt(G,'✗','ptg',-12,4);}
+        if(t2<0){const G=add(A,dir(s.al),t2); g+=d.seg(A,G,'ghost')+d.pt(G,'✗','ptg',14,-6);}
       }
       let t;
       if(ts.length===2) t=`המעגל חותך את הקרן בשתי נקודות, C₁ ו־C₂. יש שני משולשים שונים עם אותם נתונים: AB = ${s.c}, BC = ${s.a}, ∠A = ${s.al}°. המשולשים לא חופפים (השוו את AC: ≈ ${f1(Math.max(...ts))} מול ≈ ${f1(Math.min(...ts))}). הסיבה: הזווית A נמצאת מול BC = ${s.a}, הצלע הקטנה.`;
@@ -407,7 +490,90 @@ const SIMS = {
      {t:`ואפשר גם על AB = ${f1(9*lim)}. לכל המשולשים יש אותן שלוש זוויות, אבל הם בגדלים שונים. הם דומים זה לזה, לא חופפים. לכן ז.ז.ז אינו משפט חפיפה.`, g:t3s.g},
     ];
   },
-  status:s=>s.al+s.be<180?{c:'two',t:'אינסוף משולשים בגדלים שונים → ז.ז.ז אינו משפט חפיפה (רק דמיון)'}:{c:'none',t:'אין משולש'}
+  status:s=>s.al+s.be<180?{c:'two',t:'אינסוף משולשים בגדלים שונים → זווית זווית זווית אינו משפט חפיפה (רק דמיון)'}:{c:'none',t:'אין משולש'}
+ },
+ scale:{ params:[{k:'k',l:'k',min:0.5,max:2.4,step:0.1,v:1.5}],
+  build(s){
+    const d1=ctx({ox:25,oy:270,k:24}), d2=ctx({ox:175,oy:270,k:24});
+    const t1=TRI(4,50,65), t2=TRI(4*s.k,50,65);
+    return [
+     {t:`המשולש המקורי ABC: AB = 4, BC ≈ ${f1(t1.a)}, AC ≈ ${f1(t1.b)}.`, g:drawTri(d1,t1,['fill','ln'],['A','B','C'])+lens(d1,t1)},
+     {t:`מגדילים כל צלע פי k = ${s.k}: A'B' = ${f1(4*s.k)}, B'C' ≈ ${f1(t2.a)}, A'C' ≈ ${f1(t2.b)}. ${s.k<1?'(כש־k קטן מ־1 זו הקטנה.)':''}`, g:drawTri(d2,t2,['fill2','mk'],["A'","B'","C'"])+lens(d2,t2)},
+     {t:`הזוויות לא משתנות: בשני המשולשים ∠A = 50°, ∠B = 65°, ∠C = 65°. רק הגודל השתנה, הצורה נשארה.`, g:angs(d1,t1)+angs(d2,t2)},
+     {t:`השטחים: S(ABC) ≈ ${f2(t1.S)}, S(A'B'C') ≈ ${f2(t2.S)}. היחס בין השטחים הוא ${f2(t2.S/t1.S)} = ${s.k}² . השטח גדל פי k², לא פי k, כי גם הבסיס וגם הגובה גדלים פי k.`, g:''},
+    ];
+  },
+  status:s=>({c:'one',t:`דמיון ביחס k = ${s.k}: צלעות פי ${s.k}, זוויות שוות, שטח פי ${f2(s.k*s.k)}`})
+ },
+ aa:{ params:[{k:'al',l:'∠A',min:20,max:110,step:5,v:45,u:'°'},{k:'be',l:'∠B',min:20,max:110,step:5,v:70,u:'°'},{k:'c2',l:"A'B'",min:2,max:9,step:0.5,v:7}],
+  build(s){
+    const d1=ctx({ox:20,oy:270,k:24}), d2=ctx({ox:178,oy:270,k:24}), ok=s.al+s.be<180;
+    if(!ok) return [{t:`סכום הזוויות ${s.al+s.be}° הוא לפחות 180°, ולכן אין משולש. הקטינו את אחת הזוויות.`, g:''}];
+    const t1=TRI(4,s.al,s.be), t2=TRI(s.c2,s.al,s.be), A=P(0,0), B=P(s.c2,0), k=s.c2/4;
+    return [
+     {t:`המשולש המקורי ABC עם AB = 4, ∠A = ${s.al}° ו־∠B = ${s.be}°.`, g:drawTri(d1,t1,['fill','ln'],['A','B','C'])+lens(d1,t1)+d1.arc(t1.A,0,s.al,16,'')+d1.arc(t1.B,180-s.be,180,16,'')},
+     {t:`בונים את אותן שתי זוויות על בסיס A'B' = ${s.c2}. אורך הבסיס יכול להיות כל מספר.`, g:d2.seg(A,B)+d2.pt(A,"A'",'pt',-14,10)+d2.pt(B,"B'",'pt',14,10)+d2.ray(A,s.al,12)+d2.ray(B,180-s.be,12)+d2.arc(A,0,s.al,24,s.al+'°')+d2.arc(B,180-s.be,180,24,s.be+'°')},
+     {t:`הקרניים נחתכות ב־C'. הזווית השלישית שווה בשני המשולשים: ${180-s.al-s.be}°.`, g:drawTri(d2,t2,['fill2','mk'],['','',"C'"])+lens(d2,t2)},
+     {t:`בודקים את היחסים: A'B' : AB = ${f2(k)}, B'C' : BC = ${f2(t2.a/t1.a)}, A'C' : AC = ${f2(t2.b/t1.b)}. כל היחסים שווים, ולכן המשולשים דומים ביחס ${f2(k)}. שתי זוויות שוות מספיקות לדמיון.`, g:''},
+    ];
+  },
+  status:s=>s.al+s.be<180?{c:'one',t:`זווית זווית: כל הצלעות גדלו פי ${f2(s.c2/4)} → המשולשים דומים`}:{c:'none',t:'אין משולש'}
+ },
+ sas2:{ params:[{k:'k',l:'k',min:0.5,max:2.2,step:0.1,v:1.6},{k:'al',l:'∠A',min:20,max:140,step:5,v:60,u:'°'}],
+  build(s){
+    const d1=ctx({ox:20,oy:270,k:24}), d2=ctx({ox:178,oy:270,k:24});
+    const A=P(0,0), B=P(4,0), C=add(A,dir(s.al),3), B2=P(4*s.k,0), C2=add(A,dir(s.al),3*s.k);
+    const t1=mk(A,B,C), t2=mk(A,B2,C2);
+    return [
+     {t:`המשולש המקורי: AB = 4, AC = 3, ∠A = ${s.al}°.`, g:drawTri(d1,t1,['fill','ln'],['A','B','C'])+lens(d1,t1)+d1.arc(A,0,s.al,22,s.al+'°')},
+     {t:`בונים A'B' = 4 · ${s.k} = ${f1(4*s.k)}, ובקודקוד A' את אותה זווית, ${s.al}°.`, g:d2.seg(A,B2)+d2.pt(A,"A'",'pt',-14,10)+d2.pt(B2,"B'",'pt',14,10)+d2.ray(A,s.al,12)+d2.arc(A,0,s.al,22,s.al+'°')},
+     {t:`על הקרן מסמנים A'C' = 3 · ${s.k} = ${f1(3*s.k)}. יש נקודה אחת בלבד כזו.`, g:d2.circ(A,3*s.k)+d2.pt(C2,"C'",'pta',0,-12)},
+     {t:`מחברים את B' ל־C'. הצלע השלישית: B'C' ≈ ${f2(t2.a)}, ובמקור BC ≈ ${f2(t1.a)}. היחס ${f2(t2.a/t1.a)} = k. גם הזוויות האחרות שוות: ∠B' ≈ ${f1(angAt(B2,A,C2))}° כמו ∠B ≈ ${f1(angAt(B,A,C))}°. לכן המשולשים דומים.`, g:drawTri(d2,t2,['fill2','mk'],['','',''])+lens(d2,t2)},
+    ];
+  },
+  status:s=>({c:'one',t:`צלע זווית צלע: גם הצלע השלישית גדלה פי ${s.k} → המשולשים דומים`})
+ },
+ sss2:{ params:[{k:'k',l:'k',min:0.5,max:2.2,step:0.1,v:1.7}],
+  build(s){
+    const d1=ctx({ox:20,oy:270,k:24}), d2=ctx({ox:178,oy:270,k:24});
+    const c=4,b=3,a=3.5, x=(c*c+b*b-a*a)/(2*c), y=Math.sqrt(b*b-x*x);
+    const A=P(0,0), B=P(c,0), C=P(x,y), B2=P(c*s.k,0), C2=P(x*s.k,y*s.k);
+    const t1=mk(A,B,C), t2=mk(A,B2,C2);
+    return [
+     {t:`המשולש המקורי: AB = 4, AC = 3, BC = 3.5. הזוויות שלו: ∠A ≈ ${f1(angAt(A,B,C))}°, ∠B ≈ ${f1(angAt(B,A,C))}°, ∠C ≈ ${f1(angAt(C,A,B))}°.`, g:drawTri(d1,t1,['fill','ln'],['A','B','C'])+lens(d1,t1)},
+     {t:`בונים A'B' = ${f1(c*s.k)} ומעגל סביב A' ברדיוס 3 · ${s.k} = ${f1(b*s.k)}.`, g:d2.seg(A,B2)+d2.pt(A,"A'",'pt',-14,10)+d2.pt(B2,"B'",'pt',14,10)+d2.circ(A,b*s.k)},
+     {t:`ומעגל סביב B' ברדיוס 3.5 · ${s.k} = ${f1(a*s.k)}. נקודת החיתוך שמעל הבסיס היא C'.`, g:d2.circ(B2,a*s.k,'soft2')+d2.pt(C2,"C'",'pta',0,-12)},
+     {t:`הזוויות במשולש החדש: ∠A' ≈ ${f1(angAt(A,B2,C2))}°, ∠B' ≈ ${f1(angAt(B2,A,C2))}°, ∠C' ≈ ${f1(angAt(C2,A,B2))}°. אלה בדיוק הזוויות של המשולש המקורי. לכן המשולשים דומים.`, g:drawTri(d2,t2,['fill2','mk'],['','',''])+angs(d2,t2)},
+    ];
+  },
+  status:s=>({c:'one',t:`צלע צלע צלע: כל הצלעות פי ${s.k}, והזוויות זהות → המשולשים דומים`})
+ },
+ thales:{ params:[{k:'t',l:'AD:AB',min:0.1,max:0.9,step:0.05,v:0.4}],
+  build(s){
+    const d=ctx({ox:60,oy:265,k:27}), A=P(3.5,8.3), B=P(0,0), C=P(10,0);
+    const D=add(A,P(B.x-A.x,B.y-A.y),s.t), E=add(A,P(C.x-A.x,C.y-A.y),s.t), G=P(4.5,2.8);
+    const AB=dist(A,B), AC=dist(A,C), BC=dist(B,C), AD=dist(A,D), AE=dist(A,E), DE=dist(D,E);
+    return [
+     {t:`משולש ABC: AB ≈ ${f1(AB)}, AC ≈ ${f1(AC)}, BC = ${f1(BC)}.`, g:d.poly([A,B,C])+d.seg(A,B)+d.seg(B,C)+d.seg(A,C)+d.pt(A,'A','pt',0,-12)+d.pt(B,'B','pt',-14,10)+d.pt(C,'C','pt',14,10)},
+     {t:`מסמנים את D על AB ומעבירים דרכה ישר שמקביל ל־BC. הישר חותך את AC בנקודה E.`, g:d.seg(P(D.x-1.2,D.y),P(E.x+1.2,E.y),'ghost')+d.seg(D,E,'mk')+d.pt(D,'D','ptm',-14,4)+d.pt(E,'E','ptm',14,4)},
+     {t:`בגלל המקבילים, הזוויות המתאימות שוות: ∠ADE = ∠ABC ו־∠AED = ∠ACB. לכן △ADE ∼ △ABC לפי ז.ז.`, g:d.poly([A,D,E],'fill2')+d.arc(B,0,Math.atan2(A.y-B.y,A.x-B.x)/DEG,20,'')+d.arc(D,0,Math.atan2(A.y-D.y,A.x-D.x)/DEG,20,'')},
+     {t:`היחסים: AD : AB = ${f2(AD/AB)}, AE : AC = ${f2(AE/AC)}, DE : BC = ${f2(DE/BC)}. שלושתם שווים (תאלס המורחב). וגם AD : DB = ${f2(AD/(AB-AD))} = AE : EC = ${f2(AE/(AC-AE))} (משפט תאלס).`, g:''},
+    ];
+  },
+  status:s=>({c:'one',t:`יחס הדמיון בין △ADE ל־△ABC הוא ${f2(s.t)}, ויחס השטחים ${f2(s.t*s.t)}`})
+ },
+ right:{ params:[{k:'al',l:'∠A',min:20,max:70,step:1,v:35,u:'°'}],
+  build(s){
+    const d=ctx({ox:50,oy:255,k:37}), A=P(0,0), B=P(10,0), b=10*Math.cos(s.al*DEG), C=add(A,dir(s.al),b), D=P(C.x,0);
+    const p=D.x, q=10-D.x, h=C.y, a=dist(B,C);
+    return [
+     {t:`משולש ABC עם זווית ישרה ב־C ויתר AB = 10. AC ≈ ${f2(b)}, BC ≈ ${f2(a)}.`, g:d.poly([A,B,C],'fill3')+d.seg(A,B)+d.seg(B,C)+d.seg(A,C)+d.right(C,A,B)+d.pt(A,'A','pt',-14,10)+d.pt(B,'B','pt',14,10)+d.pt(C,'C','pt',0,-12)},
+     {t:`מורידים את הגובה CD ליתר. הגובה מחלק את היתר לשני קטעים: AD = p ≈ ${f2(p)}, DB = q ≈ ${f2(q)}.`, g:d.seg(C,D,'ac')+d.right(D,B,C)+d.pt(D,'D','pta',0,20)},
+     {t:`נוצרו שני משולשים קטנים. △ACD (כחול) ו־△CBD (כתום) דומים זה לזה ודומים ל־△ABC לפי ז.ז: לכל אחד יש זווית ישרה וזווית משותפת עם המשולש הגדול.`, g:d.poly([A,C,D],'fill')+d.poly([C,B,D],'fill2')+d.arc(A,0,s.al,26,s.al+'°')+d.angAt2(C,D,B,26,s.al+'°')},
+     {t:`מהדמיון: h² = p · q → ${f2(h*h)} ≈ ${f2(p*q)}. AC² = AB · p → ${f2(b*b)} ≈ ${f2(10*p)}. BC² = AB · q → ${f2(a*a)} ≈ ${f2(10*q)}. נסו זוויות אחרות: הקשרים נשמרים תמיד.`, g:''},
+    ];
+  },
+  status:s=>({c:'one',t:'שלושה משולשים דומים → h² = p·q, AC² = c·p, BC² = c·q'})
  }
 };
 

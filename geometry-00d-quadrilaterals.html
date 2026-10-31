@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מרובעים · דף לימוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same study-page style as the rest of the site; geometry pages add figures (inline SVG drawn with the color tokens), theorem boxes and converse boxes */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:68ch}
+.lead a,.meaning a{color:var(--accent);font-weight:600}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav.pages{display:flex;gap:8px;flex-wrap:wrap}
+nav.pages a,nav.pages span{padding:6px 14px;border:1px solid var(--line);border-radius:99px;font-size:.9rem;font-weight:600;text-decoration:none;color:var(--accent);background:var(--paper)}
+nav.pages span{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+nav.pages a:hover,nav.pages a:focus-visible{border-color:var(--accent);outline:none}
+
+nav.toc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav.toc ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav.toc a{color:var(--accent);text-decoration:none;font-weight:600}
+nav.toc a:hover,nav.toc a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav.toc ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:70ch;display:flex;flex-direction:column;gap:10px}
+.meaning ul,.meaning ol{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:4px}
+
+/* theorem / converse / definition boxes */
+.thm{border-inline-start:4px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0;padding:10px 16px;display:flex;flex-direction:column;gap:4px}
+.thm .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.thm.conv{border-color:var(--mark);background:var(--mark-soft)}
+.thm.conv .tag{color:var(--mark)}
+.proof{font-size:.96rem;color:var(--ink);display:flex;flex-direction:column;gap:4px;border-inline-start:2px dotted var(--line);padding-inline-start:14px}
+.proof b{color:var(--muted)}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ul.mistakes{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:8px}
+
+/* figures */
+.figrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:20px;align-items:center}
+@media (max-width:680px){.figrow{grid-template-columns:minmax(0,1fr)}}
+.figrow > div{display:flex;flex-direction:column;gap:10px;min-width:0}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+figure.fig{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+figure.fig svg{width:100%;height:auto;direction:ltr;overflow:visible}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center}
+.fig .ln{stroke:var(--ink);stroke-width:2;fill:none;stroke-linejoin:round}
+.fig .ac{stroke:var(--accent);stroke-width:2;fill:none}
+.fig .mk{stroke:var(--mark);stroke-width:2;fill:none}
+.fig .thick{stroke-width:4;stroke-linecap:round}
+.fig .thin{stroke-width:1.4}
+.fig .dash{stroke-dasharray:5 4}
+.fig .soft{stroke:var(--muted);stroke-width:1.4;fill:none;stroke-dasharray:4 4}
+.fig .fill{fill:var(--accent-soft)}
+.fig .pt{fill:var(--ink)}
+.fig .pta{fill:var(--accent)}
+.fig .ptm{fill:var(--mark)}
+.fig text{font-family:var(--f-math);font-size:15px;fill:var(--ink);text-anchor:middle}
+.fig text.he{font-family:var(--f-body);font-size:14px;direction:rtl}
+.fig text.a{fill:var(--accent);font-weight:600}
+.fig text.k{fill:var(--mark);font-weight:600}
+.fig text.sm{font-size:12px}
+
+.btn{align-self:flex-start;background:var(--accent);color:var(--paper);font-weight:700;text-decoration:none;padding:8px 18px;border-radius:99px}
+.btn:hover,.btn:focus-visible{filter:brightness(1.1);outline:none}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:#fff} nav.toc,nav.pages,.back{display:none} section.ch{break-inside:avoid-page}}
+/* proof tables: claim | reason */
+table.pf{min-width:0}
+.figcol{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:20px;align-items:center}
+@media (max-width:760px){.figcol{grid-template-columns:minmax(0,1fr)}}
+table.pf td:first-child{width:2.2em;color:var(--muted);font-family:var(--f-math)}
+table.pf td:last-child{color:var(--muted);font-size:.93rem}
+details.sol summary{cursor:pointer;color:var(--accent);font-weight:700;width:fit-content}
+details.sol > div{margin-top:8px;display:flex;flex-direction:column;gap:8px}
+.ex{border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.ex .qno{font-weight:700;color:var(--accent)}
+.small{color:var(--muted);font-size:.88rem;margin-top:-8px}
+ol.steps{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+.hier text{font-family:var(--f-body);font-size:14px;direction:rtl}
+.hier rect{fill:var(--paper);stroke:var(--accent);stroke-width:1.6;rx:8}
+.hier line{stroke:var(--muted);stroke-width:1.4;marker-end:url(#arr)}
+td.y{color:var(--accent);font-weight:700;text-align:center} td.n{color:var(--muted);text-align:center}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html#geometry">→ חזרה לנושא: גאומטריה אוקלידית</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · גאומטריה אוקלידית · נושא 3 מתוך 6</span>
+  <h1>מרובעים</h1>
+  <p class="lead">מקבילית, מלבן, מעוין, ריבוע, טרפז ודלתון. לכל מרובע: ההגדרה, התכונות (מה נובע מכך שהמרובע הוא מהסוג הזה) ומשפטי הזיהוי (מה מספיק כדי להוכיח שהוא מהסוג הזה). בנוסף: קטע אמצעים במשולש ובטרפז, טבלת השוואה, דוגמאות פתורות ושמונה תרגילים עם פתרון מפורט. הדף נשען על <a href="geometry-00b-congruence.html">חפיפת משולשים</a> ועל <a href="geometry-00a-angles-parallels.html">זוויות וישרים מקבילים</a>.</p>
+</header>
+<nav class="pages" aria-label="דפי הנושא"><a href="geometry-00-deductive-system.html">0. מערכת היסקית</a><a href="geometry-00a-angles-parallels.html">1. זוויות וישרים מקבילים</a><a href="geometry-00b-congruence.html">2. חפיפת משולשים</a><a href="geometry-00b2-congruence-questions.html">3. שאלות על חפיפה</a><a href="geometry-00c-congruence-simulations.html">4. סימולציות חפיפה ודמיון</a><span aria-current="page">5. מרובעים</span><a href="geometry-01-loci-triangle-centers.html">6. מקומות גאומטריים ונקודות מיוחדות</a><a href="geometry-02-circle.html">7. המעגל</a><a href="geometry-03-similarity.html">8. פרופורציה ודמיון</a><a href="geometry-04-concepts-theorems.html">9. מושגים ומשפטים</a><a href="geometry-05-formula-sheet.html">10. דף נוסחאות</a><a href="geometry-06-formula-questions.html">11. שאלות על דף הנוסחאות</a></nav>
+<nav class="toc" aria-label="תוכן"><strong>תוכן</strong><ol>
+  <li><a href="#basics">מושגים ומשפחת המרובעים</a></li>
+  <li><a href="#parallelogram">מקבילית</a></li>
+  <li><a href="#special">מלבן, מעוין וריבוע</a></li>
+  <li><a href="#trapezoid">טרפז</a></li>
+  <li><a href="#kite">דלתון</a></li>
+  <li><a href="#midsegment">קטע אמצעים במשולש</a></li>
+  <li><a href="#summary">טבלת השוואה</a></li>
+  <li><a href="#examples">דוגמאות פתורות</a></li>
+  <li><a href="#practice">תרגול</a></li>
+  <li><a href="#mistakes">טעויות נפוצות</a></li>
+</ol></nav>
+
+<section class="ch" id="basics">
+  <h2>1. מושגים ומשפחת המרובעים</h2>
+  <div class="meaning">
+    <p><strong>מרובע</strong> הוא מצולע עם ארבע צלעות. <strong>צלעות נגדיות</strong> לא נוגעות זו בזו, <strong>צלעות סמוכות</strong> יוצאות מאותו קודקוד. <strong>אלכסון</strong> מחבר שני קודקודים נגדיים. סכום הזוויות בכל מרובע הוא <span class="m">\(360^\circ\)</span>.</p>
+    <p>שלוש מילים שחשוב להבדיל ביניהן:</p>
+    <ul>
+      <li><strong>הגדרה:</strong> מה המרובע הוא. למשל, מקבילית היא מרובע ששני זוגות צלעותיו הנגדיות מקבילים.</li>
+      <li><strong>תכונה:</strong> מה נכון בכל מרובע כזה. משתמשים בתכונות כשיודעים שהמרובע הוא מקבילית ורוצים להסיק משהו.</li>
+      <li><strong>משפט זיהוי:</strong> מה מספיק לבדוק כדי לדעת שהמרובע הוא מקבילית. משתמשים בו כשצריך <strong>להוכיח</strong> שמרובע הוא מקבילית.</li>
+    </ul>
+  </div>
+  <figure class="fig hier"><svg viewBox="0 0 480 295" style="max-width:480px" role="img" aria-label="עץ המרובעים: כל מרובע הוא מקרה פרטי של המרובע שמעליו"><defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker></defs><rect x="185.0" y="13" width="110" height="34"/><text x="240" y="35" text-anchor="middle">מרובע</text><rect x="25.0" y="93" width="110" height="34"/><text x="80" y="115" text-anchor="middle">טרפז</text><rect x="185.0" y="93" width="110" height="34"/><text x="240" y="115" text-anchor="middle">מקבילית</text><rect x="345.0" y="93" width="110" height="34"/><text x="400" y="115" text-anchor="middle">דלתון</text><rect x="15.0" y="173" width="130" height="34"/><text x="80" y="195" text-anchor="middle">טרפז שווה שוקיים</text><rect x="135.0" y="173" width="90" height="34"/><text x="180" y="195" text-anchor="middle">מלבן</text><rect x="255.0" y="173" width="90" height="34"/><text x="300" y="195" text-anchor="middle">מעוין</text><rect x="195.0" y="253" width="90" height="34"/><text x="240" y="275" text-anchor="middle">ריבוע</text><line x1="220" y1="47" x2="100" y2="92"/><line x1="240" y1="47" x2="240" y2="92"/><line x1="260" y1="47" x2="380" y2="92"/><line x1="80" y1="127" x2="80" y2="172"/><line x1="230" y1="127" x2="190" y2="172"/><line x1="250" y1="127" x2="290" y2="172"/><line x1="190" y1="207" x2="230" y2="252"/><line x1="290" y1="207" x2="250" y2="252"/><line x1="380" y1="127" x2="320" y2="172"/></svg><figcaption>חץ מ־X ל־Y: כל Y הוא גם X. למשל, כל ריבוע הוא מלבן וגם מעוין, וכל מעוין הוא גם דלתון</figcaption></figure>
+</section>
+
+<section class="ch" id="parallelogram">
+  <h2>2. מקבילית</h2>
+  <div class="figrow"><div>
+    <div class="thm"><span class="tag">הגדרה</span><p>מקבילית היא מרובע ששני זוגות צלעותיו הנגדיות מקבילים.</p></div>
+    <div class="thm"><span class="tag">תכונות</span>
+      <p>במקבילית: (1) צלעות נגדיות שוות. (2) זוויות נגדיות שוות. (3) האלכסונים חוצים זה את זה. (4) סכום כל שתי זוויות סמוכות הוא <span class="m">\(180^\circ\)</span>.</p>
+    </div>
+  </div><figure class="fig"><svg viewBox="30 40 310 175" style="max-width:320px" role="img" aria-label="מקבילית ABCD והאלכסונים שלה"><polygon class="ln" points="60.0,190.0 260.0,190.0 320.0,60.0 120.0,60.0"/><line class="soft" x1="60.0" y1="190.0" x2="320.0" y2="60.0"/><line class="soft" x1="260.0" y1="190.0" x2="120.0" y2="60.0"/><line class="mk" x1="160.0" y1="184.0" x2="160.0" y2="196.0"/><line class="mk" x1="220.0" y1="54.0" x2="220.0" y2="66.0"/><line class="mk" x1="83.5" y1="124.8" x2="94.4" y2="129.8"/><line class="mk" x1="85.6" y1="120.2" x2="96.5" y2="125.2"/><line class="mk" x1="283.5" y1="124.8" x2="294.4" y2="129.8"/><line class="mk" x1="285.6" y1="120.2" x2="296.5" y2="125.2"/><line class="ac" x1="122.3" y1="152.1" x2="127.7" y2="162.9"/><line class="ac" x1="252.3" y1="87.1" x2="257.7" y2="97.9"/><line class="ac" x1="222.7" y1="163.6" x2="230.9" y2="154.8"/><line class="ac" x1="219.1" y1="160.2" x2="227.3" y2="151.4"/><line class="ac" x1="152.7" y1="98.6" x2="160.9" y2="89.8"/><line class="ac" x1="149.1" y1="95.2" x2="157.3" y2="86.4"/><path class="mk" d="M82.0,190.0 A22,22 0 0 0 69.2,170.0"/><path class="mk" d="M298.0,60.0 A22,22 0 0 0 310.8,80.0"/><path class="ac" d="M267.5,173.7 A18,18 0 0 0 242.0,190.0"/><path class="ac" d="M269.6,169.1 A23,23 0 0 0 237.0,190.0"/><path class="ac" d="M112.5,76.3 A18,18 0 0 0 138.0,60.0"/><path class="ac" d="M110.4,80.9 A23,23 0 0 0 143.0,60.0"/><circle class="pt" cx="60" cy="190" r="3"/><text class="" x="48" y="202">A</text><circle class="pt" cx="260" cy="190" r="3"/><text class="" x="272" y="202">B</text><circle class="pt" cx="320" cy="60" r="3"/><text class="" x="332" y="56">C</text><circle class="pt" cx="120" cy="60" r="3"/><text class="" x="108" y="56">D</text><circle class="pt" cx="190" cy="125" r="3"/><text class="" x="190" y="147">O</text></svg><figcaption>צלעות נגדיות שוות, זוויות נגדיות שוות, האלכסונים חוצים זה את זה</figcaption></figure></div>
+  <div class="proof"><b>איך מוכיחים את התכונות:</b>
+    <p>האלכסון <span class="m">\(AC\)</span> מחלק את המקבילית לשני משולשים. <span class="m">\(\triangle ABC \cong \triangle CDA\)</span> לפי זווית צלע זווית: זוויות מתחלפות בשני זוגות המקבילים והצלע המשותפת <span class="m">\(AC\)</span>. מהחפיפה: <span class="m">\(AB = CD\)</span>, <span class="m">\(BC = DA\)</span> ו־<span class="m">\(\angle B = \angle D\)</span>. את תכונה (3) מוכיחים בחפיפה של <span class="m">\(\triangle AOB\)</span> ו־<span class="m">\(\triangle COD\)</span>. (ראו תרגיל 7 ב<a href="geometry-00b-congruence.html#practice">דף החפיפה</a>.)</p>
+  </div>
+  <div class="thm conv"><span class="tag">משפטי זיהוי: מרובע הוא מקבילית אם</span>
+    <p>(1) שני זוגות הצלעות הנגדיות שווים, <strong>או</strong> (2) זוג אחד של צלעות נגדיות שוות <strong>וגם</strong> מקבילות, <strong>או</strong> (3) שני זוגות הזוויות הנגדיות שווים, <strong>או</strong> (4) האלכסונים חוצים זה את זה.</p>
+  </div>
+  <p class="note"><strong>שימו לב למשפט 2:</strong> צריך את <strong>אותו</strong> זוג צלעות גם שווה וגם מקביל. זוג אחד שווה וזוג אחר מקביל לא מספיק: טרפז שווה שוקיים הוא דוגמה נגדית.</p>
+</section>
+
+<section class="ch" id="special">
+  <h2>3. מלבן, מעוין וריבוע</h2>
+  <div class="figs"><figure class="fig"><svg viewBox="20 20 200 170" style="max-width:200px" role="img" aria-label="מלבן"><polygon class="ln" points="40.0,160.0 200.0,160.0 200.0,50.0 40.0,50.0"/><line class="soft" x1="40.0" y1="160.0" x2="200.0" y2="50.0"/><line class="soft" x1="200.0" y1="160.0" x2="40.0" y2="50.0"/><path class="mk thin" d="M52.0,160.0 L52.0,148.0 L40.0,148.0"/><path class="mk thin" d="M200.0,148.0 L188.0,148.0 L188.0,160.0"/><path class="mk thin" d="M188.0,50.0 L188.0,62.0 L200.0,62.0"/><path class="mk thin" d="M40.0,62.0 L52.0,62.0 L52.0,50.0"/><line class="ac" x1="76.6" y1="127.6" x2="83.4" y2="137.4"/><line class="ac" x1="156.6" y1="72.6" x2="163.4" y2="82.4"/><line class="ac" x1="156.6" y1="137.4" x2="163.4" y2="127.6"/><line class="ac" x1="76.6" y1="82.4" x2="83.4" y2="72.6"/></svg><figcaption>מלבן: האלכסונים שווים</figcaption></figure><figure class="fig"><svg viewBox="20 20 200 170" style="max-width:200px" role="img" aria-label="מעוין"><polygon class="ln" points="40.0,105.0 120.0,165.0 200.0,105.0 120.0,45.0"/><line class="soft" x1="40.0" y1="105.0" x2="200.0" y2="105.0"/><line class="soft" x1="120.0" y1="165.0" x2="120.0" y2="45.0"/><path class="mk thin" d="M129.0,105.0 L129.0,96.0 L120.0,96.0"/><line class="mk" x1="83.6" y1="130.2" x2="76.4" y2="139.8"/><line class="mk" x1="156.4" y1="130.2" x2="163.6" y2="139.8"/><line class="mk" x1="156.4" y1="79.8" x2="163.6" y2="70.2"/><line class="mk" x1="83.6" y1="79.8" x2="76.4" y2="70.2"/></svg><figcaption>מעוין: האלכסונים מאונכים וחוצים את הזוויות</figcaption></figure><figure class="fig"><svg viewBox="20 20 200 170" style="max-width:200px" role="img" aria-label="ריבוע"><polygon class="ln" points="60.0,160.0 180.0,160.0 180.0,40.0 60.0,40.0"/><line class="soft" x1="60.0" y1="160.0" x2="180.0" y2="40.0"/><line class="soft" x1="180.0" y1="160.0" x2="60.0" y2="40.0"/><path class="mk thin" d="M72.0,160.0 L72.0,148.0 L60.0,148.0"/><path class="mk thin" d="M126.4,93.6 L120.0,87.3 L113.6,93.6"/><line class="mk" x1="120.0" y1="154.0" x2="120.0" y2="166.0"/><line class="mk" x1="174.0" y1="100.0" x2="186.0" y2="100.0"/><line class="mk" x1="120.0" y1="46.0" x2="120.0" y2="34.0"/><line class="mk" x1="66.0" y1="100.0" x2="54.0" y2="100.0"/></svg><figcaption>ריבוע: כל התכונות של מלבן ושל מעוין</figcaption></figure></div>
+  <div class="tablebox"><table>
+    <thead><tr><th></th><th>הגדרה</th><th>תכונות (בנוסף לתכונות המקבילית)</th><th>משפטי זיהוי</th></tr></thead>
+    <tbody>
+      <tr><td><strong>מלבן</strong></td><td>מקבילית עם זווית ישרה</td><td>כל הזוויות ישרות. האלכסונים שווים.</td><td>מקבילית שהאלכסונים שלה שווים · מרובע עם שלוש זוויות ישרות</td></tr>
+      <tr><td><strong>מעוין</strong></td><td>מקבילית עם שתי צלעות סמוכות שוות</td><td>כל הצלעות שוות. האלכסונים מאונכים זה לזה. האלכסונים חוצים את הזוויות.</td><td>מרובע שכל צלעותיו שוות · מקבילית שהאלכסונים שלה מאונכים · מקבילית שאלכסון חוצה בה זווית</td></tr>
+      <tr><td><strong>ריבוע</strong></td><td>מלבן שהוא גם מעוין</td><td>כל התכונות של מלבן ושל מעוין</td><td>מלבן עם שתי צלעות סמוכות שוות · מעוין עם זווית ישרה · מלבן שהאלכסונים שלו מאונכים · מעוין שהאלכסונים שלו שווים</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note"><strong>שימו לב:</strong> רוב משפטי הזיהוי מתחילים ב"מקבילית ש...". למשל, מרובע שהאלכסונים שלו מאונכים הוא לא בהכרח מעוין (דלתון), אבל <strong>מקבילית</strong> שהאלכסונים שלה מאונכים היא מעוין.</p>
+</section>
+
+<section class="ch" id="trapezoid">
+  <h2>4. טרפז</h2>
+  <div class="figrow"><div>
+    <div class="thm"><span class="tag">הגדרה</span><p>טרפז הוא מרובע עם זוג אחד בלבד של צלעות מקבילות. הצלעות המקבילות הן <strong>הבסיסים</strong>, והאחרות הן <strong>השוקיים</strong>.</p></div>
+    <div class="thm"><span class="tag">תכונה</span><p>סכום שתי הזוויות שליד כל שוק הוא <span class="m">\(180^\circ\)</span> (זוויות חד־צדדיות בין הבסיסים).</p></div>
+    <div class="thm"><span class="tag">קטע אמצעים בטרפז</span><p>הקטע שמחבר את אמצעי השוקיים מקביל לבסיסים ושווה למחצית סכומם: <span class="m">\(EF = \frac{AB + DC}{2}\)</span>.</p></div>
+  </div><figure class="fig"><svg viewBox="30 50 320 160" style="max-width:320px" role="img" aria-label="טרפז ABCD וקטע האמצעים EF"><polygon class="ln" points="50.0,190.0 330.0,190.0 250.0,70.0 130.0,70.0"/><line class="mk" x1="90.0" y1="130.0" x2="290.0" y2="130.0"/><path class="ac" d="M184.0,195.0 L190.0,190.0 L184.0,185.0"/><path class="ac" d="M184.0,75.0 L190.0,70.0 L184.0,65.0"/><line class="ac" x1="65.0" y1="156.7" x2="75.0" y2="163.3"/><line class="ac" x1="105.0" y1="96.7" x2="115.0" y2="103.3"/><line class="ac" x1="306.4" y1="165.4" x2="316.4" y2="158.8"/><line class="ac" x1="303.6" y1="161.2" x2="313.6" y2="154.6"/><line class="ac" x1="266.4" y1="105.4" x2="276.4" y2="98.8"/><line class="ac" x1="263.6" y1="101.2" x2="273.6" y2="94.6"/><circle class="pt" cx="50" cy="190" r="3"/><text class="" x="38" y="202">A</text><circle class="pt" cx="330" cy="190" r="3"/><text class="" x="342" y="202">B</text><circle class="pt" cx="250" cy="70" r="3"/><text class="" x="262" y="66">C</text><circle class="pt" cx="130" cy="70" r="3"/><text class="" x="118" y="66">D</text><circle class="pt" cx="90" cy="130" r="3"/><text class="" x="76" y="134">E</text><circle class="pt" cx="290" cy="130" r="3"/><text class="" x="304" y="134">F</text></svg><figcaption><span class="m">\(AB \parallel DC\)</span>, <span class="m">\(EF\)</span> קטע אמצעים</figcaption></figure></div>
+  <h3>טרפז שווה שוקיים</h3>
+  <div class="thm"><span class="tag">תכונות</span><p>בטרפז שווה שוקיים זוויות הבסיס שוות, והאלכסונים שווים.</p></div>
+  <div class="thm conv"><span class="tag">משפטי זיהוי</span><p>טרפז שזוויות הבסיס שלו שוות הוא שווה שוקיים. טרפז שהאלכסונים שלו שווים הוא שווה שוקיים.</p></div>
+</section>
+
+<section class="ch" id="kite">
+  <h2>5. דלתון</h2>
+  <div class="figrow"><div>
+    <div class="thm"><span class="tag">הגדרה</span><p>דלתון הוא מרובע עם שני זוגות של צלעות סמוכות שוות. האלכסון שמחבר את הקודקודים שבין הצלעות השוות הוא <strong>האלכסון הראשי</strong> (<span class="m">\(AC\)</span> בשרטוט).</p></div>
+    <div class="thm"><span class="tag">תכונות</span><p>האלכסון הראשי חוצה את זוויות הראש (<span class="m">\(A\)</span> ו־<span class="m">\(C\)</span>), מאונך לאלכסון השני וחוצה אותו. הזוויות שבין הצלעות השונות (<span class="m">\(\angle B\)</span> ו־<span class="m">\(\angle D\)</span>) שוות.</p></div>
+  </div><figure class="fig"><svg viewBox="80 10 220 260" style="max-width:200px" role="img" aria-label="דלתון ABCD"><polygon class="ln" points="190.0,30.0 110.0,110.0 190.0,250.0 270.0,110.0"/><line class="ac" x1="190.0" y1="30.0" x2="190.0" y2="250.0"/><line class="soft" x1="110.0" y1="110.0" x2="270.0" y2="110.0"/><path class="mk thin" d="M199.0,110.0 L199.0,101.0 L190.0,101.0"/><line class="mk" x1="154.2" y1="74.2" x2="145.8" y2="65.8"/><line class="mk" x1="234.2" y1="65.8" x2="225.8" y2="74.2"/><line class="mk" x1="154.0" y1="174.9" x2="143.6" y2="180.8"/><line class="mk" x1="156.4" y1="179.2" x2="146.0" y2="185.1"/><line class="mk" x1="236.4" y1="180.8" x2="226.0" y2="174.9"/><line class="mk" x1="234.0" y1="185.1" x2="223.6" y2="179.2"/><line class="ac" x1="150.0" y1="104.0" x2="150.0" y2="116.0"/><line class="ac" x1="230.0" y1="104.0" x2="230.0" y2="116.0"/><circle class="pt" cx="190" cy="30" r="3"/><text class="" x="190" y="20">A</text><circle class="pt" cx="110" cy="110" r="3"/><text class="" x="94" y="116">B</text><circle class="pt" cx="190" cy="250" r="3"/><text class="" x="190" y="274">C</text><circle class="pt" cx="270" cy="110" r="3"/><text class="" x="286" y="116">D</text></svg><figcaption><span class="m">\(AB = AD\)</span>, <span class="m">\(CB = CD\)</span></figcaption></figure></div>
+  <p>את התכונות מוכיחים בחפיפה <span class="m">\(\triangle ABC \cong \triangle ADC\)</span> לפי צלע צלע צלע (דוגמה 4 ב<a href="geometry-00b-congruence.html#examples">דף החפיפה</a>).</p>
+</section>
+
+<section class="ch" id="midsegment">
+  <h2>6. קטע אמצעים במשולש</h2>
+  <div class="figrow"><div>
+    <div class="thm"><span class="tag">משפט</span><p>קטע אמצעים במשולש (הקטע שמחבר את אמצעי שתי צלעות) מקביל לצלע השלישית ושווה למחציתה.</p></div>
+    <div class="thm conv"><span class="tag">משפט הפוך</span><p>ישר שיוצא מאמצע צלע אחת של משולש ומקביל לצלע שנייה חוצה את הצלע השלישית.</p></div>
+  </div><figure class="fig"><svg viewBox="30 25 300 200" style="max-width:300px" role="img" aria-label="קטע אמצעים במשולש"><polygon class="ln" points="170.0,40.0 50.0,210.0 310.0,210.0"/><line class="mk" x1="110.0" y1="125.0" x2="240.0" y2="125.0"/><path class="ac" d="M169.0,130.0 L175.0,125.0 L169.0,120.0"/><path class="ac" d="M174.0,215.0 L180.0,210.0 L174.0,205.0"/><line class="ac" x1="144.9" y1="86.0" x2="135.1" y2="79.0"/><line class="ac" x1="84.9" y1="171.0" x2="75.1" y2="164.0"/><line class="ac" x1="208.0" y1="76.8" x2="198.8" y2="84.4"/><line class="ac" x1="211.2" y1="80.6" x2="202.0" y2="88.2"/><line class="ac" x1="278.0" y1="161.8" x2="268.8" y2="169.4"/><line class="ac" x1="281.2" y1="165.6" x2="272.0" y2="173.2"/><circle class="pt" cx="170" cy="40" r="3"/><text class="" x="170" y="30">A</text><circle class="pt" cx="50" cy="210" r="3"/><text class="" x="36" y="220">B</text><circle class="pt" cx="310" cy="210" r="3"/><text class="" x="324" y="220">C</text><circle class="pt" cx="110" cy="125" r="3"/><text class="" x="96" y="125">D</text><circle class="pt" cx="240" cy="125" r="3"/><text class="" x="254" y="125">E</text></svg><figcaption><span class="m">\(DE \parallel BC\)</span>, <span class="m">\(DE = \frac{BC}{2}\)</span></figcaption></figure></div>
+  <div class="proof"><b>רעיון ההוכחה:</b><p>מאריכים את <span class="m">\(DE\)</span> עד נקודה <span class="m">\(F\)</span> כך ש־<span class="m">\(EF = DE\)</span>. אז <span class="m">\(\triangle ADE \cong \triangle CFE\)</span> לפי צלע זווית צלע, ומכאן <span class="m">\(CF = AD = DB\)</span> ו־<span class="m">\(CF \parallel AB\)</span>. לכן <span class="m">\(DBCF\)</span> מקבילית (זוג צלעות שוות ומקבילות), ו־<span class="m">\(DF \parallel BC\)</span>, <span class="m">\(DF = BC\)</span>. כלומר <span class="m">\(DE = \frac{BC}{2}\)</span>.</p></div>
+</section>
+
+<section class="ch" id="summary">
+  <h2>7. טבלת השוואה</h2>
+  <div class="tablebox"><table>
+  <thead><tr><th>תכונה</th><th>מקבילית</th><th>מלבן</th><th>מעוין</th><th>ריבוע</th><th>דלתון</th><th>טרפז ש״ש</th></tr></thead>
+  <tbody>
+  <tr><td><strong>שני זוגות צלעות נגדיות מקבילים</strong></td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✗</td><td class="n">✗</td></tr>
+  <tr><td><strong>צלעות נגדיות שוות</strong></td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✗</td><td class="n">✗</td></tr>
+  <tr><td><strong>כל הצלעות שוות</strong></td><td class="n">✗</td><td class="n">✗</td><td class="y">✓</td><td class="y">✓</td><td class="n">✗</td><td class="n">✗</td></tr>
+  <tr><td><strong>זוויות נגדיות שוות</strong></td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✗</td><td class="n">✗</td></tr>
+  <tr><td><strong>כל הזוויות ישרות</strong></td><td class="n">✗</td><td class="y">✓</td><td class="n">✗</td><td class="y">✓</td><td class="n">✗</td><td class="n">✗</td></tr>
+  <tr><td><strong>האלכסונים חוצים זה את זה</strong></td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✗</td><td class="n">✗</td></tr>
+  <tr><td><strong>האלכסונים שווים</strong></td><td class="n">✗</td><td class="y">✓</td><td class="n">✗</td><td class="y">✓</td><td class="n">✗</td><td class="y">✓</td></tr>
+  <tr><td><strong>האלכסונים מאונכים</strong></td><td class="n">✗</td><td class="n">✗</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✗</td></tr>
+  <tr><td><strong>אלכסון חוצה זוויות</strong></td><td class="n">✗</td><td class="n">✗</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="n">✗</td></tr>
+  </tbody></table></div>
+  <p class="small">בדלתון רק האלכסון הראשי חוצה זוויות. בטרפז שווה שוקיים זוויות הבסיס שוות.</p>
+</section>
+
+<section class="ch" id="examples">
+  <h2>8. דוגמאות פתורות</h2>
+  <div class="example"><span class="tag">דוגמה 1: הוכחה שמרובע הוא מקבילית</span>
+  <div class="figrow"><div><p><strong>נתון:</strong> <span class="m">\(ABCD\)</span> מקבילית, והנקודות <span class="m">\(E\)</span> ו־<span class="m">\(F\)</span> על האלכסון <span class="m">\(AC\)</span> כך ש־<span class="m">\(AE = CF\)</span>.</p><p><strong>צריך להוכיח:</strong> <span class="m">\(BEDF\)</span> מקבילית.</p></div><figure class="fig"><svg viewBox="30 40 320 175" style="max-width:320px" role="img" aria-label="מקבילית ABCD ונקודות E ו־F על האלכסון AC"><polygon class="ln" points="50.0,190.0 250.0,190.0 330.0,60.0 130.0,60.0"/><line class="soft" x1="50.0" y1="190.0" x2="330.0" y2="60.0"/><line class="soft" x1="250.0" y1="190.0" x2="130.0" y2="60.0"/><polygon class="ac" points="250.0,190.0 260.0,92.5 130.0,60.0 120.0,157.5"/><line class="mk" x1="82.5" y1="168.3" x2="87.5" y2="179.2"/><line class="mk" x1="292.5" y1="70.8" x2="297.5" y2="81.7"/><circle class="pt" cx="50" cy="190" r="3"/><text class="" x="38" y="202">A</text><circle class="pt" cx="250" cy="190" r="3"/><text class="" x="262" y="202">B</text><circle class="pt" cx="330" cy="60" r="3"/><text class="" x="342" y="56">C</text><circle class="pt" cx="130" cy="60" r="3"/><text class="" x="118" y="56">D</text><circle class="pt" cx="120" cy="157.5" r="3"/><text class="" x="114" y="179.5">E</text><circle class="pt" cx="260" cy="92.5" r="3"/><text class="" x="270" y="82.5">F</text><circle class="pt" cx="190" cy="125" r="3"/><text class="" x="206" y="139">O</text></svg><figcaption><span class="m">\(AE = CF\)</span></figcaption></figure></div>
+  <div class="tablebox"><table class="pf"><thead><tr><th>#</th><th>טענה</th><th>נימוק</th></tr></thead><tbody><tr><td>1</td><td><span class="m">\(AO = OC,\ BO = OD\)</span></td><td>במקבילית <span class="m">\(ABCD\)</span> האלכסונים חוצים זה את זה (<span class="m">\(O\)</span> נקודת החיתוך)</td></tr><tr><td>2</td><td><span class="m">\(AE = CF\)</span></td><td>נתון</td></tr><tr><td>3</td><td><span class="m">\(OE = AO - AE = OC - CF = OF\)</span></td><td>חיסור קטעים שווים (טענות 1 ו־2)</td></tr><tr><td>4</td><td><span class="m">\(BEDF\)</span> מקבילית</td><td>האלכסונים <span class="m">\(EF\)</span> ו־<span class="m">\(BD\)</span> של המרובע חוצים זה את זה (טענות 1 ו־3), משפט זיהוי 4</td></tr></tbody></table></div>
+  
+</div>
+
+  <div class="example"><span class="tag">דוגמה 2: תכונות המלבן</span>
+  <div class="figrow"><div><p><strong>נתון:</strong> <span class="m">\(ABCD\)</span> מלבן, ו־<span class="m">\(M\)</span> אמצע הצלע <span class="m">\(AB\)</span>.</p><p><strong>צריך להוכיח:</strong> <span class="m">\(MD = MC\)</span>.</p></div><figure class="fig"><svg viewBox="30 50 320 180" style="max-width:320px" role="img" aria-label="מלבן ABCD ואמצע הצלע M"><polygon class="ln" points="50.0,200.0 330.0,200.0 330.0,70.0 50.0,70.0"/><line class="ac" x1="190.0" y1="200.0" x2="50.0" y2="70.0"/><line class="ac" x1="190.0" y1="200.0" x2="330.0" y2="70.0"/><path class="mk thin" d="M62.0,200.0 L62.0,188.0 L50.0,188.0"/><path class="mk thin" d="M330.0,188.0 L318.0,188.0 L318.0,200.0"/><line class="mk" x1="120.0" y1="194.0" x2="120.0" y2="206.0"/><line class="mk" x1="260.0" y1="194.0" x2="260.0" y2="206.0"/><circle class="pt" cx="50" cy="200" r="3"/><text class="" x="38" y="214">A</text><circle class="pt" cx="330" cy="200" r="3"/><text class="" x="342" y="214">B</text><circle class="pt" cx="330" cy="70" r="3"/><text class="" x="342" y="64">C</text><circle class="pt" cx="50" cy="70" r="3"/><text class="" x="38" y="64">D</text><circle class="pt" cx="190" cy="200" r="3"/><text class="" x="190" y="222">M</text></svg><figcaption><span class="m">\(M\)</span> אמצע <span class="m">\(AB\)</span></figcaption></figure></div>
+  <div class="tablebox"><table class="pf"><thead><tr><th>#</th><th>טענה</th><th>נימוק</th></tr></thead><tbody><tr><td>1</td><td><span class="m">\(AM = MB\)</span></td><td><span class="m">\(M\)</span> אמצע <span class="m">\(AB\)</span></td></tr><tr><td>2</td><td><span class="m">\(\angle A = \angle B = 90^\circ\)</span></td><td>במלבן כל הזוויות ישרות</td></tr><tr><td>3</td><td><span class="m">\(AD = BC\)</span></td><td>במלבן (כמו בכל מקבילית) צלעות נגדיות שוות</td></tr><tr><td>4</td><td><span class="m">\(\triangle AMD \cong \triangle BMC\)</span></td><td>צלע זווית צלע (טענות 1–3)</td></tr><tr><td>5</td><td><span class="m">\(MD = MC\)</span></td><td>צלעות מתאימות במשולשים חופפים</td></tr></tbody></table></div>
+  
+</div>
+
+  <div class="example"><span class="tag">דוגמה 3: אמצעי הצלעות של מרובע</span>
+  <div class="figrow"><div><p><strong>נתון:</strong> <span class="m">\(ABCD\)</span> מרובע כלשהו. <span class="m">\(K, L, M, N\)</span> אמצעי הצלעות <span class="m">\(AB, BC, CD, DA\)</span>.</p><p><strong>צריך להוכיח:</strong> <span class="m">\(KLMN\)</span> מקבילית.</p></div><figure class="fig"><svg viewBox="35 20 315 220" style="max-width:300px" role="img" aria-label="אמצעי הצלעות של מרובע"><polygon class="ln" points="60.0,180.0 200.0,220.0 330.0,90.0 130.0,40.0"/><line class="soft" x1="60.0" y1="180.0" x2="330.0" y2="90.0"/><polygon class="mk" points="130.0,200.0 265.0,155.0 230.0,65.0 95.0,110.0"/><circle class="pt" cx="60" cy="180" r="3"/><text class="" x="48" y="190">A</text><circle class="pt" cx="200" cy="220" r="3"/><text class="" x="200" y="242">B</text><circle class="pt" cx="330" cy="90" r="3"/><text class="" x="344" y="94">C</text><circle class="pt" cx="130" cy="40" r="3"/><text class="" x="130" y="30">D</text><circle class="pt" cx="130" cy="200" r="3"/><text class="" x="126" y="222">K</text><circle class="pt" cx="265" cy="155" r="3"/><text class="" x="279" y="165">L</text><circle class="pt" cx="230" cy="65" r="3"/><text class="" x="240" y="55">M</text><circle class="pt" cx="95" cy="110" r="3"/><text class="" x="79" y="110">N</text></svg><figcaption><span class="m">\(K, L, M, N\)</span> אמצעי הצלעות</figcaption></figure></div>
+  <div class="tablebox"><table class="pf"><thead><tr><th>#</th><th>טענה</th><th>נימוק</th></tr></thead><tbody><tr><td>1</td><td><span class="m">\(KL \parallel AC,\ KL = \frac{AC}{2}\)</span></td><td>קטע אמצעים במשולש <span class="m">\(ABC\)</span></td></tr><tr><td>2</td><td><span class="m">\(NM \parallel AC,\ NM = \frac{AC}{2}\)</span></td><td>קטע אמצעים במשולש <span class="m">\(ACD\)</span></td></tr><tr><td>3</td><td><span class="m">\(KL \parallel NM,\ KL = NM\)</span></td><td>שני ישרים שמקבילים לישר שלישי מקבילים זה לזה; קטעים ששווים לאותו קטע</td></tr><tr><td>4</td><td><span class="m">\(KLMN\)</span> מקבילית</td><td>זוג צלעות נגדיות שוות ומקבילות (משפט זיהוי 2)</td></tr></tbody></table></div>
+  <p>התוצאה נכונה בכל מרובע, גם אם אינו מיוחד. זה משפט ואריניון.</p>
+</div>
+</section>
+
+<section class="ch" id="practice">
+  <h2>9. תרגול</h2>
+  <p>נסו לפתור לבד, ורק אחר כך פתחו את הפתרון. בכל פתרון מופיעים התשובה ודרך הפתרון המלאה.</p>
+  <div class="ex" id="p1"><p><span class="qno">1.</span> במקבילית <span class="m">\(ABCD\)</span> הזווית <span class="m">\(\angle A\)</span> גדולה פי 2 מהזווית <span class="m">\(\angle B\)</span>. מצאו את כל זוויות המקבילית.</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(\angle A = \angle C = 120^\circ\)</span>, <span class="m">\(\angle B = \angle D = 60^\circ\)</span>.</p></div><p><strong>דרך הפתרון:</strong></p><p>במקבילית זוויות סמוכות הן זוויות חד־צדדיות בין המקבילים <span class="m">\(AD \parallel BC\)</span>, ולכן <span class="m">\(\angle A + \angle B = 180^\circ\)</span>.</p><p><span class="m">\(2x + x = 180\)</span>, ולכן <span class="m">\(\angle B = 60^\circ\)</span> ו־<span class="m">\(\angle A = 120^\circ\)</span>.</p><p>זוויות נגדיות במקבילית שוות: <span class="m">\(\angle C = \angle A = 120^\circ\)</span>, <span class="m">\(\angle D = \angle B = 60^\circ\)</span>.</p></div></details></div>
+<div class="ex" id="p2"><p><span class="qno">2.</span> היקף מקבילית <span class="m">\(ABCD\)</span> הוא 40, והצלע <span class="m">\(AB\)</span> ארוכה ב־4 מהצלע <span class="m">\(AD\)</span>. מצאו את אורכי הצלעות.</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(AB = CD = 12\)</span>, <span class="m">\(AD = BC = 8\)</span>.</p></div><p><strong>דרך הפתרון:</strong></p><p>במקבילית צלעות נגדיות שוות, ולכן ההיקף הוא <span class="m">\(2(AB + AD) = 40\)</span>, כלומר <span class="m">\(AB + AD = 20\)</span>.</p><p><span class="m">\((AD + 4) + AD = 20\)</span>, ולכן <span class="m">\(AD = 8\)</span> ו־<span class="m">\(AB = 12\)</span>.</p></div></details></div>
+<div class="ex" id="p3"><p><span class="qno">3.</span> האלכסונים של מקבילית <span class="m">\(ABCD\)</span> נחתכים בנקודה <span class="m">\(O\)</span>. נתון <span class="m">\(AO = 3x - 2\)</span>, <span class="m">\(OC = x + 6\)</span> ו־<span class="m">\(BO = 2x + 1\)</span>. מצאו את אורכי האלכסונים.</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(AC = 20\)</span>, <span class="m">\(BD = 18\)</span>.</p></div><p><strong>דרך הפתרון:</strong></p><p>במקבילית האלכסונים חוצים זה את זה, ולכן <span class="m">\(AO = OC\)</span>: <span class="m">\(3x - 2 = x + 6\)</span>, ולכן <span class="m">\(x = 4\)</span>.</p><p><span class="m">\(AO = 10\)</span>, ולכן <span class="m">\(AC = 20\)</span>. <span class="m">\(BO = 2 \cdot 4 + 1 = 9\)</span>, ולכן <span class="m">\(BD = 18\)</span>.</p></div></details></div>
+<div class="ex" id="p4"><p><span class="qno">4.</span> האלכסונים של מלבן <span class="m">\(ABCD\)</span> נחתכים בנקודה <span class="m">\(O\)</span>. אורך כל אלכסון הוא 10, והזווית <span class="m">\(\angle AOB\)</span> היא <span class="m">\(60^\circ\)</span>. מצאו את צלעות המלבן.</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(AB = 5\)</span>, <span class="m">\(BC = 5\sqrt3\)</span>.</p></div><p><strong>דרך הפתרון:</strong></p><p>במלבן האלכסונים שווים וחוצים זה את זה, ולכן <span class="m">\(AO = BO = 5\)</span>.</p><p>המשולש <span class="m">\(AOB\)</span> שווה שוקיים עם זווית ראש <span class="m">\(60^\circ\)</span>, ולכן זוויות הבסיס גם הן <span class="m">\(60^\circ\)</span> והמשולש שווה צלעות: <span class="m">\(AB = 5\)</span>.</p><p>במשולש ישר הזווית <span class="m">\(ABC\)</span>: <span class="m">\(BC = \sqrt{10^2 - 5^2} = \sqrt{75} = 5\sqrt3\)</span>.</p></div></details></div>
+<div class="ex" id="p5"><p><span class="qno">5.</span> במעוין <span class="m">\(ABCD\)</span> הצלע היא 6 ו־<span class="m">\(\angle A = 60^\circ\)</span>. מצאו את אורכי האלכסונים.</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(BD = 6\)</span>, <span class="m">\(AC = 6\sqrt3\)</span>.</p></div><p><strong>דרך הפתרון:</strong></p><p>במעוין כל הצלעות שוות, ולכן המשולש <span class="m">\(ABD\)</span> שווה שוקיים (<span class="m">\(AB = AD = 6\)</span>) עם זווית ראש <span class="m">\(60^\circ\)</span>. לכן הוא שווה צלעות ו־<span class="m">\(BD = 6\)</span>.</p><p>האלכסונים במעוין מאונכים וחוצים זה את זה. במשולש ישר הזווית שנוצר: חצי <span class="m">\(BD\)</span> הוא 3, והיתר הוא 6, ולכן חצי <span class="m">\(AC\)</span> הוא <span class="m">\(\sqrt{36 - 9} = 3\sqrt3\)</span>.</p><p><span class="m">\(AC = 6\sqrt3\)</span>.</p></div></details></div>
+<div class="ex" id="p6"><p><span class="qno">6.</span> קבעו לכל טענה אם היא נכונה, ונמקו: (א) כל מלבן הוא מקבילית. (ב) מרובע שהאלכסונים שלו מאונכים הוא מעוין. (ג) מקבילית שהאלכסונים שלה שווים היא מלבן. (ד) מעוין שהאלכסונים שלו שווים הוא ריבוע.</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p>(א) נכון. (ב) לא נכון. (ג) נכון. (ד) נכון.</p></div><p><strong>דרך הפתרון:</strong></p><p>(א) לפי ההגדרה, מלבן הוא מקבילית עם זווית ישרה.</p><p>(ב) דוגמה נגדית: בדלתון האלכסונים מאונכים, אבל הוא לא מעוין. המשפט הנכון: <strong>מקבילית</strong> שהאלכסונים שלה מאונכים היא מעוין.</p><p>(ג) זה משפט זיהוי של מלבן.</p><p>(ד) מעוין הוא מקבילית. מקבילית עם אלכסונים שווים היא מלבן. מרובע שהוא גם מלבן וגם מעוין הוא ריבוע.</p></div></details></div>
+<div class="ex" id="p7"><p><span class="qno">7.</span> בטרפז שווה שוקיים <span class="m">\(ABCD\)</span> (<span class="m">\(AB \parallel DC\)</span>) נתון <span class="m">\(\angle A = 70^\circ\)</span>, והבסיסים הם 6 ו־14. מצאו את זוויות הטרפז ואת אורך קטע האמצעים.</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(\angle A = \angle B = 70^\circ\)</span>, <span class="m">\(\angle C = \angle D = 110^\circ\)</span>, קטע האמצעים 10.</p></div><p><strong>דרך הפתרון:</strong></p><p>בטרפז שווה שוקיים זוויות הבסיס שוות: <span class="m">\(\angle B = \angle A = 70^\circ\)</span>.</p><p><span class="m">\(\angle A\)</span> ו־<span class="m">\(\angle D\)</span> חד־צדדיות בין הבסיסים המקבילים, ולכן <span class="m">\(\angle D = 110^\circ\)</span>, וגם <span class="m">\(\angle C = 110^\circ\)</span>.</p><p>קטע האמצעים שווה למחצית סכום הבסיסים: <span class="m">\(\frac{6 + 14}{2} = 10\)</span>.</p></div></details></div>
+<div class="ex" id="p8"><p><span class="qno">8.</span> במקבילית <span class="m">\(ABCD\)</span> חוצי הזוויות <span class="m">\(A\)</span> ו־<span class="m">\(B\)</span> נפגשים בנקודה <span class="m">\(E\)</span>. הוכיחו ש־<span class="m">\(\angle AEB = 90^\circ\)</span>.</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(\angle EAB + \angle EBA = 90^\circ\)</span>, ולכן <span class="m">\(\angle AEB = 90^\circ\)</span>.</p></div><p><strong>דרך הפתרון:</strong></p><div class="tablebox"><table class="pf"><thead><tr><th>#</th><th>טענה</th><th>נימוק</th></tr></thead><tbody><tr><td>1</td><td><span class="m">\(\angle DAB + \angle ABC = 180^\circ\)</span></td><td>זוויות חד־צדדיות בין המקבילים <span class="m">\(AD \parallel BC\)</span></td></tr><tr><td>2</td><td><span class="m">\(\angle EAB = \frac{\angle DAB}{2},\ \angle EBA = \frac{\angle ABC}{2}\)</span></td><td><span class="m">\(AE\)</span> ו־<span class="m">\(BE\)</span> חוצי זוויות (נתון)</td></tr><tr><td>3</td><td><span class="m">\(\angle EAB + \angle EBA = 90^\circ\)</span></td><td>מחצית מ־180° (טענות 1 ו־2)</td></tr><tr><td>4</td><td><span class="m">\(\angle AEB = 90^\circ\)</span></td><td>סכום הזוויות במשולש <span class="m">\(ABE\)</span></td></tr></tbody></table></div></div></details></div>
+</section>
+
+<section class="ch" id="mistakes">
+  <h2>10. טעויות נפוצות</h2>
+  <ul class="mistakes">
+    <li><strong>להשתמש בתכונה במקום במשפט זיהוי.</strong> כדי להוכיח שמרובע הוא מקבילית צריך משפט זיהוי. "במקבילית האלכסונים חוצים זה את זה" הוא תכונה, ומשתמשים בו רק כשכבר ידוע שזו מקבילית.</li>
+    <li><strong>"האלכסונים מאונכים, לכן זה מעוין".</strong> זה נכון רק למקבילית. בדלתון האלכסונים מאונכים והוא לא מעוין.</li>
+    <li><strong>זוג צלעות שוות וזוג אחר מקביל.</strong> במשפט זיהוי 2 של מקבילית צריך את אותו זוג גם שווה וגם מקביל.</li>
+    <li><strong>לחשוב שריבוע אינו מלבן.</strong> כל ריבוע הוא מלבן, וגם מעוין, וגם מקבילית. כל תכונה של מלבן נכונה גם בריבוע.</li>
+    <li><strong>במלבן, לחשוב שהאלכסונים חוצים את הזוויות.</strong> זה נכון רק במעוין ובריבוע.</li>
+  </ul>
+</section>
+
+<section class="ch" id="next">
+  <h2>הנושא הבא: מקומות גאומטריים ונקודות מיוחדות במשולש</h2>
+  <p>מקום גאומטרי והוכחה בשני כיוונים, ארבע הנקודות המיוחדות במשולש, משפט החפיפה הרביעי ומשפט פיתגורס ההפוך.</p>
+  <a class="btn" href="geometry-01-loci-triangle-centers.html">← לדף מקומות גאומטריים</a>
+</section>
+
+<footer>גאומטריה אוקלידית · נושא 3: מרובעים</footer>
+</div>
+</body>
+</html>

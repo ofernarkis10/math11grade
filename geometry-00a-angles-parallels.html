@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>זוויות וישרים מקבילים · דף לימוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same study-page style as the rest of the site; geometry pages add figures (inline SVG drawn with the color tokens), theorem boxes and converse boxes */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:68ch}
+.lead a,.meaning a{color:var(--accent);font-weight:600}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav.pages{display:flex;gap:8px;flex-wrap:wrap}
+nav.pages a,nav.pages span{padding:6px 14px;border:1px solid var(--line);border-radius:99px;font-size:.9rem;font-weight:600;text-decoration:none;color:var(--accent);background:var(--paper)}
+nav.pages span{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+nav.pages a:hover,nav.pages a:focus-visible{border-color:var(--accent);outline:none}
+
+nav.toc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav.toc ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav.toc a{color:var(--accent);text-decoration:none;font-weight:600}
+nav.toc a:hover,nav.toc a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav.toc ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:70ch;display:flex;flex-direction:column;gap:10px}
+.meaning ul,.meaning ol{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:4px}
+
+/* theorem / converse / definition boxes */
+.thm{border-inline-start:4px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0;padding:10px 16px;display:flex;flex-direction:column;gap:4px}
+.thm .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.thm.conv{border-color:var(--mark);background:var(--mark-soft)}
+.thm.conv .tag{color:var(--mark)}
+.proof{font-size:.96rem;color:var(--ink);display:flex;flex-direction:column;gap:4px;border-inline-start:2px dotted var(--line);padding-inline-start:14px}
+.proof b{color:var(--muted)}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ul.mistakes{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:8px}
+
+/* figures */
+.figrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:20px;align-items:center}
+@media (max-width:680px){.figrow{grid-template-columns:minmax(0,1fr)}}
+.figrow > div{display:flex;flex-direction:column;gap:10px;min-width:0}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+figure.fig{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+figure.fig svg{width:100%;height:auto;direction:ltr;overflow:visible}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center}
+.fig .ln{stroke:var(--ink);stroke-width:2;fill:none;stroke-linejoin:round}
+.fig .ac{stroke:var(--accent);stroke-width:2;fill:none}
+.fig .mk{stroke:var(--mark);stroke-width:2;fill:none}
+.fig .thick{stroke-width:4;stroke-linecap:round}
+.fig .thin{stroke-width:1.4}
+.fig .dash{stroke-dasharray:5 4}
+.fig .soft{stroke:var(--muted);stroke-width:1.4;fill:none;stroke-dasharray:4 4}
+.fig .fill{fill:var(--accent-soft)}
+.fig .pt{fill:var(--ink)}
+.fig .pta{fill:var(--accent)}
+.fig .ptm{fill:var(--mark)}
+.fig text{font-family:var(--f-math);font-size:15px;fill:var(--ink);text-anchor:middle}
+.fig text.he{font-family:var(--f-body);font-size:14px;direction:rtl}
+.fig text.a{fill:var(--accent);font-weight:600}
+.fig text.k{fill:var(--mark);font-weight:600}
+.fig text.sm{font-size:12px}
+
+.btn{align-self:flex-start;background:var(--accent);color:var(--paper);font-weight:700;text-decoration:none;padding:8px 18px;border-radius:99px}
+.btn:hover,.btn:focus-visible{filter:brightness(1.1);outline:none}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:#fff} nav.toc,nav.pages,.back{display:none} section.ch{break-inside:avoid-page}}
+/* proof tables: claim | reason */
+table.pf{min-width:0}
+.figcol{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:20px;align-items:center}
+@media (max-width:760px){.figcol{grid-template-columns:minmax(0,1fr)}}
+table.pf td:first-child{width:2.2em;color:var(--muted);font-family:var(--f-math)}
+table.pf td:last-child{color:var(--muted);font-size:.93rem}
+details.sol summary{cursor:pointer;color:var(--accent);font-weight:700;width:fit-content}
+details.sol > div{margin-top:8px;display:flex;flex-direction:column;gap:8px}
+.ex{border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.ex .qno{font-weight:700;color:var(--accent)}
+.small{color:var(--muted);font-size:.88rem;margin-top:-8px}
+ol.steps{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+.hier text{font-family:var(--f-body);font-size:14px;direction:rtl}
+.hier rect{fill:var(--paper);stroke:var(--accent);stroke-width:1.6;rx:8}
+.hier line{stroke:var(--muted);stroke-width:1.4;marker-end:url(#arr)}
+td.y{color:var(--accent);font-weight:700;text-align:center} td.n{color:var(--muted);text-align:center}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html#geometry">→ חזרה לנושא: גאומטריה אוקלידית</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · גאומטריה אוקלידית · נושא 1 מתוך 6</span>
+  <h1>זוויות וישרים מקבילים</h1>
+  <p class="lead">הכלים הבסיסיים לכל חישוב זוויות ולכל הוכחה בגאומטריה: זוויות צמודות וקודקודיות, הזוויות שנוצרות כשישר חותך שני ישרים מקבילים, סכום הזוויות במשולש ובמצולע, והזווית החיצונית. בסוף: דוגמאות פתורות ושמונה תרגילים עם פתרון מפורט. לפני הדף הזה כדאי לקרוא את <a href="geometry-00-deductive-system.html">מערכת היסקית</a>.</p>
+</header>
+<nav class="pages" aria-label="דפי הנושא"><a href="geometry-00-deductive-system.html">0. מערכת היסקית</a><span aria-current="page">1. זוויות וישרים מקבילים</span><a href="geometry-00b-congruence.html">2. חפיפת משולשים</a><a href="geometry-00b2-congruence-questions.html">3. שאלות על חפיפה</a><a href="geometry-00c-congruence-simulations.html">4. סימולציות חפיפה ודמיון</a><a href="geometry-00d-quadrilaterals.html">5. מרובעים</a><a href="geometry-01-loci-triangle-centers.html">6. מקומות גאומטריים ונקודות מיוחדות</a><a href="geometry-02-circle.html">7. המעגל</a><a href="geometry-03-similarity.html">8. פרופורציה ודמיון</a><a href="geometry-04-concepts-theorems.html">9. מושגים ומשפטים</a><a href="geometry-05-formula-sheet.html">10. דף נוסחאות</a><a href="geometry-06-formula-questions.html">11. שאלות על דף הנוסחאות</a></nav>
+<nav class="toc" aria-label="תוכן"><strong>תוכן</strong><ol>
+  <li><a href="#types">סוגי זוויות</a></li>
+  <li><a href="#vertical">זוויות צמודות וקודקודיות</a></li>
+  <li><a href="#parallel">ישרים מקבילים וחותך</a></li>
+  <li><a href="#converse">איך מוכיחים שישרים מקבילים</a></li>
+  <li><a href="#triangle">סכום הזוויות במשולש</a></li>
+  <li><a href="#polygon">סכום הזוויות במצולע</a></li>
+  <li><a href="#examples">דוגמאות פתורות</a></li>
+  <li><a href="#practice">תרגול</a></li>
+  <li><a href="#mistakes">טעויות נפוצות</a></li>
+</ol></nav>
+
+<section class="ch" id="types">
+  <h2>1. סוגי זוויות</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>שם</th><th>גודל</th></tr></thead>
+    <tbody>
+      <tr><td><strong>זווית חדה</strong></td><td>קטנה מ־<span class="m">\(90^\circ\)</span></td></tr>
+      <tr><td><strong>זווית ישרה</strong></td><td>בדיוק <span class="m">\(90^\circ\)</span>. מסמנים אותה בריבוע קטן בקודקוד.</td></tr>
+      <tr><td><strong>זווית קהה</strong></td><td>בין <span class="m">\(90^\circ\)</span> ל־<span class="m">\(180^\circ\)</span></td></tr>
+      <tr><td><strong>זווית שטוחה</strong></td><td>בדיוק <span class="m">\(180^\circ\)</span>: שתי השוקיים יוצרות ישר אחד</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="ch" id="vertical">
+  <h2>2. זוויות צמודות וקודקודיות</h2>
+  <div class="figrow"><div>
+    <div class="thm"><span class="tag">הגדרה</span><p><strong>זוויות צמודות:</strong> שתי זוויות עם קודקוד משותף ושוק משותפת, שהשוקיים האחרות שלהן יוצרות ישר אחד.</p><p><strong>זוויות קודקודיות:</strong> שתי זוויות שהשוקיים של כל אחת מהן הן ההמשכים של השוקיים של השנייה.</p></div>
+    <div class="thm"><span class="tag">משפט</span><p>סכום זוויות צמודות הוא <span class="m">\(180^\circ\)</span>.</p></div>
+    <div class="thm"><span class="tag">משפט</span><p>זוויות קודקודיות שוות זו לזו.</p></div>
+  </div><figure class="fig"><svg viewBox="30 15 290 210" style="max-width:300px" role="img" aria-label="שני ישרים נחתכים: זוויות קודקודיות וצמודות"><line class="ln" x1="40.0" y1="168.0" x2="300.0" y2="72.0"/><line class="ln" x1="95.0" y1="25.0" x2="245.0" y2="215.0"/><circle class="pt" cx="170" cy="120" r="3"/><text class="" x="184" y="144">O</text><path class="mk" d="M192.5,111.7 A24,24 0 0 0 155.1,101.2"/><text class="k sm" x="180.8" y="86.5">α</text><path class="mk" d="M147.5,128.3 A24,24 0 0 0 184.9,138.8"/><text class="k sm" x="159.2" y="163.5">α</text><path class="ac" d="M151.4,96.5 A30,30 0 0 0 141.9,130.4"/><text class="a sm" x="127.6" y="113.1">β</text><path class="ac" d="M188.6,143.5 A30,30 0 0 0 198.1,109.6"/><text class="a sm" x="212.4" y="136.9">β</text></svg><figcaption><span class="m">\(\alpha\)</span> ו־<span class="m">\(\alpha\)</span> קודקודיות · <span class="m">\(\alpha\)</span> ו־<span class="m">\(\beta\)</span> צמודות</figcaption></figure></div>
+  <div class="proof"><b>הוכחה שזוויות קודקודיות שוות:</b>
+    <p><span class="m">\(\alpha + \beta = 180^\circ\)</span>, כי הן צמודות. גם הזווית הקודקודית ל־<span class="m">\(\alpha\)</span> צמודה ל־<span class="m">\(\beta\)</span>, ולכן גם היא שווה ל־<span class="m">\(180^\circ - \beta\)</span>. שתי הזוויות שוות ל־<span class="m">\(180^\circ - \beta\)</span>, ולכן הן שוות זו לזו.</p>
+  </div>
+</section>
+
+<section class="ch" id="parallel">
+  <h2>3. ישרים מקבילים וחותך</h2>
+  <p>כשישר (<strong>חותך</strong>) חותך שני ישרים, נוצרות שמונה זוויות, ארבע בכל נקודת חיתוך. לזוגות הזוויות יש שמות:</p>
+  <figure class="fig"><svg viewBox="20 10 420 260" style="max-width:400px" role="img" aria-label="שני ישרים מקבילים וחותך: שמונה זוויות"><line class="ln" x1="30.0" y1="80.0" x2="410.0" y2="80.0"/><line class="ln" x1="30.0" y1="200.0" x2="410.0" y2="200.0"/><line class="ac" x1="110.0" y1="20.0" x2="330.0" y2="260.0"/><path class="ac" d="M214.0,85.0 L220.0,80.0 L214.0,75.0"/><path class="ac" d="M214.0,205.0 L220.0,200.0 L214.0,195.0"/><text x="420" y="85">a</text><text x="420" y="205">b</text><text class="k" x="135.7" y="72.1">1</text><text class="k" x="175.5" y="61.2">2</text><text class="k" x="154.5" y="108.8">3</text><text class="k" x="194.3" y="97.9">4</text><circle class="pt" cx="165" cy="80" r="3"/><text class="k" x="245.7" y="192.1">5</text><text class="k" x="285.5" y="181.2">6</text><text class="k" x="264.5" y="228.8">7</text><text class="k" x="304.3" y="217.9">8</text><circle class="pt" cx="275" cy="200" r="3"/></svg><figcaption><span class="m">\(a \parallel b\)</span>, והישר הכחול חותך את שניהם</figcaption></figure>
+  <div class="tablebox"><table>
+    <thead><tr><th>שם הזוג</th><th>איפה הן נמצאות</th><th>דוגמאות בשרטוט</th><th>כשהישרים מקבילים</th></tr></thead>
+    <tbody>
+      <tr><td><strong>זוויות מתאימות</strong></td><td>באותו מקום בשתי נקודות החיתוך (שתיהן מעל הישר ומימין לחותך, למשל)</td><td><span class="m">\(\angle 1, \angle 5\)</span> · <span class="m">\(\angle 2, \angle 6\)</span> · <span class="m">\(\angle 3, \angle 7\)</span> · <span class="m">\(\angle 4, \angle 8\)</span></td><td>שוות</td></tr>
+      <tr><td><strong>זוויות מתחלפות</strong></td><td>בין שני הישרים, משני צדי החותך</td><td><span class="m">\(\angle 3, \angle 6\)</span> · <span class="m">\(\angle 4, \angle 5\)</span></td><td>שוות</td></tr>
+      <tr><td><strong>זוויות חד־צדדיות</strong></td><td>בין שני הישרים, באותו צד של החותך</td><td><span class="m">\(\angle 3, \angle 5\)</span> · <span class="m">\(\angle 4, \angle 6\)</span></td><td>סכומן <span class="m">\(180^\circ\)</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="thm"><span class="tag">משפט</span><p>אם שני ישרים מקבילים נחתכים על ידי ישר שלישי, אז זוויות מתאימות שוות, זוויות מתחלפות שוות, וסכום זוויות חד־צדדיות הוא <span class="m">\(180^\circ\)</span>.</p></div>
+  <p class="note"><strong>דרך לזכור:</strong> מתחלפות יוצרות צורה של האות Z, מתאימות צורה של F, וחד־צדדיות צורה של C (או U).</p>
+</section>
+
+<section class="ch" id="converse">
+  <h2>4. איך מוכיחים שישרים מקבילים</h2>
+  <div class="thm conv"><span class="tag">המשפט ההפוך</span><p>אם ישר שלישי חותך שני ישרים, ומתקיים אחד מאלה: זוויות מתאימות שוות, <strong>או</strong> זוויות מתחלפות שוות, <strong>או</strong> סכום זוויות חד־צדדיות הוא <span class="m">\(180^\circ\)</span>, אז שני הישרים מקבילים.</p></div>
+  <div class="thm"><span class="tag">משפטים נוספים</span>
+    <p>שני ישרים שמאונכים לאותו ישר מקבילים זה לזה.</p>
+    <p>ישר שמאונך לאחד משני ישרים מקבילים מאונך גם לשני.</p>
+    <p>שני ישרים שמקבילים לישר שלישי מקבילים זה לזה.</p>
+  </div>
+  <p class="note"><strong>שימו לב:</strong> המשפט מסעיף 3 מתחיל ממקבילים ומסיק על זוויות. המשפט ההפוך מתחיל מזוויות ומסיק שהישרים מקבילים. בהוכחה צריך לבחור את הכיוון הנכון.</p>
+</section>
+
+<section class="ch" id="triangle">
+  <h2>5. סכום הזוויות במשולש</h2>
+  <div class="figrow"><div>
+    <div class="thm"><span class="tag">משפט</span><p>סכום הזוויות במשולש הוא <span class="m">\(180^\circ\)</span>.</p></div>
+    <div class="proof"><b>הוכחה:</b>
+      <p>מעבירים דרך <span class="m">\(A\)</span> ישר <span class="m">\(\ell\)</span> שמקביל ל־<span class="m">\(BC\)</span>.</p>
+      <p>הזווית שמשמאל ל־<span class="m">\(A\)</span> שווה ל־<span class="m">\(\beta\)</span>, והזווית שמימין שווה ל־<span class="m">\(\gamma\)</span>: זוויות מתחלפות בין המקבילים.</p>
+      <p>שלוש הזוויות ב־<span class="m">\(A\)</span> יוצרות זווית שטוחה, ולכן <span class="m">\(\beta + \alpha + \gamma = 180^\circ\)</span>.</p>
+    </div>
+  </div><figure class="fig"><svg viewBox="25 25 320 195" style="max-width:320px" role="img" aria-label="הוכחת סכום הזוויות במשולש בעזרת ישר מקביל"><polygon class="ln" points="170.0,50.0 50.0,200.0 300.0,200.0"/><line class="ac" x1="40.0" y1="50.0" x2="320.0" y2="50.0"/><path class="ac" d="M174.0,55.0 L180.0,50.0 L174.0,45.0"/><path class="ac" d="M169.0,205.0 L175.0,200.0 L169.0,195.0"/><circle class="pt" cx="170" cy="50" r="3"/><text class="" x="170" y="40">A</text><circle class="pt" cx="50" cy="200" r="3"/><text class="" x="36" y="210">B</text><circle class="pt" cx="300" cy="200" r="3"/><text class="" x="314" y="210">C</text><path class="mk" d="M76.0,200.0 A26,26 0 0 0 66.2,179.7"/><text class="k sm" x="87.9" y="186.8">β</text><path class="ac" d="M283.0,180.4 A26,26 0 0 0 274.0,200.0"/><text class="a sm" x="261.8" y="187.6">γ</text><path class="ln thin" d="M156.3,67.2 A22,22 0 0 0 184.4,66.6"/><text class="sm" x="170.7" y="93.0">α</text><path class="mk" d="M144.0,50.0 A26,26 0 0 0 153.8,70.3"/><text class="k sm" x="132.1" y="73.2">β</text><path class="ac" d="M187.0,69.6 A26,26 0 0 0 196.0,50.0"/><text class="a sm" x="208.2" y="72.4">γ</text><text x="330" y="55">ℓ</text></svg><figcaption>דרך <span class="m">\(A\)</span> עובר ישר <span class="m">\(\ell \parallel BC\)</span></figcaption></figure></div>
+  <div class="thm"><span class="tag">משפט: זווית חיצונית</span><p>זווית חיצונית למשולש (זווית שצמודה לאחת מזוויות המשולש) שווה לסכום שתי הזוויות הפנימיות שלא צמודות לה.</p></div>
+  <div class="proof"><b>הוכחה:</b><p>הזווית החיצונית ליד <span class="m">\(C\)</span> שווה ל־<span class="m">\(180^\circ - \gamma\)</span>, כי היא צמודה ל־<span class="m">\(\gamma\)</span>. לפי סכום הזוויות, גם <span class="m">\(\alpha + \beta = 180^\circ - \gamma\)</span>. לכן הזווית החיצונית שווה ל־<span class="m">\(\alpha + \beta\)</span>.</p></div>
+  <div class="meaning"><ul>
+    <li>במשולש יש לכל היותר זווית ישרה אחת או זווית קהה אחת.</li>
+    <li>במשולש ישר זווית סכום שתי הזוויות החדות הוא <span class="m">\(90^\circ\)</span>.</li>
+    <li>במשולש שווה צלעות כל זווית היא <span class="m">\(60^\circ\)</span>.</li>
+  </ul></div>
+</section>
+
+<section class="ch" id="polygon">
+  <h2>6. סכום הזוויות במצולע</h2>
+  <div class="thm"><span class="tag">משפט</span><p>סכום הזוויות הפנימיות במצולע בעל <span class="m">\(n\)</span> צלעות הוא <span class="m">\(180^\circ (n - 2)\)</span>.</p></div>
+  <p>הסיבה: האלכסונים שיוצאים מקודקוד אחד מחלקים את המצולע ל־<span class="m">\(n - 2\)</span> משולשים, וסכום הזוויות בכל אחד הוא <span class="m">\(180^\circ\)</span>. למשל, מרובע מתחלק ל־2 משולשים, ולכן סכום הזוויות בו <span class="m">\(360^\circ\)</span>.</p>
+  <div class="tablebox"><table>
+    <thead><tr><th>מצולע</th><th><span class="m">\(n\)</span></th><th>סכום הזוויות</th><th>זווית במצולע משוכלל</th></tr></thead>
+    <tbody>
+      <tr><td>משולש</td><td>3</td><td><span class="m">\(180^\circ\)</span></td><td><span class="m">\(60^\circ\)</span></td></tr>
+      <tr><td>מרובע</td><td>4</td><td><span class="m">\(360^\circ\)</span></td><td><span class="m">\(90^\circ\)</span></td></tr>
+      <tr><td>מחומש</td><td>5</td><td><span class="m">\(540^\circ\)</span></td><td><span class="m">\(108^\circ\)</span></td></tr>
+      <tr><td>משושה</td><td>6</td><td><span class="m">\(720^\circ\)</span></td><td><span class="m">\(120^\circ\)</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="thm"><span class="tag">משפט</span><p>סכום הזוויות החיצוניות בכל מצולע (זווית חיצונית אחת בכל קודקוד) הוא <span class="m">\(360^\circ\)</span>.</p></div>
+  <p>במצולע <strong>משוכלל</strong> כל הצלעות שוות וכל הזוויות שוות, ולכן כל זווית פנימית היא <span class="m">\(\frac{180^\circ (n-2)}{n}\)</span> וכל זווית חיצונית היא <span class="m">\(\frac{360^\circ}{n}\)</span>.</p>
+</section>
+
+<section class="ch" id="examples">
+  <h2>7. דוגמאות פתורות</h2>
+  <div class="example"><span class="tag">דוגמה 1: זווית בין שני מקבילים</span>
+  <div class="figrow"><div><p><strong>נתון:</strong> <span class="m">\(AB \parallel DC\)</span>, הנקודה <span class="m">\(E\)</span> נמצאת בין הישרים. <span class="m">\(\angle BAE = 40^\circ\)</span>, <span class="m">\(\angle CDE = 35^\circ\)</span>.</p><p><strong>צריך למצוא:</strong> <span class="m">\(\angle AED\)</span>.</p></div><figure class="fig"><svg viewBox="30 25 330 210" style="max-width:320px" role="img" aria-label="שני ישרים מקבילים ונקודה E ביניהם"><line class="ln" x1="40.0" y1="50.0" x2="340.0" y2="50.0"/><line class="ln" x1="40.0" y1="210.0" x2="340.0" y2="210.0"/><path class="ac" d="M184.0,55.0 L190.0,50.0 L184.0,45.0"/><path class="ac" d="M184.0,215.0 L190.0,210.0 L184.0,205.0"/><line class="ac" x1="80.0" y1="50.0" x2="240.0" y2="130.0"/><line class="ac" x1="80.0" y1="210.0" x2="240.0" y2="130.0"/><circle class="pt" cx="80" cy="50" r="3"/><text class="" x="74" y="40">A</text><circle class="pt" cx="330" cy="50" r="3"/><text class="" x="330" y="40">B</text><circle class="pt" cx="80" cy="210" r="3"/><text class="" x="74" y="234">D</text><circle class="pt" cx="330" cy="210" r="3"/><text class="" x="330" y="234">C</text><circle class="pt" cx="240" cy="130" r="3"/><text class="" x="256" y="136">E</text><path class="mk" d="M114.0,50.0 A34,34 0 0 1 110.4,65.2"/><text class="k sm" x="130.6" y="66.9">40°</text><path class="mk" d="M110.4,194.8 A34,34 0 0 1 114.0,210.0"/><text class="k sm" x="130.6" y="203.1">35°</text><path class="ac" d="M222.1,121.1 A20,20 0 0 0 222.1,138.9"/><line class="soft" x1="150.0" y1="130.0" x2="340.0" y2="130.0"/></svg><figcaption><span class="m">\(AB \parallel DC\)</span>, הקו המקווקו מקביל להם</figcaption></figure></div>
+  <ol class="steps"><li>מעבירים דרך <span class="m">\(E\)</span> ישר שמקביל ל־<span class="m">\(AB\)</span> (המקווקו). לפי המשפט הנוסף בסעיף 4, הוא מקביל גם ל־<span class="m">\(DC\)</span>.</li><li>החלק העליון של <span class="m">\(\angle AED\)</span> שווה ל־<span class="m">\(\angle BAE = 40^\circ\)</span>: זוויות מתחלפות בין המקבילים, והחותך הוא <span class="m">\(AE\)</span>.</li><li>החלק התחתון שווה ל־<span class="m">\(\angle CDE = 35^\circ\)</span>: זוויות מתחלפות, והחותך הוא <span class="m">\(DE\)</span>.</li><li>לכן <span class="m">\(\angle AED = 40^\circ + 35^\circ = 75^\circ\)</span>. כלל שימושי: הזווית ב־<span class="m">\(E\)</span> שווה לסכום שתי הזוויות שבקצוות.</li></ol>
+  <div class="thm"><span class="tag">תשובה</span><p><span class="m">\(\angle AED = 75^\circ\)</span></p></div>
+</div>
+
+  <div class="example"><span class="tag">דוגמה 2: מתי הישרים מקבילים</span>
+  <div class="figrow"><div><p><strong>נתון:</strong> בשרטוט של שמונה הזוויות, <span class="m">\(\angle 2 = 4x + 12^\circ\)</span> ו־<span class="m">\(\angle 6 = 6x - 28^\circ\)</span>.</p><p><strong>צריך למצוא:</strong> את <span class="m">\(x\)</span> שבעבורו <span class="m">\(a \parallel b\)</span>.</p></div><figure class="fig"><svg viewBox="20 10 420 260" style="max-width:300px" role="img" aria-label="שמונה זוויות"><line class="ln" x1="30.0" y1="80.0" x2="410.0" y2="80.0"/><line class="ln" x1="30.0" y1="200.0" x2="410.0" y2="200.0"/><line class="ac" x1="110.0" y1="20.0" x2="330.0" y2="260.0"/><path class="ac" d="M214.0,85.0 L220.0,80.0 L214.0,75.0"/><path class="ac" d="M214.0,205.0 L220.0,200.0 L214.0,195.0"/><text x="420" y="85">a</text><text x="420" y="205">b</text><text class="k" x="135.7" y="72.1">1</text><text class="k" x="175.5" y="61.2">2</text><text class="k" x="154.5" y="108.8">3</text><text class="k" x="194.3" y="97.9">4</text><circle class="pt" cx="165" cy="80" r="3"/><text class="k" x="245.7" y="192.1">5</text><text class="k" x="285.5" y="181.2">6</text><text class="k" x="264.5" y="228.8">7</text><text class="k" x="304.3" y="217.9">8</text><circle class="pt" cx="275" cy="200" r="3"/></svg><figcaption>השרטוט מסעיף 3</figcaption></figure></div>
+  <ol class="steps"><li><span class="m">\(\angle 2\)</span> ו־<span class="m">\(\angle 6\)</span> נמצאות באותו מקום בשתי נקודות החיתוך, ולכן הן זוויות מתאימות.</li><li>לפי המשפט ההפוך, אם זוויות מתאימות שוות, הישרים מקבילים: <span class="m">\(4x + 12 = 6x - 28\)</span>.</li><li><span class="m">\(2x = 40\)</span>, ולכן <span class="m">\(x = 20\)</span> ושתי הזוויות <span class="m">\(92^\circ\)</span>.</li></ol>
+  <div class="thm"><span class="tag">תשובה</span><p><span class="m">\(x = 20\)</span>, ואז <span class="m">\(\angle 2 = \angle 6 = 92^\circ\)</span></p></div>
+</div>
+</section>
+
+<section class="ch" id="practice">
+  <h2>8. תרגול</h2>
+  <p>נסו לפתור לבד, ורק אחר כך פתחו את הפתרון. בכל פתרון מופיעים התשובה ודרך הפתרון המלאה עם הנימוק לכל צעד.</p>
+  <div class="ex" id="p1"><p><span class="qno">1.</span> זווית אחת גדולה פי 4 מהזווית הצמודה לה. מצאו את שתי הזוויות.</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(36^\circ\)</span> ו־<span class="m">\(144^\circ\)</span>.</p></div><p><strong>דרך הפתרון:</strong></p><p>מסמנים את הזווית הקטנה <span class="m">\(x\)</span>, והגדולה היא <span class="m">\(4x\)</span>.</p><p>סכום זוויות צמודות הוא <span class="m">\(180^\circ\)</span>: <span class="m">\(x + 4x = 180\)</span>, ולכן <span class="m">\(x = 36^\circ\)</span> והזווית השנייה <span class="m">\(144^\circ\)</span>.</p></div></details></div>
+<div class="ex" id="p2"><p><span class="qno">2.</span> שני ישרים נחתכים. שתי זוויות קודקודיות הן <span class="m">\(3x + 20^\circ\)</span> ו־<span class="m">\(5x - 40^\circ\)</span>. מצאו את כל ארבע הזוויות.</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(110^\circ, 70^\circ, 110^\circ, 70^\circ\)</span>.</p></div><p><strong>דרך הפתרון:</strong></p><p>זוויות קודקודיות שוות: <span class="m">\(3x + 20 = 5x - 40\)</span>, ולכן <span class="m">\(2x = 60\)</span> ו־<span class="m">\(x = 30\)</span>.</p><p>כל אחת מהזוויות הקודקודיות היא <span class="m">\(3 \cdot 30 + 20 = 110^\circ\)</span>.</p><p>שתי הזוויות האחרות צמודות להן: <span class="m">\(180^\circ - 110^\circ = 70^\circ\)</span>, והן קודקודיות זו לזו ולכן שוות.</p></div></details></div>
+<div class="ex" id="p3"><p><span class="qno">3.</span> בשרטוט של שמונה הזוויות (<span class="m">\(a \parallel b\)</span>) נתון <span class="m">\(\angle 1 = 48^\circ\)</span>. מצאו את כל שאר הזוויות.</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(\angle 1 = \angle 4 = \angle 5 = \angle 8 = 48^\circ\)</span>, <span class="m">\(\angle 2 = \angle 3 = \angle 6 = \angle 7 = 132^\circ\)</span>.</p></div><p><strong>דרך הפתרון:</strong></p><p><span class="m">\(\angle 4 = \angle 1\)</span>: זוויות קודקודיות. <span class="m">\(\angle 2 = 180^\circ - 48^\circ = 132^\circ\)</span>: זוויות צמודות. <span class="m">\(\angle 3 = \angle 2\)</span>: קודקודיות.</p><p><span class="m">\(\angle 5 = \angle 1\)</span>: זוויות מתאימות בין מקבילים. באותו אופן <span class="m">\(\angle 6 = \angle 2\)</span>, <span class="m">\(\angle 7 = \angle 3\)</span>, <span class="m">\(\angle 8 = \angle 4\)</span>.</p><p>מסקנה שימושית: כשחותך חותך שני מקבילים, יש רק שני גדלים של זוויות, וסכומם 180°.</p></div></details></div>
+<div class="ex" id="p4"><p><span class="qno">4.</span> בשרטוט של שמונה הזוויות לא ידוע אם <span class="m">\(a\)</span> ו־<span class="m">\(b\)</span> מקבילים. נתון <span class="m">\(\angle 3 = 2x + 40^\circ\)</span> ו־<span class="m">\(\angle 5 = x + 20^\circ\)</span>. מה צריך להיות <span class="m">\(x\)</span> כדי שהישרים יהיו מקבילים?</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(x = 40\)</span> (ואז <span class="m">\(\angle 3 = 120^\circ\)</span>, <span class="m">\(\angle 5 = 60^\circ\)</span>).</p></div><p><strong>דרך הפתרון:</strong></p><p><span class="m">\(\angle 3\)</span> ו־<span class="m">\(\angle 5\)</span> נמצאות בין הישרים ובאותו צד של החותך, ולכן הן זוויות חד־צדדיות.</p><p>לפי המשפט ההפוך, הישרים מקבילים אם סכום הזוויות החד־צדדיות הוא <span class="m">\(180^\circ\)</span>: <span class="m">\(2x + 40 + x + 20 = 180\)</span>.</p><p><span class="m">\(3x = 120\)</span>, ולכן <span class="m">\(x = 40\)</span>.</p></div></details></div>
+<div class="ex" id="p5"><p><span class="qno">5.</span> הזוויות של משולש מתייחסות זו לזו כמו <span class="m">\(2 : 3 : 4\)</span>. מצאו את הזוויות.</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(40^\circ, 60^\circ, 80^\circ\)</span>.</p></div><p><strong>דרך הפתרון:</strong></p><p>מסמנים <span class="m">\(2x, 3x, 4x\)</span>. סכום הזוויות במשולש: <span class="m">\(9x = 180\)</span>, ולכן <span class="m">\(x = 20^\circ\)</span>.</p><p>הזוויות: <span class="m">\(40^\circ\)</span>, <span class="m">\(60^\circ\)</span>, <span class="m">\(80^\circ\)</span>.</p></div></details></div>
+<div class="ex" id="p6"><p><span class="qno">6.</span> במשולש <span class="m">\(ABC\)</span> הזווית החיצונית ליד <span class="m">\(C\)</span> היא <span class="m">\(130^\circ\)</span>, ו־<span class="m">\(\angle A\)</span> גדולה ב־<span class="m">\(20^\circ\)</span> מ־<span class="m">\(\angle B\)</span>. מצאו את זוויות המשולש.</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(\angle A = 75^\circ,\ \angle B = 55^\circ,\ \angle C = 50^\circ\)</span>.</p></div><p><strong>דרך הפתרון:</strong></p><p>הזווית החיצונית שווה לסכום שתי הזוויות הפנימיות שלא צמודות לה: <span class="m">\(\angle A + \angle B = 130^\circ\)</span>.</p><p><span class="m">\((\angle B + 20) + \angle B = 130\)</span>, ולכן <span class="m">\(\angle B = 55^\circ\)</span> ו־<span class="m">\(\angle A = 75^\circ\)</span>.</p><p><span class="m">\(\angle C = 180^\circ - 130^\circ = 50^\circ\)</span>, כי היא צמודה לזווית החיצונית.</p></div></details></div>
+<div class="ex" id="p7"><p><span class="qno">7.</span> דרך הקודקוד <span class="m">\(A\)</span> של משולש <span class="m">\(ABC\)</span> עובר ישר <span class="m">\(DE\)</span> שמקביל ל־<span class="m">\(BC\)</span> (<span class="m">\(D\)</span> בצד של <span class="m">\(B\)</span>). נתון <span class="m">\(\angle DAB = 50^\circ\)</span> ו־<span class="m">\(\angle EAC = 60^\circ\)</span>. מצאו את זוויות המשולש.</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(\angle B = 50^\circ,\ \angle C = 60^\circ,\ \angle A = 70^\circ\)</span>.</p></div><p><strong>דרך הפתרון:</strong></p><div class="tablebox"><table class="pf"><thead><tr><th>#</th><th>טענה</th><th>נימוק</th></tr></thead><tbody><tr><td>1</td><td><span class="m">\(\angle B = \angle DAB = 50^\circ\)</span></td><td>זוויות מתחלפות בין המקבילים <span class="m">\(DE \parallel BC\)</span> (החותך <span class="m">\(AB\)</span>)</td></tr><tr><td>2</td><td><span class="m">\(\angle C = \angle EAC = 60^\circ\)</span></td><td>זוויות מתחלפות (החותך <span class="m">\(AC\)</span>)</td></tr><tr><td>3</td><td><span class="m">\(\angle BAC = 180^\circ - 50^\circ - 60^\circ = 70^\circ\)</span></td><td>שלוש הזוויות ב־<span class="m">\(A\)</span> יוצרות זווית שטוחה</td></tr></tbody></table></div><p>זו בדיוק ההוכחה שסכום הזוויות במשולש הוא 180°, עם מספרים.</p></div></details></div>
+<div class="ex" id="p8"><p><span class="qno">8.</span> כל זווית פנימית במצולע משוכלל היא <span class="m">\(140^\circ\)</span>. כמה צלעות יש למצולע, ומהו סכום הזוויות הפנימיות שלו?</p>
+  <details class="sol"><summary>פתרון</summary><div><div class="thm"><span class="tag">תשובה</span><p><span class="m">\(n = 9\)</span>, הסכום <span class="m">\(1260^\circ\)</span>.</p></div><p><strong>דרך הפתרון:</strong></p><p>הזווית החיצונית: <span class="m">\(180^\circ - 140^\circ = 40^\circ\)</span>. סכום הזוויות החיצוניות הוא <span class="m">\(360^\circ\)</span>, ולכן <span class="m">\(n = 360 : 40 = 9\)</span>.</p><p>סכום הזוויות הפנימיות: <span class="m">\(180^\circ (9 - 2) = 1260^\circ\)</span>. בדיקה: <span class="m">\(9 \cdot 140 = 1260\)</span>.</p></div></details></div>
+</section>
+
+<section class="ch" id="mistakes">
+  <h2>9. טעויות נפוצות</h2>
+  <ul class="mistakes">
+    <li><strong>להשתמש בזוויות מתאימות או מתחלפות בלי מקבילים.</strong> הזוויות שוות רק כשהישרים מקבילים, וצריך לכתוב את זה בנימוק.</li>
+    <li><strong>לבלבל בין מתחלפות לחד־צדדיות.</strong> מתחלפות שוות, חד־צדדיות משלימות ל־<span class="m">\(180^\circ\)</span>. בדקו אם הזוויות באותו צד של החותך או בצדדים שונים.</li>
+    <li><strong>לבלבל בין המשפט להפוך שלו.</strong> כדי להסיק שהישרים מקבילים משתמשים במשפט ההפוך, ומתחילים מהזוויות.</li>
+    <li><strong>בזווית חיצונית, להוסיף גם את הזווית הצמודה.</strong> הזווית החיצונית שווה לסכום שתי הזוויות <strong>הרחוקות</strong> בלבד.</li>
+    <li><strong>בנוסחת המצולע לכתוב <span class="m">\(n\)</span> במקום <span class="m">\(n - 2\)</span>.</strong> בדקו במשולש: <span class="m">\(180^\circ (3 - 2) = 180^\circ\)</span>.</li>
+  </ul>
+</section>
+
+<section class="ch" id="next">
+  <h2>הנושא הבא: חפיפת משולשים</h2>
+  <p>בעזרת הזוויות והמקבילים נוכיח שמשולשים חופפים, ומשם נגיע לתכונות של משולשים ומרובעים.</p>
+  <a class="btn" href="geometry-00b-congruence.html">← לדף חפיפת משולשים</a>
+</section>
+
+<footer>גאומטריה אוקלידית · נושא 1: זוויות וישרים מקבילים</footer>
+</div>
+</body>
+</html>

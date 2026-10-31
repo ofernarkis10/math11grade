@@ -39,8 +39,11 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | Derivatives of composite functions | `composite-derivatives-01-rules.html` | The chain rule and the rules derived from it, with worked examples |
 | | `composite-derivatives-02-exercises.html` | 42 graded exercises with full solutions |
 | Euclidean geometry | `geometry-00-deductive-system.html` | Deductive system: definitions, theorems and converses, counterexamples and quantifiers, necessary and sufficient conditions, proof by contradiction |
+| | `geometry-00a-angles-parallels.html` | Angles: adjacent and vertical angles, parallel lines and a transversal (corresponding, alternate, co-interior) and the converse, angle sum in a triangle and a polygon, exterior angle; worked examples and practice with solutions |
 | | `geometry-00b-congruence.html` | Triangle congruence: SAS, ASA, SSS, what is not enough, writing two-column proofs, worked examples and practice with solutions |
-| | `geometry-00c-congruence-simulations.html` | Interactive constructions showing why SAS, ASA, SSS and SSA (angle opposite the longer side) give a unique triangle, and why SSA (opposite the shorter side) and AAA do not |
+| | `geometry-00b2-congruence-questions.html` | 26 congruence questions in five rising levels (identify the theorem, direct proofs, proofs with an intermediate step, two-stage proofs, challenge), each with a figure and a detailed solution |
+| | `geometry-00c-congruence-simulations.html` | Interactive constructions. Part A, congruence: why SAS, ASA, SSS and SSA (angle opposite the longer side) give a unique triangle, and why SSA (opposite the shorter side) and AAA do not. Part B, similarity: scaling (sides × k, area × k²), building triangles from AA, SAS and SSS similarity data, Thales with a moving point, similarity in a right triangle |
+| | `geometry-00d-quadrilaterals.html` | Quadrilaterals: parallelogram, rectangle, rhombus, square, trapezoid, kite (definitions, properties, recognition theorems), triangle and trapezoid midsegments, comparison table; worked proofs and practice with solutions |
 | | `geometry-01-loci-triangle-centers.html` | Loci, the four special points of a triangle, fourth congruence theorem, converse of Pythagoras |
 | | `geometry-02-circle.html` | The circle: chords, arcs, inscribed and central angles, cyclic quadrilaterals, tangents, constructions |
 | | `geometry-03-similarity.html` | Proportion and similarity: Thales, similarity theorems, angle-bisector theorem, similarity in right triangles and in the circle |
