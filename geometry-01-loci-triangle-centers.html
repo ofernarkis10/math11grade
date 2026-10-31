@@ -127,13 +127,12 @@ td .m .katex{font-size:1.2em}
 <div class="wrap">
 <a class="back" href="index.html#geometry">→ חזרה לנושא: גאומטריה אוקלידית</a>
 <header>
-  <span class="eyebrow">מתמטיקה · 5 יחידות · גאומטריה אוקלידית · נושא 1 מתוך 3</span>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · גאומטריה אוקלידית · נושא 2 מתוך 4</span>
   <h1>מקומות גאומטריים ונקודות מיוחדות במשולש</h1>
-  <p class="lead">הנושא הראשון מתוך שלושה בפרק הגאומטריה האוקלידית. הדף מתחיל בכלי החשיבה של ההוכחה (משפט ומשפט הפוך, תנאי הכרחי ומספיק, הוכחה בדרך השלילה), עובר למושג המקום הגאומטרי, ומשם לארבע הנקודות המיוחדות במשולש. בסוף: משפט החפיפה הרביעי ומשפט פיתגורס ההפוך.</p>
+  <p class="lead">הנושא השני מתוך ארבעה בפרק הגאומטריה האוקלידית. הדף מתחיל במושג המקום הגאומטרי, ומשם עובר לארבע הנקודות המיוחדות במשולש. כלי החשיבה של ההוכחה (משפט ומשפט הפוך, תנאי הכרחי ומספיק, הוכחה בדרך השלילה) נמצאים בדף נפרד: <a href="geometry-00-deductive-system.html">מערכת היסקית</a>. בסוף: משפט החפיפה הרביעי ומשפט פיתגורס ההפוך.</p>
 </header>
-<nav class="pages" aria-label="דפי הנושא"><span aria-current="page">1. מקומות גאומטריים ונקודות מיוחדות</span><a href="geometry-02-circle.html">2. המעגל</a><a href="geometry-03-similarity.html">3. פרופורציה ודמיון</a><a href="geometry-04-concepts-theorems.html">4. מושגים ומשפטים</a><a href="geometry-05-formula-sheet.html">5. דף נוסחאות</a><a href="geometry-06-formula-questions.html">6. שאלות על דף הנוסחאות</a></nav>
+<nav class="pages" aria-label="דפי הנושא"><a href="geometry-00-deductive-system.html">0. מערכת היסקית</a><a href="geometry-00b-congruence.html">1. חפיפת משולשים</a><a href="geometry-00c-congruence-simulations.html">2. סימולציות חפיפה</a><span aria-current="page">3. מקומות גאומטריים ונקודות מיוחדות</span><a href="geometry-02-circle.html">4. המעגל</a><a href="geometry-03-similarity.html">5. פרופורציה ודמיון</a><a href="geometry-04-concepts-theorems.html">6. מושגים ומשפטים</a><a href="geometry-05-formula-sheet.html">7. דף נוסחאות</a><a href="geometry-06-formula-questions.html">8. שאלות על דף הנוסחאות</a></nav>
 <nav class="toc" aria-label="תוכן"><strong>תוכן</strong><ol>
-  <li><a href="#logic">מערכת היסקית</a></li>
   <li><a href="#locus">מהו מקום גאומטרי</a></li>
   <li><a href="#basic">המקומות הגאומטריים הבסיסיים</a></li>
   <li><a href="#circum">אנכים אמצעיים ומעגל חוסם</a></li>
@@ -146,48 +145,9 @@ td .m .katex{font-size:1.2em}
   <li><a href="#mistakes">טעויות נפוצות</a></li>
 </ol></nav>
 
-<!-- 1. DEDUCTIVE SYSTEM -->
-<section class="ch" id="logic">
-  <h2>1. מערכת היסקית: איך בנויה הגאומטריה</h2>
-  <div class="meaning">
-    <p>הגאומטריה האוקלידית בנויה כמו בניין. בבסיס יש <strong>מושגים יסודיים</strong> שלא מגדירים (נקודה, ישר, מישור) ו<strong>אקסיומות</strong>, טענות שמקבלים בלי הוכחה. מעליהם נבנות <strong>הגדרות</strong> ו<strong>משפטים</strong>, וכל משפט מוכח רק בעזרת מה שכבר הוכח לפניו.</p>
-    <p>לכן בהוכחה מותר להסתמך רק על הנתונים, על הגדרות, על אקסיומות ועל משפטים שכבר הוכחו. "רואים בשרטוט" אינו נימוק.</p>
-  </div>
-  <div class="tablebox"><table>
-    <thead><tr><th>מושג</th><th>משמעות</th><th>דוגמה</th></tr></thead>
-    <tbody>
-      <tr><td><strong>הגדרה</strong></td><td>קובעת מה פירוש המושג. הגדרה תמיד עובדת בשני הכיוונים.</td><td>"מקבילית היא מרובע ששני זוגות צלעותיו הנגדיות מקבילים."</td></tr>
-      <tr><td><strong>משפט</strong></td><td>טענה מהצורה "אם P אז Q" שהוכחה. P הוא <strong>הנתון</strong> (ההנחה), Q הוא <strong>המסקנה</strong> (מה שצריך להוכיח).</td><td>"אם מרובע הוא מקבילית, אז אלכסוניו חוצים זה את זה."</td></tr>
-      <tr><td><strong>משפט הפוך</strong></td><td>מחליפים בין הנתון למסקנה: "אם Q אז P". הוא <strong>לא</strong> נכון אוטומטית, וצריך להוכיח אותו בנפרד.</td><td>"אם אלכסוני מרובע חוצים זה את זה, אז הוא מקבילית." במקרה הזה גם ההפוך נכון.</td></tr>
-      <tr><td><strong>דוגמה נגדית</strong></td><td>מקרה אחד שבו הנתון מתקיים והמסקנה לא. מקרה אחד מספיק כדי להפריך טענה כללית.</td><td>"כל מרובע שאלכסוניו שווים הוא מלבן": טרפז שווה שוקיים מפריך את הטענה.</td></tr>
-      <tr><td><strong>כמתים</strong></td><td>"<strong>לכל</strong>": טענה על כל המקרים, ולכן צריך הוכחה כללית. "<strong>קיים</strong>": מספיקה דוגמה אחת מתאימה.</td><td>"לכל משולש סכום הזוויות 180°". "קיים משולש שבו התיכון הוא גם גובה".</td></tr>
-    </tbody>
-  </table></div>
-  <h3>תנאי הכרחי ותנאי מספיק</h3>
-  <div class="meaning">
-    <p>במשפט "אם P אז Q" אומרים ש־<strong>P הוא תנאי מספיק ל־Q</strong> (מספיק לדעת P כדי להסיק Q), ו־<strong>Q הוא תנאי הכרחי ל־P</strong> (בלי Q אין P). כשגם המשפט וגם ההפוך שלו נכונים, כותבים "P <strong>אם ורק אם</strong> Q", ואז כל אחד מהם הוא תנאי הכרחי ומספיק לשני.</p>
-  </div>
-  <div class="example"><span class="tag">דוגמה</span>
-    <p>"המרובע הוא ריבוע" הוא תנאי <strong>מספיק</strong> לכך שאלכסוניו מאונכים, אבל לא הכרחי: גם במעוין האלכסונים מאונכים.</p>
-    <p>"האלכסונים שווים" הוא תנאי <strong>הכרחי</strong> למלבן, אבל לא מספיק: גם בטרפז שווה שוקיים האלכסונים שווים.</p>
-  </div>
-  <h3>הוכחה בדרך השלילה</h3>
-  <div class="meaning">
-    <ol>
-      <li>מניחים שהמסקנה <strong>לא</strong> נכונה.</li>
-      <li>מסיקים מההנחה הזו צעד אחר צעד.</li>
-      <li>מגיעים לסתירה: לנתון, להגדרה או למשפט ידוע.</li>
-      <li>מסיקים שההנחה הייתה שגויה, ולכן המסקנה נכונה.</li>
-    </ol>
-  </div>
-  <div class="example"><span class="tag">דוגמה: במשולש יש לכל היותר זווית קהה אחת</span>
-    <p>נניח בשלילה שיש במשולש שתי זוויות קהות. כל אחת מהן גדולה מ־90°, ולכן סכומן לבדו גדול מ־180°. יחד עם הזווית השלישית הסכום גדול עוד יותר, וזו סתירה למשפט שסכום הזוויות במשולש הוא 180°. לכן ההנחה שגויה, ויש לכל היותר זווית קהה אחת.</p>
-  </div>
-</section>
-
-<!-- 2. LOCUS -->
+<!-- 1. LOCUS -->
 <section class="ch" id="locus">
-  <h2>2. מהו מקום גאומטרי</h2>
+  <h2>1. מהו מקום גאומטרי</h2>
   <div class="thm"><span class="tag">הגדרה</span>
     <p><strong>מקום גאומטרי</strong> הוא אוסף <strong>כל</strong> הנקודות שמקיימות תכונה מסוימת, <strong>ורק</strong> הן.</p>
   </div>
@@ -201,9 +161,9 @@ td .m .katex{font-size:1.2em}
   </div>
 </section>
 
-<!-- 3. BASIC LOCI -->
+<!-- 2. BASIC LOCI -->
 <section class="ch" id="basic">
-  <h2>3. המקומות הגאומטריים הבסיסיים</h2>
+  <h2>2. המקומות הגאומטריים הבסיסיים</h2>
   <div class="tablebox"><table>
     <thead><tr><th>התכונה של הנקודות</th><th>המקום הגאומטרי</th></tr></thead>
     <tbody>
@@ -252,9 +212,9 @@ td .m .katex{font-size:1.2em}
   </div>
 </section>
 
-<!-- 4. CIRCUMCENTER -->
+<!-- 3. CIRCUMCENTER -->
 <section class="ch" id="circum">
-  <h2>4. האנכים האמצעיים: מרכז המעגל החוסם</h2>
+  <h2>3. האנכים האמצעיים: מרכז המעגל החוסם</h2>
   <div class="figrow">
     <div>
       <div class="thm"><span class="tag">משפט</span>
@@ -301,9 +261,9 @@ td .m .katex{font-size:1.2em}
   </div>
 </section>
 
-<!-- 5. INCENTER -->
+<!-- 4. INCENTER -->
 <section class="ch" id="incenter">
-  <h2>5. חוצי הזוויות: מרכז המעגל החסום</h2>
+  <h2>4. חוצי הזוויות: מרכז המעגל החסום</h2>
   <div class="figrow">
     <div>
       <div class="thm"><span class="tag">משפט</span>
@@ -341,9 +301,9 @@ td .m .katex{font-size:1.2em}
   </div>
 </section>
 
-<!-- 6. CENTROID -->
+<!-- 5. CENTROID -->
 <section class="ch" id="centroid">
-  <h2>6. התיכונים: מרכז הכובד</h2>
+  <h2>5. התיכונים: מרכז הכובד</h2>
   <div class="figrow">
     <div>
       <div class="meaning"><p><strong>תיכון</strong> הוא קטע שמחבר קדקוד לאמצע הצלע שמולו.</p></div>
@@ -387,9 +347,9 @@ td .m .katex{font-size:1.2em}
   </div>
 </section>
 
-<!-- 7. ORTHOCENTER -->
+<!-- 6. ORTHOCENTER -->
 <section class="ch" id="altitudes">
-  <h2>7. הגבהים: מפגש הגבהים</h2>
+  <h2>6. הגבהים: מפגש הגבהים</h2>
   <div class="figrow">
     <div>
       <div class="thm"><span class="tag">משפט</span>
@@ -423,13 +383,13 @@ td .m .katex{font-size:1.2em}
   </div>
   <div class="proof">
     <p><b>רעיון ההוכחה:</b> דרך כל קדקוד מעבירים ישר מקביל לצלע שמולו. נוצר משולש גדול <span class="m">\(A'B'C'\)</span>. בגלל המקביליות שנוצרות, כל קדקוד של המשולש המקורי הוא <strong>אמצע</strong> צלע של המשולש הגדול.</p>
-    <p>הגובה מ־<span class="m">\(A\)</span> מאונך ל־<span class="m">\(BC\)</span>, ולכן גם לצלע המקבילה במשולש הגדול, ועובר באמצעה. כלומר שלושת הגבהים הם שלושת <strong>האנכים האמצעיים</strong> של המשולש הגדול, ואלה נפגשים בנקודה אחת (סעיף 4).</p>
+    <p>הגובה מ־<span class="m">\(A\)</span> מאונך ל־<span class="m">\(BC\)</span>, ולכן גם לצלע המקבילה במשולש הגדול, ועובר באמצעה. כלומר שלושת הגבהים הם שלושת <strong>האנכים האמצעיים</strong> של המשולש הגדול, ואלה נפגשים בנקודה אחת (סעיף 3).</p>
   </div>
 </section>
 
-<!-- 8. SUMMARY -->
+<!-- 7. SUMMARY -->
 <section class="ch" id="summary">
-  <h2>8. סיכום ארבע הנקודות המיוחדות</h2>
+  <h2>7. סיכום ארבע הנקודות המיוחדות</h2>
   <div class="tablebox"><table>
     <thead><tr><th>נקודה</th><th>חיתוך של</th><th>תכונה</th><th>מיקום</th></tr></thead>
     <tbody>
@@ -445,9 +405,9 @@ td .m .katex{font-size:1.2em}
   </div>
 </section>
 
-<!-- 9. FOURTH CONGRUENCE -->
+<!-- 8. FOURTH CONGRUENCE -->
 <section class="ch" id="congruence">
-  <h2>9. משפט החפיפה הרביעי (צ.צ.ז)</h2>
+  <h2>8. משפט החפיפה הרביעי (צ.צ.ז)</h2>
   <div class="thm"><span class="tag">משפט</span>
     <p>שני משולשים חופפים אם יש להם שתי צלעות שוות בהתאמה, ו<strong>הזווית שמול הגדולה מבין שתי הצלעות</strong> שווה.</p>
   </div>
@@ -478,12 +438,13 @@ td .m .katex{font-size:1.2em}
 <text class="k" x="259.7" y="156.0">5</text>
 </svg><figcaption><span class="m">\(AB = 7, BC = 5, {\angle}A = 30^{\circ}\)</span>: הזווית מול הצלע הקטנה, ויש שני משולשים</figcaption></figure>
   </div>
+  <p class="note"><strong>נסו בעצמכם:</strong> בסימולציה <a href="geometry-00c-congruence-simulations.html#sim-ssa">צ.צ.ז</a> אפשר לשנות את הנתונים ולראות מתי מתקבלים שני משולשים ומתי אחד בלבד.</p>
   <p class="note"><strong>מקרה פרטי:</strong> במשולש ישר זווית הזווית הישרה תמיד מול היתר, הצלע הגדולה. לכן "יתר וניצב שווים" הוא מקרה פרטי של משפט החפיפה הרביעי.</p>
 </section>
 
-<!-- 10. CONVERSE PYTHAGORAS -->
+<!-- 9. CONVERSE PYTHAGORAS -->
 <section class="ch" id="pythagoras">
-  <h2>10. משפט פיתגורס ההפוך</h2>
+  <h2>9. משפט פיתגורס ההפוך</h2>
   <div class="thm conv"><span class="tag">משפט הפוך</span>
     <p>אם במשולש עם הצלעות <span class="m">\(a, b, c\)</span> מתקיים <span class="m">\(a^{2} + b^{2} = c^{2}\)</span>, אז הזווית שמול <span class="m">\(c\)</span> ישרה.</p>
   </div>
@@ -497,12 +458,10 @@ td .m .katex{font-size:1.2em}
   <p class="note"><strong>הרחבה:</strong> אם <span class="m">\(c\)</span> היא הצלע הגדולה, אז <span class="m">\(a^{2} + b^{2} \gt c^{2}\)</span> פירושו שהמשולש חד זווית, ו־<span class="m">\(a^{2} + b^{2} \lt c^{2}\)</span> פירושו שהוא קהה זווית. בדוגמה האחרונה <span class="m">\(113 \lt 121\)</span>, ולכן המשולש קהה זווית. ההסבר המלא מגיע עם משפט הקוסינוסים בטריגונומטריה.</p>
 </section>
 
-<!-- 11. MISTAKES -->
+<!-- 10. MISTAKES -->
 <section class="ch" id="mistakes">
-  <h2>11. טעויות נפוצות</h2>
+  <h2>10. טעויות נפוצות</h2>
   <ul class="mistakes">
-    <li><strong>להסתמך על השרטוט.</strong> "נראה ישר" או "נראה שווה" אינם נימוק. כל טענה צריכה להישען על נתון, הגדרה או משפט.</li>
-    <li><strong>להשתמש במשפט הפוך שלא הוכח.</strong> לפני שמשתמשים ב"אם Q אז P" צריך לוודא שגם הוא משפט, ולא רק "אם P אז Q".</li>
     <li><strong>להוכיח מקום גאומטרי בכיוון אחד בלבד.</strong> צריך להראות גם שכל נקודה על הצורה מקיימת את התכונה, וגם שכל נקודה שמקיימת את התכונה נמצאת על הצורה.</li>
     <li><strong>לבלבל בין המעגל החוסם לחסום.</strong> מרכז המעגל ה<strong>חוסם</strong> נמצא בחיתוך האנכים ה<strong>אמצעיים</strong>. מרכז המעגל ה<strong>חסום</strong> נמצא בחיתוך חוצי ה<strong>זוויות</strong>.</li>
     <li><strong>לחשוב שהאנך האמצעי עובר בקדקוד שמול הצלע.</strong> זה קורה רק במשולש שווה שוקיים, באנך האמצעי לבסיס.</li>

@@ -38,7 +38,10 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | | `sequences-09-homework.html` | Homework to hand in: 60 consolidation-level questions (20 arithmetic, 20 geometric, 20 infinite series), questions only, print-ready |
 | Derivatives of composite functions | `composite-derivatives-01-rules.html` | The chain rule and the rules derived from it, with worked examples |
 | | `composite-derivatives-02-exercises.html` | 42 graded exercises with full solutions |
-| Euclidean geometry | `geometry-01-loci-triangle-centers.html` | Deductive reasoning, loci, the four special points of a triangle, fourth congruence theorem, converse of Pythagoras |
+| Euclidean geometry | `geometry-00-deductive-system.html` | Deductive system: definitions, theorems and converses, counterexamples and quantifiers, necessary and sufficient conditions, proof by contradiction |
+| | `geometry-00b-congruence.html` | Triangle congruence: SAS, ASA, SSS, what is not enough, writing two-column proofs, worked examples and practice with solutions |
+| | `geometry-00c-congruence-simulations.html` | Interactive constructions showing why SAS, ASA, SSS and SSA (angle opposite the longer side) give a unique triangle, and why SSA (opposite the shorter side) and AAA do not |
+| | `geometry-01-loci-triangle-centers.html` | Loci, the four special points of a triangle, fourth congruence theorem, converse of Pythagoras |
 | | `geometry-02-circle.html` | The circle: chords, arcs, inscribed and central angles, cyclic quadrilaterals, tangents, constructions |
 | | `geometry-03-similarity.html` | Proportion and similarity: Thales, similarity theorems, angle-bisector theorem, similarity in right triangles and in the circle |
 | Trigonometric functions | `trigonometry-00-unit-circle.html` | Explanation: what sine and cosine are on the unit circle — measuring an angle, the point (cos α, sin α), link to the right triangle, special values, signs by quadrant and range; interactive lab and 13 questions with the thinking behind each solution |
@@ -48,6 +51,7 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | | `trigonometry-04-linear-vs-wheel-exercises.html` | 4 pairs of parallel questions (a straight line beside a wheel) for page 02, solved with the same five steps; folding solutions with a figure of the path |
 | | `trigonometry-05-wheel-homework.html` | Homework to hand in: 12 questions on a point on a rotating wheel (position after a time; inverse and combined questions), questions only, print-ready |
 | | `trigonometry-06-radians.html` | Explanation: radians (arc equal to the radius), 180° = π and converting degrees ↔ radians, fractions of a circle; the main table of all multiples of 30° and 45° with radians, quadrant and exact cos and sin, all angles on one circle, an interactive lab, how to remember the table, DEG/RAD calculator mode; 12 questions with the thinking behind each solution |
+| | `trigonometry-07-moving-wheel-exercises.html` | 20 questions on a point on a moving wheel (center on a line + rotation; rolling without slipping), three levels; every solution opens with the data in math notation, then the thinking, steps, answer, check and explanation |
 | Analytic geometry: equations of curves | `analytic-00-overview.html` | Overview: what the equation of a curve means, the five curves as loci, conic sections, one definition for all by focus, directrix and eccentricity (interactive lab), recognizing a curve from Ax² + Cy² + Dx + Ey + F = 0, summary table |
 | | `analytic-01-line.html` | The line: slope and m = tan α, y = mx + b (lab), other forms, parallel and perpendicular lines, intersection, distance from a point to a line |
 | | `analytic-02-circle.html` | The circle: derivation, meaning of a, b, R (lab), general form and completing the square, point vs circle, line and circle (lab), tangent |

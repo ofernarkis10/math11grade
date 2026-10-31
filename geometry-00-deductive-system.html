@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מערכת היסקית: איך בנויה הגאומטריה · דף לימוד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same study-page style as the rest of the site; geometry pages add figures (inline SVG drawn with the color tokens), theorem boxes and converse boxes */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:68ch}
+.lead a,.meaning a{color:var(--accent);font-weight:600}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav.pages{display:flex;gap:8px;flex-wrap:wrap}
+nav.pages a,nav.pages span{padding:6px 14px;border:1px solid var(--line);border-radius:99px;font-size:.9rem;font-weight:600;text-decoration:none;color:var(--accent);background:var(--paper)}
+nav.pages span{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+nav.pages a:hover,nav.pages a:focus-visible{border-color:var(--accent);outline:none}
+
+nav.toc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav.toc ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav.toc a{color:var(--accent);text-decoration:none;font-weight:600}
+nav.toc a:hover,nav.toc a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav.toc ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:70ch;display:flex;flex-direction:column;gap:10px}
+.meaning ul,.meaning ol{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:4px}
+
+/* theorem / converse / definition boxes */
+.thm{border-inline-start:4px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0;padding:10px 16px;display:flex;flex-direction:column;gap:4px}
+.thm .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.thm.conv{border-color:var(--mark);background:var(--mark-soft)}
+.thm.conv .tag{color:var(--mark)}
+.proof{font-size:.96rem;color:var(--ink);display:flex;flex-direction:column;gap:4px;border-inline-start:2px dotted var(--line);padding-inline-start:14px}
+.proof b{color:var(--muted)}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ul.mistakes{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:8px}
+
+/* figures */
+.figrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:20px;align-items:center}
+@media (max-width:680px){.figrow{grid-template-columns:minmax(0,1fr)}}
+.figrow > div{display:flex;flex-direction:column;gap:10px;min-width:0}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+figure.fig{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+figure.fig svg{width:100%;height:auto;direction:ltr;overflow:visible}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center}
+.fig .ln{stroke:var(--ink);stroke-width:2;fill:none;stroke-linejoin:round}
+.fig .ac{stroke:var(--accent);stroke-width:2;fill:none}
+.fig .mk{stroke:var(--mark);stroke-width:2;fill:none}
+.fig .thick{stroke-width:4;stroke-linecap:round}
+.fig .thin{stroke-width:1.4}
+.fig .dash{stroke-dasharray:5 4}
+.fig .soft{stroke:var(--muted);stroke-width:1.4;fill:none;stroke-dasharray:4 4}
+.fig .fill{fill:var(--accent-soft)}
+.fig .pt{fill:var(--ink)}
+.fig .pta{fill:var(--accent)}
+.fig .ptm{fill:var(--mark)}
+.fig text{font-family:var(--f-math);font-size:15px;fill:var(--ink);text-anchor:middle}
+.fig text.he{font-family:var(--f-body);font-size:14px;direction:rtl}
+.fig text.a{fill:var(--accent);font-weight:600}
+.fig text.k{fill:var(--mark);font-weight:600}
+.fig text.sm{font-size:12px}
+
+.btn{align-self:flex-start;background:var(--accent);color:var(--paper);font-weight:700;text-decoration:none;padding:8px 18px;border-radius:99px}
+.btn:hover,.btn:focus-visible{filter:brightness(1.1);outline:none}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:#fff} nav.toc,nav.pages,.back{display:none} section.ch{break-inside:avoid-page}}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html#geometry">→ חזרה לנושא: גאומטריה אוקלידית</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · גאומטריה אוקלידית · מבוא לפרק</span>
+  <h1>מערכת היסקית: איך בנויה הגאומטריה</h1>
+  <p class="lead">המבוא לפרק הגאומטריה האוקלידית: כלי החשיבה שבעזרתם כותבים הוכחה. מושגים יסודיים ואקסיומות, הגדרה, משפט ומשפט הפוך, דוגמה נגדית וכמתים, תנאי הכרחי ותנאי מספיק, והוכחה בדרך השלילה. כל הדפים הבאים בפרק נשענים על הכלים האלה.</p>
+</header>
+<nav class="pages" aria-label="דפי הנושא"><span aria-current="page">0. מערכת היסקית</span><a href="geometry-00b-congruence.html">1. חפיפת משולשים</a><a href="geometry-00c-congruence-simulations.html">2. סימולציות חפיפה</a><a href="geometry-01-loci-triangle-centers.html">3. מקומות גאומטריים ונקודות מיוחדות</a><a href="geometry-02-circle.html">4. המעגל</a><a href="geometry-03-similarity.html">5. פרופורציה ודמיון</a><a href="geometry-04-concepts-theorems.html">6. מושגים ומשפטים</a><a href="geometry-05-formula-sheet.html">7. דף נוסחאות</a><a href="geometry-06-formula-questions.html">8. שאלות על דף הנוסחאות</a></nav>
+<nav class="toc" aria-label="תוכן"><strong>תוכן</strong><ol>
+  <li><a href="#logic">מושגים, הגדרות ומשפטים</a></li>
+  <li><a href="#conditions">תנאי הכרחי ותנאי מספיק</a></li>
+  <li><a href="#contradiction">הוכחה בדרך השלילה</a></li>
+  <li><a href="#mistakes">טעויות נפוצות</a></li>
+</ol></nav>
+
+<!-- DEDUCTIVE SYSTEM -->
+<section class="ch" id="logic">
+  <h2>1. מושגים, הגדרות ומשפטים</h2>
+  <div class="meaning">
+    <p>הגאומטריה האוקלידית בנויה כמו בניין. בבסיס יש <strong>מושגים יסודיים</strong> שלא מגדירים (נקודה, ישר, מישור) ו<strong>אקסיומות</strong>, טענות שמקבלים בלי הוכחה. מעליהם נבנות <strong>הגדרות</strong> ו<strong>משפטים</strong>, וכל משפט מוכח רק בעזרת מה שכבר הוכח לפניו.</p>
+    <p>לכן בהוכחה מותר להסתמך רק על הנתונים, על הגדרות, על אקסיומות ועל משפטים שכבר הוכחו. "רואים בשרטוט" אינו נימוק.</p>
+  </div>
+  <div class="tablebox"><table>
+    <thead><tr><th>מושג</th><th>משמעות</th><th>דוגמה</th></tr></thead>
+    <tbody>
+      <tr><td><strong>הגדרה</strong></td><td>קובעת מה פירוש המושג. הגדרה תמיד עובדת בשני הכיוונים.</td><td>"מקבילית היא מרובע ששני זוגות צלעותיו הנגדיות מקבילים."</td></tr>
+      <tr><td><strong>משפט</strong></td><td>טענה מהצורה "אם P אז Q" שהוכחה. P הוא <strong>הנתון</strong> (ההנחה), Q הוא <strong>המסקנה</strong> (מה שצריך להוכיח).</td><td>"אם מרובע הוא מקבילית, אז אלכסוניו חוצים זה את זה."</td></tr>
+      <tr><td><strong>משפט הפוך</strong></td><td>מחליפים בין הנתון למסקנה: "אם Q אז P". הוא <strong>לא</strong> נכון אוטומטית, וצריך להוכיח אותו בנפרד.</td><td>"אם אלכסוני מרובע חוצים זה את זה, אז הוא מקבילית." במקרה הזה גם ההפוך נכון.</td></tr>
+      <tr><td><strong>דוגמה נגדית</strong></td><td>מקרה אחד שבו הנתון מתקיים והמסקנה לא. מקרה אחד מספיק כדי להפריך טענה כללית.</td><td>"כל מרובע שאלכסוניו שווים הוא מלבן": טרפז שווה שוקיים מפריך את הטענה.</td></tr>
+      <tr><td><strong>כמתים</strong></td><td>"<strong>לכל</strong>": טענה על כל המקרים, ולכן צריך הוכחה כללית. "<strong>קיים</strong>": מספיקה דוגמה אחת מתאימה.</td><td>"לכל משולש סכום הזוויות 180°". "קיים משולש שבו התיכון הוא גם גובה".</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="ch" id="conditions">
+  <h2>2. תנאי הכרחי ותנאי מספיק</h2>
+  <div class="meaning">
+    <p>במשפט "אם P אז Q" אומרים ש־<strong>P הוא תנאי מספיק ל־Q</strong> (מספיק לדעת P כדי להסיק Q), ו־<strong>Q הוא תנאי הכרחי ל־P</strong> (בלי Q אין P). כשגם המשפט וגם ההפוך שלו נכונים, כותבים "P <strong>אם ורק אם</strong> Q", ואז כל אחד מהם הוא תנאי הכרחי ומספיק לשני.</p>
+  </div>
+  <div class="example"><span class="tag">דוגמה</span>
+    <p>"המרובע הוא ריבוע" הוא תנאי <strong>מספיק</strong> לכך שאלכסוניו מאונכים, אבל לא הכרחי: גם במעוין האלכסונים מאונכים.</p>
+    <p>"האלכסונים שווים" הוא תנאי <strong>הכרחי</strong> למלבן, אבל לא מספיק: גם בטרפז שווה שוקיים האלכסונים שווים.</p>
+  </div>
+</section>
+
+<section class="ch" id="contradiction">
+  <h2>3. הוכחה בדרך השלילה</h2>
+  <div class="meaning">
+    <ol>
+      <li>מניחים שהמסקנה <strong>לא</strong> נכונה.</li>
+      <li>מסיקים מההנחה הזו צעד אחר צעד.</li>
+      <li>מגיעים לסתירה: לנתון, להגדרה או למשפט ידוע.</li>
+      <li>מסיקים שההנחה הייתה שגויה, ולכן המסקנה נכונה.</li>
+    </ol>
+  </div>
+  <div class="example"><span class="tag">דוגמה: במשולש יש לכל היותר זווית קהה אחת</span>
+    <p>נניח בשלילה שיש במשולש שתי זוויות קהות. כל אחת מהן גדולה מ־90°, ולכן סכומן לבדו גדול מ־180°. יחד עם הזווית השלישית הסכום גדול עוד יותר, וזו סתירה למשפט שסכום הזוויות במשולש הוא 180°. לכן ההנחה שגויה, ויש לכל היותר זווית קהה אחת.</p>
+  </div>
+</section>
+
+<!-- MISTAKES -->
+<section class="ch" id="mistakes">
+  <h2>4. טעויות נפוצות</h2>
+  <ul class="mistakes">
+    <li><strong>להסתמך על השרטוט.</strong> "נראה ישר" או "נראה שווה" אינם נימוק. כל טענה צריכה להישען על נתון, הגדרה או משפט.</li>
+    <li><strong>להשתמש במשפט הפוך שלא הוכח.</strong> לפני שמשתמשים ב"אם Q אז P" צריך לוודא שגם הוא משפט, ולא רק "אם P אז Q".</li>
+    <li><strong>להפריך טענה כללית בלי דוגמה נגדית, או "להוכיח" אותה בדוגמה.</strong> דוגמה אחת לא מוכיחה טענה של "לכל", אבל דוגמה נגדית אחת מספיקה כדי להפריך אותה.</li>
+  </ul>
+</section>
+
+<section class="ch" id="next">
+  <h2>הנושא הבא: חפיפת משולשים</h2>
+  <p>שלושת משפטי החפיפה ואיך כותבים הוכחה מסודרת בטבלה של טענה ונימוק. הכלים מהדף הזה משמשים בכל הוכחה.</p>
+  <a class="btn" href="geometry-00b-congruence.html">← לדף חפיפת משולשים</a>
+</section>
+
+<footer>גאומטריה אוקלידית · מבוא לפרק: מערכת היסקית</footer>
+</div>
+</body>
+</html>

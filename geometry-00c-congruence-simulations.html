@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>סימולציות: למה משפטי החפיפה עובדים · המחשה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same study-page style as the rest of the site; geometry pages add figures (inline SVG drawn with the color tokens), theorem boxes and converse boxes */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:68ch}
+.lead a,.meaning a{color:var(--accent);font-weight:600}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav.pages{display:flex;gap:8px;flex-wrap:wrap}
+nav.pages a,nav.pages span{padding:6px 14px;border:1px solid var(--line);border-radius:99px;font-size:.9rem;font-weight:600;text-decoration:none;color:var(--accent);background:var(--paper)}
+nav.pages span{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+nav.pages a:hover,nav.pages a:focus-visible{border-color:var(--accent);outline:none}
+
+nav.toc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav.toc ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav.toc a{color:var(--accent);text-decoration:none;font-weight:600}
+nav.toc a:hover,nav.toc a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav.toc ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:70ch;display:flex;flex-direction:column;gap:10px}
+.meaning ul,.meaning ol{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:4px}
+
+/* theorem / converse / definition boxes */
+.thm{border-inline-start:4px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0;padding:10px 16px;display:flex;flex-direction:column;gap:4px}
+.thm .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.thm.conv{border-color:var(--mark);background:var(--mark-soft)}
+.thm.conv .tag{color:var(--mark)}
+.proof{font-size:.96rem;color:var(--ink);display:flex;flex-direction:column;gap:4px;border-inline-start:2px dotted var(--line);padding-inline-start:14px}
+.proof b{color:var(--muted)}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ul.mistakes{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:8px}
+
+/* figures */
+.figrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,320px);gap:20px;align-items:center}
+@media (max-width:680px){.figrow{grid-template-columns:minmax(0,1fr)}}
+.figrow > div{display:flex;flex-direction:column;gap:10px;min-width:0}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+figure.fig{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+figure.fig svg{width:100%;height:auto;direction:ltr;overflow:visible}
+figcaption{font-size:.85rem;color:var(--muted);text-align:center}
+.fig .ln{stroke:var(--ink);stroke-width:2;fill:none;stroke-linejoin:round}
+.fig .ac{stroke:var(--accent);stroke-width:2;fill:none}
+.fig .mk{stroke:var(--mark);stroke-width:2;fill:none}
+.fig .thick{stroke-width:4;stroke-linecap:round}
+.fig .thin{stroke-width:1.4}
+.fig .dash{stroke-dasharray:5 4}
+.fig .soft{stroke:var(--muted);stroke-width:1.4;fill:none;stroke-dasharray:4 4}
+.fig .fill{fill:var(--accent-soft)}
+.fig .pt{fill:var(--ink)}
+.fig .pta{fill:var(--accent)}
+.fig .ptm{fill:var(--mark)}
+.fig text{font-family:var(--f-math);font-size:15px;fill:var(--ink);text-anchor:middle}
+.fig text.he{font-family:var(--f-body);font-size:14px;direction:rtl}
+.fig text.a{fill:var(--accent);font-weight:600}
+.fig text.k{fill:var(--mark);font-weight:600}
+.fig text.sm{font-size:12px}
+
+.btn{align-self:flex-start;background:var(--accent);color:var(--paper);font-weight:700;text-decoration:none;padding:8px 18px;border-radius:99px}
+.btn:hover,.btn:focus-visible{filter:brightness(1.1);outline:none}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:#fff} nav.toc,nav.pages,.back{display:none} section.ch{break-inside:avoid-page}}
+/* simulations */
+.simbox{display:flex;flex-direction:column;gap:12px}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 18px}
+.controls label{display:grid;grid-template-columns:3.2em 1fr 3.4em;align-items:center;gap:8px;font-weight:700}
+.controls .pl{font-family:var(--f-math);direction:ltr;text-align:center;color:var(--accent)}
+.controls input{width:100%;accent-color:var(--accent)}
+.controls output{font-family:var(--f-math);direction:ltr;text-align:center;background:var(--accent-soft);border-radius:6px;padding:1px 4px}
+.presets{display:flex;flex-wrap:wrap;gap:8px}
+.presets:empty{display:none}
+.chip{font:inherit;font-size:.9rem;font-weight:600;border:1px solid var(--mark);color:var(--mark);background:var(--mark-soft);border-radius:99px;padding:4px 12px;cursor:pointer}
+.chip:hover{filter:brightness(1.05)}
+svg.stage{width:100%;height:auto;background:var(--bg);border:1px solid var(--line);border-radius:10px;direction:ltr}
+.stage .ln{stroke:var(--ink);stroke-width:2.2;fill:none}
+.stage .ac{stroke:var(--accent);stroke-width:2.4;fill:none}
+.stage .mk{stroke:var(--mark);stroke-width:2.4;fill:none}
+.stage .ray{stroke:var(--muted);stroke-width:1.6;stroke-dasharray:2 0;fill:none}
+.stage .ghost{stroke:var(--muted);stroke-width:1.6;stroke-dasharray:5 4;fill:none}
+.stage .soft{stroke:var(--accent);stroke-width:1.4;stroke-dasharray:5 5;fill:none;opacity:.8}
+.stage .soft2{stroke:var(--mark);stroke-width:1.4;stroke-dasharray:5 5;fill:none;opacity:.8}
+.stage .fill{fill:var(--accent);opacity:.16;stroke:none}
+.stage .fill2{fill:var(--mark);opacity:.16;stroke:none}
+.stage .fill3{fill:var(--accent);opacity:.08;stroke:none}
+.stage .ang{stroke:var(--mark);stroke-width:1.8;fill:none}
+.stage circle.pt{fill:var(--ink)} .stage circle.pta{fill:var(--accent)} .stage circle.ptm{fill:var(--mark)} .stage circle.ptg{fill:var(--muted)}
+.stage text{font-family:var(--f-math);font-size:15px;text-anchor:middle;fill:var(--ink)}
+.stage text.pta{fill:var(--accent);font-weight:700} .stage text.ptm{fill:var(--mark);font-weight:700} .stage text.ptg{fill:var(--muted)}
+.stage text.lenl{font-size:13px;fill:var(--muted)}
+.stage text.angl{font-size:12px;fill:var(--mark)}
+.steprow{display:flex;gap:12px;align-items:flex-start;min-height:3.4em}
+.stepno{flex:none;font-size:.8rem;font-weight:700;color:var(--paper);background:var(--accent);border-radius:99px;padding:2px 10px;margin-top:3px}
+.steptext{margin:0}
+.status{border-radius:8px;padding:8px 14px;font-weight:700}
+.status.one{background:var(--accent-soft);color:var(--accent);border-inline-start:4px solid var(--accent)}
+.status.two{background:var(--mark-soft);color:var(--mark);border-inline-start:4px solid var(--mark)}
+.status.none{background:var(--bg);color:var(--muted);border-inline-start:4px solid var(--muted)}
+.buttons{display:flex;flex-wrap:wrap;gap:8px}
+.btn{border:0;font:inherit;font-weight:700;cursor:pointer}
+.btn.ghost{background:var(--paper);color:var(--accent);border:1px solid var(--accent)}
+.btn:disabled{opacity:.4;cursor:default}
+p.given{max-width:72ch}
+b.v{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;color:var(--accent)}
+td.ok{color:var(--accent);font-weight:700} td.no{color:var(--mark);font-weight:700}
+/* proof tables: claim | reason */
+table.pf{min-width:0}
+.figcol{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:20px;align-items:center}
+@media (max-width:760px){.figcol{grid-template-columns:minmax(0,1fr)}}
+table.pf td:first-child{width:2.2em;color:var(--muted);font-family:var(--f-math)}
+table.pf td:last-child{color:var(--muted);font-size:.93rem}
+details.sol summary{cursor:pointer;color:var(--accent);font-weight:700;width:fit-content}
+details.sol > div{margin-top:8px;display:flex;flex-direction:column;gap:8px}
+.ex{border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.ex .qno{font-weight:700;color:var(--accent)}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html#geometry">→ חזרה לנושא: גאומטריה אוקלידית</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · גאומטריה אוקלידית · המחשה למשפטי החפיפה</span>
+  <h1>סימולציות: למה משפטי החפיפה עובדים</h1>
+  <p class="lead">בכל סימולציה מתחילים מהנתונים של משפט חפיפה, ובונים מהם משולש צעד אחר צעד. אם יש רק דרך אחת לבנות את המשולש, כל שני משולשים עם אותם נתונים זהים, כלומר חופפים. אם אפשר לבנות יותר ממשולש אחד, הנתונים לא מספיקים לחפיפה. שנו את הנתונים במחוונים וראו מה קורה. ההסברים והמשפטים עצמם נמצאים בדף <a href="geometry-00b-congruence.html">חפיפת משולשים</a>.</p>
+</header>
+<nav class="pages" aria-label="דפי הנושא"><a href="geometry-00-deductive-system.html">0. מערכת היסקית</a><a href="geometry-00b-congruence.html">1. חפיפת משולשים</a><span aria-current="page">2. סימולציות חפיפה</span><a href="geometry-01-loci-triangle-centers.html">3. מקומות גאומטריים ונקודות מיוחדות</a><a href="geometry-02-circle.html">4. המעגל</a><a href="geometry-03-similarity.html">5. פרופורציה ודמיון</a><a href="geometry-04-concepts-theorems.html">6. מושגים ומשפטים</a><a href="geometry-05-formula-sheet.html">7. דף נוסחאות</a><a href="geometry-06-formula-questions.html">8. שאלות על דף הנוסחאות</a></nav>
+<nav class="toc" aria-label="תוכן"><strong>תוכן</strong><ol>
+  <li><a href="#idea">הרעיון</a></li>
+  <li><a href="#sim-sas">צ.ז.צ</a></li>
+  <li><a href="#sim-asa">ז.צ.ז</a></li>
+  <li><a href="#sim-sss">צ.צ.צ</a></li>
+  <li><a href="#sim-ssa">צ.צ.ז: מול הגדולה ומול הקטנה</a></li>
+  <li><a href="#sim-aaa">ז.ז.ז: למה זה לא מספיק</a></li>
+  <li><a href="#summary">סיכום</a></li>
+</ol></nav>
+
+<section class="ch" id="idea">
+  <h2>הרעיון: חפיפה = בנייה יחידה</h2>
+  <div class="meaning">
+    <p>משפט חפיפה אומר: אם שלושה נתונים מסוימים שווים בשני משולשים, המשולשים חופפים. למה? כי אם מהנתונים האלה אפשר לבנות <strong>משולש אחד בלבד</strong>, אז כל משולש עם הנתונים האלה הוא בדיוק אותו משולש (אולי במקום אחר בדף או הפוך), ולכן כל שני משולשים כאלה חופפים.</p>
+    <p>בבנייה משתמשים בשני כלים:</p>
+    <ul>
+      <li><strong>קרן מקודקוד בזווית נתונה:</strong> כל הנקודות שיוצרות את הזווית הנדרשת.</li>
+      <li><strong>מעגל ברדיוס נתון:</strong> כל הנקודות שנמצאות במרחק נתון מנקודה. בשרטוט הוא מקווקו.</li>
+    </ul>
+    <p>הקודקוד השלישי נמצא בחיתוך. <strong>כמה נקודות חיתוך יש, כך כמה משולשים אפשר לבנות.</strong></p>
+  </div>
+  <p class="note"><strong>איך משתמשים:</strong> לחצו "הצעד הבא" כדי לבנות שלב אחר שלב, או "כל הבנייה" כדי לראות הכול. אפשר להזיז את המחוונים בכל שלב, והשרטוט מתעדכן.</p>
+</section>
+
+<section class="ch sim" id="sim-sas" data-sim="sas">
+  <h2>צ.ז.צ: שתי צלעות והזווית שביניהן</h2>
+  <p class="given">נתונים: הצלע <b class="v">AB</b>, הצלע <b class="v">AC</b> והזווית <b class="v">A</b> שביניהן.</p>
+</section>
+
+<section class="ch sim" id="sim-asa" data-sim="asa">
+  <h2>ז.צ.ז: צלע ושתי הזוויות שלידה</h2>
+  <p class="given">נתונים: הצלע <b class="v">AB</b>, והזוויות <b class="v">A</b> ו־<b class="v">B</b> שבקצותיה.</p>
+</section>
+
+<section class="ch sim" id="sim-sss" data-sim="sss">
+  <h2>צ.צ.צ: שלוש צלעות</h2>
+  <p class="given">נתונים: <b class="v">AB</b>, <b class="v">AC</b> ו־<b class="v">BC</b>. נסו גם צלעות שלא מקיימות את אי־שוויון המשולש, למשל 2, 3 ו־8.</p>
+</section>
+
+<section class="ch sim" id="sim-ssa" data-sim="ssa">
+  <h2>צ.צ.ז: שתי צלעות וזווית שאינה ביניהן</h2>
+  <p class="given">נתונים: הצלע <b class="v">AB</b>, הצלע <b class="v">BC</b> והזווית <b class="v">A</b>. הזווית <b class="v">A</b> נמצאת <strong>מול</strong> הצלע <b class="v">BC</b>. השאלה החשובה: האם <b class="v">BC</b> היא הצלע הגדולה מבין השתיים? נסו את שני המצבים בכפתורים.</p>
+</section>
+
+<section class="ch sim" id="sim-aaa" data-sim="aaa">
+  <h2>ז.ז.ז: שלוש זוויות</h2>
+  <p class="given">נתונים: הזוויות <b class="v">A</b> ו־<b class="v">B</b>. הזווית השלישית נקבעת מעצמה, כי סכום הזוויות הוא 180°. אבל אף צלע לא נתונה.</p>
+</section>
+
+<section class="ch" id="summary">
+  <h2>סיכום: כמה משולשים אפשר לבנות?</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>נתונים</th><th>החיתוך שקובע את הקודקוד השלישי</th><th>מספר המשולשים</th><th>מספיק לחפיפה?</th></tr></thead>
+    <tbody>
+      <tr><td><strong>צ.ז.צ</strong></td><td>קרן ומעגל שמרכזו בראשית הקרן</td><td>תמיד אחד</td><td class="ok">כן</td></tr>
+      <tr><td><strong>ז.צ.ז</strong></td><td>שתי קרניים</td><td>אחד (כשסכום הזוויות קטן מ־180°)</td><td class="ok">כן</td></tr>
+      <tr><td><strong>צ.צ.צ</strong></td><td>שני מעגלים</td><td>אחד, עד כדי שיקוף (כשמתקיים אי־שוויון המשולש)</td><td class="ok">כן</td></tr>
+      <tr><td><strong>צ.צ.ז</strong>, הזווית מול הצלע <strong>הגדולה</strong></td><td>קרן ומעגל שמרכזו מחוץ לקרן</td><td>תמיד אחד</td><td class="ok">כן (משפט החפיפה הרביעי)</td></tr>
+      <tr><td><strong>צ.צ.ז</strong>, הזווית מול הצלע <strong>הקטנה</strong></td><td>קרן ומעגל שמרכזו מחוץ לקרן</td><td>אפס, אחד או שניים</td><td class="no">לא</td></tr>
+      <tr><td><strong>ז.ז.ז</strong></td><td>שתי קרניים, אבל המרחק בין הקודקודים לא נתון</td><td>אינסוף (בגדלים שונים)</td><td class="no">לא (רק דמיון)</td></tr>
+    </tbody>
+  </table></div>
+  <a class="btn" href="geometry-00b-congruence.html">← חזרה לדף חפיפת משולשים</a>
+</section>
+
+<footer>גאומטריה אוקלידית · סימולציות למשפטי החפיפה</footer>
+</div>
+
+<template id="simTpl">
+  <div class="simbox">
+    <div class="controls"></div>
+    <div class="presets"></div>
+    <svg class="stage" viewBox="0 0 480 300" role="img"></svg>
+    <div class="steprow">
+      <span class="stepno"></span>
+      <p class="steptext" aria-live="polite"></p>
+    </div>
+    <div class="status" hidden></div>
+    <div class="buttons">
+      <button type="button" class="btn ghost prev">→ הצעד הקודם</button>
+      <button type="button" class="btn next">הצעד הבא ←</button>
+      <button type="button" class="btn ghost all">כל הבנייה</button>
+      <button type="button" class="btn ghost reset">מההתחלה</button>
+    </div>
+  </div>
+</template>
+
+<script>
+(function(){
+const DEG = Math.PI/180;
+const f1 = x => (Math.round(x*10)/10).toString();
+const P = (x,y) => ({x,y});
+const dir = a => P(Math.cos(a*DEG), Math.sin(a*DEG));
+const add = (p,q,t=1) => P(p.x+q.x*t, p.y+q.y*t);
+const dist = (p,q) => Math.hypot(p.x-q.x, p.y-q.y);
+const angAt = (V,p,q) => { const a=Math.atan2(p.y-V.y,p.x-V.x), b=Math.atan2(q.y-V.y,q.x-V.x); let d=Math.abs(a-b)/DEG; return d>180?360-d:d; };
+
+// drawing context: math units -> svg px
+function ctx(o){
+  const K=o.k||28, OX=o.ox||70, OY=o.oy||260;
+  const X=p=>(OX+p.x*K).toFixed(1), Y=p=>(OY-p.y*K).toFixed(1);
+  return {
+    seg:(p,q,c='ln')=>`<line class="${c}" x1="${X(p)}" y1="${Y(p)}" x2="${X(q)}" y2="${Y(q)}"/>`,
+    ray:(p,a,len,c='ray')=>{const q=add(p,dir(a),len);return `<line class="${c}" x1="${X(p)}" y1="${Y(p)}" x2="${X(q)}" y2="${Y(q)}"/>`;},
+    circ:(c0,r,c='soft')=>`<circle class="${c}" cx="${X(c0)}" cy="${Y(c0)}" r="${(r*K).toFixed(1)}"/>`,
+    poly:(pts,c='fill')=>`<polygon class="${c}" points="${pts.map(p=>X(p)+','+Y(p)).join(' ')}"/>`,
+    pt:(p,lab,c='pt',dx=0,dy=0)=>`<circle class="${c}" cx="${X(p)}" cy="${Y(p)}" r="4"/>`+(lab?`<text class="lb ${c}" x="${(+X(p)+dx).toFixed(1)}" y="${(+Y(p)+dy).toFixed(1)}">${lab}</text>`:''),
+    len:(p,q,t,c='lenl',off=14)=>{const mx=(p.x+q.x)/2,my=(p.y+q.y)/2,L=dist(p,q)||1,nx=-(q.y-p.y)/L,ny=(q.x-p.x)/L;const m=P(mx+nx*off/K,my+ny*off/K);return `<text class="${c}" x="${X(m)}" y="${(+Y(m)+5).toFixed(1)}">${t}</text>`;},
+    arc:(V,a1,a2,r,lab,c='ang')=>{ // ccw from a1 to a2 (degrees, math)
+      const rr=r/K, p1=add(V,dir(a1),rr), p2=add(V,dir(a2),rr), large=((a2-a1+360)%360)>180?1:0;
+      const mid=a1+((a2-a1+360)%360)/2, lp=add(V,dir(mid),rr+16/K);
+      return `<path class="${c}" d="M${X(p1)},${Y(p1)} A${r},${r} 0 ${large} 0 ${X(p2)},${Y(p2)}"/>`+(lab?`<text class="angl" x="${X(lp)}" y="${(+Y(lp)+5).toFixed(1)}">${lab}</text>`:'');
+    }
+  };
+}
+
+const SIMS = {
+ sas:{ params:[{k:'c',l:'AB',min:3,max:10,step:0.5,v:7},{k:'b',l:'AC',min:2,max:9,step:0.5,v:5},{k:'al',l:'∠A',min:15,max:150,step:5,v:50,u:'°'}],
+  build(s){
+    const d=ctx({}), A=P(0,0), B=P(s.c,0), C=add(A,dir(s.al),s.b);
+    const a=dist(B,C), angB=angAt(B,A,C), angC=180-s.al-angB;
+    return [
+     {t:`שרטטו את הצלע AB באורך ${s.c}.`, g:d.seg(A,B)+d.len(A,B,s.c,'lenl',-16)+d.pt(A,'A','pt',-14,8)+d.pt(B,'B','pt',14,8)},
+     {t:`בקודקוד A בונים זווית של ${s.al}°. הצלע AC חייבת להיות על הקרן הזאת.`, g:d.ray(A,s.al,13)+d.arc(A,0,s.al,30,s.al+'°')},
+     {t:`על הקרן מסמנים את C במרחק ${s.b} מ־A. המעגל המקווקו הוא כל הנקודות במרחק ${s.b} מ־A, והוא חותך את הקרן בנקודה אחת בלבד.`, g:d.circ(A,s.b)+d.len(A,C,s.b,'lenl',14)+d.pt(C,'C','pta',0,-12)},
+     {t:`מחברים את B ל־C. לא היה לנו שום מקום לבחירה, ולכן גם השאר נקבע: BC ≈ ${f1(a)}, ∠B ≈ ${f1(angB)}°, ∠C ≈ ${f1(angC)}°. כל משולש עם הנתונים האלה הוא אותו משולש, ולכן כל שני משולשים כאלה חופפים.`, g:d.poly([A,B,C])+d.seg(B,C,'ac')+d.seg(A,C,'ac')+d.seg(A,B)+d.pt(A,'','pt')+d.pt(B,'','pt')+d.pt(C,'','pta')},
+    ];
+  },
+  status:()=>({c:'one',t:'אפשר לבנות משולש אחד בלבד → צ.ז.צ הוא משפט חפיפה'})
+ },
+ asa:{ params:[{k:'c',l:'AB',min:3,max:10,step:0.5,v:7},{k:'al',l:'∠A',min:10,max:160,step:5,v:50,u:'°'},{k:'be',l:'∠B',min:10,max:160,step:5,v:60,u:'°'}],
+  build(s){
+    const d=ctx({}), A=P(0,0), B=P(s.c,0), ok=s.al+s.be<180;
+    const steps=[
+     {t:`שרטטו את הצלע AB באורך ${s.c}.`, g:d.seg(A,B)+d.len(A,B,s.c,'lenl',-16)+d.pt(A,'A','pt',-14,8)+d.pt(B,'B','pt',14,8)},
+     {t:`בקודקוד A בונים זווית של ${s.al}°. הקודקוד C נמצא איפשהו על הקרן הזאת.`, g:d.ray(A,s.al,14)+d.arc(A,0,s.al,30,s.al+'°')},
+     {t:`בקודקוד B בונים זווית של ${s.be}°. גם עליה נמצא C.`, g:d.ray(B,180-s.be,14)+d.arc(B,180-s.be,180,30,s.be+'°')},
+    ];
+    if(ok){
+      const b=s.c*Math.sin(s.be*DEG)/Math.sin((s.al+s.be)*DEG), C=add(A,dir(s.al),b);
+      steps.push({t:`שתי קרניים שאינן מקבילות נחתכות בנקודה אחת בלבד, וזה הקודקוד C. התקבל משולש יחיד: AC ≈ ${f1(b)}, BC ≈ ${f1(dist(B,C))}, ∠C = ${180-s.al-s.be}°.`, g:d.poly([A,B,C])+d.seg(A,C,'ac')+d.seg(B,C,'ac')+d.seg(A,B)+d.pt(C,'C','pta',0,-12)});
+    } else {
+      steps.push({t:`סכום הזוויות ${s.al}° + ${s.be}° הוא ${s.al+s.be}°, לפחות 180°. הקרניים לא נפגשות מעל AB, ולכן אין משולש.`, g:''});
+    }
+    return steps;
+  },
+  status:s=>s.al+s.be<180?{c:'one',t:'אפשר לבנות משולש אחד בלבד → ז.צ.ז הוא משפט חפיפה'}:{c:'none',t:'אין משולש: סכום שתי הזוויות חייב להיות קטן מ־180°'}
+ },
+ sss:{ params:[{k:'c',l:'AB',min:2,max:9,step:0.5,v:7},{k:'b',l:'AC',min:1,max:9,step:0.5,v:5},{k:'a',l:'BC',min:1,max:9,step:0.5,v:6}],
+  build(s){
+    const d=ctx({oy:165,ox:110,k:26}), A=P(0,0), B=P(s.c,0);
+    const x=(s.c*s.c+s.b*s.b-s.a*s.a)/(2*s.c), h2=s.b*s.b-x*x;
+    const steps=[
+     {t:`שרטטו את הצלע AB באורך ${s.c}.`, g:d.seg(A,B)+d.len(A,B,s.c,'lenl',-16)+d.pt(A,'A','pt',-14,8)+d.pt(B,'B','pt',14,8)},
+     {t:`C נמצא במרחק ${s.b} מ־A, כלומר על המעגל שמרכזו A ורדיוסו ${s.b}.`, g:d.circ(A,s.b)},
+     {t:`C נמצא גם במרחק ${s.a} מ־B, כלומר על המעגל שמרכזו B ורדיוסו ${s.a}.`, g:d.circ(B,s.a,'soft2')},
+    ];
+    if(h2>1e-9){
+      const C=P(x,Math.sqrt(h2)), C2=P(x,-Math.sqrt(h2));
+      steps.push({t:`שני המעגלים נחתכים בשתי נקודות, אחת מכל צד של AB. שני המשולשים שמתקבלים הם שיקוף זה של זה ביחס ל־AB, ולכן הם חופפים: בעצם זה אותו משולש. הזוויות נקבעו: ∠A ≈ ${f1(angAt(A,B,C))}°, ∠B ≈ ${f1(angAt(B,A,C))}°, ∠C ≈ ${f1(angAt(C,A,B))}°.`,
+        g:d.poly([A,B,C])+d.poly([A,B,C2],'fill2')+d.seg(A,C,'ac')+d.seg(B,C,'ac')+d.seg(A,C2,'ghost')+d.seg(B,C2,'ghost')+d.seg(A,B)+d.pt(C,'C','pta',0,-12)+d.pt(C2,"C'",'ptg',0,22)});
+    } else if(h2>-1e-9){
+      steps.push({t:`המעגלים משיקים בנקודה אחת שנמצאת על הישר AB. הנקודות על ישר אחד, ולכן אין משולש (${s.a} + ${s.b} = ${s.c} או שאחת הצלעות שווה לסכום האחרות).`, g:''});
+    } else {
+      steps.push({t:`המעגלים לא נחתכים, ולכן אין משולש. אי־שוויון המשולש לא מתקיים: כל צלע חייבת להיות קטנה מסכום שתי האחרות.`, g:''});
+    }
+    return steps;
+  },
+  status:s=>{const x=(s.c*s.c+s.b*s.b-s.a*s.a)/(2*s.c),h2=s.b*s.b-x*x;return h2>1e-9?{c:'one',t:'משולש אחד בלבד (עד כדי שיקוף) → צ.צ.צ הוא משפט חפיפה'}:{c:'none',t:'אין משולש: אי־שוויון המשולש לא מתקיים'};}
+ },
+ ssa:{ params:[{k:'c',l:'AB',min:3,max:10,step:0.5,v:8},{k:'a',l:'BC',min:1,max:10,step:0.5,v:5},{k:'al',l:'∠A',min:10,max:150,step:5,v:35,u:'°'}],
+  presets:[{l:'הזווית מול הצלע הקטנה (שני משולשים)',v:{c:8,a:5,al:35}},{l:'הזווית מול הצלע הגדולה (משולש אחד)',v:{c:6,a:8,al:40}},{l:'מול הקטנה, אין משולש',v:{c:8,a:3.5,al:35}}],
+  roots(s){ const p=s.c*Math.cos(s.al*DEG), D=s.a*s.a-Math.pow(s.c*Math.sin(s.al*DEG),2);
+    if(D< -1e-9) return [];
+    const r=Math.sqrt(Math.max(D,0)); const ts=[p+r,p-r].filter(t=>t>1e-6);
+    return (r<1e-6)?ts.slice(0,1):ts; },
+  build(s){
+    const d=ctx({oy:240}), A=P(0,0), B=P(s.c,0), ts=this.roots(s);
+    const big = s.a>=s.c;
+    const steps=[
+     {t:`שרטטו את הצלע AB באורך ${s.c}.`, g:d.seg(A,B)+d.len(A,B,s.c,'lenl',-16)+d.pt(A,'A','pt',-14,8)+d.pt(B,'B','pt',14,8)},
+     {t:`בקודקוד A בונים זווית של ${s.al}°. C נמצא איפשהו על הקרן.`, g:d.ray(A,s.al,15)+d.arc(A,0,s.al,30,s.al+'°')},
+     {t:`C נמצא במרחק ${s.a} מ־B, כלומר על המעגל שמרכזו B ורדיוסו ${s.a}. הפעם מרכז המעגל לא נמצא על הקרן, ולכן המעגל יכול לחתוך את הקרן ביותר מנקודה אחת.`, g:d.circ(B,s.a,'soft2')},
+    ];
+    const cls=[['fill','ac','pta'],['fill2','mk','ptm']];
+    if(ts.length===0){
+      steps.push({t:`המעגל לא מגיע לקרן: ${s.a} קטן מהמרחק של B מהקרן (≈ ${f1(s.c*Math.sin(s.al*DEG))}). אין משולש.`, g:''});
+    } else {
+      let g='', names=ts.length===2?['C₁','C₂']:['C'];
+      ts.forEach((t,i)=>{const C=add(A,dir(s.al),t);g+=d.poly([A,B,C],cls[i][0])+d.seg(B,C,cls[i][1])+d.pt(C,names[i],cls[i][2],i?12:-14,-10);});
+      g+=d.seg(A,B)+d.ray(A,s.al,15)+d.pt(A,'','pt')+d.pt(B,'','pt');
+      if(ts.length===1 && big){ // show the second intersection, behind A on the extension of the ray
+        const t2=s.c*Math.cos(s.al*DEG)-Math.sqrt(s.a*s.a-Math.pow(s.c*Math.sin(s.al*DEG),2));
+        if(t2<0){const G=add(A,dir(s.al),t2); g+=d.seg(A,G,'ghost')+d.pt(G,'✗','ptg',-12,4);}
+      }
+      let t;
+      if(ts.length===2) t=`המעגל חותך את הקרן בשתי נקודות, C₁ ו־C₂. יש שני משולשים שונים עם אותם נתונים: AB = ${s.c}, BC = ${s.a}, ∠A = ${s.al}°. המשולשים לא חופפים (השוו את AC: ≈ ${f1(Math.max(...ts))} מול ≈ ${f1(Math.min(...ts))}). הסיבה: הזווית A נמצאת מול BC = ${s.a}, הצלע הקטנה.`;
+      else if(big) t=`המעגל חותך את הקרן בנקודה אחת בלבד. נקודת החיתוך השנייה (מסומנת ב־✗) נמצאת על ההמשך של הקרן, מאחורי A, ולכן היא לא נותנת משולש עם זווית A הנתונה. זה קורה תמיד כש־BC ≥ AB, כלומר כשהזווית A נמצאת מול הצלע הגדולה. לכן זה משפט חפיפה.`;
+      else t=`המעגל משיק לקרן בנקודה אחת: BC שווה בדיוק למרחק של B מהקרן, והמשולש ישר זווית ב־C. זה מקרה גבולי. אם תשנו קצת את BC, יהיו שני משולשים או אף אחד.`;
+      steps.push({t,g});
+    }
+    return steps;
+  },
+  status(s){ const n=this.roots(s).length, big=s.a>=s.c;
+    if(n===2) return {c:'two',t:'שני משולשים שונים! הזווית מול הצלע הקטנה → אי אפשר להסיק חפיפה'};
+    if(n===1 && big) return {c:'one',t:'משולש אחד בלבד: הזווית מול הצלע הגדולה → משפט החפיפה הרביעי'};
+    if(n===1) return {c:'one',t:'משולש אחד, אבל רק במקרה הגבולי (משולש ישר זווית). באופן כללי אין כאן משפט חפיפה'};
+    return {c:'none',t:'אין משולש: BC קצר מדי'}; }
+ },
+ aaa:{ params:[{k:'al',l:'∠A',min:20,max:120,step:5,v:50,u:'°'},{k:'be',l:'∠B',min:20,max:120,step:5,v:60,u:'°'}],
+  build(s){
+    const d=ctx({}), ok=s.al+s.be<180, gam=180-s.al-s.be;
+    if(!ok) return [{t:`סכום הזוויות ${s.al+s.be}° הוא לפחות 180°, ולכן אין משולש. הקטינו את אחת הזוויות.`, g:''}];
+    const tri=(c,cl)=>{const A=P(0,0),B=P(c,0),b=c*Math.sin(s.be*DEG)/Math.sin((s.al+s.be)*DEG),C=add(A,dir(s.al),b);return {A,B,C,g:d.poly([A,B,C],cl[0])+d.seg(A,B,cl[1])+d.seg(B,C,cl[1])+d.seg(A,C,cl[1])+d.pt(C,'','ptg')+d.pt(B,'','ptg')};};
+    const t1=tri(3,['fill','ln']), t2=tri(5.5,['fill2','mk']), t3=tri(9,['fill3','ac']);
+    const lim=Math.min(1, 7.5/Math.max(t3.C.y,0.1)); // keep it on screen
+    const t3s=tri(9*lim,['fill3','ac']);
+    return [
+     {t:`בונים משולש עם הזוויות ${s.al}° ו־${s.be}° על צלע AB באורך 3. הזווית השלישית היא ${gam}°.`, g:t1.g+d.arc(P(0,0),0,s.al,24,s.al+'°')+d.pt(P(0,0),'A','pt',-14,8)},
+     {t:`אבל אורך AB לא נתון. אפשר לבנות את אותן זוויות גם על AB = 5.5.`, g:t2.g},
+     {t:`ואפשר גם על AB = ${f1(9*lim)}. לכל המשולשים יש אותן שלוש זוויות, אבל הם בגדלים שונים. הם דומים זה לזה, לא חופפים. לכן ז.ז.ז אינו משפט חפיפה.`, g:t3s.g},
+    ];
+  },
+  status:s=>s.al+s.be<180?{c:'two',t:'אינסוף משולשים בגדלים שונים → ז.ז.ז אינו משפט חפיפה (רק דמיון)'}:{c:'none',t:'אין משולש'}
+ }
+};
+
+const tpl=document.getElementById('simTpl');
+document.querySelectorAll('section.sim').forEach(sec=>{
+  const sim=SIMS[sec.dataset.sim], box=tpl.content.firstElementChild.cloneNode(true);
+  sec.appendChild(box);
+  const state={}; sim.params.forEach(p=>state[p.k]=p.v);
+  let step=0;
+  const ctr=box.querySelector('.controls'), inputs={};
+  sim.params.forEach(p=>{
+    const lab=document.createElement('label');
+    lab.innerHTML=`<span class="pl">${p.l}</span><input type="range" min="${p.min}" max="${p.max}" step="${p.step}" value="${p.v}" aria-label="${p.l}"><output>${p.v}${p.u||''}</output>`;
+    const inp=lab.querySelector('input'), out=lab.querySelector('output');
+    inp.addEventListener('input',()=>{state[p.k]=+inp.value;out.textContent=inp.value+(p.u||'');draw();});
+    inputs[p.k]={inp,out,p}; ctr.appendChild(lab);
+  });
+  const pr=box.querySelector('.presets');
+  (sim.presets||[]).forEach(ps=>{const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=ps.l;
+    b.onclick=()=>{Object.entries(ps.v).forEach(([k,v])=>{state[k]=v;inputs[k].inp.value=v;inputs[k].out.textContent=v+(inputs[k].p.u||'');});step=99;draw();};pr.appendChild(b);});
+  const svg=box.querySelector('svg'), txt=box.querySelector('.steptext'), no=box.querySelector('.stepno'), st=box.querySelector('.status');
+  svg.setAttribute('aria-label','בניית משולש: '+sec.querySelector('h2').textContent);
+  function draw(){
+    const steps=sim.build(state); if(step>steps.length-1) step=steps.length-1; if(step<0) step=0;
+    svg.innerHTML=steps.slice(0,step+1).map(s=>s.g).join('');
+    txt.textContent=steps[step].t; no.textContent=`שלב ${step+1} מתוך ${steps.length}`;
+    const last=step===steps.length-1; st.hidden=!last;
+    if(last){const r=sim.status(state); st.className='status '+r.c; st.textContent=r.t;}
+    box.querySelector('.prev').disabled=step===0; box.querySelector('.next').disabled=last;
+  }
+  box.querySelector('.prev').onclick=()=>{step--;draw();};
+  box.querySelector('.next').onclick=()=>{step++;draw();};
+  box.querySelector('.all').onclick=()=>{step=99;draw();};
+  box.querySelector('.reset').onclick=()=>{step=0;draw();};
+  draw();
+});
+})();
+</script>
+</body>
+</html>
