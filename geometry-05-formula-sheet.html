@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>דף נוסחאות: גאומטריה אוקלידית · להדפסה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Formula sheet: compact two-column cards on screen, two columns on one or two A4 pages in print */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media screen and (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+@media screen{:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:28px 56px;display:flex;flex-direction:column;gap:18px}
+h1,h2{font-family:var(--f-display);line-height:1.2;margin:0}
+h1{font-size:2.1rem}
+h2{font-size:1.15rem;color:var(--accent);border-bottom:2px solid var(--accent-soft);padding-bottom:3px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover{text-decoration:underline}
+header{display:flex;flex-direction:column;gap:6px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.lead{color:var(--muted);max-width:75ch}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{background:var(--accent);color:var(--paper);font:inherit;font-weight:700;border:0;cursor:pointer;text-decoration:none;padding:7px 18px;border-radius:99px}
+.btn:hover{filter:brightness(1.1)}
+.bar label{display:flex;gap:6px;align-items:center;font-size:.95rem;cursor:pointer}
+.student{display:none}
+
+.sheet{columns:2 440px;column-gap:18px}
+.card{break-inside:avoid;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0 0 14px;display:flex;flex-direction:column;gap:6px}
+.card ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
+.card li{display:flex;justify-content:space-between;gap:12px;align-items:baseline;border-bottom:1px dotted var(--line);padding-bottom:4px}
+.card li:last-child{border-bottom:0;padding-bottom:0}
+.card li > span:first-child{flex:1}
+.card li > .m{flex:none;text-align:left}
+.small{font-size:.85rem;color:var(--muted)}
+.cut{display:inline-block;font-size:.68rem;font-weight:700;color:var(--mark);border:1px solid var(--mark);border-radius:99px;padding:0 6px;margin-inline-start:4px;white-space:nowrap}
+li.removed{opacity:.7}
+body.hide-removed li.removed{display:none}
+footer{color:var(--muted);font-size:.85rem;text-align:center}
+
+@page{size:A4;margin:11mm 10mm}
+@media print{
+  body{background:#fff;color:#000;font-size:10.5pt;line-height:1.35}
+  .wrap{max-width:none;padding:0;gap:6px}
+  .back,.bar,.lead,footer .screen{display:none}
+  h1{font-size:16pt} h2{font-size:11pt;color:#000;border-color:#999}
+  .eyebrow{font-size:8pt}
+  .student{display:flex;gap:28px;font-size:10pt;margin-top:2px}
+  .sheet{columns:2;column-gap:8mm}
+  .card{border:1px solid #999;border-radius:4px;padding:5px 8px;margin-bottom:6px;gap:3px;background:#fff}
+  .card li{border-bottom:1px dotted #bbb;padding-bottom:2px}
+  .small{color:#333}
+  .cut{color:#000;border-color:#000}
+  footer{font-size:8pt;color:#333}
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+.m .katex{font-size:1.1em}
+.m:has(.katex){white-space:normal}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html#geometry">→ חזרה לנושא: גאומטריה אוקלידית</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · שאלון 571 · גאומטריה אוקלידית</span>
+  <h1>דף נוסחאות: גאומטריה אוקלידית</h1>
+  <div class="student"><span>שם: ____________________</span><span>כיתה: ________</span></div>
+  <p class="lead">כל הנוסחאות והיחסים של הפרק בדף אחד, מוכן להדפסה על דף A4 בשני טורים. המשפטים עצמם, עם המשפטים ההפוכים, מופיעים ב<a href="geometry-04-concepts-theorems.html">דף המושגים והמשפטים</a>. לתרגול: <a href="geometry-06-formula-questions.html">שאלה על כל נוסחה, עם פתרון מפורט</a>.</p>
+  <div class="bar">
+    <button class="btn" type="button" onclick="window.print()">הדפסה</button>
+    <label><input type="checkbox" id="hideRemoved"> בלי מה שירד במיקוד תשפ״ז</label>
+  </div>
+</header>
+
+<main class="sheet">
+
+<section class="card">
+  <h2>זוויות</h2>
+  <ul>
+    <li><span>סכום זוויות במשולש</span><span class="m">\(180^\circ\)</span></li>
+    <li><span>סכום זוויות במרובע</span><span class="m">\(360^\circ\)</span></li>
+    <li><span>סכום זוויות פנימיות במצולע בעל <span class="m">\(n\)</span> צלעות</span><span class="m">\(180^\circ(n-2)\)</span></li>
+    <li><span>זווית במצולע משוכלל</span><span class="m">\(\frac{180^\circ(n-2)}{n}\)</span></li>
+    <li><span>סכום הזוויות החיצוניות בכל מצולע</span><span class="m">\(360^\circ\)</span></li>
+    <li><span>זווית חיצונית למשולש</span><span class="m">\(\gamma_{ext}=\alpha+\beta\)</span></li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>משולש ישר זווית</h2>
+  <p class="small">ניצבים <span class="m">\(a,b\)</span>, יתר <span class="m">\(c\)</span>, גובה ליתר <span class="m">\(h\)</span>, היטלי הניצבים על היתר <span class="m">\(p,q\)</span> (<span class="m">\(p\)</span> ליד <span class="m">\(a\)</span>).</p>
+  <ul>
+    <li><span>משפט פיתגורס</span><span class="m">\(a^2+b^2=c^2\)</span></li>
+    <li><span>תיכון ליתר</span><span class="m">\(m_c=\frac{c}{2}\)</span></li>
+    <li><span>גובה ליתר</span><span class="m">\(h=\frac{ab}{c}\)</span></li>
+    <li><span>גובה ליתר והיטלים</span><span class="m">\(h^2=p\cdot q\)</span></li>
+    <li><span>ניצב והיטלו</span><span class="m">\(a^2=c\cdot p,\ \ b^2=c\cdot q\)</span></li>
+    <li><span>משולש <span class="m">\(30^\circ\text{-}60^\circ\text{-}90^\circ\)</span></span><span class="m">\(x : x\sqrt3 : 2x\)</span></li>
+    <li><span>משולש <span class="m">\(45^\circ\text{-}45^\circ\text{-}90^\circ\)</span></span><span class="m">\(x : x : x\sqrt2\)</span></li>
+    <li><span>רדיוס המעגל החוסם</span><span class="m">\(R=\frac{c}{2}\)</span></li>
+    <li><span>רדיוס המעגל החסום</span><span class="m">\(r=\frac{a+b-c}{2}\)</span></li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>משולש שווה צלעות (צלע <span class="m">\(a\)</span>)</h2>
+  <ul>
+    <li><span>גובה (שהוא גם תיכון וחוצה זווית)</span><span class="m">\(h=\frac{a\sqrt3}{2}\)</span></li>
+    <li><span>שטח</span><span class="m">\(S=\frac{a^2\sqrt3}{4}\)</span></li>
+    <li><span>רדיוס המעגל החוסם</span><span class="m">\(R=\frac{2}{3}h=\frac{a\sqrt3}{3}\)</span></li>
+    <li><span>רדיוס המעגל החסום</span><span class="m">\(r=\frac{1}{3}h=\frac{a\sqrt3}{6}\)</span></li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>קטעים ונקודות מיוחדות</h2>
+  <ul>
+    <li><span>מפגש התיכונים מחלק כל תיכון (מהקודקוד)</span><span class="m">\(2:1\)</span></li>
+    <li><span>קטע אמצעים במשולש (מקביל לצלע <span class="m">\(a\)</span>)</span><span class="m">\(\frac{a}{2}\)</span></li>
+    <li><span>קטע אמצעים בטרפז</span><span class="m">\(\frac{a+b}{2}\)</span></li>
+    <li><span>רדיוס המעגל החסום בכל משולש (<span class="m">\(P\)</span> היקף)</span><span class="m">\(r=\frac{2S}{P}\)</span></li>
+    <li><span>מרכז המעגל החוסם</span><span>מפגש האנכים האמצעיים</span></li>
+    <li><span>מרכז המעגל החסום</span><span>מפגש חוצי הזוויות</span></li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>מרובעים</h2>
+  <ul>
+    <li><span>אלכסון במלבן</span><span class="m">\(d=\sqrt{a^2+b^2}\)</span></li>
+    <li><span>אלכסון בריבוע</span><span class="m">\(d=a\sqrt2\)</span></li>
+    <li><span>צלע במעוין לפי האלכסונים</span><span class="m">\(a^2=\left(\frac{d_1}{2}\right)^2+\left(\frac{d_2}{2}\right)^2\)</span></li>
+    <li><span>זוויות סמוכות במקבילית / ליד שוק בטרפז</span><span class="m">\(\alpha+\beta=180^\circ\)</span></li>
+    <li><span>זוויות נגדיות במרובע חסום במעגל</span><span class="m">\(\alpha+\gamma=180^\circ\)</span></li>
+    <li class="removed"><span>מרובע חוסם מעגל <span class="cut">ירד במיקוד</span></span><span class="m">\(a+c=b+d\)</span></li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>שטחים והיקפים</h2>
+  <ul>
+    <li><span>משולש</span><span class="m">\(S=\frac{a\cdot h_a}{2}\)</span></li>
+    <li><span>משולש ישר זווית</span><span class="m">\(S=\frac{a\cdot b}{2}=\frac{c\cdot h}{2}\)</span></li>
+    <li><span>מקבילית</span><span class="m">\(S=a\cdot h_a\)</span></li>
+    <li><span>מלבן</span><span class="m">\(S=a\cdot b\)</span></li>
+    <li><span>ריבוע</span><span class="m">\(S=a^2=\frac{d^2}{2}\)</span></li>
+    <li><span>מעוין, דלתון (אלכסונים מאונכים)</span><span class="m">\(S=\frac{d_1\cdot d_2}{2}\)</span></li>
+    <li><span>טרפז</span><span class="m">\(S=\frac{(a+b)\,h}{2}\)</span></li>
+    <li><span>עיגול / היקף מעגל</span><span class="m">\(S=\pi r^2,\ \ P=2\pi r\)</span></li>
+    <li><span>אורך קשת (זווית מרכזית <span class="m">\(\alpha\)</span>)</span><span class="m">\(\ell=2\pi r\cdot\frac{\alpha}{360^\circ}\)</span></li>
+    <li><span>שטח גזרה</span><span class="m">\(S=\pi r^2\cdot\frac{\alpha}{360^\circ}\)</span></li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>יחסי שטחים</h2>
+  <ul>
+    <li><span>משולשים עם גובה משותף</span><span class="m">\(\frac{S_1}{S_2}=\frac{a_1}{a_2}\)</span></li>
+    <li><span>תיכון מחלק את המשולש לשני חלקים</span><span class="m">\(S_1=S_2\)</span></li>
+    <li><span>שלושת התיכונים מחלקים את המשולש ל־6 חלקים</span><span>שווי שטח</span></li>
+    <li><span>משולשים עם בסיס משותף וקודקודים על ישר מקביל לבסיס</span><span>שווי שטח</span></li>
+    <li><span>משולשים דומים</span><span class="m">\(\frac{S_1}{S_2}=k^2\)</span></li>
+    <li><span>המשולש שקטעי האמצעים יוצרים, מתוך שטח המשולש</span><span class="m">\(\frac14\)</span></li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>פרופורציה ודמיון</h2>
+  <p class="small">במשולש <span class="m">\(ABC\)</span>: <span class="m">\(D\)</span> על <span class="m">\(AB\)</span>, <span class="m">\(E\)</span> על <span class="m">\(AC\)</span>, ו־<span class="m">\(DE\parallel BC\)</span>.</p>
+  <ul>
+    <li><span>משפט תאלס</span><span class="m">\(\frac{AD}{DB}=\frac{AE}{EC}\)</span></li>
+    <li><span>משפט תאלס המורחב</span><span class="m">\(\frac{AD}{AB}=\frac{AE}{AC}=\frac{DE}{BC}\)</span></li>
+    <li><span>משפט חוצה הזווית (<span class="m">\(AD\)</span> חוצה את <span class="m">\(\angle A\)</span>)</span><span class="m">\(\frac{BD}{DC}=\frac{AB}{AC}\)</span></li>
+    <li><span>משפטי דמיון</span><span>ז.ז · צ.ז.צ · צ.צ.צ</span></li>
+    <li><span>צלעות וגבהים מתאימים</span><span class="m">\(k\)</span></li>
+    <li><span>שטחים</span><span class="m">\(k^2\)</span></li>
+    <li class="removed"><span>היקפים, תיכונים, חוצי זוויות, רדיוסים <span class="cut">ירד במיקוד</span></span><span class="m">\(k\)</span></li>
+    <li><span>תכונות פרופורציה (אם <span class="m">\(\frac ab=\frac cd\)</span>)</span><span class="m">\(ad=bc,\ \frac{a+b}{b}=\frac{c+d}{d}\)</span></li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>המעגל</h2>
+  <ul>
+    <li><span>זווית היקפית וזווית מרכזית על אותה קשת</span><span class="m">\(\alpha=\frac{\beta_{center}}{2}\)</span></li>
+    <li><span>זווית היקפית על קוטר</span><span class="m">\(90^\circ\)</span></li>
+    <li><span>זווית בין משיק למיתר</span><span>= הזווית ההיקפית על המיתר</span></li>
+    <li><span>זווית בין מיתרים נחתכים (בתוך המעגל)</span><span class="m">\(\frac{\overset{\frown}{x}+\overset{\frown}{y}}{2}\)</span></li>
+    <li><span>זווית בין חותכים או משיקים (מחוץ למעגל)</span><span class="m">\(\frac{\overset{\frown}{x}-\overset{\frown}{y}}{2}\)</span></li>
+    <li><span>מרחק <span class="m">\(d\)</span> של מיתר <span class="m">\(c\)</span> מהמרכז</span><span class="m">\(\left(\frac c2\right)^2+d^2=r^2\)</span></li>
+    <li><span>משיק ורדיוס בנקודת ההשקה</span><span>מאונכים</span></li>
+    <li><span>שני משיקים מאותה נקודה</span><span class="m">\(PA=PB\)</span></li>
+    <li><span>משיק ורדיוס, נקודה <span class="m">\(P\)</span> במרחק <span class="m">\(d\)</span> מהמרכז</span><span class="m">\(PT^2=d^2-r^2\)</span></li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>קטעים במעגל (מדמיון)</h2>
+  <ul>
+    <li><span>מיתרים <span class="m">\(AB\)</span>, <span class="m">\(CD\)</span> נחתכים ב־<span class="m">\(E\)</span></span><span class="m">\(AE\cdot EB=CE\cdot ED\)</span></li>
+    <li><span>משיק <span class="m">\(PT\)</span> וחותך <span class="m">\(PAB\)</span></span><span class="m">\(PT^2=PA\cdot PB\)</span></li>
+    <li><span>שני חותכים <span class="m">\(PAB\)</span>, <span class="m">\(PCD\)</span></span><span class="m">\(PA\cdot PB=PC\cdot PD\)</span></li>
+  </ul>
+  <p class="small">בחותך מכפילים את המרחק לנקודה הקרובה במרחק לנקודה הרחוקה, תמיד מ־<span class="m">\(P\)</span>.</p>
+</section>
+
+</main>
+
+<footer>גאומטריה אוקלידית · דף נוסחאות · מעודכן למיקוד תשפ״ז <span class="screen">· <a href="index.html">לדף הראשי</a></span></footer>
+</div>
+<script>
+document.getElementById('hideRemoved').addEventListener('change', e => document.body.classList.toggle('hide-removed', e.target.checked));
+</script>
+</body>
+</html>

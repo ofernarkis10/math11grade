@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>שאלות על דף הנוסחאות: גאומטריה אוקלידית · תרגול עם פתרונות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Practice page: one question per formula-sheet item, solution folded under each question */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:24px}
+h1,h2{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.3rem}
+h2{font-size:1.6rem;color:var(--accent)}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:70ch}
+.lead a{color:var(--accent);font-weight:600}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover{text-decoration:underline}
+.small{color:var(--muted);font-size:.85rem}
+
+nav.pages{display:flex;gap:8px;flex-wrap:wrap}
+nav.pages a,nav.pages span{padding:6px 14px;border:1px solid var(--line);border-radius:99px;font-size:.9rem;font-weight:600;text-decoration:none;color:var(--accent);background:var(--paper)}
+nav.pages span{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+nav.toc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav.toc ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav.toc a{color:var(--accent);text-decoration:none;font-weight:600}
+@media (max-width:560px){nav.toc ol{columns:1}}
+
+.bar{display:flex;gap:10px;flex-wrap:wrap}
+.btn{background:var(--accent);color:var(--paper);font:inherit;font-weight:700;border:0;cursor:pointer;text-decoration:none;padding:7px 18px;border-radius:99px}
+.btn.ghost{background:var(--paper);color:var(--accent);border:1px solid var(--accent)}
+.btn:hover{filter:brightness(1.1)}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px 22px 24px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+article.q{border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;scroll-margin-top:16px}
+.qhead{display:flex;gap:10px;align-items:center}
+.qno{background:var(--accent);color:var(--paper);font-weight:700;border-radius:99px;min-width:2em;height:2em;display:inline-flex;align-items:center;justify-content:center;font-size:.85rem}
+.item{font-size:.82rem;font-weight:700;color:var(--muted);letter-spacing:.03em}
+details summary{cursor:pointer;color:var(--accent);font-weight:700;width:fit-content}
+details summary:hover{text-decoration:underline}
+.sol{margin-top:8px;border-inline-start:4px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0;padding:10px 16px;display:flex;flex-direction:column;gap:6px}
+.sol .ans strong{color:var(--accent)}
+.sol .how{font-weight:700;color:var(--muted);font-size:.92rem}
+.sol ol{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:16px 12px 18px}}
+@media print{
+  body{background:#fff;font-size:12.5pt}
+  .back,nav.pages,nav.toc,.bar{display:none}
+  section.ch{border:0;padding:0}
+  article.q{break-inside:avoid}
+  body:not(.print-solutions) details{display:none}
+  body.print-solutions details summary{display:none}
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+.m .katex{font-size:1.14em;position:relative}
+.m:has(.katex){white-space:normal}
+*:has(> .m .mfrac){line-height:2.15}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html#geometry">→ חזרה לנושא: גאומטריה אוקלידית</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · שאלון 571 · גאומטריה אוקלידית · תרגול</span>
+  <h1>שאלות על דף הנוסחאות</h1>
+  <p class="lead">65 שאלות, אחת לכל נוסחה או יחס ב<a href="geometry-05-formula-sheet.html">דף הנוסחאות</a>, באותו סדר. נסו לפתור לבד ורק אחר כך פתחו את הפתרון. בכל פתרון מופיעים התשובה, דרך הפתרון והמשפט שעליו הוא מבוסס. השאלות מתאימות למיקוד תשפ״ז, ולכן אין בדף שאלות על הנושאים שירדו ממנו.</p>
+  <div class="bar">
+    <button class="btn ghost" type="button" id="openAll">לפתוח את כל הפתרונות</button>
+    <button class="btn ghost" type="button" id="closeAll">לסגור את כל הפתרונות</button>
+    <button class="btn" type="button" id="printQ">הדפסת שאלות בלבד</button>
+    <button class="btn" type="button" id="printS">הדפסה עם פתרונות</button>
+  </div>
+</header>
+
+<nav class="pages" aria-label="דפי הנושא"><a href="geometry-01-loci-triangle-centers.html">1. מקומות גאומטריים ונקודות מיוחדות</a><a href="geometry-02-circle.html">2. המעגל</a><a href="geometry-03-similarity.html">3. פרופורציה ודמיון</a><a href="geometry-04-concepts-theorems.html">4. מושגים ומשפטים</a><a href="geometry-05-formula-sheet.html">5. דף נוסחאות</a><span aria-current="page">6. שאלות על דף הנוסחאות</span></nav>
+
+<nav class="toc" aria-label="תוכן"><strong>תוכן</strong><ol><li><a href="#angles">זוויות</a> <span class="small">(6)</span></li><li><a href="#right">משולש ישר זווית</a> <span class="small">(9)</span></li><li><a href="#equilateral">משולש שווה צלעות</a> <span class="small">(4)</span></li><li><a href="#special">קטעים ונקודות מיוחדות</a> <span class="small">(6)</span></li><li><a href="#quads">מרובעים</a> <span class="small">(5)</span></li><li><a href="#areas">שטחים והיקפים</a> <span class="small">(10)</span></li><li><a href="#ratios">יחסי שטחים</a> <span class="small">(6)</span></li><li><a href="#similarity">פרופורציה ודמיון</a> <span class="small">(7)</span></li><li><a href="#circle">המעגל</a> <span class="small">(9)</span></li><li><a href="#segments">קטעים במעגל</a> <span class="small">(3)</span></li></ol></nav>
+
+<section class="ch" id="angles"><h2>זוויות</h2>
+<article class="q" id="q1">
+  <div class="qhead"><span class="qno">1</span><span class="item">סכום זוויות במשולש</span></div>
+  <p class="qtext">במשולש <span class="m">\(ABC\)</span> נתון <span class="m">\(\angle A = 48^\circ\)</span>, והזווית <span class="m">\(\angle B\)</span> גדולה ב־<span class="m">\(22^\circ\)</span> מ־<span class="m">\(\angle A\)</span>. מצאו את <span class="m">\(\angle C\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(\angle C = 62^\circ\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>מחשבים את <span class="m">\(\angle B\)</span>: <span class="m">\(48^\circ + 22^\circ = 70^\circ\)</span>.</li><li>סכום הזוויות במשולש הוא <span class="m">\(180^\circ\)</span>, ולכן <span class="m">\(\angle C = 180^\circ - 48^\circ - 70^\circ = 62^\circ\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q2">
+  <div class="qhead"><span class="qno">2</span><span class="item">סכום זוויות במרובע</span></div>
+  <p class="qtext">הזוויות של מרובע מתייחסות זו לזו כמו <span class="m">\(2:3:4:6\)</span>. מצאו את הזוויות.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(48^\circ,\ 72^\circ,\ 96^\circ,\ 144^\circ\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>מסמנים את הזוויות <span class="m">\(2x, 3x, 4x, 6x\)</span>. יחד יש <span class="m">\(15x\)</span>.</li><li>סכום הזוויות במרובע הוא <span class="m">\(360^\circ\)</span>: <span class="m">\(15x = 360^\circ\)</span>, ולכן <span class="m">\(x = 24^\circ\)</span>.</li><li>מציבים: <span class="m">\(2\cdot 24 = 48^\circ\)</span>, <span class="m">\(3\cdot24=72^\circ\)</span>, <span class="m">\(4\cdot24=96^\circ\)</span>, <span class="m">\(6\cdot24=144^\circ\)</span>. בדיקה: <span class="m">\(48+72+96+144=360\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q3">
+  <div class="qhead"><span class="qno">3</span><span class="item">סכום זוויות פנימיות במצולע</span></div>
+  <p class="qtext">סכום הזוויות הפנימיות של מצולע הוא <span class="m">\(1440^\circ\)</span>. כמה צלעות יש למצולע?</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(n = 10\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>משתמשים בנוסחה <span class="m">\(180^\circ (n-2)\)</span> ומשווים לסכום הנתון: <span class="m">\(180(n-2) = 1440\)</span>.</li><li>מחלקים ב־180: <span class="m">\(n - 2 = 8\)</span>, ולכן <span class="m">\(n = 10\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q4">
+  <div class="qhead"><span class="qno">4</span><span class="item">זווית במצולע משוכלל</span></div>
+  <p class="qtext">כל זווית פנימית במצולע משוכלל היא <span class="m">\(150^\circ\)</span>. כמה צלעות יש למצולע?</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(n = 12\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>במצולע משוכלל כל הזוויות שוות, ולכן כל זווית היא <span class="m">\(\frac{180(n-2)}{n}\)</span>.</li><li>משווים: <span class="m">\(\frac{180(n-2)}{n} = 150\)</span>. כופלים ב־<span class="m">\(n\)</span>: <span class="m">\(180n - 360 = 150n\)</span>.</li><li>מעבירים אגפים: <span class="m">\(30n = 360\)</span>, ולכן <span class="m">\(n = 12\)</span>.</li><li>דרך קצרה: הזווית החיצונית היא <span class="m">\(180^\circ-150^\circ=30^\circ\)</span>, וסכום הזוויות החיצוניות הוא <span class="m">\(360^\circ\)</span>, ולכן <span class="m">\(n = 360 : 30 = 12\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q5">
+  <div class="qhead"><span class="qno">5</span><span class="item">סכום הזוויות החיצוניות</span></div>
+  <p class="qtext">כל זווית חיצונית במצולע משוכלל היא <span class="m">\(24^\circ\)</span>. כמה צלעות יש למצולע, ומהי הזווית הפנימית שלו?</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(n = 15,\ \ 156^\circ\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>סכום הזוויות החיצוניות בכל מצולע הוא <span class="m">\(360^\circ\)</span>, ובמצולע משוכלל הן שוות זו לזו.</li><li>לכן מספר הצלעות הוא <span class="m">\(360 : 24 = 15\)</span>.</li><li>זווית פנימית וזווית חיצונית באותו קודקוד צמודות, ולכן הזווית הפנימית היא <span class="m">\(180^\circ - 24^\circ = 156^\circ\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q6">
+  <div class="qhead"><span class="qno">6</span><span class="item">זווית חיצונית למשולש</span></div>
+  <p class="qtext">במשולש <span class="m">\(ABC\)</span> הזווית החיצונית ליד הקודקוד <span class="m">\(C\)</span> היא <span class="m">\(115^\circ\)</span>. נתון <span class="m">\(\angle A = 3x\)</span> ו־<span class="m">\(\angle B = 2x + 15^\circ\)</span>. מצאו את שלוש זוויות המשולש.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(\angle A = 60^\circ,\ \angle B = 55^\circ,\ \angle C = 65^\circ\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>הזווית החיצונית שווה לסכום שתי הזוויות הפנימיות שלא צמודות לה: <span class="m">\(3x + 2x + 15 = 115\)</span>.</li><li>פותרים: <span class="m">\(5x = 100\)</span>, ולכן <span class="m">\(x = 20\)</span>. מכאן <span class="m">\(\angle A = 60^\circ\)</span> ו־<span class="m">\(\angle B = 55^\circ\)</span>.</li><li><span class="m">\(\angle C\)</span> צמודה לזווית החיצונית: <span class="m">\(\angle C = 180^\circ - 115^\circ = 65^\circ\)</span>. בדיקה: <span class="m">\(60+55+65=180\)</span>.</li></ol></div>
+  </details>
+</article>
+</section>
+<section class="ch" id="right"><h2>משולש ישר זווית</h2>
+<article class="q" id="q7">
+  <div class="qhead"><span class="qno">7</span><span class="item">משפט פיתגורס</span></div>
+  <p class="qtext">במשולש ישר זווית היתר הוא 26 ואחד הניצבים הוא 10. מצאו את הניצב השני ואת היקף המשולש.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(b = 24,\ \ P = 60\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>לפי פיתגורס <span class="m">\(a^2 + b^2 = c^2\)</span>: <span class="m">\(10^2 + b^2 = 26^2\)</span>.</li><li><span class="m">\(b^2 = 676 - 100 = 576\)</span>, ולכן <span class="m">\(b = 24\)</span> (אורך הוא חיובי).</li><li>ההיקף: <span class="m">\(10 + 24 + 26 = 60\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q8">
+  <div class="qhead"><span class="qno">8</span><span class="item">תיכון ליתר</span></div>
+  <p class="qtext">במשולש <span class="m">\(ABC\)</span> הזווית <span class="m">\(C\)</span> ישרה. התיכון <span class="m">\(CM\)</span> ליתר שווה ל־7.5, ונתון <span class="m">\(AC = 9\)</span>. מצאו את <span class="m">\(BC\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(BC = 12\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>במשולש ישר זווית התיכון ליתר שווה למחצית היתר. לכן <span class="m">\(AB = 2 \cdot 7.5 = 15\)</span>.</li><li>לפי פיתגורס: <span class="m">\(BC^2 = 15^2 - 9^2 = 225 - 81 = 144\)</span>, ולכן <span class="m">\(BC = 12\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q9">
+  <div class="qhead"><span class="qno">9</span><span class="item">גובה ליתר</span></div>
+  <p class="qtext">הניצבים של משולש ישר זווית הם 15 ו־20. מצאו את הגובה ליתר.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(h = 12\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>מחשבים את היתר לפי פיתגורס: <span class="m">\(c = \sqrt{15^2+20^2} = \sqrt{625} = 25\)</span>.</li><li>את השטח אפשר לחשב בשתי דרכים: <span class="m">\(\frac{a\cdot b}{2} = \frac{c\cdot h}{2}\)</span>. מכאן <span class="m">\(h = \frac{ab}{c}\)</span>.</li><li><span class="m">\(h = \frac{15\cdot 20}{25} = \frac{300}{25} = 12\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q10">
+  <div class="qhead"><span class="qno">10</span><span class="item">גובה ליתר והיטלים</span></div>
+  <p class="qtext">הגובה ליתר במשולש ישר זווית מחלק את היתר לקטעים באורך 4 ו־9. מצאו את הגובה ואת שטח המשולש.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(h = 6,\ \ S = 39\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>הגובה ליתר יוצר שני משולשים דומים, ומהדמיון מתקבל <span class="m">\(h^2 = p \cdot q\)</span>.</li><li><span class="m">\(h^2 = 4 \cdot 9 = 36\)</span>, ולכן <span class="m">\(h = 6\)</span>.</li><li>היתר הוא <span class="m">\(4 + 9 = 13\)</span>, ולכן השטח הוא <span class="m">\(\frac{13 \cdot 6}{2} = 39\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q11">
+  <div class="qhead"><span class="qno">11</span><span class="item">ניצב והיטלו</span></div>
+  <p class="qtext">היתר של משולש ישר זווית הוא 25. ההיטל של הניצב <span class="m">\(a\)</span> על היתר הוא 9. מצאו את שני הניצבים.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(a = 15,\ \ b = 20\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>ניצב בריבוע שווה למכפלת היתר בהיטל של אותו ניצב: <span class="m">\(a^2 = c \cdot p = 25 \cdot 9 = 225\)</span>, ולכן <span class="m">\(a = 15\)</span>.</li><li>ההיטל של הניצב השני הוא <span class="m">\(q = 25 - 9 = 16\)</span>, ולכן <span class="m">\(b^2 = 25 \cdot 16 = 400\)</span> ו־<span class="m">\(b = 20\)</span>.</li><li>בדיקה בפיתגורס: <span class="m">\(15^2 + 20^2 = 225 + 400 = 625 = 25^2\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q12">
+  <div class="qhead"><span class="qno">12</span><span class="item">משולש 30°-60°-90°</span></div>
+  <p class="qtext">במשולש ישר זווית אחת הזוויות היא <span class="m">\(30^\circ\)</span> והיתר הוא 14. מצאו את הניצבים ואת השטח.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(7,\ \ 7\sqrt3,\ \ S = \frac{49\sqrt3}{2}\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>הניצב שמול זווית של <span class="m">\(30^\circ\)</span> שווה למחצית היתר: <span class="m">\(14 : 2 = 7\)</span>.</li><li>היחס בין הצלעות הוא <span class="m">\(x : x\sqrt3 : 2x\)</span> עם <span class="m">\(x = 7\)</span>, ולכן הניצב השני הוא <span class="m">\(7\sqrt3\)</span>. (אפשר גם בפיתגורס: <span class="m">\(\sqrt{14^2 - 7^2} = \sqrt{147} = 7\sqrt3\)</span>.)</li><li>השטח הוא מחצית מכפלת הניצבים: <span class="m">\(\frac{7 \cdot 7\sqrt3}{2} = \frac{49\sqrt3}{2}\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q13">
+  <div class="qhead"><span class="qno">13</span><span class="item">משולש 45°-45°-90°</span></div>
+  <p class="qtext">היתר של משולש ישר זווית ושווה שוקיים הוא 10. מצאו את הניצבים ואת השטח.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(5\sqrt2,\ \ S = 25\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>במשולש ישר זווית ושווה שוקיים היחס בין הצלעות הוא <span class="m">\(x : x : x\sqrt2\)</span>.</li><li><span class="m">\(x\sqrt2 = 10\)</span>, ולכן <span class="m">\(x = \frac{10}{\sqrt2} = 5\sqrt2\)</span>.</li><li>השטח: <span class="m">\(\frac{5\sqrt2 \cdot 5\sqrt2}{2} = \frac{50}{2} = 25\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q14">
+  <div class="qhead"><span class="qno">14</span><span class="item">רדיוס המעגל החוסם משולש ישר זווית</span></div>
+  <p class="qtext">הניצבים של משולש ישר זווית הם 7 ו־24. מצאו את רדיוס המעגל החוסם את המשולש.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(R = 12.5\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>היתר: <span class="m">\(c = \sqrt{7^2 + 24^2} = \sqrt{625} = 25\)</span>.</li><li>הזווית הישרה היא זווית היקפית, ולכן היא נשענת על קוטר. כלומר היתר הוא קוטר המעגל החוסם, ומרכז המעגל הוא אמצע היתר.</li><li><span class="m">\(R = \frac{c}{2} = 12.5\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q15">
+  <div class="qhead"><span class="qno">15</span><span class="item">רדיוס המעגל החסום במשולש ישר זווית</span></div>
+  <p class="qtext">הניצבים של משולש ישר זווית הם 7 ו־24. מצאו את רדיוס המעגל החסום במשולש.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(r = 3\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>היתר הוא 25 (ראו השאלה הקודמת). לפי הנוסחה <span class="m">\(r = \frac{a+b-c}{2} = \frac{7 + 24 - 25}{2} = 3\)</span>.</li><li>למה הנוסחה נכונה: המשיקים מקודקוד הזווית הישרה שווים ל־<span class="m">\(r\)</span>, ולכן המשיקים מהקודקודים האחרים הם <span class="m">\(a-r\)</span> ו־<span class="m">\(b-r\)</span>, וסכומם הוא היתר: <span class="m">\((a-r)+(b-r)=c\)</span>.</li><li>בדיקה בדרך אחרת: <span class="m">\(r = \frac{2S}{P} = \frac{2 \cdot 84}{56} = 3\)</span>.</li></ol></div>
+  </details>
+</article>
+</section>
+<section class="ch" id="equilateral"><h2>משולש שווה צלעות</h2>
+<article class="q" id="q16">
+  <div class="qhead"><span class="qno">16</span><span class="item">גובה במשולש שווה צלעות</span></div>
+  <p class="qtext">צלע של משולש שווה צלעות היא 8. מצאו את הגובה.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(h = 4\sqrt3\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>הגובה הוא גם תיכון, ולכן הוא מחלק את הבסיס לשני חצאים של 4.</li><li>בפיתגורס במשולש ישר הזווית שנוצר: <span class="m">\(h = \sqrt{8^2 - 4^2} = \sqrt{48} = 4\sqrt3\)</span>.</li><li>זה מתאים לנוסחה <span class="m">\(h = \frac{a\sqrt3}{2} = \frac{8\sqrt3}{2}\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q17">
+  <div class="qhead"><span class="qno">17</span><span class="item">שטח משולש שווה צלעות</span></div>
+  <p class="qtext">שטח של משולש שווה צלעות הוא <span class="m">\(25\sqrt3\)</span>. מצאו את היקף המשולש.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(P = 30\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>מציבים בנוסחה <span class="m">\(S = \frac{a^2\sqrt3}{4}\)</span>: <span class="m">\(\frac{a^2 \sqrt3}{4} = 25\sqrt3\)</span>.</li><li>מחלקים ב־<span class="m">\(\sqrt3\)</span> וכופלים ב־4: <span class="m">\(a^2 = 100\)</span>, ולכן <span class="m">\(a = 10\)</span>.</li><li>ההיקף: <span class="m">\(3 \cdot 10 = 30\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q18">
+  <div class="qhead"><span class="qno">18</span><span class="item">רדיוס המעגל החוסם משולש שווה צלעות</span></div>
+  <p class="qtext">צלע של משולש שווה צלעות היא <span class="m">\(6\sqrt3\)</span>. מצאו את רדיוס המעגל החוסם.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(R = 6\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>במשולש שווה צלעות כל הנקודות המיוחדות מתלכדות, ומרכז המעגל החוסם הוא גם מפגש התיכונים. לכן <span class="m">\(R = \frac{2}{3}h\)</span>.</li><li>הגובה: <span class="m">\(h = \frac{6\sqrt3 \cdot \sqrt3}{2} = \frac{18}{2} = 9\)</span>.</li><li><span class="m">\(R = \frac{2}{3} \cdot 9 = 6\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q19">
+  <div class="qhead"><span class="qno">19</span><span class="item">רדיוס המעגל החסום במשולש שווה צלעות</span></div>
+  <p class="qtext">רדיוס המעגל החסום במשולש שווה צלעות הוא 2. מצאו את צלע המשולש.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(a = 4\sqrt3\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>מרכז המעגל החסום הוא מפגש התיכונים, שמחלק את הגובה ביחס <span class="m">\(2:1\)</span>. הרדיוס הוא החלק הקטן, ולכן <span class="m">\(r = \frac{1}{3}h\)</span>.</li><li><span class="m">\(h = 3 \cdot 2 = 6\)</span>.</li><li>מ־<span class="m">\(h = \frac{a\sqrt3}{2}\)</span>: <span class="m">\(a = \frac{2h}{\sqrt3} = \frac{12}{\sqrt3} = 4\sqrt3\)</span>.</li></ol></div>
+  </details>
+</article>
+</section>
+<section class="ch" id="special"><h2>קטעים ונקודות מיוחדות</h2>
+<article class="q" id="q20">
+  <div class="qhead"><span class="qno">20</span><span class="item">מפגש התיכונים</span></div>
+  <p class="qtext">במשולש <span class="m">\(ABC\)</span> הנקודה <span class="m">\(G\)</span> היא מפגש התיכונים, ו־<span class="m">\(AD\)</span> תיכון באורך 18. מצאו את <span class="m">\(AG\)</span> ואת <span class="m">\(GD\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(AG = 12,\ \ GD = 6\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>מפגש התיכונים מחלק כל תיכון ביחס <span class="m">\(2:1\)</span>, כשהחלק הגדול צמוד לקודקוד.</li><li>התיכון מחולק ל־3 חלקים שווים של <span class="m">\(18 : 3 = 6\)</span>. לכן <span class="m">\(AG = 2 \cdot 6 = 12\)</span> ו־<span class="m">\(GD = 6\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q21">
+  <div class="qhead"><span class="qno">21</span><span class="item">קטע אמצעים במשולש</span></div>
+  <p class="qtext">אורכי הצלעות של משולש הם 10, 14 ו־18. מחברים את אמצעי הצלעות. מהו היקף המשולש שנוצר?</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(P = 21\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>כל אחד מהקטעים הוא קטע אמצעים, ולכן הוא שווה למחצית הצלע שמקבילה לו: 5, 7 ו־9.</li><li>ההיקף: <span class="m">\(5 + 7 + 9 = 21\)</span>, כלומר מחצית מההיקף של המשולש המקורי (<span class="m">\(42\)</span>).</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q22">
+  <div class="qhead"><span class="qno">22</span><span class="item">קטע אמצעים בטרפז</span></div>
+  <p class="qtext">קטע האמצעים של טרפז הוא 13, והבסיס הקטן הוא 8. מצאו את הבסיס הגדול.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(18\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>קטע האמצעים בטרפז שווה למחצית סכום הבסיסים: <span class="m">\(\frac{8 + x}{2} = 13\)</span>.</li><li><span class="m">\(8 + x = 26\)</span>, ולכן <span class="m">\(x = 18\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q23">
+  <div class="qhead"><span class="qno">23</span><span class="item">רדיוס המעגל החסום בכל משולש</span></div>
+  <p class="qtext">אורכי הצלעות של משולש הם 13, 14 ו־15, והגובה לצלע 14 הוא 12. מצאו את רדיוס המעגל החסום.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(r = 4\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>שטח המשולש: <span class="m">\(S = \frac{14 \cdot 12}{2} = 84\)</span>. ההיקף: <span class="m">\(13+14+15=42\)</span>.</li><li>מחברים את מרכז המעגל החסום לשלושת הקודקודים ומקבלים שלושה משולשים שהגובה בכולם הוא <span class="m">\(r\)</span>. לכן <span class="m">\(S = \frac{r \cdot P}{2}\)</span>, ומכאן <span class="m">\(r = \frac{2S}{P}\)</span>.</li><li><span class="m">\(r = \frac{2 \cdot 84}{42} = 4\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q24">
+  <div class="qhead"><span class="qno">24</span><span class="item">מרכז המעגל החוסם</span></div>
+  <p class="qtext">במשולש <span class="m">\(ABC\)</span> האנכים האמצעיים של <span class="m">\(AB\)</span> ושל <span class="m">\(AC\)</span> נפגשים בנקודה <span class="m">\(O\)</span>, ו־<span class="m">\(OA = 7\)</span>. מצאו את <span class="m">\(OB\)</span> ואת <span class="m">\(OC\)</span>, והסבירו למה גם האנך האמצעי של <span class="m">\(BC\)</span> עובר דרך <span class="m">\(O\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(OB = OC = 7\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>כל נקודה על האנך האמצעי של קטע נמצאת במרחקים שווים מקצות הקטע. <span class="m">\(O\)</span> על האנך האמצעי של <span class="m">\(AB\)</span>, ולכן <span class="m">\(OB = OA = 7\)</span>. <span class="m">\(O\)</span> על האנך האמצעי של <span class="m">\(AC\)</span>, ולכן <span class="m">\(OC = OA = 7\)</span>.</li><li>מכאן <span class="m">\(OB = OC\)</span>. לפי המשפט ההפוך, נקודה שנמצאת במרחקים שווים מקצות קטע נמצאת על האנך האמצעי שלו, ולכן <span class="m">\(O\)</span> על האנך האמצעי של <span class="m">\(BC\)</span>.</li><li><span class="m">\(O\)</span> נמצאת במרחק 7 מכל הקודקודים, ולכן היא מרכז המעגל החוסם, והרדיוס שלו הוא 7.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q25">
+  <div class="qhead"><span class="qno">25</span><span class="item">מרכז המעגל החסום</span></div>
+  <p class="qtext">במשולש <span class="m">\(ABC\)</span> נתון <span class="m">\(\angle A = 70^\circ\)</span>. הנקודה <span class="m">\(I\)</span> היא מפגש חוצי הזוויות. מצאו את <span class="m">\(\angle BIC\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(\angle BIC = 125^\circ\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>סכום שתי הזוויות האחרות: <span class="m">\(\angle B + \angle C = 180^\circ - 70^\circ = 110^\circ\)</span>.</li><li><span class="m">\(BI\)</span> ו־<span class="m">\(CI\)</span> חוצים את הזוויות, ולכן <span class="m">\(\angle IBC + \angle ICB = 110^\circ : 2 = 55^\circ\)</span>.</li><li>במשולש <span class="m">\(BIC\)</span>: <span class="m">\(\angle BIC = 180^\circ - 55^\circ = 125^\circ\)</span>. באופן כללי <span class="m">\(\angle BIC = 90^\circ + \frac{\angle A}{2}\)</span>.</li></ol></div>
+  </details>
+</article>
+</section>
+<section class="ch" id="quads"><h2>מרובעים</h2>
+<article class="q" id="q26">
+  <div class="qhead"><span class="qno">26</span><span class="item">אלכסון במלבן</span></div>
+  <p class="qtext">צלעות של מלבן הן 5 ו־12. מצאו את אורך האלכסון.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(d = 13\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>האלכסון מחלק את המלבן לשני משולשים ישרי זווית, והוא היתר שלהם.</li><li><span class="m">\(d = \sqrt{5^2 + 12^2} = \sqrt{169} = 13\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q27">
+  <div class="qhead"><span class="qno">27</span><span class="item">אלכסון בריבוע</span></div>
+  <p class="qtext">האלכסון של ריבוע הוא 8. מצאו את צלע הריבוע ואת שטחו.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(a = 4\sqrt2,\ \ S = 32\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li><span class="m">\(d = a\sqrt2\)</span>, ולכן <span class="m">\(a = \frac{8}{\sqrt2} = 4\sqrt2\)</span>.</li><li>השטח: <span class="m">\(a^2 = (4\sqrt2)^2 = 32\)</span>. בדרך אחרת: <span class="m">\(S = \frac{d^2}{2} = \frac{64}{2} = 32\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q28">
+  <div class="qhead"><span class="qno">28</span><span class="item">צלע במעוין לפי האלכסונים</span></div>
+  <p class="qtext">האלכסונים של מעוין הם 10 ו־24. מצאו את צלע המעוין ואת היקפו.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(a = 13,\ \ P = 52\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>במעוין האלכסונים חוצים זה את זה ומאונכים זה לזה, ולכן הם יוצרים ארבעה משולשים ישרי זווית חופפים עם ניצבים <span class="m">\(5\)</span> ו־<span class="m">\(12\)</span>.</li><li>הצלע היא היתר: <span class="m">\(a = \sqrt{5^2 + 12^2} = 13\)</span>.</li><li>ההיקף: <span class="m">\(4 \cdot 13 = 52\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q29">
+  <div class="qhead"><span class="qno">29</span><span class="item">זוויות סמוכות במקבילית</span></div>
+  <p class="qtext">במקבילית <span class="m">\(ABCD\)</span> הזווית <span class="m">\(\angle A\)</span> גדולה ב־<span class="m">\(40^\circ\)</span> מ־<span class="m">\(\angle B\)</span>. מצאו את כל זוויות המקבילית.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(\angle A = \angle C = 110^\circ,\ \ \angle B = \angle D = 70^\circ\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>צלעות נגדיות במקבילית מקבילות, ולכן הזוויות הסמוכות <span class="m">\(A\)</span> ו־<span class="m">\(B\)</span> הן זוויות חד־צדדיות וסכומן <span class="m">\(180^\circ\)</span>.</li><li><span class="m">\(x + 40 + x = 180\)</span>, ולכן <span class="m">\(x = 70^\circ\)</span>: <span class="m">\(\angle B = 70^\circ\)</span> ו־<span class="m">\(\angle A = 110^\circ\)</span>.</li><li>במקבילית זוויות נגדיות שוות: <span class="m">\(\angle C = 110^\circ\)</span>, <span class="m">\(\angle D = 70^\circ\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q30">
+  <div class="qhead"><span class="qno">30</span><span class="item">זוויות נגדיות במרובע חסום</span></div>
+  <p class="qtext">המרובע <span class="m">\(ABCD\)</span> חסום במעגל. נתון <span class="m">\(\angle A = 3x\)</span>, <span class="m">\(\angle C = x + 20^\circ\)</span> ו־<span class="m">\(\angle B = 85^\circ\)</span>. מצאו את <span class="m">\(\angle A\)</span>, <span class="m">\(\angle C\)</span> ו־<span class="m">\(\angle D\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(\angle A = 120^\circ,\ \angle C = 60^\circ,\ \angle D = 95^\circ\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>במרובע חסום במעגל סכום כל שתי זוויות נגדיות הוא <span class="m">\(180^\circ\)</span>: <span class="m">\(3x + x + 20 = 180\)</span>.</li><li><span class="m">\(4x = 160\)</span>, ולכן <span class="m">\(x = 40\)</span>: <span class="m">\(\angle A = 120^\circ\)</span>, <span class="m">\(\angle C = 60^\circ\)</span>.</li><li>גם <span class="m">\(B\)</span> ו־<span class="m">\(D\)</span> נגדיות: <span class="m">\(\angle D = 180^\circ - 85^\circ = 95^\circ\)</span>.</li></ol></div>
+  </details>
+</article>
+</section>
+<section class="ch" id="areas"><h2>שטחים והיקפים</h2>
+<article class="q" id="q31">
+  <div class="qhead"><span class="qno">31</span><span class="item">שטח משולש</span></div>
+  <p class="qtext">שטח של משולש הוא 54, ואחת הצלעות שלו היא 12. מצאו את הגובה לצלע זו.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(h = 9\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li><span class="m">\(S = \frac{a \cdot h_a}{2}\)</span>: <span class="m">\(\frac{12 \cdot h}{2} = 54\)</span>.</li><li><span class="m">\(6h = 54\)</span>, ולכן <span class="m">\(h = 9\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q32">
+  <div class="qhead"><span class="qno">32</span><span class="item">שטח משולש ישר זווית</span></div>
+  <p class="qtext">הניצבים של משולש ישר זווית הם 9 ו־12. מצאו את השטח ואת הגובה ליתר.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(S = 54,\ \ h = 7.2\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>השטח לפי הניצבים: <span class="m">\(\frac{9 \cdot 12}{2} = 54\)</span>.</li><li>היתר: <span class="m">\(\sqrt{81 + 144} = 15\)</span>.</li><li>השטח לפי היתר והגובה אליו: <span class="m">\(\frac{15 \cdot h}{2} = 54\)</span>, ולכן <span class="m">\(h = \frac{108}{15} = 7.2\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q33">
+  <div class="qhead"><span class="qno">33</span><span class="item">שטח מקבילית</span></div>
+  <p class="qtext">צלעות של מקבילית הן 10 ו־6, והגובה לצלע 10 הוא 4.8. מצאו את השטח ואת הגובה לצלע 6.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(S = 48,\ \ h_6 = 8\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li><span class="m">\(S = a \cdot h_a = 10 \cdot 4.8 = 48\)</span>.</li><li>אותו שטח מחושב גם עם הצלע השנייה: <span class="m">\(6 \cdot h_6 = 48\)</span>, ולכן <span class="m">\(h_6 = 8\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q34">
+  <div class="qhead"><span class="qno">34</span><span class="item">שטח מלבן</span></div>
+  <p class="qtext">היקף של מלבן הוא 34 ושטחו 60. מצאו את צלעות המלבן.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(5,\ 12\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>מסמנים את הצלעות <span class="m">\(a\)</span> ו־<span class="m">\(b\)</span>. מההיקף: <span class="m">\(2(a+b) = 34\)</span>, כלומר <span class="m">\(a + b = 17\)</span>. מהשטח: <span class="m">\(ab = 60\)</span>.</li><li>מציבים <span class="m">\(b = 17 - a\)</span>: <span class="m">\(a(17 - a) = 60\)</span>, כלומר <span class="m">\(a^2 - 17a + 60 = 0\)</span>.</li><li>הפתרונות הם <span class="m">\(a = 5\)</span> או <span class="m">\(a = 12\)</span>. בשני המקרים הצלעות הן 5 ו־12.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q35">
+  <div class="qhead"><span class="qno">35</span><span class="item">שטח ריבוע לפי האלכסון</span></div>
+  <p class="qtext">האלכסון של ריבוע הוא 6. מצאו את שטח הריבוע.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(S = 18\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>ריבוע הוא גם מעוין, ולכן שטחו הוא מחצית מכפלת האלכסונים. שני האלכסונים שווים: <span class="m">\(S = \frac{d^2}{2} = \frac{36}{2} = 18\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q36">
+  <div class="qhead"><span class="qno">36</span><span class="item">שטח מעוין</span></div>
+  <p class="qtext">האלכסונים של מעוין הם 12 ו־16. מצאו את שטח המעוין, את הצלע ואת הגובה.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(S = 96,\ a = 10,\ h = 9.6\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>באלכסונים מאונכים: <span class="m">\(S = \frac{d_1 d_2}{2} = \frac{12 \cdot 16}{2} = 96\)</span>.</li><li>הצלע: <span class="m">\(\sqrt{6^2 + 8^2} = 10\)</span>.</li><li>מעוין הוא מקבילית, ולכן גם <span class="m">\(S = a \cdot h\)</span>: <span class="m">\(10h = 96\)</span>, ולכן <span class="m">\(h = 9.6\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q37">
+  <div class="qhead"><span class="qno">37</span><span class="item">שטח טרפז</span></div>
+  <p class="qtext">הבסיסים של טרפז הם 7 ו־15, והגובה הוא 6. מצאו את שטח הטרפז.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(S = 66\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li><span class="m">\(S = \frac{(a+b)h}{2} = \frac{(7 + 15)\cdot 6}{2} = 66\)</span>.</li><li>אפשר גם לחשב קטע אמצעים כפול גובה: קטע האמצעים הוא <span class="m">\(11\)</span>, ו־<span class="m">\(11 \cdot 6 = 66\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q38">
+  <div class="qhead"><span class="qno">38</span><span class="item">עיגול והיקף מעגל</span></div>
+  <p class="qtext">היקף של מעגל הוא <span class="m">\(10\pi\)</span>. מצאו את שטח העיגול.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(S = 25\pi\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li><span class="m">\(2\pi r = 10\pi\)</span>, ולכן <span class="m">\(r = 5\)</span>.</li><li><span class="m">\(S = \pi r^2 = 25\pi\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q39">
+  <div class="qhead"><span class="qno">39</span><span class="item">אורך קשת</span></div>
+  <p class="qtext">במעגל שרדיוסו 9 יש זווית מרכזית של <span class="m">\(80^\circ\)</span>. מצאו את אורך הקשת שהיא נשענת עליה.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(\ell = 4\pi\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>הקשת היא חלק מההיקף ביחס הזווית ל־<span class="m">\(360^\circ\)</span>: <span class="m">\(\ell = 2\pi r \cdot \frac{\alpha}{360^\circ}\)</span>.</li><li><span class="m">\(\ell = 18\pi \cdot \frac{80}{360} = 18\pi \cdot \frac{2}{9} = 4\pi\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q40">
+  <div class="qhead"><span class="qno">40</span><span class="item">שטח גזרה</span></div>
+  <p class="qtext">מצאו את שטח הגזרה במעגל שרדיוסו 6 עם זווית מרכזית של <span class="m">\(120^\circ\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(S = 12\pi\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li><span class="m">\(S = \pi r^2 \cdot \frac{\alpha}{360^\circ} = 36\pi \cdot \frac{120}{360} = 36\pi \cdot \frac13 = 12\pi\)</span>.</li></ol></div>
+  </details>
+</article>
+</section>
+<section class="ch" id="ratios"><h2>יחסי שטחים</h2>
+<article class="q" id="q41">
+  <div class="qhead"><span class="qno">41</span><span class="item">משולשים עם גובה משותף</span></div>
+  <p class="qtext">במשולש <span class="m">\(ABC\)</span> הנקודה <span class="m">\(D\)</span> על <span class="m">\(BC\)</span> כך ש־<span class="m">\(BD : DC = 2 : 3\)</span>. שטח המשולש <span class="m">\(ABC\)</span> הוא 40. מצאו את השטחים של <span class="m">\(ABD\)</span> ושל <span class="m">\(ADC\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(S_{ABD} = 16,\ \ S_{ADC} = 24\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>לשני המשולשים יש אותו גובה מ־<span class="m">\(A\)</span> לישר <span class="m">\(BC\)</span>, ולכן היחס בין השטחים שווה ליחס בין הבסיסים: <span class="m">\(2 : 3\)</span>.</li><li>יש 5 חלקים של <span class="m">\(40 : 5 = 8\)</span>. לכן <span class="m">\(S_{ABD} = 16\)</span> ו־<span class="m">\(S_{ADC} = 24\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q42">
+  <div class="qhead"><span class="qno">42</span><span class="item">תיכון מחלק לשני חלקים שווי שטח</span></div>
+  <p class="qtext"><span class="m">\(AM\)</span> תיכון במשולש <span class="m">\(ABC\)</span>, ושטח המשולש <span class="m">\(ABM\)</span> הוא 18. מצאו את שטח המשולש <span class="m">\(ABC\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(S_{ABC} = 36\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li><span class="m">\(BM = MC\)</span>, ולמשולשים <span class="m">\(ABM\)</span> ו־<span class="m">\(AMC\)</span> יש אותו גובה מ־<span class="m">\(A\)</span>. לכן השטחים שלהם שווים.</li><li><span class="m">\(S_{ABC} = 2 \cdot 18 = 36\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q43">
+  <div class="qhead"><span class="qno">43</span><span class="item">שלושת התיכונים</span></div>
+  <p class="qtext">שטח המשולש <span class="m">\(ABC\)</span> הוא 48, ו־<span class="m">\(G\)</span> מפגש התיכונים. מצאו את שטח המשולש <span class="m">\(GBC\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(S_{GBC} = 16\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>שלושת התיכונים מחלקים את המשולש לשישה משולשים שווי שטח, כל אחד <span class="m">\(48 : 6 = 8\)</span>.</li><li>המשולש <span class="m">\(GBC\)</span> מורכב משניים מהם: <span class="m">\(2 \cdot 8 = 16\)</span>, כלומר שליש משטח המשולש.</li><li>דרך נוספת: <span class="m">\(GD = \frac13 AD\)</span>, ולכן הגובה מ־<span class="m">\(G\)</span> ל־<span class="m">\(BC\)</span> הוא שליש מהגובה מ־<span class="m">\(A\)</span>, והשטח הוא שליש.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q44">
+  <div class="qhead"><span class="qno">44</span><span class="item">בסיס משותף וקודקודים על ישר מקביל</span></div>
+  <p class="qtext">בטרפז <span class="m">\(ABCD\)</span> (<span class="m">\(AB \parallel CD\)</span>) האלכסונים נחתכים בנקודה <span class="m">\(O\)</span>. שטח המשולש <span class="m">\(AOD\)</span> הוא 10. מצאו את שטח המשולש <span class="m">\(BOC\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(S_{BOC} = 10\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>למשולשים <span class="m">\(ADC\)</span> ו־<span class="m">\(BDC\)</span> יש בסיס משותף <span class="m">\(DC\)</span>, והקודקודים <span class="m">\(A\)</span> ו־<span class="m">\(B\)</span> נמצאים על ישר שמקביל לבסיס. לכן הגבהים שלהם שווים, והם שווי שטח.</li><li>מורידים משניהם את המשולש המשותף <span class="m">\(DOC\)</span>: <span class="m">\(S_{AOD} = S_{ADC} - S_{DOC} = S_{BDC} - S_{DOC} = S_{BOC}\)</span>.</li><li>לכן <span class="m">\(S_{BOC} = 10\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q45">
+  <div class="qhead"><span class="qno">45</span><span class="item">יחס שטחים במשולשים דומים</span></div>
+  <p class="qtext">במשולש <span class="m">\(ABC\)</span> הקטע <span class="m">\(DE\)</span> מקביל ל־<span class="m">\(BC\)</span> (<span class="m">\(D\)</span> על <span class="m">\(AB\)</span>, <span class="m">\(E\)</span> על <span class="m">\(AC\)</span>), ו־<span class="m">\(AD : DB = 2 : 3\)</span>. שטח המשולש <span class="m">\(ABC\)</span> הוא 75. מצאו את שטח המשולש <span class="m">\(ADE\)</span> ואת שטח הטרפז <span class="m">\(DBCE\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(S_{ADE} = 12,\ \ S_{DBCE} = 63\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li><span class="m">\(DE \parallel BC\)</span>, ולכן <span class="m">\(\triangle ADE \sim \triangle ABC\)</span> (ז.ז: זוויות מתאימות).</li><li>יחס הדמיון הוא <span class="m">\(k = \frac{AD}{AB} = \frac{2}{5}\)</span>. שימו לב: מחלקים בצלע כולה, <span class="m">\(AB = 2 + 3\)</span>.</li><li>יחס השטחים הוא <span class="m">\(k^2 = \frac{4}{25}\)</span>, ולכן <span class="m">\(S_{ADE} = 75 \cdot \frac{4}{25} = 12\)</span>.</li><li>הטרפז: <span class="m">\(75 - 12 = 63\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q46">
+  <div class="qhead"><span class="qno">46</span><span class="item">המשולש שקטעי האמצעים יוצרים</span></div>
+  <p class="qtext">שטח של משולש הוא 60. מחברים את אמצעי הצלעות. מה שטח המשולש שנוצר?</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(15\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>כל צלע של המשולש החדש היא קטע אמצעים, ולכן היא מחצית הצלע המקבילה לה. המשולש החדש דומה למשולש המקורי (צ.צ.צ) ביחס <span class="m">\(k = \frac12\)</span>.</li><li>יחס השטחים הוא <span class="m">\(k^2 = \frac14\)</span>, ולכן השטח הוא <span class="m">\(60 : 4 = 15\)</span>.</li><li>קטעי האמצעים מחלקים את המשולש לארבעה משולשים חופפים, וכל אחד מהם שווה ברבע מהשטח.</li></ol></div>
+  </details>
+</article>
+</section>
+<section class="ch" id="similarity"><h2>פרופורציה ודמיון</h2>
+<article class="q" id="q47">
+  <div class="qhead"><span class="qno">47</span><span class="item">משפט תאלס</span></div>
+  <p class="qtext">במשולש <span class="m">\(ABC\)</span> הקטע <span class="m">\(DE\)</span> מקביל ל־<span class="m">\(BC\)</span>, <span class="m">\(AD = 6\)</span>, <span class="m">\(DB = 4\)</span> ו־<span class="m">\(AE = 9\)</span>. מצאו את <span class="m">\(EC\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(EC = 6\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>לפי משפט תאלס, מקבילים חותכים על שוקי הזווית קטעים פרופורציוניים: <span class="m">\(\frac{AD}{DB} = \frac{AE}{EC}\)</span>.</li><li><span class="m">\(\frac{6}{4} = \frac{9}{EC}\)</span>, ולכן <span class="m">\(EC = \frac{4 \cdot 9}{6} = 6\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q48">
+  <div class="qhead"><span class="qno">48</span><span class="item">משפט תאלס המורחב</span></div>
+  <p class="qtext">במשולש <span class="m">\(ABC\)</span> הקטע <span class="m">\(DE\)</span> מקביל ל־<span class="m">\(BC\)</span>, <span class="m">\(AD = 6\)</span>, <span class="m">\(AB = 10\)</span> ו־<span class="m">\(BC = 15\)</span>. מצאו את <span class="m">\(DE\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(DE = 9\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>ביחס עם הקטעים המקבילים משתמשים בשוק כולה: <span class="m">\(\frac{DE}{BC} = \frac{AD}{AB}\)</span>.</li><li><span class="m">\(\frac{DE}{15} = \frac{6}{10}\)</span>, ולכן <span class="m">\(DE = 9\)</span>.</li><li>טעות נפוצה: לכתוב <span class="m">\(\frac{AD}{DB}\)</span>. כך מקבלים <span class="m">\(DE = 22.5\)</span>, יותר מ־<span class="m">\(BC\)</span>, וזה לא ייתכן.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q49">
+  <div class="qhead"><span class="qno">49</span><span class="item">משפט חוצה הזווית</span></div>
+  <p class="qtext">במשולש <span class="m">\(ABC\)</span> נתון <span class="m">\(AB = 12\)</span>, <span class="m">\(AC = 8\)</span> ו־<span class="m">\(BC = 15\)</span>. <span class="m">\(AD\)</span> חוצה את הזווית <span class="m">\(A\)</span> (<span class="m">\(D\)</span> על <span class="m">\(BC\)</span>). מצאו את <span class="m">\(BD\)</span> ואת <span class="m">\(DC\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(BD = 9,\ \ DC = 6\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>חוצה זווית פנימית מחלק את הצלע שמולה ביחס הצלעות הכולאות את הזווית: <span class="m">\(\frac{BD}{DC} = \frac{AB}{AC} = \frac{12}{8} = \frac32\)</span>.</li><li>מחלקים את <span class="m">\(BC = 15\)</span> ל־5 חלקים של 3: <span class="m">\(BD = 3 \cdot 3 = 9\)</span> ו־<span class="m">\(DC = 2 \cdot 3 = 6\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q50">
+  <div class="qhead"><span class="qno">50</span><span class="item">משפטי דמיון</span></div>
+  <p class="qtext">במשולש <span class="m">\(ABC\)</span>: <span class="m">\(AB = 6\)</span>, <span class="m">\(AC = 9\)</span>, <span class="m">\(\angle A = 40^\circ\)</span> ו־<span class="m">\(BC = 7.5\)</span>. במשולש <span class="m">\(DEF\)</span>: <span class="m">\(DE = 4\)</span>, <span class="m">\(DF = 6\)</span> ו־<span class="m">\(\angle D = 40^\circ\)</span>. הוכיחו שהמשולשים דומים ומצאו את <span class="m">\(EF\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(EF = 5\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>בודקים את היחס בין הצלעות שכולאות את הזווית השווה: <span class="m">\(\frac{AB}{DE} = \frac{6}{4} = 1.5\)</span> וגם <span class="m">\(\frac{AC}{DF} = \frac{9}{6} = 1.5\)</span>.</li><li>שתי הצלעות פרופורציוניות והזווית שביניהן שווה (<span class="m">\(40^\circ\)</span>), ולכן <span class="m">\(\triangle ABC \sim \triangle DEF\)</span> לפי צ.ז.צ.</li><li><span class="m">\(BC\)</span> ו־<span class="m">\(EF\)</span> מתאימות (מול הזוויות השוות), ולכן <span class="m">\(EF = \frac{7.5}{1.5} = 5\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q51">
+  <div class="qhead"><span class="qno">51</span><span class="item">צלעות וגבהים מתאימים</span></div>
+  <p class="qtext">שני משולשים דומים ויחס הדמיון ביניהם הוא <span class="m">\(3 : 5\)</span>. הגובה במשולש הקטן הוא 6. מצאו את הגובה המתאים במשולש הגדול.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(10\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>במשולשים דומים היחס בין גבהים מתאימים שווה ליחס הדמיון: <span class="m">\(\frac{6}{h} = \frac{3}{5}\)</span>.</li><li><span class="m">\(h = \frac{6 \cdot 5}{3} = 10\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q52">
+  <div class="qhead"><span class="qno">52</span><span class="item">יחס שטחים</span></div>
+  <p class="qtext">השטחים של שני משולשים דומים הם 18 ו־50. צלע במשולש הקטן היא 9. מצאו את הצלע המתאימה במשולש הגדול.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(15\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>יחס השטחים הוא ריבוע יחס הדמיון: <span class="m">\(k^2 = \frac{18}{50} = \frac{9}{25}\)</span>, ולכן <span class="m">\(k = \frac35\)</span>.</li><li><span class="m">\(\frac{9}{x} = \frac{3}{5}\)</span>, ולכן <span class="m">\(x = 15\)</span>.</li><li>טעות נפוצה: להשתמש ביחס השטחים כאילו הוא יחס הצלעות.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q53">
+  <div class="qhead"><span class="qno">53</span><span class="item">תכונות פרופורציה</span></div>
+  <p class="qtext">נתון <span class="m">\(\frac{a}{b} = \frac{3}{5}\)</span> ו־<span class="m">\(a + b = 40\)</span>. מצאו את <span class="m">\(a\)</span> ואת <span class="m">\(b\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(a = 15,\ \ b = 25\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>מוסיפים את המכנה למונה בשני הצדדים: <span class="m">\(\frac{a+b}{b} = \frac{3+5}{5} = \frac85\)</span>.</li><li><span class="m">\(\frac{40}{b} = \frac{8}{5}\)</span>, ולכן <span class="m">\(b = 25\)</span> ו־<span class="m">\(a = 40 - 25 = 15\)</span>.</li><li>בדיקה בכפל בהצלבה: <span class="m">\(15 \cdot 5 = 25 \cdot 3 = 75\)</span>.</li></ol></div>
+  </details>
+</article>
+</section>
+<section class="ch" id="circle"><h2>המעגל</h2>
+<article class="q" id="q54">
+  <div class="qhead"><span class="qno">54</span><span class="item">זווית היקפית וזווית מרכזית</span></div>
+  <p class="qtext">במעגל שמרכזו <span class="m">\(O\)</span> הזווית המרכזית <span class="m">\(\angle AOB\)</span> היא <span class="m">\(130^\circ\)</span>. הנקודה <span class="m">\(C\)</span> על הקשת הגדולה. מצאו את <span class="m">\(\angle ACB\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(\angle ACB = 65^\circ\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li><span class="m">\(\angle ACB\)</span> היא זווית היקפית שנשענת על אותה קשת כמו הזווית המרכזית <span class="m">\(\angle AOB\)</span>.</li><li>זווית היקפית שווה למחצית הזווית המרכזית: <span class="m">\(130^\circ : 2 = 65^\circ\)</span>.</li><li>אילו <span class="m">\(C\)</span> הייתה על הקשת הקטנה, היא הייתה נשענת על הקשת השנייה, ואז <span class="m">\(\angle ACB = (360^\circ - 130^\circ) : 2 = 115^\circ\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q55">
+  <div class="qhead"><span class="qno">55</span><span class="item">זווית היקפית על קוטר</span></div>
+  <p class="qtext"><span class="m">\(AB\)</span> קוטר במעגל, והנקודה <span class="m">\(C\)</span> על המעגל. נתון <span class="m">\(AC = 6\)</span> ו־<span class="m">\(BC = 8\)</span>. מצאו את רדיוס המעגל.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(r = 5\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>זווית היקפית שנשענת על קוטר היא ישרה, ולכן <span class="m">\(\angle ACB = 90^\circ\)</span>.</li><li>לפי פיתגורס: <span class="m">\(AB = \sqrt{36 + 64} = 10\)</span>, ולכן הרדיוס הוא <span class="m">\(5\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q56">
+  <div class="qhead"><span class="qno">56</span><span class="item">זווית בין משיק למיתר</span></div>
+  <p class="qtext">הישר <span class="m">\(t\)</span> משיק למעגל בנקודה <span class="m">\(A\)</span>. הזווית בין המשיק למיתר <span class="m">\(AB\)</span> היא <span class="m">\(70^\circ\)</span>. הנקודה <span class="m">\(C\)</span> על המעגל, בצד השני של המיתר. מצאו את <span class="m">\(\angle ACB\)</span> ואת הזווית המרכזית <span class="m">\(\angle AOB\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(\angle ACB = 70^\circ,\ \ \angle AOB = 140^\circ\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>הזווית בין משיק למיתר שווה לזווית ההיקפית שנשענת על המיתר מהצד השני, ולכן <span class="m">\(\angle ACB = 70^\circ\)</span>.</li><li>הזווית המרכזית שנשענת על אותה קשת היא כפולה: <span class="m">\(\angle AOB = 140^\circ\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q57">
+  <div class="qhead"><span class="qno">57</span><span class="item">זווית בין מיתרים נחתכים</span></div>
+  <p class="qtext">שני מיתרים נחתכים בתוך מעגל. הזווית שביניהם והזווית הקודקודית לה כולאות קשתות של <span class="m">\(100^\circ\)</span> ושל <span class="m">\(40^\circ\)</span>. מצאו את הזווית בין המיתרים.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(70^\circ\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>זווית בין מיתרים נחתכים שווה למחצית סכום הקשתות: <span class="m">\(\frac{100^\circ + 40^\circ}{2} = 70^\circ\)</span>.</li><li>למה: מחברים שניים מקצות המיתרים. הזווית היא זווית חיצונית למשולש שנוצר, ולכן היא שווה לסכום שתי זוויות היקפיות, שכל אחת מהן היא מחצית מאחת הקשתות.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q58">
+  <div class="qhead"><span class="qno">58</span><span class="item">זווית בין חותכים מחוץ למעגל</span></div>
+  <p class="qtext">שני חותכים יוצאים מנקודה <span class="m">\(P\)</span> מחוץ למעגל. הקשתות שהם כולאים הן <span class="m">\(110^\circ\)</span> (הרחוקה) ו־<span class="m">\(30^\circ\)</span> (הקרובה). מצאו את <span class="m">\(\angle P\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(\angle P = 40^\circ\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>זווית בין חותכים מחוץ למעגל שווה למחצית ההפרש בין הקשתות: <span class="m">\(\frac{110^\circ - 30^\circ}{2} = 40^\circ\)</span>.</li><li>למה: זווית היקפית שנשענת על הקשת הרחוקה היא זווית חיצונית במשולש שאחד מקודקודיו הוא P, ולכן הזווית ב־P היא ההפרש בין שתי זוויות היקפיות.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q59">
+  <div class="qhead"><span class="qno">59</span><span class="item">מרחק מיתר מהמרכז</span></div>
+  <p class="qtext">רדיוס של מעגל הוא 13, ובמעגל יש מיתר באורך 24. מצאו את המרחק של המיתר ממרכז המעגל.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(d = 5\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>האנך ממרכז המעגל למיתר חוצה את המיתר, ולכן נוצר משולש ישר זווית עם יתר <span class="m">\(r = 13\)</span> וניצב <span class="m">\(24 : 2 = 12\)</span>.</li><li><span class="m">\(d = \sqrt{13^2 - 12^2} = \sqrt{25} = 5\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q60">
+  <div class="qhead"><span class="qno">60</span><span class="item">משיק ורדיוס בנקודת ההשקה</span></div>
+  <p class="qtext"><span class="m">\(PA\)</span> משיק למעגל שמרכזו <span class="m">\(O\)</span>, בנקודה <span class="m">\(A\)</span>. נתון <span class="m">\(\angle AOP = 55^\circ\)</span>. מצאו את <span class="m">\(\angle APO\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(\angle APO = 35^\circ\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>משיק מאונך לרדיוס בנקודת ההשקה, ולכן <span class="m">\(\angle OAP = 90^\circ\)</span>.</li><li>במשולש <span class="m">\(OAP\)</span>: <span class="m">\(\angle APO = 180^\circ - 90^\circ - 55^\circ = 35^\circ\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q61">
+  <div class="qhead"><span class="qno">61</span><span class="item">שני משיקים מאותה נקודה</span></div>
+  <p class="qtext"><span class="m">\(PA\)</span> ו־<span class="m">\(PB\)</span> משיקים למעגל מהנקודה <span class="m">\(P\)</span>, ו־<span class="m">\(\angle APB = 50^\circ\)</span>. מצאו את <span class="m">\(\angle PAB\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(\angle PAB = 65^\circ\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>שני משיקים מאותה נקודה שווים, ולכן <span class="m">\(PA = PB\)</span> והמשולש <span class="m">\(PAB\)</span> שווה שוקיים.</li><li>זוויות הבסיס שוות: <span class="m">\(\angle PAB = \frac{180^\circ - 50^\circ}{2} = 65^\circ\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q62">
+  <div class="qhead"><span class="qno">62</span><span class="item">אורך משיק מנקודה</span></div>
+  <p class="qtext">רדיוס של מעגל הוא 5. הנקודה <span class="m">\(P\)</span> נמצאת במרחק 13 ממרכז המעגל. מצאו את אורך המשיק <span class="m">\(PT\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(PT = 12\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>המשיק מאונך לרדיוס <span class="m">\(OT\)</span>, ולכן המשולש <span class="m">\(OTP\)</span> ישר זווית ו־<span class="m">\(OP\)</span> היתר שלו.</li><li><span class="m">\(PT^2 = OP^2 - r^2 = 169 - 25 = 144\)</span>, ולכן <span class="m">\(PT = 12\)</span>.</li></ol></div>
+  </details>
+</article>
+</section>
+<section class="ch" id="segments"><h2>קטעים במעגל</h2>
+<article class="q" id="q63">
+  <div class="qhead"><span class="qno">63</span><span class="item">מיתרים נחתכים</span></div>
+  <p class="qtext">המיתרים <span class="m">\(AB\)</span> ו־<span class="m">\(CD\)</span> נחתכים בנקודה <span class="m">\(E\)</span>. נתון <span class="m">\(AE = 4\)</span>, <span class="m">\(EB = 9\)</span> ו־<span class="m">\(CE = 6\)</span>. מצאו את <span class="m">\(ED\)</span> ואת אורך המיתר <span class="m">\(CD\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(ED = 6,\ \ CD = 12\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>מכפלת חלקי מיתר אחד שווה למכפלת חלקי המיתר השני: <span class="m">\(AE \cdot EB = CE \cdot ED\)</span>.</li><li><span class="m">\(4 \cdot 9 = 6 \cdot ED\)</span>, ולכן <span class="m">\(ED = 6\)</span> ו־<span class="m">\(CD = 12\)</span>.</li><li>מקור המשפט: <span class="m">\(\triangle AEC \sim \triangle DEB\)</span> (ז.ז: זוויות קודקודיות וזוויות היקפיות על אותה קשת).</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q64">
+  <div class="qhead"><span class="qno">64</span><span class="item">משיק וחותך</span></div>
+  <p class="qtext">מהנקודה <span class="m">\(P\)</span> יוצאים משיק <span class="m">\(PT\)</span> וחותך שחותך את המעגל בנקודות <span class="m">\(A\)</span> ו־<span class="m">\(B\)</span> (<span class="m">\(A\)</span> קרובה יותר ל־<span class="m">\(P\)</span>). נתון <span class="m">\(PA = 4\)</span> ו־<span class="m">\(AB = 5\)</span>. מצאו את <span class="m">\(PT\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(PT = 6\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li>מחשבים את המרחק לנקודה הרחוקה: <span class="m">\(PB = 4 + 5 = 9\)</span>.</li><li><span class="m">\(PT^2 = PA \cdot PB = 4 \cdot 9 = 36\)</span>, ולכן <span class="m">\(PT = 6\)</span>.</li><li>טעות נפוצה: לכפול ב־<span class="m">\(AB\)</span> במקום ב־<span class="m">\(PB\)</span>.</li></ol></div>
+  </details>
+</article>
+<article class="q" id="q65">
+  <div class="qhead"><span class="qno">65</span><span class="item">שני חותכים</span></div>
+  <p class="qtext">מהנקודה <span class="m">\(P\)</span> יוצאים שני חותכים: אחד חותך את המעגל ב־<span class="m">\(A\)</span> וב־<span class="m">\(B\)</span>, והשני ב־<span class="m">\(C\)</span> וב־<span class="m">\(D\)</span>. נתון <span class="m">\(PA = 3\)</span>, <span class="m">\(AB = 9\)</span> ו־<span class="m">\(PC = 4\)</span>. מצאו את <span class="m">\(CD\)</span>.</p>
+  <details><summary>פתרון</summary>
+    <div class="sol"><p class="ans"><strong>תשובה:</strong> <span class="m">\(CD = 5\)</span></p>
+    <p class="how">דרך הפתרון:</p><ol><li><span class="m">\(PB = 3 + 9 = 12\)</span>.</li><li><span class="m">\(PA \cdot PB = PC \cdot PD\)</span>: <span class="m">\(3 \cdot 12 = 4 \cdot PD\)</span>, ולכן <span class="m">\(PD = 9\)</span>.</li><li><span class="m">\(CD = PD - PC = 9 - 4 = 5\)</span>.</li></ol></div>
+  </details>
+</article>
+</section>
+
+<footer>גאומטריה אוקלידית · שאלות על דף הנוסחאות · <a href="index.html">לדף הראשי</a></footer>
+</div>
+<script>
+(function(){
+  const all = () => document.querySelectorAll('details');
+  document.getElementById('openAll').onclick = () => all().forEach(d => d.open = true);
+  document.getElementById('closeAll').onclick = () => all().forEach(d => d.open = false);
+  document.getElementById('printQ').onclick = () => { document.body.classList.remove('print-solutions'); window.print(); };
+  document.getElementById('printS').onclick = () => {
+    const was = [...all()].map(d => d.open);
+    document.body.classList.add('print-solutions'); all().forEach(d => d.open = true);
+    window.print();
+    all().forEach((d, i) => d.open = was[i]); document.body.classList.remove('print-solutions');
+  };
+})();
+</script>
+</body>
+</html>

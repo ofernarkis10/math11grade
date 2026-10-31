@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מושגים ומשפטים בגאומטריה אוקלידית · דף סיכום</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same study-page style as the other geometry pages; this page is a reference sheet of terms and theorems in tables */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:960px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:72ch}
+.lead a,.meaning a{color:var(--accent);font-weight:600}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav.pages{display:flex;gap:8px;flex-wrap:wrap}
+nav.pages a,nav.pages span{padding:6px 14px;border:1px solid var(--line);border-radius:99px;font-size:.9rem;font-weight:600;text-decoration:none;color:var(--accent);background:var(--paper)}
+nav.pages span{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+nav.pages a:hover,nav.pages a:focus-visible{border-color:var(--accent);outline:none}
+
+nav.toc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav.toc ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav.toc a{color:var(--accent);text-decoration:none;font-weight:600}
+nav.toc a:hover,nav.toc a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav.toc ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td.no{color:var(--muted);font-family:var(--f-math);width:3.2em;white-space:nowrap}
+td.term{font-weight:700;width:9.5em}
+td.conv{color:var(--muted);font-size:.92rem}
+td.conv b{color:var(--mark)}
+td.ref a{color:var(--accent);font-weight:600;text-decoration:none;font-size:.88rem;white-space:nowrap}
+td.ref a:hover{text-decoration:underline}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+section.ch .tablebox{border-radius:8px}
+.meaning{max-width:72ch;display:flex;flex-direction:column;gap:10px}
+.meaning ul{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:4px}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+
+/* items that the תשפ"ז focus removed from the exam */
+.cut{display:inline-block;font-size:.72rem;font-weight:700;color:var(--mark);border:1px solid var(--mark);border-radius:99px;padding:0 8px;margin-inline-start:6px;white-space:nowrap;vertical-align:middle}
+tr.removed td{background:var(--mark-soft)}
+body.hide-removed tr.removed{display:none}
+
+.tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+.tools input[type=search]{flex:1 1 240px;font:inherit;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.tools label{display:flex;gap:6px;align-items:center;font-size:.95rem;cursor:pointer}
+.tools .count{color:var(--muted);font-size:.9rem}
+
+.btn{align-self:flex-start;background:var(--accent);color:var(--paper);font-weight:700;text-decoration:none;padding:8px 18px;border-radius:99px}
+.btn:hover,.btn:focus-visible{filter:brightness(1.1);outline:none}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:#fff;font-size:14px} nav.toc,nav.pages,.back,.tools{display:none} section.ch{break-inside:auto} tr{break-inside:avoid} table{min-width:0}}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+.m .katex{font-size:1.14em;position:relative}
+.m:has(.katex){white-space:normal}
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.12em}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html#geometry">→ חזרה לנושא: גאומטריה אוקלידית</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · שאלון 571 · גאומטריה אוקלידית · דף סיכום</span>
+  <h1>מושגים ומשפטים בגאומטריה אוקלידית</h1>
+  <p class="lead">כל המושגים והמשפטים של הפרק בדף אחד, מסודרים לפי נושאים: לוגיקה ומקום גאומטרי, זוויות ומקבילים, משולשים, קטעים ונקודות מיוחדות, מרובעים, מעגל, פרופורציה ודמיון, ושטחים. בבגרות מותר לצטט את המשפטים האלה בלי להוכיח אותם. לכל משפט מופיע גם המשפט ההפוך, כשיש כזה, וקישור לדף ההסבר באתר.</p>
+</header>
+
+<nav class="pages" aria-label="דפי הנושא"><a href="geometry-01-loci-triangle-centers.html">1. מקומות גאומטריים ונקודות מיוחדות</a><a href="geometry-02-circle.html">2. המעגל</a><a href="geometry-03-similarity.html">3. פרופורציה ודמיון</a><span aria-current="page">4. מושגים ומשפטים</span><a href="geometry-05-formula-sheet.html">5. דף נוסחאות</a><a href="geometry-06-formula-questions.html">6. שאלות על דף הנוסחאות</a></nav>
+
+<p class="note"><strong>מיקוד תשפ״ז (שאלון 571):</strong> שני נושאים בגאומטריה ירדו מהבחינה. הראשון הוא מרובע חוסם מעגל. השני הוא היחסים במשולשים דומים בין היקפים, בין תיכונים, בין חוצי זוויות ובין רדיוסים של המעגל החוסם והחסום. השורות האלה מסומנות בתווית <span class="cut">ירד במיקוד תשפ״ז</span>. יחס השטחים במשולשים דומים לא ירד. את המיקוד המחייב יש לבדוק באתר המפמ״ר, כי משרד החינוך עשוי לעדכן אותו במהלך השנה.</p>
+
+<div class="tools">
+  <input id="q" type="search" placeholder="חיפוש מושג או משפט, למשל: משיק, תיכון, מקבילית" aria-label="חיפוש בטבלאות">
+  <label><input type="checkbox" id="hideRemoved"> להסתיר את מה שירד במיקוד</label>
+  <span class="count" id="count" aria-live="polite"></span>
+</div>
+
+<nav class="toc" aria-label="תוכן"><strong>תוכן</strong><ol>
+  <li><a href="#logic">לוגיקה, הוכחה ומקום גאומטרי</a></li>
+  <li><a href="#angles">זוויות וישרים מקבילים</a></li>
+  <li><a href="#triangles">משולשים וחפיפה</a></li>
+  <li><a href="#special">קטעים ונקודות מיוחדות במשולש</a></li>
+  <li><a href="#quads">מרובעים</a></li>
+  <li><a href="#circle">המעגל</a></li>
+  <li><a href="#similarity">פרופורציה ודמיון</a></li>
+  <li><a href="#areas">שטחים</a></li>
+</ol></nav>
+
+<!-- ============ 1 ============ -->
+<section class="ch" id="logic">
+  <h2>1. לוגיקה, הוכחה ומקום גאומטרי</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>מושג</th><th>הגדרה</th><th>באתר</th></tr></thead>
+    <tbody>
+      <tr><td class="term">הגדרה</td><td>קביעה שנותנת שם לעצם ומתארת את התכונות שמאפיינות אותו. הגדרה תמיד הפיכה.</td><td class="ref"><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></td></tr>
+      <tr><td class="term">משפט</td><td>טענה שהוכחה. בנוי מנתון ("אם") וממסקנה ("אז").</td><td class="ref"><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></td></tr>
+      <tr><td class="term">משפט הפוך</td><td>מחליפים בין הנתון למסקנה. משפט הפוך לא תמיד נכון, ולכן צריך להוכיח אותו בנפרד.</td><td class="ref"><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></td></tr>
+      <tr><td class="term">תנאי הכרחי</td><td>תנאי שחייב להתקיים כדי שהטענה תהיה נכונה, אבל לבדו לא מבטיח אותה.</td><td class="ref"><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></td></tr>
+      <tr><td class="term">תנאי מספיק</td><td>תנאי שכשהוא מתקיים, הטענה בוודאות נכונה.</td><td class="ref"><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></td></tr>
+      <tr><td class="term">הוכחה בדרך השלילה</td><td>מניחים שהמסקנה לא נכונה ומגיעים לסתירה לנתון או למשפט ידוע.</td><td class="ref"><a href="geometry-01-loci-triangle-centers.html#logic">מקומות גאומטריים</a></td></tr>
+      <tr><td class="term">מקום גאומטרי</td><td>אוסף כל הנקודות, ורק הנקודות, שיש להן תכונה מסוימת. ההוכחה היא בשני כיוונים: כל נקודה בעלת התכונה נמצאת על הצורה, וכל נקודה על הצורה היא בעלת התכונה.</td><td class="ref"><a href="geometry-01-loci-triangle-centers.html">מקומות גאומטריים</a></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section class="ch" id="angles">
+  <h2>2. זוויות וישרים מקבילים</h2>
+  <h3>מושגים</h3>
+  <div class="tablebox"><table>
+    <thead><tr><th>מושג</th><th>הגדרה</th></tr></thead>
+    <tbody>
+      <tr><td class="term">זוויות צמודות</td><td>שתי זוויות עם קודקוד משותף ושוק משותפת, שהשוקיים האחרות שלהן יוצרות ישר אחד.</td></tr>
+      <tr><td class="term">זוויות קודקודיות</td><td>שתי זוויות שהשוקיים של כל אחת מהן הן ההמשכים של השוקיים של השנייה.</td></tr>
+      <tr><td class="term">זוויות מתאימות, מתחלפות וחד־צדדיות</td><td>זוגות זוויות שנוצרים כשישר שלישי (חותך) חותך שני ישרים.</td></tr>
+      <tr><td class="term">ישרים מקבילים</td><td>ישרים באותו מישור שאין להם נקודה משותפת.</td></tr>
+      <tr><td class="term">ישרים מאונכים</td><td>ישרים שנחתכים בזווית של <span class="m">\(90^\circ\)</span>.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>משפטים</h3>
+  <div class="tablebox"><table>
+    <thead><tr><th>#</th><th>משפט</th><th>משפט הפוך / הערה</th></tr></thead>
+    <tbody>
+      <tr><td class="no">2.1</td><td>סכום זוויות צמודות הוא <span class="m">\(180^\circ\)</span>.</td><td class="conv"></td></tr>
+      <tr><td class="no">2.2</td><td>זוויות קודקודיות שוות זו לזו.</td><td class="conv"></td></tr>
+      <tr><td class="no">2.3</td><td>אם שני ישרים מקבילים נחתכים על ידי ישר שלישי, אז זוויות מתאימות שוות, זוויות מתחלפות שוות וסכום זוויות חד־צדדיות הוא <span class="m">\(180^\circ\)</span>.</td><td class="conv"><b>הפוך:</b> אם זוויות מתאימות שוות, או זוויות מתחלפות שוות, או סכום זוויות חד־צדדיות הוא <span class="m">\(180^\circ\)</span>, אז הישרים מקבילים.</td></tr>
+      <tr><td class="no">2.4</td><td>שני ישרים שמאונכים לאותו ישר מקבילים זה לזה.</td><td class="conv"></td></tr>
+      <tr><td class="no">2.5</td><td>ישר שמאונך לאחד משני ישרים מקבילים מאונך גם לשני.</td><td class="conv"></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section class="ch" id="triangles">
+  <h2>3. משולשים וחפיפה</h2>
+  <h3>מושגים</h3>
+  <div class="tablebox"><table>
+    <thead><tr><th>מושג</th><th>הגדרה</th></tr></thead>
+    <tbody>
+      <tr><td class="term">זווית חיצונית</td><td>זווית שצמודה לזווית של המשולש.</td></tr>
+      <tr><td class="term">משולש שווה שוקיים</td><td>משולש עם שתי צלעות שוות (השוקיים). הצלע השלישית היא הבסיס, והזווית שמול הבסיס היא זווית הראש.</td></tr>
+      <tr><td class="term">משולש שווה צלעות</td><td>משולש שכל צלעותיו שוות.</td></tr>
+      <tr><td class="term">משולש ישר זווית</td><td>משולש שאחת מזוויותיו ישרה. הצלעות שליד הזווית הישרה הן הניצבים, והצלע שמולה היא היתר.</td></tr>
+      <tr><td class="term">משולשים חופפים</td><td>משולשים שכל הצלעות וכל הזוויות המתאימות בהם שוות.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>משפטים</h3>
+  <div class="tablebox"><table>
+    <thead><tr><th>#</th><th>משפט</th><th>משפט הפוך / הערה</th><th>באתר</th></tr></thead>
+    <tbody>
+      <tr><td class="no">3.1</td><td>סכום הזוויות במשולש הוא <span class="m">\(180^\circ\)</span>.</td><td class="conv">מסקנה: סכום הזוויות במצולע בעל <span class="m">\(n\)</span> צלעות הוא <span class="m">\(180^\circ(n-2)\)</span>.</td><td class="ref"></td></tr>
+      <tr><td class="no">3.2</td><td>זווית חיצונית למשולש שווה לסכום שתי הזוויות הפנימיות שלא צמודות לה.</td><td class="conv"></td><td class="ref"></td></tr>
+      <tr><td class="no">3.3</td><td><strong>חפיפה צ.ז.צ:</strong> שתי צלעות והזווית שביניהן.</td><td class="conv"></td><td class="ref"></td></tr>
+      <tr><td class="no">3.4</td><td><strong>חפיפה ז.צ.ז:</strong> צלע ושתי הזוויות שלידה.</td><td class="conv"></td><td class="ref"></td></tr>
+      <tr><td class="no">3.5</td><td><strong>חפיפה צ.צ.צ:</strong> שלוש צלעות.</td><td class="conv"></td><td class="ref"></td></tr>
+      <tr><td class="no">3.6</td><td><strong>חפיפה צ.צ.ז:</strong> שתי צלעות והזווית שמול הגדולה מביניהן.</td><td class="conv">משפט החפיפה הרביעי. הזווית חייבת להיות מול הצלע הגדולה.</td><td class="ref"><a href="geometry-01-loci-triangle-centers.html">דף 1</a></td></tr>
+      <tr><td class="no">3.7</td><td>במשולש שווה שוקיים, זוויות הבסיס שוות.</td><td class="conv"><b>הפוך:</b> משולש עם שתי זוויות שוות הוא שווה שוקיים.</td><td class="ref"></td></tr>
+      <tr><td class="no">3.8</td><td>במשולש שווה שוקיים, חוצה זווית הראש, התיכון לבסיס והגובה לבסיס מתלכדים.</td><td class="conv"><b>הפוך:</b> אם במשולש שניים מהקטעים האלה (חוצה זווית, תיכון, גובה) מאותו קודקוד מתלכדים, המשולש שווה שוקיים.</td><td class="ref"></td></tr>
+      <tr><td class="no">3.9</td><td>במשולש שווה צלעות כל הזוויות שוות ל־<span class="m">\(60^\circ\)</span>.</td><td class="conv"></td><td class="ref"></td></tr>
+      <tr><td class="no">3.10</td><td>במשולש, מול צלע גדולה יותר נמצאת זווית גדולה יותר.</td><td class="conv"><b>הפוך:</b> מול זווית גדולה יותר נמצאת צלע גדולה יותר.</td><td class="ref"></td></tr>
+      <tr><td class="no">3.11</td><td><strong>אי־שוויון המשולש:</strong> סכום שתי צלעות גדול מהצלע השלישית.</td><td class="conv">ההפרש בין שתי צלעות קטן מהצלע השלישית.</td><td class="ref"></td></tr>
+      <tr><td class="no">3.12</td><td><strong>משפט פיתגורס:</strong> במשולש ישר זווית <span class="m">\(a^2+b^2=c^2\)</span>.</td><td class="conv"><b>הפוך:</b> אם <span class="m">\(a^2+b^2=c^2\)</span>, הזווית שמול <span class="m">\(c\)</span> ישרה.</td><td class="ref"><a href="geometry-01-loci-triangle-centers.html">דף 1</a></td></tr>
+      <tr><td class="no">3.13</td><td>במשולש ישר זווית, התיכון ליתר שווה למחצית היתר.</td><td class="conv"><b>הפוך:</b> אם התיכון לצלע שווה למחציתה, הזווית שמול הצלע ישרה.</td><td class="ref"></td></tr>
+      <tr><td class="no">3.14</td><td>במשולש ישר זווית, הניצב שמול זווית של <span class="m">\(30^\circ\)</span> שווה למחצית היתר.</td><td class="conv"><b>הפוך:</b> אם ניצב שווה למחצית היתר, הזווית שמולו היא <span class="m">\(30^\circ\)</span>.</td><td class="ref"></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section class="ch" id="special">
+  <h2>4. קטעים ונקודות מיוחדות במשולש</h2>
+  <h3>מושגים</h3>
+  <div class="tablebox"><table>
+    <thead><tr><th>מושג</th><th>הגדרה</th></tr></thead>
+    <tbody>
+      <tr><td class="term">תיכון</td><td>קטע שמחבר קודקוד עם אמצע הצלע שמולו.</td></tr>
+      <tr><td class="term">גובה</td><td>אנך מקודקוד לישר שעליו נמצאת הצלע שמולו.</td></tr>
+      <tr><td class="term">חוצה זווית</td><td>קרן שיוצאת מקודקוד הזווית ומחלקת אותה לשתי זוויות שוות.</td></tr>
+      <tr><td class="term">אנך אמצעי</td><td>ישר שמאונך לקטע ועובר באמצעו.</td></tr>
+      <tr><td class="term">קטע אמצעים</td><td>במשולש: קטע שמחבר את אמצעי שתי צלעות. בטרפז: קטע שמחבר את אמצעי השוקיים.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>משפטים</h3>
+  <div class="tablebox"><table>
+    <thead><tr><th>#</th><th>משפט</th><th>משפט הפוך / הערה</th><th>באתר</th></tr></thead>
+    <tbody>
+      <tr><td class="no">4.1</td><td>כל נקודה על האנך האמצעי של קטע נמצאת במרחקים שווים מקצות הקטע.</td><td class="conv"><b>הפוך:</b> נקודה שנמצאת במרחקים שווים מקצות הקטע נמצאת על האנך האמצעי שלו. לכן האנך האמצעי הוא מקום גאומטרי.</td><td class="ref"><a href="geometry-01-loci-triangle-centers.html">דף 1</a></td></tr>
+      <tr><td class="no">4.2</td><td>כל נקודה על חוצה זווית נמצאת במרחקים שווים משוקי הזווית.</td><td class="conv"><b>הפוך:</b> נקודה בתוך זווית שנמצאת במרחקים שווים משוקי הזווית נמצאת על חוצה הזווית.</td><td class="ref"><a href="geometry-01-loci-triangle-centers.html">דף 1</a></td></tr>
+      <tr><td class="no">4.3</td><td>שלושת האנכים האמצעיים במשולש נפגשים בנקודה אחת. הנקודה היא מרכז המעגל החוסם את המשולש.</td><td class="conv">במשולש ישר זווית מרכז המעגל החוסם הוא אמצע היתר.</td><td class="ref"><a href="geometry-01-loci-triangle-centers.html">דף 1</a></td></tr>
+      <tr><td class="no">4.4</td><td>שלושת חוצי הזוויות במשולש נפגשים בנקודה אחת. הנקודה היא מרכז המעגל החסום במשולש.</td><td class="conv"></td><td class="ref"><a href="geometry-01-loci-triangle-centers.html">דף 1</a></td></tr>
+      <tr><td class="no">4.5</td><td>שלושת התיכונים במשולש נפגשים בנקודה אחת (מרכז הכובד), שמחלקת כל תיכון ביחס <span class="m">\(2:1\)</span> מהקודקוד.</td><td class="conv"></td><td class="ref"><a href="geometry-01-loci-triangle-centers.html">דף 1</a></td></tr>
+      <tr><td class="no">4.6</td><td>שלושת הגבהים במשולש (או ההמשכים שלהם) נפגשים בנקודה אחת.</td><td class="conv"></td><td class="ref"><a href="geometry-01-loci-triangle-centers.html">דף 1</a></td></tr>
+      <tr><td class="no">4.7</td><td>קטע אמצעים במשולש מקביל לצלע השלישית ושווה למחציתה.</td><td class="conv"><b>הפוך:</b> ישר שיוצא מאמצע צלע אחת ומקביל לצלע שנייה חוצה את הצלע השלישית.</td><td class="ref"><a href="geometry-03-similarity.html#converse">דף 3</a></td></tr>
+      <tr><td class="no">4.8</td><td>קטע אמצעים בטרפז מקביל לבסיסים ושווה למחצית סכומם.</td><td class="conv"><b>הפוך:</b> ישר שיוצא מאמצע שוק אחת ומקביל לבסיסים חוצה את השוק השנייה.</td><td class="ref"><a href="geometry-03-similarity.html#converse">דף 3</a></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section class="ch" id="quads">
+  <h2>5. מרובעים</h2>
+  <p class="meaning">לכל מרובע: ההגדרה, התכונות (מה נובע מכך שהמרובע הוא מהסוג הזה) ומשפטי הזיהוי (מה מספיק כדי להוכיח שמרובע הוא מהסוג הזה). סכום הזוויות בכל מרובע הוא <span class="m">\(360^\circ\)</span>.</p>
+  <div class="tablebox"><table>
+    <thead><tr><th>מרובע</th><th>הגדרה</th><th>תכונות</th><th>משפטי זיהוי (מספיק אחד מהם)</th></tr></thead>
+    <tbody>
+      <tr><td class="term">מקבילית</td><td>מרובע ששני זוגות הצלעות הנגדיות בו מקבילים.</td><td>צלעות נגדיות שוות. זוויות נגדיות שוות. האלכסונים חוצים זה את זה. סכום זוויות סמוכות <span class="m">\(180^\circ\)</span>.</td><td>שני זוגות צלעות נגדיות שוות · זוג צלעות נגדיות שוות ומקבילות · שני זוגות זוויות נגדיות שוות · האלכסונים חוצים זה את זה.</td></tr>
+      <tr><td class="term">מלבן</td><td>מקבילית עם זווית ישרה.</td><td>כל התכונות של מקבילית. כל הזוויות ישרות. האלכסונים שווים.</td><td>מקבילית עם אלכסונים שווים · מרובע עם שלוש זוויות ישרות.</td></tr>
+      <tr><td class="term">מעוין</td><td>מקבילית עם שתי צלעות סמוכות שוות.</td><td>כל התכונות של מקבילית. כל הצלעות שוות. האלכסונים מאונכים זה לזה וחוצים את זוויות המעוין.</td><td>מרובע שכל צלעותיו שוות · מקבילית שהאלכסונים שלה מאונכים · מקבילית שאלכסון חוצה בה זווית.</td></tr>
+      <tr><td class="term">ריבוע</td><td>מלבן שהוא גם מעוין.</td><td>כל התכונות של מלבן ושל מעוין.</td><td>מלבן עם שתי צלעות סמוכות שוות · מעוין עם זווית ישרה.</td></tr>
+      <tr><td class="term">טרפז</td><td>מרובע עם זוג אחד בלבד של צלעות מקבילות (הבסיסים).</td><td>סכום הזוויות שליד כל שוק הוא <span class="m">\(180^\circ\)</span>. קטע האמצעים מקביל לבסיסים ושווה למחצית סכומם.</td><td></td></tr>
+      <tr><td class="term">טרפז שווה שוקיים</td><td>טרפז שהשוקיים שלו שוות.</td><td>זוויות הבסיס שוות. האלכסונים שווים.</td><td>טרפז עם זוויות בסיס שוות · טרפז עם אלכסונים שווים.</td></tr>
+      <tr><td class="term">דלתון</td><td>מרובע עם שני זוגות של צלעות סמוכות שוות.</td><td>האלכסון הראשי חוצה את זוויות הראש ומאונך לאלכסון המשני וחוצה אותו. הזוויות שבין השוקיים הלא שוות שוות זו לזו.</td><td></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section class="ch" id="circle">
+  <h2>6. המעגל</h2>
+  <h3>מושגים</h3>
+  <div class="tablebox"><table>
+    <thead><tr><th>מושג</th><th>הגדרה</th></tr></thead>
+    <tbody>
+      <tr><td class="term">מעגל</td><td>המקום הגאומטרי של כל הנקודות שנמצאות במרחק קבוע (רדיוס) מנקודה קבועה (מרכז).</td></tr>
+      <tr><td class="term">מיתר, קוטר</td><td>מיתר הוא קטע שמחבר שתי נקודות על המעגל. קוטר הוא מיתר שעובר דרך המרכז.</td></tr>
+      <tr><td class="term">קשת</td><td>חלק של המעגל שנמצא בין שתי נקודות עליו.</td></tr>
+      <tr><td class="term">זווית מרכזית</td><td>זווית שהקודקוד שלה במרכז המעגל.</td></tr>
+      <tr><td class="term">זווית היקפית</td><td>זווית שהקודקוד שלה על המעגל והשוקיים שלה מיתרים.</td></tr>
+      <tr><td class="term">משיק</td><td>ישר שיש לו נקודה משותפת אחת בלבד עם המעגל.</td></tr>
+      <tr><td class="term">חותך</td><td>ישר שחותך את המעגל בשתי נקודות.</td></tr>
+      <tr><td class="term">מצולע חסום / חוסם</td><td>מצולע חסום במעגל: כל הקודקודים שלו על המעגל. מצולע חוסם מעגל: כל הצלעות שלו משיקות למעגל.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>משפטים</h3>
+  <div class="tablebox"><table>
+    <thead><tr><th>#</th><th>משפט</th><th>משפט הפוך / הערה</th><th>באתר</th></tr></thead>
+    <tbody>
+      <tr><td class="no">6.1</td><td>במעגל, לזוויות מרכזיות שוות מתאימות קשתות שוות ומיתרים שווים.</td><td class="conv"><b>הפוך:</b> מיתרים שווים או קשתות שוות נשענים על זוויות מרכזיות שוות.</td><td class="ref"><a href="geometry-02-circle.html">דף 2</a></td></tr>
+      <tr><td class="no">6.2</td><td>האנך ממרכז המעגל למיתר חוצה את המיתר ואת הקשת.</td><td class="conv"><b>הפוך:</b> הקטע שמחבר את המרכז עם אמצע מיתר מאונך למיתר. האנך האמצעי של מיתר עובר דרך המרכז.</td><td class="ref"><a href="geometry-02-circle.html">דף 2</a></td></tr>
+      <tr><td class="no">6.3</td><td>מיתרים שווים נמצאים במרחקים שווים ממרכז המעגל.</td><td class="conv"><b>הפוך:</b> מיתרים שנמצאים במרחקים שווים מהמרכז שווים. המיתר הגדול יותר קרוב יותר למרכז.</td><td class="ref"><a href="geometry-02-circle.html">דף 2</a></td></tr>
+      <tr><td class="no">6.4</td><td>זווית היקפית שווה למחצית הזווית המרכזית שנשענת על אותה קשת.</td><td class="conv"></td><td class="ref"><a href="geometry-02-circle.html">דף 2</a></td></tr>
+      <tr><td class="no">6.5</td><td>זוויות היקפיות שנשענות על אותה קשת (או על קשתות שוות) שוות.</td><td class="conv"><b>הפוך:</b> זוויות היקפיות שוות נשענות על קשתות שוות ועל מיתרים שווים.</td><td class="ref"><a href="geometry-02-circle.html">דף 2</a></td></tr>
+      <tr><td class="no">6.6</td><td>זווית היקפית שנשענת על קוטר היא ישרה.</td><td class="conv"><b>הפוך:</b> זווית היקפית ישרה נשענת על קוטר.</td><td class="ref"><a href="geometry-02-circle.html">דף 2</a></td></tr>
+      <tr><td class="no">6.7</td><td>משיק למעגל מאונך לרדיוס בנקודת ההשקה.</td><td class="conv"><b>הפוך:</b> ישר שמאונך לרדיוס בקצהו שעל המעגל משיק למעגל.</td><td class="ref"><a href="geometry-02-circle.html">דף 2</a></td></tr>
+      <tr><td class="no">6.8</td><td>שני משיקים למעגל שיוצאים מאותה נקודה שווים זה לזה.</td><td class="conv">הקטע שמחבר את הנקודה עם מרכז המעגל חוצה את הזווית שבין המשיקים.</td><td class="ref"><a href="geometry-02-circle.html">דף 2</a></td></tr>
+      <tr><td class="no">6.9</td><td>הזווית שבין משיק למיתר שווה לזווית ההיקפית שנשענת על המיתר מהצד השני.</td><td class="conv"></td><td class="ref"><a href="geometry-02-circle.html">דף 2</a></td></tr>
+      <tr><td class="no">6.10</td><td>זווית בין שני מיתרים שנחתכים בתוך המעגל שווה למחצית סכום הקשתות שהיא והזווית הקודקודית לה נשענות עליהן.</td><td class="conv"></td><td class="ref"><a href="geometry-02-circle.html">דף 2</a></td></tr>
+      <tr><td class="no">6.11</td><td>זווית בין שני חותכים שנפגשים מחוץ למעגל שווה למחצית ההפרש בין הקשתות שהיא כולאת.</td><td class="conv"></td><td class="ref"><a href="geometry-02-circle.html">דף 2</a></td></tr>
+      <tr><td class="no">6.12</td><td>במרובע חסום במעגל, סכום כל שתי זוויות נגדיות הוא <span class="m">\(180^\circ\)</span>.</td><td class="conv"><b>הפוך:</b> מרובע שסכום שתי זוויות נגדיות בו הוא <span class="m">\(180^\circ\)</span> חסום במעגל.</td><td class="ref"><a href="geometry-02-circle.html">דף 2</a></td></tr>
+      <tr class="removed"><td class="no">6.13</td><td>במרובע חוסם מעגל, סכומי הצלעות הנגדיות שווים. <span class="cut">ירד במיקוד תשפ״ז</span></td><td class="conv"><b>הפוך:</b> מרובע שבו סכומי הצלעות הנגדיות שווים חוסם מעגל.</td><td class="ref"><a href="geometry-02-circle.html">דף 2</a></td></tr>
+      <tr><td class="no">6.14</td><td>בכל משולש אפשר לחסום מעגל, וכל משולש אפשר לחסום במעגל.</td><td class="conv">ראו 4.3 ו־4.4.</td><td class="ref"><a href="geometry-01-loci-triangle-centers.html">דף 1</a></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ 7 ============ -->
+<section class="ch" id="similarity">
+  <h2>7. פרופורציה ודמיון</h2>
+  <h3>מושגים</h3>
+  <div class="tablebox"><table>
+    <thead><tr><th>מושג</th><th>הגדרה</th></tr></thead>
+    <tbody>
+      <tr><td class="term">יחס, פרופורציה</td><td>יחס הוא מנה בין שני גדלים: <span class="m">\(a:b\)</span>. פרופורציה היא שוויון בין שני יחסים: <span class="m">\(\frac{a}{b}=\frac{c}{d}\)</span>.</td></tr>
+      <tr><td class="term">משולשים דומים</td><td>משולשים שהזוויות המתאימות בהם שוות והצלעות המתאימות בהם פרופורציוניות.</td></tr>
+      <tr><td class="term">יחס דמיון</td><td>היחס הקבוע <span class="m">\(k\)</span> בין צלעות מתאימות במשולשים דומים.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>משפטים</h3>
+  <div class="tablebox"><table>
+    <thead><tr><th>#</th><th>משפט</th><th>משפט הפוך / הערה</th><th>באתר</th></tr></thead>
+    <tbody>
+      <tr><td class="no">7.1</td><td><strong>משפט תאלס:</strong> ישרים מקבילים חותכים על שוקי זווית קטעים פרופורציוניים. במשולש <span class="m">\(ABC\)</span> עם <span class="m">\(DE\parallel BC\)</span>: <span class="m">\(\frac{AD}{DB}=\frac{AE}{EC}\)</span>.</td><td class="conv"><b>הפוך:</b> אם <span class="m">\(\frac{AD}{DB}=\frac{AE}{EC}\)</span>, אז <span class="m">\(DE\parallel BC\)</span>.</td><td class="ref"><a href="geometry-03-similarity.html#thales">דף 3</a></td></tr>
+      <tr><td class="no">7.2</td><td><strong>משפט תאלס המורחב:</strong> <span class="m">\(\frac{AD}{AB}=\frac{AE}{AC}=\frac{DE}{BC}\)</span>.</td><td class="conv">ביחס עם הקטעים המקבילים משתמשים בשוק כולה.</td><td class="ref"><a href="geometry-03-similarity.html#thales">דף 3</a></td></tr>
+      <tr><td class="no">7.3</td><td><strong>דמיון ז.ז:</strong> שתי זוויות שוות.</td><td class="conv"></td><td class="ref"><a href="geometry-03-similarity.html">דף 3</a></td></tr>
+      <tr><td class="no">7.4</td><td><strong>דמיון צ.ז.צ:</strong> שתי צלעות פרופורציוניות והזווית שביניהן שווה.</td><td class="conv">הזווית חייבת להיות כלואה בין הצלעות.</td><td class="ref"><a href="geometry-03-similarity.html">דף 3</a></td></tr>
+      <tr><td class="no">7.5</td><td><strong>דמיון צ.צ.צ:</strong> שלוש צלעות פרופורציוניות.</td><td class="conv"></td><td class="ref"><a href="geometry-03-similarity.html">דף 3</a></td></tr>
+      <tr><td class="no">7.6</td><td>היחס בין השטחים של משולשים דומים שווה לריבוע יחס הדמיון: <span class="m">\(\frac{S_1}{S_2}=k^2\)</span>.</td><td class="conv">נשאר בבחינה.</td><td class="ref"><a href="geometry-03-similarity.html">דף 3</a></td></tr>
+      <tr><td class="no">7.7</td><td>במשולשים דומים, היחס בין גבהים מתאימים שווה ליחס הדמיון.</td><td class="conv"></td><td class="ref"><a href="geometry-03-similarity.html">דף 3</a></td></tr>
+      <tr class="removed"><td class="no">7.8</td><td>במשולשים דומים, היחס בין ההיקפים, בין תיכונים מתאימים, בין חוצי זוויות מתאימים ובין רדיוסי המעגלים החוסמים והחסומים שווה ליחס הדמיון. <span class="cut">ירד במיקוד תשפ״ז</span></td><td class="conv"></td><td class="ref"><a href="geometry-03-similarity.html">דף 3</a></td></tr>
+      <tr><td class="no">7.9</td><td><strong>משפט חוצה הזווית:</strong> חוצה זווית פנימית במשולש מחלק את הצלע שמולה ביחס הצלעות הכולאות את הזווית: <span class="m">\(\frac{BD}{DC}=\frac{AB}{AC}\)</span>.</td><td class="conv"><b>הפוך:</b> אם נקודה על הצלע מחלקת אותה ביחס הזה, הקטע מהקודקוד אליה חוצה את הזווית.</td><td class="ref"><a href="geometry-03-similarity.html">דף 3</a></td></tr>
+      <tr><td class="no">7.10</td><td>במשולש ישר זווית, הגובה ליתר יוצר שני משולשים שדומים זה לזה ודומים למשולש המקורי. אם <span class="m">\(p,q\)</span> הם היטלי הניצבים <span class="m">\(a,b\)</span> על היתר <span class="m">\(c\)</span>: <span class="m">\(h^2=pq\)</span>, <span class="m">\(a^2=c\cdot p\)</span>, <span class="m">\(b^2=c\cdot q\)</span>.</td><td class="conv"></td><td class="ref"><a href="geometry-03-similarity.html">דף 3</a></td></tr>
+      <tr><td class="no">7.11</td><td><strong>מיתרים נחתכים:</strong> אם המיתרים <span class="m">\(AB\)</span> ו־<span class="m">\(CD\)</span> נחתכים בנקודה <span class="m">\(E\)</span>, אז <span class="m">\(AE\cdot EB=CE\cdot ED\)</span>.</td><td class="conv"></td><td class="ref"><a href="geometry-03-similarity.html">דף 3</a></td></tr>
+      <tr><td class="no">7.12</td><td><strong>משיק וחותך:</strong> מנקודה <span class="m">\(P\)</span> מחוץ למעגל, <span class="m">\(PT^2=PA\cdot PB\)</span>. כאן <span class="m">\(PT\)</span> משיק, ו־<span class="m">\(A\)</span>, <span class="m">\(B\)</span> נקודות החיתוך של החותך.</td><td class="conv">לשני חותכים מאותה נקודה: <span class="m">\(PA\cdot PB=PC\cdot PD\)</span>.</td><td class="ref"><a href="geometry-03-similarity.html">דף 3</a></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ 8 ============ -->
+<section class="ch" id="areas">
+  <h2>8. שטחים</h2>
+  <div class="tablebox"><table>
+    <thead><tr><th>צורה / משפט</th><th>נוסחה או טענה</th></tr></thead>
+    <tbody>
+      <tr><td class="term">משולש</td><td><span class="m">\(S=\frac{a\cdot h_a}{2}\)</span></td></tr>
+      <tr><td class="term">מקבילית</td><td><span class="m">\(S=a\cdot h_a\)</span></td></tr>
+      <tr><td class="term">טרפז</td><td><span class="m">\(S=\frac{(a+b)\cdot h}{2}\)</span>. אפשר גם קטע אמצעים כפול גובה.</td></tr>
+      <tr><td class="term">מעוין, דלתון</td><td><span class="m">\(S=\frac{d_1\cdot d_2}{2}\)</span> (מכפלת האלכסונים חלקי 2)</td></tr>
+      <tr><td class="term">עיגול</td><td><span class="m">\(S=\pi r^2\)</span>, היקף המעגל <span class="m">\(P=2\pi r\)</span></td></tr>
+      <tr><td class="term">גובה משותף</td><td>היחס בין השטחים של משולשים עם אותו גובה שווה ליחס בין הבסיסים שלהם.</td></tr>
+      <tr><td class="term">תיכון</td><td>תיכון מחלק את המשולש לשני משולשים שווי שטח.</td></tr>
+      <tr><td class="term">בסיס משותף ומקבילים</td><td>משולשים עם בסיס משותף שהקודקודים השלישיים שלהם על ישר מקביל לבסיס שווים בשטחם.</td></tr>
+      <tr><td class="term">משולשים דומים</td><td>יחס השטחים שווה לריבוע יחס הדמיון. ראו 7.6.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="ch" id="back">
+  <h2>להמשך</h2>
+  <p>להסברים מלאים, שרטוטים ודוגמאות פתורות: <a href="geometry-01-loci-triangle-centers.html">מקומות גאומטריים ונקודות מיוחדות</a> · <a href="geometry-02-circle.html">המעגל</a> · <a href="geometry-03-similarity.html">פרופורציה ודמיון</a>. להגדרות של כל המושגים באתר: <a href="glossary.html">מילון המושגים</a>.</p>
+  <a class="btn" href="index.html">← לדף הראשי</a>
+</section>
+
+<footer>גאומטריה אוקלידית · דף סיכום: מושגים ומשפטים · מעודכן למיקוד תשפ״ז</footer>
+</div>
+<script>
+// Search filters table rows across all sections; the checkbox hides rows the תשפ"ז focus removed
+(function(){
+  const q = document.getElementById('q'), hide = document.getElementById('hideRemoved'), count = document.getElementById('count');
+  const rows = [...document.querySelectorAll('section.ch tbody tr')];
+  const sections = [...document.querySelectorAll('section.ch')].filter(s => s.id !== 'back');
+  const text = r => (r.dataset.t ??= r.textContent.replace(/\s+/g,' ').toLowerCase());
+  function apply(){
+    const term = q.value.trim().toLowerCase();
+    document.body.classList.toggle('hide-removed', hide.checked);
+    let shown = 0;
+    rows.forEach(r => {
+      const ok = !term || text(r).includes(term);
+      r.hidden = !ok;
+      if (ok && !(hide.checked && r.classList.contains('removed'))) shown++;
+    });
+    sections.forEach(s => {
+      const any = [...s.querySelectorAll('tbody tr')].some(r => !r.hidden && !(hide.checked && r.classList.contains('removed')));
+      s.hidden = !!term && !any;
+    });
+    count.textContent = term ? `${shown} תוצאות` : '';
+  }
+  q.addEventListener('input', apply);
+  hide.addEventListener('change', apply);
+})();
+</script>
+</body>
+</html>
