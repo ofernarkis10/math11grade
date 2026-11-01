@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>סימולטור: נקודה על גלגל</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same worksheet style as the rest of the site (copied from composite-derivatives-02-exercises.html) */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:middle}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td .m{font-size:1rem}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.big{background:var(--accent-soft);border-radius:10px;padding:16px 18px;text-align:center;display:flex;flex-direction:column;gap:6px}
+.big .m{font-size:1.25rem;font-weight:600;white-space:normal}
+.big small{color:var(--muted);font-size:.92rem}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ul.mistakes{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+.steps .m{white-space:normal}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+
+/* inner/outer machine diagram, drawn left-to-right like the formula */
+.machine{direction:ltr;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:14px 8px;font-family:var(--f-math);font-size:.95rem}
+.machine .box{border:2px solid var(--accent);border-radius:8px;padding:8px 12px;text-align:center;line-height:1.3;background:var(--paper)}
+.machine .box.out{border-color:var(--mark)}
+.machine .box small{display:block;font-family:var(--f-body);font-size:.75rem;color:var(--muted)}
+.machine .val{padding:6px 10px;background:var(--accent-soft);border-radius:99px}
+.machine .arr{color:var(--muted)}
+.inner{color:var(--accent);font-weight:600}
+.outer{color:var(--mark);font-weight:600}
+
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+@media print{body{background:#fff} details{display:block} details .sol{display:block} summary{display:none} nav{display:none}}
+.lead a{color:var(--accent);font-weight:600}
+/* Every solution: "דרך החשיבה" (how to recognise the structure and choose the rule), numbered steps, and the answer */
+.think{background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.think-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.think p{margin:0}
+ol.st{margin:6px 0 0;padding-inline-start:24px;display:flex;flex-direction:column;gap:6px}
+ol.st li::marker{font-weight:700;color:var(--mark)}
+ol.st b{color:var(--mark)}
+.sol .ans{font-weight:700;border-top:1px dashed var(--line);padding-top:8px;margin-top:4px}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+<style>
+/* wheel-motion topic additions */
+.fig{display:flex;justify-content:center}
+.fig svg{max-width:440px;width:100%;height:auto}
+.fig svg text{font-family:var(--f-body);fill:var(--ink)}
+.cap{color:var(--muted);font-size:.9rem;text-align:center}
+.blue{color:var(--accent);font-weight:700}
+.orange{color:var(--mark);font-weight:700}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+.toolbar button{font-family:var(--f-body);font-size:.95rem;border:1px solid var(--accent);background:var(--paper);color:var(--accent);padding:6px 14px;border-radius:8px;cursor:pointer}
+.toolbar button:hover{background:var(--accent-soft)}
+body.nosol details{display:none}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pager a{color:var(--accent);font-weight:600;text-decoration:none}
+.pager a:hover{text-decoration:underline}
+ol.method{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:4px}
+ol.method li::marker{font-weight:700;color:var(--accent)}
+.sol .chk{color:var(--muted);font-size:.95rem}
+.blank td{height:2.2em}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html#wheel-motion">→ חזרה לנושא: תנועה על גלגל ועל גלגל מתגלגל</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · טריגונומטריה · תנועה על גלגל ועל גלגל מתגלגל</span>
+  <h1>סימולטור: נקודה על גלגל</h1>
+  <p class="lead">סימולטור אינטראקטיבי של הנוסחה הכללית: משנים את מיקום המרכז, את מהירותו, את הרדיוס, את הזווית ההתחלתית ואת המהירות הזוויתית, ורואים את מסלול הנקודה. במצב ״גלגל מתגלגל״ רואים ציקלואידה. מתאים להדגמה בכיתה ולבדיקת תשובות.</p>
+</header>
+<nav aria-label="תוכן"><strong>תוכן</strong><ol><li><a href="#sim">הסימולטור</a></li><li><a href="#try">מה כדאי לנסות</a></li></ol></nav>
+
+
+<section class="ch" id="sim"><h2>הסימולטור</h2>
+<p class="lead">משנים את 7 הרכיבים ורואים את המסלול של הנקודה. במצב ״גלגל מתגלגל״ הסימולטור מחשב בעצמו את <span class="m">\(y_0 = R\)</span>, <span class="m">\(v_y = 0\)</span> ו־<span class="m">\(\omega = -\dfrac{180\,v_x}{\pi R}\)</span>.</p>
+<div id="ctl" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px">
+<label><span class="m">\(x_0\)</span><input type="number" id="x0" value="1" step="0.5"></label>
+<label><span class="m">\(y_0\)</span><input type="number" id="y0" value="3" step="0.5"></label>
+<label><span class="m">\(v_x\)</span><input type="number" id="vx" value="1.5" step="0.1"></label>
+<label><span class="m">\(v_y\)</span><input type="number" id="vy" value="0.5" step="0.1"></label>
+<label><span class="m">\(R\)</span><input type="number" id="R" value="1.5" step="0.1" min="0.1"></label>
+<label><span class="m">\(\theta_0\)</span> (°)<input type="number" id="th0" value="90" step="15"></label>
+<label><span class="m">\(\omega\)</span> (°/s)<input type="number" id="w" value="-90" step="15"></label>
+<label>מהירות הצגה<input type="number" id="spd" value="1" step="0.25" min="0.25"></label>
+</div>
+<label><input type="checkbox" id="roll"> גלגל מתגלגל על ציר x (בלי החלקה)</label>
+<div class="toolbar"><button type="button" id="play">▶ הפעלה</button><button type="button" id="reset">⟲ איפוס</button>
+<button type="button" id="ex1">דוגמה: גלגל חופשי</button><button type="button" id="ex2">דוגמה: ציקלואידה</button></div>
+<div class="big" id="formula" style="direction:ltr;font-family:var(--f-math);font-size:.95rem"></div>
+<canvas id="cv" style="width:100%;background:#fff;border:1px solid var(--line);border-radius:10px;direction:ltr"></canvas>
+<p id="readout" style="direction:ltr;text-align:center;font-family:var(--f-math);font-size:.9rem"></p>
+</section>
+
+<section class="ch" id="try"><h2>מה כדאי לנסות</h2>
+<ol class="method">
+<li>שנו רק את <span class="m">\(\omega\)</span> לערך חיובי: הנקודה מסתובבת נגד השעון.</li>
+<li>אפסו את <span class="m">\(v_x\)</span> ואת <span class="m">\(v_y\)</span>: הגלגל מסתובב במקום, והמסלול הוא מעגל.</li>
+<li>אפסו את <span class="m">\(\omega\)</span>: הנקודה זזה בקו ישר, כמו המרכז.</li>
+<li>סמנו ״גלגל מתגלגל״ ושנו את <span class="m">\(\theta_0\)</span> ל־270: הנקודה מתחילה בקרקע ומציירת ציקלואידה; היא נוגעת בקרקע פעם בכל היקף.</li>
+<li>בדקו תשובה של שאלה מדף התרגול: הכניסו את הרכיבים, עצרו בזמן הנדרש וקראו את P בשורה שמתחת לשרטוט.</li>
+</ol>
+</section>
+
+<style>
+#ctl label{display:flex;flex-direction:column;gap:2px;font-size:.95rem}
+#ctl input{width:100%;font-family:var(--f-math);font-size:1rem;padding:4px 6px;border:1px solid var(--line);border-radius:6px;direction:ltr;background:var(--paper);color:var(--ink)}
+</style>
+<script>
+(function(){
+var $=function(id){return document.getElementById(id);};
+var cv=$('cv'),ctx=cv.getContext('2d');
+var t=0,running=false,last=null,trail=[];
+var XMIN=-1,XMAX=25,YMIN=-1;
+function size(){var w=cv.clientWidth,d=window.devicePixelRatio||1;cv.width=w*d;cv.height=w*0.5*d;cv.style.height=(w*0.5)+'px';draw();}
+function P(){var p={};['x0','y0','vx','vy','R','th0','w','spd'].forEach(function(k){p[k]=parseFloat($(k).value)||0;});
+ if(p.R<=0)p.R=0.1;
+ if($('roll').checked){p.y0=p.R;p.vy=0;p.w=-p.vx*180/(Math.PI*p.R);
+  $('y0').value=+p.y0.toFixed(3);$('vy').value=0;$('w').value=+p.w.toFixed(2);}
+ return p;}
+function sg(n){n=+n.toFixed(2);return n<0?'− '+(-n):'+ '+n;}
+function formula(p){var R=+p.R.toFixed(2),th=+p.th0.toFixed(2);
+ $('formula').innerHTML='x(t) = '+(+p.x0.toFixed(2))+' '+sg(p.vx)+'·t + '+R+'·cos('+th+' '+sg(p.w)+'·t)<br>'+
+ 'y(t) = '+(+p.y0.toFixed(2))+' '+sg(p.vy)+'·t + '+R+'·sin('+th+' '+sg(p.w)+'·t)';}
+function draw(){var p=P();formula(p);var d=window.devicePixelRatio||1;
+ var W=cv.width,H=cv.height,s=W/(XMAX-XMIN);
+ var X=function(x){return (x-XMIN)*s;},Y=function(y){return H-(y-YMIN)*s;};
+ ctx.clearRect(0,0,W,H);ctx.lineWidth=d;ctx.strokeStyle='#eceff3';
+ for(var i=Math.ceil(XMIN);i<=XMAX;i++){ctx.beginPath();ctx.moveTo(X(i),0);ctx.lineTo(X(i),H);ctx.stroke();}
+ for(var j=Math.ceil(YMIN);j<=YMIN+H/s;j++){ctx.beginPath();ctx.moveTo(0,Y(j));ctx.lineTo(W,Y(j));ctx.stroke();}
+ ctx.strokeStyle='#8a96a6';ctx.beginPath();ctx.moveTo(0,Y(0));ctx.lineTo(W,Y(0));ctx.moveTo(X(0),0);ctx.lineTo(X(0),H);ctx.stroke();
+ ctx.fillStyle='#8a96a6';ctx.font=(11*d)+'px sans-serif';for(var k=0;k<=XMAX;k+=5)ctx.fillText(k,X(k)+2,Y(0)+12*d);
+ var cx=p.x0+p.vx*t,cy=p.y0+p.vy*t,th=(p.th0+p.w*t)*Math.PI/180,px=cx+p.R*Math.cos(th),py=cy+p.R*Math.sin(th);
+ ctx.setLineDash([5*d,5*d]);ctx.strokeStyle='#1f6f8b';ctx.beginPath();ctx.moveTo(X(p.x0),Y(p.y0));ctx.lineTo(X(cx),Y(cy));ctx.stroke();ctx.setLineDash([]);
+ ctx.strokeStyle='#b4561e';ctx.lineWidth=2*d;ctx.beginPath();
+ trail.forEach(function(q,i){if(i)ctx.lineTo(X(q[0]),Y(q[1]));else ctx.moveTo(X(q[0]),Y(q[1]));});ctx.stroke();
+ ctx.strokeStyle='#1c2633';ctx.beginPath();ctx.arc(X(cx),Y(cy),p.R*s,0,2*Math.PI);ctx.stroke();
+ for(var q=1;q<4;q++){var a=th+q*Math.PI/2;ctx.strokeStyle='#c9d1db';ctx.lineWidth=d;ctx.beginPath();ctx.moveTo(X(cx),Y(cy));ctx.lineTo(X(cx+p.R*Math.cos(a)),Y(cy+p.R*Math.sin(a)));ctx.stroke();}
+ ctx.strokeStyle='#1c2633';ctx.lineWidth=2*d;ctx.beginPath();ctx.moveTo(X(cx),Y(cy));ctx.lineTo(X(px),Y(py));ctx.stroke();
+ ctx.fillStyle='#1c2633';ctx.beginPath();ctx.arc(X(cx),Y(cy),3.5*d,0,7);ctx.fill();
+ ctx.fillStyle='#b4561e';ctx.beginPath();ctx.arc(X(px),Y(py),6*d,0,7);ctx.fill();
+ var deg=((p.th0+p.w*t)%360+360)%360;
+ $('readout').textContent='t = '+t.toFixed(2)+' s  |  C = ('+cx.toFixed(2)+', '+cy.toFixed(2)+')  |  θ = '+deg.toFixed(1)+'°  |  P = ('+px.toFixed(2)+', '+py.toFixed(2)+')';
+ return [px,py];}
+function step(ts){if(!running)return;if(last!==null)t+=(ts-last)/1000*(parseFloat($('spd').value)||1);last=ts;
+ trail.push(draw());if(trail.length>4000)trail.shift();requestAnimationFrame(step);}
+$('play').onclick=function(){running=!running;$('play').textContent=running?'⏸ עצירה':'▶ הפעלה';last=null;if(running)requestAnimationFrame(step);};
+function reset(){t=0;trail=[];trail.push(draw());}
+$('reset').onclick=reset;
+document.querySelectorAll('#ctl input,#roll').forEach(function(e){e.addEventListener('input',reset);});
+function setv(o,r){for(var k in o)$(k).value=o[k];$('roll').checked=r;reset();}
+$('ex1').onclick=function(){setv({x0:1,y0:3,vx:1.5,vy:0.5,R:1.5,th0:90,w:-90},false);};
+$('ex2').onclick=function(){setv({x0:1,y0:2,vx:1.5708,vy:0,R:2,th0:270,w:-45},true);};
+window.addEventListener('resize',size);size();reset();
+})();
+</script>
+
+<nav class="pager" aria-label="דפים סמוכים" style="background:none;border:0;padding:0"><a href="wheel-motion-00-theory.html">→ תאוריה: שתי משוואות ונוסחה אחת</a><a href="wheel-motion-02-substitution.html">תרגול ראשון: הצבה בנוסחה ←</a></nav>
+<footer>דף 01 בנושא תנועה על גלגל ועל גלגל מתגלגל</footer>
+</div>
+
+</body>
+</html>

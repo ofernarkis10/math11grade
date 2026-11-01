@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>תרגול משולב: בונים את הנוסחה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same worksheet style as the rest of the site (copied from composite-derivatives-02-exercises.html) */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:middle}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td .m{font-size:1rem}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.big{background:var(--accent-soft);border-radius:10px;padding:16px 18px;text-align:center;display:flex;flex-direction:column;gap:6px}
+.big .m{font-size:1.25rem;font-weight:600;white-space:normal}
+.big small{color:var(--muted);font-size:.92rem}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ul.mistakes{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+.steps .m{white-space:normal}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+
+/* inner/outer machine diagram, drawn left-to-right like the formula */
+.machine{direction:ltr;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:14px 8px;font-family:var(--f-math);font-size:.95rem}
+.machine .box{border:2px solid var(--accent);border-radius:8px;padding:8px 12px;text-align:center;line-height:1.3;background:var(--paper)}
+.machine .box.out{border-color:var(--mark)}
+.machine .box small{display:block;font-family:var(--f-body);font-size:.75rem;color:var(--muted)}
+.machine .val{padding:6px 10px;background:var(--accent-soft);border-radius:99px}
+.machine .arr{color:var(--muted)}
+.inner{color:var(--accent);font-weight:600}
+.outer{color:var(--mark);font-weight:600}
+
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+@media print{body{background:#fff} details{display:block} details .sol{display:block} summary{display:none} nav{display:none}}
+.lead a{color:var(--accent);font-weight:600}
+/* Every solution: "דרך החשיבה" (how to recognise the structure and choose the rule), numbered steps, and the answer */
+.think{background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.think-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.think p{margin:0}
+ol.st{margin:6px 0 0;padding-inline-start:24px;display:flex;flex-direction:column;gap:6px}
+ol.st li::marker{font-weight:700;color:var(--mark)}
+ol.st b{color:var(--mark)}
+.sol .ans{font-weight:700;border-top:1px dashed var(--line);padding-top:8px;margin-top:4px}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+<style>
+/* wheel-motion topic additions */
+.fig{display:flex;justify-content:center}
+.fig svg{max-width:440px;width:100%;height:auto}
+.fig svg text{font-family:var(--f-body);fill:var(--ink)}
+.cap{color:var(--muted);font-size:.9rem;text-align:center}
+.blue{color:var(--accent);font-weight:700}
+.orange{color:var(--mark);font-weight:700}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+.toolbar button{font-family:var(--f-body);font-size:.95rem;border:1px solid var(--accent);background:var(--paper);color:var(--accent);padding:6px 14px;border-radius:8px;cursor:pointer}
+.toolbar button:hover{background:var(--accent-soft)}
+body.nosol details{display:none}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pager a{color:var(--accent);font-weight:600;text-decoration:none}
+.pager a:hover{text-decoration:underline}
+ol.method{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:4px}
+ol.method li::marker{font-weight:700;color:var(--accent)}
+.sol .chk{color:var(--muted);font-size:.95rem}
+.blank td{height:2.2em}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html#wheel-motion">→ חזרה לנושא: תנועה על גלגל ועל גלגל מתגלגל</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · טריגונומטריה · תנועה על גלגל ועל גלגל מתגלגל</span>
+  <h1>תרגול משולב: בונים את הנוסחה</h1>
+  <p class="lead">18 שאלות שמחברות את שתי המשוואות לשאלה אחת. בכל שאלה: מוצאים קודם את כל 7 הרכיבים, רושמים את הנוסחה המלאה, ורק אז מציבים. ההסבר והשיטה בדף <a href="wheel-motion-00-theory.html#general">התאוריה</a>.</p>
+</header>
+<nav aria-label="תוכן"><strong>תוכן</strong><ol><li><a href="#lvl1">רמה א׳: גלגל חופשי (1–8)</a></li><li><a href="#lvl2">רמה ב׳: גלגל מתגלגל (9–14)</a></li><li><a href="#lvl3">רמה ג׳: רמת בגרות (15–18)</a></li></ol></nav>
+<div class="toolbar"><button type="button" onclick="toggleSol(this)">הסתרת פתרונות (דף עבודה)</button><button type="button" onclick="openAll(true)">פתיחת כל הפתרונות</button><button type="button" onclick="openAll(false)">סגירת כל הפתרונות</button></div>
+<div class="tablebox"><table class="blank"><tr><th>רכיב</th><th><span class="m">\(x_0\)</span></th><th><span class="m">\(y_0\)</span></th><th><span class="m">\(v_x\)</span></th><th><span class="m">\(v_y\)</span></th><th><span class="m">\(R\)</span></th><th><span class="m">\(\theta_0\)</span></th><th><span class="m">\(\omega\)</span></th></tr><tr><td>ערך</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table></div>
+<p class="cap">טבלת עבודה: מעתיקים למחברת וממלאים בכל שאלה לפני שרושמים את הנוסחה.</p><div class="big"><span class="m">\(x(t) = \color{#1f6f8b}{x_0 + v_x t} + R\cos(\color{#b4561e}{\theta_0 + \omega t})\)</span><br><span class="m">\(y(t) = \color{#1f6f8b}{y_0 + v_y t} + R\sin(\color{#b4561e}{\theta_0 + \omega t})\)</span></div><section class="ch level" id="lvl1"><h2>רמה א׳: גלגל חופשי <small>שאלות 1–8</small></h2><p class="lead">מוצאים את 7 הרכיבים, רושמים את הנוסחה ומציבים; גם קריאה הפוכה של נוסחה.</p><ol class="exercises" start="1"><li>גלגל ברדיוס 2. המרכז מתחיל ב־<span class="m">\((0,5)\)</span> עם <span class="m">\(v_x = 3,\ v_y = 1\)</span>. הגלגל מסתובב נגד השעון ב־<span class="m">\(90^\circ\)</span> לשנייה. ב־<span class="m">\(t=0\)</span> הנקודה P בצד ימין של הגלגל. (א) מלאו את טבלת הרכיבים ורשמו את הנוסחה. (ב) מצאו את P ב־<span class="m">\(t=1\)</span> וב־<span class="m">\(t=2\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>כל הרכיבים נתונים כמעט ישירות; צריך רק לתרגם ״צד ימין״ לזווית 0. אחרי שהנוסחה כתובה, בכל זמן מחשבים קודם את המרכז ואת הזווית, ואז מוסיפים את ההזזה מהמרכז.</p></div><ol class="st"><li><b>רכיבים:</b> <span class="m">\(x_0=0,\ y_0=5,\ v_x=3,\ v_y=1,\ R=2,\ \theta_0=0^\circ,\ \omega=90\)</span></li><li><b>נוסחה:</b> <span class="m">\(x(t) = 3t + 2\cos(90t),\ y(t) = 5 + t + 2\sin(90t)\)</span></li><li><b>t = 1:</b> מרכז <span class="m">\((3,6)\)</span>, זווית <span class="m">\(90^\circ\)</span> — <span class="m">\(P = (3, 6+2) = (3,8)\)</span></li><li><b>t = 2:</b> מרכז <span class="m">\((6,7)\)</span>, זווית <span class="m">\(180^\circ\)</span> — <span class="m">\(P = (6-2, 7) = (4,7)\)</span></li></ol><p class="ans">תשובה: <span class="m">\(P(1) = (3,8),\ P(2) = (4,7)\)</span></p><p class="chk"><b>בדיקה:</b> המרחק של P מהמרכז בשני המקרים הוא 2 = R ✓</p></div></details></li>
+<li>מרכז גלגל ברדיוס 3 עובר מ־<span class="m">\((1,1)\)</span> ל־<span class="m">\((11,6)\)</span> תוך 5 שניות. ב־<span class="m">\(t=0\)</span> הנקודה P בראש הגלגל. הגלגל משלים סיבוב כל 12 שניות עם כיוון השעון. רשמו את הנוסחה ומצאו את P ב־<span class="m">\(t=3\)</span> וב־<span class="m">\(t=6\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>שני רכיבים צריך לחשב: את מהירות המרכז משתי נקודות, ואת ω מזמן המחזור עם סימן שלילי. ״ראש הגלגל״ הוא 90 מעלות.</p></div><ol class="st"><li><b>מרכז:</b> <span class="m">\(v_x = \dfrac{10}{5} = 2,\ v_y = \dfrac{5}{5} = 1\)</span></li><li><b>סיבוב:</b> <span class="m">\(\theta_0 = 90^\circ,\ \omega = -\dfrac{360}{12} = -30\)</span></li><li><b>נוסחה:</b> <span class="m">\(x(t) = 1 + 2t + 3\cos(90-30t),\ y(t) = 1 + t + 3\sin(90-30t)\)</span></li><li><b>t = 3:</b> מרכז <span class="m">\((7,4)\)</span>, זווית <span class="m">\(0^\circ\)</span> — <span class="m">\(P = (10,4)\)</span></li><li><b>t = 6:</b> מרכז <span class="m">\((13,7)\)</span>, זווית <span class="m">\(-90^\circ\)</span> — <span class="m">\(P = (13,4)\)</span></li></ol><p class="ans">תשובה: <span class="m">\(P(3) = (10,4),\ P(6) = (13,4)\)</span></p><p class="chk"><b>בדיקה:</b> עם השעון, מהראש עוברים לימין (אחרי רבע מחזור, 3 שניות) ואז לתחתית (6 שניות) ✓</p></div></details></li>
+<li>נתונה הנוסחה <span class="m">\(x(t) = 4 + 3t + 2\cos(60 + 45t),\ y(t) = -1 + 4t + 2\sin(60 + 45t)\)</span>. מהו מיקום ההתחלה של המרכז ומהו גודל מהירותו? מהו הרדיוס ומהי הזווית ההתחלתית? באיזה כיוון מסתובב הגלגל ומהו זמן המחזור? איפה הנקודה ב־<span class="m">\(t=0\)</span>?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>קוראים את הנוסחה ״הפוך״: משווים אותה לנוסחה הכללית ומזהים כל רכיב לפי מקומו. אחר כך מחשבים ממנו את מה שנשאל.</p></div><ol class="st"><li><b>זיהוי:</b> <span class="m">\(x_0=4,\ y_0=-1,\ v_x=3,\ v_y=4,\ R=2,\ \theta_0=60^\circ,\ \omega=45\)</span></li><li><b>גודל המהירות:</b> <span class="m">\(|v| = \sqrt{9+16} = 5\)</span></li><li><b>כיוון ומחזור:</b> <span class="m">\(\omega \gt 0\)</span> נגד השעון; <span class="m">\(T = \dfrac{360}{45} = 8\)</span></li><li><b>t = 0:</b> <span class="m">\(x = 4 + 2\cos 60^\circ = 5,\ y = -1 + 2\sin 60^\circ = -1+\sqrt3 \approx 0.73\)</span></li></ol><p class="ans">תשובה: מרכז מתחיל ב־<span class="m">\((4,-1)\)</span>, <span class="m">\(|v|=5\)</span>, <span class="m">\(R=2,\ \theta_0=60^\circ\)</span>, נגד השעון, <span class="m">\(T=8\)</span>; <span class="m">\(P(0) = (5,\ -1+\sqrt3)\)</span></p><p class="chk"><b>בדיקה:</b> המרחק של <span class="m">\((5, -1+\sqrt3)\)</span> מ־<span class="m">\((4,-1)\)</span>: <span class="m">\(\sqrt{1+3} = 2\)</span> ✓</p></div></details></li>
+<li>ב־<span class="m">\(t=0\)</span> מרכז הגלגל ב־<span class="m">\((3,3)\)</span> והנקודה P ב־<span class="m">\((5,3)\)</span>. ב־<span class="m">\(t=2\)</span> המרכז ב־<span class="m">\((9,5)\)</span> והנקודה ב־<span class="m">\((9,7)\)</span>. הגלגל מסתובב נגד השעון והשלים פחות מסיבוב. מצאו את כל הרכיבים, רשמו את הנוסחה ומצאו את P ב־<span class="m">\(t=4\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>הכול נתון כמיקומים. מהמרכז בשני הזמנים: מהירות המרכז. מההפרש בין P למרכז בכל זמן: הרדיוס והזווית באותו רגע. משתי הזוויות: ω.</p></div><ol class="st"><li><b>רדיוס וזווית התחלה:</b> <span class="m">\(P - C = (2,0) \Rightarrow R = 2,\ \theta_0 = 0^\circ\)</span></li><li><b>מהירות המרכז:</b> <span class="m">\(v_x = \dfrac{6}{2} = 3,\ v_y = \dfrac{2}{2} = 1\)</span></li><li><b>זווית ב־t = 2:</b> <span class="m">\(P - C = (0,2) \Rightarrow \theta = 90^\circ\)</span></li><li><b>מהירות זוויתית:</b> <span class="m">\(\omega = \dfrac{90-0}{2} = 45\)</span></li><li><b>נוסחה:</b> <span class="m">\(x(t) = 3 + 3t + 2\cos(45t),\ y(t) = 3 + t + 2\sin(45t)\)</span></li><li><b>t = 4:</b> מרכז <span class="m">\((15,7)\)</span>, זווית <span class="m">\(180^\circ\)</span> — <span class="m">\(P = (13,7)\)</span></li></ol><p class="ans">תשובה: <span class="m">\(P(4) = (13,7)\)</span></p><p class="chk"><b>בדיקה:</b> הצבת t = 2 בנוסחה: <span class="m">\((3+6+0,\ 3+2+2) = (9,7)\)</span> ✓</p></div></details></li>
+<li>גלגל ברדיוס 1. המרכז מתחיל ב־<span class="m">\((2,0)\)</span> עם <span class="m">\(v_x = 1,\ v_y = 2\)</span>. הגלגל מסתובב עם השעון ב־<span class="m">\(90^\circ\)</span> לשנייה, ו־P מתחילה בראש הגלגל. רשמו את הנוסחה ומצאו את P ב־<span class="m">\(t=1\)</span> וב־<span class="m">\(t=2\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>מתרגמים: ״ראש הגלגל״ 90 מעלות, ״עם השעון״ ω שלילית. שאר הרכיבים נתונים.</p></div><ol class="st"><li><b>רכיבים:</b> <span class="m">\(x_0=2,\ y_0=0,\ v_x=1,\ v_y=2,\ R=1,\ \theta_0=90^\circ,\ \omega=-90\)</span></li><li><b>נוסחה:</b> <span class="m">\(x = 2 + t + \cos(90 - 90t),\ y = 2t + \sin(90 - 90t)\)</span></li><li><b>t = 1:</b> מרכז <span class="m">\((3,2)\)</span>, זווית <span class="m">\(0^\circ\)</span> — <span class="m">\(P = (4,2)\)</span></li><li><b>t = 2:</b> מרכז <span class="m">\((4,4)\)</span>, זווית <span class="m">\(-90^\circ\)</span> — <span class="m">\(P = (4,3)\)</span></li></ol><p class="ans">תשובה: <span class="m">\(P(1) = (4,2),\ P(2) = (4,3)\)</span></p><p class="chk"><b>בדיקה:</b> עם השעון מהראש: ימין ואז תחתית ✓</p></div></details></li>
+<li>מרכז גלגל ברדיוס 2 עובר מ־<span class="m">\((0,2)\)</span> ל־<span class="m">\((12,8)\)</span> תוך 6 שניות. P מתחילה בצד שמאל. הגלגל משלים סיבוב כל 8 שניות נגד השעון. רשמו את הנוסחה ומצאו את P ב־<span class="m">\(t=2\)</span> וב־<span class="m">\(t=4\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>מהירות המרכז משתי נקודות, ω מזמן המחזור (חיובית), ו״צד שמאל״ 180 מעלות.</p></div><ol class="st"><li><b>מרכז:</b> <span class="m">\(v_x = 2,\ v_y = 1\)</span></li><li><b>סיבוב:</b> <span class="m">\(\theta_0 = 180^\circ,\ \omega = 45\)</span></li><li><b>נוסחה:</b> <span class="m">\(x = 2t + 2\cos(180+45t),\ y = 2 + t + 2\sin(180+45t)\)</span></li><li><b>t = 2:</b> מרכז <span class="m">\((4,4)\)</span>, זווית <span class="m">\(270^\circ\)</span> — <span class="m">\(P = (4,2)\)</span></li><li><b>t = 4:</b> מרכז <span class="m">\((8,6)\)</span>, זווית <span class="m">\(360^\circ\)</span> — <span class="m">\(P = (10,6)\)</span></li></ol><p class="ans">תשובה: <span class="m">\(P(2) = (4,2),\ P(4) = (10,6)\)</span></p><p class="chk"><b>בדיקה:</b> נגד השעון משמאל: תחתית ואז ימין ✓</p></div></details></li>
+<li>נתונה הנוסחה <span class="m">\(x(t) = -2 + 5t + 3\cos(120 - 30t),\ y(t) = 6 - t + 3\sin(120 - 30t)\)</span>. מהו מיקום ההתחלה של המרכז וגודל מהירותו? מהו הרדיוס והזווית ההתחלתית? כיוון הסיבוב וזמן המחזור? איפה P ב־<span class="m">\(t=0\)</span>?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>מזהים רכיבים לפי מקומם בנוסחה הכללית, ושמים לב לסימנים.</p></div><ol class="st"><li><b>זיהוי:</b> <span class="m">\(x_0=-2,\ y_0=6,\ v_x=5,\ v_y=-1,\ R=3,\ \theta_0=120^\circ,\ \omega=-30\)</span></li><li><b>גודל המהירות:</b> <span class="m">\(|v| = \sqrt{26} \approx 5.10\)</span></li><li><b>כיוון ומחזור:</b> עם השעון, <span class="m">\(T = 12\)</span></li><li><b>t = 0:</b> <span class="m">\(x = -2 + 3\cos 120^\circ = -3.5,\ y = 6 + 3\sin 120^\circ \approx 8.60\)</span></li></ol><p class="ans">תשובה: מרכז <span class="m">\((-2,6)\)</span>, <span class="m">\(|v| \approx 5.10\)</span>, <span class="m">\(R = 3,\ \theta_0 = 120^\circ\)</span>, עם השעון, <span class="m">\(T=12\)</span>; <span class="m">\(P(0) \approx (-3.5,\ 8.60)\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(1.5^2 + 2.6^2 \approx 9\)</span> ✓</p></div></details></li>
+<li>ב־<span class="m">\(t=0\)</span> המרכז ב־<span class="m">\((0,0)\)</span> ו־P ב־<span class="m">\((0,3)\)</span>. ב־<span class="m">\(t=3\)</span> המרכז ב־<span class="m">\((6,-3)\)</span> ו־P ב־<span class="m">\((3,-3)\)</span>. הגלגל מסתובב נגד השעון והשלים פחות מסיבוב. מצאו את כל הרכיבים ואת P ב־<span class="m">\(t=6\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>מההפרש P פחות המרכז בכל זמן: רדיוס וזווית. מהמרכזים: מהירות. משתי הזוויות: ω.</p></div><ol class="st"><li><b>התחלה:</b> <span class="m">\(P - C = (0,3) \Rightarrow R = 3,\ \theta_0 = 90^\circ\)</span></li><li><b>מרכז:</b> <span class="m">\(v_x = 2,\ v_y = -1\)</span></li><li><b>זווית ב־t = 3:</b> <span class="m">\(P - C = (-3, 0) \Rightarrow 180^\circ\)</span></li><li><b>מהירות זוויתית:</b> <span class="m">\(\omega = \dfrac{90}{3} = 30\)</span></li><li><b>t = 6:</b> מרכז <span class="m">\((12,-6)\)</span>, זווית <span class="m">\(270^\circ\)</span> — <span class="m">\(P = (12,-9)\)</span></li></ol><p class="ans">תשובה: <span class="m">\(P(6) = (12,-9)\)</span></p><p class="chk"><b>בדיקה:</b> הצבת t = 3 בנוסחה נותנת <span class="m">\((3,-3)\)</span> ✓</p></div></details></li></ol></section><section class="ch level" id="lvl2"><h2>רמה ב׳: גלגל מתגלגל <small>שאלות 9–14</small></h2><p class="lead">מהירות המרכז מתוך הסיבוב, מתי נקודה נוגעת בקרקע, ותנאי אי־ההחלקה.</p><ol class="exercises" start="9"><li>גלגל ברדיוס 1 מתגלגל ימינה על ציר x בלי החלקה ומשלים סיבוב כל 4 שניות. ב־<span class="m">\(t=0\)</span> המרכז ב־<span class="m">\((0,1)\)</span> והנקודה P נוגעת בקרקע. מצאו את מהירות המרכז מתוך הסיבוב, רשמו את הנוסחה, ומצאו את P ב־<span class="m">\(t=2\)</span> וב־<span class="m">\(t=4\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>בגלגל מתגלגל מהירות המרכז לא נתונה: מחשבים אותה מהסיבוב (היקף לכל סיבוב). ״נוגעת בקרקע״ היא 270 מעלות, וימינה פירושו ω שלילית.</p></div><ol class="st"><li><b>מהירות המרכז:</b> <span class="m">\(v_x = \dfrac{2\pi\cdot 1}{4} = \dfrac{\pi}{2},\ v_y = 0\)</span></li><li><b>סיבוב:</b> <span class="m">\(\theta_0 = 270^\circ,\ \omega = -90\)</span></li><li><b>נוסחה:</b> <span class="m">\(x(t) = \tfrac{\pi}{2}t + \cos(270-90t),\ y(t) = 1 + \sin(270-90t)\)</span></li><li><b>t = 2:</b> זווית <span class="m">\(90^\circ\)</span> — <span class="m">\(P = (\pi, 2)\)</span></li><li><b>t = 4:</b> זווית <span class="m">\(-90^\circ\)</span> — <span class="m">\(P = (2\pi, 0)\)</span></li></ol><p class="ans">תשובה: <span class="m">\(P(2) = (\pi,2)\)</span> (ראש הגלגל), <span class="m">\(P(4) = (2\pi,0)\)</span> (שוב בקרקע)</p><p class="chk"><b>בדיקה:</b> אחרי סיבוב שלם P חזרה לקרקע במרחק <span class="m">\(2\pi\)</span> — היקף אחד ✓</p></div></details></li>
+<li>גלגל ברדיוס 0.5 מתגלגל ימינה ב־2 סיבובים לשנייה. ב־<span class="m">\(t=0\)</span> המרכז ב־<span class="m">\((0,0.5)\)</span> והנקודה P בצד ימין של הגלגל. רשמו את הנוסחה. מתי P נוגעת בקרקע לראשונה, ומה x שלה אז?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>״נוגעת בקרקע״ פירושו y = 0, כלומר הזווית −90 מעלות (התחתית). מתחילים מ־0 מעלות ומסתובבים עם השעון, ולכן מגיעים לשם אחרי רבע סיבוב.</p></div><ol class="st"><li><b>מהירות המרכז:</b> <span class="m">\(v_x = 2\pi\cdot 0.5\cdot 2 = 2\pi\)</span></li><li><b>סיבוב:</b> <span class="m">\(\theta_0 = 0^\circ,\ \omega = -720\)</span></li><li><b>נוסחה:</b> <span class="m">\(x(t) = 2\pi t + 0.5\cos(-720t),\ y(t) = 0.5 + 0.5\sin(-720t)\)</span></li><li><b>זמן:</b> <span class="m">\(-720t = -90 \Rightarrow t = \tfrac18\)</span></li><li><b>מיקום:</b> <span class="m">\(x = 2\pi\cdot\tfrac18 + 0 = \tfrac{\pi}{4} \approx 0.785\)</span></li></ol><p class="ans">תשובה: ב־<span class="m">\(t = \tfrac18\)</span> שנייה, ב־<span class="m">\(x = \tfrac{\pi}{4}\)</span></p><p class="chk"><b>בדיקה:</b> ברגע המגע P מתחת למרכז בדיוק: המרכז ב־<span class="m">\(x = \tfrac{\pi}{4}\)</span> ✓</p></div></details></li>
+<li>נתונה התנועה <span class="m">\(x(t) = 6t + 3\cos(90 - kt),\ y(t) = 3 + 3\sin(90 - kt)\)</span>. זהו את R, את מהירות המרכז ואת <span class="m">\(\theta_0\)</span>, ומצאו את k כך שהגלגל יתגלגל בלי החלקה.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>מזהים רכיבים מהנוסחה, ובודקים שזה באמת גלגל על הקרקע (גובה המרכז = R). תנאי אי־ההחלקה קושר את ω למהירות המרכז, ולכן k נקבע.</p></div><ol class="st"><li><b>זיהוי:</b> <span class="m">\(R = 3,\ v_x = 6,\ v_y = 0,\ y_0 = 3 = R,\ \theta_0 = 90^\circ\)</span></li><li><b>תנאי:</b> <span class="m">\(|\omega| = \dfrac{180|v|}{\pi R} = \dfrac{180\cdot 6}{3\pi} = \dfrac{360}{\pi}\)</span></li><li><b>k:</b> <span class="m">\(k = \dfrac{360}{\pi} \approx 114.6\)</span></li></ol><p class="ans">תשובה: <span class="m">\(k = \tfrac{360}{\pi} \approx 114.6^\circ/\text{s}\)</span></p><p class="chk"><b>בדיקה:</b> סיבוב לוקח <span class="m">\(\tfrac{360}{k} = \pi\)</span> שניות, ובזמן זה המרכז עובר <span class="m">\(6\pi = 2\pi\cdot 3\)</span> — היקף ✓</p></div></details></li>
+<li>גלגל ברדיוס 2 מתגלגל ימינה בלי החלקה ומשלים סיבוב כל 6 שניות. המרכז מתחיל ב־<span class="m">\((0,2)\)</span> ו־P בראש הגלגל. רשמו את הנוסחה ומצאו את P ב־<span class="m">\(t=1.5\)</span> וב־<span class="m">\(t=3\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>מהירות המרכז מהסיבוב, ω שלילית, וזווית התחלה 90.</p></div><ol class="st"><li><b>מהירות:</b> <span class="m">\(v_x = \dfrac{4\pi}{6} = \dfrac{2\pi}{3}\)</span></li><li><b>סיבוב:</b> <span class="m">\(\theta_0 = 90^\circ,\ \omega = -60\)</span></li><li><b>נוסחה:</b> <span class="m">\(x = \tfrac{2\pi}{3}t + 2\cos(90-60t),\ y = 2 + 2\sin(90-60t)\)</span></li><li><b>t = 1.5:</b> זווית <span class="m">\(0^\circ\)</span>: <span class="m">\(x = \pi + 2 \approx 5.14,\ y = 2\)</span></li><li><b>t = 3:</b> זווית <span class="m">\(-90^\circ\)</span>: <span class="m">\(x = 2\pi \approx 6.28,\ y = 0\)</span></li></ol><p class="ans">תשובה: <span class="m">\((5.14,\ 2)\)</span> ו־<span class="m">\((2\pi,\ 0)\)</span></p><p class="chk"><b>בדיקה:</b> אחרי חצי סיבוב הנקודה עברה מהראש לקרקע ✓</p></div></details></li>
+<li>גלגל ברדיוס 1 מתגלגל ימינה, סיבוב כל 2 שניות. המרכז מתחיל ב־<span class="m">\((0,1)\)</span> ו־P בצד שמאל. מתי P נוגעת בקרקע לראשונה, ומה x שלה אז?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>מצד שמאל (180) עם השעון מגיעים לתחתית (−90) אחרי שלושה רבעי סיבוב: הזווית יורדת 270 מעלות.</p></div><ol class="st"><li><b>רכיבים:</b> <span class="m">\(v_x = \pi,\ \theta_0 = 180^\circ,\ \omega = -180\)</span></li><li><b>זמן:</b> <span class="m">\(180 - 180t = -90 \Rightarrow t = 1.5\)</span></li><li><b>מיקום:</b> <span class="m">\(x = 1.5\pi + \cos(-90^\circ) = 1.5\pi \approx 4.71\)</span></li></ol><p class="ans">תשובה: ב־<span class="m">\(t = 1.5\)</span>, ב־<span class="m">\(x = 1.5\pi \approx 4.71\)</span></p><p class="chk"><b>בדיקה:</b> ברגע המגע P מתחת למרכז, שנמצא ב־<span class="m">\(1.5\pi\)</span> ✓</p></div></details></li>
+<li>נתונה התנועה <span class="m">\(x(t) = 3\pi t + 1.5\cos(270 - kt),\ y(t) = 1.5 + 1.5\sin(270 - kt)\)</span>. זהו את R ואת מהירות המרכז, ומצאו את k כך שאין החלקה.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>גובה המרכז שווה ל־R, ולכן זה גלגל על הקרקע. תנאי אי־ההחלקה נותן את ω.</p></div><ol class="st"><li><b>זיהוי:</b> <span class="m">\(R = 1.5,\ v_x = 3\pi,\ \theta_0 = 270^\circ\)</span></li><li><b>תנאי:</b> <span class="m">\(|\omega| = \dfrac{180\cdot 3\pi}{\pi\cdot 1.5} = 360\)</span></li><li><b>k:</b> <span class="m">\(k = 360\)</span></li></ol><p class="ans">תשובה: <span class="m">\(k = 360^\circ/\text{s}\)</span></p><p class="chk"><b>בדיקה:</b> סיבוב בשנייה, והמרכז עובר <span class="m">\(3\pi = 2\pi\cdot 1.5\)</span> בשנייה ✓</p></div></details></li></ol></section><section class="ch level" id="lvl3"><h2>רמה ג׳: רמת בגרות <small>שאלות 15–18</small></h2><p class="lead">מספרים מהחיים וגלגול שמאלה.</p><ol class="exercises" start="15"><li>השסתום של גלגל אופניים (רדיוס 0.35 מ׳) בראש הגלגל ב־<span class="m">\(t=0\)</span>. האופניים נוסעים ימינה במהירות 7 מ׳/ש׳, והמרכז מתחיל ב־<span class="m">\((0,0.35)\)</span>. מצאו את מספר הסיבובים בשנייה ואת <span class="m">\(\omega\)</span>, רשמו את הנוסחה, ומצאו את גובה השסתום אחרי 0.1 שניות.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>שאלה מהחיים עם מספרים לא עגולים: מחשבים ω מהמהירות והרדיוס, מציבים ומחשבים במחשבון במצב מעלות (DEG).</p></div><ol class="st"><li><b>סיבובים:</b> <span class="m">\(n = \dfrac{7}{0.7\pi} = \dfrac{10}{\pi} \approx 3.18\)</span></li><li><b>מהירות זוויתית:</b> <span class="m">\(\omega = -360n = -\dfrac{3600}{\pi} \approx -1145.9\)</span></li><li><b>נוסחה:</b> <span class="m">\(y(t) = 0.35 + 0.35\sin(90 - 1145.9t)\)</span></li><li><b>זווית:</b> <span class="m">\(90 - 114.59 \approx -24.6^\circ\)</span></li><li><b>גובה:</b> <span class="m">\(y \approx 0.35 + 0.35\cdot(-0.416) \approx 0.204\)</span> מ׳</li></ol><p class="ans">תשובה: כ־3.18 סיבובים בשנייה, <span class="m">\(\omega \approx -1145.9^\circ/\text{s}\)</span>, גובה כ־0.20 מ׳ (20 ס״מ)</p><p class="chk"><b>בדיקה:</b> הזווית שלילית, ולכן השסתום כבר מתחת לגובה המרכז (0.35 מ׳) ועדיין מעל הקרקע: <span class="m">\(0 \lt 0.204 \lt 0.35\)</span> ✓</p></div></details></li>
+<li>גלגל ברדיוס 2 מתגלגל <strong>שמאלה</strong> בלי החלקה. המרכז מתחיל ב־<span class="m">\((20,2)\)</span> ונע במהירות <span class="m">\(\pi\)</span> יחידות לשנייה. ב־<span class="m">\(t=0\)</span> הנקודה P בצד שמאל של הגלגל. מצאו את כל 7 הרכיבים ואת P ב־<span class="m">\(t=2\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>כל הסימנים הפוכים מהרגיל: שמאלה פירושו <span class="m">\(v_x \lt 0\)</span> ו־ω חיובית. ״צד שמאל״ הוא 180 מעלות.</p></div><ol class="st"><li><b>מרכז:</b> <span class="m">\(x_0=20,\ y_0=2,\ v_x=-\pi,\ v_y=0\)</span></li><li><b>גלגל:</b> <span class="m">\(R = 2,\ \theta_0 = 180^\circ\)</span></li><li><b>מהירות זוויתית:</b> <span class="m">\(|\omega| = \dfrac{180\pi}{2\pi} = 90\)</span>, שמאלה <span class="m">\(\Rightarrow \omega = +90\)</span></li><li><b>נוסחה:</b> <span class="m">\(x(t) = 20 - \pi t + 2\cos(180+90t),\ y(t) = 2 + 2\sin(180+90t)\)</span></li><li><b>t = 2:</b> מרכז <span class="m">\((20-2\pi, 2) \approx (13.72, 2)\)</span>, זווית <span class="m">\(360^\circ\)</span> — <span class="m">\(P \approx (15.72, 2)\)</span></li></ol><p class="ans">תשובה: <span class="m">\(P(2) = (22 - 2\pi,\ 2) \approx (15.72, 2)\)</span></p><p class="chk"><b>בדיקה:</b> אחרי חצי סיבוב P עברה מצד שמאל לצד ימין, והמרכז זז חצי היקף, <span class="m">\(2\pi\)</span> ✓</p></div></details></li>
+<li>השסתום של צמיג מכונית (רדיוס 0.3 מ׳) בתחתית הגלגל ב־<span class="m">\(t=0\)</span>. המכונית נוסעת ימינה במהירות 15 מ׳/ש׳, והמרכז מתחיל ב־<span class="m">\((0,0.3)\)</span>. מצאו את <span class="m">\(\omega\)</span> ואת גובה השסתום אחרי 0.01 שניות.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>מחשבים ω מהמהירות והרדיוס, ומציבים במחשבון במצב מעלות.</p></div><ol class="st"><li><b>סיבובים:</b> <span class="m">\(n = \dfrac{15}{0.6\pi} \approx 7.96\)</span></li><li><b>מהירות זוויתית:</b> <span class="m">\(\omega \approx -2864.8\)</span></li><li><b>זווית:</b> <span class="m">\(270 - 28.65 \approx 241.35^\circ\)</span></li><li><b>גובה:</b> <span class="m">\(y \approx 0.3 + 0.3\cdot(-0.877) \approx 0.037\)</span> מ׳</li></ol><p class="ans">תשובה: <span class="m">\(\omega \approx -2865^\circ/\text{s}\)</span>, גובה כ־3.7 ס״מ</p><p class="chk"><b>בדיקה:</b> השסתום רק התחיל לעלות מהקרקע: גובה קטן וחיובי ✓</p></div></details></li>
+<li>גלגל ברדיוס 1 מתגלגל <strong>שמאלה</strong> בלי החלקה. המרכז מתחיל ב־<span class="m">\((10,1)\)</span> ונע במהירות <span class="m">\(\tfrac{\pi}{2}\)</span>. P מתחילה בראש הגלגל. מצאו את כל הרכיבים ואת P ב־<span class="m">\(t=1\)</span> וב־<span class="m">\(t=2\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>שמאלה: v_x שלילי ו־ω חיובית. ״ראש הגלגל״ 90 מעלות.</p></div><ol class="st"><li><b>רכיבים:</b> <span class="m">\(x_0=10,\ y_0=1,\ v_x=-\tfrac{\pi}{2},\ v_y=0,\ R=1,\ \theta_0=90^\circ\)</span></li><li><b>מהירות זוויתית:</b> <span class="m">\(|\omega| = \dfrac{180\cdot\frac{\pi}{2}}{\pi} = 90\)</span>, שמאלה <span class="m">\(\Rightarrow \omega = +90\)</span></li><li><b>t = 1:</b> זווית <span class="m">\(180^\circ\)</span>: <span class="m">\(x = 10 - \tfrac{\pi}{2} - 1 \approx 7.43,\ y = 1\)</span></li><li><b>t = 2:</b> זווית <span class="m">\(270^\circ\)</span>: <span class="m">\(x = 10 - \pi \approx 6.86,\ y = 0\)</span></li></ol><p class="ans">תשובה: <span class="m">\((7.43,\ 1)\)</span> ו־<span class="m">\((10-\pi,\ 0) \approx (6.86,\ 0)\)</span></p><p class="chk"><b>בדיקה:</b> אחרי חצי סיבוב הנקודה בקרקע, מתחת למרכז ✓</p></div></details></li></ol></section>
+<nav class="pager" aria-label="דפים סמוכים" style="background:none;border:0;padding:0"><a href="wheel-motion-07-cart-speed-exercises.html">→ תרגול: מהירות העגלה</a><a href="wheel-motion-09-formula-sheet.html">דף נוסחאות: נקודה על גלגל ←</a></nav>
+<footer>דף 08 בנושא תנועה על גלגל ועל גלגל מתגלגל · הפתרונות מוסתרים; בהדפסה כולם מוצגים.</footer>
+</div>
+<script>
+function toggleSol(b){document.body.classList.toggle('nosol');b.textContent=document.body.classList.contains('nosol')?'הצגת פתרונות':'הסתרת פתרונות (דף עבודה)';}
+function openAll(o){document.querySelectorAll('details').forEach(function(d){d.open=o;});}
+</script>
+</body>
+</html>

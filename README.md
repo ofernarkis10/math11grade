@@ -43,6 +43,7 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | | `geometry-00b-congruence.html` | Triangle congruence: SAS, ASA, SSS, what is not enough, writing two-column proofs, worked examples and practice with solutions |
 | | `geometry-00b2-congruence-questions.html` | 26 congruence questions in five rising levels (identify the theorem, direct proofs, proofs with an intermediate step, two-stage proofs, challenge), each with a figure and a detailed solution |
 | | `geometry-00c-congruence-simulations.html` | Interactive constructions. Part A, congruence: why SAS, ASA, SSS and SSA (angle opposite the longer side) give a unique triangle, and why SSA (opposite the shorter side) and AAA do not. Part B, similarity: scaling (sides × k, area × k²), building triangles from AA, SAS and SSS similarity data, Thales with a moving point, similarity in a right triangle |
+| | `geometry-00c2-similarity-to-congruence.html` | Similarity-first simulations: scaling, AA, SAS and SSS similarity, Thales, right-triangle similarity, then congruence as similarity with ratio k = 1 (overlay constructions), and why SSA and AAA are not enough |
 | | `geometry-00d-quadrilaterals.html` | Quadrilaterals: parallelogram, rectangle, rhombus, square, trapezoid, kite (definitions, properties, recognition theorems), triangle and trapezoid midsegments, comparison table; worked proofs and practice with solutions |
 | | `geometry-01-loci-triangle-centers.html` | Loci, the four special points of a triangle, fourth congruence theorem, converse of Pythagoras |
 | | `geometry-02-circle.html` | The circle: chords, arcs, inscribed and central angles, cyclic quadrilaterals, tangents, constructions |
@@ -55,6 +56,17 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | | `trigonometry-05-wheel-homework.html` | Homework to hand in: 12 questions on a point on a rotating wheel (position after a time; inverse and combined questions), questions only, print-ready |
 | | `trigonometry-06-radians.html` | Explanation: radians (arc equal to the radius), 180° = π and converting degrees ↔ radians, fractions of a circle; the main table of all multiples of 30° and 45° with radians, quadrant and exact cos and sin, all angles on one circle, an interactive lab, how to remember the table, DEG/RAD calculator mode; 12 questions with the thinking behind each solution |
 | | `trigonometry-07-moving-wheel-exercises.html` | 20 questions on a point on a moving wheel (center on a line + rotation; rolling without slipping), three levels; every solution opens with the data in math notation, then the thinking, steps, answer, check and explanation |
+| Wheel motion and the rolling wheel | `wheel-motion-00-theory.html` | Theory: the linear equation of the center (x₀, y₀, vₓ, v_y from two points, speed and angle), the rotation equation in degrees (θ₀ and ω from revolutions, period, rpm, two angles; sign = direction), the general formula with its 7 components and a five-step method, the rolling wheel without slipping (one circumference per revolution), two worked examples |
+| | `wheel-motion-01-simulator.html` | Interactive simulator of the general formula with a rolling-wheel mode (cycloid) |
+| | `wheel-motion-02-substitution.html` | 24 easy first questions: all components given (or the formula already written), substitute only: center, angle, offset, the full formula, a rolling wheel, a calculator angle |
+| | `wheel-motion-03-center-velocity.html` | 18 questions: finding the center's velocity components and start position from the data, three levels |
+| | `wheel-motion-04-angular-velocity.html` | 20 questions: finding θ₀ and ω in degrees per second from revolutions, period, rpm, two angles, words and coordinates |
+| | `wheel-motion-05-rolling-wheel.html` | 18 questions: rolling without slipping: center speed from the rotation, rotation from the center speed, the radius; rolling left, diameter and unit conversion |
+| | `wheel-motion-06-cart-speed.html` | Explanation: the speed of the cart from the motion of its wheel — one circumference per revolution, v = P·n = 2πRn (P = circumference; C is kept for the center), formulas by what is given (radius, diameter, circumference, period, rpm, degrees or radians per second), the reverse direction, two wheels on one cart, four worked examples, common mistakes |
+| | `wheel-motion-07-cart-speed-exercises.html` | 20 questions: cart speed from the wheel's rotation speed, radius and circumference and back, unit conversions, multi-step questions (tractor, bicycle gears, travel time, speedometer with bigger tyres) |
+| | `wheel-motion-08-combined.html` | 18 combined questions: fill the table of 7 components, write the full formula, substitute; free wheel, reading a formula backwards, rolling wheel, matriculation level |
+| | `wheel-motion-09-formula-sheet.html` | Printable formula sheet (one A4 page): the general formula, the center and rotation equations and how to find each component, the rolling wheel, the work order, sin and cos values |
+| | `wheel-motion-10-data-table.html` | Printable data table (one A4 page): a blank table of the 7 components to fill in for each question before the final calculation, with one worked row |
 | Analytic geometry: equations of curves | `analytic-00-overview.html` | Overview: what the equation of a curve means, the five curves as loci, conic sections, one definition for all by focus, directrix and eccentricity (interactive lab), recognizing a curve from Ax² + Cy² + Dx + Ey + F = 0, summary table |
 | | `analytic-01-line.html` | The line: slope and m = tan α, y = mx + b (lab), other forms, parallel and perpendicular lines, intersection, distance from a point to a line |
 | | `analytic-02-circle.html` | The circle: derivation, meaning of a, b, R (lab), general form and completing the square, point vs circle, line and circle (lab), tangent |
@@ -178,7 +190,7 @@ Each document is one entry in its topic's `items`, in the order of study:
 
 ```
 math11grade/
-├── index.html                          all navigation: home page, topic lists (#<topic-id>), homework list (#homework) and search (#q=…); topic ids: curriculum, glossary, summer-work, sequences, composite-derivatives, geometry, trigonometry, analytic, units
+├── index.html                          all navigation: home page, topic lists (#<topic-id>), homework list (#homework) and search (#q=…); topic ids: curriculum, glossary, summer-work, sequences, composite-derivatives, geometry, trigonometry, wheel-motion, analytic, units
 ├── curriculum-5units-grade10-11.html   curriculum reference
 ├── glossary.html                       glossary of every term used on the site
 ├── summer-work-grade10-5units.pdf    summer assignment from the end of grade 10 (PDF)
@@ -190,6 +202,7 @@ math11grade/
 ├── composite-derivatives-NN-<name>.html  derivatives of composite functions (01 rules, 02 exercises)
 ├── geometry-NN-<name>.html              Euclidean geometry (01 loci & triangle centers, 02 circle, 03 similarity)
 ├── trigonometry-NN-<name>.html          trigonometric functions (00 unit circle, 01 polar coordinates & the wheel, 02 linear vs wheel, 03 wheel exercises, 04 linear-vs-wheel exercises, 05 wheel homework, 06 radians and the table of special angles)
+├── wheel-motion-NN-<name>.html          motion on a wheel and the rolling wheel (00 theory, 01 simulator, 02 substitution, 03 center velocity, 04 angular velocity, 05 rolling wheel, 06 cart speed, 07 cart speed exercises, 08 combined, 09 formula sheet, 10 data table)
 ├── analytic-NN-<name>.html              analytic geometry: equations of curves (00 overview, 01 line, 02 circle, 03 parabola, 04 ellipse, 05 hyperbola); figures drawn in SVG by a small inline script, with interactive labs
 ├── units-NN-<name>.html                 units and motion equations (00 overview, 01 quantities, 02 conversion, 03 motion equations, 04 solving with units, 05 workbook, 06 circular motion, 07 force to distance, 08 pool filling, 09 equations sheet, 10 simulators, 11 pool simulators)
 ├── font-size.js                       text-size control shown on every page

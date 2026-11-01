@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>דף נוסחאות: נקודה על גלגל</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same worksheet style as the rest of the site (copied from composite-derivatives-02-exercises.html) */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:middle}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td .m{font-size:1rem}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.big{background:var(--accent-soft);border-radius:10px;padding:16px 18px;text-align:center;display:flex;flex-direction:column;gap:6px}
+.big .m{font-size:1.25rem;font-weight:600;white-space:normal}
+.big small{color:var(--muted);font-size:.92rem}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ul.mistakes{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+.steps .m{white-space:normal}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+
+/* inner/outer machine diagram, drawn left-to-right like the formula */
+.machine{direction:ltr;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:14px 8px;font-family:var(--f-math);font-size:.95rem}
+.machine .box{border:2px solid var(--accent);border-radius:8px;padding:8px 12px;text-align:center;line-height:1.3;background:var(--paper)}
+.machine .box.out{border-color:var(--mark)}
+.machine .box small{display:block;font-family:var(--f-body);font-size:.75rem;color:var(--muted)}
+.machine .val{padding:6px 10px;background:var(--accent-soft);border-radius:99px}
+.machine .arr{color:var(--muted)}
+.inner{color:var(--accent);font-weight:600}
+.outer{color:var(--mark);font-weight:600}
+
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+@media print{body{background:#fff} details{display:block} details .sol{display:block} summary{display:none} nav{display:none}}
+.lead a{color:var(--accent);font-weight:600}
+/* Every solution: "דרך החשיבה" (how to recognise the structure and choose the rule), numbered steps, and the answer */
+.think{background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.think-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.think p{margin:0}
+ol.st{margin:6px 0 0;padding-inline-start:24px;display:flex;flex-direction:column;gap:6px}
+ol.st li::marker{font-weight:700;color:var(--mark)}
+ol.st b{color:var(--mark)}
+.sol .ans{font-weight:700;border-top:1px dashed var(--line);padding-top:8px;margin-top:4px}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+<style>
+/* wheel-motion topic additions */
+.fig{display:flex;justify-content:center}
+.fig svg{max-width:440px;width:100%;height:auto}
+.fig svg text{font-family:var(--f-body);fill:var(--ink)}
+.cap{color:var(--muted);font-size:.9rem;text-align:center}
+.blue{color:var(--accent);font-weight:700}
+.orange{color:var(--mark);font-weight:700}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+.toolbar button{font-family:var(--f-body);font-size:.95rem;border:1px solid var(--accent);background:var(--paper);color:var(--accent);padding:6px 14px;border-radius:8px;cursor:pointer}
+.toolbar button:hover{background:var(--accent-soft)}
+body.nosol details{display:none}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pager a{color:var(--accent);font-weight:600;text-decoration:none}
+.pager a:hover{text-decoration:underline}
+ol.method{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:4px}
+ol.method li::marker{font-weight:700;color:var(--accent)}
+.sol .chk{color:var(--muted);font-size:.95rem}
+.blank td{height:2.2em}
+</style>
+<script src="font-size.js"></script>
+<style>
+.sheet{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.sheet h1{font-size:1.7rem;margin:0;line-height:1.2}
+.sheet .sub{color:var(--muted);font-size:15px;margin:0}
+.namebar{display:flex;gap:14px;flex-wrap:wrap;font-size:16px;color:var(--muted)}
+.namebar span{flex:1;min-width:140px;border-bottom:1px solid var(--line);padding-bottom:1px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.box{border:1.5px solid var(--line);border-radius:10px;padding:6px 10px;min-width:0}
+.box h2{font-size:1.15rem;margin:0 0 4px;color:var(--accent);line-height:1.25}
+.box.bridge{border-color:var(--mark);background:var(--mark-soft)}
+.box.bridge h2{color:var(--mark)}
+.sheet ul,.sheet ol{margin:0;padding-inline-start:1.2em;font-size:16px;line-height:1.55}
+.sheet .big{margin:0;padding:6px 10px}
+.sheet table{min-width:0;font-size:15px}
+.sheet th,.sheet td{padding:3px 6px;text-align:center}
+.sheet td.l,.sheet th.l{text-align:start}
+.fill th{background:var(--accent-soft)}
+.fill td{height:2.6em;border:1px solid var(--line)}
+.fill th{border:1px solid var(--line)}
+.fill tr.ex td{height:auto;color:var(--muted);font-style:italic}
+.fill td.sep,.fill th.sep{border-inline-start:3px solid var(--mark)}
+.page2{break-before:page}
+.hint{font-size:15px;color:var(--muted)}
+@media (max-width:700px){.cols{grid-template-columns:1fr}}
+@page{size:A4;margin:8mm}
+@media print{
+ html,body{background:#fff!important;font-size:13.5pt;line-height:1.35}
+ :root{--paper:#fff;--bg:#fff}
+ .wrap{max-width:none;padding:0;gap:0}
+ .back,header,nav,.pager,footer,.noprint{display:none!important}
+ .sheet{border:none;padding:0;gap:5px}
+ .cols{grid-template-columns:1fr 1fr;gap:5px}
+ .box{break-inside:avoid;padding:3px 8px}
+ .sheet ul,.sheet ol{font-size:13pt;line-height:1.5}
+ .box{padding:5px 10px}
+ .sheet{gap:9px}
+ .sheet table{font-size:13pt}
+ .fill td{height:1.45cm}
+ .sheet h1{font-size:18pt}
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html#wheel-motion">→ חזרה לנושא: תנועה על גלגל ועל גלגל מתגלגל</a>
+<div class="noprint toolbar"><button type="button" onclick="window.print()">הדפסה</button></div>
+<p class="noprint lead">עמוד A4 אחד: כל הנוסחאות של הנושא ואיך מוצאים כל רכיב. את טבלת הנתונים הריקה שממלאים בכל שאלה תמצאו ב<a href="wheel-motion-10-data-table.html">דף 10</a>.</p>
+<div class="sheet">
+<h1>דף נוסחאות: נקודה על גלגל</h1>
+<div class="sub">מתמטיקה · כיתה י״א · 5 יח״ל · תנועה על גלגל ועל גלגל מתגלגל</div>
+<div class="namebar"><span>שם:</span><span>כיתה:</span><span>תאריך:</span></div>
+<div class="big"><span class="m">\(x(t) = \color{#1f6f8b}{x_0 + v_x t} + R\cos(\color{#b4561e}{\theta_0 + \omega t})\)</span><br><span class="m">\(y(t) = \color{#1f6f8b}{y_0 + v_y t} + R\sin(\color{#b4561e}{\theta_0 + \omega t})\)</span></div>
+<div class="cols">
+<div class="box"><h2>משוואת המרכז (לינארית)</h2><ul>
+<li><span class="m">\(x_C = x_0 + v_x t,\ \ y_C = y_0 + v_y t\)</span></li>
+<li>משתי נקודות: <span class="m">\(v_x = \dfrac{\Delta x}{\Delta t},\ v_y = \dfrac{\Delta y}{\Delta t}\)</span></li>
+<li>מגודל וזווית: <span class="m">\(v_x = |v|\cos\alpha,\ v_y = |v|\sin\alpha\)</span></li>
+<li>גודל וכיוון: <span class="m">\(|v| = \sqrt{v_x^2+v_y^2},\ \tan\alpha = \dfrac{v_y}{v_x}\)</span> (לבדוק רביע)</li>
+<li>חזרה ל־<span class="m">\(t=0\)</span>: <span class="m">\(x_0 = x_1 - v_x t_1,\ y_0 = y_1 - v_y t_1\)</span></li>
+</ul></div>
+<div class="box"><h2>משוואת הסיבוב (מעלות)</h2><ul>
+<li><span class="m">\(\theta(t) = \theta_0 + \omega t\)</span> · נגד השעון <span class="m">\(\omega \gt 0\)</span>, עם השעון <span class="m">\(\omega \lt 0\)</span></li>
+<li><span class="m">\(|\omega| = 360n = \dfrac{360}{T} = 6\cdot\text{rpm}\)</span> · <span class="m">\(\omega = \dfrac{\Delta\theta}{\Delta t}\)</span></li>
+<li>ימין <span class="m">\(0^\circ\)</span> · למעלה <span class="m">\(90^\circ\)</span> · שמאל <span class="m">\(180^\circ\)</span> · למטה <span class="m">\(270^\circ\)</span></li>
+<li>מקואורדינטות: <span class="m">\(R = |P - C|,\ \cos\theta_0 = \dfrac{x_P - x_C}{R},\ \sin\theta_0 = \dfrac{y_P - y_C}{R}\)</span></li>
+</ul></div>
+</div>
+<div class="box bridge"><h2>גלגל מתגלגל בלי החלקה</h2><ul>
+<li>סיבוב אחד = המרכז מתקדם היקף אחד: <span class="m">\(|v| = 2\pi R n\)</span> · <span class="m">\(|v| = \dfrac{|\omega|\pi R}{180}\)</span> · <span class="m">\(|\omega| = \dfrac{180|v|}{\pi R}\)</span></li>
+<li>על ציר x: <span class="m">\(y_0 = R,\ v_y = 0\)</span> · נע ימינה: <span class="m">\(v_x \gt 0,\ \omega \lt 0\)</span> · נע שמאלה: <span class="m">\(v_x \lt 0,\ \omega \gt 0\)</span></li>
+</ul></div>
+<div class="cols">
+<div class="box"><h2>סדר העבודה</h2><ol>
+<li>ממלאים את 7 הרכיבים בטבלת הנתונים (דף 10).</li>
+<li>רושמים את הנוסחה המלאה עם המספרים.</li>
+<li>מציבים <span class="m">\(t\)</span>: קודם המרכז, אחר כך הזווית, ואז ההזזה.</li>
+<li>בודקים: המרחק של P מהמרכז שווה ל־<span class="m">\(R\)</span>.</li>
+</ol></div>
+<div class="box"><h2>ערכים שכדאי לזכור</h2><div class="tablebox"><table><tr><th class="l">זווית</th><th>\(0^\circ\)</th><th>\(30^\circ\)</th><th>\(45^\circ\)</th><th>\(60^\circ\)</th><th>\(90^\circ\)</th><th>\(180^\circ\)</th><th>\(270^\circ\)</th></tr>
+<tr><td class="l">\(\cos\)</td><td>\(1\)</td><td>\(\tfrac{\sqrt3}{2}\)</td><td>\(\tfrac{\sqrt2}{2}\)</td><td>\(\tfrac12\)</td><td>\(0\)</td><td>\(-1\)</td><td>\(0\)</td></tr>
+<tr><td class="l">\(\sin\)</td><td>\(0\)</td><td>\(\tfrac12\)</td><td>\(\tfrac{\sqrt2}{2}\)</td><td>\(\tfrac{\sqrt3}{2}\)</td><td>\(1\)</td><td>\(0\)</td><td>\(-1\)</td></tr></table></div></div>
+</div>
+</div>
+<nav class="pager" aria-label="דפים סמוכים" style="background:none;border:0;padding:0"><a href="wheel-motion-08-combined.html">→ תרגול משולב: בונים את הנוסחה</a><a href="wheel-motion-10-data-table.html">טבלת נתונים לפני החישוב ←</a></nav>
+<footer>דף 09 בנושא תנועה על גלגל ועל גלגל מתגלגל · להדפסה, עמוד A4 אחד</footer>
+</div>
+</body>
+</html>

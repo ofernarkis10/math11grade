@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>תאוריה: שתי משוואות ונוסחה אחת</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same worksheet style as the rest of the site (copied from composite-derivatives-02-exercises.html) */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:middle}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td .m{font-size:1rem}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.big{background:var(--accent-soft);border-radius:10px;padding:16px 18px;text-align:center;display:flex;flex-direction:column;gap:6px}
+.big .m{font-size:1.25rem;font-weight:600;white-space:normal}
+.big small{color:var(--muted);font-size:.92rem}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ul.mistakes{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+.steps .m{white-space:normal}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+
+/* inner/outer machine diagram, drawn left-to-right like the formula */
+.machine{direction:ltr;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:14px 8px;font-family:var(--f-math);font-size:.95rem}
+.machine .box{border:2px solid var(--accent);border-radius:8px;padding:8px 12px;text-align:center;line-height:1.3;background:var(--paper)}
+.machine .box.out{border-color:var(--mark)}
+.machine .box small{display:block;font-family:var(--f-body);font-size:.75rem;color:var(--muted)}
+.machine .val{padding:6px 10px;background:var(--accent-soft);border-radius:99px}
+.machine .arr{color:var(--muted)}
+.inner{color:var(--accent);font-weight:600}
+.outer{color:var(--mark);font-weight:600}
+
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+@media print{body{background:#fff} details{display:block} details .sol{display:block} summary{display:none} nav{display:none}}
+.lead a{color:var(--accent);font-weight:600}
+/* Every solution: "דרך החשיבה" (how to recognise the structure and choose the rule), numbered steps, and the answer */
+.think{background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.think-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.think p{margin:0}
+ol.st{margin:6px 0 0;padding-inline-start:24px;display:flex;flex-direction:column;gap:6px}
+ol.st li::marker{font-weight:700;color:var(--mark)}
+ol.st b{color:var(--mark)}
+.sol .ans{font-weight:700;border-top:1px dashed var(--line);padding-top:8px;margin-top:4px}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+<style>
+/* wheel-motion topic additions */
+.fig{display:flex;justify-content:center}
+.fig svg{max-width:440px;width:100%;height:auto}
+.fig svg text{font-family:var(--f-body);fill:var(--ink)}
+.cap{color:var(--muted);font-size:.9rem;text-align:center}
+.blue{color:var(--accent);font-weight:700}
+.orange{color:var(--mark);font-weight:700}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+.toolbar button{font-family:var(--f-body);font-size:.95rem;border:1px solid var(--accent);background:var(--paper);color:var(--accent);padding:6px 14px;border-radius:8px;cursor:pointer}
+.toolbar button:hover{background:var(--accent-soft)}
+body.nosol details{display:none}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pager a{color:var(--accent);font-weight:600;text-decoration:none}
+.pager a:hover{text-decoration:underline}
+ol.method{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:4px}
+ol.method li::marker{font-weight:700;color:var(--accent)}
+.sol .chk{color:var(--muted);font-size:.95rem}
+.blank td{height:2.2em}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html#wheel-motion">→ חזרה לנושא: תנועה על גלגל ועל גלגל מתגלגל</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · טריגונומטריה · תנועה על גלגל ועל גלגל מתגלגל</span>
+  <h1>תאוריה: שתי משוואות ונוסחה אחת</h1>
+  <p class="lead">איך מתארים את המיקום של נקודה על גלגל שזז ומסתובב: משוואה לינארית למרכז, משוואת סיבוב במעלות, והנוסחה הכללית שמחברת אותן. אחר כך גלגל שמתגלגל בלי החלקה, ושתי דוגמאות פתורות. לתרגול: הדפים הבאים בנושא.</p>
+</header>
+<nav aria-label="תוכן"><strong>תוכן</strong><ol><li><a href="#idea">הרעיון והמוסכמות</a></li><li><a href="#center">משוואת המרכז</a></li><li><a href="#rotation">משוואת הסיבוב</a></li><li><a href="#general">הנוסחה הכללית</a></li><li><a href="#rolling">גלגל מתגלגל</a></li><li><a href="#ex1">דוגמה פתורה: גלגל חופשי</a></li><li><a href="#ex2">דוגמה פתורה: גלגל מתגלגל</a></li></ol></nav>
+
+
+<section class="ch" id="idea"><h2>הרעיון</h2>
+<div class="meaning"><p>גלגל שהמרכז שלו נע בקו ישר, ובאותו זמן הוא מסתובב. רוצים לדעת איפה נמצאת נקודה P על השפה שלו בכל רגע.</p>
+<p>המיקום של P הוא <strong>המיקום של המרכז</strong> (משוואה לינארית) ועוד <strong>המיקום של P ביחס למרכז</strong> (סיבוב לפי מעלות). לכן מתחילים משתי משוואות, ובסוף מחברים אותן לנוסחה אחת.</p></div>
+<div class="fig"><svg viewBox="0 0 420 260" role="img" aria-label="גלגל עם מרכז C, נקודה P, רדיוס R, זווית תטא ומהירות המרכז v">
+ <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#b4561e"/></marker>
+ <marker id="ab" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#1f6f8b"/></marker></defs>
+ <line x1="20" y1="230" x2="400" y2="230" stroke="currentColor" opacity=".4"/><line x1="30" y1="250" x2="30" y2="15" stroke="currentColor" opacity=".4"/>
+ <text x="402" y="245" font-size="14">x</text><text x="14" y="20" font-size="14">y</text>
+ <circle cx="190" cy="130" r="80" fill="rgba(31,111,139,.08)" stroke="currentColor" stroke-width="2"/>
+ <line x1="190" y1="130" x2="300" y2="130" stroke="currentColor" opacity=".45" stroke-dasharray="4 4"/>
+ <line x1="190" y1="130" x2="246.6" y2="73.4" stroke="currentColor" stroke-width="2"/>
+ <path d="M225,130 A35,35 0 0 0 214.7,105.3" fill="none" stroke="#b4561e" stroke-width="2"/>
+ <text x="232" y="116" font-size="16" style="fill:#b4561e">θ</text>
+ <text x="204" y="94" font-size="15">R</text>
+ <circle cx="190" cy="130" r="4" fill="currentColor"/><text x="168" y="152" font-size="15">C</text>
+ <circle cx="246.6" cy="73.4" r="6" fill="#b4561e"/><text x="254" y="68" font-size="15" style="fill:#b4561e">P</text>
+ <line x1="190" y1="130" x2="300" y2="190" stroke="#1f6f8b" stroke-width="2.5" marker-end="url(#ab)"/>
+ <text x="306" y="200" font-size="15" style="fill:#1f6f8b">v</text>
+ <path d="M150,40 A90,90 0 0 1 240,45" fill="none" stroke="#b4561e" stroke-width="1.5" marker-end="url(#ar)"/>
+ <text x="176" y="32" font-size="14" style="fill:#b4561e">ω</text>
+</svg></div><p class="cap">C – מרכז הגלגל · P – הנקודה על השפה · θ – הזווית של P ביחס למרכז · v – מהירות המרכז · ω – מהירות הסיבוב</p>
+<div class="tablebox"><table><tr><th>נושא</th><th>מוסכמה בכל הדפים של הנושא</th></tr>
+<tr><td>זווית <span class="m">\(\theta\)</span></td><td>במעלות, נמדדת מהכיוון החיובי של ציר x, נגד כיוון השעון חיובי.</td></tr>
+<tr><td><span class="m">\(\omega\)</span></td><td>מהירות זוויתית במעלות לשנייה. חיובית: נגד כיוון השעון. שלילית: עם כיוון השעון.</td></tr>
+<tr><td>נקודות מיוחדות על הגלגל</td><td>ימין <span class="m">\(0^\circ\)</span>, למעלה <span class="m">\(90^\circ\)</span>, שמאל <span class="m">\(180^\circ\)</span>, למטה <span class="m">\(270^\circ\)</span> (או <span class="m">\(-90^\circ\)</span>).</td></tr>
+<tr><td>זמן</td><td><span class="m">\(t\)</span> בשניות; <span class="m">\(t=0\)</span> הוא רגע ההתחלה.</td></tr>
+<tr><td>גלגל מתגלגל</td><td>מתגלגל על ציר x בלי להחליק. נע ימינה: מסתובב עם כיוון השעון (<span class="m">\(\omega \lt 0\)</span>).</td></tr>
+</table></div>
+</section>
+
+<section class="ch" id="center"><h2>משוואה 1: תנועת המרכז (לינארית)</h2>
+<div class="meaning"><p>המרכז נע בקו ישר במהירות קבועה: בכל שנייה x גדל ב־<span class="m">\(v_x\)</span> ו־y גדל ב־<span class="m">\(v_y\)</span>.</p></div>
+<div class="big"><span class="m">\(x_C(t) = x_0 + v_x t \qquad y_C(t) = y_0 + v_y t\)</span></div>
+<div class="tablebox"><table><tr><th>רכיב</th><th>משמעות</th><th>איך מוצאים אותו מהנתונים</th></tr>
+<tr><td><span class="m">\((x_0, y_0)\)</span></td><td>מיקום המרכז ב־<span class="m">\(t=0\)</span></td><td>נתון ישירות, או חוזרים אחורה מנקודה בזמן אחר: <span class="m">\(x_0 = x_1 - v_x t_1\)</span>, <span class="m">\(y_0 = y_1 - v_y t_1\)</span></td></tr>
+<tr><td><span class="m">\(v_x, v_y\)</span></td><td>מהירות המרכז בכל ציר</td><td>משתי נקודות: <span class="m">\(v_x = \dfrac{{\Delta x}}{{\Delta t}},\ v_y = \dfrac{{\Delta y}}{{\Delta t}}\)</span><br>מגודל וזווית: <span class="m">\(v_x = |v|\cos\alpha,\ v_y = |v|\sin\alpha\)</span></td></tr>
+<tr><td><span class="m">\(|v|\)</span></td><td>גודל מהירות המרכז</td><td><span class="m">\(|v| = \sqrt{{v_x^2 + v_y^2}}\)</span></td></tr>
+<tr><td><span class="m">\(\alpha\)</span></td><td>כיוון התנועה</td><td><span class="m">\(\tan\alpha = \dfrac{{v_y}}{{v_x}}\)</span> — ובודקים ברביע לפי הסימנים</td></tr>
+</table></div>
+</section>
+
+<section class="ch" id="rotation"><h2>משוואה 2: הסיבוב (לפי מעלות)</h2>
+<div class="meaning"><p>הגלגל מסתובב במהירות זוויתית קבועה, ולכן הזווית של P משתנה באופן לינארי בזמן.</p></div>
+<div class="big"><span class="m">\(\theta(t) = \theta_0 + \omega t\)</span></div>
+<div class="tablebox"><table><tr><th>רכיב</th><th>משמעות</th><th>איך מוצאים אותו מהנתונים</th></tr>
+<tr><td><span class="m">\(\theta_0\)</span></td><td>הזווית של P ב־<span class="m">\(t=0\)</span></td><td>מתיאור: "בראש הגלגל" <span class="m">\(90^\circ\)</span>, "נוגעת בקרקע" <span class="m">\(270^\circ\)</span>, "בצד ימין" <span class="m">\(0^\circ\)</span>.<br>מקואורדינטות: <span class="m">\(\cos\theta_0 = \dfrac{{x_P - x_C}}{{R}},\ \sin\theta_0 = \dfrac{{y_P - y_C}}{{R}}\)</span></td></tr>
+<tr><td><span class="m">\(\omega\)</span></td><td>מעלות לשנייה, הסימן הוא הכיוון</td><td>n סיבובים לשנייה: <span class="m">\(\omega = 360n\)</span> · זמן מחזור: <span class="m">\(\omega = \dfrac{{360}}{{T}}\)</span> · סל״ד: <span class="m">\(\omega = \dfrac{{360\cdot\text{{rpm}}}}{{60}} = 6\cdot\text{{rpm}}\)</span> · משתי זוויות: <span class="m">\(\omega = \dfrac{{\Delta\theta}}{{\Delta t}}\)</span></td></tr>
+</table></div>
+<div class="note"><strong>שימו לב לסימן:</strong> עם כיוון השעון <span class="m">\(\Rightarrow \omega \lt 0\)</span>. נגד כיוון השעון <span class="m">\(\Rightarrow \omega \gt 0\)</span>.</div>
+</section>
+
+<section class="ch" id="general"><h2>הנוסחה הכללית</h2>
+<div class="meaning"><p>נקודה על מעגל ברדיוס R סביב הראשית נמצאת ב־<span class="m">\((R\cos\theta, R\sin\theta)\)</span>. כשהמרכז הוא C, מזיזים: <span class="m">\(P = C + (R\cos\theta, R\sin\theta)\)</span>. מציבים את שתי המשוואות:</p></div>
+<div class="big"><span class="m">\(x(t) = \color{#1f6f8b}{x_0 + v_x t} + R\cos(\color{#b4561e}{\theta_0 + \omega t})\)</span><br><span class="m">\(y(t) = \color{#1f6f8b}{y_0 + v_y t} + R\sin(\color{#b4561e}{\theta_0 + \omega t})\)</span><small>בכחול: המשוואה הלינארית של המרכז · בכתום: משוואת הסיבוב</small></div>
+<div class="example"><span class="tag">שיטת עבודה לכל שאלה</span><ol class="method">
+<li>רושמים את הנוסחה הכללית עם 7 מקומות ריקים: <span class="m">\(x_0, y_0, v_x, v_y, R, \theta_0, \omega\)</span>.</li>
+<li><strong>מרכז:</strong> מוצאים <span class="m">\(x_0, y_0, v_x, v_y\)</span>.</li>
+<li><strong>גלגל:</strong> מוצאים <span class="m">\(R\)</span>.</li>
+<li><strong>סיבוב:</strong> מוצאים <span class="m">\(\theta_0\)</span> ו־<span class="m">\(\omega\)</span>, כולל הסימן.</li>
+<li>רושמים את הנוסחה המלאה, ורק אז מציבים <span class="m">\(t\)</span>.</li></ol></div>
+</section>
+
+<section class="ch" id="rolling"><h2>גלגל מתגלגל בלי החלקה</h2>
+<div class="meaning"><p>כשהגלגל מתגלגל על הקרקע בלי להחליק, בכל סיבוב מלא המרכז מתקדם בדיוק <strong>היקף אחד</strong>, <span class="m">\(2\pi R\)</span>. כאן שתי המשוואות כבר תלויות זו בזו: את מהירות המרכז מחשבים מתוך הסיבוב, ולהפך.</p></div>
+<div class="formulas">
+<div class="f"><b>מהירות המרכז מתוך מספר הסיבובים בשנייה</b><span class="m">\(|v| = 2\pi R\cdot n\)</span></div>
+<div class="f"><b>מהירות זוויתית מתוך מספר הסיבובים</b><span class="m">\(|\omega| = 360 n\)</span></div>
+<div class="f"><b>מ־ω למהירות המרכז</b><span class="m">\(|v| = \dfrac{|\omega|\,\pi R}{180}\)</span></div>
+<div class="f"><b>ממהירות המרכז ל־ω</b><span class="m">\(|\omega| = \dfrac{180\,|v|}{\pi R}\)</span></div>
+</div>
+<div class="tablebox"><table><tr><th>רכיב</th><th>בגלגל שמתגלגל על ציר x</th></tr>
+<tr><td><span class="m">\(y_0\)</span></td><td>תמיד <span class="m">\(R\)</span>: המרכז בגובה הרדיוס</td></tr>
+<tr><td><span class="m">\(v_y\)</span></td><td><span class="m">\(0\)</span></td></tr>
+<tr><td><span class="m">\(v_x\)</span></td><td><span class="m">\(\pm 2\pi R n\)</span>: חיובי כשנע ימינה</td></tr>
+<tr><td><span class="m">\(\omega\)</span></td><td>נע ימינה: <span class="m">\(\omega = -360n\)</span>. נע שמאלה: <span class="m">\(\omega = +360n\)</span></td></tr>
+</table></div>
+<div class="big"><span class="m">\(x(t) = x_0 + v t + R\cos(\theta_0 + \omega t)\)</span><br><span class="m">\(y(t) = R + R\sin(\theta_0 + \omega t)\)</span><small>המסלול של נקודה על גלגל מתגלגל נקרא ציקלואידה (אפשר לראות אותו בסימולטור)</small></div>
+<ul class="mistakes"><li>שוכחים את הסימן של <span class="m">\(\omega\)</span>: גלגל שנוסע ימינה מסתובב <strong>עם</strong> כיוון השעון.</li>
+<li>מבלבלים קוטר ורדיוס: ההיקף הוא <span class="m">\(2\pi R = \pi d\)</span>.</li>
+<li>מציבים מהירות בקמ״ש ורדיוס במטרים: קודם ממירים ליחידות אחידות.</li></ul>
+</section>
+
+<section class="ch" id="ex1"><h2>דוגמה פתורה 1: גלגל חופשי</h2>
+<div class="example"><span class="tag">השאלה</span><p>מרכז גלגל ברדיוס 2 נמצא ב־<span class="m">\(t=0\)</span> בנקודה <span class="m">\((1,4)\)</span> וב־<span class="m">\(t=2\)</span> בנקודה <span class="m">\((7,8)\)</span>. הגלגל מסתובב נגד כיוון השעון ומשלים סיבוב כל 8 שניות. ב־<span class="m">\(t=0\)</span> הנקודה P בראש הגלגל. מצאו את מיקום P ב־<span class="m">\(t=2\)</span>.</p></div>
+<ol class="st">
+<li><b>מרכז:</b> <span class="m">\(x_0 = 1,\ y_0 = 4\)</span>; <span class="m">\(v_x = \dfrac{7-1}{2} = 3,\ v_y = \dfrac{8-4}{2} = 2\)</span>.</li>
+<li><b>רדיוס:</b> <span class="m">\(R = 2\)</span>.</li>
+<li><b>סיבוב:</b> "בראש הגלגל" <span class="m">\(\Rightarrow \theta_0 = 90^\circ\)</span>. סיבוב כל 8 שניות נגד השעון <span class="m">\(\Rightarrow \omega = \dfrac{360}{8} = 45^\circ/\text{s}\)</span>.</li>
+<li><b>נוסחה:</b> <span class="m">\(x(t) = 1 + 3t + 2\cos(90^\circ + 45^\circ t),\ y(t) = 4 + 2t + 2\sin(90^\circ + 45^\circ t)\)</span>.</li>
+<li><b>הצבה <span class="m">\(t=2\)</span>:</b> הזווית <span class="m">\(90 + 90 = 180^\circ\)</span>; <span class="m">\(x = 1 + 6 + 2\cdot(-1) = 5,\ y = 4 + 4 + 0 = 8\)</span>.</li></ol>
+<p class="ans">תשובה: <span class="m">\(P(5,8)\)</span> — בצד שמאל של המרכז <span class="m">\((7,8)\)</span>, כמו שמצפים מזווית <span class="m">\(180^\circ\)</span>.</p>
+</section>
+
+<section class="ch" id="ex2"><h2>דוגמה פתורה 2: גלגל מתגלגל</h2>
+<div class="example"><span class="tag">השאלה</span><p>גלגל ברדיוס 1 מתגלגל ימינה על ציר x בלי החלקה ומשלים סיבוב כל 4 שניות. ב־<span class="m">\(t=0\)</span> המרכז ב־<span class="m">\((0,1)\)</span> והנקודה P נוגעת בקרקע. מצאו את P ב־<span class="m">\(t=1\)</span> וב־<span class="m">\(t=2\)</span>.</p></div>
+<ol class="st">
+<li><b>מרכז:</b> <span class="m">\(x_0 = 0,\ y_0 = R = 1,\ v_y = 0\)</span>.</li>
+<li><b>מהירות המרכז מתוך הסיבוב:</b> בסיבוב אחד (4 שניות) המרכז עובר <span class="m">\(2\pi\cdot 1 = 2\pi\)</span>, ולכן <span class="m">\(v_x = \dfrac{2\pi}{4} = \dfrac{\pi}{2} \approx 1.571\)</span>.</li>
+<li><b>סיבוב:</b> נוגעת בקרקע <span class="m">\(\Rightarrow \theta_0 = 270^\circ\)</span>; נע ימינה <span class="m">\(\Rightarrow\)</span> עם השעון <span class="m">\(\Rightarrow \omega = -\dfrac{360}{4} = -90^\circ/\text{s}\)</span>.</li>
+<li><b>נוסחה:</b> <span class="m">\(x(t) = \tfrac{\pi}{2}t + \cos(270^\circ - 90^\circ t),\ y(t) = 1 + \sin(270^\circ - 90^\circ t)\)</span>.</li>
+<li><b><span class="m">\(t=1\)</span>:</b> זווית <span class="m">\(180^\circ\)</span>: <span class="m">\(x = \tfrac{\pi}{2} - 1 \approx 0.571,\ y = 1\)</span>.</li>
+<li><b><span class="m">\(t=2\)</span>:</b> זווית <span class="m">\(90^\circ\)</span>: <span class="m">\(x = \pi \approx 3.14,\ y = 2\)</span>.</li></ol>
+<p class="ans">תשובה: <span class="m">\(P(1) \approx (0.571, 1)\)</span>, <span class="m">\(P(2) = (\pi, 2)\)</span> — אחרי חצי סיבוב הנקודה בראש הגלגל.</p>
+</section>
+
+<nav class="pager" aria-label="דפים סמוכים" style="background:none;border:0;padding:0"><span></span><a href="wheel-motion-01-simulator.html">סימולטור: נקודה על גלגל ←</a></nav>
+<footer>דף 00 בנושא תנועה על גלגל ועל גלגל מתגלגל</footer>
+</div>
+
+</body>
+</html>

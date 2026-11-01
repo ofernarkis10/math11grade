@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>תרגול: מהירות המרכז</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same worksheet style as the rest of the site (copied from composite-derivatives-02-exercises.html) */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:middle}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td .m{font-size:1rem}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.big{background:var(--accent-soft);border-radius:10px;padding:16px 18px;text-align:center;display:flex;flex-direction:column;gap:6px}
+.big .m{font-size:1.25rem;font-weight:600;white-space:normal}
+.big small{color:var(--muted);font-size:.92rem}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ul.mistakes{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+.steps .m{white-space:normal}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+
+/* inner/outer machine diagram, drawn left-to-right like the formula */
+.machine{direction:ltr;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:14px 8px;font-family:var(--f-math);font-size:.95rem}
+.machine .box{border:2px solid var(--accent);border-radius:8px;padding:8px 12px;text-align:center;line-height:1.3;background:var(--paper)}
+.machine .box.out{border-color:var(--mark)}
+.machine .box small{display:block;font-family:var(--f-body);font-size:.75rem;color:var(--muted)}
+.machine .val{padding:6px 10px;background:var(--accent-soft);border-radius:99px}
+.machine .arr{color:var(--muted)}
+.inner{color:var(--accent);font-weight:600}
+.outer{color:var(--mark);font-weight:600}
+
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+@media print{body{background:#fff} details{display:block} details .sol{display:block} summary{display:none} nav{display:none}}
+.lead a{color:var(--accent);font-weight:600}
+/* Every solution: "דרך החשיבה" (how to recognise the structure and choose the rule), numbered steps, and the answer */
+.think{background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.think-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.think p{margin:0}
+ol.st{margin:6px 0 0;padding-inline-start:24px;display:flex;flex-direction:column;gap:6px}
+ol.st li::marker{font-weight:700;color:var(--mark)}
+ol.st b{color:var(--mark)}
+.sol .ans{font-weight:700;border-top:1px dashed var(--line);padding-top:8px;margin-top:4px}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+<style>
+/* wheel-motion topic additions */
+.fig{display:flex;justify-content:center}
+.fig svg{max-width:440px;width:100%;height:auto}
+.fig svg text{font-family:var(--f-body);fill:var(--ink)}
+.cap{color:var(--muted);font-size:.9rem;text-align:center}
+.blue{color:var(--accent);font-weight:700}
+.orange{color:var(--mark);font-weight:700}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+.toolbar button{font-family:var(--f-body);font-size:.95rem;border:1px solid var(--accent);background:var(--paper);color:var(--accent);padding:6px 14px;border-radius:8px;cursor:pointer}
+.toolbar button:hover{background:var(--accent-soft)}
+body.nosol details{display:none}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pager a{color:var(--accent);font-weight:600;text-decoration:none}
+.pager a:hover{text-decoration:underline}
+ol.method{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:4px}
+ol.method li::marker{font-weight:700;color:var(--accent)}
+.sol .chk{color:var(--muted);font-size:.95rem}
+.blank td{height:2.2em}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html#wheel-motion">→ חזרה לנושא: תנועה על גלגל ועל גלגל מתגלגל</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · טריגונומטריה · תנועה על גלגל ועל גלגל מתגלגל</span>
+  <h1>תרגול: מהירות המרכז</h1>
+  <p class="lead">18 שאלות על המשוואה הלינארית של המרכז, <span class="m">\(x_C = x_0 + v_x t\)</span>, <span class="m">\(y_C = y_0 + v_y t\)</span>: איך מוצאים את <span class="m">\(v_x, v_y, x_0, y_0\)</span> מתוך הנתונים. בכל פתרון: דרך החשיבה, השלבים, התשובה ובדיקה. ההסבר בדף <a href="wheel-motion-00-theory.html#center">התאוריה</a>.</p>
+</header>
+<nav aria-label="תוכן"><strong>תוכן</strong><ol><li><a href="#lvl1">רמה א׳: נתונים ישירים (1–8)</a></li><li><a href="#lvl2">רמה ב׳: מחשבים נתונים (9–14)</a></li><li><a href="#lvl3">רמה ג׳: הפוכות ומשולבות (15–18)</a></li></ol></nav>
+<div class="toolbar"><button type="button" onclick="toggleSol(this)">הסתרת פתרונות (דף עבודה)</button><button type="button" onclick="openAll(true)">פתיחת כל הפתרונות</button><button type="button" onclick="openAll(false)">סגירת כל הפתרונות</button></div>
+<div class="note"><strong>כלים לדף:</strong> <span class="m">\(v_x = \dfrac{\Delta x}{\Delta t}\)</span> · <span class="m">\(v_y = \dfrac{\Delta y}{\Delta t}\)</span> · <span class="m">\(v_x = |v|\cos\alpha\)</span> · <span class="m">\(v_y = |v|\sin\alpha\)</span> · <span class="m">\(|v| = \sqrt{v_x^2+v_y^2}\)</span> · <span class="m">\(x_0 = x_1 - v_x t_1\)</span></div><section class="ch level" id="lvl1"><h2>רמה א׳: נתונים ישירים <small>שאלות 1–8</small></h2><p class="lead">שתי נקודות, תנועה אופקית, גודל וזווית.</p><ol class="exercises" start="1"><li>מרכז גלגל נמצא ב־<span class="m">\(t=0\)</span> בנקודה <span class="m">\((2,1)\)</span>, וב־<span class="m">\(t=4\)</span> בנקודה <span class="m">\((14,9)\)</span>. (א) מצאו את <span class="m">\(v_x\)</span> ואת <span class="m">\(v_y\)</span>. (ב) רשמו את משוואות המרכז. (ג) איפה המרכז ב־<span class="m">\(t=10\)</span>?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>נתונות שתי נקודות ושני זמנים. מהירות בציר היא כמה הקואורדינטה משתנה בשנייה: השינוי בקואורדינטה חלקי השינוי בזמן. נקודת ההתחלה נתונה ישירות כי אחת הנקודות היא ב־t = 0.</p></div><ol class="st"><li><b>נתונים:</b> <span class="m">\((x,y)\big|_{t=0} = (2,1),\ (x,y)\big|_{t=4} = (14,9)\)</span></li><li><b>נוסחה:</b> <span class="m">\(v_x = \dfrac{\Delta x}{\Delta t},\ v_y = \dfrac{\Delta y}{\Delta t}\)</span></li><li><b>חישוב:</b> <span class="m">\(v_x = \dfrac{14-2}{4} = 3,\ v_y = \dfrac{9-1}{4} = 2\)</span></li><li><b>משוואות:</b> <span class="m">\(x_C = 2 + 3t,\ y_C = 1 + 2t\)</span></li><li><b>הצבה t = 10:</b> <span class="m">\(x_C = 2 + 30 = 32,\ y_C = 1 + 20 = 21\)</span></li></ol><p class="ans">תשובה: <span class="m">\(v_x = 3,\ v_y = 2\)</span>; <span class="m">\(x_C = 2+3t,\ y_C = 1+2t\)</span>; ב־<span class="m">\(t=10\)</span> המרכז ב־<span class="m">\((32,21)\)</span>.</p><p class="chk"><b>בדיקה:</b> ב־<span class="m">\(t=4\)</span>: <span class="m">\((2+12,\ 1+8) = (14,9)\)</span> ✓</p></div></details></li>
+<li>מרכז גלגל נע ימינה בקו אופקי. הוא מתחיל ב־<span class="m">\((-5,4)\)</span> ועובר 30 יחידות ב־6 שניות. מצאו את <span class="m">\(v_x, v_y\)</span> ורשמו את משוואות המרכז.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>״קו אופקי״ אומר ש־y לא משתנה, ולכן המהירות בציר y היא 0. ״ימינה״ אומר שהמהירות בציר x חיובית. המהירות היא מרחק חלקי זמן.</p></div><ol class="st"><li><b>כיוון:</b> אופקי ימינה <span class="m">\(\Rightarrow v_y = 0,\ v_x \gt 0\)</span></li><li><b>חישוב:</b> <span class="m">\(v_x = \dfrac{30}{6} = 5\)</span></li><li><b>משוואות:</b> <span class="m">\(x_C = -5 + 5t,\ y_C = 4\)</span></li></ol><p class="ans">תשובה: <span class="m">\(v_x = 5,\ v_y = 0\)</span>; <span class="m">\(x_C = -5+5t,\ y_C = 4\)</span></p><p class="chk"><b>בדיקה:</b> אחרי 6 שניות <span class="m">\(x_C = -5+30 = 25\)</span>: עבר <span class="m">\(25-(-5) = 30\)</span> יחידות ✓</p></div></details></li>
+<li>מרכז גלגל יוצא מהראשית במהירות 10 יחידות לשנייה, בכיוון של <span class="m">\(30^\circ\)</span> מעל הכיוון החיובי של ציר x. מצאו את <span class="m">\(v_x, v_y\)</span> ורשמו את משוואות המרכז.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>נתונים גודל המהירות והזווית שלה, כמו קואורדינטות קוטביות. מפרקים את המהירות לרכיבים: הרכיב בציר x הוא הגודל כפול קוסינוס הזווית, והרכיב בציר y הוא הגודל כפול סינוס הזווית.</p></div><ol class="st"><li><b>נתונים:</b> <span class="m">\(|v| = 10,\ \alpha = 30^\circ,\ (x_0,y_0) = (0,0)\)</span></li><li><b>פירוק:</b> <span class="m">\(v_x = 10\cos 30^\circ = 10\cdot\tfrac{\sqrt3}{2} = 5\sqrt3 \approx 8.66\)</span></li><li><b>פירוק:</b> <span class="m">\(v_y = 10\sin 30^\circ = 10\cdot\tfrac12 = 5\)</span></li><li><b>משוואות:</b> <span class="m">\(x_C = 5\sqrt3\,t,\ y_C = 5t\)</span></li></ol><p class="ans">תשובה: <span class="m">\(v_x = 5\sqrt3 \approx 8.66,\ v_y = 5\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(\sqrt{(5\sqrt3)^2 + 5^2} = \sqrt{75+25} = 10\)</span> ✓</p></div></details></li>
+<li>מרכז גלגל מתחיל ב־<span class="m">\((10,0)\)</span> ונע במהירות 6 יחידות לשנייה בכיוון של <span class="m">\(135^\circ\)</span>. מצאו את <span class="m">\(v_x, v_y\)</span>, הסבירו את הסימנים, ורשמו את משוואות המרכז.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>אותה שיטה כמו בשאלה הקודמת, אבל הזווית ברביע השני. שם הקוסינוס שלילי והסינוס חיובי, ולכן המרכז זז שמאלה ולמעלה. הסימנים יוצאים לבד מהפירוק, לא צריך לנחש.</p></div><ol class="st"><li><b>פירוק:</b> <span class="m">\(v_x = 6\cos 135^\circ = 6\cdot\left(-\tfrac{\sqrt2}{2}\right) = -3\sqrt2 \approx -4.24\)</span></li><li><b>פירוק:</b> <span class="m">\(v_y = 6\sin 135^\circ = 6\cdot\tfrac{\sqrt2}{2} = 3\sqrt2 \approx 4.24\)</span></li><li><b>פירוש:</b> <span class="m">\(v_x \lt 0\)</span> — שמאלה; <span class="m">\(v_y \gt 0\)</span> — למעלה</li><li><b>משוואות:</b> <span class="m">\(x_C = 10 - 3\sqrt2\,t,\ y_C = 3\sqrt2\,t\)</span></li></ol><p class="ans">תשובה: <span class="m">\(v_x = -3\sqrt2,\ v_y = 3\sqrt2\)</span>: המרכז נע שמאלה ולמעלה.</p><p class="chk"><b>בדיקה:</b> <span class="m">\(\sqrt{18+18} = 6\)</span> ✓</p></div></details></li>
+<li>מרכז גלגל נמצא ב־<span class="m">\(t=0\)</span> בנקודה <span class="m">\((-1,3)\)</span>, וב־<span class="m">\(t=5\)</span> בנקודה <span class="m">\((9,-7)\)</span>. מצאו את <span class="m">\(v_x, v_y\)</span>, רשמו את משוואות המרכז, ומצאו את המרכז ב־<span class="m">\(t=2\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>שתי נקודות ושני זמנים, ואחת מהן ב־t = 0. y יורד, ולכן נצפה ל־v_y שלילי.</p></div><ol class="st"><li><b>חישוב:</b> <span class="m">\(v_x = \dfrac{9-(-1)}{5} = 2,\ v_y = \dfrac{-7-3}{5} = -2\)</span></li><li><b>משוואות:</b> <span class="m">\(x_C = -1 + 2t,\ y_C = 3 - 2t\)</span></li><li><b>הצבה t = 2:</b> <span class="m">\((3, -1)\)</span></li></ol><p class="ans">תשובה: <span class="m">\(v_x=2,\ v_y=-2\)</span>; המרכז ב־<span class="m">\(t=2\)</span>: <span class="m">\((3,-1)\)</span></p><p class="chk"><b>בדיקה:</b> ב־<span class="m">\(t=5\)</span>: <span class="m">\((9,-7)\)</span> ✓</p></div></details></li>
+<li>מרכז גלגל עולה אנכית. הוא מתחיל ב־<span class="m">\((4,-2)\)</span> ועולה 18 יחידות ב־3 שניות. מצאו את <span class="m">\(v_x, v_y\)</span> ורשמו את משוואות המרכז.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>״אנכית״ אומר ש־x לא משתנה, ולכן v_x = 0. ״עולה״ — v_y חיובי.</p></div><ol class="st"><li><b>כיוון:</b> <span class="m">\(v_x = 0,\ v_y \gt 0\)</span></li><li><b>חישוב:</b> <span class="m">\(v_y = \dfrac{18}{3} = 6\)</span></li><li><b>משוואות:</b> <span class="m">\(x_C = 4,\ y_C = -2 + 6t\)</span></li></ol><p class="ans">תשובה: <span class="m">\(v_x=0,\ v_y=6\)</span>; <span class="m">\(x_C = 4,\ y_C = -2+6t\)</span></p><p class="chk"><b>בדיקה:</b> ב־<span class="m">\(t=3\)</span>: <span class="m">\(y_C = 16\)</span>, עלייה של 18 ✓</p></div></details></li>
+<li>מרכז גלגל מתחיל ב־<span class="m">\((1,1)\)</span> ונע במהירות 8 בכיוון <span class="m">\(60^\circ\)</span>. מצאו את <span class="m">\(v_x, v_y\)</span> ורשמו את משוואות המרכז.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>מפרקים את המהירות לרכיבים בעזרת cos ו־sin של 60 מעלות.</p></div><ol class="st"><li><b>פירוק:</b> <span class="m">\(v_x = 8\cos 60^\circ = 4,\ v_y = 8\sin 60^\circ = 4\sqrt3 \approx 6.93\)</span></li><li><b>משוואות:</b> <span class="m">\(x_C = 1 + 4t,\ y_C = 1 + 4\sqrt3\,t\)</span></li></ol><p class="ans">תשובה: <span class="m">\(v_x = 4,\ v_y = 4\sqrt3\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(\sqrt{16+48} = 8\)</span> ✓</p></div></details></li>
+<li>מרכז גלגל יוצא מהראשית במהירות 10 בכיוון <span class="m">\(210^\circ\)</span>. מצאו את <span class="m">\(v_x, v_y\)</span> והסבירו את הסימנים.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>210 מעלות ברביע השלישי: גם cos וגם sin שליליים, ולכן המרכז נע שמאלה ולמטה.</p></div><ol class="st"><li><b>פירוק:</b> <span class="m">\(v_x = 10\cos 210^\circ = -5\sqrt3 \approx -8.66\)</span></li><li><b>פירוק:</b> <span class="m">\(v_y = 10\sin 210^\circ = -5\)</span></li><li><b>פירוש:</b> שני הרכיבים שליליים — שמאלה ולמטה</li></ol><p class="ans">תשובה: <span class="m">\(v_x = -5\sqrt3,\ v_y = -5\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(\sqrt{75+25} = 10\)</span> ✓</p></div></details></li></ol></section><section class="ch level" id="lvl2"><h2>רמה ב׳: מחשבים נתונים לפני ההצבה <small>שאלות 9–14</small></h2><p class="lead">שיפוע במקום זווית, נקודות שאינן ב־t = 0, ומהמשוואה חזרה לגודל ולכיוון.</p><ol class="exercises" start="9"><li>מרכז גלגל יוצא מהראשית במהירות 13 יחידות לשנייה. על כל 12 יחידות ימינה הוא עולה 5 יחידות. מצאו את <span class="m">\(v_x\)</span> ואת <span class="m">\(v_y\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>במקום זווית נתון שיפוע: היחס בין העלייה להתקדמות. היחס בין הרכיבים של המהירות שווה ליחס הזה. מסמנים את הרכיבים בעזרת פרמטר אחד, ומוצאים אותו מגודל המהירות.</p></div><ol class="st"><li><b>יחס:</b> <span class="m">\(\dfrac{v_y}{v_x} = \dfrac{5}{12} \Rightarrow v_x = 12k,\ v_y = 5k\)</span></li><li><b>גודל:</b> <span class="m">\(\sqrt{(12k)^2 + (5k)^2} = \sqrt{169k^2} = 13k\)</span></li><li><b>משוואה:</b> <span class="m">\(13k = 13 \Rightarrow k = 1\)</span></li><li><b>רכיבים:</b> <span class="m">\(v_x = 12,\ v_y = 5\)</span></li></ol><p class="ans">תשובה: <span class="m">\(v_x = 12,\ v_y = 5\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(\sqrt{144+25} = 13\)</span> והיחס <span class="m">\(5:12\)</span> ✓</p></div></details></li>
+<li>ב־<span class="m">\(t=2\)</span> המרכז ב־<span class="m">\((7,3)\)</span>, וב־<span class="m">\(t=5\)</span> ב־<span class="m">\((1,12)\)</span>. (א) מצאו את <span class="m">\(v_x, v_y\)</span>. (ב) מצאו את <span class="m">\(x_0, y_0\)</span>. (ג) רשמו את משוואות המרכז.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>אף אחת מהנקודות לא ב־t = 0, ולכן נקודת ההתחלה לא נתונה. קודם מוצאים את המהירות משתי הנקודות, ואחר כך ״חוזרים אחורה בזמן״ מאחת הנקודות: בכל שנייה אחורה מחסירים את המהירות.</p></div><ol class="st"><li><b>מהירות:</b> <span class="m">\(\Delta t = 3:\ v_x = \dfrac{1-7}{3} = -2,\ v_y = \dfrac{12-3}{3} = 3\)</span></li><li><b>חזרה ל־t = 0:</b> <span class="m">\(x_0 = 7 - (-2)\cdot 2 = 11,\ y_0 = 3 - 3\cdot 2 = -3\)</span></li><li><b>משוואות:</b> <span class="m">\(x_C = 11 - 2t,\ y_C = -3 + 3t\)</span></li></ol><p class="ans">תשובה: <span class="m">\(x_C = 11-2t,\ y_C = -3+3t\)</span></p><p class="chk"><b>בדיקה:</b> ב־<span class="m">\(t=5\)</span>: <span class="m">\((11-10,\ -3+15) = (1,12)\)</span> ✓</p></div></details></li>
+<li>משוואות המרכז הן <span class="m">\(x_C = 4 + 2t,\ y_C = 1 - 2t\)</span>. מהו מיקום ההתחלה, מהם <span class="m">\(v_x, v_y\)</span>, מהו גודל המהירות ומהו כיוון התנועה?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>כאן הכיוון הפוך: נתונה המשוואה ומחלצים ממנה את הרכיבים. המספר החופשי הוא מיקום ההתחלה, והמקדם של t הוא המהירות. את הזווית מוצאים מטנגנס, ואת הרביע קובעים לפי הסימנים של הרכיבים.</p></div><ol class="st"><li><b>זיהוי:</b> <span class="m">\((x_0,y_0) = (4,1),\ v_x = 2,\ v_y = -2\)</span></li><li><b>גודל:</b> <span class="m">\(|v| = \sqrt{4+4} = 2\sqrt2 \approx 2.83\)</span></li><li><b>כיוון:</b> <span class="m">\(\tan\alpha = \dfrac{-2}{2} = -1\)</span></li><li><b>רביע:</b> <span class="m">\(v_x \gt 0,\ v_y \lt 0\)</span> — רביע רביעי (ימינה ולמטה) <span class="m">\(\Rightarrow \alpha = -45^\circ\)</span></li></ol><p class="ans">תשובה: התחלה <span class="m">\((4,1)\)</span>, <span class="m">\(v_x=2,\ v_y=-2\)</span>, <span class="m">\(|v| = 2\sqrt2\)</span>, כיוון <span class="m">\(-45^\circ\)</span> (או <span class="m">\(315^\circ\)</span>).</p><p class="chk"><b>בדיקה:</b> <span class="m">\(2\sqrt2\cos(-45^\circ) = 2\)</span>, <span class="m">\(2\sqrt2\sin(-45^\circ) = -2\)</span> ✓</p></div></details></li>
+<li>מרכז גלגל יוצא מהראשית במהירות 25. על כל 4 יחידות ימינה הוא עולה 3 יחידות. מצאו את <span class="m">\(v_x, v_y\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>היחס בין הרכיבים הוא 3 ל־4. מסמנים בפרמטר אחד ומוצאים אותו מגודל המהירות.</p></div><ol class="st"><li><b>יחס:</b> <span class="m">\(v_x = 4k,\ v_y = 3k\)</span></li><li><b>גודל:</b> <span class="m">\(\sqrt{16k^2 + 9k^2} = 5k = 25 \Rightarrow k = 5\)</span></li><li><b>רכיבים:</b> <span class="m">\(v_x = 20,\ v_y = 15\)</span></li></ol><p class="ans">תשובה: <span class="m">\(v_x = 20,\ v_y = 15\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(\sqrt{400+225} = 25\)</span> ✓</p></div></details></li>
+<li>ב־<span class="m">\(t=1\)</span> המרכז ב־<span class="m">\((5,0)\)</span>, וב־<span class="m">\(t=4\)</span> ב־<span class="m">\((14,-6)\)</span>. מצאו את <span class="m">\(v_x, v_y\)</span> ואת <span class="m">\(x_0, y_0\)</span>, ורשמו את משוואות המרכז.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>קודם מהירות משתי הנקודות, ואחר כך חוזרים שנייה אחת אחורה מהנקודה ב־t = 1.</p></div><ol class="st"><li><b>מהירות:</b> <span class="m">\(v_x = \dfrac{9}{3} = 3,\ v_y = \dfrac{-6}{3} = -2\)</span></li><li><b>חזרה ל־t = 0:</b> <span class="m">\(x_0 = 5 - 3 = 2,\ y_0 = 0 + 2 = 2\)</span></li><li><b>משוואות:</b> <span class="m">\(x_C = 2 + 3t,\ y_C = 2 - 2t\)</span></li></ol><p class="ans">תשובה: <span class="m">\(x_C = 2 + 3t,\ y_C = 2 - 2t\)</span></p><p class="chk"><b>בדיקה:</b> ב־<span class="m">\(t=4\)</span>: <span class="m">\((14,-6)\)</span> ✓</p></div></details></li>
+<li>משוואות המרכז הן <span class="m">\(x_C = -1 - 3t,\ y_C = 2 + 4t\)</span>. מהו מיקום ההתחלה, מהם <span class="m">\(v_x, v_y\)</span>, מהו גודל המהירות ומהו הכיוון?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>מחלצים את הרכיבים מהמשוואה. v_x שלילי ו־v_y חיובי: רביע שני, ולכן מוסיפים 180 לזווית שהמחשבון נותן.</p></div><ol class="st"><li><b>זיהוי:</b> <span class="m">\((x_0,y_0) = (-1,2),\ v_x = -3,\ v_y = 4\)</span></li><li><b>גודל:</b> <span class="m">\(|v| = \sqrt{9+16} = 5\)</span></li><li><b>כיוון:</b> <span class="m">\(\tan\alpha = -\tfrac43\)</span>; המחשבון נותן <span class="m">\(-53.13^\circ\)</span>, ברביע שני <span class="m">\(\alpha = 180 - 53.13 = 126.87^\circ\)</span></li></ol><p class="ans">תשובה: התחלה <span class="m">\((-1,2)\)</span>, <span class="m">\(|v|=5\)</span>, כיוון כ־<span class="m">\(126.9^\circ\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(5\cos 126.87^\circ \approx -3\)</span> ✓</p></div></details></li></ol></section><section class="ch level" id="lvl3"><h2>רמה ג׳: שאלות הפוכות ומשולבות <small>שאלות 15–18</small></h2><p class="lead">מתי המרכז מגיע לנקודה, ומרחק במקום מהירות.</p><ol class="exercises" start="15"><li>מרכז גלגל עובר מ־<span class="m">\(A(1,2)\)</span> ל־<span class="m">\(B(9,8)\)</span> תוך 2 שניות (ב־<span class="m">\(t=0\)</span> הוא ב־A). (א) מצאו את <span class="m">\(v_x, v_y\)</span> ואת גודל המהירות. (ב) מתי המרכז יגיע ל־<span class="m">\(x=25\)</span>? מה יהיה אז y?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>קודם בונים את משוואות המרכז. אחר כך זו בעיה הפוכה: נתון ערך של x ומחפשים את הזמן. פותרים משוואה ב־t ממשוואת x, ומציבים את הזמן במשוואת y.</p></div><ol class="st"><li><b>מהירות:</b> <span class="m">\(v_x = \dfrac{8}{2} = 4,\ v_y = \dfrac{6}{2} = 3,\ |v| = 5\)</span></li><li><b>משוואות:</b> <span class="m">\(x_C = 1 + 4t,\ y_C = 2 + 3t\)</span></li><li><b>זמן:</b> <span class="m">\(1 + 4t = 25 \Rightarrow t = 6\)</span></li><li><b>y באותו רגע:</b> <span class="m">\(y_C = 2 + 18 = 20\)</span></li></ol><p class="ans">תשובה: <span class="m">\(|v| = 5\)</span>; המרכז מגיע ל־<span class="m">\(x=25\)</span> ב־<span class="m">\(t=6\)</span>, ואז <span class="m">\(y=20\)</span>.</p><p class="chk"><b>בדיקה:</b> המרחק מ־A ל־<span class="m">\((25,20)\)</span> הוא <span class="m">\(\sqrt{24^2+18^2} = 30\)</span>, ו־<span class="m">\(30/5 = 6\)</span> שניות ✓</p></div></details></li>
+<li>מרכז גלגל מתחיל ב־<span class="m">\((0,3)\)</span> ונע בכיוון <span class="m">\(60^\circ\)</span> מעל ציר x. אחרי 4 שניות הוא עבר 20 יחידות. מצאו את גודל המהירות, את <span class="m">\(v_x, v_y\)</span>, ורשמו את משוואות המרכז.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>שני שלבים: מהמרחק והזמן מקבלים את גודל המהירות, ורק אז מפרקים אותו לרכיבים לפי הזווית. מי שמפרק את המרחק 20 במקום את המהירות מקבל רכיבים גדולים פי 4.</p></div><ol class="st"><li><b>גודל:</b> <span class="m">\(|v| = \dfrac{20}{4} = 5\)</span></li><li><b>פירוק:</b> <span class="m">\(v_x = 5\cos 60^\circ = 2.5,\ v_y = 5\sin 60^\circ = 2.5\sqrt3 \approx 4.33\)</span></li><li><b>משוואות:</b> <span class="m">\(x_C = 2.5t,\ y_C = 3 + 2.5\sqrt3\,t\)</span></li></ol><p class="ans">תשובה: <span class="m">\(|v|=5\)</span>; <span class="m">\(x_C = 2.5t,\ y_C = 3 + 2.5\sqrt3\,t\)</span></p><p class="chk"><b>בדיקה:</b> ב־<span class="m">\(t=4\)</span>: תזוזה <span class="m">\((10,\ 10\sqrt3)\)</span>, ואורכה <span class="m">\(\sqrt{100+300} = 20\)</span> ✓</p></div></details></li>
+<li>מרכז גלגל עובר מ־<span class="m">\(A(0,0)\)</span> ל־<span class="m">\(B(6,8)\)</span> תוך 2 שניות (ב־<span class="m">\(t=0\)</span> הוא ב־A). מתי יגיע ל־<span class="m">\(y=20\)</span>? מה יהיה אז x, וכמה עבר?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>בונים משוואות, ופותרים משוואה ב־t ממשוואת y. את המרחק מקבלים ממהירות כפול זמן.</p></div><ol class="st"><li><b>מהירות:</b> <span class="m">\(v_x = 3,\ v_y = 4,\ |v| = 5\)</span></li><li><b>זמן:</b> <span class="m">\(4t = 20 \Rightarrow t = 5\)</span></li><li><b>x:</b> <span class="m">\(x = 15\)</span></li><li><b>מרחק:</b> <span class="m">\(5\cdot 5 = 25\)</span></li></ol><p class="ans">תשובה: ב־<span class="m">\(t=5\)</span>, ב־<span class="m">\(x=15\)</span>, אחרי 25 יחידות</p><p class="chk"><b>בדיקה:</b> <span class="m">\(\sqrt{15^2+20^2} = 25\)</span> ✓</p></div></details></li>
+<li>מרכז גלגל מתחיל ב־<span class="m">\((2,1)\)</span> ונע בכיוון <span class="m">\(45^\circ\)</span>. אחרי 3 שניות הוא עבר <span class="m">\(6\sqrt2\)</span> יחידות. מצאו את גודל המהירות, את <span class="m">\(v_x, v_y\)</span> ואת משוואות המרכז.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>קודם גודל המהירות ממרחק וזמן, ורק אז פירוק לפי הזווית.</p></div><ol class="st"><li><b>גודל:</b> <span class="m">\(|v| = \dfrac{6\sqrt2}{3} = 2\sqrt2\)</span></li><li><b>פירוק:</b> <span class="m">\(v_x = 2\sqrt2\cdot\tfrac{\sqrt2}{2} = 2,\ v_y = 2\)</span></li><li><b>משוואות:</b> <span class="m">\(x_C = 2 + 2t,\ y_C = 1 + 2t\)</span></li></ol><p class="ans">תשובה: <span class="m">\(|v| = 2\sqrt2,\ v_x = v_y = 2\)</span></p><p class="chk"><b>בדיקה:</b> ב־<span class="m">\(t=3\)</span> תזוזה <span class="m">\((6,6)\)</span>, ואורכה <span class="m">\(6\sqrt2\)</span> ✓</p></div></details></li></ol></section>
+<nav class="pager" aria-label="דפים סמוכים" style="background:none;border:0;padding:0"><a href="wheel-motion-02-substitution.html">→ תרגול ראשון: הצבה בנוסחה</a><a href="wheel-motion-04-angular-velocity.html">תרגול: מהירות זוויתית במעלות ←</a></nav>
+<footer>דף 03 בנושא תנועה על גלגל ועל גלגל מתגלגל · הפתרונות מוסתרים; בהדפסה כולם מוצגים.</footer>
+</div>
+<script>
+function toggleSol(b){document.body.classList.toggle('nosol');b.textContent=document.body.classList.contains('nosol')?'הצגת פתרונות':'הסתרת פתרונות (דף עבודה)';}
+function openAll(o){document.querySelectorAll('details').forEach(function(d){d.open=o;});}
+</script>
+</body>
+</html>

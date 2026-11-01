@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>תרגול: מהירות זוויתית במעלות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same worksheet style as the rest of the site (copied from composite-derivatives-02-exercises.html) */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:middle}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td .m{font-size:1rem}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.big{background:var(--accent-soft);border-radius:10px;padding:16px 18px;text-align:center;display:flex;flex-direction:column;gap:6px}
+.big .m{font-size:1.25rem;font-weight:600;white-space:normal}
+.big small{color:var(--muted);font-size:.92rem}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ul.mistakes{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+.steps .m{white-space:normal}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+
+/* inner/outer machine diagram, drawn left-to-right like the formula */
+.machine{direction:ltr;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:14px 8px;font-family:var(--f-math);font-size:.95rem}
+.machine .box{border:2px solid var(--accent);border-radius:8px;padding:8px 12px;text-align:center;line-height:1.3;background:var(--paper)}
+.machine .box.out{border-color:var(--mark)}
+.machine .box small{display:block;font-family:var(--f-body);font-size:.75rem;color:var(--muted)}
+.machine .val{padding:6px 10px;background:var(--accent-soft);border-radius:99px}
+.machine .arr{color:var(--muted)}
+.inner{color:var(--accent);font-weight:600}
+.outer{color:var(--mark);font-weight:600}
+
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+@media print{body{background:#fff} details{display:block} details .sol{display:block} summary{display:none} nav{display:none}}
+.lead a{color:var(--accent);font-weight:600}
+/* Every solution: "דרך החשיבה" (how to recognise the structure and choose the rule), numbered steps, and the answer */
+.think{background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.think-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.think p{margin:0}
+ol.st{margin:6px 0 0;padding-inline-start:24px;display:flex;flex-direction:column;gap:6px}
+ol.st li::marker{font-weight:700;color:var(--mark)}
+ol.st b{color:var(--mark)}
+.sol .ans{font-weight:700;border-top:1px dashed var(--line);padding-top:8px;margin-top:4px}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+<style>
+/* wheel-motion topic additions */
+.fig{display:flex;justify-content:center}
+.fig svg{max-width:440px;width:100%;height:auto}
+.fig svg text{font-family:var(--f-body);fill:var(--ink)}
+.cap{color:var(--muted);font-size:.9rem;text-align:center}
+.blue{color:var(--accent);font-weight:700}
+.orange{color:var(--mark);font-weight:700}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+.toolbar button{font-family:var(--f-body);font-size:.95rem;border:1px solid var(--accent);background:var(--paper);color:var(--accent);padding:6px 14px;border-radius:8px;cursor:pointer}
+.toolbar button:hover{background:var(--accent-soft)}
+body.nosol details{display:none}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pager a{color:var(--accent);font-weight:600;text-decoration:none}
+.pager a:hover{text-decoration:underline}
+ol.method{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:4px}
+ol.method li::marker{font-weight:700;color:var(--accent)}
+.sol .chk{color:var(--muted);font-size:.95rem}
+.blank td{height:2.2em}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html#wheel-motion">→ חזרה לנושא: תנועה על גלגל ועל גלגל מתגלגל</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · טריגונומטריה · תנועה על גלגל ועל גלגל מתגלגל</span>
+  <h1>תרגול: מהירות זוויתית במעלות</h1>
+  <p class="lead">20 שאלות על משוואת הסיבוב <span class="m">\(\theta(t) = \theta_0 + \omega t\)</span>: איך מוצאים את הזווית ההתחלתית ואת המהירות הזוויתית במעלות לשנייה, כולל הסימן. ההסבר בדף <a href="wheel-motion-00-theory.html#rotation">התאוריה</a>.</p>
+</header>
+<nav aria-label="תוכן"><strong>תוכן</strong><ol><li><a href="#lvl1">רמה א׳: ω ישירה (1–8)</a></li><li><a href="#lvl2">רמה ב׳: ω ו־θ₀ מתיאור (9–16)</a></li><li><a href="#lvl3">רמה ג׳: θ₀ מקואורדינטות (17–20)</a></li></ol></nav>
+<div class="toolbar"><button type="button" onclick="toggleSol(this)">הסתרת פתרונות (דף עבודה)</button><button type="button" onclick="openAll(true)">פתיחת כל הפתרונות</button><button type="button" onclick="openAll(false)">סגירת כל הפתרונות</button></div>
+<div class="note"><strong>כלים לדף:</strong> <span class="m">\(\omega = 360n\)</span> · <span class="m">\(\omega = \dfrac{360}{T}\)</span> · <span class="m">\(\omega = 6\cdot\text{rpm}\)</span> · <span class="m">\(\omega = \dfrac{\Delta\theta}{\Delta t}\)</span> · נגד השעון <span class="m">\(\omega \gt 0\)</span>, עם השעון <span class="m">\(\omega \lt 0\)</span> · ימין <span class="m">\(0^\circ\)</span>, למעלה <span class="m">\(90^\circ\)</span>, שמאל <span class="m">\(180^\circ\)</span>, למטה <span class="m">\(270^\circ\)</span></div><section class="ch level" id="lvl1"><h2>רמה א׳: מהירות זוויתית ישירה <small>שאלות 1–8</small></h2><p class="lead">סיבובים לשנייה, זמן מחזור, סל״ד, וזיהוי רכיבים מהמשוואה.</p><ol class="exercises" start="1"><li>גלגל מבצע 2 סיבובים בשנייה נגד כיוון השעון. מהי <span class="m">\(\omega\)</span> במעלות לשנייה?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>סיבוב מלא הוא 360 מעלות. כמה סיבובים בשנייה כפול 360 נותן מעלות בשנייה. הכיוון קובע את הסימן: נגד השעון הוא חיובי.</p></div><ol class="st"><li><b>נוסחה:</b> <span class="m">\(\omega = 360n\)</span></li><li><b>הצבה:</b> <span class="m">\(\omega = 360\cdot 2 = 720\)</span></li><li><b>סימן:</b> נגד השעון <span class="m">\(\Rightarrow +\)</span></li></ol><p class="ans">תשובה: <span class="m">\(\omega = 720^\circ/\text{s}\)</span></p><p class="chk"><b>בדיקה:</b> בחצי שנייה הגלגל מסתובב <span class="m">\(360^\circ\)</span>, כלומר סיבוב אחד, ואכן 2 סיבובים בשנייה ✓</p></div></details></li>
+<li>גלגל משלים סיבוב מלא כל 8 שניות, עם כיוון השעון. מהי <span class="m">\(\omega\)</span>?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>נתון זמן מחזור, כלומר כמה שניות לוקח סיבוב אחד. מחלקים 360 מעלות בזמן הזה. עם כיוון השעון ולכן הסימן שלילי.</p></div><ol class="st"><li><b>נוסחה:</b> <span class="m">\(|\omega| = \dfrac{360}{T}\)</span></li><li><b>הצבה:</b> <span class="m">\(|\omega| = \dfrac{360}{8} = 45\)</span></li><li><b>סימן:</b> עם השעון <span class="m">\(\Rightarrow \omega = -45\)</span></li></ol><p class="ans">תשובה: <span class="m">\(\omega = -45^\circ/\text{s}\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(45\cdot 8 = 360\)</span> ✓</p></div></details></li>
+<li>גלגל מסתובב ב־30 סיבובים לדקה (סל״ד) נגד כיוון השעון. כמה סיבובים בשנייה, ומהי <span class="m">\(\omega\)</span>?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>היחידה נתונה בדקות, ו־ω במעלות לשנייה. קודם ממירים לסיבובים בשנייה (מחלקים ב־60), ואז כופלים ב־360. אפשר גם לזכור: ω = 6 · סל״ד.</p></div><ol class="st"><li><b>המרה:</b> <span class="m">\(n = \dfrac{30}{60} = 0.5\)</span></li><li><b>חישוב:</b> <span class="m">\(\omega = 360\cdot 0.5 = 180\)</span></li><li><b>קיצור:</b> <span class="m">\(\omega = 6\cdot 30 = 180\)</span></li></ol><p class="ans">תשובה: 0.5 סיבוב לשנייה, <span class="m">\(\omega = 180^\circ/\text{s}\)</span></p><p class="chk"><b>בדיקה:</b> שתי הדרכים נותנות 180 ✓</p></div></details></li>
+<li>משוואת הסיבוב היא <span class="m">\(\theta(t) = 45 + 60t\)</span>. מה הזווית ההתחלתית ובאיזה רביע הנקודה מתחילה? באיזה כיוון מסתובב הגלגל? מהו זמן המחזור, וכמה סיבובים לדקה?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>מזהים את הרכיבים: המספר החופשי הוא <span class="m">\(\theta_0\)</span> והמקדם של t הוא <span class="m">\(\omega\)</span>. הסימן של ω נותן את הכיוון, ומ־ω מחשבים את זמן המחזור.</p></div><ol class="st"><li><b>זיהוי:</b> <span class="m">\(\theta_0 = 45^\circ,\ \omega = 60^\circ/\text{s}\)</span></li><li><b>רביע:</b> <span class="m">\(0^\circ \lt 45^\circ \lt 90^\circ\)</span> — רביע ראשון</li><li><b>כיוון:</b> <span class="m">\(\omega \gt 0\)</span> — נגד השעון</li><li><b>מחזור:</b> <span class="m">\(T = \dfrac{360}{60} = 6\)</span> שניות</li><li><b>סל״ד:</b> <span class="m">\(\dfrac{60}{6} = 10\)</span></li></ol><p class="ans">תשובה: מתחילה ב־<span class="m">\(45^\circ\)</span> (רביע ראשון), נגד השעון, <span class="m">\(T = 6\)</span> שניות, 10 סל״ד.</p><p class="chk"><b>בדיקה:</b> <span class="m">\(6\cdot 10 = 60\)</span> ✓</p></div></details></li>
+<li>גלגל מבצע 3 סיבובים בשנייה עם כיוון השעון. מהי <span class="m">\(\omega\)</span>?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>סיבובים לשנייה כפול 360. עם השעון — סימן שלילי.</p></div><ol class="st"><li><b>נוסחה:</b> <span class="m">\(|\omega| = 360\cdot 3 = 1080\)</span></li><li><b>סימן:</b> עם השעון <span class="m">\(\Rightarrow \omega = -1080\)</span></li></ol><p class="ans">תשובה: <span class="m">\(\omega = -1080^\circ/\text{s}\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(1080 / 360 = 3\)</span> ✓</p></div></details></li>
+<li>גלגל משלים סיבוב כל 20 שניות נגד כיוון השעון. מהי <span class="m">\(\omega\)</span>?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>360 מעלות חלקי זמן המחזור. נגד השעון — חיובי.</p></div><ol class="st"><li><b>הצבה:</b> <span class="m">\(\omega = \dfrac{360}{20} = 18\)</span></li></ol><p class="ans">תשובה: <span class="m">\(\omega = 18^\circ/\text{s}\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(18\cdot 20 = 360\)</span> ✓</p></div></details></li>
+<li>גלגל מסתובב ב־45 סל״ד עם כיוון השעון. כמה סיבובים בשנייה, ומהי <span class="m">\(\omega\)</span>?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>ממירים מדקה לשנייה, כופלים ב־360, ושמים סימן שלילי.</p></div><ol class="st"><li><b>המרה:</b> <span class="m">\(n = \dfrac{45}{60} = 0.75\)</span></li><li><b>חישוב:</b> <span class="m">\(|\omega| = 360\cdot 0.75 = 270\)</span></li><li><b>קיצור:</b> <span class="m">\(6\cdot 45 = 270\)</span></li></ol><p class="ans">תשובה: 0.75 סיבוב לשנייה, <span class="m">\(\omega = -270^\circ/\text{s}\)</span></p><p class="chk"><b>בדיקה:</b> שתי הדרכים נותנות 270 ✓</p></div></details></li>
+<li>משוואת הסיבוב היא <span class="m">\(\theta(t) = 300 - 30t\)</span>. מה הזווית ההתחלתית ובאיזה רביע? באיזה כיוון מסתובב הגלגל? מהו זמן המחזור, וכמה סל״ד?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>מזהים את <span class="m">\(\theta_0\)</span> ואת <span class="m">\(\omega\)</span> מהמשוואה. ω שלילית — עם השעון.</p></div><ol class="st"><li><b>זיהוי:</b> <span class="m">\(\theta_0 = 300^\circ,\ \omega = -30\)</span></li><li><b>רביע:</b> <span class="m">\(270^\circ \lt 300^\circ \lt 360^\circ\)</span> — רביע רביעי</li><li><b>מחזור:</b> <span class="m">\(T = \dfrac{360}{30} = 12\)</span></li><li><b>סל״ד:</b> <span class="m">\(\dfrac{60}{12} = 5\)</span></li></ol><p class="ans">תשובה: רביע רביעי, עם השעון, <span class="m">\(T = 12\)</span> שניות, 5 סל״ד</p><p class="chk"><b>בדיקה:</b> <span class="m">\(6\cdot 5 = 30\)</span> ✓</p></div></details></li></ol></section><section class="ch level" id="lvl2"><h2>רמה ב׳: מוצאים ω ו־θ₀ מתיאור <small>שאלות 9–16</small></h2><p class="lead">שתי זוויות, תיאור מילולי, רבע סיבוב וחזרה לאותה נקודה.</p><ol class="exercises" start="9"><li>ב־<span class="m">\(t=0\)</span> הנקודה בזווית <span class="m">\(20^\circ\)</span>, וב־<span class="m">\(t=3\)</span> בזווית <span class="m">\(110^\circ\)</span>. הגלגל מסתובב נגד השעון והשלים פחות מסיבוב. מצאו את <span class="m">\(\omega\)</span>, רשמו את <span class="m">\(\theta(t)\)</span>, ומצאו מתי הנקודה תגיע לראשונה לתחתית הגלגל.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>שתי זוויות בשני זמנים: בדיוק כמו מהירות משתי נקודות, רק עם זוויות. ״פחות מסיבוב״ אומר שאין להוסיף 360. התחתית היא 270 מעלות, ופותרים משוואה ב־t.</p></div><ol class="st"><li><b>מהירות זוויתית:</b> <span class="m">\(\omega = \dfrac{110-20}{3} = 30\)</span></li><li><b>משוואה:</b> <span class="m">\(\theta(t) = 20 + 30t\)</span></li><li><b>תחתית:</b> <span class="m">\(20 + 30t = 270 \Rightarrow t = \dfrac{250}{30} \approx 8.33\)</span></li></ol><p class="ans">תשובה: <span class="m">\(\omega = 30^\circ/\text{s}\)</span>, <span class="m">\(\theta(t) = 20 + 30t\)</span>, בתחתית לראשונה אחרי כ־8.33 שניות.</p><p class="chk"><b>בדיקה:</b> <span class="m">\(\theta(3) = 110\)</span> ✓</p></div></details></li>
+<li>נקודה מתחילה בראש הגלגל. הגלגל מסתובב עם כיוון השעון ומשלים סיבוב כל 4 שניות. רשמו את <span class="m">\(\theta(t)\)</span> ומצאו איפה הנקודה ב־<span class="m">\(t=1\)</span> וב־<span class="m">\(t=3\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>מתרגמים את התיאור המילולי: ״ראש הגלגל״ הוא 90 מעלות. ״עם כיוון השעון״ נותן ω שלילי. אחר כך מציבים ומפרשים את הזווית כמקום על הגלגל.</p></div><ol class="st"><li><b>זווית התחלה:</b> <span class="m">\(\theta_0 = 90^\circ\)</span></li><li><b>מהירות זוויתית:</b> <span class="m">\(\omega = -\dfrac{360}{4} = -90\)</span></li><li><b>משוואה:</b> <span class="m">\(\theta(t) = 90 - 90t\)</span></li><li><b>t = 1:</b> <span class="m">\(\theta = 0^\circ\)</span> — צד ימין</li><li><b>t = 3:</b> <span class="m">\(\theta = -180^\circ\)</span> — צד שמאל</li></ol><p class="ans">תשובה: <span class="m">\(\theta(t) = 90 - 90t\)</span>; ב־t = 1 בצד ימין, ב־t = 3 בצד שמאל.</p><p class="chk"><b>בדיקה:</b> עם השעון מהראש מגיעים קודם לימין (רבע סיבוב, שנייה אחת) ✓</p></div></details></li>
+<li>ב־<span class="m">\(t=0\)</span> הנקודה בצד ימין של הגלגל. אחרי 2 שניות, כשהגלגל השלים רבע סיבוב בדיוק, היא מגיעה לתחתית. באיזה כיוון הגלגל מסתובב? מצאו את <span class="m">\(\omega\)</span> ורשמו את <span class="m">\(\theta(t)\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>הכיוון לא נתון במפורש, אבל אפשר להסיק אותו. מימין (0°) לתחתית (270° או −90°) אפשר להגיע ברבע סיבוב עם השעון, או בשלושה רבעים נגד השעון. השאלה אומרת רבע סיבוב, ולכן הכיוון הוא עם השעון.</p></div><ol class="st"><li><b>כיוון:</b> מ־<span class="m">\(0^\circ\)</span> ל־<span class="m">\(-90^\circ\)</span> ברבע סיבוב — עם השעון</li><li><b>מהירות זוויתית:</b> <span class="m">\(\omega = \dfrac{-90-0}{2} = -45\)</span></li><li><b>משוואה:</b> <span class="m">\(\theta(t) = -45t\)</span></li></ol><p class="ans">תשובה: עם כיוון השעון, <span class="m">\(\omega = -45^\circ/\text{s}\)</span>, <span class="m">\(\theta(t) = -45t\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(\theta(2) = -90^\circ\)</span> — תחתית, אחרי רבע סיבוב ✓</p></div></details></li>
+<li>ב־<span class="m">\(t=0\)</span> הנקודה בזווית <span class="m">\(30^\circ\)</span>. ב־<span class="m">\(t=5\)</span> היא חוזרת לזווית הזו בפעם הראשונה. הגלגל מסתובב נגד השעון. מהו זמן המחזור? רשמו את <span class="m">\(\theta(t)\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>״חוזרת לאותה זווית בפעם הראשונה״ פירושו שהגלגל השלים בדיוק סיבוב אחד. לכן הזמן הזה הוא זמן המחזור.</p></div><ol class="st"><li><b>מחזור:</b> <span class="m">\(T = 5\)</span></li><li><b>מהירות זוויתית:</b> <span class="m">\(\omega = \dfrac{360}{5} = 72\)</span></li><li><b>משוואה:</b> <span class="m">\(\theta(t) = 30 + 72t\)</span></li></ol><p class="ans">תשובה: <span class="m">\(T = 5\)</span> שניות, <span class="m">\(\theta(t) = 30 + 72t\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(\theta(5) = 390^\circ = 30^\circ + 360^\circ\)</span> ✓</p></div></details></li>
+<li>ב־<span class="m">\(t=0\)</span> הנקודה בזווית <span class="m">\(150^\circ\)</span>, וב־<span class="m">\(t=4\)</span> בזווית <span class="m">\(50^\circ\)</span>. הגלגל מסתובב עם השעון והשלים פחות מסיבוב. מצאו את <span class="m">\(\omega\)</span>, רשמו את <span class="m">\(\theta(t)\)</span>, ומצאו מתי הנקודה תגיע לראשונה לצד ימין.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>הזווית קטנה — מתאים לסיבוב עם השעון. צד ימין הוא 0 מעלות.</p></div><ol class="st"><li><b>מהירות זוויתית:</b> <span class="m">\(\omega = \dfrac{50-150}{4} = -25\)</span></li><li><b>משוואה:</b> <span class="m">\(\theta(t) = 150 - 25t\)</span></li><li><b>צד ימין:</b> <span class="m">\(150 - 25t = 0 \Rightarrow t = 6\)</span></li></ol><p class="ans">תשובה: <span class="m">\(\omega = -25^\circ/\text{s}\)</span>; צד ימין ב־<span class="m">\(t=6\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(\theta(4) = 50\)</span> ✓</p></div></details></li>
+<li>נקודה מתחילה בתחתית הגלגל. הגלגל מסתובב נגד השעון ומשלים סיבוב כל 6 שניות. רשמו את <span class="m">\(\theta(t)\)</span> ומצאו איפה הנקודה ב־<span class="m">\(t=1.5\)</span> וב־<span class="m">\(t=3\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>״תחתית״ היא 270 מעלות. נגד השעון — ω חיובית. מזווית גדולה מ־360 מחסירים 360.</p></div><ol class="st"><li><b>רכיבים:</b> <span class="m">\(\theta_0 = 270^\circ,\ \omega = 60\)</span></li><li><b>משוואה:</b> <span class="m">\(\theta(t) = 270 + 60t\)</span></li><li><b>t = 1.5:</b> <span class="m">\(360^\circ = 0^\circ\)</span> — צד ימין</li><li><b>t = 3:</b> <span class="m">\(450^\circ = 90^\circ\)</span> — ראש הגלגל</li></ol><p class="ans">תשובה: ב־1.5 בצד ימין, ב־3 בראש הגלגל</p><p class="chk"><b>בדיקה:</b> חצי מחזור (3 שניות) מהתחתית מגיע לראש ✓</p></div></details></li>
+<li>נקודה מתחילה בראש הגלגל. אחרי 3 שניות, כשהגלגל השלים רבע סיבוב בדיוק, היא בצד שמאל. באיזה כיוון הגלגל מסתובב? מצאו את <span class="m">\(\omega\)</span> ורשמו את <span class="m">\(\theta(t)\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>מהראש (90) לצד שמאל (180) ברבע סיבוב — הזווית גדלה, כלומר נגד השעון.</p></div><ol class="st"><li><b>כיוון:</b> <span class="m">\(90^\circ \to 180^\circ\)</span> — נגד השעון</li><li><b>מהירות זוויתית:</b> <span class="m">\(\omega = \dfrac{90}{3} = 30\)</span></li><li><b>משוואה:</b> <span class="m">\(\theta(t) = 90 + 30t\)</span></li></ol><p class="ans">תשובה: נגד השעון, <span class="m">\(\omega = 30^\circ/\text{s}\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(\theta(3) = 180\)</span> ✓</p></div></details></li>
+<li>נקודה מתחילה בזווית <span class="m">\(0^\circ\)</span>. אחרי 4 שניות היא שוב ב־<span class="m">\(0^\circ\)</span>, אחרי שהגלגל השלים בדיוק 2 סיבובים עם כיוון השעון. מהו זמן המחזור? מצאו את <span class="m">\(\omega\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>שני סיבובים ב־4 שניות: סיבוב כל 2 שניות. עם השעון — ω שלילית.</p></div><ol class="st"><li><b>מחזור:</b> <span class="m">\(T = \dfrac{4}{2} = 2\)</span></li><li><b>מהירות זוויתית:</b> <span class="m">\(\omega = -\dfrac{360}{2} = -180\)</span></li><li><b>משוואה:</b> <span class="m">\(\theta(t) = -180t\)</span></li></ol><p class="ans">תשובה: <span class="m">\(T = 2\)</span> שניות, <span class="m">\(\omega = -180^\circ/\text{s}\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(\theta(4) = -720^\circ\)</span> — שני סיבובים שלמים ✓</p></div></details></li></ol></section><section class="ch level" id="lvl3"><h2>רמה ג׳: θ₀ מקואורדינטות <small>שאלות 17–20</small></h2><p class="lead">הזווית ההתחלתית מתוך מיקום המרכז ומיקום הנקודה.</p><ol class="exercises" start="17"><li>מרכז הגלגל ב־<span class="m">\(t=0\)</span> ב־<span class="m">\((3,2)\)</span>, והנקודה P ב־<span class="m">\((3,-2)\)</span>. הגלגל מבצע 3 סיבובים בדקה עם כיוון השעון. מצאו את R, את <span class="m">\(\theta_0\)</span> ואת <span class="m">\(\omega\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>הרדיוס הוא המרחק בין P למרכז. הזווית ההתחלתית היא הזווית של הווקטור מהמרכז אל P: מחשבים את ההפרשים, מחלקים ב־R ומקבלים cos ו־sin של הזווית.</p></div><ol class="st"><li><b>הפרשים:</b> <span class="m">\(x_P - x_C = 0,\ y_P - y_C = -4\)</span></li><li><b>רדיוס:</b> <span class="m">\(R = 4\)</span></li><li><b>זווית:</b> <span class="m">\(\cos\theta_0 = 0,\ \sin\theta_0 = -1 \Rightarrow \theta_0 = 270^\circ\)</span></li><li><b>מהירות זוויתית:</b> <span class="m">\(\omega = -6\cdot 3 = -18\)</span></li></ol><p class="ans">תשובה: <span class="m">\(R = 4,\ \theta_0 = 270^\circ,\ \omega = -18^\circ/\text{s}\)</span></p><p class="chk"><b>בדיקה:</b> P מתחת למרכז בדיוק — תחתית הגלגל, 270 מעלות ✓</p></div></details></li>
+<li>מרכז הגלגל ב־<span class="m">\(t=0\)</span> ב־<span class="m">\((0,0)\)</span>, והנקודה P ב־<span class="m">\((-1,\sqrt3)\)</span>. הגלגל משלים סיבוב כל 12 שניות נגד השעון. מצאו את R ואת <span class="m">\(\theta_0\)</span>. מתי P תגיע לראשונה לצד שמאל של הגלגל?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>כמו בשאלה הקודמת, אבל הזווית לא על ציר. cos שלילי ו־sin חיובי: רביע שני. מזהים את הזווית לפי הערכים המוכרים (cos = −½). צד שמאל הוא 180 מעלות.</p></div><ol class="st"><li><b>רדיוס:</b> <span class="m">\(R = \sqrt{1+3} = 2\)</span></li><li><b>זווית:</b> <span class="m">\(\cos\theta_0 = -\tfrac12,\ \sin\theta_0 = \tfrac{\sqrt3}{2} \Rightarrow \theta_0 = 120^\circ\)</span></li><li><b>מהירות זוויתית:</b> <span class="m">\(\omega = \dfrac{360}{12} = 30\)</span></li><li><b>זמן:</b> <span class="m">\(120 + 30t = 180 \Rightarrow t = 2\)</span></li></ol><p class="ans">תשובה: <span class="m">\(R = 2,\ \theta_0 = 120^\circ\)</span>, צד שמאל ב־<span class="m">\(t=2\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(2\cos 120^\circ = -1,\ 2\sin 120^\circ = \sqrt3\)</span> ✓</p></div></details></li>
+<li>מרכז הגלגל ב־<span class="m">\(t=0\)</span> ב־<span class="m">\((-2,1)\)</span>, והנקודה P ב־<span class="m">\((1,1)\)</span>. הגלגל מסתובב ב־10 סל״ד נגד השעון. מצאו את R, את <span class="m">\(\theta_0\)</span> ואת <span class="m">\(\omega\)</span>.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>ההפרש P פחות המרכז נותן את הרדיוס ואת הכיוון של P.</p></div><ol class="st"><li><b>הפרשים:</b> <span class="m">\((1-(-2),\ 1-1) = (3, 0)\)</span></li><li><b>רדיוס וזווית:</b> <span class="m">\(R = 3,\ \theta_0 = 0^\circ\)</span></li><li><b>מהירות זוויתית:</b> <span class="m">\(\omega = 6\cdot 10 = 60\)</span></li></ol><p class="ans">תשובה: <span class="m">\(R = 3,\ \theta_0 = 0^\circ,\ \omega = 60^\circ/\text{s}\)</span></p><p class="chk"><b>בדיקה:</b> P מימין למרכז בדיוק ✓</p></div></details></li>
+<li>מרכז הגלגל ב־<span class="m">\(t=0\)</span> ב־<span class="m">\((1,1)\)</span>, והנקודה P ב־<span class="m">\((1-\sqrt2,\ 1+\sqrt2)\)</span>. הגלגל משלים סיבוב כל 8 שניות עם השעון. מצאו את R ואת <span class="m">\(\theta_0\)</span>. מתי P תגיע לראשונה לראש הגלגל?<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>ההפרש <span class="m">\((-\sqrt2, \sqrt2)\)</span>: cos שלילי ו־sin חיובי, רביע שני. עם השעון הזווית קטנה, ולכן מ־135 מגיעים קודם ל־90.</p></div><ol class="st"><li><b>רדיוס:</b> <span class="m">\(R = \sqrt{2+2} = 2\)</span></li><li><b>זווית:</b> <span class="m">\(\cos\theta_0 = -\tfrac{\sqrt2}{2},\ \sin\theta_0 = \tfrac{\sqrt2}{2} \Rightarrow \theta_0 = 135^\circ\)</span></li><li><b>מהירות זוויתית:</b> <span class="m">\(\omega = -45\)</span></li><li><b>זמן:</b> <span class="m">\(135 - 45t = 90 \Rightarrow t = 1\)</span></li></ol><p class="ans">תשובה: <span class="m">\(R = 2,\ \theta_0 = 135^\circ\)</span>, ראש הגלגל ב־<span class="m">\(t=1\)</span></p><p class="chk"><b>בדיקה:</b> <span class="m">\(2\cos 135^\circ = -\sqrt2\)</span> ✓</p></div></details></li></ol></section>
+<nav class="pager" aria-label="דפים סמוכים" style="background:none;border:0;padding:0"><a href="wheel-motion-03-center-velocity.html">→ תרגול: מהירות המרכז</a><a href="wheel-motion-05-rolling-wheel.html">תרגול: גלגל מתגלגל ←</a></nav>
+<footer>דף 04 בנושא תנועה על גלגל ועל גלגל מתגלגל · הפתרונות מוסתרים; בהדפסה כולם מוצגים.</footer>
+</div>
+<script>
+function toggleSol(b){document.body.classList.toggle('nosol');b.textContent=document.body.classList.contains('nosol')?'הצגת פתרונות':'הסתרת פתרונות (דף עבודה)';}
+function openAll(o){document.querySelectorAll('details').forEach(function(d){d.open=o;});}
+</script>
+</body>
+</html>
