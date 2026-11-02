@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>טבלת נתונים: ממלאים לפני החישוב הסופי</title>
+<title>דף נוסחאות: נקודה על גלגל</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
@@ -120,6 +120,8 @@ td .m .katex{font-size:1.2em}
 /* wheel-motion topic additions */
 .fig{display:flex;justify-content:center}
 .fig svg{max-width:440px;width:100%;height:auto}
+.sol .fig{margin:8px 0}
+.sol .fig svg{min-width:300px}
 .fig svg text{font-family:var(--f-body);fill:var(--ink)}
 .cap{color:var(--muted);font-size:.9rem;text-align:center}
 .blue{color:var(--accent);font-weight:700}
@@ -184,16 +186,47 @@ ol.method li::marker{font-weight:700;color:var(--accent)}
 <div class="wrap">
 <a class="back" href="index.html#wheel-motion">→ חזרה לנושא: תנועה על גלגל ועל גלגל מתגלגל</a>
 <div class="noprint toolbar"><button type="button" onclick="window.print()">הדפסה</button></div>
-<p class="noprint lead">עמוד A4 אחד: טבלה ריקה של שבעת הרכיבים, שממלאים בכל שאלה לפני החישוב הסופי. הנוסחאות ב<a href="wheel-motion-09-formula-sheet.html">דף הנוסחאות</a>.</p>
+<p class="noprint lead">עמוד A4 אחד: כל הנוסחאות של הנושא ואיך מוצאים כל רכיב. את טבלת הנתונים הריקה שממלאים בכל שאלה תמצאו ב<a href="wheel-motion-11-data-table.html">דף 11</a>.</p>
 <div class="sheet">
-<h1>טבלת נתונים: ממלאים לפני החישוב הסופי</h1>
-<div class="namebar"><span>שם:</span><span>כיתה:</span><span>דף תרגול:</span></div>
-<p class="hint">בכל שאלה ממלאים קודם את שבעת הרכיבים. רק כשכל התאים מלאים, רושמים את הנוסחה, מציבים את <span class="m">\(t\)</span> וממלאים את <span class="m">\(x(t)\)</span> ו־<span class="m">\(y(t)\)</span>. שורת הדוגמה היא דוגמה פתורה 1 מדף התאוריה.</p>
-<div class="tablebox"><table class="fill"><tr><th>שאלה</th><th><span class="m">\(x_0\)</span></th><th><span class="m">\(y_0\)</span></th><th><span class="m">\(v_x\)</span></th><th><span class="m">\(v_y\)</span></th><th><span class="m">\(R\)</span></th><th><span class="m">\(\theta_0\)</span></th><th><span class="m">\(\omega\)</span></th><th class="sep"><span class="m">\(t\)</span></th><th><span class="m">\(x(t)\)</span></th><th><span class="m">\(y(t)\)</span></th></tr><tr class="ex"><td>דוגמה</td><td><span class="m">\(1\)</span></td><td><span class="m">\(4\)</span></td><td><span class="m">\(3\)</span></td><td><span class="m">\(2\)</span></td><td><span class="m">\(2\)</span></td><td><span class="m">\(90^\circ\)</span></td><td><span class="m">\(45\)</span></td><td class="sep"><span class="m">\(2\)</span></td><td><span class="m">\(5\)</span></td><td><span class="m">\(8\)</span></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="sep"></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="sep"></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="sep"></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="sep"></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="sep"></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="sep"></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="sep"></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="sep"></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="sep"></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="sep"></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="sep"></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="sep"></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="sep"></td><td></td><td></td></tr></table></div>
-<p class="hint">הנוסחה: <span class="m">\(x(t) = x_0 + v_x t + R\cos(\theta_0 + \omega t)\)</span>, <span class="m">\(y(t) = y_0 + v_y t + R\sin(\theta_0 + \omega t)\)</span>. בגלגל מתגלגל: <span class="m">\(y_0 = R,\ v_y = 0\)</span>, ואת <span class="m">\(v_x\)</span> ו־<span class="m">\(\omega\)</span> מחשבים זה מזה.</p>
+<h1>דף נוסחאות: נקודה על גלגל</h1>
+<div class="sub">מתמטיקה · כיתה י״א · 5 יח״ל · תנועה על גלגל ועל גלגל מתגלגל</div>
+<div class="namebar"><span>שם:</span><span>כיתה:</span><span>תאריך:</span></div>
+<div class="big"><span class="m">\(x(t) = \color{#1f6f8b}{x_A + v_x t} + R\cos(\color{#b4561e}{\theta_0 + \omega t})\)</span><br><span class="m">\(y(t) = \color{#1f6f8b}{y_A + v_y t} + R\sin(\color{#b4561e}{\theta_0 + \omega t})\)</span></div>
+<div class="cols">
+<div class="box"><h2>משוואת המרכז (לינארית)</h2><ul>
+<li>נקודות: <span class="m">\(A\)</span> התחלה (<span class="m">\(t_A=0\)</span>), <span class="m">\(B\)</span> סיום (<span class="m">\(t_B\)</span>), <span class="m">\(D, E\)</span> נוספות · <span class="m">\(C\)</span> מרכז, <span class="m">\(P\)</span> נקודה על הגלגל, <span class="m">\(L\)</span> היקף</li>
+<li><span class="m">\(x_C = x_A + v_x t,\ \ y_C = y_A + v_y t\)</span></li>
+<li>משתי נקודות: <span class="m">\(v_x = \dfrac{x_B - x_A}{t_B - t_A},\ v_y = \dfrac{y_B - y_A}{t_B - t_A}\)</span></li>
+<li>מגודל וזווית: <span class="m">\(v_x = |v|\cos\alpha,\ v_y = |v|\sin\alpha\)</span></li>
+<li>גודל וכיוון: <span class="m">\(|v| = \sqrt{v_x^2+v_y^2},\ \tan\alpha = \dfrac{v_y}{v_x}\)</span> (לבדוק רביע)</li>
+<li>חזרה ל־<span class="m">\(t=0\)</span>: <span class="m">\(x_A = x_B - v_x t_B,\ y_A = y_B - v_y t_B\)</span></li>
+</ul></div>
+<div class="box"><h2>משוואת הסיבוב (מעלות)</h2><ul>
+<li><span class="m">\(\theta(t) = \theta_0 + \omega t\)</span> · נגד השעון <span class="m">\(\omega \gt 0\)</span>, עם השעון <span class="m">\(\omega \lt 0\)</span></li>
+<li><span class="m">\(|\omega| = 360n = \dfrac{360}{T} = 6\cdot\text{rpm}\)</span> · <span class="m">\(\omega = \dfrac{\Delta\theta}{\Delta t}\)</span></li>
+<li>ימין <span class="m">\(0^\circ\)</span> · למעלה <span class="m">\(90^\circ\)</span> · שמאל <span class="m">\(180^\circ\)</span> · למטה <span class="m">\(270^\circ\)</span></li>
+<li>מהגובה לזווית: <span class="m">\(\sin\theta = \dfrac{y - y_C}{R},\ \theta_1 = \sin^{-1}(\ldots),\ \theta_2 = 180^\circ - \theta_1,\ t = \dfrac{\theta - \theta_0}{\omega}\)</span></li>
+<li>מקואורדינטות: <span class="m">\(R = |P - C|,\ \cos\theta_0 = \dfrac{x_P - x_C}{R},\ \sin\theta_0 = \dfrac{y_P - y_C}{R}\)</span></li>
+</ul></div>
 </div>
-<nav class="pager" aria-label="דפים סמוכים" style="background:none;border:0;padding:0"><a href="wheel-motion-09-formula-sheet.html">→ דף נוסחאות: נקודה על גלגל</a><span></span></nav>
-<footer>דף 10 בנושא תנועה על גלגל ועל גלגל מתגלגל · להדפסה, עמוד A4 אחד</footer>
+<div class="box bridge"><h2>גלגל מתגלגל בלי החלקה</h2><ul>
+<li>סיבוב אחד = המרכז מתקדם היקף אחד: <span class="m">\(|v| = 2\pi R n\)</span> · <span class="m">\(|v| = \dfrac{|\omega|\pi R}{180}\)</span> · <span class="m">\(|\omega| = \dfrac{180|v|}{\pi R}\)</span></li>
+<li>על ציר x: <span class="m">\(y_A = R,\ v_y = 0\)</span> · נע ימינה: <span class="m">\(v_x \gt 0,\ \omega \lt 0\)</span> · נע שמאלה: <span class="m">\(v_x \lt 0,\ \omega \gt 0\)</span></li>
+</ul></div>
+<div class="cols">
+<div class="box"><h2>סדר העבודה</h2><ol>
+<li>ממלאים את 7 הרכיבים בטבלת הנתונים (דף 11).</li>
+<li>רושמים את הנוסחה המלאה עם המספרים.</li>
+<li>מציבים <span class="m">\(t\)</span>: קודם המרכז, אחר כך הזווית, ואז ההזזה.</li>
+<li>בודקים: המרחק של P מהמרכז שווה ל־<span class="m">\(R\)</span>.</li>
+</ol></div>
+<div class="box"><h2>ערכים שכדאי לזכור</h2><div class="tablebox"><table><tr><th class="l">זווית</th><th>\(0^\circ\)</th><th>\(30^\circ\)</th><th>\(45^\circ\)</th><th>\(60^\circ\)</th><th>\(90^\circ\)</th><th>\(180^\circ\)</th><th>\(270^\circ\)</th></tr>
+<tr><td class="l">\(\cos\)</td><td>\(1\)</td><td>\(\tfrac{\sqrt3}{2}\)</td><td>\(\tfrac{\sqrt2}{2}\)</td><td>\(\tfrac12\)</td><td>\(0\)</td><td>\(-1\)</td><td>\(0\)</td></tr>
+<tr><td class="l">\(\sin\)</td><td>\(0\)</td><td>\(\tfrac12\)</td><td>\(\tfrac{\sqrt2}{2}\)</td><td>\(\tfrac{\sqrt3}{2}\)</td><td>\(1\)</td><td>\(0\)</td><td>\(-1\)</td></tr></table></div></div>
+</div>
+</div>
+<nav class="pager" aria-label="דפים סמוכים" style="background:none;border:0;padding:0"><a href="wheel-motion-09-height-to-angle.html">→ מהגובה לזווית ולזמן</a><a href="wheel-motion-11-data-table.html">טבלת נתונים לפני החישוב ←</a></nav>
+<footer>דף 11 בנושא תנועה על גלגל ועל גלגל מתגלגל · להדפסה, עמוד A4 אחד</footer>
 </div>
 </body>
 </html>

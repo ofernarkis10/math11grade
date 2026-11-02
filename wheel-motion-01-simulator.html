@@ -120,6 +120,8 @@ td .m .katex{font-size:1.2em}
 /* wheel-motion topic additions */
 .fig{display:flex;justify-content:center}
 .fig svg{max-width:440px;width:100%;height:auto}
+.sol .fig{margin:8px 0}
+.sol .fig svg{min-width:300px}
 .fig svg text{font-family:var(--f-body);fill:var(--ink)}
 .cap{color:var(--muted);font-size:.9rem;text-align:center}
 .blue{color:var(--accent);font-weight:700}
@@ -137,6 +139,23 @@ ol.method li::marker{font-weight:700;color:var(--accent)}
 .blank td{height:2.2em}
 </style>
 <script src="font-size.js"></script>
+<style>
+/* solution layout: heading on the right, each expression on its own line on the left */
+ol.st > li > .lab{display:block;font-weight:700;color:var(--mark)}
+.ml{display:flex;flex-direction:column;gap:3px;margin:2px 0 4px}
+.ml-m{direction:ltr;text-align:left;unicode-bidi:isolate}
+.ml-m .m{white-space:normal}
+.ml-m .u{direction:rtl;unicode-bidi:isolate;margin-left:.35em;color:var(--muted)}
+.ml-t{text-align:right}
+.sol p.ans,.sol p.chk{display:block}
+.sol .ans .lab,.sol .chk .lab{display:block;font-weight:700}
+
+ol.st > li > .lab .kind{display:inline-block;font-size:.72rem;font-weight:700;padding:1px 8px;border-radius:99px;margin-inline-start:8px;vertical-align:middle}
+.kind.k-dist{background:var(--accent-soft);color:var(--accent)}
+.kind.k-ang{background:var(--accent-soft);color:var(--accent);border:1px dashed var(--accent)}
+.kind.k-pos{background:var(--mark-soft);color:var(--mark)}
+.kind.k-conv{background:var(--line);color:var(--muted)}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -150,10 +169,10 @@ ol.method li::marker{font-weight:700;color:var(--accent)}
 
 
 <section class="ch" id="sim"><h2>הסימולטור</h2>
-<p class="lead">משנים את 7 הרכיבים ורואים את המסלול של הנקודה. במצב ״גלגל מתגלגל״ הסימולטור מחשב בעצמו את <span class="m">\(y_0 = R\)</span>, <span class="m">\(v_y = 0\)</span> ו־<span class="m">\(\omega = -\dfrac{180\,v_x}{\pi R}\)</span>.</p>
+<p class="lead">משנים את 7 הרכיבים ורואים את המסלול של הנקודה. במצב ״גלגל מתגלגל״ הסימולטור מחשב בעצמו את <span class="m">\(y_A = R\)</span>, <span class="m">\(v_y = 0\)</span> ו־<span class="m">\(\omega = -\dfrac{180\,v_x}{\pi R}\)</span>.</p>
 <div id="ctl" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px">
-<label><span class="m">\(x_0\)</span><input type="number" id="x0" value="1" step="0.5"></label>
-<label><span class="m">\(y_0\)</span><input type="number" id="y0" value="3" step="0.5"></label>
+<label><span class="m">\(x_A\)</span><input type="number" id="x0" value="1" step="0.5"></label>
+<label><span class="m">\(y_A\)</span><input type="number" id="y0" value="3" step="0.5"></label>
 <label><span class="m">\(v_x\)</span><input type="number" id="vx" value="1.5" step="0.1"></label>
 <label><span class="m">\(v_y\)</span><input type="number" id="vy" value="0.5" step="0.1"></label>
 <label><span class="m">\(R\)</span><input type="number" id="R" value="1.5" step="0.1" min="0.1"></label>

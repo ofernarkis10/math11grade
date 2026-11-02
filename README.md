@@ -56,17 +56,18 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | | `trigonometry-05-wheel-homework.html` | Homework to hand in: 12 questions on a point on a rotating wheel (position after a time; inverse and combined questions), questions only, print-ready |
 | | `trigonometry-06-radians.html` | Explanation: radians (arc equal to the radius), 180° = π and converting degrees ↔ radians, fractions of a circle; the main table of all multiples of 30° and 45° with radians, quadrant and exact cos and sin, all angles on one circle, an interactive lab, how to remember the table, DEG/RAD calculator mode; 12 questions with the thinking behind each solution |
 | | `trigonometry-07-moving-wheel-exercises.html` | 20 questions on a point on a moving wheel (center on a line + rotation; rolling without slipping), three levels; every solution opens with the data in math notation, then the thinking, steps, answer, check and explanation |
-| Wheel motion and the rolling wheel | `wheel-motion-00-theory.html` | Theory: the linear equation of the center (x₀, y₀, vₓ, v_y from two points, speed and angle), the rotation equation in degrees (θ₀ and ω from revolutions, period, rpm, two angles; sign = direction), the general formula with its 7 components and a five-step method, the rolling wheel without slipping (one circumference per revolution), two worked examples |
+| Wheel motion and the rolling wheel | `wheel-motion-00-theory.html` | Theory: the linear equation of the center (start point A(x_A, y_A), vₓ, v_y from two points, speed and angle), the rotation equation in degrees (θ₀ and ω from revolutions, period, rpm, two angles; sign = direction), the general formula with its 7 components and a five-step method, the rolling wheel without slipping (one circumference per revolution), two worked examples |
 | | `wheel-motion-01-simulator.html` | Interactive simulator of the general formula with a rolling-wheel mode (cycloid) |
 | | `wheel-motion-02-substitution.html` | 24 easy first questions: all components given (or the formula already written), substitute only: center, angle, offset, the full formula, a rolling wheel, a calculator angle |
 | | `wheel-motion-03-center-velocity.html` | 18 questions: finding the center's velocity components and start position from the data, three levels |
 | | `wheel-motion-04-angular-velocity.html` | 20 questions: finding θ₀ and ω in degrees per second from revolutions, period, rpm, two angles, words and coordinates |
 | | `wheel-motion-05-rolling-wheel.html` | 18 questions: rolling without slipping: center speed from the rotation, rotation from the center speed, the radius; rolling left, diameter and unit conversion |
-| | `wheel-motion-06-cart-speed.html` | Explanation: the speed of the cart from the motion of its wheel — one circumference per revolution, v = P·n = 2πRn (P = circumference; C is kept for the center), formulas by what is given (radius, diameter, circumference, period, rpm, degrees or radians per second), the reverse direction, two wheels on one cart, four worked examples, common mistakes |
+| | `wheel-motion-06-cart-speed.html` | Explanation: the speed of the cart from the motion of its wheel — one circumference per revolution, v = L·n = 2πRn (L = circumference; C is the center, P the point on the wheel), formulas by what is given (radius, diameter, circumference, period, rpm, degrees or radians per second), the reverse direction, two wheels on one cart, four worked examples, common mistakes |
 | | `wheel-motion-07-cart-speed-exercises.html` | 20 questions: cart speed from the wheel's rotation speed, radius and circumference and back, unit conversions, multi-step questions (tractor, bicycle gears, travel time, speedometer with bigger tyres) |
 | | `wheel-motion-08-combined.html` | 18 combined questions: fill the table of 7 components, write the full formula, substitute; free wheel, reading a formula backwards, rolling wheel, matriculation level |
-| | `wheel-motion-09-formula-sheet.html` | Printable formula sheet (one A4 page): the general formula, the center and rotation equations and how to find each component, the rolling wheel, the work order, sin and cos values |
-| | `wheel-motion-10-data-table.html` | Printable data table (one A4 page): a blank table of the 7 components to fill in for each question before the final calculation, with one worked row |
+| | `wheel-motion-09-height-to-angle.html` | Explanation: the inverse problem from height to angle and time — y = y_C + R sin θ, isolate sin θ and check |sin θ| ≤ 1, θ₁ = sin⁻¹(…) and θ₂ = 180° − θ₁, from angle to time by the direction of rotation, four worked examples (special angle and time above a height, calculator, rolling wheel, impossible height) |
+| | `wheel-motion-10-formula-sheet.html` | Printable formula sheet (one A4 page): the general formula, the center and rotation equations and how to find each component, the rolling wheel, the work order, sin and cos values |
+| | `wheel-motion-11-data-table.html` | Printable data table (one A4 page): a blank table of the 7 components to fill in for each question before the final calculation, with one worked row |
 | Analytic geometry: equations of curves | `analytic-00-overview.html` | Overview: what the equation of a curve means, the five curves as loci, conic sections, one definition for all by focus, directrix and eccentricity (interactive lab), recognizing a curve from Ax² + Cy² + Dx + Ey + F = 0, summary table |
 | | `analytic-01-line.html` | The line: slope and m = tan α, y = mx + b (lab), other forms, parallel and perpendicular lines, intersection, distance from a point to a line |
 | | `analytic-02-circle.html` | The circle: derivation, meaning of a, b, R (lab), general form and completing the square, point vs circle, line and circle (lab), tangent |
@@ -106,6 +107,25 @@ Most study pages combine explanation and practice. A topic can also split them i
 - **A check** of the answer whenever there is a natural one (another method, substitution back, a sanity check of the number).
 
 The composite-derivatives exercises (`composite-derivatives-02-exercises.html`) and the units workbook (`units-05-workbook.html`) are reference examples of this structure. Pages written before this rule should be brought up to it when they are next edited. Homework pages are published without solutions, as before (see below).
+
+## Rule: how solutions are written (Hebrew math notation)
+
+**This rule applies to the whole site.** Solutions are written the way students should write answers in Hebrew math notation, so they get used to writing answers correctly:
+
+- **Headings on the right, expressions on the left.** Each step's heading (נתונים, מהירות, זווית, תשובה, בדיקה …) is on its own line, aligned right. Every mathematical expression is on its own line, aligned left, one under the other — also short given values (for example `A(2,1)` and `t_A = 0` are two lines). Hebrew words between expressions stay on the right, in order; a unit (מ׳, מ׳/ש׳, שניות) stays on the line of its expression.
+- **The formula before the numbers.** Wherever a formula is used to compute or extract a value, write the general formula first, then the substitution, then the result: `v_x = (x_B − x_A)/(t_B − t_A) = (14 − 2)/(4 − 0) = 3`, not only `v_x = 12/4 = 3`. The same for an equation that is solved: `x_D = x_A + v_x t_D:  1 + 4t_D = 25 ⇒ t_D = 6`.
+
+- **The type of exercise in every step.** Each solution step is tagged with the type of exercise it solves: **שאלת מרחק** (time, speed or distance — including the linear motion of the center split into x and y, even though it finds the center's position), **שאלת מרחק זוויתי** (angle = angular speed × time: θ = θ₀ + ωt, ω from rpm or period, time from an angle), **שאלת מיקום** (the coordinates of a specific point on the wheel, or its angle from its coordinates or height: x = x_C + R cos θ, sin θ = (y − y_C)/R) and **המרת יחידות**. A step can carry more than one tag. Data and identification steps carry none.
+
+In the wheel-motion pages this layout is produced automatically from the solution data; new pages should follow it, and older pages should be brought up to it when they are next edited.
+
+## Rule: naming points and symbols
+
+**This rule applies to the whole site.**
+
+- **Points in motion questions.** `A` is the start point (`t_A = 0`), `B` the end point or a point at a later time `t_B`, and `D`, `E` … further points as needed. Name the points in the question, and list them with their coordinates in the data step: `A(1,2), t_A = 0, B(9,8), t_B = 2`.
+- **Coordinates of a point.** In expressions write `x_A, y_A, x_B, y_B, t_B` — the variable with the point's letter as a small subscript (`\(x_A\)`), never `x_0, x_1` for "start" and "end". Example: `x_A = x_B − v_x t_B`.
+- **Reserved letters.** `C` is the center of a circle or wheel (`x_C, y_C`), `P` is the point on the wheel (the moving point), `R` the radius, `d` the diameter, and `L` the circumference (היקף) in the motion topics: `L = 2πR = πd`. Do not use `A`/`B` for anything else in the same question.
 
 ## Rule: every homework is also listed in the homework list
 
@@ -202,7 +222,7 @@ math11grade/
 ├── composite-derivatives-NN-<name>.html  derivatives of composite functions (01 rules, 02 exercises)
 ├── geometry-NN-<name>.html              Euclidean geometry (01 loci & triangle centers, 02 circle, 03 similarity)
 ├── trigonometry-NN-<name>.html          trigonometric functions (00 unit circle, 01 polar coordinates & the wheel, 02 linear vs wheel, 03 wheel exercises, 04 linear-vs-wheel exercises, 05 wheel homework, 06 radians and the table of special angles)
-├── wheel-motion-NN-<name>.html          motion on a wheel and the rolling wheel (00 theory, 01 simulator, 02 substitution, 03 center velocity, 04 angular velocity, 05 rolling wheel, 06 cart speed, 07 cart speed exercises, 08 combined, 09 formula sheet, 10 data table)
+├── wheel-motion-NN-<name>.html          motion on a wheel and the rolling wheel (00 theory, 01 simulator, 02 substitution, 03 center velocity, 04 angular velocity, 05 rolling wheel, 06 cart speed, 07 cart speed exercises, 08 combined, 09 height to angle, 10 formula sheet, 11 data table)
 ├── analytic-NN-<name>.html              analytic geometry: equations of curves (00 overview, 01 line, 02 circle, 03 parabola, 04 ellipse, 05 hyperbola); figures drawn in SVG by a small inline script, with interactive labs
 ├── units-NN-<name>.html                 units and motion equations (00 overview, 01 quantities, 02 conversion, 03 motion equations, 04 solving with units, 05 workbook, 06 circular motion, 07 force to distance, 08 pool filling, 09 equations sheet, 10 simulators, 11 pool simulators)
 ├── font-size.js                       text-size control shown on every page

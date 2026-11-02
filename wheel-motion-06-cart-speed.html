@@ -120,6 +120,8 @@ td .m .katex{font-size:1.2em}
 /* wheel-motion topic additions */
 .fig{display:flex;justify-content:center}
 .fig svg{max-width:440px;width:100%;height:auto}
+.sol .fig{margin:8px 0}
+.sol .fig svg{min-width:300px}
 .fig svg text{font-family:var(--f-body);fill:var(--ink)}
 .cap{color:var(--muted);font-size:.9rem;text-align:center}
 .blue{color:var(--accent);font-weight:700}
@@ -137,6 +139,23 @@ ol.method li::marker{font-weight:700;color:var(--accent)}
 .blank td{height:2.2em}
 </style>
 <script src="font-size.js"></script>
+<style>
+/* solution layout: heading on the right, each expression on its own line on the left */
+ol.st > li > .lab{display:block;font-weight:700;color:var(--mark)}
+.ml{display:flex;flex-direction:column;gap:3px;margin:2px 0 4px}
+.ml-m{direction:ltr;text-align:left;unicode-bidi:isolate}
+.ml-m .m{white-space:normal}
+.ml-m .u{direction:rtl;unicode-bidi:isolate;margin-left:.35em;color:var(--muted)}
+.ml-t{text-align:right}
+.sol p.ans,.sol p.chk{display:block}
+.sol .ans .lab,.sol .chk .lab{display:block;font-weight:700}
+
+ol.st > li > .lab .kind{display:inline-block;font-size:.72rem;font-weight:700;padding:1px 8px;border-radius:99px;margin-inline-start:8px;vertical-align:middle}
+.kind.k-dist{background:var(--accent-soft);color:var(--accent)}
+.kind.k-ang{background:var(--accent-soft);color:var(--accent);border:1px dashed var(--accent)}
+.kind.k-pos{background:var(--mark-soft);color:var(--mark)}
+.kind.k-conv{background:var(--line);color:var(--muted)}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -169,7 +188,7 @@ ol.method li::marker{font-weight:700;color:var(--accent)}
 <section class="ch" id="quantities"><h2>הגדלים והיחידות</h2>
 <div class="tablebox"><table><tr><th>גודל</th><th>סימון</th><th>יחידה</th><th>הערה</th></tr>
 <tr><td>רדיוס / קוטר</td><td><span class="m">\(R,\ d\)</span></td><td>מ׳</td><td><span class="m">\(d = 2R\)</span>. לשים לב לס״מ: מחלקים ב־100</td></tr>
-<tr><td>היקף</td><td><span class="m">\(P\)</span></td><td>מ׳</td><td><span class="m">\(P = 2\pi R = \pi d\)</span> — המרחק שהעגלה עוברת בסיבוב אחד. מסמנים P כמו בגאומטריה; האות C שמורה למרכז הגלגל</td></tr>
+<tr><td>היקף</td><td><span class="m">\(L\)</span></td><td>מ׳</td><td><span class="m">\(L = 2\pi R = \pi d\)</span> — המרחק שהעגלה עוברת בסיבוב אחד. מסמנים L (אורך ההיקף); האות C שמורה למרכז הגלגל, והאות P לנקודה על הגלגל</td></tr>
 <tr><td>סיבובים בשנייה</td><td><span class="m">\(n\)</span></td><td>סיבובים לשנייה</td><td><span class="m">\(n = \dfrac{\text{rpm}}{60} = \dfrac{1}{T}\)</span></td></tr>
 <tr><td>סיבובים לדקה (סל״ד)</td><td><span class="m">\(\text{rpm}\)</span></td><td>סיבובים לדקה</td><td><span class="m">\(\text{rpm} = 60n\)</span></td></tr>
 <tr><td>זמן מחזור</td><td><span class="m">\(T\)</span></td><td>שניות</td><td>זמן של סיבוב אחד</td></tr>
@@ -179,44 +198,44 @@ ol.method li::marker{font-weight:700;color:var(--accent)}
 </section>
 
 <section class="ch" id="formulas"><h2>הנוסחאות: מתנועת הגלגל למהירות העגלה</h2>
-<div class="big"><span class="m">\(v = P\cdot n = 2\pi R\cdot n\)</span><small>מהירות העגלה = היקף × מספר הסיבובים בשנייה</small></div>
+<div class="big"><span class="m">\(v = L\cdot n = 2\pi R\cdot n\)</span><small>מהירות העגלה = היקף × מספר הסיבובים בשנייה</small></div>
 <div class="tablebox"><table><tr><th>מה נתון על הגלגל</th><th>הנוסחה למהירות העגלה</th></tr>
 <tr><td>רדיוס וסיבובים בשנייה</td><td><span class="m">\(v = 2\pi R\, n\)</span></td></tr>
 <tr><td>קוטר וסיבובים בשנייה</td><td><span class="m">\(v = \pi d\, n\)</span></td></tr>
-<tr><td>היקף וסיבובים בשנייה</td><td><span class="m">\(v = P\, n\)</span></td></tr>
+<tr><td>היקף וסיבובים בשנייה</td><td><span class="m">\(v = L\, n\)</span></td></tr>
 <tr><td>רדיוס וזמן מחזור</td><td><span class="m">\(v = \dfrac{2\pi R}{T}\)</span></td></tr>
 <tr><td>רדיוס וסל״ד</td><td><span class="m">\(v = \dfrac{2\pi R\cdot\text{rpm}}{60}\)</span></td></tr>
 <tr><td>רדיוס ומהירות סיבוב במעלות לשנייה</td><td><span class="m">\(v = \dfrac{|\omega|\,\pi R}{180}\)</span></td></tr>
 <tr><td>רדיוס ומהירות זוויתית ברדיאנים לשנייה</td><td><span class="m">\(v = \omega R\)</span></td></tr>
 </table></div>
-<div class="note"><strong>למה זה עובד:</strong> בשנייה אחת הגלגל מבצע <span class="m">\(n\)</span> סיבובים, ובכל סיבוב העגלה מתקדמת <span class="m">\(P\)</span>. לכן בשנייה העגלה מתקדמת <span class="m">\(P\cdot n\)</span> — וזו המהירות.</div>
+<div class="note"><strong>למה זה עובד:</strong> בשנייה אחת הגלגל מבצע <span class="m">\(n\)</span> סיבובים, ובכל סיבוב העגלה מתקדמת <span class="m">\(L\)</span>. לכן בשנייה העגלה מתקדמת <span class="m">\(L\cdot n\)</span> — וזו המהירות.</div>
 </section>
 
 <section class="ch" id="reverse"><h2>בכיוון ההפוך: ממהירות העגלה לתנועת הגלגל</h2>
 <div class="formulas">
-<div class="f"><b>סיבובים בשנייה</b><span class="m">\(n = \dfrac{v}{P} = \dfrac{v}{2\pi R}\)</span></div>
+<div class="f"><b>סיבובים בשנייה</b><span class="m">\(n = \dfrac{v}{L} = \dfrac{v}{2\pi R}\)</span></div>
 <div class="f"><b>סל״ד</b><span class="m">\(\text{rpm} = 60\cdot\dfrac{v}{2\pi R}\)</span></div>
 <div class="f"><b>מהירות סיבוב במעלות</b><span class="m">\(|\omega| = \dfrac{180\,v}{\pi R}\)</span></div>
 <div class="f"><b>רדיוס מתוך המהירות והסיבוב</b><span class="m">\(R = \dfrac{v}{2\pi n}\)</span></div>
-<div class="f"><b>מרחק מתוך מספר סיבובים</b><span class="m">\(s = P\cdot N\)</span></div>
-<div class="f"><b>מספר סיבובים לאורך דרך</b><span class="m">\(N = \dfrac{s}{P}\)</span></div>
+<div class="f"><b>מרחק מתוך מספר סיבובים</b><span class="m">\(s = L\cdot N\)</span></div>
+<div class="f"><b>מספר סיבובים לאורך דרך</b><span class="m">\(N = \dfrac{s}{L}\)</span></div>
 </div>
 <div class="note"><strong>שני גלגלים באותה עגלה:</strong> כל הגלגלים של העגלה נעים באותה מהירות <span class="m">\(v\)</span>. גלגל קטן צריך להסתובב מהר יותר מגלגל גדול: <span class="m">\(n = \dfrac{v}{2\pi R}\)</span>, ולכן פי 2 ברדיוס פירושו חצי ממספר הסיבובים.</div>
 </section>
 
 <section class="ch" id="ex1"><h2>דוגמה פתורה 1: אופניים</h2>
 <div class="example"><span class="tag">השאלה</span><p>קוטר גלגל אופניים 70 ס״מ, והגלגל מבצע 2.5 סיבובים בשנייה. באיזו מהירות נוסעים האופניים, במ׳/ש׳ ובקמ״ש?</p></div>
-<ol class="st"><li><b>נתונים:</b> <span class="m">\(d = 0.7\ \text{m},\ n = 2.5\ \text{rev/s}\)</span></li><li><b>היקף:</b> <span class="m">\(P = \pi d = 0.7\pi \approx 2.199\ \text{m}\)</span></li><li><b>מהירות:</b> <span class="m">\(v = P\cdot n = 0.7\pi\cdot 2.5 \approx 5.50\ \text{m/s}\)</span></li><li><b>המרה:</b> <span class="m">\(5.50\cdot 3.6 \approx 19.8\ \text{km/h}\)</span></li></ol>
-<p class="ans">תשובה: כ־5.5 מ׳/ש׳, כלומר כ־19.8 קמ״ש</p></section><section class="ch" id="ex2"><h2>דוגמה פתורה 2: סל״ד</h2>
+<ol class="st"><li><span class="lab">נתונים</span><div class="ml"><div class="ml-m"><span class="m">\(d = 0.7\ \text{m}\)</span></div><div class="ml-m"><span class="m">\(n = 2.5\ \text{rev/s}\)</span></div></div></li><li><span class="lab">היקף<span class="kind k-dist">שאלת מרחק</span></span><div class="ml"><div class="ml-m"><span class="m">\(L = \pi d = 0.7\pi \approx 2.199\ \text{m}\)</span></div></div></li><li><span class="lab">מהירות<span class="kind k-dist">שאלת מרחק</span></span><div class="ml"><div class="ml-m"><span class="m">\(v = L\cdot n = 0.7\pi\cdot 2.5 \approx 5.50\ \text{m/s}\)</span></div></div></li><li><span class="lab">המרה<span class="kind k-conv">המרת יחידות</span></span><div class="ml"><div class="ml-m"><span class="m">\(v_{\text{km/h}} = 3.6\,v = 5.50\cdot 3.6 \approx 19.8\ \text{km/h}\)</span></div></div></li></ol>
+<div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">כ־5.5 מ׳/ש׳, כלומר כ־19.8 קמ״ש</div></div></div></section><section class="ch" id="ex2"><h2>דוגמה פתורה 2: סל״ד</h2>
 <div class="example"><span class="tag">השאלה</span><p>רדיוס צמיג 0.3 מ׳, והצמיג מסתובב ב־600 סל״ד. מהי מהירות המכונית?</p></div>
-<ol class="st"><li><b>סיבובים בשנייה:</b> <span class="m">\(n = \dfrac{600}{60} = 10\)</span></li><li><b>היקף:</b> <span class="m">\(P = 2\pi\cdot 0.3 = 0.6\pi \approx 1.885\ \text{m}\)</span></li><li><b>מהירות:</b> <span class="m">\(v = 0.6\pi\cdot 10 = 6\pi \approx 18.85\ \text{m/s}\)</span></li><li><b>המרה:</b> <span class="m">\(18.85\cdot 3.6 \approx 67.9\ \text{km/h}\)</span></li></ol>
-<p class="ans">תשובה: כ־18.85 מ׳/ש׳, כלומר כ־68 קמ״ש</p></section><section class="ch" id="ex3"><h2>דוגמה פתורה 3: מעלות לשנייה</h2>
+<ol class="st"><li><span class="lab">סיבובים בשנייה<span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(n = \dfrac{\text{rpm}}{60} = \dfrac{600}{60} = 10\)</span></div></div></li><li><span class="lab">היקף<span class="kind k-dist">שאלת מרחק</span></span><div class="ml"><div class="ml-m"><span class="m">\(L = 2\pi R = 2\pi\cdot 0.3 = 0.6\pi \approx 1.885\ \text{m}\)</span></div></div></li><li><span class="lab">מהירות<span class="kind k-dist">שאלת מרחק</span></span><div class="ml"><div class="ml-m"><span class="m">\(v = L\cdot n = 0.6\pi\cdot 10 = 6\pi \approx 18.85\ \text{m/s}\)</span></div></div></li><li><span class="lab">המרה<span class="kind k-conv">המרת יחידות</span></span><div class="ml"><div class="ml-m"><span class="m">\(v_{\text{km/h}} = 3.6\,v = 18.85\cdot 3.6 \approx 67.9\ \text{km/h}\)</span></div></div></li></ol>
+<div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">כ־18.85 מ׳/ש׳, כלומר כ־68 קמ״ש</div></div></div></section><section class="ch" id="ex3"><h2>דוגמה פתורה 3: מעלות לשנייה</h2>
 <div class="example"><span class="tag">השאלה</span><p>גלגל של עגלת צעצוע ברדיוס 5 ס״מ מסתובב ב־<span class="m">\(540^\circ/\text{s}\)</span>. מהי מהירות העגלה?</p></div>
-<ol class="st"><li><b>המרה:</b> <span class="m">\(R = 0.05\ \text{m}\)</span></li><li><b>סיבובים בשנייה:</b> <span class="m">\(n = \dfrac{540}{360} = 1.5\)</span></li><li><b>מהירות:</b> <span class="m">\(v = 2\pi\cdot 0.05\cdot 1.5 = 0.15\pi \approx 0.47\ \text{m/s}\)</span></li><li><b>בנוסחה הישירה:</b> <span class="m">\(v = \dfrac{540\cdot\pi\cdot 0.05}{180} \approx 0.47\)</span></li></ol>
-<p class="ans">תשובה: כ־0.47 מ׳/ש׳</p></section><section class="ch" id="ex4"><h2>דוגמה פתורה 4: ממספר סיבובים למרחק</h2>
+<ol class="st"><li><span class="lab">המרה</span><div class="ml"><div class="ml-m"><span class="m">\(R = 0.05\ \text{m}\)</span></div></div></li><li><span class="lab">סיבובים בשנייה<span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(n = \dfrac{|\omega|}{360} = \dfrac{540}{360} = 1.5\)</span></div></div></li><li><span class="lab">מהירות<span class="kind k-dist">שאלת מרחק</span></span><div class="ml"><div class="ml-m"><span class="m">\(v = L\cdot n = 2\pi\cdot 0.05\cdot 1.5 = 0.15\pi \approx 0.47\ \text{m/s}\)</span></div></div></li><li><span class="lab">בנוסחה הישירה<span class="kind k-dist">שאלת מרחק</span><span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(v = \dfrac{|\omega|\pi R}{180} = \dfrac{540\cdot\pi\cdot 0.05}{180} \approx 0.47\)</span></div></div></li></ol>
+<div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">כ־0.47 מ׳/ש׳</div></div></div></section><section class="ch" id="ex4"><h2>דוגמה פתורה 4: ממספר סיבובים למרחק</h2>
 <div class="example"><span class="tag">השאלה</span><p>מונה סיבובים על גלגל ברדיוס 0.3 מ׳ ספר 1500 סיבובים. כמה מטרים עברה העגלה?</p></div>
-<ol class="st"><li><b>היקף:</b> <span class="m">\(P = 0.6\pi \approx 1.885\ \text{m}\)</span></li><li><b>מרחק:</b> <span class="m">\(1500\cdot 1.885 \approx 2827\ \text{m}\)</span></li></ol>
-<p class="ans">תשובה: כ־2.83 ק״מ</p></section>
+<ol class="st"><li><span class="lab">היקף<span class="kind k-dist">שאלת מרחק</span></span><div class="ml"><div class="ml-m"><span class="m">\(L = 2\pi R = 0.6\pi \approx 1.885\ \text{m}\)</span></div></div></li><li><span class="lab">מרחק<span class="kind k-dist">שאלת מרחק</span></span><div class="ml"><div class="ml-m"><span class="m">\(s = L\cdot N = 1500\cdot 1.885 \approx 2827\ \text{m}\)</span></div></div></li></ol>
+<div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">כ־2.83 ק״מ</div></div></div></section>
 
 <section class="ch" id="mistakes"><h2>טעויות נפוצות</h2>
 <ul class="mistakes">
