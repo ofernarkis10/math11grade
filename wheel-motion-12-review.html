@@ -171,6 +171,22 @@ ol.st > li > .lab .kind{display:inline-block;font-size:.72rem;font-weight:700;pa
 .anim-ro b{color:var(--mark)}
 @media print{.anim-ctl,.anim-ro{display:none}.anim{break-inside:avoid}}
 </style>
+<style>
+/* One question per screen: only the current question (and its level heading) is shown; the page scrolls normally inside it. All questions are shown in print and without script */
+@media screen{.one .qhide{display:none}}
+.qnav{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.qnav-top{position:sticky;top:0;z-index:30;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.qnav button{font-family:var(--f-body);font-size:.9rem;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:4px 10px;cursor:pointer;min-width:2.2em}
+.qnav button.cur{background:var(--accent);border-color:var(--accent);color:var(--paper);font-weight:700}
+.qnav button.step{border-color:var(--accent);color:var(--accent);background:var(--paper);font-weight:700}
+.qnav button:disabled{opacity:.4;cursor:default}
+.qnav .qnums{display:flex;flex-wrap:wrap;gap:4px;flex:1 1 auto;justify-content:center}
+.qnav .qof{font-size:.85rem;color:var(--muted);white-space:nowrap}
+.qnav-bot{justify-content:space-between;margin-top:14px}
+.one section.level > ol > li{min-height:60vh}
+@media (max-width:600px){.qnav-top{position:static;box-shadow:none}.qnav .qnums{order:3;flex-basis:100%}}
+@media print{.qnav{display:none}}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -182,6 +198,7 @@ ol.st > li > .lab .kind{display:inline-block;font-size:.72rem;font-weight:700;pa
 </header>
 <nav aria-label="תוכן"><strong>תוכן</strong><ol><li><a href="#lvl1">רמה א׳: הצבה וביטוי לגובה (1–4)</a></li><li><a href="#lvl2">רמה ב׳: בעיה הפוכה וזווית התחלה (5–7)</a></li><li><a href="#lvl3">רמה ג׳: רמת בגרות (8–10)</a></li><li><a href="#lvl4">רמה ד׳: גלגל של עגלה בתנועה (11–12)</a></li></ol></nav>
 <div class="toolbar"><button type="button" onclick="toggleSol(this)">הסתרת פתרונות (דף עבודה)</button><button type="button" onclick="openAll(true)">פתיחת כל הפתרונות</button><button type="button" onclick="openAll(false)">סגירת כל הפתרונות</button></div>
+<div class="qnav qnav-top" id="qnavTop" aria-label="מעבר בין שאלות"><button type="button" class="step" data-go="-1">→ הקודמת</button><span class="qnums"></span><span class="qof"></span><button type="button" class="step" data-go="1">הבאה ←</button></div>
 <div class="big"><span class="m">\(x = x_C + R\cos(\theta_0 + \omega t)\)</span><br><span class="m">\(y = y_C + R\sin(\theta_0 + \omega t)\)</span></div>
 <section class="ch level" id="lvl1"><h2>רמה א׳: הצבה וביטוי לגובה <small>שאלות 1–4</small></h2><ol class="exercises" start="1">
 <li>נקודה P על גלגל נעה כך שבזמן <span class="m">\(t\)</span> (בשניות) המיקום שלה הוא:<div class="ml"><div class="ml-m"><span class="m">\(x(t) = 4 + 10\cos(30^\circ + 45t)\)</span></div><div class="ml-m"><span class="m">\(y(t) = 6 + 10\sin(30^\circ + 45t)\)</span></div></div>מצאו את מיקום P אחרי 2 שניות ואחרי 8 שניות.<details><summary>הצג פתרון</summary><div class="sol steps"><div class="think"><span class="think-h">דרך החשיבה</span><p>הנוסחה כבר כתובה, ולכן כל העבודה היא הצבה: קודם מחשבים את הזווית, ורק אחר כך cos ו־sin. זווית גדולה מ־360° מקטינים בסיבוב שלם.</p></div><div class="anim" data-cfg='{"xc": 4, "yc": 6, "R": 10, "th0": 30, "w": 45, "tmax": 8, "keys": [[2, "2"], [8, "8"]], "axes": 1}'><div class="anim-cap">אנימציה: הנקודה P על הגלגל. הפעילו, גררו את הזמן, או קפצו לזמנים שבשאלה</div><svg role="img" aria-label="אנימציה של הגלגל בשאלה 1"></svg><div class="anim-ctl"><button type="button" class="a-play">▶ הפעלה</button><button type="button" class="a-rst">↺ t = 0</button><span class="a-keys"></span><input type="range" class="a-t" min="0" step="any" aria-label="זמן"></div><div class="anim-ro"></div></div><ol class="st"><li><span class="lab">נתונים</span><div class="ml"><div class="ml-m"><span class="m">\(x_C = 4,\ y_C = 6,\ R = 10\)</span></div><div class="ml-m"><span class="m">\(\theta_0 = 30^\circ,\ \omega = 45^\circ/\text{s}\)</span></div></div></li><li><span class="lab">הצבה <span class="m">\(t = 2\)</span><span class="kind k-ang">שאלת מרחק זוויתי</span><span class="kind k-pos">שאלת מיקום</span></span><div class="ml"><div class="ml-t">זווית</div><div class="ml-m"><span class="m">\(\theta = \theta_0 + \omega t = 30^\circ + 45\cdot2 = 120^\circ\)</span></div><div class="ml-m"><span class="m">\(x = x_C + R\cos\theta = 4 + 10\cos120^\circ = 4 - 5 = -1\)</span></div><div class="ml-m"><span class="m">\(y = y_C + R\sin\theta = 6 + 10\sin120^\circ = 6 + 5\sqrt3 \approx 14.66\)</span></div></div></li><li><span class="lab">הצבה <span class="m">\(t = 8\)</span><span class="kind k-ang">שאלת מרחק זוויתי</span><span class="kind k-pos">שאלת מיקום</span></span><div class="ml"><div class="ml-t">זווית</div><div class="ml-m"><span class="m">\(\theta = \theta_0 + \omega t = 30^\circ + 45\cdot8 = 390^\circ \equiv 30^\circ\)</span></div><div class="ml-m"><span class="m">\(x = x_C + R\cos\theta = 4 + 10\cos30^\circ = 4 + 5\sqrt3 \approx 12.66\)</span></div><div class="ml-m"><span class="m">\(y = y_C + R\sin\theta = 6 + 10\sin30^\circ = 11\)</span></div></div></li></ol><div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(t = 2:\ P(-1,\ 14.66)\)</span></div><div class="ml-m"><span class="m">\(t = 8:\ P(12.66,\ 11)\)</span></div></div></div><div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">המרחק של P מהמרכז שווה לרדיוס:</div><div class="ml-m"><span class="m">\(\sqrt{(-1-4)^2 + (14.66-6)^2} = \sqrt{25 + 75} = 10\ \checkmark\)</span></div></div></div></div></details></li>
@@ -209,6 +226,46 @@ ol.st > li > .lab .kind{display:inline-block;font-size:.72rem;font-weight:700;pa
 <script>
 function toggleSol(b){document.body.classList.toggle('nosol');b.textContent=document.body.classList.contains('nosol')?'הצגת פתרונות':'הסתרת פתרונות (דף עבודה)';}
 function openAll(o){document.querySelectorAll('details').forEach(function(d){d.open=o;});}
+</script>
+<script>
+// One question per screen: numbered buttons, previous/next (also at the bottom of the question), arrow keys, and #q<N> in the address
+(function(){
+  var items=[].slice.call(document.querySelectorAll('section.level > ol > li'));if(!items.length)return;
+  var secs=[].slice.call(document.querySelectorAll('section.level'));
+  document.body.classList.add('one');
+  var top=document.getElementById('qnavTop'),nums=top.querySelector('.qnums'),of=top.querySelector('.qof'),cur=0;
+  items.forEach(function(li,i){
+    li.id='q'+(i+1);li.value=i+1;
+    var b=document.createElement('button');b.type='button';b.textContent=i+1;b.setAttribute('aria-label','שאלה '+(i+1));
+    b.addEventListener('click',function(){show(i,true);});nums.appendChild(b);
+    var bot=document.createElement('div');bot.className='qnav qnav-bot';
+    bot.innerHTML='<button type="button" class="step" data-go="-1">→ השאלה הקודמת</button><span class="qof">שאלה '+(i+1)+' מתוך '+items.length+'</span><button type="button" class="step" data-go="1">השאלה הבאה ←</button>';
+    li.appendChild(bot);
+  });
+  document.querySelectorAll('.qnav [data-go]').forEach(function(b){b.addEventListener('click',function(){show(cur+(+b.getAttribute('data-go')),true);});});
+  function show(i,scroll){
+    i=Math.max(0,Math.min(items.length-1,i));cur=i;
+    items.forEach(function(li,k){li.classList.toggle('qhide',k!==i);});
+    secs.forEach(function(sc){sc.classList.toggle('qhide',!sc.contains(items[i]));});
+    [].forEach.call(nums.children,function(b,k){b.classList.toggle('cur',k===i);});
+    of.textContent='שאלה '+(i+1)+' מתוך '+items.length;
+    document.querySelectorAll('.qnav [data-go="-1"]').forEach(function(b){b.disabled=i===0;});
+    document.querySelectorAll('.qnav [data-go="1"]').forEach(function(b){b.disabled=i===items.length-1;});
+    if(history.replaceState)history.replaceState(null,'','#q'+(i+1));
+    if(scroll){var sc=items[i].closest('section');var off=getComputedStyle(top).position==='sticky'?top.offsetHeight+8:8;window.scrollTo(0,sc.getBoundingClientRect().top+window.scrollY-off);}
+  }
+  function fromHash(){var h=location.hash,m=h.match(/^#q(\d+)$/),l=h.match(/^#lvl(\d+)$/);
+    if(m)return +m[1]-1;
+    if(l){var sec=document.getElementById('lvl'+l[1]);if(sec)return items.indexOf(sec.querySelector('ol > li'));}
+    return 0;}
+  window.addEventListener('hashchange',function(){show(fromHash(),true);});
+  document.addEventListener('keydown',function(e){
+    var t=e.target.tagName;if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT'||e.altKey||e.ctrlKey||e.metaKey)return;
+    if(e.key==='ArrowLeft'){show(cur+1,true);e.preventDefault();}
+    if(e.key==='ArrowRight'){show(cur-1,true);e.preventDefault();}
+  });
+  show(fromHash(),false);
+})();
 </script>
 <script>
 // Draws each question's wheel from its data-cfg and animates P(t): theta = th0 + w*t, x = xc + R cos theta, y = yc + R sin theta
