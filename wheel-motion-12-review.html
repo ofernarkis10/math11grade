@@ -182,7 +182,6 @@ ol.st > li > .lab .kind{display:inline-block;font-size:.72rem;font-weight:700;pa
 .qnav button:disabled{opacity:.4;cursor:default}
 .qnav .qnums{display:flex;flex-wrap:wrap;gap:4px;flex:1 1 auto;justify-content:center}
 .qnav .qof{font-size:.85rem;color:var(--muted);white-space:nowrap}
-.qnav-bot{justify-content:space-between;margin-top:14px}
 .one section.level > ol > li{min-height:60vh}
 @media (max-width:600px){.qnav-top{position:static;box-shadow:none}.qnav .qnums{order:3;flex-basis:100%}}
 @media print{.qnav{display:none}}
@@ -228,7 +227,7 @@ function toggleSol(b){document.body.classList.toggle('nosol');b.textContent=docu
 function openAll(o){document.querySelectorAll('details').forEach(function(d){d.open=o;});}
 </script>
 <script>
-// One question per screen: numbered buttons, previous/next (also at the bottom of the question), arrow keys, and #q<N> in the address
+// One question per screen: numbered buttons, previous/next, arrow keys, and #q<N> in the address
 (function(){
   var items=[].slice.call(document.querySelectorAll('section.level > ol > li'));if(!items.length)return;
   var secs=[].slice.call(document.querySelectorAll('section.level'));
@@ -238,9 +237,6 @@ function openAll(o){document.querySelectorAll('details').forEach(function(d){d.o
     li.id='q'+(i+1);li.value=i+1;
     var b=document.createElement('button');b.type='button';b.textContent=i+1;b.setAttribute('aria-label','שאלה '+(i+1));
     b.addEventListener('click',function(){show(i,true);});nums.appendChild(b);
-    var bot=document.createElement('div');bot.className='qnav qnav-bot';
-    bot.innerHTML='<button type="button" class="step" data-go="-1">→ השאלה הקודמת</button><span class="qof">שאלה '+(i+1)+' מתוך '+items.length+'</span><button type="button" class="step" data-go="1">השאלה הבאה ←</button>';
-    li.appendChild(bot);
   });
   document.querySelectorAll('.qnav [data-go]').forEach(function(b){b.addEventListener('click',function(){show(cur+(+b.getAttribute('data-go')),true);});});
   function show(i,scroll){
