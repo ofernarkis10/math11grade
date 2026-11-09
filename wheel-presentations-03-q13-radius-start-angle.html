@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מצגת מונפשת – שאלה 13: רדיוס וזווית התחלה מהמרכז ומנקודה</title>
+<style>
+  :root{
+    --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#f8fafc;
+    --cab:#f97316; --R:#2563eb; --L:#16a34a; --ang:#9333ea; --B:#dc2626; --D:#0891b2;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;overflow:hidden}
+  header{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 16px;background:#fff;border-bottom:1px solid var(--line)}
+  header h1{font-size:18px;margin:0}
+  header a{color:var(--R);text-decoration:none;font-size:14px}
+  .wrap{flex:1;min-height:0;display:flex;gap:10px;padding:10px}
+  /* RTL: הילד הראשון (הטקסט) בצד ימין, הסימולטור בצד שמאל */
+  .panel{flex:0 0 47%;overflow-y:auto;padding-left:6px;scroll-behavior:smooth}
+  .stage{flex:1;min-width:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px;display:flex;align-items:center;justify-content:center}
+  svg{width:100%;height:100%;display:block;direction:ltr}
+  @media (max-width:700px){body{overflow:auto;display:block}.wrap{flex-direction:column}.panel{flex:none;overflow:visible}.stage{order:-1}}
+
+  .qfull,.qbox{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;line-height:1.75}
+  .qfull{font-size:17px}
+  .qbox summary{cursor:pointer;font-weight:700;color:var(--muted)}
+  .qfull ol,.qbox ol{margin:6px 0 0;padding-right:22px}
+  .hint{color:var(--muted);margin-top:12px}
+
+  ol.items{list-style:none;margin:12px 0 0;padding:0}
+  ol.items li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:8px;cursor:pointer}
+  ol.items li.new{animation:pop .5s ease both}
+  ol.items li.ahead{opacity:.5}
+  ol.items li.cur{cursor:default}
+  ol.items li.cur{border:2px solid var(--cab);box-shadow:0 4px 14px rgba(249,115,22,.15)}
+  ol.items li.done{opacity:.8}
+  .chip{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;margin-left:8px;background:#e0f2fe;color:#075985}
+  .chip.sec{background:#ffedd5;color:#9a3412}
+  .chip.type{background:#f3e8ff;color:#6b21a8}
+  .qtext{font-size:17px;line-height:1.6}
+  .ans{margin-top:6px;color:#166534;font-weight:600}
+  .ans span{margin-left:14px}
+  .ans span,.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+  .sol{margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}
+  li.new .sol{animation:pop .6s .5s ease both}
+  .sol details{margin:6px 0}
+  .sol summary{cursor:pointer;font-weight:700;line-height:1.5}
+  .math{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;font-size:17px;background:#f8fafc;border-radius:8px;padding:6px 12px;margin-top:4px}
+  .math div{padding:2px 0}
+  @keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* svg */
+  .se{transition:opacity .6s}
+  .hid{opacity:0}
+  .instant .se{transition:none}
+  .lbl{font:700 15px "Segoe UI",Arial,sans-serif;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round;fill:var(--ink)}
+  .gond rect{fill:#e2e8f0;stroke:#64748b;stroke-width:1.5}
+  .cab.hl rect{fill:var(--cab);stroke:#9a3412}
+  .dash{stroke-dasharray:6 5}
+
+  .bar{flex:none;background:#fff;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:10px;padding:7px;flex-wrap:wrap}
+  .bar button{font:inherit;font-size:16px;border:0;border-radius:10px;padding:8px 18px;cursor:pointer;background:#e2e8f0}
+  .bar button.main{background:var(--cab);color:#fff;font-weight:700}
+  .bar button:disabled{opacity:.4;cursor:default}
+  .dots{display:flex;gap:5px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:#cbd5e1;cursor:pointer}
+  .dots i.on{background:var(--cab)}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎡 שאלה 13: רדיוס וזווית התחלה מהמרכז ומנקודה – מצגת מונפשת</h1>
+  <a href="index.html#wheel-presentations">→ למצגות תנועה על גלגל</a>
+</header>
+
+<div class="wrap">
+  <section class="panel" id="panel"></section>
+  <section class="stage"><svg id="sv" viewBox="0 0 500 520" aria-label="שרטוט הגלגל"></svg></section>
+</div>
+
+<div class="bar">
+  <button id="prev">→ הקודם</button>
+  <button id="replay">↻ נגן שוב</button>
+  <div class="dots" id="dots"></div>
+  <span id="cnt" style="color:var(--muted);min-width:50px;text-align:center"></span>
+  <button id="next" class="main">הבא ←</button>
+</div>
+
+<script>
+/* ---------- גאומטריה: 28 פיקסלים = יחידה אחת ---------- */
+const NS='http://www.w3.org/2000/svg';
+const svg=document.getElementById('sv');
+const S=28, OX=175, OY=330;
+const X=x=>OX+x*S, Y=y=>OY-y*S;
+const xc=2, yc=1, Rr=6, CX=X(xc), CY=Y(yc), R=Rr*S, START=120;
+const P=(th,r=R)=>{const a=th*Math.PI/180;return [CX+r*Math.cos(a), CY-r*Math.sin(a)];};
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);(parent||svg).appendChild(e);return e;}
+function txt(x,y,s,attrs,parent){const t=el('text',Object.assign({x,y,class:'lbl'},attrs||{}),parent);t.textContent=s;return t;}
+function subTxt(x,y,a,b,c,attrs,parent){const t=txt(x,y,'',attrs,parent);t.innerHTML=`${a}<tspan dy="5" font-size="11">${b}</tspan><tspan dy="-5">${c}</tspan>`;return t;}
+function grp(){return el('g',{class:'se hid'});}
+function arcD(th1,th2,r=R){const[x1,y1]=P(th1,r),[x2,y2]=P(th2,r);const large=(th1-th2)>180?1:0;return `M${x1} ${y1} A${r} ${r} 0 ${large} 1 ${x2} ${y2}`;}
+const wedgeD=(th1,th2,r)=>`M${CX} ${CY} L${P(th1,r)} `+arcD(th1,th2,r).replace(/^M[^A]*/,'')+' Z';
+const line=(x1,y1,x2,y2,a,p)=>el('line',Object.assign({x1,y1,x2,y2},a),p);
+const dot=(x,y,c,p,r=7)=>el('circle',{cx:x,cy:y,r,fill:c,stroke:'#fff','stroke-width':2},p);
+
+const defs=el('defs',{});
+[['ar','#334155'],['arO','#f97316'],['arP','#9333ea']].forEach(([id,c])=>{
+  const m=el('marker',{id,viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs);
+  el('path',{d:'M0 0 L10 5 L0 10 z',fill:c},m);
+});
+
+/* רשת */
+for(let x=-6;x<=11;x++)line(X(x),0,X(x),520,{stroke:'#eef2f7','stroke-width':1});
+for(let y=-6;y<=11;y++)line(0,Y(y),500,Y(y),{stroke:'#eef2f7','stroke-width':1});
+
+/* צירים */
+const gAxes=grp();
+line(5,OY,490,OY,{stroke:'#334155','stroke-width':2,'marker-end':'url(#ar)'},gAxes);
+line(OX,515,OX,8,{stroke:'#334155','stroke-width':2,'marker-end':'url(#ar)'},gAxes);
+txt(488,OY-8,'x',{},gAxes); txt(OX+8,16,'y',{},gAxes); txt(OX-16,OY+18,'O',{},gAxes);
+for(const x of [-4,-2,2,4,6,8])txt(X(x),OY+16,String(x).replace('-','−'),{'text-anchor':'middle',style:'font-size:11px;font-weight:500'},gAxes);
+for(const y of [-4,-2,2,4,6,8])txt(OX-6,Y(y)+4,String(y).replace('-','−'),{'text-anchor':'end',style:'font-size:11px;font-weight:500'},gAxes);
+
+/* הגלגל (מופיע אחרי שמוצאים את R) */
+const gWheel=grp();
+const rim=el('circle',{cx:CX,cy:CY,r:R,fill:'none',stroke:'#64748b','stroke-width':4,pathLength:1,'stroke-dasharray':1,'stroke-dashoffset':1,transform:`rotate(-120 ${CX} ${CY})`},gWheel);
+const spokes=el('g',{},gWheel);
+for(let k=0;k<8;k++){const[x,y]=P(START+k*45);line(CX,CY,x,y,{stroke:'#cbd5e1','stroke-width':2},spokes);}
+
+const trace=el('path',{d:'',fill:'none',stroke:'var(--cab)','stroke-width':7,'stroke-linecap':'round',opacity:.85});
+const gWd4=grp(); el('path',{d:wedgeD(120,30,42),fill:'rgba(147,51,234,.18)',stroke:'var(--ang)','stroke-width':2},gWd4);
+txt(...P(75,60),'α = −90°',{fill:'var(--ang)'},gWd4);
+const gWd5=grp(); el('path',{d:wedgeD(120,-180,42),fill:'rgba(147,51,234,.14)',stroke:'var(--ang)','stroke-width':2},gWd5);
+txt(...P(-60,72),'α = −300°',{fill:'var(--ang)'},gWd5);
+
+/* נתון 1: המרכז */
+const gC=grp(); dot(CX,CY,'var(--ink)',gC,6); txt(CX-10,CY-12,'C(2, 1)',{'text-anchor':'end'},gC);
+const gCp=grp();
+line(CX,CY,CX,OY,{stroke:'#334155',class:'dash'},gCp);
+line(CX,CY,OX,CY,{stroke:'#334155',class:'dash'},gCp);
+
+/* נתון 2: נקודת ההתחלה */
+const [Ax,Ay]=P(120);
+const gA=grp(); el('circle',{cx:Ax,cy:Ay,r:9,fill:'none',stroke:'var(--cab)','stroke-width':3},gA);
+txt(Ax-12,Ay-12,'A(−1, 1+3√3)',{fill:'#c2410c','text-anchor':'end'},gA);
+const gAp=grp();
+line(Ax,Ay,Ax,OY,{stroke:'#334155',class:'dash'},gAp);
+line(Ax,Ay,OX,Ay,{stroke:'#334155',class:'dash'},gAp);
+txt(OX+6,Ay-6,'≈ 6.20',{style:'font-size:13px'},gAp);
+
+/* נתון 3: כיוון ומהירות */
+const gDir=grp();
+el('path',{d:arcD(75,35,R+24),fill:'none',stroke:'var(--cab)','stroke-width':4,'marker-end':'url(#arO)'},gDir);
+txt(12,62,'עם כיוון השעון',{fill:'#c2410c'},gDir);
+txt(12,84,'5 סיבובים בדקה',{fill:'#c2410c'},gDir);
+
+/* סעיף א: המשולש והרדיוס */
+const gTri=grp();
+line(CX,CY,Ax,CY,{stroke:'var(--R)','stroke-width':4},gTri);
+line(Ax,CY,Ax,Ay,{stroke:'var(--B)','stroke-width':4},gTri);
+txt((CX+Ax)/2,CY+20,'Δx = −3',{fill:'var(--R)','text-anchor':'middle'},gTri);
+txt(Ax-8,(CY+Ay)/2+8,'Δy = 3√3',{fill:'var(--B)','text-anchor':'end'},gTri);
+const gRl=grp();
+line(CX,CY,Ax,Ay,{stroke:'var(--L)','stroke-width':4},gRl);
+txt((CX+Ax)/2+10,(CY+Ay)/2,'R = 6',{fill:'var(--L)'},gRl);
+const gRtop=grp(); txt(490,30,'R = 6',{fill:'var(--L)','text-anchor':'end'},gRtop);
+
+/* סעיף ב: זווית ההתחלה */
+const gTh=grp();
+line(CX,CY,CX+70,CY,{stroke:'var(--ang)','stroke-width':2,class:'dash'},gTh);
+el('path',{d:`M${P(0,34)} A34 34 0 0 0 ${P(120,34)}`,fill:'none',stroke:'var(--ang)','stroke-width':3,'marker-end':'url(#arP)'},gTh);
+subTxt(...P(60,56).map((v,i)=>v+(i?0:4)),'θ','A',' = 120°',{fill:'var(--ang)'},gTh);
+txt(CX-110,CY-120,'רביע II',{fill:'var(--ang)',style:'font-size:18px'},gTh);
+const gThTop=grp(); subTxt(490,52,'θ','A',' = 120°',{fill:'var(--ang)','text-anchor':'end'},gThTop);
+
+/* סעיף ג */
+const gWtop=grp(); txt(490,74,'ω = −30° לשנייה',{fill:'var(--L)','text-anchor':'end'},gWtop);
+
+/* סעיף ד: הנקודה B */
+const [Bx,By]=P(30);
+const gB=grp(); dot(Bx,By,'var(--B)',gB); txt(Bx+4,By-14,'B(7.20, 4)',{fill:'var(--B)'},gB);
+const gBp=grp();
+line(Bx,By,Bx,OY,{stroke:'#334155',class:'dash'},gBp);
+line(Bx,By,OX,By,{stroke:'#334155',class:'dash'},gBp);
+txt(Bx,OY+30,'≈ 7.20',{'text-anchor':'middle',fill:'var(--B)'},gBp);
+
+/* סעיף ה: הנקודה D */
+const [Dx,Dy]=P(180);
+const gD=grp(); dot(Dx,Dy,'var(--D)',gD); txt(Dx+12,Dy-12,'D(−4, 1)',{fill:'var(--D)'},gD);
+
+/* הנקודה P שזזה */
+const pDot=el('circle',{cx:Ax,cy:Ay,r:8,fill:'var(--cab)',stroke:'#9a3412','stroke-width':2,class:'se hid'});
+const timer=txt(12,30,'',{class:'lbl se hid',fill:'#c2410c',style:'font-size:20px'});
+
+/* ---------- מצב ---------- */
+let theta=START;
+function setTheta(th){
+  theta=th;
+  spokes.setAttribute('transform',`rotate(${START-th} ${CX} ${CY})`);
+  const[x,y]=P(th);pDot.setAttribute('cx',x);pDot.setAttribute('cy',y);
+}
+const show=e=>e.classList.remove('hid');
+let token=0;
+const wait=(ms,my)=>new Promise(r=>setTimeout(()=>r(my===token),ms));
+function tween(dur,f,my){return new Promise(res=>{const t0=performance.now();
+  function fr(now){if(my!==token)return res(false);const p=Math.min(1,(now-t0)/dur);f(p);p<1?requestAnimationFrame(fr):res(true);}
+  requestAnimationFrame(fr);});}
+async function reveal(a,my,...els){for(const e of els){if(a&&!(await wait(600,my)))return false;show(e);}return true;}
+const setTimer=t=>{timer.textContent=`t = ${(Math.round(t*100)/100).toFixed(2)} שניות`;show(timer);};
+function moveTo(th1,th2,t1,t2){return p=>{const th=th1+(th2-th1)*p;setTheta(th);trace.setAttribute('d',th<START-0.01?arcD(START,th):'');setTimer(t1+(t2-t1)*p);};}
+
+/* ---------- תוכן ---------- */
+const s=(v,p)=>`${v}<sub>${p}</sub>`;
+const m=lines=>`<div class="math">${lines.map(l=>`<div>${l}</div>`).join('')}</div>`;
+const sol=(type,parts)=>`<div class="sol"><span class="chip type">סוג התרגיל: ${type}</span>`+
+  parts.map(([h,l])=>`<details open><summary>${h}</summary>${m(l)}</details>`).join('')+`</div>`;
+const heb=t=>`<span style="font-family:Segoe UI,Arial;font-size:15px;color:#6b21a8" dir="rtl">${t}</span>`;
+const sq=v=>`√<span style="text-decoration:overline">${v}</span>`;
+
+const Q=`<b>שאלה 13 מתרגול החזרה, מחולקת לסעיפים:</b><br>
+מרכז הגלגל הוא <span class="ltr">C(2, 1)</span>, ונקודת ההתחלה של נקודה P על הגלגל היא <span class="ltr">A(−1, 1+3√3)</span>.
+הגלגל מסתובב <b>עם כיוון השעון</b>, <b>5 סיבובים בדקה</b>.
+<ol type="א">
+<li>מצאו את רדיוס הגלגל R.</li>
+<li>מצאו את זווית ההתחלה θ<sub>A</sub>.</li>
+<li>מצאו את המהירות הזוויתית ω ואת זמן המחזור T.</li>
+<li>איפה תהיה P אחרי 3 שניות (נקודה B)?</li>
+<li>מתי תגיע P לראשונה לנקודה השמאלית ביותר של הגלגל, D?</li>
+</ol>`;
+
+const steps=[
+ {intro:true, run:async()=>{}},
+ {tag:'נתון',text:'מרכז הגלגל הוא <span class="ltr">C(2, 1)</span>.',temp:[gCp],run:(a,my)=>reveal(a,my,gAxes,gC,gCp)},
+ {tag:'נתון',text:'נקודת ההתחלה של P היא <span class="ltr">A(−1, 1+3√3)</span>, כלומר בערך <span class="ltr">(−1, 6.20)</span>.',
+  temp:[gAp],run:(a,my)=>reveal(a,my,gA,gAp,pDot)},
+ {tag:'נתון',text:'הגלגל מסתובב עם כיוון השעון, 5 סיבובים בדקה.',run:(a,my)=>reveal(a,my,gDir)},
+ {tag:'סעיף א',sec:true,text:'מצאו את רדיוס הגלגל R.',ans:'R = 6',
+  sol:sol('שאלת מיקום',[
+   ['הרדיוס הוא המרחק בין המרכז לכל נקודה על הגלגל, לכן רושמים את נוסחת המרחק בין C ל-A',[`R = √((${s('x','A')} − ${s('x','C')})² + (${s('y','A')} − ${s('y','C')})²)`]],
+   ['מחשבים את ההפרש האופקי ואת ההפרש האנכי בין A ל-C',[`Δx = ${s('x','A')} − ${s('x','C')} = −1 − 2 = −3`,`Δy = ${s('y','A')} − ${s('y','C')} = (1 + 3√3) − 1 = 3√3`]],
+   ['מציבים בנוסחת המרחק',['R = √((−3)² + (3√3)²)','R = √(9 + 27) = √36 = 6']]]),
+  temp:[gTri,gRl],
+  run:async(a,my)=>{if(!await reveal(a,my,gTri,gRl))return;show(gWheel);
+    if(a){if(!await wait(600,my))return;if(!await tween(1800,p=>rim.setAttribute('stroke-dashoffset',1-p),my))return;}else rim.setAttribute('stroke-dashoffset',0);
+    return reveal(a,my,gRtop);}},
+ {tag:'סעיף ב',sec:true,text:'מצאו את זווית ההתחלה θ<sub>A</sub>.',ans:'θ<sub>A</sub> = 120°',
+  sol:sol('שאלת מיקום',[
+   ['רושמים את הנוסחה הכללית למיקום נקודה על הגלגל לפי זווית',[`x = ${s('x','C')} + R · cos θ`,`y = ${s('y','C')} + R · sin θ`]],
+   [`מבודדים את cos ${s('θ','A')}: ההפרש האופקי מהמרכז חלקי הרדיוס`,[`cos ${s('θ','A')} = (${s('x','A')} − ${s('x','C')}) / R`,`cos ${s('θ','A')} = −3 / 6 = −1/2`]],
+   [`מבודדים את sin ${s('θ','A')}: ההפרש האנכי מהמרכז חלקי הרדיוס`,[`sin ${s('θ','A')} = (${s('y','A')} − ${s('y','C')}) / R`,`sin ${s('θ','A')} = 3√3 / 6 = √3/2`]],
+   ['מזהים את הרביע: cos שלילי ו-sin חיובי, לכן A ברביע II (משמאל למרכז ומעליו)',[`${s('θ','A')} = 120°`]]]),
+  temp:[gTh],
+  run:(a,my)=>reveal(a,my,gTh,gThTop)},
+ {tag:'סעיף ג',sec:true,text:'מצאו את המהירות הזוויתית ω ואת זמן המחזור T.',ans:['ω = −30° לשנייה','T = 12 שניות'],
+  sol:sol('המרת יחידות, ושאלת מרחק זוויתי',[
+   ['רושמים את נוסחת הבסיס לסיבוב: זווית = מהירות זוויתית × זמן – בדיוק כמו דרך = מהירות × זמן',['α = ω · t &nbsp;&nbsp;⟷&nbsp;&nbsp; s = v · t',heb('זווית ↔ דרך &nbsp;|&nbsp; מהירות זוויתית ↔ מהירות &nbsp;|&nbsp; זמן ↔ זמן')]],
+   ['מבודדים את המהירות הזוויתית',['ω = α / t']],
+   ['מציבים: בדקה אחת (60 שניות) הגלגל מסתובב 5 סיבובים של 360°. עם כיוון השעון הזווית יורדת, לכן הסיבוב שלילי',['α = −5 · 360° = −1800°','t = 60','ω = −1800° / 60 = −30° לשנייה']],
+   ['מבודדים את הזמן מנוסחת הבסיס, ומציבים סיבוב שלם (360°) כדי לקבל את זמן המחזור',['t = α / ω','T = −360° / (−30) = 12 שניות']]]),
+  run:async(a,my)=>{if(!await reveal(a,my,gWtop))return;
+    if(a){timer.textContent='סיבוב שלם = 12 שניות (מואץ פי 3)';show(timer);
+      if(!await tween(4000,p=>setTheta(START-360*p),my))return;setTheta(START);timer.classList.add('hid');}}},
+ {tag:'סעיף ד',sec:true,text:'איפה תהיה P אחרי 3 שניות (נקודה B)?',ans:'B(2 + 3√3, 4) ≈ (7.20, 4)',
+  sol:sol('שאלת מרחק זוויתי, ואחר כך שאלת מיקום',[
+   ['רושמים את נוסחת הבסיס לסיבוב (כמו דרך = מהירות × זמן)',['α = ω · t']],
+   ['מציבים את המהירות הזוויתית ואת הזמן, ומקבלים בכמה מעלות הסתובבה P',[`${s('t','B')} = 3`,`α = −30 · ${s('t','B')}`,'α = −30 · 3 = −90°']],
+   ['מוסיפים את הסיבוב לזווית ההתחלה, ומקבלים את הזווית של B',[`${s('θ','B')} = ${s('θ','A')} + α`,`${s('θ','B')} = 120° + (−90°) = 30°`]],
+   ['מציבים את הזווית של B בנוסחת x',[`${s('x','B')} = ${s('x','C')} + R · cos ${s('θ','B')}`,`${s('x','B')} = 2 + 6 · cos 30°`,`${s('x','B')} = 2 + 6 · (√3/2) = 2 + 3√3 ≈ 7.20`]],
+   ['מציבים את הזווית של B בנוסחת y',[`${s('y','B')} = ${s('y','C')} + R · sin ${s('θ','B')}`,`${s('y','B')} = 1 + 6 · sin 30°`,`${s('y','B')} = 1 + 6 · (1/2) = 4`]],
+   ['כותבים את שיעורי הנקודה',['B(2 + 3√3, 4) ≈ B(7.20, 4)']]]),
+  temp:[gWd4,gBp],
+  run:async(a,my)=>{const f=moveTo(START,30,0,3);if(a){if(!await tween(3000,f,my))return;}else f(1);return reveal(a,my,gWd4,gB,gBp);}},
+ {tag:'סעיף ה',sec:true,text:'מתי תגיע P לראשונה לנקודה השמאלית ביותר של הגלגל, D?',ans:`${s('t','D')} = 10 שניות`,
+  sol:sol('שאלת מרחק זוויתי',[
+   ['מוצאים את הזווית של הנקודה השמאלית ביותר',[`${s('θ','D')} = 180°`]],
+   ['עם כיוון השעון הזווית יורדת: מ-120° היא עוברת דרך 0° ממשיכה לערכים שליליים. 180° היא אותה נקודה כמו −180°',[`${s('θ','D')} = 180° − 360° = −180°`]],
+   ['מחשבים בכמה מעלות צריך להסתובב מ-A עד D',[`α = ${s('θ','D')} − ${s('θ','A')}`,'α = −180° − 120° = −300°']],
+   ['רושמים את נוסחת הבסיס לסיבוב (כמו דרך = מהירות × זמן) ומבודדים את הזמן',['α = ω · t','t = α / ω']],
+   ['מציבים את הסיבוב ואת המהירות הזוויתית',[`${s('t','D')} = −300 / (−30) = 10 שניות`]]]),
+  run:async(a,my)=>{const f=moveTo(START,-180,0,10);f(0);if(a){if(!await wait(500,my))return;if(!await tween(10000,f,my))return;}else f(1);return reveal(a,my,gWd5,gD);}},
+];
+
+/* ---------- הצגה ---------- */
+const panel=document.getElementById('panel');
+let cur=0, shown=0;
+function renderPanel(i){
+  const isNew=i>shown; if(isNew)shown=i;
+  const keep=panel.scrollTop;
+  let h=`<details class="qbox" ${i===0?'open':''}><summary>השאלה המלאה</summary>${Q}</details>`;
+  if(shown===0)h+=`<p class="hint">לחצו "הבא" – כל נתון וכל סעיף יתווסף בתחתית הרשימה, ומשמעותו תסומן בסימולטור משמאל. אפשר לגלול למעלה וללחוץ על סעיף קודם כדי לחזור למצב שלו.</p>`;
+  h+='<ol class="items">';
+  for(let k=1;k<=shown;k++){const st=steps[k];
+    const cls=(k===i?'cur':k<i?'done':'ahead')+(isNew&&k===i?' new':'');
+    h+=`<li class="${cls}" data-k="${k}"><span class="chip ${st.sec?'sec':''}">${st.tag}</span><span class="qtext">${st.text}</span>`;
+    if(k===i&&st.sol)h+=st.sol; else if(k!==i&&st.ans)h+=`<div class="ans">✓ ${[].concat(st.ans).map(x=>`<span>${x}</span>`).join('')}</div>`;
+    h+='</li>';}
+  panel.innerHTML=h+'</ol>';
+  panel.querySelectorAll('li[data-k]').forEach(li=>li.onclick=()=>{const k=+li.dataset.k;if(k!==cur)go(k);});
+  panel.style.scrollBehavior='auto';panel.scrollTop=keep;panel.style.scrollBehavior='';
+  const c=panel.querySelector('li.cur');
+  if(isNew)panel.scrollTo({top:panel.scrollHeight});
+  else if(c)c.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function resetDrawing(){
+  svg.querySelectorAll('.se').forEach(e=>e.classList.add('hid'));
+  trace.setAttribute('d','');rim.setAttribute('stroke-dashoffset',1);setTheta(START);
+}
+async function go(i){
+  cur=Math.max(0,Math.min(steps.length-1,i));const my=++token;
+  renderPanel(cur);
+  svg.classList.add('instant');resetDrawing();
+  for(let k=1;k<cur;k++)await steps[k].run(false,my);
+  for(let k=1;k<cur;k++)(steps[k].temp||[]).forEach(e=>e.classList.add('hid'));
+  void svg.getBoundingClientRect();svg.classList.remove('instant');
+  document.getElementById('prev').disabled=cur===0;
+  document.getElementById('next').disabled=cur===steps.length-1;
+  document.getElementById('cnt').textContent=`${cur} / ${steps.length-1}`;
+  document.querySelectorAll('#dots i').forEach((d,k)=>d.classList.toggle('on',k<=cur));
+  if(!(await wait(700,my)))return;           // קודם הטקסט, אחר כך השרטוט
+  await steps[cur].run(true,my);
+}
+const dots=document.getElementById('dots');
+steps.forEach((_,k)=>{const d=document.createElement('i');d.title=k?steps[k].tag:'השאלה';d.onclick=()=>go(k);dots.appendChild(d);});
+document.getElementById('next').onclick=()=>go(cur+1);
+document.getElementById('prev').onclick=()=>go(cur-1);
+document.getElementById('replay').onclick=()=>go(cur);
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='SUMMARY')return;
+  if(e.key==='ArrowLeft'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(cur+1);}
+  if(e.key==='ArrowRight'||e.key==='PageUp'){e.preventDefault();go(cur-1);}
+});
+setTheta(START);go(0);
+</script>
+</body>
+</html>
