@@ -93,7 +93,6 @@ figure figcaption{font-size:.78rem;color:#5b6878;text-align:center}
 .steps{display:flex;flex-direction:column;gap:5px}
 .steps .m{white-space:normal}
 .ans{background:var(--ok-soft);border-radius:6px;padding:6px 12px;width:fit-content;max-width:100%;font-weight:600}
-.ans::before{content:"תשובה: ";color:var(--ok)}
 .ans .m .katex{font-size:1.15em}
 .uses{font-size:.88rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .uses a{font-size:.82rem;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:1px 10px;text-decoration:none;font-weight:600}
@@ -120,6 +119,23 @@ figure.graph{max-width:560px;margin-top:4px}
   .steps p,.ans{overflow-x:auto;overflow-y:hidden}
 }
 @media print{.to-top,nav.qnav{display:none}body{background:#fff}.card{break-inside:avoid-page}}
+
+/* Solutions in the site format: the thinking, numbered steps (heading on the right, every expression on its own line on the left), the answer and a check */
+.think{background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.think-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.think p{margin:0}
+ol.st{margin:2px 0 0;padding-inline-start:24px;display:flex;flex-direction:column;gap:8px}
+ol.st li::marker{font-weight:700;color:var(--mark)}
+ol.st > li > .lab{display:block;font-weight:700;color:var(--mark)}
+.ml{display:flex;flex-direction:column;gap:3px;margin:2px 0 4px}
+.ml-m{direction:ltr;text-align:left;unicode-bidi:isolate;line-height:2.15}
+.ml-m .m{white-space:normal}
+.ml-t{text-align:right;line-height:2.15}
+.ml .signwrap{direction:rtl}
+div.ans{background:var(--ok-soft);border-radius:6px;padding:8px 12px;font-weight:600;width:auto}
+div.ans .lab{display:block;font-weight:700;color:var(--ok)}
+.chk{color:var(--muted);font-size:.95rem;border:1px dashed var(--line);border-radius:6px;padding:8px 12px}
+.chk .lab{display:block;font-weight:700;color:var(--ink)}
 </style>
 <script src="font-size.js"></script>
 </head>
@@ -212,43 +228,57 @@ figure.graph{max-width:560px;margin-top:4px}
 
   <div class="part">
     <h3><span class="lt">א.</span>מצאו את ערך הפרמטר <span class="m">\(a\)</span></h3>
-    <div class="steps">
-      <p>גוזרים: <span class="m">\(f'(x) = -3ax^{2} - 12x - 9a^{3}\)</span>. מציבים <span class="m">\(x=0\)</span>: <span class="m">\(f'(0) = -9a^{3}\)</span>.</p>
-      <p>שיפוע המשיק הוא <span class="m">\(-9\)</span>: <span class="m">\(-9a^{3} = -9 \Rightarrow a^{3} = 1 \Rightarrow a = 1\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(a=1\)</span></p>
     <div class="note"><strong>סתירה בנתונים:</strong> לפי השאלה <span class="m">\(a&lt;0\)</span>, אבל אז <span class="m">\(-9a^{3}&gt;0\)</span> והשיפוע לא יכול להיות <span class="m">\(-9\)</span>. הפתרון היחיד הוא <span class="m">\(a=1\)</span>, כנראה התנאי הנכון הוא <span class="m">\(a&gt;0\)</span>. ההמשך נפתר עם <span class="m">\(a=1\)</span>, וכל המספרים יוצאים שלמים.</div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>שיפוע המשיק בנקודה הוא ערך הנגזרת בנקודה. לכן גוזרים, מציבים <span class="m">\(x=0\)</span> ומשווים ל־<span class="m">\(-9\)</span>. מקבלים משוואה בפרמטר <span class="m">\(a\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">נוסחה</span><div class="ml"><div class="ml-t">שיפוע המשיק בנקודה <span class="m">\(x_0\)</span>:</div><div class="ml-m"><span class="m">\(m = f'(x_0)\)</span></div></div></li>
+    <li><span class="lab">גזירה</span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = -ax^{3} - 6x^{2} - 9a^{3}x\)</span></div><div class="ml-m"><span class="m">\(f'(x) = -3ax^{2} - 12x - 9a^{3}\)</span></div></div></li>
+    <li><span class="lab">הצבה</span><div class="ml"><div class="ml-m"><span class="m">\(f'(0) = -3a\cdot 0 - 12\cdot 0 - 9a^{3} = -9a^{3}\)</span></div></div></li>
+    <li><span class="lab">משוואה</span><div class="ml"><div class="ml-m"><span class="m">\(-9a^{3} = -9\)</span></div><div class="ml-m"><span class="m">\(a^{3} = 1\)</span></div><div class="ml-m"><span class="m">\(a = 1\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(a = 1\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(f'(0) = -9\cdot 1^{3} = -9\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-deriv">כללי גזירה</a><a href="#t-tangent">שיפוע המשיק</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span>הציבו <span class="m">\(a=1\)</span>: <span class="m">\(f(x) = -x^{3} - 6x^{2} - 9x\)</span></h3>
-    <div class="steps">
-      <p><strong>(1) חיתוך עם הצירים.</strong> מוציאים גורם משותף: <span class="m">\(f(x) = -x(x^{2}+6x+9) = -x(x+3)^{2}\)</span>.</p>
-      <p><span class="m">\(f(x)=0 \Rightarrow x=0\)</span> או <span class="m">\(x=-3\)</span>. חיתוך עם ציר <span class="m">\(y\)</span>: <span class="m">\(f(0)=0\)</span>.</p>
-      <p><strong>(2) נקודות קיצון.</strong> <span class="m">\(f'(x) = -3x^{2} - 12x - 9 = -3(x^{2}+4x+3) = -3(x+1)(x+3)\)</span>, ולכן <span class="m">\(f'(x)=0\)</span> ב־<span class="m">\(x=-3\)</span> וב־<span class="m">\(x=-1\)</span>.</p>
-      <div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-3\)</td><td>\(-3\)</td><td>\(-3&lt;x&lt;-1\)</td><td>\(-1\)</td><td>\(x&gt;-1\)</td></tr><tr><th>f′</th><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td></tr><tr><th>f</th><td class="down">↘</td><td>מינ'</td><td class="up">↗</td><td>מקס'</td><td class="down">↘</td></tr></table></div>
-      <p><span class="m">\(f(-3) = 27 - 54 + 27 = 0\)</span>, <span class="m">\(f(-1) = 1 - 6 + 9 = 4\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\((0,0)\)</span>, <span class="m">\((-3,0)\)</span> · מינימום <span class="m">\((-3,0)\)</span>, מקסימום <span class="m">\((-1,4)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>לחיתוך עם ציר <span class="m">\(x\)</span> מפרקים לגורמים: יש גורם משותף <span class="m">\(-x\)</span> ואחריו ריבוע שלם. לקיצון גוזרים, משווים ל־0, ובונים טבלת סימנים כדי לדעת איזו נקודה היא מינימום ואיזו מקסימום.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): פירוק</span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = -x^{3} - 6x^{2} - 9x = -x(x^{2} + 6x + 9) = -x(x+3)^{2}\)</span></div></div></li>
+    <li><span class="lab">חיתוך עם הצירים</span><div class="ml"><div class="ml-t">ציר <span class="m">\(x\)</span>:</div><div class="ml-m"><span class="m">\(f(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 0\ \text{או}\ x = -3\)</span></div><div class="ml-t">ציר <span class="m">\(y\)</span>:</div><div class="ml-m"><span class="m">\(f(0) = 0\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): נגזרת</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = -3x^{2} - 12x - 9 = -3(x^{2} + 4x + 3) = -3(x+1)(x+3)\)</span></div><div class="ml-m"><span class="m">\(f'(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = -3\ \text{או}\ x = -1\)</span></div></div></li>
+    <li><span class="lab">טבלת סימנים</span><div class="ml"><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-3\)</td><td>\(-3\)</td><td>\(-3&lt;x&lt;-1\)</td><td>\(-1\)</td><td>\(x&gt;-1\)</td></tr><tr><th>f′</th><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td></tr><tr><th>f</th><td class="down">↘</td><td>מינ'</td><td class="up">↗</td><td>מקס'</td><td class="down">↘</td></tr></table></div></div></li>
+    <li><span class="lab">ערכי הפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(-3) = -(-3)^{3} - 6(-3)^{2} - 9(-3) = 27 - 54 + 27 = 0\)</span></div><div class="ml-m"><span class="m">\(f(-1) = -(-1)^{3} - 6(-1)^{2} - 9(-1) = 1 - 6 + 9 = 4\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">חיתוך עם הצירים:</div><div class="ml-m"><span class="m">\((0,0),\ (-3,0)\)</span></div><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((-3,0)\)</span></div><div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\((-1,4)\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">המינימום <span class="m">\((-3,0)\)</span> על ציר <span class="m">\(x\)</span>, כי <span class="m">\(x=-3\)</span> הוא שורש כפול: הגרף נוגע בציר ולא חוצה אותו ✓</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-int">חיתוך עם הצירים</a><a href="#t-deriv">כללי גזירה</a><a href="#t-extrema">נקודות קיצון</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>גרף הפונקציה</h3>
-    <p>הפונקציה יורדת עד <span class="m">\(x=-3\)</span>, נוגעת בציר <span class="m">\(x\)</span> במינימום, עולה עד המקסימום <span class="m">\((-1,4)\)</span>, ואז יורדת וחוצה את הראשית. המקדם המוביל שלילי, ולכן משמאל הגרף שואף ל־<span class="m">\(+\infty\)</span> ומימין ל־<span class="m">\(-\infty\)</span>.</p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>סקיצה בונים מהנקודות שמצאנו (חיתוך וקיצון), מתחומי העלייה והירידה ומההתנהגות בקצוות, שנקבעת לפי המקדם המוביל.</p></div>
+    <ol class="st">
+    <li><span class="lab">נקודות</span><div class="ml"><div class="ml-t">חיתוך:</div><div class="ml-m"><span class="m">\((0,0),\ (-3,0)\)</span></div><div class="ml-t">מינימום ומקסימום:</div><div class="ml-m"><span class="m">\((-3,0),\ (-1,4)\)</span></div></div></li>
+    <li><span class="lab">מהלך הגרף</span><div class="ml"><div class="ml-t">יורדת עד <span class="m">\(x=-3\)</span>, עולה עד <span class="m">\(x=-1\)</span>, ואחר כך יורדת וחוצה את הראשית.</div></div></li>
+    <li><span class="lab">קצוות</span><div class="ml"><div class="ml-t">המקדם המוביל שלילי:</div><div class="ml-m"><span class="m">\(x \to -\infty:\ f(x) \to +\infty\)</span></div><div class="ml-m"><span class="m">\(x \to +\infty:\ f(x) \to -\infty\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">הסקיצה בגרף שלמטה.</div></div></div>
     <figure class="graph"><img src="img/summer-calculus/p1.png" alt="גרף f(x) = −x³ − 6x² − 9x עם מינימום ב־(−3,0) ומקסימום ב־(−1,4)"></figure>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span>הציבו <span class="m">\(a=-2\)</span></h3>
-    <div class="steps">
-      <p><span class="m">\(f(x) = 2x^{3} - 6x^{2} - 9(-8)x = 2x^{3} - 6x^{2} + 72x\)</span>.</p>
-      <p><strong>(1) קיצון מוחלט ב־<span class="m">\([-1,1]\)</span>.</strong> <span class="m">\(f'(x) = 6x^{2} - 12x + 72 = 6(x^{2} - 2x + 12)\)</span>. הדיסקרימיננטה <span class="m">\(4 - 48 &lt; 0\)</span> והמקדם המוביל חיובי, ולכן <span class="m">\(f'(x)&gt;0\)</span> לכל <span class="m">\(x\)</span>: הפונקציה עולה תמיד ואין לה נקודות קיצון פנימיות.</p>
-      <p>לכן הקיצון המוחלט נמצא בקצות הקטע: <span class="m">\(f(-1) = -2 - 6 - 72 = -80\)</span>, <span class="m">\(f(1) = 2 - 6 + 72 = 68\)</span>.</p>
-      <p><strong>(2) מעבר בראשית.</strong> <span class="m">\(f(0) = 0\)</span>, ולכן כן. למעשה זה נכון לכל <span class="m">\(a\)</span>, כי לפונקציה אין איבר חופשי.</p>
-    </div>
-    <p class="ans">מקסימום מוחלט <span class="m">\((1,68)\)</span>, מינימום מוחלט <span class="m">\((-1,-80)\)</span> · כן, עוברת בראשית</p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>קיצון מוחלט בקטע סגור נמצא בנקודת קיצון שבתוך הקטע או בקצות הקטע. כאן הנגזרת חיובית תמיד (דיסקרימיננטה שלילית), ולכן אין קיצון פנימי, והקיצון המוחלט בקצוות.</p></div>
+    <ol class="st">
+    <li><span class="lab">הצבה</span><div class="ml"><div class="ml-m"><span class="m">\(a = -2\)</span></div><div class="ml-m"><span class="m">\(f(x) = -(-2)x^{3} - 6x^{2} - 9(-2)^{3}x = 2x^{3} - 6x^{2} + 72x\)</span></div></div></li>
+    <li><span class="lab">סעיף (1): נגזרת</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = 6x^{2} - 12x + 72 = 6(x^{2} - 2x + 12)\)</span></div><div class="ml-t">דיסקרימיננטה:</div><div class="ml-m"><span class="m">\(\Delta = b^{2} - 4ac = 4 - 48 = -44 &lt; 0\)</span></div><div class="ml-t">המקדם המוביל חיובי, ולכן:</div><div class="ml-m"><span class="m">\(f'(x) &gt; 0\)</span></div><div class="ml-t">הפונקציה עולה לכל <span class="m">\(x\)</span>, ואין קיצון פנימי.</div></div></li>
+    <li><span class="lab">קצות הקטע</span><div class="ml"><div class="ml-m"><span class="m">\(f(-1) = 2(-1)^{3} - 6(-1)^{2} + 72(-1) = -2 - 6 - 72 = -80\)</span></div><div class="ml-m"><span class="m">\(f(1) = 2 - 6 + 72 = 68\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): מעבר בראשית</span><div class="ml"><div class="ml-m"><span class="m">\(f(0) = 0\)</span></div><div class="ml-t">כן. זה נכון לכל <span class="m">\(a\)</span>, כי אין לפונקציה איבר חופשי.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">מקסימום מוחלט:</div><div class="ml-m"><span class="m">\((1,68)\)</span></div><div class="ml-t">מינימום מוחלט:</div><div class="ml-m"><span class="m">\((-1,-80)\)</span></div><div class="ml-t">הגרף עובר בראשית.</div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">פונקציה עולה מקבלת את הערך הקטן בקצה השמאלי ואת הגדול בקצה הימני:</div><div class="ml-m"><span class="m">\(-80 &lt; 68\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-monot">עלייה וירידה</a><a href="#t-abs">קיצון מוחלט בקטע סגור</a></p>
   </div>
 </section>
@@ -263,40 +293,44 @@ figure.graph{max-width:560px;margin-top:4px}
 
   <div class="part">
     <h3><span class="lt">א.</span>נתון <span class="m">\(f(x) = (5x-1)(x^{2}-9)\)</span></h3>
-    <div class="steps">
-      <p><strong>(1) חיתוך עם הצירים.</strong> <span class="m">\(5x-1=0 \Rightarrow x=\dfrac15\)</span>, ו־<span class="m">\(x^{2}-9=0 \Rightarrow x=\pm3\)</span>. ציר <span class="m">\(y\)</span>: <span class="m">\(f(0) = (-1)(-9) = 9\)</span>.</p>
-      <p><strong>(2) הפרמטרים.</strong> פותחים סוגריים: <span class="m">\((5x-1)(x^{2}-9) = 5x^{3} - x^{2} - 45x + 9\)</span>, ומשווים מקדמים.</p>
-    </div>
-    <p class="ans"><span class="m">\((\tfrac15,0)\)</span>, <span class="m">\((3,0)\)</span>, <span class="m">\((-3,0)\)</span>, <span class="m">\((0,9)\)</span> · <span class="m">\(a=-1\)</span>, <span class="m">\(b=9\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>הצורה המפורקת נותנת מיד את נקודות החיתוך עם ציר <span class="m">\(x\)</span>. את הפרמטרים מוצאים בפתיחת סוגריים והשוואת מקדמים לצורה הנתונה.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): חיתוך עם ציר <span class="m">\(x\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(5x - 1 = 0\)</span></div><div class="ml-m"><span class="m">\(x = \dfrac{1}{5}\)</span></div><div class="ml-m"><span class="m">\(x^{2} - 9 = 0\)</span></div><div class="ml-m"><span class="m">\(x = \pm 3\)</span></div></div></li>
+    <li><span class="lab">חיתוך עם ציר <span class="m">\(y\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(f(0) = (5\cdot 0 - 1)(0 - 9) = (-1)(-9) = 9\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): פתיחת סוגריים</span><div class="ml"><div class="ml-m"><span class="m">\((5x-1)(x^{2}-9) = 5x^{3} - x^{2} - 45x + 9\)</span></div></div></li>
+    <li><span class="lab">השוואת מקדמים</span><div class="ml"><div class="ml-m"><span class="m">\(5x^{3} + ax^{2} - 45x + b = 5x^{3} - x^{2} - 45x + 9\)</span></div><div class="ml-m"><span class="m">\(a = -1\)</span></div><div class="ml-m"><span class="m">\(b = 9\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\((\tfrac15,0),\ (3,0),\ (-3,0),\ (0,9)\)</span></div><div class="ml-m"><span class="m">\(a = -1,\ b = 9\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">המקדם של <span class="m">\(x\)</span> זהה בשתי הצורות (<span class="m">\(-45\)</span>), כמו שצריך ✓</div><div class="ml-m"><span class="m">\(b = f(0) = 9\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-int">חיתוך עם הצירים</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span><span class="m">\(g(x) = \dfrac{9}{32}f(x)\)</span></h3>
-    <div class="steps">
-      <p><strong>(1)</strong> <span class="m">\(g(x)=0 \Leftrightarrow \dfrac{9}{32}f(x) = 0 \Leftrightarrow f(x)=0\)</span>, כי <span class="m">\(\dfrac{9}{32}\neq0\)</span>. לכן נקודות החיתוך עם ציר <span class="m">\(x\)</span> זהות: <span class="m">\(x = -3,\ \tfrac15,\ 3\)</span>.</p>
-      <p><strong>(2) נקודות קיצון.</strong> <span class="m">\(g'(x) = \dfrac{9}{32}f'(x) = \dfrac{9}{32}(15x^{2} - 2x - 45) = \dfrac{9}{32}(3x+5)(5x-9)\)</span>.</p>
-      <p><span class="m">\(g'(x)=0 \Rightarrow x = -\dfrac53\)</span> או <span class="m">\(x = \dfrac95\)</span>. זו פרבולה "מחייכת", ולכן <span class="m">\(g'\)</span> חיובית מחוץ לשורשים ושלילית ביניהם.</p>
-      <div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-\tfrac53\)</td><td>\(-\tfrac53\)</td><td>\(-\tfrac53&lt;x&lt;\tfrac95\)</td><td>\(\tfrac95\)</td><td>\(x&gt;\tfrac95\)</td></tr><tr><th>g′</th><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td></tr><tr><th>g</th><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div>
-      <p><span class="m">\(f(-\tfrac53) = (-\tfrac{28}{3})(-\tfrac{56}{9}) = \dfrac{1568}{27}\)</span>, ולכן <span class="m">\(g(-\tfrac53) = \dfrac{9}{32}\cdot\dfrac{1568}{27} = \dfrac{49}{3}\)</span>.</p>
-      <p><span class="m">\(f(\tfrac95) = 8\cdot(-\tfrac{144}{25})\)</span>, ולכן <span class="m">\(g(\tfrac95) = \dfrac{9}{32}\cdot\left(-\dfrac{1152}{25}\right) = -\dfrac{324}{25}\)</span>.</p>
-      <p><strong>(3) סקיצה.</strong> שלוש נקודות אפס, חיתוך עם ציר <span class="m">\(y\)</span> ב־<span class="m">\(g(0) = \tfrac{9}{32}\cdot9 = \tfrac{81}{32}\)</span>, מקסימום ואחריו מינימום.</p>
-    </div>
-    <p class="ans">מקסימום <span class="m">\((-\tfrac53,\tfrac{49}{3})\)</span>, מינימום <span class="m">\((\tfrac95,-\tfrac{324}{25})\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>כפל במספר חיובי מותח את הגרף אנכית: נקודות האפס ושיעורי ה־<span class="m">\(x\)</span> של הקיצון לא משתנים, וערכי <span class="m">\(y\)</span> מוכפלים. גוזרים כרגיל ומוצאים את הקיצון.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): חיתוך עם ציר <span class="m">\(x\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(g(x) = 0\)</span></div><div class="ml-m"><span class="m">\(\dfrac{9}{32}f(x) = 0\)</span></div><div class="ml-m"><span class="m">\(f(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = -3,\ \tfrac15,\ 3\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): נגזרת</span><div class="ml"><div class="ml-t">כפל בקבוע:</div><div class="ml-m"><span class="m">\((c\cdot f)' = c\cdot f'\)</span></div><div class="ml-m"><span class="m">\(g'(x) = \dfrac{9}{32}f'(x) = \dfrac{9}{32}(15x^{2} - 2x - 45) = \dfrac{9}{32}(3x+5)(5x-9)\)</span></div><div class="ml-m"><span class="m">\(g'(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = -\dfrac{5}{3}\ \text{או}\ x = \dfrac{9}{5}\)</span></div></div></li>
+    <li><span class="lab">טבלת סימנים</span><div class="ml"><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-\tfrac53\)</td><td>\(-\tfrac53\)</td><td>\(-\tfrac53&lt;x&lt;\tfrac95\)</td><td>\(\tfrac95\)</td><td>\(x&gt;\tfrac95\)</td></tr><tr><th>g′</th><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td></tr><tr><th>g</th><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div></div></li>
+    <li><span class="lab">ערכי הקיצון</span><div class="ml"><div class="ml-m"><span class="m">\(f(-\tfrac53) = (-\tfrac{28}{3})(-\tfrac{56}{9}) = \dfrac{1568}{27}\)</span></div><div class="ml-m"><span class="m">\(g(-\tfrac53) = \dfrac{9}{32}\cdot\dfrac{1568}{27} = \dfrac{49}{3}\)</span></div><div class="ml-m"><span class="m">\(f(\tfrac95) = 8\cdot(-\tfrac{144}{25}) = -\dfrac{1152}{25}\)</span></div><div class="ml-m"><span class="m">\(g(\tfrac95) = \dfrac{9}{32}\cdot\left(-\dfrac{1152}{25}\right) = -\dfrac{324}{25}\)</span></div></div></li>
+    <li><span class="lab">סעיף (3): לסקיצה</span><div class="ml"><div class="ml-t">חיתוך עם ציר <span class="m">\(y\)</span>:</div><div class="ml-m"><span class="m">\(g(0) = \dfrac{9}{32}\cdot 9 = \dfrac{81}{32}\)</span></div><div class="ml-t">שלוש נקודות אפס, מקסימום ואחריו מינימום.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\((-\tfrac53,\ \tfrac{49}{3})\)</span></div><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((\tfrac95,\ -\tfrac{324}{25})\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">המקסימום בין האפסים <span class="m">\(-3\)</span> ו־<span class="m">\(\tfrac15\)</span>, והמינימום בין <span class="m">\(\tfrac15\)</span> ל־<span class="m">\(3\)</span>, כמו שצריך בפולינום ממעלה 3 ✓</div></div></div>
     <figure class="graph"><img src="img/summer-calculus/p2.png" alt="גרף g(x) = 9/32·(5x−1)(x²−9)"></figure>
     <p class="uses">שימוש ב: <a href="#t-trans">מתיחה c·f(x)</a><a href="#t-deriv">כללי גזירה</a><a href="#t-extrema">נקודות קיצון</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span><span class="m">\(h(x) = g(x+k) + n\)</span>, וראשית הצירים היא נקודת מקסימום של <span class="m">\(h\)</span></h3>
-    <div class="steps">
-      <p><strong>(1)</strong> הגרף של <span class="m">\(h\)</span> הוא הגרף של <span class="m">\(g\)</span> מוזז <span class="m">\(k\)</span> יחידות שמאלה ו־<span class="m">\(n\)</span> יחידות למעלה. סוג הקיצון לא משתנה בהזזה, ולכן המקסימום <span class="m">\((-\tfrac53,\tfrac{49}{3})\)</span> עובר לראשית:</p>
-      <p><span class="m">\(-\tfrac53 - k = 0 \Rightarrow k = -\tfrac53\)</span>, ו־<span class="m">\(\tfrac{49}{3} + n = 0 \Rightarrow n = -\tfrac{49}{3}\)</span>.</p>
-      <p><strong>(2)</strong> המינימום <span class="m">\((\tfrac95,-\tfrac{324}{25})\)</span> עובר באותה הזזה: <span class="m">\(x = \tfrac95 + \tfrac53 = \tfrac{52}{15}\)</span>, <span class="m">\(y = -\tfrac{324}{25} - \tfrac{49}{3} = -\tfrac{2197}{75}\)</span>.</p>
-      <p><strong>(3)</strong> <span class="m">\(-h(-x)\)</span> מתקבלת משיקוף בציר <span class="m">\(y\)</span> (סוג הקיצון נשמר) ואז שיקוף בציר <span class="m">\(x\)</span> (מקסימום הופך למינימום). כל נקודה <span class="m">\((x,y)\)</span> עוברת ל־<span class="m">\((-x,-y)\)</span>:</p>
-      <p>המקסימום <span class="m">\((0,0)\)</span> הופך למינימום <span class="m">\((0,0)\)</span>, והמינימום <span class="m">\((\tfrac{52}{15},-\tfrac{2197}{75})\)</span> הופך למקסימום <span class="m">\((-\tfrac{52}{15},\tfrac{2197}{75})\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(k=-\tfrac53\)</span>, <span class="m">\(n=-\tfrac{49}{3}\)</span> · מינימום של h: <span class="m">\((\tfrac{52}{15},-\tfrac{2197}{75})\)</span> · ל־<span class="m">\(-h(-x)\)</span>: מינ' <span class="m">\((0,0)\)</span>, מקס' <span class="m">\((-\tfrac{52}{15},\tfrac{2197}{75})\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p><span class="m">\(g(x+k)+n\)</span> היא הזזה של הגרף: <span class="m">\(k\)</span> יחידות שמאלה ו־<span class="m">\(n\)</span> למעלה. בהזזה סוג הקיצון לא משתנה, ולכן המקסימום של <span class="m">\(g\)</span> צריך לעבור לראשית. את <span class="m">\(-h(-x)\)</span> מקבלים משני שיקופים: נקודה <span class="m">\((x,y)\)</span> עוברת ל־<span class="m">\((-x,-y)\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): הזזה</span><div class="ml"><div class="ml-t">נקודה <span class="m">\((x_0, y_0)\)</span> על <span class="m">\(g\)</span> עוברת ל־:</div><div class="ml-m"><span class="m">\((x_0 - k,\ y_0 + n)\)</span></div><div class="ml-t">המקסימום עובר לראשית:</div><div class="ml-m"><span class="m">\(-\tfrac53 - k = 0\)</span></div><div class="ml-m"><span class="m">\(k = -\tfrac53\)</span></div><div class="ml-m"><span class="m">\(\tfrac{49}{3} + n = 0\)</span></div><div class="ml-m"><span class="m">\(n = -\tfrac{49}{3}\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): המינימום של <span class="m">\(h\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(x = \tfrac95 - k = \tfrac95 + \tfrac53 = \tfrac{52}{15}\)</span></div><div class="ml-m"><span class="m">\(y = -\tfrac{324}{25} + n = -\tfrac{324}{25} - \tfrac{49}{3} = -\tfrac{2197}{75}\)</span></div></div></li>
+    <li><span class="lab">סעיף (3): שיקופים</span><div class="ml"><div class="ml-t"><span class="m">\(h(-x)\)</span>: שיקוף בציר <span class="m">\(y\)</span>, סוג הקיצון נשמר. <span class="m">\(-h(-x)\)</span>: שיקוף בציר <span class="m">\(x\)</span>, מקסימום הופך למינימום:</div><div class="ml-m"><span class="m">\((x,\ y) \to (-x,\ -y)\)</span></div><div class="ml-m"><span class="m">\((0,0) \to (0,0)\)</span></div><div class="ml-m"><span class="m">\((\tfrac{52}{15},\ -\tfrac{2197}{75}) \to (-\tfrac{52}{15},\ \tfrac{2197}{75})\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(k = -\tfrac53,\ n = -\tfrac{49}{3}\)</span></div><div class="ml-t">מינימום של <span class="m">\(h\)</span>:</div><div class="ml-m"><span class="m">\((\tfrac{52}{15},\ -\tfrac{2197}{75})\)</span></div><div class="ml-t">ל־<span class="m">\(-h(-x)\)</span>: מינימום ומקסימום:</div><div class="ml-m"><span class="m">\((0,0),\ (-\tfrac{52}{15},\ \tfrac{2197}{75})\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">המרחק בין שתי נקודות הקיצון לא משתנה בהזזה:</div><div class="ml-m"><span class="m">\(\tfrac95 - (-\tfrac53) = \tfrac{52}{15} - 0\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-trans">הזזות ושיקופים</a></p>
   </div>
 </section>
@@ -311,46 +345,68 @@ figure.graph{max-width:560px;margin-top:4px}
 
   <div class="part">
     <h3><span class="lt">א.</span>חיתוך עם הצירים</h3>
-    <div class="steps"><p><span class="m">\(f(x)=0 \Leftrightarrow x^{2}=9 \Leftrightarrow x=\pm3\)</span>. <span class="m">\(f(0) = (-9)^{2} = 81\)</span>.</p></div>
-    <p class="ans"><span class="m">\((-3,0)\)</span>, <span class="m">\((3,0)\)</span>, <span class="m">\((0,81)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>ריבוע מתאפס רק כשהבסיס מתאפס, ולכן פותרים <span class="m">\(x^{2} - 9 = 0\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">ציר <span class="m">\(x\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x^{2} - 9 = 0\)</span></div><div class="ml-m"><span class="m">\(x = \pm 3\)</span></div></div></li>
+    <li><span class="lab">ציר <span class="m">\(y\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(f(0) = (0 - 9)^{2} = 81\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\((-3,0),\ (3,0),\ (0,81)\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-int">חיתוך עם הצירים</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span>נקודות קיצון</h3>
-    <div class="steps">
-      <p>לפי כלל השרשרת: <span class="m">\(f'(x) = 2(x^{2}-9)\cdot 2x = 4x(x-3)(x+3)\)</span>. מתאפסת ב־<span class="m">\(x = -3,\ 0,\ 3\)</span>.</p>
-      <div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-3\)</td><td>\(-3\)</td><td>\(-3&lt;x&lt;0\)</td><td>\(0\)</td><td>\(0&lt;x&lt;3\)</td><td>\(3\)</td><td>\(x&gt;3\)</td></tr><tr><th>f′</th><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="down">↘</td><td>מינ'</td><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div>
-    </div>
-    <p class="ans">מינימום <span class="m">\((-3,0)\)</span> ו־<span class="m">\((3,0)\)</span>, מקסימום <span class="m">\((0,81)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>הפונקציה היא ביטוי בחזקה, ולכן גוזרים בכלל השרשרת: נגזרת החיצונית כפול נגזרת הפנימית. אחר כך מפרקים, משווים ל־0 ובונים טבלת סימנים.</p></div>
+    <ol class="st">
+    <li><span class="lab">כלל השרשרת</span><div class="ml"><div class="ml-m"><span class="m">\(\left[u^{n}\right]' = n\,u^{n-1}\cdot u'\)</span></div><div class="ml-m"><span class="m">\(f'(x) = 2(x^{2} - 9)\cdot 2x = 4x(x-3)(x+3)\)</span></div></div></li>
+    <li><span class="lab">השוואה ל־0</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = -3,\ 0,\ 3\)</span></div></div></li>
+    <li><span class="lab">טבלת סימנים</span><div class="ml"><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-3\)</td><td>\(-3\)</td><td>\(-3&lt;x&lt;0\)</td><td>\(0\)</td><td>\(0&lt;x&lt;3\)</td><td>\(3\)</td><td>\(x&gt;3\)</td></tr><tr><th>f′</th><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="down">↘</td><td>מינ'</td><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div></div></li>
+    <li><span class="lab">ערכי הפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(\pm 3) = 0\)</span></div><div class="ml-m"><span class="m">\(f(0) = 81\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((-3,0),\ (3,0)\)</span></div><div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\((0,81)\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">ריבוע אינו שלילי, ולכן הנקודות שבהן <span class="m">\(f=0\)</span> חייבות להיות מינימום ✓</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-deriv">כללי גזירה</a><a href="#t-extrema">נקודות קיצון</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>סקיצה</h3>
-    <p>צורת "W": שתי נקודות מינימום על ציר <span class="m">\(x\)</span> ומקסימום על ציר <span class="m">\(y\)</span>. הגרף סימטרי לציר <span class="m">\(y\)</span> ואף פעם לא יורד מתחת לציר <span class="m">\(x\)</span>.</p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>משתמשים בנקודות מסעיפים א ו־ב. הפונקציה ריבוע, ולכן הגרף לא יורד מתחת לציר <span class="m">\(x\)</span>, והיא זוגית ולכן סימטרית לציר <span class="m">\(y\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">נקודות</span><div class="ml"><div class="ml-t">מינימום על ציר <span class="m">\(x\)</span>:</div><div class="ml-m"><span class="m">\((-3,0),\ (3,0)\)</span></div><div class="ml-t">מקסימום על ציר <span class="m">\(y\)</span>:</div><div class="ml-m"><span class="m">\((0,81)\)</span></div></div></li>
+    <li><span class="lab">צורה</span><div class="ml"><div class="ml-t">צורת "W", סימטרית לציר <span class="m">\(y\)</span>:</div><div class="ml-m"><span class="m">\(f(-x) = f(x)\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">הסקיצה בגרף שלמטה.</div></div></div>
     <figure class="graph"><img src="img/summer-calculus/p3.png" alt="גרף f(x) = (x²−9)² בצורת W"></figure>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span>חיתוך של <span class="m">\(f'(x)\)</span> עם ציר <span class="m">\(x\)</span></h3>
-    <div class="steps"><p>מסעיף ב: <span class="m">\(f'(x) = 4x(x-3)(x+3) = 0\)</span> ב־<span class="m">\(x=-3,0,3\)</span>.</p></div>
-    <p class="ans"><span class="m">\((-3,0)\)</span>, <span class="m">\((0,0)\)</span>, <span class="m">\((3,0)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>נקודות החיתוך של <span class="m">\(f'(x)\)</span> עם ציר <span class="m">\(x\)</span> הן הנקודות שבהן <span class="m">\(f'(x) = 0\)</span>, וכבר מצאנו אותן בסעיף ב.</p></div>
+    <ol class="st">
+    <li><span class="lab">מסעיף ב</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = 4x(x-3)(x+3) = 0\)</span></div><div class="ml-m"><span class="m">\(x = -3,\ 0,\ 3\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\((-3,0),\ (0,0),\ (3,0)\)</span></div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ה.</span>התחום שבו <span class="m">\(f(x)\cdot f'(x) &gt; 0\)</span></h3>
-    <div class="steps">
-      <p><span class="m">\(f(x) = (x^{2}-9)^{2} \ge 0\)</span>, ומתאפסת רק ב־<span class="m">\(x=\pm3\)</span>. לכן המכפלה חיובית בדיוק כאשר <span class="m">\(f'(x) &gt; 0\)</span> (ו־<span class="m">\(x\neq\pm3\)</span>).</p>
-      <p>מטבלת הסימנים: <span class="m">\(f'(x)&gt;0\)</span> עבור <span class="m">\(-3&lt;x&lt;0\)</span> או <span class="m">\(x&gt;3\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(-3&lt;x&lt;0\)</span> או <span class="m">\(x&gt;3\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מכפלה חיובית כששני הגורמים באותו סימן. כאן <span class="m">\(f(x) \ge 0\)</span> תמיד, ולכן מספיק לדעת היכן <span class="m">\(f'(x) &gt; 0\)</span>, ולהוציא את הנקודות שבהן <span class="m">\(f = 0\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">סימן <span class="m">\(f\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = (x^{2}-9)^{2} \ge 0\)</span></div><div class="ml-m"><span class="m">\(f(x) = 0 \iff x = \pm 3\)</span></div></div></li>
+    <li><span class="lab">סימן <span class="m">\(f'\)</span></span><div class="ml"><div class="ml-t">מטבלת הסימנים בסעיף ב:</div><div class="ml-m"><span class="m">\(f'(x) &gt; 0 \iff -3 &lt; x &lt; 0\ \text{או}\ x &gt; 3\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(-3 &lt; x &lt; 0\ \text{או}\ x &gt; 3\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(x = 4:\ f(4)\cdot f'(4) = 49\cdot 112 &gt; 0\ \checkmark\)</span></div><div class="ml-m"><span class="m">\(x = 1:\ f(1)\cdot f'(1) = 64\cdot(-32) &lt; 0\ \checkmark\)</span></div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ו.</span><span class="m">\(h'(x) = f(x)\)</span>: תחומי עלייה וירידה של <span class="m">\(h\)</span></h3>
-    <div class="steps"><p><span class="m">\(h'(x) = (x^{2}-9)^{2} \ge 0\)</span> לכל <span class="m">\(x\)</span>, ומתאפסת רק בשתי נקודות בודדות (<span class="m">\(x=\pm3\)</span>) בלי להחליף סימן. לכן <span class="m">\(h\)</span> עולה לכל <span class="m">\(x\)</span> ואין לה תחום ירידה.</p></div>
-    <p class="ans"><span class="m">\(h\)</span> עולה לכל <span class="m">\(x\)</span>, אין תחום ירידה</p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>נתונה הנגזרת של <span class="m">\(h\)</span>, ולכן הסימן של <span class="m">\(f\)</span> קובע היכן <span class="m">\(h\)</span> עולה ויורדת. <span class="m">\(f\)</span> היא ריבוע: לא שלילית, ומתאפסת רק בנקודות בודדות.</p></div>
+    <ol class="st">
+    <li><span class="lab">סימן הנגזרת</span><div class="ml"><div class="ml-m"><span class="m">\(h'(x) = f(x) = (x^{2}-9)^{2} \ge 0\)</span></div><div class="ml-m"><span class="m">\(h'(x) = 0 \iff x = \pm 3\)</span></div></div></li>
+    <li><span class="lab">מסקנה</span><div class="ml"><div class="ml-t">הנגזרת מתאפסת רק בשתי נקודות ולא מחליפה סימן, ולכן <span class="m">\(h\)</span> עולה לכל <span class="m">\(x\)</span>.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t"><span class="m">\(h\)</span> עולה לכל <span class="m">\(x\)</span>, ואין לה תחום ירידה.</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-monot">h′ = f</a></p>
   </div>
 </section>
@@ -365,45 +421,62 @@ figure.graph{max-width:560px;margin-top:4px}
 
   <div class="part">
     <h3><span class="lt">א.</span>תחום הגדרה</h3>
-    <p>פולינום מוגדר לכל <span class="m">\(x\)</span>.</p>
-    <p class="ans">כל <span class="m">\(x\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>פולינום מוגדר לכל ערך של <span class="m">\(x\)</span>: אין מכנה ואין שורש.</p></div>
+    <ol class="st">
+    <li><span class="lab">תחום</span><div class="ml"><div class="ml-t">אין מכנה ואין שורש:</div><div class="ml-m"><span class="m">\(x \in \mathbb{R}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">כל <span class="m">\(x\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-domain">תחום הגדרה</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span>חיתוך עם הצירים</h3>
-    <div class="steps"><p><span class="m">\(f(x)=0 \Rightarrow x=2\)</span> או <span class="m">\(x=-2\)</span>. <span class="m">\(f(0) = (-2)\cdot 8 = -16\)</span>.</p></div>
-    <p class="ans"><span class="m">\((2,0)\)</span>, <span class="m">\((-2,0)\)</span>, <span class="m">\((0,-16)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>הפונקציה כבר מפורקת לגורמים, ולכן מכפלה שווה ל־0 כשאחד הגורמים שווה ל־0.</p></div>
+    <ol class="st">
+    <li><span class="lab">ציר <span class="m">\(x\)</span></span><div class="ml"><div class="ml-m"><span class="m">\((x-2)(x+2)^{3} = 0\)</span></div><div class="ml-m"><span class="m">\(x = 2\ \text{או}\ x = -2\)</span></div></div></li>
+    <li><span class="lab">ציר <span class="m">\(y\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(f(0) = (0-2)(0+2)^{3} = (-2)\cdot 8 = -16\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\((2,0),\ (-2,0),\ (0,-16)\)</span></div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>נקודות קיצון</h3>
-    <div class="steps">
-      <p>כלל המכפלה: <span class="m">\(f'(x) = 1\cdot(x+2)^{3} + (x-2)\cdot3(x+2)^{2}\)</span>.</p>
-      <p>מוציאים <span class="m">\((x+2)^{2}\)</span>: <span class="m">\(f'(x) = (x+2)^{2}\left[(x+2) + 3(x-2)\right] = (x+2)^{2}(4x-4) = 4(x+2)^{2}(x-1)\)</span>.</p>
-      <p><span class="m">\(f'(x)=0\)</span> ב־<span class="m">\(x=-2\)</span> וב־<span class="m">\(x=1\)</span>. הגורם <span class="m">\((x+2)^{2}\)</span> אינו שלילי, ולכן הסימן נקבע לפי <span class="m">\(x-1\)</span>:</p>
-      <div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-2\)</td><td>\(-2\)</td><td>\(-2&lt;x&lt;1\)</td><td>\(1\)</td><td>\(x&gt;1\)</td></tr><tr><th>f′</th><td>−</td><td>0</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="down">↘</td><td>אין קיצון</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div>
-      <p>ב־<span class="m">\(x=-2\)</span> הנגזרת מתאפסת אבל לא מחליפה סימן, ולכן זו אינה נקודת קיצון. <span class="m">\(f(1) = (-1)\cdot27 = -27\)</span>.</p>
-    </div>
-    <p class="ans">מינימום <span class="m">\((1,-27)\)</span> (ב־<span class="m">\((-2,0)\)</span> אין קיצון)</p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מכפלה של שני גורמים, ולכן כלל המכפלה. מוציאים גורם משותף כדי לקבל נגזרת מפורקת. נגזרת שמתאפסת ולא מחליפה סימן (גורם בריבוע) אינה נותנת קיצון.</p></div>
+    <ol class="st">
+    <li><span class="lab">כלל המכפלה</span><div class="ml"><div class="ml-m"><span class="m">\((u\cdot v)' = u'v + uv'\)</span></div><div class="ml-m"><span class="m">\(f'(x) = 1\cdot(x+2)^{3} + (x-2)\cdot 3(x+2)^{2}\)</span></div></div></li>
+    <li><span class="lab">גורם משותף</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = (x+2)^{2}\left[(x+2) + 3(x-2)\right] = (x+2)^{2}(4x - 4) = 4(x+2)^{2}(x-1)\)</span></div><div class="ml-m"><span class="m">\(f'(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = -2\ \text{או}\ x = 1\)</span></div></div></li>
+    <li><span class="lab">טבלת סימנים</span><div class="ml"><div class="ml-t"><span class="m">\((x+2)^{2} \ge 0\)</span>, ולכן הסימן נקבע לפי <span class="m">\(x - 1\)</span>:</div><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-2\)</td><td>\(-2\)</td><td>\(-2&lt;x&lt;1\)</td><td>\(1\)</td><td>\(x&gt;1\)</td></tr><tr><th>f′</th><td>−</td><td>0</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="down">↘</td><td>אין קיצון</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div></div></li>
+    <li><span class="lab">ערכי הפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(1) = (1-2)(1+2)^{3} = -27\)</span></div><div class="ml-t">ב־<span class="m">\(x=-2\)</span> הנגזרת לא מחליפה סימן, ולכן אין שם קיצון.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((1,-27)\)</span></div><div class="ml-t">ב־<span class="m">\((-2,0)\)</span> אין קיצון.</div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(f'(-3) = 4\cdot 1\cdot(-4) &lt; 0,\ f'(0) = 4\cdot 4\cdot(-1) &lt; 0\)</span></div><div class="ml-t">אותו סימן משני צדי <span class="m">\(-2\)</span> ✓</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-deriv">כלל המכפלה</a><a href="#t-extrema">נקודות קיצון</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span>סקיצה</h3>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מסמנים את נקודות החיתוך ואת המינימום. ב־<span class="m">\(x=-2\)</span> הגרף חוצה את ציר <span class="m">\(x\)</span> בצורה "שטוחה" (נקודת פיתול), כי הגורם <span class="m">\((x+2)^{3}\)</span> בחזקה אי־זוגית.</p></div>
+    <ol class="st">
+    <li><span class="lab">נקודות</span><div class="ml"><div class="ml-m"><span class="m">\((-2,0),\ (2,0),\ (0,-16)\)</span></div><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((1,-27)\)</span></div></div></li>
+    <li><span class="lab">מהלך</span><div class="ml"><div class="ml-t">יורדת עד <span class="m">\(x=1\)</span> (גם דרך <span class="m">\(x=-2\)</span>), ועולה אחר כך.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">הסקיצה בגרף שלמטה.</div></div></div>
     <figure class="graph"><img src="img/summer-calculus/p4.png" alt="גרף f(x) = (x−2)(x+2)³"></figure>
   </div>
 
   <div class="part">
     <h3><span class="lt">ה.</span><span class="m">\(h(x) = p\cdot f(x)\)</span>, ושיפוע המשיק ל־<span class="m">\(h\)</span> ב־<span class="m">\(x=0\)</span> הוא 32</h3>
     <p class="alt"><strong>השלמה:</strong> בסעיף (2) נעלם שם הציר. הפתרון נותן את נקודות החיתוך עם שני הצירים.</p>
-    <div class="steps">
-      <p><strong>(1)</strong> <span class="m">\(h'(x) = p\cdot f'(x)\)</span>, ו־<span class="m">\(f'(0) = 4\cdot 4\cdot(-1) = -16\)</span>. לכן <span class="m">\(-16p = 32 \Rightarrow p = -2\)</span>.</p>
-      <p><strong>(2)</strong> <span class="m">\(h(x) = -2f(x)\)</span> מתאפסת בדיוק היכן ש־<span class="m">\(f\)</span> מתאפסת: <span class="m">\((-2,0)\)</span>, <span class="m">\((2,0)\)</span>. עם ציר <span class="m">\(y\)</span>: <span class="m">\(h(0) = -2\cdot(-16) = 32\)</span>.</p>
-      <p><strong>(3)</strong> כפל במספר שלילי הופך מינימום למקסימום, ולכן המינימום <span class="m">\((1,-27)\)</span> של <span class="m">\(f\)</span> הופך למקסימום של <span class="m">\(h\)</span>: <span class="m">\((1,\ -2\cdot(-27)) = (1,54)\)</span>.</p>
-      <p>לשתי הנקודות אותו שיעור <span class="m">\(x\)</span>, ולכן המרחק ביניהן הוא <span class="m">\(54 - (-27) = 81\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(p=-2\)</span> · <span class="m">\((\pm2,0)\)</span>, <span class="m">\((0,32)\)</span> · מרחק 81</p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>כפל בקבוע מכפיל גם את הנגזרת, ולכן מהשיפוע ב־<span class="m">\(x=0\)</span> מוצאים את <span class="m">\(p\)</span>. כפל במספר שלילי הופך את הגרף (שיקוף בציר <span class="m">\(x\)</span> ומתיחה): נקודות האפס נשמרות, ומינימום הופך למקסימום.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): נוסחה</span><div class="ml"><div class="ml-m"><span class="m">\(h'(x) = p\cdot f'(x)\)</span></div><div class="ml-m"><span class="m">\(f'(0) = 4(0+2)^{2}(0-1) = -16\)</span></div></div></li>
+    <li><span class="lab">משוואה</span><div class="ml"><div class="ml-m"><span class="m">\(h'(0) = 32\)</span></div><div class="ml-m"><span class="m">\(-16p = 32\)</span></div><div class="ml-m"><span class="m">\(p = -2\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): חיתוך עם הצירים</span><div class="ml"><div class="ml-t"><span class="m">\(h = -2f\)</span> מתאפסת היכן ש־<span class="m">\(f\)</span> מתאפסת:</div><div class="ml-m"><span class="m">\((-2,0),\ (2,0)\)</span></div><div class="ml-m"><span class="m">\(h(0) = -2\cdot(-16) = 32\)</span></div></div></li>
+    <li><span class="lab">סעיף (3): המקסימום של <span class="m">\(h\)</span></span><div class="ml"><div class="ml-t">המינימום של <span class="m">\(f\)</span> הופך למקסימום של <span class="m">\(h\)</span>:</div><div class="ml-m"><span class="m">\((1,\ -2\cdot(-27)) = (1,54)\)</span></div></div></li>
+    <li><span class="lab">מרחק</span><div class="ml"><div class="ml-t">לשתי הנקודות אותו שיעור <span class="m">\(x\)</span>:</div><div class="ml-m"><span class="m">\(d = |y_{2} - y_{1}| = |54 - (-27)| = 81\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(p = -2\)</span></div><div class="ml-m"><span class="m">\((\pm 2,0),\ (0,32)\)</span></div><div class="ml-t">המרחק:</div><div class="ml-m"><span class="m">\(81\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(h'(0) = -2\cdot(-16) = 32\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-tangent">שיפוע המשיק</a><a href="#t-trans">c·f(x) עם c שלילי</a></p>
   </div>
 </section>
@@ -419,49 +492,67 @@ figure.graph{max-width:560px;margin-top:4px}
   <div class="part">
     <h3><span class="lt">א.</span>מצאו את <span class="m">\(a\)</span></h3>
     <p class="alt"><strong>השלמה:</strong> בקובץ נעלם שם הפרמטר אחרי "מצאו את".</p>
-    <div class="steps"><p><span class="m">\(f(5) = 5(5-a)^{3} = 5 \Rightarrow (5-a)^{3} = 1 \Rightarrow 5-a = 1 \Rightarrow a = 4\)</span>.</p></div>
-    <p class="ans"><span class="m">\(a=4\)</span>, כלומר <span class="m">\(f(x) = x(x-4)^{3}\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>נקודה על הגרף מקיימת את משוואת הפונקציה, ולכן מציבים <span class="m">\(x=5\)</span>, <span class="m">\(y=5\)</span> ופותרים.</p></div>
+    <ol class="st">
+    <li><span class="lab">הצבה</span><div class="ml"><div class="ml-m"><span class="m">\(f(5) = 5\)</span></div><div class="ml-m"><span class="m">\(5(5-a)^{3} = 5\)</span></div><div class="ml-m"><span class="m">\((5-a)^{3} = 1\)</span></div><div class="ml-m"><span class="m">\(5 - a = 1\)</span></div><div class="ml-m"><span class="m">\(a = 4\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(a = 4\)</span></div><div class="ml-m"><span class="m">\(f(x) = x(x-4)^{3}\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(f(5) = 5\cdot 1^{3} = 5\ \checkmark\)</span></div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span>חיתוך עם הצירים</h3>
-    <div class="steps"><p><span class="m">\(x(x-4)^{3} = 0 \Rightarrow x=0\)</span> או <span class="m">\(x=4\)</span>. החיתוך עם ציר <span class="m">\(y\)</span> הוא הראשית.</p></div>
-    <p class="ans"><span class="m">\((0,0)\)</span>, <span class="m">\((4,0)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>הפונקציה מפורקת, ולכן משווים כל גורם ל־0.</p></div>
+    <ol class="st">
+    <li><span class="lab">ציר <span class="m">\(x\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(x(x-4)^{3} = 0\)</span></div><div class="ml-m"><span class="m">\(x = 0\ \text{או}\ x = 4\)</span></div></div></li>
+    <li><span class="lab">ציר <span class="m">\(y\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(f(0) = 0\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\((0,0),\ (4,0)\)</span></div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>הנקודות שבהן הנגזרת מתאפסת</h3>
-    <div class="steps">
-      <p><span class="m">\(f'(x) = (x-4)^{3} + x\cdot3(x-4)^{2} = (x-4)^{2}(x - 4 + 3x) = 4(x-1)(x-4)^{2}\)</span>.</p>
-      <p><span class="m">\(f'(x)=0\)</span> ב־<span class="m">\(x=1\)</span> (<span class="m">\(f(1) = 1\cdot(-3)^{3} = -27\)</span>) וב־<span class="m">\(x=4\)</span> (<span class="m">\(f(4)=0\)</span>).</p>
-    </div>
-    <p class="ans"><span class="m">\((1,-27)\)</span>, <span class="m">\((4,0)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מכפלה, ולכן כלל המכפלה, ואחריו הוצאת גורם משותף <span class="m">\((x-4)^{2}\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">כלל המכפלה</span><div class="ml"><div class="ml-m"><span class="m">\((u\cdot v)' = u'v + uv'\)</span></div><div class="ml-m"><span class="m">\(f'(x) = 1\cdot(x-4)^{3} + x\cdot 3(x-4)^{2}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = (x-4)^{2}(x - 4 + 3x) = 4(x-1)(x-4)^{2}\)</span></div></div></li>
+    <li><span class="lab">השוואה ל־0</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 1\ \text{או}\ x = 4\)</span></div></div></li>
+    <li><span class="lab">ערכי הפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(1) = 1\cdot(1-4)^{3} = -27\)</span></div><div class="ml-m"><span class="m">\(f(4) = 0\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\((1,-27),\ (4,0)\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-deriv">כלל המכפלה</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span>מי מהן נקודת קיצון</h3>
-    <div class="steps">
-      <p><span class="m">\((x-4)^{2}\ge0\)</span>, ולכן הסימן של <span class="m">\(f'\)</span> נקבע לפי <span class="m">\(x-1\)</span>:</p>
-      <div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;1\)</td><td>\(1\)</td><td>\(1&lt;x&lt;4\)</td><td>\(4\)</td><td>\(x&gt;4\)</td></tr><tr><th>f′</th><td>−</td><td>0</td><td>+</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="down">↘</td><td>מינ'</td><td class="up">↗</td><td>אין קיצון</td><td class="up">↗</td></tr></table></div>
-    </div>
-    <p class="ans">מינימום <span class="m">\((1,-27)\)</span>. ב־<span class="m">\((4,0)\)</span> אין קיצון</p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>נקודה שבה הנגזרת מתאפסת היא קיצון רק אם הנגזרת מחליפה שם סימן. הגורם <span class="m">\((x-4)^{2}\)</span> אינו שלילי, ולכן הוא לא מחליף סימן.</p></div>
+    <ol class="st">
+    <li><span class="lab">טבלת סימנים</span><div class="ml"><div class="ml-t"><span class="m">\((x-4)^{2} \ge 0\)</span>, ולכן הסימן נקבע לפי <span class="m">\(x - 1\)</span>:</div><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;1\)</td><td>\(1\)</td><td>\(1&lt;x&lt;4\)</td><td>\(4\)</td><td>\(x&gt;4\)</td></tr><tr><th>f′</th><td>−</td><td>0</td><td>+</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="down">↘</td><td>מינ'</td><td class="up">↗</td><td>אין קיצון</td><td class="up">↗</td></tr></table></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((1,-27)\)</span></div><div class="ml-t">ב־<span class="m">\((4,0)\)</span> אין קיצון.</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-extrema">נקודות קיצון</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ה.</span>סקיצה של <span class="m">\(f\)</span></h3>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מסמנים את נקודות החיתוך ואת המינימום. ב־<span class="m">\(x=4\)</span> הגרף חוצה את ציר <span class="m">\(x\)</span> בנקודה "שטוחה", כי <span class="m">\((x-4)^{3}\)</span> בחזקה אי־זוגית.</p></div>
+    <ol class="st">
+    <li><span class="lab">נקודות</span><div class="ml"><div class="ml-m"><span class="m">\((0,0),\ (4,0)\)</span></div><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((1,-27)\)</span></div></div></li>
+    <li><span class="lab">מהלך</span><div class="ml"><div class="ml-t">יורדת עד <span class="m">\(x=1\)</span> ועולה אחר כך (גם דרך <span class="m">\(x=4\)</span>).</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">הסקיצה בגרף שלמטה.</div></div></div>
     <figure class="graph"><img src="img/summer-calculus/p5f.png" alt="גרף f(x) = x(x−4)³"></figure>
   </div>
 
   <div class="part">
     <h3><span class="lt">ו.</span><span class="m">\(g(x) = -f(x)\)</span></h3>
-    <div class="steps">
-      <p><strong>(1)</strong> שיקוף של <span class="m">\(f\)</span> בציר <span class="m">\(x\)</span>: המינימום <span class="m">\((1,-27)\)</span> הופך למקסימום <span class="m">\((1,27)\)</span>, ונקודות האפס נשארות.</p>
-      <p><strong>(2)</strong> <span class="m">\(g'(x) = -f'(x) = -4(x-1)(x-4)^{2}\)</span>. הסימנים הפוכים לטבלה של סעיף ד.</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p><span class="m">\(-f(x)\)</span> היא שיקוף בציר <span class="m">\(x\)</span>: נקודות האפס נשמרות, ערכי <span class="m">\(y\)</span> מחליפים סימן, ומינימום הופך למקסימום. גם הנגזרת מחליפה סימן.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): שיקוף</span><div class="ml"><div class="ml-m"><span class="m">\((x,\ y) \to (x,\ -y)\)</span></div><div class="ml-m"><span class="m">\((1,-27) \to (1,27)\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): נגזרת</span><div class="ml"><div class="ml-m"><span class="m">\(g'(x) = -f'(x) = -4(x-1)(x-4)^{2}\)</span></div><div class="ml-t">הסימנים הפוכים לטבלה בסעיף ד.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">מקסימום של <span class="m">\(g\)</span>:</div><div class="ml-m"><span class="m">\((1,27)\)</span></div><div class="ml-m"><span class="m">\(g'(x) &gt; 0:\ x &lt; 1\)</span></div><div class="ml-m"><span class="m">\(g'(x) &lt; 0:\ 1 &lt; x &lt; 4,\ x &gt; 4\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(g'(0) = -4\cdot(-1)\cdot 16 = 64 &gt; 0\ \checkmark\)</span></div></div></div>
     <figure class="graph"><img src="img/summer-calculus/p5g.png" alt="גרף g(x) = −x(x−4)³"></figure>
-    <p class="ans"><span class="m">\(g'(x)&gt;0\)</span> עבור <span class="m">\(x&lt;1\)</span> · <span class="m">\(g'(x)&lt;0\)</span> עבור <span class="m">\(1&lt;x&lt;4\)</span> ו־<span class="m">\(x&gt;4\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-trans">שיקוף −f(x)</a></p>
   </div>
 </section>
@@ -476,51 +567,73 @@ figure.graph{max-width:560px;margin-top:4px}
 
   <div class="part">
     <h3><span class="lt">א.</span>חיתוך עם הצירים</h3>
-    <div class="steps"><p><span class="m">\(x^{2}=1 \Rightarrow x=\pm1\)</span>, <span class="m">\(x^{2}=49 \Rightarrow x=\pm7\)</span>. <span class="m">\(f(0) = (-1)\cdot49 = -49\)</span>.</p></div>
-    <p class="ans"><span class="m">\((\pm1,0)\)</span>, <span class="m">\((\pm7,0)\)</span>, <span class="m">\((0,-49)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>הפונקציה מפורקת לשני גורמים, וכל אחד מהם הוא הפרש ריבועים.</p></div>
+    <ol class="st">
+    <li><span class="lab">ציר <span class="m">\(x\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(x^{2} - 1 = 0\)</span></div><div class="ml-m"><span class="m">\(x = \pm 1\)</span></div><div class="ml-m"><span class="m">\(49 - x^{2} = 0\)</span></div><div class="ml-m"><span class="m">\(x = \pm 7\)</span></div></div></li>
+    <li><span class="lab">ציר <span class="m">\(y\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(f(0) = (0-1)(49-0) = -49\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\((\pm 1,0),\ (\pm 7,0),\ (0,-49)\)</span></div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span>נקודות קיצון</h3>
-    <div class="steps">
-      <p>פותחים סוגריים: <span class="m">\(f(x) = -x^{4} + 50x^{2} - 49\)</span>, ולכן <span class="m">\(f'(x) = -4x^{3} + 100x = -4x(x-5)(x+5)\)</span>.</p>
-      <div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-5\)</td><td>\(-5\)</td><td>\(-5&lt;x&lt;0\)</td><td>\(0\)</td><td>\(0&lt;x&lt;5\)</td><td>\(5\)</td><td>\(x&gt;5\)</td></tr><tr><th>f′</th><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td></tr><tr><th>f</th><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td><td>מקס'</td><td class="down">↘</td></tr></table></div>
-      <p><span class="m">\(f(\pm5) = 24\cdot24 = 576\)</span>, <span class="m">\(f(0) = -49\)</span>.</p>
-    </div>
-    <p class="ans">מקסימום <span class="m">\((-5,576)\)</span> ו־<span class="m">\((5,576)\)</span>, מינימום <span class="m">\((0,-49)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>נוח יותר לפתוח סוגריים ולגזור פולינום רגיל. הנגזרת יוצאת עם גורם משותף <span class="m">\(x\)</span>, ואחריו הפרש ריבועים.</p></div>
+    <ol class="st">
+    <li><span class="lab">פתיחת סוגריים</span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = -x^{4} + 50x^{2} - 49\)</span></div></div></li>
+    <li><span class="lab">נגזרת</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = -4x^{3} + 100x = -4x(x-5)(x+5)\)</span></div><div class="ml-m"><span class="m">\(f'(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = -5,\ 0,\ 5\)</span></div></div></li>
+    <li><span class="lab">טבלת סימנים</span><div class="ml"><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-5\)</td><td>\(-5\)</td><td>\(-5&lt;x&lt;0\)</td><td>\(0\)</td><td>\(0&lt;x&lt;5\)</td><td>\(5\)</td><td>\(x&gt;5\)</td></tr><tr><th>f′</th><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td></tr><tr><th>f</th><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td><td>מקס'</td><td class="down">↘</td></tr></table></div></div></li>
+    <li><span class="lab">ערכי הפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(\pm 5) = (25-1)(49-25) = 24\cdot 24 = 576\)</span></div><div class="ml-m"><span class="m">\(f(0) = -49\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\((-5,576),\ (5,576)\)</span></div><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((0,-49)\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">המקסימומים סימטריים לציר <span class="m">\(y\)</span>, כמו שמתאים לפונקציה זוגית (סעיף ג) ✓</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-deriv">כללי גזירה</a><a href="#t-extrema">נקודות קיצון</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>זוגית או אי־זוגית</h3>
-    <div class="steps"><p><span class="m">\(f(-x) = ((-x)^{2}-1)(49-(-x)^{2}) = (x^{2}-1)(49-x^{2}) = f(x)\)</span>. בפונקציה מופיעות רק חזקות זוגיות של <span class="m">\(x\)</span>.</p></div>
-    <p class="ans">זוגית (הגרף סימטרי לציר <span class="m">\(y\)</span>)</p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>בודקים מה קורה כשמציבים <span class="m">\(-x\)</span> במקום <span class="m">\(x\)</span>. אם מקבלים את <span class="m">\(f(x)\)</span>, הפונקציה זוגית.</p></div>
+    <ol class="st">
+    <li><span class="lab">הגדרה</span><div class="ml"><div class="ml-t">פונקציה זוגית:</div><div class="ml-m"><span class="m">\(f(-x) = f(x)\)</span></div></div></li>
+    <li><span class="lab">הצבה</span><div class="ml"><div class="ml-m"><span class="m">\(f(-x) = ((-x)^{2} - 1)(49 - (-x)^{2}) = (x^{2} - 1)(49 - x^{2}) = f(x)\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">זוגית: הגרף סימטרי לציר <span class="m">\(y\)</span>.</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-even">זוגית ואי־זוגית</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span>חיתוך בין <span class="m">\(f\)</span> ל־<span class="m">\(g\)</span></h3>
-    <div class="steps">
-      <p><span class="m">\(-x^{4} + 50x^{2} - 49 = 10x^{2} + 95 \Rightarrow x^{4} - 40x^{2} + 144 = 0\)</span>.</p>
-      <p>מציבים <span class="m">\(t = x^{2}\)</span>: <span class="m">\(t^{2} - 40t + 144 = 0 \Rightarrow t = 4\)</span> או <span class="m">\(t = 36\)</span>, ולכן <span class="m">\(x = \pm2,\ \pm6\)</span>.</p>
-      <p><span class="m">\(g(\pm2) = 135\)</span>, <span class="m">\(g(\pm6) = 455\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\((-6,455)\)</span>, <span class="m">\((-2,135)\)</span>, <span class="m">\((2,135)\)</span>, <span class="m">\((6,455)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>משווים את שתי הפונקציות. מקבלים משוואה דו־ריבועית (רק <span class="m">\(x^{4}\)</span> ו־<span class="m">\(x^{2}\)</span>), ולכן מציבים <span class="m">\(t = x^{2}\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">השוואה</span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = g(x)\)</span></div><div class="ml-m"><span class="m">\(-x^{4} + 50x^{2} - 49 = 10x^{2} + 95\)</span></div><div class="ml-m"><span class="m">\(x^{4} - 40x^{2} + 144 = 0\)</span></div></div></li>
+    <li><span class="lab">הצבה <span class="m">\(t = x^{2}\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(t^{2} - 40t + 144 = 0\)</span></div><div class="ml-m"><span class="m">\(t_{1,2} = \dfrac{-b \pm \sqrt{b^{2} - 4ac}}{2a} = \dfrac{40 \pm \sqrt{1600 - 576}}{2} = \dfrac{40 \pm 32}{2}\)</span></div><div class="ml-m"><span class="m">\(t = 4\ \text{או}\ t = 36\)</span></div><div class="ml-m"><span class="m">\(x = \pm 2,\ \pm 6\)</span></div></div></li>
+    <li><span class="lab">שיעורי <span class="m">\(y\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(g(\pm 2) = 10\cdot 4 + 95 = 135\)</span></div><div class="ml-m"><span class="m">\(g(\pm 6) = 10\cdot 36 + 95 = 455\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\((-6,455),\ (-2,135),\ (2,135),\ (6,455)\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(f(2) = (4-1)(49-4) = 3\cdot 45 = 135\ \checkmark\)</span></div><div class="ml-m"><span class="m">\(f(6) = (36-1)(49-36) = 35\cdot 13 = 455\ \checkmark\)</span></div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ה.</span>שני הגרפים באותה מערכת צירים</h3>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p><span class="m">\(f\)</span> היא צורת "M" עם שני מקסימומים, ו־<span class="m">\(g\)</span> היא פרבולה "מחייכת" עם קדקוד <span class="m">\((0,95)\)</span>. מסמנים את ארבע נקודות החיתוך מסעיף ד.</p></div>
+    <ol class="st">
+    <li><span class="lab"><span class="m">\(f\)</span></span><div class="ml"><div class="ml-t">מקסימום ומינימום:</div><div class="ml-m"><span class="m">\((\pm 5,576),\ (0,-49)\)</span></div></div></li>
+    <li><span class="lab"><span class="m">\(g\)</span></span><div class="ml"><div class="ml-t">קדקוד:</div><div class="ml-m"><span class="m">\((0,95)\)</span></div></div></li>
+    <li><span class="lab">חיתוך</span><div class="ml"><div class="ml-m"><span class="m">\((\pm 2,135),\ (\pm 6,455)\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">הסקיצה בגרף שלמטה.</div></div></div>
     <figure class="graph"><img src="img/summer-calculus/p6.png" alt="הגרפים של f ושל g, ומשולש בין שתי נקודות המקסימום של f לנקודת המינימום של g"></figure>
   </div>
 
   <div class="part">
     <h3><span class="lt">ו.</span>שטח המשולש</h3>
-    <div class="steps">
-      <p><span class="m">\(g'(x) = 20x = 0 \Rightarrow x=0\)</span>, ולכן המינימום של <span class="m">\(g\)</span> הוא <span class="m">\((0,95)\)</span>.</p>
-      <p>קדקודי המשולש: <span class="m">\((-5,576)\)</span>, <span class="m">\((5,576)\)</span>, <span class="m">\((0,95)\)</span>. הבסיס אופקי, באורך <span class="m">\(10\)</span>, והגובה הוא <span class="m">\(576 - 95 = 481\)</span>.</p>
-      <p><span class="m">\(S = \dfrac{10\cdot481}{2} = 2405\)</span></p>
-    </div>
-    <p class="ans"><span class="m">\(S = 2405\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>קדקודי המשולש הם שתי נקודות המקסימום של <span class="m">\(f\)</span> והמינימום של <span class="m">\(g\)</span>. שני המקסימומים באותו גובה, ולכן הבסיס אופקי והגובה הוא הפרש שיעורי <span class="m">\(y\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">המינימום של <span class="m">\(g\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(g'(x) = 20x = 0\)</span></div><div class="ml-m"><span class="m">\(x = 0\)</span></div><div class="ml-m"><span class="m">\((0,95)\)</span></div></div></li>
+    <li><span class="lab">קדקודים</span><div class="ml"><div class="ml-m"><span class="m">\((-5,576),\ (5,576),\ (0,95)\)</span></div></div></li>
+    <li><span class="lab">בסיס וגובה</span><div class="ml"><div class="ml-m"><span class="m">\(a = 5 - (-5) = 10\)</span></div><div class="ml-m"><span class="m">\(h = 576 - 95 = 481\)</span></div></div></li>
+    <li><span class="lab">שטח</span><div class="ml"><div class="ml-m"><span class="m">\(S = \dfrac{a\cdot h}{2} = \dfrac{10\cdot 481}{2} = 2405\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(S = 2405\)</span></div></div></div>
   </div>
 </section>
 
@@ -535,41 +648,59 @@ figure.graph{max-width:560px;margin-top:4px}
   <div class="part">
     <h3><span class="lt">א.</span>מצאו את <span class="m">\(b\)</span> ו־<span class="m">\(c\)</span></h3>
     <p class="alt"><strong>השלמה:</strong> בקובץ נעלם הפרמטר <span class="m">\(c\)</span>.</p>
-    <div class="steps"><p><span class="m">\((x^{2}-6x+9)(x+6) = x^{3} + 6x^{2} - 6x^{2} - 36x + 9x + 54 = x^{3} - 27x + 54\)</span>.</p></div>
-    <p class="ans"><span class="m">\(b=-27\)</span>, <span class="m">\(c=54\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>פותחים את הצורה המפורקת ומשווים מקדמים לצורה <span class="m">\(x^{3} + bx + c\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">פתיחת סוגריים</span><div class="ml"><div class="ml-m"><span class="m">\((x-3)^{2}(x+6) = (x^{2} - 6x + 9)(x+6)\)</span></div><div class="ml-m"><span class="m">\(= x^{3} + 6x^{2} - 6x^{2} - 36x + 9x + 54 = x^{3} - 27x + 54\)</span></div></div></li>
+    <li><span class="lab">השוואת מקדמים</span><div class="ml"><div class="ml-m"><span class="m">\(b = -27\)</span></div><div class="ml-m"><span class="m">\(c = 54\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(b = -27,\ c = 54\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">אין איבר <span class="m">\(x^{2}\)</span> אחרי הפתיחה, כמו בצורה הנתונה ✓</div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span>חיתוך עם הצירים</h3>
-    <div class="steps"><p>מהצורה המפורקת: <span class="m">\(x=3\)</span> או <span class="m">\(x=-6\)</span>. <span class="m">\(f(0) = 54\)</span>.</p></div>
-    <p class="ans"><span class="m">\((3,0)\)</span>, <span class="m">\((-6,0)\)</span>, <span class="m">\((0,54)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מהצורה המפורקת קוראים את נקודות האפס, ומהצורה הפתוחה את <span class="m">\(f(0)\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">ציר <span class="m">\(x\)</span></span><div class="ml"><div class="ml-m"><span class="m">\((x-3)^{2}(x+6) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 3\ \text{או}\ x = -6\)</span></div></div></li>
+    <li><span class="lab">ציר <span class="m">\(y\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(f(0) = c = 54\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\((3,0),\ (-6,0),\ (0,54)\)</span></div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>נקודות קיצון</h3>
-    <div class="steps">
-      <p><span class="m">\(f'(x) = 3x^{2} - 27 = 3(x-3)(x+3)\)</span>. פרבולה "מחייכת": חיובית מחוץ לשורשים ושלילית ביניהם.</p>
-      <p><span class="m">\(f(-3) = -27 + 81 + 54 = 108\)</span> (מעבר מ־+ ל־−, מקסימום), <span class="m">\(f(3) = 0\)</span> (מעבר מ־− ל־+, מינימום).</p>
-    </div>
-    <p class="ans">מקסימום <span class="m">\((-3,108)\)</span>, מינימום <span class="m">\((3,0)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>הנגזרת היא פרבולה. פרבולה "מחייכת" חיובית מחוץ לשורשים ושלילית ביניהם, ומזה יודעים את סוג הקיצון.</p></div>
+    <ol class="st">
+    <li><span class="lab">נגזרת</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = 3x^{2} - 27 = 3(x-3)(x+3)\)</span></div><div class="ml-m"><span class="m">\(f'(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = \pm 3\)</span></div></div></li>
+    <li><span class="lab">סימן</span><div class="ml"><div class="ml-t">פרבולה "מחייכת": <span class="m">\(+\)</span> ואז <span class="m">\(-\)</span> ואז <span class="m">\(+\)</span>.</div></div></li>
+    <li><span class="lab">ערכי הפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(-3) = (-3)^{3} - 27(-3) + 54 = -27 + 81 + 54 = 108\)</span></div><div class="ml-m"><span class="m">\(f(3) = 27 - 81 + 54 = 0\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\((-3,108)\)</span></div><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((3,0)\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t"><span class="m">\(x=3\)</span> שורש כפול, ולכן המינימום על ציר <span class="m">\(x\)</span> ✓</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-extrema">נקודות קיצון</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span>סקיצה</h3>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מסמנים את נקודות החיתוך והקיצון. הגרף נוגע בציר <span class="m">\(x\)</span> ב־<span class="m">\(x=3\)</span> (שורש כפול) וחוצה אותו ב־<span class="m">\(x=-6\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">נקודות</span><div class="ml"><div class="ml-m"><span class="m">\((-6,0),\ (3,0),\ (0,54)\)</span></div><div class="ml-m"><span class="m">\((-3,108),\ (3,0)\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">הסקיצה בגרף שלמטה.</div></div></div>
     <figure class="graph"><img src="img/summer-calculus/p7.png" alt="גרף f(x) = x³ − 27x + 54"></figure>
   </div>
 
   <div class="part">
     <h3><span class="lt">ה.</span><span class="m">\(g(x) = f(2x-3)\)</span> בתחום <span class="m">\([-1,4]\)</span></h3>
-    <div class="steps">
-      <p>נסמן <span class="m">\(t = 2x-3\)</span>. כאשר <span class="m">\(x\)</span> עובר על <span class="m">\([-1,4]\)</span>, <span class="m">\(t\)</span> עובר על <span class="m">\([-5,5]\)</span>. לכן הערכים של <span class="m">\(g\)</span> בתחום הם בדיוק הערכים של <span class="m">\(f\)</span> בקטע <span class="m">\([-5,5]\)</span>.</p>
-      <p>בודקים את <span class="m">\(f\)</span> בקצוות ובנקודות הקיצון שבקטע: <span class="m">\(f(-5) = 64\)</span>, <span class="m">\(f(-3) = 108\)</span>, <span class="m">\(f(3) = 0\)</span>, <span class="m">\(f(5) = 44\)</span>.</p>
-      <p><strong>(1)</strong> הערך הגדול ביותר הוא 108, ב־<span class="m">\(t=-3\)</span>, כלומר <span class="m">\(2x-3=-3 \Rightarrow x=0\)</span>.</p>
-      <p><strong>(2)</strong> הערך הקטן ביותר הוא 0, ב־<span class="m">\(t=3\)</span>, כלומר <span class="m">\(x=3\)</span>.</p>
-      <p class="alt"><strong>בדרך הנגזרת:</strong> <span class="m">\(g'(x) = 2f'(2x-3)\)</span> מתאפסת כאשר <span class="m">\(2x-3=\pm3\)</span>, כלומר ב־<span class="m">\(x=0\)</span> וב־<span class="m">\(x=3\)</span>, ובקצוות <span class="m">\(g(-1)=f(-5)=64\)</span>, <span class="m">\(g(4)=f(5)=44\)</span>. אותה תוצאה.</p>
-    </div>
-    <p class="ans">מקסימום מוחלט <span class="m">\((0,108)\)</span>, מינימום מוחלט <span class="m">\((3,0)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p><span class="m">\(g(x) = f(2x-3)\)</span> מקבלת את אותם ערכים כמו <span class="m">\(f\)</span>, רק בנקודות אחרות. מציבים <span class="m">\(t = 2x - 3\)</span>: כש־<span class="m">\(x\)</span> בקטע <span class="m">\([-1,4]\)</span>, <span class="m">\(t\)</span> בקטע <span class="m">\([-5,5]\)</span>. קיצון מוחלט בקטע סגור: בודקים את הקצוות ואת נקודות הקיצון שבתוך הקטע.</p></div>
+    <ol class="st">
+    <li><span class="lab">הצבה</span><div class="ml"><div class="ml-m"><span class="m">\(t = 2x - 3\)</span></div><div class="ml-m"><span class="m">\(x = -1:\ t = -5\)</span></div><div class="ml-m"><span class="m">\(x = 4:\ t = 5\)</span></div><div class="ml-m"><span class="m">\(t \in [-5,5]\)</span></div></div></li>
+    <li><span class="lab">ערכי <span class="m">\(f\)</span></span><div class="ml"><div class="ml-t">בקצוות ובנקודות הקיצון שבקטע:</div><div class="ml-m"><span class="m">\(f(-5) = -125 + 135 + 54 = 64\)</span></div><div class="ml-m"><span class="m">\(f(-3) = 108\)</span></div><div class="ml-m"><span class="m">\(f(3) = 0\)</span></div><div class="ml-m"><span class="m">\(f(5) = 125 - 135 + 54 = 44\)</span></div></div></li>
+    <li><span class="lab">סעיף (1): הגדול ביותר</span><div class="ml"><div class="ml-m"><span class="m">\(108\)</span></div><div class="ml-m"><span class="m">\(2x - 3 = -3\)</span></div><div class="ml-m"><span class="m">\(x = 0\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): הקטן ביותר</span><div class="ml"><div class="ml-m"><span class="m">\(0\)</span></div><div class="ml-m"><span class="m">\(2x - 3 = 3\)</span></div><div class="ml-m"><span class="m">\(x = 3\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">מקסימום מוחלט:</div><div class="ml-m"><span class="m">\((0,108)\)</span></div><div class="ml-t">מינימום מוחלט:</div><div class="ml-m"><span class="m">\((3,0)\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">בדרך הנגזרת, בכלל השרשרת:</div><div class="ml-m"><span class="m">\(g'(x) = 2f'(2x-3) = 0\)</span></div><div class="ml-m"><span class="m">\(2x - 3 = \pm 3\)</span></div><div class="ml-m"><span class="m">\(x = 0,\ x = 3\)</span></div><div class="ml-m"><span class="m">\(g(-1) = f(-5) = 64,\ g(4) = f(5) = 44\)</span></div><div class="ml-t">אותה תוצאה ✓</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-abs">קיצון מוחלט בקטע סגור</a><a href="#t-deriv">גזירת f(ax+b)</a></p>
   </div>
 </section>
@@ -586,50 +717,71 @@ figure.graph{max-width:560px;margin-top:4px}
 
   <div class="part">
     <h3><span class="lt">א.</span>אסימפטוטות מאונכות לצירים</h3>
-    <div class="steps">
-      <p>המכנה מתאפס ב־<span class="m">\(x=1.5\)</span> וב־<span class="m">\(x=5\)</span>, והמונה לא מתאפס שם, ולכן אלה אסימפטוטות אנכיות.</p>
-      <p>מעלת המונה שווה למעלת המכנה, ולכן יש גם אסימפטוטה אופקית: <span class="m">\(y = \dfrac{4}{2} = 2\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(x=1.5\)</span>, <span class="m">\(x=5\)</span>, <span class="m">\(y=2\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>אסימפטוטה אנכית: המכנה מתאפס והמונה לא. אסימפטוטה אופקית כשמעלת המונה שווה למעלת המכנה: היחס בין המקדמים המובילים.</p></div>
+    <ol class="st">
+    <li><span class="lab">אנכיות</span><div class="ml"><div class="ml-m"><span class="m">\((2x-3)(x-5) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 1.5\ \text{או}\ x = 5\)</span></div><div class="ml-t">המונה <span class="m">\(4(x-1)(x-6)\)</span> לא מתאפס שם.</div></div></li>
+    <li><span class="lab">אופקית</span><div class="ml"><div class="ml-t">מעלות שוות (2 ו־2):</div><div class="ml-m"><span class="m">\(y = \dfrac{a_{n}}{b_{n}} = \dfrac{4}{2} = 2\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(x = 1.5,\ x = 5,\ y = 2\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-va">אסימפטוטה אנכית</a><a href="#t-ha">אסימפטוטה אופקית</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span>חיתוך עם הצירים</h3>
-    <div class="steps"><p>המונה מתאפס ב־<span class="m">\(x=1\)</span> וב־<span class="m">\(x=6\)</span>. <span class="m">\(f(0) = \dfrac{24}{15} = \dfrac85\)</span>.</p></div>
-    <p class="ans"><span class="m">\((1,0)\)</span>, <span class="m">\((6,0)\)</span>, <span class="m">\((0,\tfrac85)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>פונקציה רציונלית מתאפסת כשהמונה מתאפס (בתוך התחום).</p></div>
+    <ol class="st">
+    <li><span class="lab">ציר <span class="m">\(x\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(4(x-1)(x-6) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 1\ \text{או}\ x = 6\)</span></div></div></li>
+    <li><span class="lab">ציר <span class="m">\(y\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(f(0) = \dfrac{24}{15} = \dfrac{8}{5}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\((1,0),\ (6,0),\ (0,\tfrac85)\)</span></div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>נקודות קיצון</h3>
-    <div class="steps">
-      <p>כלל המנה, המונה של הנגזרת: <span class="m">\((8x-28)(2x^{2}-13x+15) - (4x^{2}-28x+24)(4x-13)\)</span>.</p>
-      <p>פותחים: <span class="m">\((16x^{3} - 160x^{2} + 484x - 420) - (16x^{3} - 164x^{2} + 460x - 312) = 4x^{2} + 24x - 108\)</span>.</p>
-      <p><span class="m">\(f'(x) = \dfrac{4(x+9)(x-3)}{(2x-3)^{2}(x-5)^{2}}\)</span>. המכנה חיובי, ולכן הסימן נקבע לפי המונה.</p>
-      <div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-9\)</td><td>\(-9\)</td><td>\(-9&lt;x&lt;1.5\)</td><td>\(1.5&lt;x&lt;3\)</td><td>\(3\)</td><td>\(3&lt;x&lt;5\)</td><td>\(x&gt;5\)</td></tr><tr><th>f′</th><td>+</td><td>0</td><td>−</td><td>−</td><td>0</td><td>+</td><td>+</td></tr><tr><th>f</th><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td><td class="up">↗</td></tr></table></div>
-      <p><span class="m">\(f(-9) = \dfrac{600}{294} = \dfrac{100}{49}\)</span>, <span class="m">\(f(3) = \dfrac{-24}{-6} = 4\)</span>.</p>
-      <p class="alt">ערך המינימום גדול מערך המקסימום. זה אפשרי כי הן נמצאות על ענפים שונים של הגרף, משני צדי האסימפטוטה.</p>
-    </div>
-    <p class="ans">מקסימום <span class="m">\((-9,\tfrac{100}{49})\)</span>, מינימום <span class="m">\((3,4)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מנה של שני פולינומים, ולכן כלל המנה. מכנה הנגזרת הוא ריבוע ולכן חיובי, והסימן נקבע לפי המונה בלבד. בטבלת הסימנים צריך להכניס גם את האסימפטוטות.</p></div>
+    <ol class="st">
+    <li><span class="lab">כלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^{2}}\)</span></div><div class="ml-t">מונה הנגזרת:</div><div class="ml-m"><span class="m">\((8x-28)(2x^{2}-13x+15) - (4x^{2}-28x+24)(4x-13)\)</span></div></div></li>
+    <li><span class="lab">פתיחה</span><div class="ml"><div class="ml-m"><span class="m">\(= (16x^{3} - 160x^{2} + 484x - 420) - (16x^{3} - 164x^{2} + 460x - 312)\)</span></div><div class="ml-m"><span class="m">\(= 4x^{2} + 24x - 108 = 4(x+9)(x-3)\)</span></div></div></li>
+    <li><span class="lab">הנגזרת</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{4(x+9)(x-3)}{(2x-3)^{2}(x-5)^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = -9\ \text{או}\ x = 3\)</span></div></div></li>
+    <li><span class="lab">טבלת סימנים</span><div class="ml"><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-9\)</td><td>\(-9\)</td><td>\(-9&lt;x&lt;1.5\)</td><td>\(1.5&lt;x&lt;3\)</td><td>\(3\)</td><td>\(3&lt;x&lt;5\)</td><td>\(x&gt;5\)</td></tr><tr><th>f′</th><td>+</td><td>0</td><td>−</td><td>−</td><td>0</td><td>+</td><td>+</td></tr><tr><th>f</th><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td><td class="up">↗</td></tr></table></div></div></li>
+    <li><span class="lab">ערכי הפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(-9) = \dfrac{4(-10)(-15)}{(-21)(-14)} = \dfrac{600}{294} = \dfrac{100}{49}\)</span></div><div class="ml-m"><span class="m">\(f(3) = \dfrac{4\cdot 2\cdot(-3)}{3\cdot(-2)} = 4\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\((-9,\ \tfrac{100}{49})\)</span></div><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((3,4)\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">ערך המינימום גדול מערך המקסימום. זה אפשרי, כי הנקודות על ענפים שונים של הגרף (משני צדי <span class="m">\(x = 1.5\)</span>) ✓</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-deriv">כלל המנה</a><a href="#t-extrema">נקודות קיצון</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span>תחומי עלייה וירידה</h3>
-    <div class="steps"><p>מטבלת הסימנים, ובלי הנקודות שאינן בתחום ההגדרה.</p></div>
-    <p class="ans">עולה: <span class="m">\(x&lt;-9\)</span>, <span class="m">\(3&lt;x&lt;5\)</span>, <span class="m">\(x&gt;5\)</span> · יורדת: <span class="m">\(-9&lt;x&lt;1.5\)</span>, <span class="m">\(1.5&lt;x&lt;3\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>קוראים את התחומים מטבלת הסימנים של סעיף ג, ומוציאים את הנקודות שאינן בתחום ההגדרה.</p></div>
+    <ol class="st">
+    <li><span class="lab">מטבלת הסימנים</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) &gt; 0:\ x &lt; -9,\ 3 &lt; x &lt; 5,\ x &gt; 5\)</span></div><div class="ml-m"><span class="m">\(f'(x) &lt; 0:\ -9 &lt; x &lt; 1.5,\ 1.5 &lt; x &lt; 3\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">עולה:</div><div class="ml-m"><span class="m">\(x &lt; -9,\ 3 &lt; x &lt; 5,\ x &gt; 5\)</span></div><div class="ml-t">יורדת:</div><div class="ml-m"><span class="m">\(-9 &lt; x &lt; 1.5,\ 1.5 &lt; x &lt; 3\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-monot">עלייה וירידה</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ה.</span>סקיצה של <span class="m">\(f\)</span></h3>
-    <p>שימו לב: משמאל הגרף חוצה את האסימפטוטה האופקית. <span class="m">\(f(x)=2 \Rightarrow 4x^{2}-28x+24 = 4x^{2}-26x+30 \Rightarrow x=-3\)</span>. אחר כך הוא עולה מעט מעליה (המקסימום <span class="m">\(\tfrac{100}{49}\approx2.04\)</span>) וחוזר אליה.</p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מסמנים אסימפטוטות, נקודות חיתוך וקיצון. כדאי לבדוק אם הגרף חוצה את האסימפטוטה האופקית: פותרים <span class="m">\(f(x) = 2\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">חיתוך עם <span class="m">\(y = 2\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{4x^{2} - 28x + 24}{2x^{2} - 13x + 15} = 2\)</span></div><div class="ml-m"><span class="m">\(4x^{2} - 28x + 24 = 4x^{2} - 26x + 30\)</span></div><div class="ml-m"><span class="m">\(x = -3\)</span></div></div></li>
+    <li><span class="lab">מהלך משמאל</span><div class="ml"><div class="ml-t">הגרף חוצה את <span class="m">\(y=2\)</span> ב־<span class="m">\(x=-3\)</span>, עולה מעט מעליה עד המקסימום, וחוזר אליה:</div><div class="ml-m"><span class="m">\(\tfrac{100}{49} \approx 2.04\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">הסקיצה בגרף שלמטה.</div></div></div>
     <figure class="graph"><img src="img/summer-calculus/r1f.png" alt="גרף f עם אסימפטוטות x=1.5, x=5, y=2"></figure>
   </div>
 
   <div class="part">
     <h3><span class="lt">ו.</span><span class="m">\(g(x) = f(x) - 2\)</span></h3>
-    <div class="steps"><p>הזזה של 2 יחידות למטה. האסימפטוטות האנכיות נשארות, האופקית עוברת ל־<span class="m">\(y=0\)</span>, הקיצון עובר ל־<span class="m">\((-9,\tfrac{2}{49})\)</span> ול־<span class="m">\((3,2)\)</span>, ונקודת החיתוך עם ציר <span class="m">\(y\)</span> היא <span class="m">\((0,-\tfrac25)\)</span>. החיתוך עם ציר <span class="m">\(x\)</span> הוא ב־<span class="m">\(x=-3\)</span>, הנקודה שבה <span class="m">\(f=2\)</span>.</p></div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p><span class="m">\(f(x) - 2\)</span> היא הזזה של 2 יחידות למטה: שיעורי <span class="m">\(x\)</span> לא משתנים, וכל ערך <span class="m">\(y\)</span> קטן ב־2. החיתוך החדש עם ציר <span class="m">\(x\)</span> הוא היכן ש־<span class="m">\(f = 2\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">הזזה</span><div class="ml"><div class="ml-m"><span class="m">\((x,\ y) \to (x,\ y - 2)\)</span></div></div></li>
+    <li><span class="lab">אסימפטוטות</span><div class="ml"><div class="ml-m"><span class="m">\(x = 1.5,\ x = 5,\ y = 0\)</span></div></div></li>
+    <li><span class="lab">קיצון</span><div class="ml"><div class="ml-m"><span class="m">\((-9,\ \tfrac{100}{49} - 2) = (-9,\ \tfrac{2}{49})\)</span></div><div class="ml-m"><span class="m">\((3,\ 4 - 2) = (3,2)\)</span></div></div></li>
+    <li><span class="lab">חיתוך</span><div class="ml"><div class="ml-m"><span class="m">\(g(0) = \tfrac85 - 2 = -\tfrac25\)</span></div><div class="ml-t">מסעיף ה:</div><div class="ml-m"><span class="m">\(g(x) = 0 \iff f(x) = 2 \iff x = -3\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">אסימפטוטות:</div><div class="ml-m"><span class="m">\(x = 1.5,\ x = 5,\ y = 0\)</span></div><div class="ml-t">קיצון:</div><div class="ml-m"><span class="m">\((-9,\ \tfrac{2}{49}),\ (3,2)\)</span></div><div class="ml-t">חיתוך:</div><div class="ml-m"><span class="m">\((0,-\tfrac25),\ (-3,0)\)</span></div></div></div>
     <figure class="graph"><img src="img/summer-calculus/r1g.png" alt="גרף g(x) = f(x) − 2"></figure>
     <p class="uses">שימוש ב: <a href="#t-trans">הזזה אנכית</a></p>
   </div>
@@ -645,56 +797,87 @@ figure.graph{max-width:560px;margin-top:4px}
 
   <div class="part">
     <h3><span class="lt">א.</span>תחום הגדרה</h3>
-    <div class="steps"><p><span class="m">\((x^{2}-1)^{2} = 0 \Leftrightarrow x = \pm1\)</span>.</p></div>
-    <p class="ans"><span class="m">\(x \neq \pm1\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>פונקציה רציונלית מוגדרת בכל מקום חוץ מהנקודות שבהן המכנה מתאפס. המכנה הוא ריבוע שלם.</p></div>
+    <ol class="st">
+    <li><span class="lab">המכנה</span><div class="ml"><div class="ml-m"><span class="m">\(x^{4} - 2x^{2} + 1 = (x^{2} - 1)^{2}\)</span></div><div class="ml-m"><span class="m">\((x^{2} - 1)^{2} = 0\)</span></div><div class="ml-m"><span class="m">\(x = \pm 1\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(x \neq \pm 1\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-domain">תחום הגדרה</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span>אסימפטוטות מקבילות לצירים</h3>
-    <div class="steps"><p>אנכיות: <span class="m">\(x=\pm1\)</span> (המונה <span class="m">\(2\neq0\)</span> שם). אופקית: המעלות שוות (4 ו־4), ולכן <span class="m">\(y = \dfrac21 = 2\)</span>.</p></div>
-    <p class="ans"><span class="m">\(x=1\)</span>, <span class="m">\(x=-1\)</span>, <span class="m">\(y=2\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>אנכיות: היכן שהמכנה מתאפס והמונה לא. אופקית: מעלות שוות, ולכן יחס המקדמים המובילים.</p></div>
+    <ol class="st">
+    <li><span class="lab">אנכיות</span><div class="ml"><div class="ml-m"><span class="m">\(x = \pm 1\)</span></div><div class="ml-t">המונה שם:</div><div class="ml-m"><span class="m">\(2\cdot 1 = 2 \neq 0\)</span></div></div></li>
+    <li><span class="lab">אופקית</span><div class="ml"><div class="ml-t">מעלות שוות (4 ו־4):</div><div class="ml-m"><span class="m">\(y = \dfrac{a_{n}}{b_{n}} = \dfrac{2}{1} = 2\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(x = 1,\ x = -1,\ y = 2\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-va">אסימפטוטה אנכית</a><a href="#t-ha">אסימפטוטה אופקית</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>חיתוך עם הצירים</h3>
-    <div class="steps"><p><span class="m">\(2x^{4} = 0 \Leftrightarrow x = 0\)</span>, ו־<span class="m">\(f(0)=0\)</span>.</p></div>
-    <p class="ans"><span class="m">\((0,0)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>המונה <span class="m">\(2x^{4}\)</span> מתאפס רק ב־<span class="m">\(x=0\)</span>, וזו גם נקודת החיתוך עם ציר <span class="m">\(y\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">חיתוך</span><div class="ml"><div class="ml-m"><span class="m">\(2x^{4} = 0\)</span></div><div class="ml-m"><span class="m">\(x = 0\)</span></div><div class="ml-m"><span class="m">\(f(0) = 0\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\((0,0)\)</span></div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span>נקודות קיצון</h3>
-    <div class="steps">
-      <p><span class="m">\(f'(x) = \dfrac{8x^{3}(x^{2}-1)^{2} - 2x^{4}\cdot2(x^{2}-1)\cdot2x}{(x^{2}-1)^{4}} = \dfrac{8x^{3}(x^{2}-1)\left[(x^{2}-1) - x^{2}\right]}{(x^{2}-1)^{4}} = \dfrac{-8x^{3}}{(x^{2}-1)^{3}}\)</span>.</p>
-      <p><span class="m">\(f'(x)=0 \Leftrightarrow x=0\)</span>. ליד 0 המכנה <span class="m">\((x^{2}-1)^{3}\)</span> שלילי, ולכן הנגזרת שלילית משמאל ל־0 וחיובית מימין.</p>
-    </div>
-    <p class="ans">מינימום <span class="m">\((0,0)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>כלל המנה, כשהמכנה בחזקה. מוציאים גורם משותף כדי לצמצם. כדי לקבוע את סוג הקיצון בודקים את סימן הנגזרת משני צדי <span class="m">\(x=0\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">כלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{8x^{3}(x^{2}-1)^{2} - 2x^{4}\cdot 2(x^{2}-1)\cdot 2x}{(x^{2}-1)^{4}}\)</span></div></div></li>
+    <li><span class="lab">צמצום</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{8x^{3}(x^{2}-1)\left[(x^{2}-1) - x^{2}\right]}{(x^{2}-1)^{4}} = \dfrac{-8x^{3}}{(x^{2}-1)^{3}}\)</span></div></div></li>
+    <li><span class="lab">השוואה ל־0</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 0\)</span></div></div></li>
+    <li><span class="lab">סימן ליד 0</span><div class="ml"><div class="ml-t">ליד 0 המכנה <span class="m">\((x^{2}-1)^{3}\)</span> שלילי:</div><div class="ml-m"><span class="m">\(x &lt; 0:\ f'(x) &lt; 0\)</span></div><div class="ml-m"><span class="m">\(x &gt; 0:\ f'(x) &gt; 0\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((0,0)\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">הפונקציה אינה שלילית (מונה ומכנה לא שליליים), ו־<span class="m">\(f(0)=0\)</span>, ולכן זה מינימום ✓</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-deriv">כלל המנה</a><a href="#t-extrema">נקודות קיצון</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ה.</span>תחומי עלייה וירידה</h3>
-    <div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-1\)</td><td>\(-1&lt;x&lt;0\)</td><td>\(0&lt;x&lt;1\)</td><td>\(x&gt;1\)</td></tr><tr><th>\(-8x^{3}\)</th><td>+</td><td>+</td><td>−</td><td>−</td></tr><tr><th>\((x^{2}-1)^{3}\)</th><td>+</td><td>−</td><td>−</td><td>+</td></tr><tr><th>f′</th><td>+</td><td>−</td><td>+</td><td>−</td></tr><tr><th>f</th><td class="up">↗</td><td class="down">↘</td><td class="up">↗</td><td class="down">↘</td></tr></table></div>
-    <p class="ans">עולה: <span class="m">\(x&lt;-1\)</span>, <span class="m">\(0&lt;x&lt;1\)</span> · יורדת: <span class="m">\(-1&lt;x&lt;0\)</span>, <span class="m">\(x&gt;1\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>הסימן של <span class="m">\(f'\)</span> נקבע לפי המונה <span class="m">\(-8x^{3}\)</span> והמכנה <span class="m">\((x^{2}-1)^{3}\)</span>. בונים טבלת סימנים עם הנקודות <span class="m">\(-1, 0, 1\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">טבלת סימנים</span><div class="ml"><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-1\)</td><td>\(-1&lt;x&lt;0\)</td><td>\(0&lt;x&lt;1\)</td><td>\(x&gt;1\)</td></tr><tr><th>\(-8x^{3}\)</th><td>+</td><td>+</td><td>−</td><td>−</td></tr><tr><th>\((x^{2}-1)^{3}\)</th><td>+</td><td>−</td><td>−</td><td>+</td></tr><tr><th>f′</th><td>+</td><td>−</td><td>+</td><td>−</td></tr><tr><th>f</th><td class="up">↗</td><td class="down">↘</td><td class="up">↗</td><td class="down">↘</td></tr></table></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">עולה:</div><div class="ml-m"><span class="m">\(x &lt; -1,\ 0 &lt; x &lt; 1\)</span></div><div class="ml-t">יורדת:</div><div class="ml-m"><span class="m">\(-1 &lt; x &lt; 0,\ x &gt; 1\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-monot">עלייה וירידה</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ו.</span>חיתוך עם האסימפטוטה האופקית</h3>
-    <div class="steps"><p><span class="m">\(\dfrac{2x^{4}}{(x^{2}-1)^{2}} = 2 \Rightarrow x^{4} = x^{4} - 2x^{2} + 1 \Rightarrow x^{2} = \dfrac12 \Rightarrow x = \pm\dfrac{1}{\sqrt2} = \pm\dfrac{\sqrt2}{2}\)</span>.</p></div>
-    <p class="ans"><span class="m">\(\left(\tfrac{\sqrt2}{2},2\right)\)</span>, <span class="m">\(\left(-\tfrac{\sqrt2}{2},2\right)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>נקודת חיתוך עם האסימפטוטה האופקית היא פתרון של <span class="m">\(f(x) = 2\)</span>. אחרי הכפלה במכנה החזקות <span class="m">\(x^{4}\)</span> מצטמצמות.</p></div>
+    <ol class="st">
+    <li><span class="lab">משוואה</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{2x^{4}}{(x^{2}-1)^{2}} = 2\)</span></div><div class="ml-m"><span class="m">\(x^{4} = x^{4} - 2x^{2} + 1\)</span></div><div class="ml-m"><span class="m">\(x^{2} = \dfrac{1}{2}\)</span></div><div class="ml-m"><span class="m">\(x = \pm\dfrac{1}{\sqrt2} = \pm\dfrac{\sqrt2}{2}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\left(\tfrac{\sqrt2}{2},\ 2\right),\ \left(-\tfrac{\sqrt2}{2},\ 2\right)\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(x^{2} = \tfrac12:\ f = \dfrac{2\cdot\tfrac14}{\left(-\tfrac12\right)^{2}} = \dfrac{\tfrac12}{\tfrac14} = 2\ \checkmark\)</span></div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ז.</span>סקיצה</h3>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מסמנים את האסימפטוטות, המינימום בראשית ונקודות החיתוך עם <span class="m">\(y = 2\)</span>. הפונקציה זוגית, ולכן הגרף סימטרי לציר <span class="m">\(y\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">אסימפטוטות</span><div class="ml"><div class="ml-m"><span class="m">\(x = \pm 1,\ y = 2\)</span></div></div></li>
+    <li><span class="lab">נקודות</span><div class="ml"><div class="ml-m"><span class="m">\((0,0),\ \left(\pm\tfrac{\sqrt2}{2},\ 2\right)\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">הסקיצה בגרף שלמטה.</div></div></div>
     <figure class="graph"><img src="img/summer-calculus/r2.png" alt="גרף f(x) = 2x⁴/(x²−1)²"></figure>
   </div>
 
   <div class="part">
     <h3><span class="lt">ח.</span><span class="m">\(g(x) = 2f(x) + c\)</span>, והאסימפטוטה האופקית של <span class="m">\(g\)</span> היא <span class="m">\(y=5\)</span></h3>
-    <div class="steps"><p>כאשר <span class="m">\(x\to\pm\infty\)</span>, <span class="m">\(f(x)\to2\)</span> ולכן <span class="m">\(g(x)\to 2\cdot2 + c = 4+c\)</span>. <span class="m">\(4+c = 5 \Rightarrow c=1\)</span>.</p></div>
-    <p class="ans"><span class="m">\(c=1\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>האסימפטוטה האופקית היא הגבול כש־<span class="m">\(x \to \pm\infty\)</span>. <span class="m">\(f\)</span> שואפת ל־2, ולכן <span class="m">\(g\)</span> שואפת ל־<span class="m">\(2\cdot 2 + c\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">גבול</span><div class="ml"><div class="ml-m"><span class="m">\(x \to \pm\infty:\ f(x) \to 2\)</span></div><div class="ml-m"><span class="m">\(g(x) \to 2\cdot 2 + c = 4 + c\)</span></div></div></li>
+    <li><span class="lab">משוואה</span><div class="ml"><div class="ml-m"><span class="m">\(4 + c = 5\)</span></div><div class="ml-m"><span class="m">\(c = 1\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(c = 1\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-trans">מתיחה והזזה</a></p>
   </div>
 </section>
@@ -709,50 +892,63 @@ figure.graph{max-width:560px;margin-top:4px}
 
   <div class="part">
     <h3><span class="lt">א.</span>הפרמטר</h3>
-    <div class="steps"><p><span class="m">\(f(0) = \dfrac{a}{-1} = 1 \Rightarrow a = -1\)</span>.</p></div>
-    <p class="ans"><span class="m">\(a=-1\)</span>, כלומר <span class="m">\(f(x) = \dfrac{2x-1}{x^{4}-1}\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>הנקודה <span class="m">\((0,1)\)</span> על הגרף, ולכן מציבים <span class="m">\(x=0\)</span> ומשווים ל־1.</p></div>
+    <ol class="st">
+    <li><span class="lab">הצבה</span><div class="ml"><div class="ml-m"><span class="m">\(f(0) = 1\)</span></div><div class="ml-m"><span class="m">\(\dfrac{2\cdot 0 + a}{0 - 1} = 1\)</span></div><div class="ml-m"><span class="m">\(-a = 1\)</span></div><div class="ml-m"><span class="m">\(a = -1\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(a = -1\)</span></div><div class="ml-m"><span class="m">\(f(x) = \dfrac{2x - 1}{x^{4} - 1}\)</span></div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span>תחום, חיתוך ואסימפטוטות</h3>
-    <div class="steps">
-      <p><strong>(1)</strong> <span class="m">\(x^{4} = 1 \Leftrightarrow x=\pm1\)</span>.</p>
-      <p><strong>(2)</strong> <span class="m">\(2x-1=0 \Rightarrow x=\tfrac12\)</span>, ו־<span class="m">\(f(0)=1\)</span>.</p>
-      <p><strong>(3)</strong> ב־<span class="m">\(x=\pm1\)</span> המונה שונה מ־0 (<span class="m">\(1\)</span> ו־<span class="m">\(-3\)</span>), ולכן אלה אסימפטוטות אנכיות.</p>
-    </div>
-    <p class="ans"><span class="m">\(x\neq\pm1\)</span> · <span class="m">\((\tfrac12,0)\)</span>, <span class="m">\((0,1)\)</span> · <span class="m">\(x=1\)</span>, <span class="m">\(x=-1\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>תחום: המכנה שונה מ־0. חיתוך: המונה שווה ל־0. אסימפטוטה אנכית: המכנה מתאפס והמונה לא.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): תחום</span><div class="ml"><div class="ml-m"><span class="m">\(x^{4} - 1 = 0\)</span></div><div class="ml-m"><span class="m">\(x = \pm 1\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): חיתוך</span><div class="ml"><div class="ml-m"><span class="m">\(2x - 1 = 0\)</span></div><div class="ml-m"><span class="m">\(x = \tfrac12\)</span></div><div class="ml-m"><span class="m">\(f(0) = 1\)</span></div></div></li>
+    <li><span class="lab">סעיף (3): אסימפטוטות</span><div class="ml"><div class="ml-t">המונה ב־<span class="m">\(x = \pm 1\)</span>:</div><div class="ml-m"><span class="m">\(2\cdot 1 - 1 = 1 \neq 0\)</span></div><div class="ml-m"><span class="m">\(2\cdot(-1) - 1 = -3 \neq 0\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(x \neq \pm 1\)</span></div><div class="ml-m"><span class="m">\((\tfrac12,0),\ (0,1)\)</span></div><div class="ml-m"><span class="m">\(x = 1,\ x = -1\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-domain">תחום הגדרה</a><a href="#t-int">חיתוך עם הצירים</a><a href="#t-va">אסימפטוטה אנכית</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span><span class="m">\(g(x) = -6x^{4} + 4x^{3} - 2\)</span></h3>
-    <div class="steps">
-      <p><strong>(1)</strong> <span class="m">\(g'(x) = -24x^{3} + 12x^{2} = -12x^{2}(2x-1)\)</span>, מתאפסת ב־<span class="m">\(x=0\)</span> וב־<span class="m">\(x=\tfrac12\)</span>.</p>
-      <div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;0\)</td><td>\(0\)</td><td>\(0&lt;x&lt;\tfrac12\)</td><td>\(\tfrac12\)</td><td>\(x&gt;\tfrac12\)</td></tr><tr><th>g′</th><td>+</td><td>0</td><td>+</td><td>0</td><td>−</td></tr><tr><th>g</th><td class="up">↗</td><td>אין קיצון</td><td class="up">↗</td><td>מקס'</td><td class="down">↘</td></tr></table></div>
-      <p><span class="m">\(g(\tfrac12) = -\tfrac{6}{16} + \tfrac{4}{8} - 2 = -\tfrac{15}{8}\)</span>. ב־<span class="m">\(x=0\)</span> הנגזרת לא מחליפה סימן, ולכן אין שם קיצון.</p>
-      <p><strong>(2) הוכחה ש־<span class="m">\(f\)</span> יורדת.</strong> כלל המנה:</p>
-      <p><span class="m">\(f'(x) = \dfrac{2(x^{4}-1) - (2x-1)\cdot4x^{3}}{(x^{4}-1)^{2}} = \dfrac{-6x^{4} + 4x^{3} - 2}{(x^{4}-1)^{2}} = \dfrac{g(x)}{(x^{4}-1)^{2}}\)</span>.</p>
-      <p>הערך הגדול ביותר של <span class="m">\(g\)</span> הוא <span class="m">\(-\tfrac{15}{8}\)</span> (המקסימום היחיד, ו־<span class="m">\(g\to-\infty\)</span> בשני הקצוות), ולכן <span class="m">\(g(x)&lt;0\)</span> לכל <span class="m">\(x\)</span>. המכנה חיובי, ולכן <span class="m">\(f'(x)&lt;0\)</span> בכל תחום ההגדרה, ו־<span class="m">\(f\)</span> יורדת בכל אחד מקטעי התחום.</p>
-    </div>
-    <p class="ans">מקסימום של g: <span class="m">\((\tfrac12,-\tfrac{15}{8})\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p><span class="m">\(g\)</span> היא בדיוק המונה של <span class="m">\(f'\)</span>. לכן מוצאים את הערך הגדול ביותר של <span class="m">\(g\)</span>: אם הוא שלילי, <span class="m">\(g\)</span> שלילית תמיד, ומכאן ש־<span class="m">\(f'\)</span> שלילית ו־<span class="m">\(f\)</span> יורדת.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): נגזרת של <span class="m">\(g\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(g'(x) = -24x^{3} + 12x^{2} = -12x^{2}(2x - 1)\)</span></div><div class="ml-m"><span class="m">\(g'(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 0\ \text{או}\ x = \tfrac12\)</span></div></div></li>
+    <li><span class="lab">טבלת סימנים</span><div class="ml"><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;0\)</td><td>\(0\)</td><td>\(0&lt;x&lt;\tfrac12\)</td><td>\(\tfrac12\)</td><td>\(x&gt;\tfrac12\)</td></tr><tr><th>g′</th><td>+</td><td>0</td><td>+</td><td>0</td><td>−</td></tr><tr><th>g</th><td class="up">↗</td><td>אין קיצון</td><td class="up">↗</td><td>מקס'</td><td class="down">↘</td></tr></table></div></div></li>
+    <li><span class="lab">ערך המקסימום</span><div class="ml"><div class="ml-m"><span class="m">\(g(\tfrac12) = -\tfrac{6}{16} + \tfrac{4}{8} - 2 = -\tfrac{15}{8}\)</span></div><div class="ml-t">ב־<span class="m">\(x=0\)</span> הנגזרת לא מחליפה סימן, ולכן אין שם קיצון.</div></div></li>
+    <li><span class="lab">סעיף (2): כלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{2(x^{4}-1) - (2x-1)\cdot 4x^{3}}{(x^{4}-1)^{2}} = \dfrac{-6x^{4} + 4x^{3} - 2}{(x^{4}-1)^{2}} = \dfrac{g(x)}{(x^{4}-1)^{2}}\)</span></div></div></li>
+    <li><span class="lab">סימן</span><div class="ml"><div class="ml-t">המקסימום היחיד של <span class="m">\(g\)</span> הוא <span class="m">\(-\tfrac{15}{8}\)</span>, ו־<span class="m">\(g \to -\infty\)</span> בשני הקצוות:</div><div class="ml-m"><span class="m">\(g(x) \le -\tfrac{15}{8} &lt; 0\)</span></div><div class="ml-m"><span class="m">\((x^{4}-1)^{2} &gt; 0\)</span></div><div class="ml-m"><span class="m">\(f'(x) &lt; 0\)</span></div><div class="ml-t">ולכן <span class="m">\(f\)</span> יורדת בכל אחד מקטעי התחום.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">מקסימום של <span class="m">\(g\)</span>:</div><div class="ml-m"><span class="m">\((\tfrac12,\ -\tfrac{15}{8})\)</span></div><div class="ml-t">הוכחנו ש־<span class="m">\(f\)</span> יורדת בכל תחום הגדרתה.</div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(f'(0) = \dfrac{g(0)}{1} = -2 &lt; 0\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-extrema">נקודות קיצון</a><a href="#t-deriv">כלל המנה</a><a href="#t-monot">עלייה וירידה</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span>סקיצה</h3>
-    <p>אסימפטוטות אנכיות <span class="m">\(x=\pm1\)</span>, ואסימפטוטה אופקית <span class="m">\(y=0\)</span> (מעלת המונה קטנה ממעלת המכנה). בכל אחד משלושת הענפים הגרף יורד.</p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מסמנים אסימפטוטות ונקודות חיתוך. מעלת המונה קטנה ממעלת המכנה, ולכן האסימפטוטה האופקית היא <span class="m">\(y = 0\)</span>. מסעיף ג הגרף יורד בכל ענף.</p></div>
+    <ol class="st">
+    <li><span class="lab">אסימפטוטות</span><div class="ml"><div class="ml-m"><span class="m">\(x = \pm 1,\ y = 0\)</span></div></div></li>
+    <li><span class="lab">נקודות</span><div class="ml"><div class="ml-m"><span class="m">\((\tfrac12,0),\ (0,1)\)</span></div></div></li>
+    <li><span class="lab">מהלך</span><div class="ml"><div class="ml-t">בכל אחד משלושת הענפים הגרף יורד.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">הסקיצה בגרף שלמטה.</div></div></div>
     <figure class="graph"><img src="img/summer-calculus/r3.png" alt="גרף f(x) = (2x−1)/(x⁴−1)"></figure>
     <p class="uses">שימוש ב: <a href="#t-ha">אסימפטוטה אופקית</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ה.</span><span class="m">\(h'(x) = f(x)\)</span></h3>
-    <div class="steps">
-      <p>הסימן של <span class="m">\(f\)</span> קובע היכן <span class="m">\(h\)</span> עולה. סימן המונה <span class="m">\(2x-1\)</span> וסימן המכנה <span class="m">\(x^{4}-1\)</span>:</p>
-      <div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-1\)</td><td>\(-1&lt;x&lt;\tfrac12\)</td><td>\(\tfrac12\)</td><td>\(\tfrac12&lt;x&lt;1\)</td><td>\(x&gt;1\)</td></tr><tr><th>\(2x-1\)</th><td>−</td><td>−</td><td>0</td><td>+</td><td>+</td></tr><tr><th>\(x^{4}-1\)</th><td>+</td><td>−</td><td>−</td><td>−</td><td>+</td></tr><tr><th>h′ = f</th><td>−</td><td>+</td><td>0</td><td>−</td><td>+</td></tr><tr><th>h</th><td class="down">↘</td><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td class="up">↗</td></tr></table></div>
-      <p><strong>(1)</strong> בתוך התחום, <span class="m">\(h'\)</span> מתאפסת ומחליפה סימן רק ב־<span class="m">\(x=\tfrac12\)</span>, מ־+ ל־−.</p>
-    </div>
-    <p class="ans">(1) מקסימום ב־<span class="m">\(x=\tfrac12\)</span> · (2) עולה: <span class="m">\(-1&lt;x&lt;\tfrac12\)</span>, <span class="m">\(x&gt;1\)</span> · יורדת: <span class="m">\(x&lt;-1\)</span>, <span class="m">\(\tfrac12&lt;x&lt;1\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>נתון ש־<span class="m">\(f\)</span> היא הנגזרת של <span class="m">\(h\)</span>. לכן הסימן של <span class="m">\(f\)</span> קובע היכן <span class="m">\(h\)</span> עולה ויורדת, ומעבר של <span class="m">\(f\)</span> מ־<span class="m">\(+\)</span> ל־<span class="m">\(-\)</span> הוא מקסימום של <span class="m">\(h\)</span>. את הסימן של <span class="m">\(f\)</span> מוצאים מסימני המונה והמכנה.</p></div>
+    <ol class="st">
+    <li><span class="lab">טבלת סימנים</span><div class="ml"><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-1\)</td><td>\(-1&lt;x&lt;\tfrac12\)</td><td>\(\tfrac12\)</td><td>\(\tfrac12&lt;x&lt;1\)</td><td>\(x&gt;1\)</td></tr><tr><th>\(2x-1\)</th><td>−</td><td>−</td><td>0</td><td>+</td><td>+</td></tr><tr><th>\(x^{4}-1\)</th><td>+</td><td>−</td><td>−</td><td>−</td><td>+</td></tr><tr><th>h′ = f</th><td>−</td><td>+</td><td>0</td><td>−</td><td>+</td></tr><tr><th>h</th><td class="down">↘</td><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td class="up">↗</td></tr></table></div></div></li>
+    <li><span class="lab">סעיף (1): קיצון</span><div class="ml"><div class="ml-t">בתוך התחום, <span class="m">\(h' = f\)</span> מתאפסת ומחליפה סימן רק ב־<span class="m">\(x = \tfrac12\)</span>, מ־<span class="m">\(+\)</span> ל־<span class="m">\(-\)</span>.</div></div></li>
+    <li><span class="lab">סעיף (2): תחומים</span><div class="ml"><div class="ml-m"><span class="m">\(h'(x) &gt; 0:\ -1 &lt; x &lt; \tfrac12,\ x &gt; 1\)</span></div><div class="ml-m"><span class="m">\(h'(x) &lt; 0:\ x &lt; -1,\ \tfrac12 &lt; x &lt; 1\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">(1) מקסימום ב־<span class="m">\(x = \tfrac12\)</span></div><div class="ml-t">(2) עולה:</div><div class="ml-m"><span class="m">\(-1 &lt; x &lt; \tfrac12,\ x &gt; 1\)</span></div><div class="ml-t">יורדת:</div><div class="ml-m"><span class="m">\(x &lt; -1,\ \tfrac12 &lt; x &lt; 1\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(h'(0) = f(0) = 1 &gt; 0\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-monot">h′ = f</a></p>
   </div>
 </section>
@@ -767,39 +963,43 @@ figure.graph{max-width:560px;margin-top:4px}
 
   <div class="part">
     <h3><span class="lt">א.</span>בעזרת <span class="m">\(n\)</span></h3>
-    <div class="steps">
-      <p><strong>(1)</strong> המכנה מתאפס ב־<span class="m">\(x=1\)</span> וב־<span class="m">\(x=9\)</span>.</p>
-      <p><strong>(2)</strong> אנכיות: <span class="m">\(x=1\)</span>, <span class="m">\(x=9\)</span> (המונה <span class="m">\(-9n\)</span> ו־<span class="m">\(-n\)</span>, שונה מ־0). אופקית: מעלת המונה 1 קטנה ממעלת המכנה 2, ולכן <span class="m">\(y=0\)</span>.</p>
-      <p><strong>(3)</strong> <span class="m">\(f(x)=0 \Leftrightarrow x=10\)</span>. <span class="m">\(f(0) = \dfrac{-10n}{25-16} = -\dfrac{10n}{9}\)</span>.</p>
-      <p><strong>(4)</strong> חיתוך עם האסימפטוטה <span class="m">\(y=0\)</span> הוא בדיוק חיתוך עם ציר <span class="m">\(x\)</span>. המונה מתאפס רק ב־<span class="m">\(x=10\)</span>, ולכן יש נקודת חיתוך אחת בלבד.</p>
-    </div>
-    <p class="ans"><span class="m">\(x\neq1,9\)</span> · <span class="m">\(x=1\)</span>, <span class="m">\(x=9\)</span>, <span class="m">\(y=0\)</span> · <span class="m">\((10,0)\)</span>, <span class="m">\((0,-\tfrac{10n}{9})\)</span> · חיתוך עם האסימפטוטה: <span class="m">\((10,0)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מפרקים את המכנה כהפרש ריבועים, <span class="m">\((x-5)^{2} - 4^{2}\)</span>, ואז קוראים ממנו את התחום והאסימפטוטות האנכיות. מעלת המונה קטנה ממעלת המכנה, ולכן האסימפטוטה האופקית היא <span class="m">\(y=0\)</span>. חיתוך עם <span class="m">\(y=0\)</span> הוא בדיוק חיתוך עם ציר <span class="m">\(x\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">פירוק המכנה</span><div class="ml"><div class="ml-m"><span class="m">\(a^{2} - b^{2} = (a-b)(a+b)\)</span></div><div class="ml-m"><span class="m">\((x-5)^{2} - 16 = (x-5-4)(x-5+4) = (x-9)(x-1)\)</span></div></div></li>
+    <li><span class="lab">סעיף (1): תחום</span><div class="ml"><div class="ml-m"><span class="m">\(x \neq 1,\ x \neq 9\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): אסימפטוטות</span><div class="ml"><div class="ml-t">המונה ב־<span class="m">\(x=1\)</span> וב־<span class="m">\(x=9\)</span>:</div><div class="ml-m"><span class="m">\(n(1-10) = -9n \neq 0\)</span></div><div class="ml-m"><span class="m">\(n(9-10) = -n \neq 0\)</span></div><div class="ml-t">אנכיות:</div><div class="ml-m"><span class="m">\(x = 1,\ x = 9\)</span></div><div class="ml-t">מעלה 1 במונה, 2 במכנה:</div><div class="ml-m"><span class="m">\(y = 0\)</span></div></div></li>
+    <li><span class="lab">סעיף (3): חיתוך</span><div class="ml"><div class="ml-m"><span class="m">\(n(x - 10) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 10\)</span></div><div class="ml-m"><span class="m">\(f(0) = \dfrac{-10n}{25 - 16} = -\dfrac{10n}{9}\)</span></div></div></li>
+    <li><span class="lab">סעיף (4): חיתוך עם <span class="m">\(y = 0\)</span></span><div class="ml"><div class="ml-t">זה החיתוך עם ציר <span class="m">\(x\)</span>, ויש נקודה אחת בלבד:</div><div class="ml-m"><span class="m">\((10,0)\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(x \neq 1,\ 9\)</span></div><div class="ml-m"><span class="m">\(x = 1,\ x = 9,\ y = 0\)</span></div><div class="ml-m"><span class="m">\((10,0),\ (0,-\tfrac{10n}{9})\)</span></div><div class="ml-t">חיתוך עם האסימפטוטה:</div><div class="ml-m"><span class="m">\((10,0)\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-domain">תחום הגדרה</a><a href="#t-va">אסימפטוטה אנכית</a><a href="#t-ha">אסימפטוטה אופקית</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span><span class="m">\(g(x) = \dfrac{(x-b)\cdot f(x)}{x-b}\)</span>, <span class="m">\(b&gt;0\)</span></h3>
     <p class="alt"><strong>השלמה:</strong> בקובץ נעלם שם הפרמטר <span class="m">\(b\)</span> בתנאי "<span class="m">\(&gt;0\)</span>".</p>
-    <div class="steps">
-      <p><span class="m">\(g\)</span> שווה ל־<span class="m">\(f\)</span> בכל מקום, חוץ מ־<span class="m">\(x=b\)</span> שבו היא לא מוגדרת. שם נוצר "חור" בגרף.</p>
-      <p><strong>(1)</strong> ל־<span class="m">\(f\)</span> יש נקודת חיתוך אחת עם <span class="m">\(y=0\)</span>, והיא <span class="m">\((10,0)\)</span>. כדי שלגרף של <span class="m">\(g\)</span> לא תהיה נקודת חיתוך עם האסימפטוטה, צריך להוציא בדיוק את הנקודה הזו: <span class="m">\(b=10\)</span>.</p>
-      <p><strong>(2)</strong> <span class="m">\(g(5) = f(5) = \dfrac{n(-5)}{0-16} = \dfrac{5n}{16} = 5 \Rightarrow n = 16\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(b=10\)</span>, <span class="m">\(n=16\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p><span class="m">\(g\)</span> שווה ל־<span class="m">\(f\)</span> בכל מקום חוץ מ־<span class="m">\(x=b\)</span>, שבו היא לא מוגדרת ("חור" בגרף). כדי שלא יהיה חיתוך עם האסימפטוטה צריך שהחור ייפול בדיוק על נקודת החיתוך היחידה.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): הוצאת הנקודה</span><div class="ml"><div class="ml-t">נקודת החיתוך היחידה של <span class="m">\(f\)</span> עם <span class="m">\(y=0\)</span> היא <span class="m">\((10,0)\)</span>:</div><div class="ml-m"><span class="m">\(b = 10\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): הצבה</span><div class="ml"><div class="ml-m"><span class="m">\(g(5) = f(5) = \dfrac{n(5-10)}{(5-5)^{2} - 16} = \dfrac{-5n}{-16} = \dfrac{5n}{16}\)</span></div><div class="ml-m"><span class="m">\(\dfrac{5n}{16} = 5\)</span></div><div class="ml-m"><span class="m">\(n = 16\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(b = 10,\ n = 16\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(n = 16 &gt; 0,\ b = 10 &gt; 0\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-va">נקודת אי־רציפות ("חור")</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span><span class="m">\(g(x) = \dfrac{16(x-10)}{(x-1)(x-9)}\)</span>, <span class="m">\(x\neq10\)</span></h3>
-    <div class="steps">
-      <p><strong>(1)</strong> כלל המנה, עם מכנה <span class="m">\(x^{2}-10x+9\)</span>:</p>
-      <p><span class="m">\(g'(x) = 16\cdot\dfrac{(x^{2}-10x+9) - (x-10)(2x-10)}{(x-1)^{2}(x-9)^{2}} = \dfrac{16(-x^{2}+20x-91)}{(x-1)^{2}(x-9)^{2}} = \dfrac{-16(x-7)(x-13)}{(x-1)^{2}(x-9)^{2}}\)</span>.</p>
-      <p><span class="m">\(g'\)</span> חיובית בין 7 ל־13 (חוץ מהנקודות שמחוץ לתחום) ושלילית מחוץ לקטע הזה.</p>
-      <p><span class="m">\(g(7) = \dfrac{16(-3)}{6\cdot(-2)} = 4\)</span> (מעבר מ־− ל־+, מינימום). <span class="m">\(g(13) = \dfrac{16\cdot3}{12\cdot4} = 1\)</span> (מעבר מ־+ ל־−, מקסימום).</p>
-      <p><strong>(2)</strong> בסקיצה מסמנים עיגול ריק ב־<span class="m">\((10,0)\)</span>, הנקודה שהוצאה.</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>גוזרים בכלל המנה. מכנה הנגזרת חיובי, ולכן הסימן נקבע לפי המונה, שהוא פרבולה "בוכה". בסקיצה מסמנים עיגול ריק בנקודה שהוצאה.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): כלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^{2}}\)</span></div><div class="ml-m"><span class="m">\(v = (x-1)(x-9) = x^{2} - 10x + 9\)</span></div><div class="ml-m"><span class="m">\(g'(x) = 16\cdot\dfrac{(x^{2} - 10x + 9) - (x-10)(2x-10)}{(x-1)^{2}(x-9)^{2}}\)</span></div><div class="ml-m"><span class="m">\(g'(x) = \dfrac{16(-x^{2} + 20x - 91)}{(x-1)^{2}(x-9)^{2}} = \dfrac{-16(x-7)(x-13)}{(x-1)^{2}(x-9)^{2}}\)</span></div></div></li>
+    <li><span class="lab">סימן</span><div class="ml"><div class="ml-m"><span class="m">\(g'(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 7\ \text{או}\ x = 13\)</span></div><div class="ml-t"><span class="m">\(g'\)</span> חיובית בין 7 ל־13 ושלילית מחוץ לקטע הזה.</div></div></li>
+    <li><span class="lab">ערכי הקיצון</span><div class="ml"><div class="ml-m"><span class="m">\(g(7) = \dfrac{16(7-10)}{(7-1)(7-9)} = \dfrac{-48}{-12} = 4\)</span></div><div class="ml-t">מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span>: מינימום.</div><div class="ml-m"><span class="m">\(g(13) = \dfrac{16(13-10)}{(13-1)(13-9)} = \dfrac{48}{48} = 1\)</span></div><div class="ml-t">מ־<span class="m">\(+\)</span> ל־<span class="m">\(-\)</span>: מקסימום.</div></div></li>
+    <li><span class="lab">סעיף (2): סקיצה</span><div class="ml"><div class="ml-t">עיגול ריק בנקודה:</div><div class="ml-m"><span class="m">\((10,0)\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((7,4)\)</span></div><div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\((13,1)\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">המינימום בענף <span class="m">\(1 &lt; x &lt; 9\)</span> והמקסימום בענף <span class="m">\(x &gt; 9\)</span>, ולכן אין סתירה בכך ש־<span class="m">\(4 &gt; 1\)</span> ✓</div></div></div>
     <figure class="graph"><img src="img/summer-calculus/r4.png" alt="גרף g עם חור בנקודה (10,0)"></figure>
-    <p class="ans">מינימום <span class="m">\((7,4)\)</span>, מקסימום <span class="m">\((13,1)\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-deriv">כלל המנה</a><a href="#t-extrema">נקודות קיצון</a></p>
   </div>
 </section>
@@ -815,46 +1015,53 @@ figure.graph{max-width:560px;margin-top:4px}
   <div class="part">
     <h3><span class="lt">א.</span>שתי האפשרויות ל־<span class="m">\(k\)</span></h3>
     <p class="alt"><strong>השלמה:</strong> בקובץ נעלם שם הפרמטר <span class="m">\(k\)</span>.</p>
-    <div class="steps">
-      <p>אם <span class="m">\(k\)</span> שונה מ־7, 11 ו־13, הישר <span class="m">\(x=k\)</span> הוא אסימפטוטה אנכית נוספת, בסתירה לנתון. לכן בודקים שלושה מקרים:</p>
-      <p>• <span class="m">\(k=13\)</span>: אין אסימפטוטה נוספת, אבל המונה מתאפס גם ב־11 וגם ב־7, כלומר שתי נקודות חיתוך. לא מתאים.</p>
-      <p>• <span class="m">\(k=7\)</span>: הגורם <span class="m">\((x-7)\)</span> מצטמצם (חור ב־<span class="m">\(x=7\)</span>), ונשאר אפס יחיד ב־<span class="m">\(x=11\)</span>. מתאים.</p>
-      <p>• <span class="m">\(k=11\)</span>: גורם אחד <span class="m">\((x-11)\)</span> מצטמצם, ו־<span class="m">\(x=11\)</span> מחוץ לתחום, ולכן נשאר אפס יחיד ב־<span class="m">\(x=7\)</span>. מתאים.</p>
-    </div>
-    <p class="ans"><span class="m">\(k=7\)</span> או <span class="m">\(k=11\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>אם <span class="m">\(k\)</span> אינו אחד משורשי המונה, <span class="m">\(x = k\)</span> הוא אסימפטוטה נוספת, בסתירה לנתון. לכן <span class="m">\(k\)</span> הוא 13 (אותה אסימפטוטה) או אחד משורשי המונה (7 או 11), ובודקים כל מקרה לפי מספר נקודות החיתוך.</p></div>
+    <ol class="st">
+    <li><span class="lab">מקרה <span class="m">\(k = 13\)</span></span><div class="ml"><div class="ml-t">אין אסימפטוטה נוספת, אבל המונה מתאפס ב־11 וב־7: שתי נקודות חיתוך. לא מתאים.</div></div></li>
+    <li><span class="lab">מקרה <span class="m">\(k = 7\)</span></span><div class="ml"><div class="ml-t">הגורם <span class="m">\((x-7)\)</span> מצטמצם (חור ב־<span class="m">\(x=7\)</span>), ונשאר אפס יחיד:</div><div class="ml-m"><span class="m">\(x = 11\)</span></div><div class="ml-t">מתאים.</div></div></li>
+    <li><span class="lab">מקרה <span class="m">\(k = 11\)</span></span><div class="ml"><div class="ml-t">גורם אחד <span class="m">\((x-11)\)</span> מצטמצם, ו־<span class="m">\(x=11\)</span> מחוץ לתחום. נשאר אפס יחיד:</div><div class="ml-m"><span class="m">\(x = 7\)</span></div><div class="ml-t">מתאים.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(k = 7\ \text{או}\ k = 11\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-va">אסימפטוטה אנכית ו"חור"</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span><span class="m">\(k=7\)</span></h3>
-    <div class="steps">
-      <p><strong>(1)</strong> המכנה <span class="m">\((x-13)^{2}(x-7)\)</span> מתאפס ב־7 וב־13. אחרי צמצום: <span class="m">\(f(x) = \dfrac{n(x-11)^{2}}{(x-13)^{2}}\)</span>, <span class="m">\(x\neq7\)</span>.</p>
-      <p><strong>(2)</strong> <span class="m">\(f'(x) = n\cdot\dfrac{2(x-11)(x-13)^{2} - (x-11)^{2}\cdot2(x-13)}{(x-13)^{4}} = \dfrac{2n(x-11)\left[(x-13)-(x-11)\right]}{(x-13)^{3}} = \dfrac{-4n(x-11)}{(x-13)^{3}}\)</span>.</p>
-      <p>מתאפסת ב־<span class="m">\(x=11\)</span>. משמאל ל־11 (למשל <span class="m">\(x=10\)</span>) הנגזרת שלילית, ומימין (למשל <span class="m">\(x=12\)</span>) חיובית, ולכן זה מינימום. גם בלי חישוב: <span class="m">\(f\ge0\)</span> ו־<span class="m">\(f(11)=0\)</span>.</p>
-      <p><strong>(3)</strong> <span class="m">\((11,0)\)</span>, ו־<span class="m">\(f(0) = \dfrac{121n}{169}\)</span>.</p>
-      <p><strong>(4)</strong> המעלות במונה ובמכנה שוות, ולכן <span class="m">\(y = \dfrac{n}{1} = n\)</span>.</p>
-      <p><strong>(5)</strong> בסקיצה מסמנים חור ב־<span class="m">\(x=7\)</span>: <span class="m">\(\left(7,\ \tfrac{16n}{36}\right) = \left(7,\ \tfrac{4n}{9}\right)\)</span>. הגרף מצויר עבור <span class="m">\(n=3\)</span> (מסעיף ג).</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>אחרי צמצום הגורם <span class="m">\((x-7)\)</span> נשארת פונקציה פשוטה יותר, אבל <span class="m">\(x=7\)</span> נשאר מחוץ לתחום (חור). גוזרים בכלל המנה, ומוציאים גורם משותף.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): תחום וצמצום</span><div class="ml"><div class="ml-m"><span class="m">\(x \neq 7,\ x \neq 13\)</span></div><div class="ml-m"><span class="m">\(f(x) = \dfrac{n(x-11)^{2}}{(x-13)^{2}},\ x \neq 7\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): כלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = n\cdot\dfrac{2(x-11)(x-13)^{2} - (x-11)^{2}\cdot 2(x-13)}{(x-13)^{4}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{2n(x-11)\left[(x-13) - (x-11)\right]}{(x-13)^{3}} = \dfrac{-4n(x-11)}{(x-13)^{3}}\)</span></div></div></li>
+    <li><span class="lab">סוג הקיצון</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 11\)</span></div><div class="ml-m"><span class="m">\(f'(10) = \dfrac{-4n\cdot(-1)}{(-3)^{3}} &lt; 0\)</span></div><div class="ml-m"><span class="m">\(f'(12) = \dfrac{-4n\cdot 1}{(-1)^{3}} &gt; 0\)</span></div><div class="ml-t">מינימום.</div></div></li>
+    <li><span class="lab">סעיף (3): חיתוך</span><div class="ml"><div class="ml-m"><span class="m">\((11,0)\)</span></div><div class="ml-m"><span class="m">\(f(0) = \dfrac{n\cdot 121}{169} = \dfrac{121n}{169}\)</span></div></div></li>
+    <li><span class="lab">סעיף (4): אסימפטוטה אופקית</span><div class="ml"><div class="ml-t">מעלות שוות:</div><div class="ml-m"><span class="m">\(y = \dfrac{a_{n}}{b_{n}} = \dfrac{n}{1} = n\)</span></div></div></li>
+    <li><span class="lab">סעיף (5): החור</span><div class="ml"><div class="ml-m"><span class="m">\(f(7) = \dfrac{n(7-11)^{2}}{(7-13)^{2}} = \dfrac{16n}{36} = \dfrac{4n}{9}\)</span></div><div class="ml-m"><span class="m">\(\left(7,\ \tfrac{4n}{9}\right)\)</span></div><div class="ml-t">הגרף מצויר עבור <span class="m">\(n = 3\)</span> (מסעיף ג).</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(x \neq 7,\ 13\)</span></div><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((11,0)\)</span></div><div class="ml-t">חיתוך:</div><div class="ml-m"><span class="m">\((11,0),\ (0,\tfrac{121n}{169})\)</span></div><div class="ml-t">אסימפטוטה אופקית:</div><div class="ml-m"><span class="m">\(y = n\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t"><span class="m">\(f \ge 0\)</span> (ריבוע חלקי ריבוע) ו־<span class="m">\(f(11) = 0\)</span>, ולכן זה אכן מינימום ✓</div></div></div>
     <figure class="graph"><img src="img/summer-calculus/r5f.png" alt="גרף f עבור n=3 ו־k=7, עם חור ב־x=7"></figure>
-    <p class="ans"><span class="m">\(x\neq7,13\)</span> · מינימום <span class="m">\((11,0)\)</span> · <span class="m">\((11,0)\)</span>, <span class="m">\((0,\tfrac{121n}{169})\)</span> · <span class="m">\(y=n\)</span></p>
     <p class="uses">שימוש ב: <a href="#t-deriv">כלל המנה</a><a href="#t-extrema">נקודות קיצון</a><a href="#t-ha">אסימפטוטה אופקית</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>הנקודה <span class="m">\((0,\tfrac{363}{169})\)</span> על הגרף</h3>
-    <div class="steps"><p><span class="m">\(\dfrac{121n}{169} = \dfrac{363}{169} \Rightarrow n = 3\)</span>.</p></div>
-    <p class="ans"><span class="m">\(n=3\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מסעיף ב יודעים ש־<span class="m">\(f(0) = \tfrac{121n}{169}\)</span>. משווים לערך הנתון.</p></div>
+    <ol class="st">
+    <li><span class="lab">הצבה</span><div class="ml"><div class="ml-m"><span class="m">\(f(0) = \dfrac{363}{169}\)</span></div><div class="ml-m"><span class="m">\(\dfrac{121n}{169} = \dfrac{363}{169}\)</span></div><div class="ml-m"><span class="m">\(n = 3\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(n = 3\)</span></div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span><span class="m">\(g(x) = f(x)\cdot(x-13)^{2}\)</span></h3>
-    <div class="steps">
-      <p><strong>(1)</strong> <span class="m">\(g(x) = 3(x-11)^{2}\)</span>, אבל בתחום של <span class="m">\(f\)</span> בלבד, כלומר <span class="m">\(x\neq7,13\)</span>. זו פרבולה עם קדקוד <span class="m">\((11,0)\)</span> ועם שני חורים: <span class="m">\((7,48)\)</span> ו־<span class="m">\((13,12)\)</span>.</p>
-      <p><strong>(2)</strong> עבור <span class="m">\(L&lt;0\)</span> אין חיתוך. עבור <span class="m">\(L=0\)</span> יש נקודה אחת, הקדקוד. עבור <span class="m">\(L&gt;0\)</span> הישר חותך את הפרבולה בשתי נקודות, <span class="m">\(x = 11\pm\sqrt{L/3}\)</span>, אלא אם אחת מהן היא חור:</p>
-      <p><span class="m">\(L=48\)</span>: הנקודות <span class="m">\(x=7\)</span> (חור) ו־<span class="m">\(x=15\)</span>, ולכן נשארת אחת. <span class="m">\(L=12\)</span>: הנקודות <span class="m">\(x=13\)</span> (חור) ו־<span class="m">\(x=9\)</span>, ולכן נשארת אחת.</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>הכפל ב־<span class="m">\((x-13)^{2}\)</span> מבטל את המכנה, אבל התחום של <span class="m">\(f\)</span> נשאר: מקבלים פרבולה עם שני חורים. ישר אופקי <span class="m">\(y = L\)</span> חותך פרבולה "מחייכת" בשתי נקודות מעל הקדקוד, ולכן מחפשים את הערכים שבהם אחת הנקודות נופלת בחור, ואת הקדקוד.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): הפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(g(x) = 3(x-11)^{2},\ x \neq 7,\ 13\)</span></div><div class="ml-t">קדקוד:</div><div class="ml-m"><span class="m">\((11,0)\)</span></div><div class="ml-t">חורים:</div><div class="ml-m"><span class="m">\(g(7) = 3\cdot 16 = 48\)</span></div><div class="ml-m"><span class="m">\(g(13) = 3\cdot 4 = 12\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): חיתוך עם <span class="m">\(y = L\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(3(x-11)^{2} = L\)</span></div><div class="ml-m"><span class="m">\(x = 11 \pm \sqrt{\tfrac{L}{3}}\)</span></div><div class="ml-t">עבור <span class="m">\(L&lt;0\)</span> אין חיתוך, עבור <span class="m">\(L=0\)</span> נקודה אחת (הקדקוד), ועבור <span class="m">\(L&gt;0\)</span> שתי נקודות, חוץ מאשר כשאחת מהן חור.</div></div></li>
+    <li><span class="lab">החורים</span><div class="ml"><div class="ml-m"><span class="m">\(L = 48:\ x = 7\ (\text{חור}),\ x = 15\)</span></div><div class="ml-m"><span class="m">\(L = 12:\ x = 13\ (\text{חור}),\ x = 9\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(L = 0,\ L = 12,\ L = 48\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(g(15) = 3\cdot 16 = 48,\ g(9) = 3\cdot 4 = 12\ \checkmark\)</span></div></div></div>
     <figure class="graph"><img src="img/summer-calculus/r5g.png" alt="הפרבולה g(x) = 3(x−11)² עם חורים ב־(7,48) וב־(13,12)"></figure>
-    <p class="ans"><span class="m">\(L=0\)</span>, <span class="m">\(L=12\)</span>, <span class="m">\(L=48\)</span></p>
   </div>
 </section>
 
@@ -868,55 +1075,68 @@ figure.graph{max-width:560px;margin-top:4px}
 
   <div class="part">
     <h3><span class="lt">א.</span>הפרמטרים</h3>
-    <div class="steps">
-      <p>המכנה: <span class="m">\(x^{3}(x^{2}-4) = x^{3}(x-2)(x+2)\)</span>, ומתאפס ב־<span class="m">\(0,\ 2,\ -2\)</span>.</p>
-      <p>ב־<span class="m">\(x=0\)</span> לא יכול להיות חור: צריך לצמצם <span class="m">\(x^{3}\)</span>, ואז <span class="m">\(a=b=0\)</span> ו־<span class="m">\(f=\tfrac{1}{x}\)</span>, שלא עוברת ב־<span class="m">\((1,0)\)</span>. לכן החורים ב־<span class="m">\(x=\pm2\)</span>, והמונה מתאפס שם.</p>
-      <p><span class="m">\(16 + 4a + b = 0\)</span>, ומהנקודה <span class="m">\((1,0)\)</span>: <span class="m">\(1 + a + b = 0\)</span>. מחסרים: <span class="m">\(15 + 3a = 0 \Rightarrow a=-5\)</span>, ואז <span class="m">\(b=4\)</span>.</p>
-      <p>בדיקה: <span class="m">\(x^{4}-5x^{2}+4 = (x^{2}-1)(x^{2}-4)\)</span>, ולכן <span class="m">\(f(x) = \dfrac{x^{2}-1}{x^{3}}\)</span>, <span class="m">\(x\neq\pm2\)</span>. נשארה אסימפטוטה אחת, <span class="m">\(x=0\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(a=-5\)</span>, <span class="m">\(b=4\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>נקודת אי־רציפות סליקה ("חור") נוצרת כשגורם במכנה מצטמצם עם גורם במונה. המכנה מתאפס ב־<span class="m">\(0\)</span> וב־<span class="m">\(\pm 2\)</span>. בודקים איפה יכולים להיות החורים, ומציבים במונה.</p></div>
+    <ol class="st">
+    <li><span class="lab">המכנה</span><div class="ml"><div class="ml-m"><span class="m">\(x^{5} - 4x^{3} = x^{3}(x-2)(x+2)\)</span></div><div class="ml-t">מתאפס ב־:</div><div class="ml-m"><span class="m">\(x = 0,\ 2,\ -2\)</span></div></div></li>
+    <li><span class="lab">איפה החורים</span><div class="ml"><div class="ml-t">ב־<span class="m">\(x=0\)</span> צריך לצמצם <span class="m">\(x^{3}\)</span>, ואז <span class="m">\(a = b = 0\)</span> ו־<span class="m">\(f = \tfrac1x\)</span>, שלא עוברת ב־<span class="m">\((1,0)\)</span>. לכן החורים ב־<span class="m">\(x = \pm 2\)</span>, והמונה מתאפס שם.</div></div></li>
+    <li><span class="lab">משוואות</span><div class="ml"><div class="ml-t">המונה מתאפס ב־<span class="m">\(x = 2\)</span>:</div><div class="ml-m"><span class="m">\(16 + 4a + b = 0\)</span></div><div class="ml-t">הנקודה <span class="m">\((1,0)\)</span>:</div><div class="ml-m"><span class="m">\(1 + a + b = 0\)</span></div></div></li>
+    <li><span class="lab">פתרון</span><div class="ml"><div class="ml-t">חיסור המשוואות:</div><div class="ml-m"><span class="m">\(15 + 3a = 0\)</span></div><div class="ml-m"><span class="m">\(a = -5\)</span></div><div class="ml-m"><span class="m">\(b = -1 - a = 4\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(a = -5,\ b = 4\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(x^{4} - 5x^{2} + 4 = (x^{2} - 1)(x^{2} - 4)\)</span></div><div class="ml-m"><span class="m">\(f(x) = \dfrac{(x^{2}-1)(x^{2}-4)}{x^{3}(x^{2}-4)} = \dfrac{x^{2} - 1}{x^{3}},\ x \neq \pm 2\)</span></div><div class="ml-t">נשארה אסימפטוטה אחת, <span class="m">\(x = 0\)</span> ✓</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-va">אסימפטוטה ו"חור"</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב–ד.</span>תחום, אסימפטוטה וחיתוך עם ציר <span class="m">\(x\)</span></h3>
-    <div class="steps">
-      <p>תחום: <span class="m">\(x\neq0,\ \pm2\)</span>. אסימפטוטה אנכית: <span class="m">\(x=0\)</span>. חיתוך: <span class="m">\(x^{2}-1=0 \Rightarrow x=\pm1\)</span>. אין חיתוך עם ציר <span class="m">\(y\)</span>, כי 0 לא בתחום.</p>
-    </div>
-    <p class="ans"><span class="m">\(x\neq0,\pm2\)</span> · <span class="m">\(x=0\)</span> · <span class="m">\((1,0)\)</span>, <span class="m">\((-1,0)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>משתמשים בצורה המצומצמת מסעיף א, וזוכרים שהחורים <span class="m">\(x = \pm 2\)</span> נשארים מחוץ לתחום.</p></div>
+    <ol class="st">
+    <li><span class="lab">תחום</span><div class="ml"><div class="ml-m"><span class="m">\(x \neq 0,\ \pm 2\)</span></div></div></li>
+    <li><span class="lab">אסימפטוטה אנכית</span><div class="ml"><div class="ml-m"><span class="m">\(x = 0\)</span></div></div></li>
+    <li><span class="lab">חיתוך עם ציר <span class="m">\(x\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(x^{2} - 1 = 0\)</span></div><div class="ml-m"><span class="m">\(x = \pm 1\)</span></div><div class="ml-t">אין חיתוך עם ציר <span class="m">\(y\)</span>, כי <span class="m">\(x = 0\)</span> לא בתחום.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(x \neq 0,\ \pm 2\)</span></div><div class="ml-m"><span class="m">\(x = 0\)</span></div><div class="ml-m"><span class="m">\((1,0),\ (-1,0)\)</span></div></div></div>
   </div>
 
   <div class="part">
     <h3><span class="lt">ה.</span>נקודות קיצון</h3>
-    <div class="steps">
-      <p><span class="m">\(f'(x) = \dfrac{2x\cdot x^{3} - (x^{2}-1)\cdot3x^{2}}{x^{6}} = \dfrac{3-x^{2}}{x^{4}}\)</span>, מתאפסת ב־<span class="m">\(x=\pm\sqrt3\)</span>.</p>
-      <p><span class="m">\(x^{4}&gt;0\)</span>, ולכן <span class="m">\(f'&gt;0\)</span> כאשר <span class="m">\(|x|&lt;\sqrt3\)</span> ו־<span class="m">\(f'&lt;0\)</span> כאשר <span class="m">\(|x|&gt;\sqrt3\)</span>.</p>
-      <p><span class="m">\(f(\sqrt3) = \dfrac{2}{3\sqrt3} = \dfrac{2\sqrt3}{9}\)</span> (מקסימום), ו־<span class="m">\(f(-\sqrt3) = -\dfrac{2\sqrt3}{9}\)</span> (מינימום).</p>
-    </div>
-    <p class="ans">מקסימום <span class="m">\(\left(\sqrt3,\tfrac{2\sqrt3}{9}\right)\)</span>, מינימום <span class="m">\(\left(-\sqrt3,-\tfrac{2\sqrt3}{9}\right)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>גוזרים בכלל המנה את הצורה המצומצמת. מכנה הנגזרת <span class="m">\(x^{4}\)</span> חיובי, ולכן הסימן נקבע לפי <span class="m">\(3 - x^{2}\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">כלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{2x\cdot x^{3} - (x^{2}-1)\cdot 3x^{2}}{x^{6}} = \dfrac{-x^{4} + 3x^{2}}{x^{6}} = \dfrac{3 - x^{2}}{x^{4}}\)</span></div></div></li>
+    <li><span class="lab">השוואה ל־0</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = 0\)</span></div><div class="ml-m"><span class="m">\(x = \pm\sqrt3\)</span></div></div></li>
+    <li><span class="lab">סימן</span><div class="ml"><div class="ml-m"><span class="m">\(|x| &lt; \sqrt3:\ f'(x) &gt; 0\)</span></div><div class="ml-m"><span class="m">\(|x| &gt; \sqrt3:\ f'(x) &lt; 0\)</span></div></div></li>
+    <li><span class="lab">ערכי הקיצון</span><div class="ml"><div class="ml-m"><span class="m">\(f(\sqrt3) = \dfrac{3 - 1}{3\sqrt3} = \dfrac{2}{3\sqrt3} = \dfrac{2\sqrt3}{9}\)</span></div><div class="ml-t">מ־<span class="m">\(+\)</span> ל־<span class="m">\(-\)</span>: מקסימום.</div><div class="ml-m"><span class="m">\(f(-\sqrt3) = -\dfrac{2\sqrt3}{9}\)</span></div><div class="ml-t">מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span>: מינימום.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\(\left(\sqrt3,\ \tfrac{2\sqrt3}{9}\right)\)</span></div><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\(\left(-\sqrt3,\ -\tfrac{2\sqrt3}{9}\right)\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">הפונקציה אי־זוגית, ולכן הקיצונים סימטריים לראשית ✓</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-deriv">כלל המנה</a><a href="#t-extrema">נקודות קיצון</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ו.</span>סקיצה</h3>
-    <p>הפונקציה אי־זוגית, והגרף סימטרי לראשית. אסימפטוטה אופקית <span class="m">\(y=0\)</span>. החורים: <span class="m">\(f(2) = \tfrac38\)</span> ו־<span class="m">\(f(-2) = -\tfrac38\)</span>.</p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>הפונקציה אי־זוגית (<span class="m">\(f(-x) = -f(x)\)</span>), ולכן מספיק לשרטט ענף אחד ולשקף בראשית. מסמנים את החורים בעיגולים ריקים.</p></div>
+    <ol class="st">
+    <li><span class="lab">אסימפטוטות</span><div class="ml"><div class="ml-m"><span class="m">\(x = 0,\ y = 0\)</span></div></div></li>
+    <li><span class="lab">החורים</span><div class="ml"><div class="ml-m"><span class="m">\(f(2) = \dfrac{4 - 1}{8} = \dfrac{3}{8}\)</span></div><div class="ml-m"><span class="m">\(f(-2) = -\dfrac{3}{8}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">הסקיצה בגרף שלמטה.</div></div></div>
     <figure class="graph"><img src="img/summer-calculus/r6.png" alt="גרף f(x) = (x²−1)/x³ עם חורים ב־(2,3/8) וב־(−2,−3/8)"></figure>
     <p class="uses">שימוש ב: <a href="#t-even">אי־זוגית</a><a href="#t-ha">אסימפטוטה אופקית</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ז.</span>הישר <span class="m">\(y=k\)</span></h3>
-    <div class="steps">
-      <p>נסמן <span class="m">\(M = \tfrac{2\sqrt3}{9}\approx0.385\)</span>. שימו לב ש־<span class="m">\(\tfrac38 = 0.375\)</span> קטן מ־<span class="m">\(M\)</span>.</p>
-      <p><strong>הענף הימני (<span class="m">\(x&gt;0\)</span>):</strong> עולה מ־<span class="m">\(-\infty\)</span> עד <span class="m">\(M\)</span>, ואז יורד ושואף ל־0 מלמעלה. על החלק היורד, בגובה <span class="m">\(\tfrac38\)</span>, יש חור. לכן מספר נקודות החיתוך עם <span class="m">\(y=k\)</span> בענף הימני הוא:</p>
-      <p>• 1 עבור <span class="m">\(k\le0\)</span> • 2 עבור <span class="m">\(0&lt;k&lt;M\)</span>, חוץ מ־<span class="m">\(k=\tfrac38\)</span> שבו יש 1 • 1 עבור <span class="m">\(k=M\)</span> • 0 עבור <span class="m">\(k&gt;M\)</span>.</p>
-      <p><strong>הענף השמאלי</strong> הוא שיקוף סימטרי לראשית. לכן מספר הנקודות הכולל עבור <span class="m">\(k\)</span> שווה למספר עבור <span class="m">\(-k\)</span>.</p>
-      <div class="signwrap"><table class="signs"><tr><th>k</th><td>\(0\)</td><td>\(0&lt;k&lt;\tfrac38\)</td><td>\(\tfrac38\)</td><td>\(\tfrac38&lt;k&lt;M\)</td><td>\(M\)</td><td>\(k&gt;M\)</td></tr><tr><th>ימני</th><td>1</td><td>2</td><td>1</td><td>2</td><td>1</td><td>0</td></tr><tr><th>שמאלי</th><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><th>סה״כ</th><td>2</td><td>3</td><td>2</td><td>3</td><td>2</td><td>1</td></tr></table></div>
-      <p><strong>(1)</strong> שתי נקודות: <span class="m">\(k = 0,\ \pm\tfrac38,\ \pm\tfrac{2\sqrt3}{9}\)</span>.</p>
-      <p><strong>(2)</strong> נקודה אחת: <span class="m">\(|k| &gt; \tfrac{2\sqrt3}{9}\)</span>.</p>
-      <p><strong>(3)</strong> <span class="m">\(|f(x)| = k\)</span>. עבור <span class="m">\(k&lt;0\)</span> אין פתרון, ועבור <span class="m">\(k=0\)</span> יש 2 (<span class="m">\(x=\pm1\)</span>). עבור <span class="m">\(k&gt;0\)</span> הפתרונות הם של <span class="m">\(f=k\)</span> ושל <span class="m">\(f=-k\)</span>, ובגלל הסימטריה מספרם כפול ממספר הפתרונות של <span class="m">\(f=k\)</span>. כדי לקבל 4 צריך בדיוק 2 פתרונות ל־<span class="m">\(f=k\)</span> עם <span class="m">\(k&gt;0\)</span>.</p>
-    </div>
-    <p class="ans">(1) <span class="m">\(k\in\{0,\ \pm\tfrac38,\ \pm\tfrac{2\sqrt3}{9}\}\)</span> · (2) <span class="m">\(|k|&gt;\tfrac{2\sqrt3}{9}\)</span> · (3) <span class="m">\(k=\tfrac38\)</span> או <span class="m">\(k=\tfrac{2\sqrt3}{9}\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מספר נקודות החיתוך עם ישר אופקי <span class="m">\(y=k\)</span> קוראים מהגרף: סופרים בכל ענף בנפרד. צריך לשים לב לחור בגובה <span class="m">\(\tfrac38\)</span>, שנמצא קצת מתחת למקסימום <span class="m">\(M\)</span>. בגלל הסימטריה לראשית, המספר עבור <span class="m">\(k\)</span> שווה למספר עבור <span class="m">\(-k\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">סימון</span><div class="ml"><div class="ml-m"><span class="m">\(M = \dfrac{2\sqrt3}{9} \approx 0.385\)</span></div><div class="ml-m"><span class="m">\(\dfrac{3}{8} = 0.375 &lt; M\)</span></div></div></li>
+    <li><span class="lab">ענף ימני (<span class="m">\(x &gt; 0\)</span>)</span><div class="ml"><div class="ml-t">עולה מ־<span class="m">\(-\infty\)</span> עד <span class="m">\(M\)</span>, ואז יורד ושואף ל־0 מלמעלה. על החלק היורד יש חור בגובה <span class="m">\(\tfrac38\)</span>.</div></div></li>
+    <li><span class="lab">ספירה עבור <span class="m">\(k \ge 0\)</span></span><div class="ml"><div class="signwrap"><table class="signs"><tr><th>k</th><td>\(0\)</td><td>\(0&lt;k&lt;\tfrac38\)</td><td>\(\tfrac38\)</td><td>\(\tfrac38&lt;k&lt;M\)</td><td>\(M\)</td><td>\(k&gt;M\)</td></tr><tr><th>ימני</th><td>1</td><td>2</td><td>1</td><td>2</td><td>1</td><td>0</td></tr><tr><th>שמאלי</th><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr><tr><th>סה״כ</th><td>2</td><td>3</td><td>2</td><td>3</td><td>2</td><td>1</td></tr></table></div><div class="ml-t">מספר הנקודות עבור <span class="m">\(-k\)</span> שווה למספר עבור <span class="m">\(k\)</span>.</div></div></li>
+    <li><span class="lab">סעיף (1): שתי נקודות</span><div class="ml"><div class="ml-m"><span class="m">\(k = 0,\ \pm\tfrac38,\ \pm\tfrac{2\sqrt3}{9}\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): נקודה אחת</span><div class="ml"><div class="ml-m"><span class="m">\(|k| &gt; \tfrac{2\sqrt3}{9}\)</span></div></div></li>
+    <li><span class="lab">סעיף (3): המשוואה <span class="m">\(|f(x)| = k\)</span></span><div class="ml"><div class="ml-t">עבור <span class="m">\(k &gt; 0\)</span> הפתרונות הם של <span class="m">\(f = k\)</span> ושל <span class="m">\(f = -k\)</span>, ובגלל הסימטריה מספרם כפול ממספר הפתרונות של <span class="m">\(f = k\)</span>. כדי לקבל 4 צריך 2 פתרונות ל־<span class="m">\(f = k\)</span>:</div><div class="ml-m"><span class="m">\(k = \tfrac38\ \text{או}\ k = \tfrac{2\sqrt3}{9}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">(1)</div><div class="ml-m"><span class="m">\(k \in \{0,\ \pm\tfrac38,\ \pm\tfrac{2\sqrt3}{9}\}\)</span></div><div class="ml-t">(2)</div><div class="ml-m"><span class="m">\(|k| &gt; \tfrac{2\sqrt3}{9}\)</span></div><div class="ml-t">(3)</div><div class="ml-m"><span class="m">\(k = \tfrac38\ \text{או}\ k = \tfrac{2\sqrt3}{9}\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">עבור <span class="m">\(k = 0\)</span> ב־<span class="m">\(|f(x)| = 0\)</span> יש רק 2 פתרונות (<span class="m">\(x = \pm 1\)</span>), ולכן <span class="m">\(k = 0\)</span> לא נכלל ב־(3) ✓</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-monot">עלייה וירידה</a><a href="#t-even">סימטריה לראשית</a><a href="#t-va">"חור"</a></p>
   </div>
 </section>
@@ -931,30 +1151,41 @@ figure.graph{max-width:560px;margin-top:4px}
 
   <div class="part">
     <h3><span class="lt">א.</span>חקירה</h3>
-    <div class="steps">
-      <p><strong>(1)</strong> <span class="m">\(x\neq3\)</span>. <strong>(2)</strong> אסימפטוטה אנכית <span class="m">\(x=3\)</span> (המונה שם <span class="m">\(1\neq0\)</span>).</p>
-      <p><strong>(3)</strong> <span class="m">\((x-2)^{2}=0 \Rightarrow x=2\)</span>. <span class="m">\(f(0) = \dfrac{4}{-3}\)</span>.</p>
-      <p><strong>(4)</strong> <span class="m">\(f'(x) = \dfrac{2(x-2)(x-3) - (x-2)^{2}}{(x-3)^{2}} = \dfrac{(x-2)(2x-6-x+2)}{(x-3)^{2}} = \dfrac{(x-2)(x-4)}{(x-3)^{2}}\)</span>.</p>
-      <div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;2\)</td><td>\(2\)</td><td>\(2&lt;x&lt;3\)</td><td>\(3&lt;x&lt;4\)</td><td>\(4\)</td><td>\(x&gt;4\)</td></tr><tr><th>f′</th><td>+</td><td>0</td><td>−</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div>
-      <p><span class="m">\(f(2)=0\)</span>, <span class="m">\(f(4) = \dfrac{4}{1} = 4\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(x\neq3\)</span> · <span class="m">\(x=3\)</span> · <span class="m">\((2,0)\)</span>, <span class="m">\((0,-\tfrac43)\)</span> · מקסימום <span class="m">\((2,0)\)</span>, מינימום <span class="m">\((4,4)\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>המונה הוא ריבוע שלם, <span class="m">\((x-2)^{2}\)</span>. חקירה רגילה: תחום, אסימפטוטה, חיתוך, נגזרת בכלל המנה וטבלת סימנים שכוללת את האסימפטוטה <span class="m">\(x = 3\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): תחום</span><div class="ml"><div class="ml-m"><span class="m">\(x \neq 3\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): אסימפטוטה אנכית</span><div class="ml"><div class="ml-t">המונה ב־<span class="m">\(x=3\)</span>:</div><div class="ml-m"><span class="m">\((3-2)^{2} = 1 \neq 0\)</span></div><div class="ml-m"><span class="m">\(x = 3\)</span></div></div></li>
+    <li><span class="lab">סעיף (3): חיתוך</span><div class="ml"><div class="ml-m"><span class="m">\((x-2)^{2} = 0\)</span></div><div class="ml-m"><span class="m">\(x = 2\)</span></div><div class="ml-m"><span class="m">\(f(0) = \dfrac{4}{-3} = -\dfrac43\)</span></div></div></li>
+    <li><span class="lab">סעיף (4): כלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{2(x-2)(x-3) - (x-2)^{2}}{(x-3)^{2}} = \dfrac{(x-2)(2x - 6 - x + 2)}{(x-3)^{2}} = \dfrac{(x-2)(x-4)}{(x-3)^{2}}\)</span></div></div></li>
+    <li><span class="lab">טבלת סימנים</span><div class="ml"><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;2\)</td><td>\(2\)</td><td>\(2&lt;x&lt;3\)</td><td>\(3&lt;x&lt;4\)</td><td>\(4\)</td><td>\(x&gt;4\)</td></tr><tr><th>f′</th><td>+</td><td>0</td><td>−</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div></div></li>
+    <li><span class="lab">ערכי הקיצון</span><div class="ml"><div class="ml-m"><span class="m">\(f(2) = 0\)</span></div><div class="ml-m"><span class="m">\(f(4) = \dfrac{(4-2)^{2}}{4-3} = 4\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(x \neq 3\)</span></div><div class="ml-m"><span class="m">\(x = 3\)</span></div><div class="ml-m"><span class="m">\((2,0),\ (0,-\tfrac43)\)</span></div><div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\((2,0)\)</span></div><div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((4,4)\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">המקסימום (<span class="m">\(0\)</span>) קטן מהמינימום (<span class="m">\(4\)</span>), כי הם על ענפים שונים, משני צדי <span class="m">\(x = 3\)</span> ✓</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-va">אסימפטוטה אנכית</a><a href="#t-deriv">כלל המנה</a><a href="#t-extrema">נקודות קיצון</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span>סקיצה</h3>
-    <p>אפשר לכתוב <span class="m">\(f(x) = x - 1 + \dfrac{1}{x-3}\)</span>, ולכן הגרף מתקרב לישר המשופע <span class="m">\(y=x-1\)</span> (מסומן בקו מנוקד, לא נדרש בשאלה).</p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מחלקים את המונה במכנה כדי לראות להיכן הגרף מתקרב רחוק מהאסימפטוטה. זה לא נדרש בשאלה, אבל עוזר לשרטט.</p></div>
+    <ol class="st">
+    <li><span class="lab">חילוק</span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = x - 1 + \dfrac{1}{x - 3}\)</span></div></div></li>
+    <li><span class="lab">מהלך</span><div class="ml"><div class="ml-t">רחוק מ־<span class="m">\(x = 3\)</span> הגרף מתקרב לישר (קו מנוקד בגרף):</div><div class="ml-m"><span class="m">\(y = x - 1\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">הסקיצה בגרף שלמטה.</div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\((x - 1)(x - 3) + 1 = x^{2} - 4x + 4\ \checkmark\)</span></div></div></div>
     <figure class="graph"><img src="img/summer-calculus/r7.png" alt="גרף f(x) = (x−2)²/(x−3)"></figure>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span><span class="m">\(g'(x) = f(x) + \tfrac12\)</span>: תחומי עלייה וירידה של <span class="m">\(g\)</span></h3>
-    <div class="steps">
-      <p>מכנה משותף: <span class="m">\(g'(x) = \dfrac{2(x-2)^{2} + (x-3)}{2(x-3)} = \dfrac{2x^{2} - 7x + 5}{2(x-3)} = \dfrac{(2x-5)(x-1)}{2(x-3)}\)</span>.</p>
-      <div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;1\)</td><td>\(1&lt;x&lt;2.5\)</td><td>\(2.5&lt;x&lt;3\)</td><td>\(x&gt;3\)</td></tr><tr><th>\((2x-5)(x-1)\)</th><td>+</td><td>−</td><td>+</td><td>+</td></tr><tr><th>\(x-3\)</th><td>−</td><td>−</td><td>−</td><td>+</td></tr><tr><th>g′</th><td>−</td><td>+</td><td>−</td><td>+</td></tr><tr><th>g</th><td class="down">↘</td><td class="up">↗</td><td class="down">↘</td><td class="up">↗</td></tr></table></div>
-    </div>
-    <p class="ans">עולה: <span class="m">\(1&lt;x&lt;2.5\)</span>, <span class="m">\(x&gt;3\)</span> · יורדת: <span class="m">\(x&lt;1\)</span>, <span class="m">\(2.5&lt;x&lt;3\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>נתונה הנגזרת של <span class="m">\(g\)</span>, ולכן הסימן של <span class="m">\(f + \tfrac12\)</span> קובע היכן <span class="m">\(g\)</span> עולה. מביאים למכנה משותף, מפרקים את המונה, ובונים טבלת סימנים.</p></div>
+    <ol class="st">
+    <li><span class="lab">מכנה משותף</span><div class="ml"><div class="ml-m"><span class="m">\(g'(x) = \dfrac{(x-2)^{2}}{x-3} + \dfrac{1}{2} = \dfrac{2(x-2)^{2} + (x-3)}{2(x-3)}\)</span></div><div class="ml-m"><span class="m">\(g'(x) = \dfrac{2x^{2} - 7x + 5}{2(x-3)} = \dfrac{(2x-5)(x-1)}{2(x-3)}\)</span></div></div></li>
+    <li><span class="lab">טבלת סימנים</span><div class="ml"><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;1\)</td><td>\(1&lt;x&lt;2.5\)</td><td>\(2.5&lt;x&lt;3\)</td><td>\(x&gt;3\)</td></tr><tr><th>\((2x-5)(x-1)\)</th><td>+</td><td>−</td><td>+</td><td>+</td></tr><tr><th>\(x-3\)</th><td>−</td><td>−</td><td>−</td><td>+</td></tr><tr><th>g′</th><td>−</td><td>+</td><td>−</td><td>+</td></tr><tr><th>g</th><td class="down">↘</td><td class="up">↗</td><td class="down">↘</td><td class="up">↗</td></tr></table></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">עולה:</div><div class="ml-m"><span class="m">\(1 &lt; x &lt; 2.5,\ x &gt; 3\)</span></div><div class="ml-t">יורדת:</div><div class="ml-m"><span class="m">\(x &lt; 1,\ 2.5 &lt; x &lt; 3\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(g'(0) = \dfrac{(-5)(-1)}{2(-3)} &lt; 0\ \checkmark\)</span></div><div class="ml-m"><span class="m">\(g'(2) = \dfrac{(-1)\cdot 1}{2(-1)} &gt; 0\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-monot">g′ נתונה: הסימן קובע</a></p>
   </div>
 </section>

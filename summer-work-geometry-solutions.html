@@ -93,7 +93,6 @@ figure figcaption{font-size:.78rem;color:#5b6878;text-align:center}
 .steps{display:flex;flex-direction:column;gap:5px}
 .steps .m{white-space:normal}
 .ans{background:var(--ok-soft);border-radius:6px;padding:6px 12px;width:fit-content;max-width:100%;font-weight:600}
-.ans::before{content:"תשובה: ";color:var(--ok)}
 .ans .m .katex{font-size:1.15em}
 .uses{font-size:.88rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .uses a{font-size:.82rem;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:1px 10px;text-decoration:none;font-weight:600}
@@ -106,6 +105,23 @@ footer{color:var(--muted);font-size:.9rem}
 .to-top:hover,.to-top:focus-visible{filter:brightness(1.1);outline:none}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media print{.to-top,nav.qnav{display:none}body{background:#fff}.card{break-inside:avoid-page}}
+
+/* Solutions in the site format: the thinking, numbered steps (heading on the right, every expression on its own line on the left), the answer and a check */
+.think{background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.think-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.think p{margin:0}
+ol.st{margin:2px 0 0;padding-inline-start:24px;display:flex;flex-direction:column;gap:8px}
+ol.st li::marker{font-weight:700;color:var(--mark)}
+ol.st > li > .lab{display:block;font-weight:700;color:var(--mark)}
+.ml{display:flex;flex-direction:column;gap:3px;margin:2px 0 4px}
+.ml-m{direction:ltr;text-align:left;unicode-bidi:isolate;line-height:2.15}
+.ml-m .m{white-space:normal}
+.ml-t{text-align:right;line-height:2.15}
+.ml .signwrap{direction:rtl}
+div.ans{background:var(--ok-soft);border-radius:6px;padding:8px 12px;font-weight:600;width:auto}
+div.ans .lab{display:block;font-weight:700;color:var(--ok)}
+.chk{color:var(--muted);font-size:.95rem;border:1px dashed var(--line);border-radius:6px;padding:8px 12px}
+.chk .lab{display:block;font-weight:700;color:var(--ink)}
 </style>
 <script src="font-size.js"></script>
 </head>
@@ -193,54 +209,58 @@ footer{color:var(--muted);font-size:.9rem}
 
   <div class="part">
     <h3><span class="lt">א.</span>הוכחה: <span class="m">\(\triangle BCD \sim \triangle DCE\)</span></h3>
-    <div class="steps">
-      <p>נשווה את המשולשים <span class="m">\(BCD\)</span> ו־<span class="m">\(DCE\)</span>:</p>
-      <p>• <span class="m">\(\measuredangle C\)</span> משותפת לשני המשולשים.</p>
-      <p>• <span class="m">\(\measuredangle DBC = \measuredangle CDE\)</span>, כי זה הנתון (<span class="m">\(\measuredangle DBE\)</span> היא בדיוק <span class="m">\(\measuredangle DBC\)</span>, כי <span class="m">\(E\)</span> נמצאת על <span class="m">\(BC\)</span>).</p>
-      <p>שתי זוויות שוות, ולכן המשולשים דומים. ההתאמה היא <span class="m">\(B\leftrightarrow D\)</span>, <span class="m">\(C\leftrightarrow C\)</span>, <span class="m">\(D\leftrightarrow E\)</span>, ומכאן:</p>
-      <p><span class="m">\(\dfrac{BC}{DC} = \dfrac{CD}{CE} = \dfrac{BD}{DE}\)</span></p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>כדי להוכיח דמיון מחפשים שתי זוויות שוות. לשני המשולשים יש את הזווית <span class="m">\(C\)</span>, והזווית השנייה נתונה. חשוב לכתוב את ההתאמה בין הקדקודים לפי הזוויות השוות, כי ממנה יוצאים היחסים שנצטרך בהמשך.</p></div>
+    <ol class="st">
+    <li><span class="lab">זווית משותפת</span><div class="ml"><div class="ml-t">הזווית <span class="m">\(C\)</span> משותפת לשני המשולשים:</div><div class="ml-m"><span class="m">\(\measuredangle BCD = \measuredangle DCE\)</span></div></div></li>
+    <li><span class="lab">זווית נתונה</span><div class="ml"><div class="ml-t"><span class="m">\(E\)</span> על <span class="m">\(BC\)</span>, ולכן <span class="m">\(\measuredangle DBE\)</span> היא <span class="m">\(\measuredangle DBC\)</span>. לפי הנתון:</div><div class="ml-m"><span class="m">\(\measuredangle DBC = \measuredangle CDE\)</span></div></div></li>
+    <li><span class="lab">מסקנה</span><div class="ml"><div class="ml-t">לפי משפט ז.ז:</div><div class="ml-m"><span class="m">\(\triangle BCD \sim \triangle DCE\)</span></div><div class="ml-t">ההתאמה:</div><div class="ml-m"><span class="m">\(B \leftrightarrow D,\ C \leftrightarrow C,\ D \leftrightarrow E\)</span></div><div class="ml-t">ומכאן היחסים:</div><div class="ml-m"><span class="m">\(\dfrac{BC}{DC} = \dfrac{CD}{CE} = \dfrac{BD}{DE}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\triangle BCD \sim \triangle DCE\)</span></div><div class="ml-t">לפי ז.ז</div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">הזוויות המתאימות שוות: <span class="m">\(B\)</span> מול <span class="m">\(D\)</span> (הנתון), <span class="m">\(C\)</span> מול <span class="m">\(C\)</span> (משותפת).</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-aa">ז.ז</a><a href="#t-ratio">יחסים במשולשים דומים</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span>נתון <span class="m">\(\dfrac{BE}{CE} = \dfrac{7}{9}\)</span></h3>
     <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות השנייה במונה. <span class="m">\(\dfrac{BE}{CE}\)</span> היא הקריאה היחידה שמתאימה לשרטוט ונותנת תוצאות שלמות.</p>
-    <div class="steps">
-      <p>נסמן <span class="m">\(BE = 7k\)</span>, <span class="m">\(CE = 9k\)</span>. לכן <span class="m">\(BC = 16k\)</span>.</p>
-      <p>מהדמיון בסעיף א: <span class="m">\(\dfrac{BC}{CD} = \dfrac{CD}{CE}\)</span>, ולכן <span class="m">\(CD^{2} = BC\cdot CE = 16k\cdot 9k = 144k^{2}\)</span>, כלומר <span class="m">\(CD = 12k\)</span>.</p>
-      <p><strong>(1)</strong> <span class="m">\(\dfrac{CD}{CE} = \dfrac{12k}{9k} = \dfrac{4}{3}\)</span></p>
-      <p><strong>(2)</strong> <span class="m">\(\dfrac{BD}{DE}\)</span> שווה ליחס הדמיון, כלומר ל־<span class="m">\(\dfrac{BC}{DC} = \dfrac{16k}{12k} = \dfrac{4}{3}\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(\dfrac{CD}{CE} = \dfrac{4}{3}\)</span>, <span class="m">\(\dfrac{BD}{DE} = \dfrac{4}{3}\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>כשנתון יחס בין קטעים מסמנים אותם בעזרת משתנה אחד: <span class="m">\(7k\)</span> ו־<span class="m">\(9k\)</span>. מהדמיון בסעיף א יש פרופורציה שבה <span class="m">\(CD\)</span> מופיע פעמיים, ולכן ממנה מקבלים את <span class="m">\(CD^{2}\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">נתונים</span><div class="ml"><div class="ml-m"><span class="m">\(BE = 7k\)</span></div><div class="ml-m"><span class="m">\(CE = 9k\)</span></div><div class="ml-m"><span class="m">\(BC = BE + CE = 7k + 9k = 16k\)</span></div></div></li>
+    <li><span class="lab">הצלע <span class="m">\(CD\)</span> מהדמיון</span><div class="ml"><div class="ml-t">מסעיף א:</div><div class="ml-m"><span class="m">\(\dfrac{BC}{CD} = \dfrac{CD}{CE}\)</span></div><div class="ml-m"><span class="m">\(CD^{2} = BC\cdot CE = 16k\cdot 9k = 144k^{2}\)</span></div><div class="ml-m"><span class="m">\(CD = 12k\)</span></div></div></li>
+    <li><span class="lab">סעיף (1): היחס <span class="m">\(\dfrac{CD}{CE}\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{CD}{CE} = \dfrac{12k}{9k} = \dfrac{4}{3}\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): היחס <span class="m">\(\dfrac{BD}{DE}\)</span></span><div class="ml"><div class="ml-t"><span class="m">\(BD\)</span> ו־<span class="m">\(DE\)</span> צלעות מתאימות, ולכן היחס שלהן שווה ליחס הדמיון:</div><div class="ml-m"><span class="m">\(\dfrac{BD}{DE} = \dfrac{BC}{DC} = \dfrac{16k}{12k} = \dfrac{4}{3}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{CD}{CE} = \dfrac{4}{3}\)</span></div><div class="ml-m"><span class="m">\(\dfrac{BD}{DE} = \dfrac{4}{3}\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">כל זוגות הצלעות המתאימות נותנים אותו יחס:</div><div class="ml-m"><span class="m">\(\dfrac{BC}{DC} = \dfrac{16}{12} = \dfrac{4}{3},\quad \dfrac{CD}{CE} = \dfrac{12}{9} = \dfrac{4}{3}\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-ratio">יחסים במשולשים דומים</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>נתון <span class="m">\(\measuredangle BDE = 90^{\circ}\)</span>. מצאו את <span class="m">\(\dfrac{BD}{BE}\)</span></h3>
-    <div class="steps">
-      <p>המשולש <span class="m">\(BDE\)</span> ישר זווית ב־<span class="m">\(D\)</span>, ומסעיף ב(2) ידוע ש־<span class="m">\(\dfrac{BD}{DE} = \dfrac{4}{3}\)</span>.</p>
-      <p>נסמן <span class="m">\(BD = 4m\)</span>, <span class="m">\(DE = 3m\)</span>. לפי פיתגורס: <span class="m">\(BE = \sqrt{16m^{2} + 9m^{2}} = 5m\)</span>.</p>
-      <p><span class="m">\(\dfrac{BD}{BE} = \dfrac{4m}{5m} = \dfrac{4}{5}\)</span></p>
-    </div>
-    <p class="ans"><span class="m">\(\dfrac{BD}{BE} = \dfrac{4}{5}\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>זה משולש ישר זווית שבו ידוע היחס בין הניצבים (מסעיף ב). מסמנים את הניצבים <span class="m">\(4m\)</span> ו־<span class="m">\(3m\)</span>, ומפיתגורס מקבלים את היתר.</p></div>
+    <ol class="st">
+    <li><span class="lab">נתונים</span><div class="ml"><div class="ml-m"><span class="m">\(\measuredangle BDE = 90^{\circ}\)</span></div><div class="ml-t">מסעיף ב(2):</div><div class="ml-m"><span class="m">\(\dfrac{BD}{DE} = \dfrac{4}{3}\)</span></div><div class="ml-m"><span class="m">\(BD = 4m\)</span></div><div class="ml-m"><span class="m">\(DE = 3m\)</span></div></div></li>
+    <li><span class="lab">פיתגורס במשולש <span class="m">\(BDE\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(BE^{2} = BD^{2} + DE^{2}\)</span></div><div class="ml-m"><span class="m">\(BE^{2} = 16m^{2} + 9m^{2} = 25m^{2}\)</span></div><div class="ml-m"><span class="m">\(BE = 5m\)</span></div></div></li>
+    <li><span class="lab">היחס</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{BD}{BE} = \dfrac{4m}{5m} = \dfrac{4}{5}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{BD}{BE} = \dfrac{4}{5}\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">3, 4, 5 היא שלשה פיתגורית:</div><div class="ml-m"><span class="m">\(3^{2} + 4^{2} = 9 + 16 = 25 = 5^{2}\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-right">פיתגורס</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span><span class="m">\(EF \perp DC\)</span>, והנקודה <span class="m">\(F\)</span> על <span class="m">\(DC\)</span></h3>
-    <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">\(\triangle BDE \sim \triangle DFE\)</span>.</strong></p>
-      <p>• <span class="m">\(\measuredangle BDE = \measuredangle DFE = 90^{\circ}\)</span> (נתון ו־<span class="m">\(EF \perp DC\)</span>).</p>
-      <p>• <span class="m">\(\measuredangle DBE = \measuredangle FDE\)</span>, כי <span class="m">\(\measuredangle FDE\)</span> היא <span class="m">\(\measuredangle CDE\)</span>, ולפי הנתון היא שווה ל־<span class="m">\(\measuredangle DBE\)</span>.</p>
-      <p>לכן המשולשים דומים לפי ז.ז, בהתאמה <span class="m">\(B\leftrightarrow D\)</span>, <span class="m">\(D\leftrightarrow F\)</span>, <span class="m">\(E\leftrightarrow E\)</span>.</p>
-      <p><strong>(2) יחס הדמיון.</strong> היתר <span class="m">\(BE\)</span> מתאים ליתר <span class="m">\(DE\)</span>, ולכן <span class="m">\(k = \dfrac{BE}{DE} = \dfrac{5m}{3m} = \dfrac{5}{3}\)</span>.</p>
-      <p><strong>(3) היחס <span class="m">\(DF:FC\)</span>.</strong> נבטא הכול באמצעות <span class="m">\(k\)</span> מסעיף ב: <span class="m">\(BE = 7k = 5m\)</span>, ולכן <span class="m">\(m = \dfrac{7k}{5}\)</span>, <span class="m">\(BD = \dfrac{28k}{5}\)</span>, <span class="m">\(DE = \dfrac{21k}{5}\)</span>.</p>
-      <p>הצלע <span class="m">\(DF\)</span> מתאימה ל־<span class="m">\(BD\)</span>: <span class="m">\(DF = BD\cdot \dfrac{3}{5} = \dfrac{84k}{25}\)</span>.</p>
-      <p><span class="m">\(DC = 12k = \dfrac{300k}{25}\)</span>, ולכן <span class="m">\(FC = \dfrac{300k}{25} - \dfrac{84k}{25} = \dfrac{216k}{25}\)</span>.</p>
-      <p><span class="m">\(DF:FC = 84:216 = 7:18\)</span></p>
-    </div>
-    <p class="ans">יחס הדמיון <span class="m">\(5:3\)</span>, <span class="m">\(DF:FC = 7:18\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>שני המשולשים ישרי זווית, ולכן מספיקה עוד זווית חדה שווה. יחס הדמיון הוא היחס בין היתרים. כדי לחשב את <span class="m">\(DF:FC\)</span> צריך לבטא את כל הקטעים באותו משתנה: מסעיף ג (<span class="m">\(m\)</span>) עוברים ל־<span class="m">\(k\)</span> של סעיף ב.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): הוכחת הדמיון</span><div class="ml"><div class="ml-t">נתון בסעיף ג, ו־<span class="m">\(EF \perp DC\)</span>:</div><div class="ml-m"><span class="m">\(\measuredangle BDE = \measuredangle DFE = 90^{\circ}\)</span></div><div class="ml-t"><span class="m">\(\measuredangle FDE\)</span> היא <span class="m">\(\measuredangle CDE\)</span>, ולפי הנתון:</div><div class="ml-m"><span class="m">\(\measuredangle DBE = \measuredangle FDE\)</span></div><div class="ml-t">לפי ז.ז:</div><div class="ml-m"><span class="m">\(\triangle BDE \sim \triangle DFE\)</span></div><div class="ml-m"><span class="m">\(B \leftrightarrow D,\ D \leftrightarrow F,\ E \leftrightarrow E\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): יחס הדמיון</span><div class="ml"><div class="ml-t">היתר <span class="m">\(BE\)</span> מתאים ליתר <span class="m">\(DE\)</span>:</div><div class="ml-m"><span class="m">\(\dfrac{BE}{DE} = \dfrac{5m}{3m} = \dfrac{5}{3}\)</span></div></div></li>
+    <li><span class="lab">סעיף (3): מעבר למשתנה <span class="m">\(k\)</span></span><div class="ml"><div class="ml-t">מסעיף ב <span class="m">\(BE = 7k\)</span>, ומסעיף ג <span class="m">\(BE = 5m\)</span>:</div><div class="ml-m"><span class="m">\(5m = 7k\)</span></div><div class="ml-m"><span class="m">\(m = \dfrac{7k}{5}\)</span></div><div class="ml-m"><span class="m">\(BD = 4m = \dfrac{28k}{5}\)</span></div><div class="ml-m"><span class="m">\(DE = 3m = \dfrac{21k}{5}\)</span></div></div></li>
+    <li><span class="lab">הקטע <span class="m">\(DF\)</span></span><div class="ml"><div class="ml-t"><span class="m">\(DF\)</span> מתאים ל־<span class="m">\(BD\)</span>, ויחס הדמיון של <span class="m">\(\triangle DFE\)</span> ל־<span class="m">\(\triangle BDE\)</span> הוא <span class="m">\(\dfrac{3}{5}\)</span>:</div><div class="ml-m"><span class="m">\(DF = \dfrac{3}{5}\cdot BD = \dfrac{3}{5}\cdot\dfrac{28k}{5} = \dfrac{84k}{25}\)</span></div></div></li>
+    <li><span class="lab">הקטע <span class="m">\(FC\)</span></span><div class="ml"><div class="ml-t">מסעיף ב:</div><div class="ml-m"><span class="m">\(DC = 12k = \dfrac{300k}{25}\)</span></div><div class="ml-m"><span class="m">\(FC = DC - DF = \dfrac{300k}{25} - \dfrac{84k}{25} = \dfrac{216k}{25}\)</span></div></div></li>
+    <li><span class="lab">היחס</span><div class="ml"><div class="ml-m"><span class="m">\(DF:FC = 84:216 = 7:18\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t">יחס הדמיון:</div><div class="ml-m"><span class="m">\(5:3\)</span></div><div class="ml-m"><span class="m">\(DF:FC = 7:18\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">את <span class="m">\(EF\)</span> אפשר לחשב בפיתגורס משני המשולשים ישרי הזווית, ומקבלים אותו אורך:</div><div class="ml-m"><span class="m">\(EF^{2} = DE^{2} - DF^{2} = \dfrac{441k^{2}}{25} - \dfrac{7056k^{2}}{625} = \dfrac{3969k^{2}}{625}\)</span></div><div class="ml-m"><span class="m">\(EF^{2} = CE^{2} - FC^{2} = 81k^{2} - \dfrac{46656k^{2}}{625} = \dfrac{3969k^{2}}{625}\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-aa">ז.ז</a><a href="#t-ratio">יחסים במשולשים דומים</a></p>
   </div>
 </section>
@@ -258,49 +278,55 @@ footer{color:var(--muted);font-size:.9rem}
 
   <div class="part">
     <h3><span class="lt">א.</span>מצאו את <span class="m">\(\dfrac{DE}{BE}\)</span></h3>
-    <div class="steps">
-      <p>נסמן <span class="m">\(EO = t\)</span>, ולכן <span class="m">\(DE = 2t\)</span> ו־<span class="m">\(DO = 3t\)</span>.</p>
-      <p>האלכסונים במקבילית חוצים זה את זה, ולכן <span class="m">\(OB = DO = 3t\)</span>.</p>
-      <p><span class="m">\(BE = EO + OB = t + 3t = 4t\)</span>, ולכן <span class="m">\(\dfrac{DE}{BE} = \dfrac{2t}{4t} = \dfrac{1}{2}\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(\dfrac{DE}{BE} = \dfrac{1}{2}\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>נתון יחס על הקטע <span class="m">\(DO\)</span>, ולכן מסמנים <span class="m">\(EO = t\)</span>. התכונה של המקבילית שמשמשת כאן: האלכסונים חוצים זה את זה, ולכן <span class="m">\(OB = DO\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">נתונים</span><div class="ml"><div class="ml-m"><span class="m">\(EO = t\)</span></div><div class="ml-m"><span class="m">\(DE = 2EO = 2t\)</span></div><div class="ml-m"><span class="m">\(DO = DE + EO = 3t\)</span></div></div></li>
+    <li><span class="lab">אלכסוני המקבילית</span><div class="ml"><div class="ml-t">האלכסונים חוצים זה את זה:</div><div class="ml-m"><span class="m">\(OB = DO = 3t\)</span></div></div></li>
+    <li><span class="lab">הקטע <span class="m">\(BE\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(BE = EO + OB = t + 3t = 4t\)</span></div></div></li>
+    <li><span class="lab">היחס</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{DE}{BE} = \dfrac{2t}{4t} = \dfrac{1}{2}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{DE}{BE} = \dfrac{1}{2}\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">כל האלכסון שווה לפעמיים חציו:</div><div class="ml-m"><span class="m">\(DB = DE + BE = 2t + 4t = 6t = 2\cdot DO\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-pgram">אלכסוני מקבילית</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span><span class="m">\(EF \parallel AB\)</span>. מצאו את <span class="m">\(\dfrac{DF}{AD}\)</span></h3>
-    <div class="steps">
-      <p>במשולש <span class="m">\(DAB\)</span> הקטע <span class="m">\(EF\)</span> מקביל לצלע <span class="m">\(AB\)</span>. לפי תאלס המורחב, <span class="m">\(\triangle DFE \sim \triangle DAB\)</span> ו־<span class="m">\(\dfrac{DF}{DA} = \dfrac{DE}{DB}\)</span>.</p>
-      <p><span class="m">\(DB = 2\cdot DO = 6t\)</span>, ולכן <span class="m">\(\dfrac{DF}{DA} = \dfrac{2t}{6t} = \dfrac{1}{3}\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(\dfrac{DF}{AD} = \dfrac{1}{3}\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>קטע המקביל לצלע במשולש יוצר משולש דומה (תאלס המורחב). המשולש הוא <span class="m">\(DAB\)</span>, והקטע <span class="m">\(EF\)</span> מקביל ל־<span class="m">\(AB\)</span>, ולכן היחס <span class="m">\(DF:DA\)</span> שווה ל־<span class="m">\(DE:DB\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">תאלס המורחב</span><div class="ml"><div class="ml-t">במשולש <span class="m">\(DAB\)</span> מתקיים <span class="m">\(EF \parallel AB\)</span>:</div><div class="ml-m"><span class="m">\(\triangle DFE \sim \triangle DAB\)</span></div><div class="ml-m"><span class="m">\(\dfrac{DF}{DA} = \dfrac{DE}{DB}\)</span></div></div></li>
+    <li><span class="lab">הקטע <span class="m">\(DB\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(DB = 2\cdot DO = 6t\)</span></div></div></li>
+    <li><span class="lab">הצבה</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{DF}{DA} = \dfrac{2t}{6t} = \dfrac{1}{3}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{DF}{AD} = \dfrac{1}{3}\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">לפי משפט תאלס על הקטעים עצמם:</div><div class="ml-m"><span class="m">\(\dfrac{DF}{FA} = \dfrac{DE}{EB} = \dfrac{2t}{4t} = \dfrac{1}{2}\)</span></div><div class="ml-t">ולכן <span class="m">\(DF\)</span> הוא שליש מ־<span class="m">\(DA\)</span> ✓</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-thales">תאלס המורחב</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>המשך <span class="m">\(AE\)</span> חותך את <span class="m">\(DC\)</span> בנקודה <span class="m">\(G\)</span></h3>
-    <div class="steps">
-      <p><strong>(1) <span class="m">\(\dfrac{AE}{EG}\)</span>.</strong> נשווה את <span class="m">\(\triangle ABE\)</span> ו־<span class="m">\(\triangle GDE\)</span>:</p>
-      <p>• <span class="m">\(\measuredangle AEB = \measuredangle GED\)</span> (זוויות קודקודיות).</p>
-      <p>• <span class="m">\(\measuredangle ABE = \measuredangle GDE\)</span> (זוויות מתחלפות, כי <span class="m">\(AB \parallel DC\)</span>).</p>
-      <p>לפי ז.ז המשולשים דומים, ולכן <span class="m">\(\dfrac{AE}{EG} = \dfrac{BE}{DE} = \dfrac{4t}{2t} = 2\)</span>.</p>
-      <p><strong>(2) הוכחה: <span class="m">\(E\)</span> היא מפגש התיכונים במשולש <span class="m">\(ACD\)</span>.</strong></p>
-      <p>האלכסונים חוצים זה את זה, ולכן <span class="m">\(O\)</span> אמצע <span class="m">\(AC\)</span> ו־<span class="m">\(DO\)</span> הוא תיכון במשולש <span class="m">\(ACD\)</span>.</p>
-      <p>הנקודה <span class="m">\(E\)</span> נמצאת על התיכון <span class="m">\(DO\)</span> ומחלקת אותו ביחס <span class="m">\(DE:EO = 2:1\)</span> מהקדקוד. מפגש התיכונים הוא הנקודה היחידה על התיכון שמחלקת אותו כך, ולכן <span class="m">\(E\)</span> היא מפגש התיכונים.</p>
-      <p>מכאן גם ש־<span class="m">\(AG\)</span> הוא תיכון, כלומר <span class="m">\(G\)</span> אמצע <span class="m">\(DC\)</span>. זה מתאים לתוצאה <span class="m">\(AE:EG = 2:1\)</span> מסעיף (1).</p>
-    </div>
-    <p class="ans"><span class="m">\(\dfrac{AE}{EG} = 2\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>קטעים על ישר שחוצה שני ישרים מקבילים יוצרים שני משולשים דומים ("פרפר"): זוויות קודקודיות וזוויות מתחלפות. לחלק (2) משתמשים בכך שמפגש התיכונים מחלק כל תיכון ביחס <span class="m">\(2:1\)</span> מהקדקוד.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): הוכחת הדמיון</span><div class="ml"><div class="ml-t">זוויות קודקודיות:</div><div class="ml-m"><span class="m">\(\measuredangle AEB = \measuredangle GED\)</span></div><div class="ml-t">זוויות מתחלפות, כי <span class="m">\(AB \parallel DC\)</span>:</div><div class="ml-m"><span class="m">\(\measuredangle ABE = \measuredangle GDE\)</span></div><div class="ml-t">לפי ז.ז:</div><div class="ml-m"><span class="m">\(\triangle ABE \sim \triangle GDE\)</span></div></div></li>
+    <li><span class="lab">היחס <span class="m">\(\dfrac{AE}{EG}\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{AE}{EG} = \dfrac{BE}{DE} = \dfrac{4t}{2t} = 2\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): <span class="m">\(DO\)</span> תיכון</span><div class="ml"><div class="ml-t">האלכסונים חוצים זה את זה, ולכן <span class="m">\(O\)</span> אמצע <span class="m">\(AC\)</span>:</div><div class="ml-m"><span class="m">\(AO = OC\)</span></div><div class="ml-t">ולכן <span class="m">\(DO\)</span> הוא תיכון במשולש <span class="m">\(ACD\)</span>.</div></div></li>
+    <li><span class="lab">מפגש התיכונים</span><div class="ml"><div class="ml-t"><span class="m">\(E\)</span> על התיכון <span class="m">\(DO\)</span> ומחלקת אותו מהקדקוד ביחס:</div><div class="ml-m"><span class="m">\(DE:EO = 2:1\)</span></div><div class="ml-t">מפגש התיכונים הוא הנקודה היחידה על התיכון שמחלקת אותו כך, ולכן <span class="m">\(E\)</span> היא מפגש התיכונים במשולש <span class="m">\(ACD\)</span>.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{AE}{EG} = 2\)</span></div><div class="ml-t"><span class="m">\(E\)</span> היא מפגש התיכונים במשולש <span class="m">\(ACD\)</span>.</div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">אם <span class="m">\(E\)</span> מפגש התיכונים, גם <span class="m">\(AG\)</span> תיכון ומחולק ביחס <span class="m">\(2:1\)</span>, וזה מתאים לסעיף (1):</div><div class="ml-m"><span class="m">\(AE:EG = 2:1\ \checkmark\)</span></div><div class="ml-t">וגם <span class="m">\(G\)</span> אמצע <span class="m">\(DC\)</span>: מהדמיון</div><div class="ml-m"><span class="m">\(\dfrac{DG}{AB} = \dfrac{DE}{BE} = \dfrac{1}{2}\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-angles">זוויות קודקודיות</a><a href="#t-par">זוויות מתחלפות</a><a href="#t-aa">ז.ז</a><a href="#t-centroid">מפגש התיכונים</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span><span class="m">\(S_{\triangle DEF} = S\)</span></h3>
-    <div class="steps">
-      <p><strong>(1) <span class="m">\(S_{\triangle ADE}\)</span>.</strong> למשולשים <span class="m">\(DEF\)</span> ו־<span class="m">\(ADE\)</span> יש קדקוד משותף <span class="m">\(E\)</span>, והבסיסים <span class="m">\(DF\)</span> ו־<span class="m">\(DA\)</span> על אותו ישר, ולכן הגובה שלהם שווה. <span class="m">\(DA = 3DF\)</span>, ולכן <span class="m">\(S_{\triangle ADE} = 3S\)</span>.</p>
-      <p><strong>(2) <span class="m">\(S_{\triangle ADO}\)</span>.</strong> למשולשים <span class="m">\(ADE\)</span> ו־<span class="m">\(ADO\)</span> יש קדקוד משותף <span class="m">\(A\)</span>, והבסיסים <span class="m">\(DE\)</span> ו־<span class="m">\(DO\)</span> על הישר <span class="m">\(DB\)</span>. לכן <span class="m">\(\dfrac{S_{\triangle ADO}}{S_{\triangle ADE}} = \dfrac{DO}{DE} = \dfrac{3t}{2t} = \dfrac{3}{2}\)</span>.</p>
-      <p><span class="m">\(S_{\triangle ADO} = \dfrac{3}{2}\cdot 3S = 4.5S\)</span></p>
-    </div>
-    <p class="ans"><span class="m">\(S_{\triangle ADE} = 3S\)</span>, <span class="m">\(S_{\triangle ADO} = \dfrac{9S}{2}\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>משולשים עם קדקוד משותף ובסיסים על אותו ישר הם בעלי אותו גובה, ולכן יחס השטחים שלהם שווה ליחס הבסיסים. מחפשים בכל פעם קדקוד משותף כזה.</p></div>
+    <ol class="st">
+    <li><span class="lab">כלל</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{S_{1}}{S_{2}} = \dfrac{a_{1}}{a_{2}}\)</span></div><div class="ml-t">כאשר לשני המשולשים אותו גובה (<span class="m">\(a\)</span> הבסיסים).</div></div></li>
+    <li><span class="lab">סעיף (1): <span class="m">\(S_{\triangle ADE}\)</span></span><div class="ml"><div class="ml-t">קדקוד משותף <span class="m">\(E\)</span>, בסיסים <span class="m">\(DA\)</span> ו־<span class="m">\(DF\)</span> על אותו ישר:</div><div class="ml-m"><span class="m">\(\dfrac{S_{\triangle ADE}}{S_{\triangle DEF}} = \dfrac{DA}{DF} = 3\)</span></div><div class="ml-m"><span class="m">\(S_{\triangle ADE} = 3S\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): <span class="m">\(S_{\triangle ADO}\)</span></span><div class="ml"><div class="ml-t">קדקוד משותף <span class="m">\(A\)</span>, בסיסים <span class="m">\(DO\)</span> ו־<span class="m">\(DE\)</span> על הישר <span class="m">\(DB\)</span>:</div><div class="ml-m"><span class="m">\(\dfrac{S_{\triangle ADO}}{S_{\triangle ADE}} = \dfrac{DO}{DE} = \dfrac{3t}{2t} = \dfrac{3}{2}\)</span></div><div class="ml-m"><span class="m">\(S_{\triangle ADO} = \dfrac{3}{2}\cdot 3S = \dfrac{9S}{2}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(S_{\triangle ADE} = 3S\)</span></div><div class="ml-m"><span class="m">\(S_{\triangle ADO} = \dfrac{9S}{2}\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">בדרך אחרת: <span class="m">\(\triangle DFE \sim \triangle DAB\)</span> ביחס <span class="m">\(\dfrac{1}{3}\)</span>, ויחס השטחים הוא ריבוע יחס הדמיון:</div><div class="ml-m"><span class="m">\(S_{\triangle DAB} = 9S\)</span></div><div class="ml-t"><span class="m">\(O\)</span> אמצע <span class="m">\(DB\)</span>, ולכן:</div><div class="ml-m"><span class="m">\(S_{\triangle ADO} = \dfrac{1}{2}\cdot 9S = \dfrac{9S}{2}\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-area">משולשים בעלי גובה משותף</a></p>
   </div>
 </section>
@@ -318,24 +344,28 @@ footer{color:var(--muted);font-size:.9rem}
 
   <div class="part">
     <h3><span class="lt">א.</span>מצאו את <span class="m">\(\dfrac{EG}{AC}\)</span></h3>
-    <div class="steps">
-      <p><span class="m">\(DE = 2AE\)</span>, ולכן <span class="m">\(\dfrac{DE}{DA} = \dfrac{2}{3}\)</span>.</p>
-      <p>במשולש <span class="m">\(DAC\)</span>: <span class="m">\(EG \parallel AC\)</span>, ולכן <span class="m">\(\triangle DEG \sim \triangle DAC\)</span>, ו־<span class="m">\(\dfrac{EG}{AC} = \dfrac{DE}{DA} = \dfrac{2}{3}\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(\dfrac{EG}{AC} = \dfrac{2}{3}\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>במשולש <span class="m">\(DAC\)</span> הקטע <span class="m">\(EG\)</span> מקביל לצלע <span class="m">\(AC\)</span>, ולכן לפי תאלס המורחב היחס <span class="m">\(EG:AC\)</span> שווה ליחס <span class="m">\(DE:DA\)</span>, שאותו מקבלים מהנתון.</p></div>
+    <ol class="st">
+    <li><span class="lab">נתונים</span><div class="ml"><div class="ml-m"><span class="m">\(DE = 2AE\)</span></div><div class="ml-m"><span class="m">\(DA = DE + AE = 3AE\)</span></div><div class="ml-m"><span class="m">\(\dfrac{DE}{DA} = \dfrac{2}{3}\)</span></div></div></li>
+    <li><span class="lab">תאלס המורחב</span><div class="ml"><div class="ml-t">במשולש <span class="m">\(DAC\)</span> מתקיים <span class="m">\(EG \parallel AC\)</span>:</div><div class="ml-m"><span class="m">\(\triangle DEG \sim \triangle DAC\)</span></div><div class="ml-m"><span class="m">\(\dfrac{EG}{AC} = \dfrac{DE}{DA} = \dfrac{2}{3}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{EG}{AC} = \dfrac{2}{3}\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">מאותו דמיון גם <span class="m">\(G\)</span> מחלקת את <span class="m">\(DC\)</span> באותו יחס:</div><div class="ml-m"><span class="m">\(\dfrac{DG}{DC} = \dfrac{2}{3}\)</span></div><div class="ml-t">נשתמש בזה בסעיף ב.</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-thales">תאלס המורחב</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span><span class="m">\(F\)</span> נקודת החיתוך של <span class="m">\(DC\)</span> ו־<span class="m">\(BE\)</span></h3>
-    <div class="steps">
-      <p><strong>(1) <span class="m">\(\dfrac{GF}{FC}\)</span>.</strong> נשווה את <span class="m">\(\triangle FEG\)</span> ו־<span class="m">\(\triangle FBC\)</span>: הזוויות ב־<span class="m">\(F\)</span> קודקודיות, ו־<span class="m">\(\measuredangle GEF = \measuredangle CBF\)</span> מתחלפות (<span class="m">\(EG \parallel BC\)</span>). לכן המשולשים דומים לפי ז.ז:</p>
-      <p><span class="m">\(\dfrac{GF}{FC} = \dfrac{EG}{BC}\)</span>. <span class="m">\(C\)</span> אמצע <span class="m">\(AB\)</span>, ולכן <span class="m">\(BC = AC\)</span>, ומסעיף א: <span class="m">\(\dfrac{GF}{FC} = \dfrac{EG}{AC} = \dfrac{2}{3}\)</span>.</p>
-      <p><strong>(2) <span class="m">\(\dfrac{DF}{FC}\)</span>.</strong> מאותו דמיון בסעיף א: <span class="m">\(\dfrac{DG}{DC} = \dfrac{2}{3}\)</span>. נסמן <span class="m">\(DC = 3a\)</span>, ולכן <span class="m">\(DG = 2a\)</span> ו־<span class="m">\(GC = a\)</span>.</p>
-      <p><span class="m">\(GF:FC = 2:3\)</span>, ולכן <span class="m">\(GF = \dfrac{2a}{5}\)</span> ו־<span class="m">\(FC = \dfrac{3a}{5}\)</span>.</p>
-      <p><span class="m">\(DF = DG + GF = 2a + \dfrac{2a}{5} = \dfrac{12a}{5}\)</span>, ולכן <span class="m">\(\dfrac{DF}{FC} = \dfrac{\frac{12a}{5}}{\frac{3a}{5}} = 4\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(\dfrac{GF}{FC} = \dfrac{2}{3}\)</span>, <span class="m">\(\dfrac{DF}{FC} = 4\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p><span class="m">\(EG \parallel BC\)</span>, ולכן <span class="m">\(BE\)</span> ו־<span class="m">\(GC\)</span> יוצרים "פרפר": שני משולשים דומים עם קדקוד ב־<span class="m">\(F\)</span>. כדי לחשב את <span class="m">\(DF:FC\)</span> מסמנים את כל הקטע <span class="m">\(DC\)</span> במשתנה אחד ומחלקים אותו לפי היחסים.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): הוכחת הדמיון</span><div class="ml"><div class="ml-t">זוויות קודקודיות:</div><div class="ml-m"><span class="m">\(\measuredangle EFG = \measuredangle BFC\)</span></div><div class="ml-t">זוויות מתחלפות, כי <span class="m">\(EG \parallel BC\)</span>:</div><div class="ml-m"><span class="m">\(\measuredangle GEF = \measuredangle CBF\)</span></div><div class="ml-t">לפי ז.ז:</div><div class="ml-m"><span class="m">\(\triangle FEG \sim \triangle FBC\)</span></div></div></li>
+    <li><span class="lab">היחס <span class="m">\(\dfrac{GF}{FC}\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{GF}{FC} = \dfrac{EG}{BC}\)</span></div><div class="ml-t"><span class="m">\(C\)</span> אמצע <span class="m">\(AB\)</span>, ולכן:</div><div class="ml-m"><span class="m">\(BC = AC\)</span></div><div class="ml-m"><span class="m">\(\dfrac{GF}{FC} = \dfrac{EG}{AC} = \dfrac{2}{3}\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): חלוקת <span class="m">\(DC\)</span></span><div class="ml"><div class="ml-t">מסעיף א:</div><div class="ml-m"><span class="m">\(\dfrac{DG}{DC} = \dfrac{2}{3}\)</span></div><div class="ml-m"><span class="m">\(DC = 3a\)</span></div><div class="ml-m"><span class="m">\(DG = 2a\)</span></div><div class="ml-m"><span class="m">\(GC = a\)</span></div></div></li>
+    <li><span class="lab">חלוקת <span class="m">\(GC\)</span></span><div class="ml"><div class="ml-t"><span class="m">\(GF:FC = 2:3\)</span>, ולכן:</div><div class="ml-m"><span class="m">\(GF = \dfrac{2}{5}\cdot a = \dfrac{2a}{5}\)</span></div><div class="ml-m"><span class="m">\(FC = \dfrac{3}{5}\cdot a = \dfrac{3a}{5}\)</span></div></div></li>
+    <li><span class="lab">היחס <span class="m">\(\dfrac{DF}{FC}\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(DF = DG + GF = 2a + \dfrac{2a}{5} = \dfrac{12a}{5}\)</span></div><div class="ml-m"><span class="m">\(\dfrac{DF}{FC} = \dfrac{12a}{5} : \dfrac{3a}{5} = 4\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{GF}{FC} = \dfrac{2}{3}\)</span></div><div class="ml-m"><span class="m">\(\dfrac{DF}{FC} = 4\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">סכום החלקים שווה לכל הקטע:</div><div class="ml-m"><span class="m">\(DF + FC = \dfrac{12a}{5} + \dfrac{3a}{5} = 3a = DC\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-angles">זוויות קודקודיות</a><a href="#t-par">זוויות מתחלפות</a><a href="#t-aa">ז.ז</a><a href="#t-thales">תאלס המורחב</a></p>
   </div>
 </section>
@@ -353,51 +383,59 @@ footer{color:var(--muted);font-size:.9rem}
 
   <div class="part">
     <h3><span class="lt">א.</span>מצאו את <span class="m">\(\dfrac{AE}{EC}\)</span></h3>
-    <div class="steps">
-      <p>האלכסונים חוצים זה את זה: <span class="m">\(AO = OC\)</span>. נסמן <span class="m">\(AO = OC = 2t\)</span>.</p>
-      <p><span class="m">\(AE = t\)</span>, ולכן <span class="m">\(EC = EO + OC = t + 2t = 3t\)</span>, ו־<span class="m">\(\dfrac{AE}{EC} = \dfrac{1}{3}\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(\dfrac{AE}{EC} = \dfrac{1}{3}\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>במעוין האלכסונים חוצים זה את זה. <span class="m">\(E\)</span> היא אמצע של חצי אלכסון, ולכן כדאי לסמן <span class="m">\(AO = 2t\)</span> כדי שכל הקטעים יצאו שלמים.</p></div>
+    <ol class="st">
+    <li><span class="lab">אלכסוני המעוין</span><div class="ml"><div class="ml-m"><span class="m">\(AO = OC = 2t\)</span></div></div></li>
+    <li><span class="lab"><span class="m">\(E\)</span> אמצע <span class="m">\(AO\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(AE = EO = t\)</span></div></div></li>
+    <li><span class="lab">הקטע <span class="m">\(EC\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(EC = EO + OC = t + 2t = 3t\)</span></div></div></li>
+    <li><span class="lab">היחס</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{AE}{EC} = \dfrac{t}{3t} = \dfrac{1}{3}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{AE}{EC} = \dfrac{1}{3}\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(AE + EC = t + 3t = 4t = AC\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-rhombus">אלכסוני מעוין</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span><span class="m">\(F\)</span> על <span class="m">\(AD\)</span>, ו־<span class="m">\(DF = 2AF\)</span></h3>
-    <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">\(\triangle AEF \sim \triangle CED\)</span>.</strong></p>
-      <p>• <span class="m">\(\measuredangle FAE = \measuredangle DCE\)</span>: האלכסון <span class="m">\(AC\)</span> חוצה את זוויות המעוין, והזוויות הנגדיות <span class="m">\(\measuredangle A\)</span> ו־<span class="m">\(\measuredangle C\)</span> שוות, ולכן גם החצאים שלהן שווים. דרך נוספת: <span class="m">\(AD = DC\)</span>, ולכן במשולש שווה השוקיים <span class="m">\(ADC\)</span> זוויות הבסיס שוות.</p>
-      <p>• <span class="m">\(\dfrac{AF}{CD} = \dfrac{\frac{AD}{3}}{AD} = \dfrac{1}{3}\)</span> (כי <span class="m">\(CD = AD\)</span>), ומסעיף א: <span class="m">\(\dfrac{AE}{CE} = \dfrac{1}{3}\)</span>.</p>
-      <p>שתי צלעות פרופורציוניות והזווית שביניהן שווה, ולכן המשולשים דומים לפי צ.ז.צ, בהתאמה <span class="m">\(A\leftrightarrow C\)</span>, <span class="m">\(E\leftrightarrow E\)</span>, <span class="m">\(F\leftrightarrow D\)</span>. יחס הדמיון הוא <span class="m">\(1:3\)</span>.</p>
-      <p><strong>(2) הוכחה: <span class="m">\(\measuredangle AEF = \measuredangle CED\)</span>.</strong> אלה זוויות מתאימות במשולשים הדומים מסעיף (1).</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>היחס <span class="m">\(1:3\)</span> מסעיף א והיחס <span class="m">\(AF:AD = 1:3\)</span> מהנתון מרמזים על דמיון צ.ז.צ: שתי צלעות ביחס <span class="m">\(1:3\)</span> והזווית שביניהן. הזווית שביניהן היא זווית בין צלע לאלכסון, והאלכסון חוצה את זוויות המעוין.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): זווית שווה</span><div class="ml"><div class="ml-t"><span class="m">\(AD = DC\)</span> (צלעות המעוין), ובמשולש שווה השוקיים <span class="m">\(ADC\)</span> זוויות הבסיס שוות:</div><div class="ml-m"><span class="m">\(\measuredangle FAE = \measuredangle DCE\)</span></div></div></li>
+    <li><span class="lab">יחסי צלעות</span><div class="ml"><div class="ml-t"><span class="m">\(DF = 2AF\)</span>, ולכן <span class="m">\(AF = \dfrac{AD}{3}\)</span>, ו־<span class="m">\(CD = AD\)</span>:</div><div class="ml-m"><span class="m">\(\dfrac{AF}{CD} = \dfrac{1}{3}\)</span></div><div class="ml-t">מסעיף א:</div><div class="ml-m"><span class="m">\(\dfrac{AE}{CE} = \dfrac{1}{3}\)</span></div></div></li>
+    <li><span class="lab">מסקנה</span><div class="ml"><div class="ml-t">שתי צלעות פרופורציוניות והזווית שביניהן שווה, לפי צ.ז.צ:</div><div class="ml-m"><span class="m">\(\triangle AEF \sim \triangle CED\)</span></div><div class="ml-m"><span class="m">\(A \leftrightarrow C,\ E \leftrightarrow E,\ F \leftrightarrow D\)</span></div><div class="ml-t">יחס הדמיון:</div><div class="ml-m"><span class="m">\(1:3\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): זוויות מתאימות</span><div class="ml"><div class="ml-t"><span class="m">\(\measuredangle AEF\)</span> ו־<span class="m">\(\measuredangle CED\)</span> הן זוויות מתאימות במשולשים הדומים:</div><div class="ml-m"><span class="m">\(\measuredangle AEF = \measuredangle CED\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\triangle AEF \sim \triangle CED\)</span></div><div class="ml-t">לפי צ.ז.צ, ביחס <span class="m">\(1:3\)</span></div><div class="ml-m"><span class="m">\(\measuredangle AEF = \measuredangle CED\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-rhombus">תכונות מעוין</a><a href="#t-iso">שווה שוקיים</a><a href="#t-sas">צ.ז.צ</a><a href="#t-ratio">זוויות מתאימות</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span><span class="m">\(EG\)</span> חוצה זווית במשולש <span class="m">\(FED\)</span></h3>
     <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות הראשונה בשם המשולש. מדובר במשולש <span class="m">\(FED\)</span>, ו־<span class="m">\(EG\)</span> חוצה את <span class="m">\(\measuredangle FED\)</span> כאשר <span class="m">\(G\)</span> על <span class="m">\(FD\)</span>. רק בקריאה הזו שני חלקי הסעיף נכונים.</p>
-    <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">\(EG \parallel DO\)</span>.</strong> נסמן <span class="m">\(\measuredangle AEF = \measuredangle CED = \beta\)</span> (סעיף ב(2)).</p>
-      <p>הנקודות <span class="m">\(F\)</span> ו־<span class="m">\(D\)</span> באותו צד של הישר <span class="m">\(AC\)</span>, ולכן <span class="m">\(\measuredangle AEF + \measuredangle FED + \measuredangle DEC = 180^{\circ}\)</span> (זווית שטוחה), ו־<span class="m">\(\measuredangle FED = 180^{\circ} - 2\beta\)</span>.</p>
-      <p><span class="m">\(EG\)</span> חוצה אותה: <span class="m">\(\measuredangle FEG = 90^{\circ} - \beta\)</span>. לכן <span class="m">\(\measuredangle AEG = \beta + (90^{\circ} - \beta ) = 90^{\circ}\)</span>, כלומר <span class="m">\(EG \perp AC\)</span>.</p>
-      <p>אלכסוני המעוין מאונכים, ולכן גם <span class="m">\(DO \perp AC\)</span>. שני ישרים המאונכים לאותו ישר מקבילים זה לזה, ולכן <span class="m">\(EG \parallel DO\)</span>.</p>
-      <p><strong>(2) הוכחה: <span class="m">\(AD = 6FG\)</span>.</strong> לפי משפט חוצה הזווית במשולש <span class="m">\(FED\)</span>: <span class="m">\(\dfrac{FG}{GD} = \dfrac{EF}{ED}\)</span>. מהדמיון בסעיף ב, <span class="m">\(\dfrac{EF}{ED} = \dfrac{1}{3}\)</span>.</p>
-      <p>לכן <span class="m">\(FG = \dfrac{FD}{4}\)</span>. <span class="m">\(FD = \dfrac{2AD}{3}\)</span>, ולכן <span class="m">\(FG = \dfrac{\frac{2AD}{3}}{4} = \dfrac{AD}{6}\)</span>, כלומר <span class="m">\(AD = 6FG\)</span>.</p>
-      <p class="alt"><strong>בדיקה בדרך נוספת:</strong> במשולש <span class="m">\(ADO\)</span> מתקיים <span class="m">\(EG \parallel DO\)</span> ו־<span class="m">\(E\)</span> אמצע <span class="m">\(AO\)</span>, ולכן <span class="m">\(G\)</span> אמצע <span class="m">\(AD\)</span> ו־<span class="m">\(AG = \dfrac{AD}{2}\)</span>. מאחר ש־<span class="m">\(AF = \dfrac{AD}{3}\)</span>, מקבלים <span class="m">\(FG = \dfrac{AD}{2} - \dfrac{AD}{3} = \dfrac{AD}{6}\)</span>.</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>כדי להוכיח שני ישרים מקבילים, מראים ששניהם מאונכים לאותו ישר (<span class="m">\(AC\)</span>). לזה מחשבים זוויות סביב הנקודה <span class="m">\(E\)</span> בעזרת סעיף ב(2). לחלק (2) משתמשים במשפט חוצה הזווית ובדמיון מסעיף ב.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): סימון</span><div class="ml"><div class="ml-t">מסעיף ב(2):</div><div class="ml-m"><span class="m">\(\measuredangle AEF = \measuredangle CED = \beta\)</span></div></div></li>
+    <li><span class="lab">זווית שטוחה</span><div class="ml"><div class="ml-t"><span class="m">\(F\)</span> ו־<span class="m">\(D\)</span> באותו צד של <span class="m">\(AC\)</span>:</div><div class="ml-m"><span class="m">\(\measuredangle AEF + \measuredangle FED + \measuredangle DEC = 180^{\circ}\)</span></div><div class="ml-m"><span class="m">\(\measuredangle FED = 180^{\circ} - 2\beta\)</span></div></div></li>
+    <li><span class="lab">חוצה הזווית</span><div class="ml"><div class="ml-m"><span class="m">\(\measuredangle FEG = \dfrac{180^{\circ} - 2\beta}{2} = 90^{\circ} - \beta\)</span></div><div class="ml-m"><span class="m">\(\measuredangle AEG = \beta + (90^{\circ} - \beta) = 90^{\circ}\)</span></div><div class="ml-m"><span class="m">\(EG \perp AC\)</span></div></div></li>
+    <li><span class="lab">מסקנה</span><div class="ml"><div class="ml-t">אלכסוני המעוין מאונכים:</div><div class="ml-m"><span class="m">\(DO \perp AC\)</span></div><div class="ml-t">שני ישרים המאונכים לאותו ישר מקבילים:</div><div class="ml-m"><span class="m">\(EG \parallel DO\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): משפט חוצה הזווית</span><div class="ml"><div class="ml-t">במשולש <span class="m">\(FED\)</span>:</div><div class="ml-m"><span class="m">\(\dfrac{FG}{GD} = \dfrac{EF}{ED}\)</span></div><div class="ml-t">מהדמיון בסעיף ב:</div><div class="ml-m"><span class="m">\(\dfrac{EF}{ED} = \dfrac{1}{3}\)</span></div><div class="ml-m"><span class="m">\(FG = \dfrac{1}{4}\cdot FD\)</span></div></div></li>
+    <li><span class="lab">הצבה</span><div class="ml"><div class="ml-m"><span class="m">\(FD = \dfrac{2}{3}\cdot AD\)</span></div><div class="ml-m"><span class="m">\(FG = \dfrac{1}{4}\cdot\dfrac{2AD}{3} = \dfrac{AD}{6}\)</span></div><div class="ml-m"><span class="m">\(AD = 6FG\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(EG \parallel DO\)</span></div><div class="ml-m"><span class="m">\(AD = 6FG\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">בדרך נוספת: במשולש <span class="m">\(ADO\)</span> מתקיים <span class="m">\(EG \parallel DO\)</span> ו־<span class="m">\(E\)</span> אמצע <span class="m">\(AO\)</span>, ולכן <span class="m">\(G\)</span> אמצע <span class="m">\(AD\)</span> (קטע אמצעים):</div><div class="ml-m"><span class="m">\(AG = \dfrac{AD}{2}\)</span></div><div class="ml-m"><span class="m">\(FG = AG - AF = \dfrac{AD}{2} - \dfrac{AD}{3} = \dfrac{AD}{6}\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-angles">זווית שטוחה, ישרים מאונכים</a><a href="#t-rhombus">אלכסוני מעוין</a><a href="#t-bisector">חוצה הזווית</a><a href="#t-thales">תאלס</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span><span class="m">\(S_{\triangle EFG} = S\)</span></h3>
     <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות האחרונה בשמות המשולשים. הקריאה הטבעית היא <span class="m">\(AEF\)</span> בסעיף (1) ו־<span class="m">\(CED\)</span> בסעיף (2), המשולשים הדומים מסעיף ב.</p>
-    <div class="steps">
-      <p>כל המשולשים שקדקודם <span class="m">\(E\)</span> ובסיסם על <span class="m">\(AD\)</span> הם בעלי אותו גובה. על <span class="m">\(AD\)</span>, ביחידות של <span class="m">\(FG\)</span>: <span class="m">\(AF = 2\)</span>, <span class="m">\(FG = 1\)</span>, <span class="m">\(GD = 3\)</span>, ו־<span class="m">\(AD = 6\)</span>.</p>
-      <p><strong>(1)</strong> <span class="m">\(S_{\triangle AEF} = 2S\)</span> (ואם הכוונה היא ל־<span class="m">\(\triangle AEG\)</span>: <span class="m">\(3S\)</span>).</p>
-      <p><strong>(2)</strong> <span class="m">\(\triangle AEF \sim \triangle CED\)</span> ביחס דמיון <span class="m">\(1:3\)</span>, ולכן יחס השטחים הוא <span class="m">\(1:9\)</span> ו־<span class="m">\(S_{\triangle CED} = 9\cdot 2S = 18S\)</span>.</p>
-      <p class="alt"><strong>בדיקה:</strong> <span class="m">\(S_{\triangle AED} = 6S\)</span>. למשולשים <span class="m">\(AED\)</span> ו־<span class="m">\(CED\)</span> יש קדקוד משותף <span class="m">\(D\)</span> ובסיסים <span class="m">\(AE:EC = 1:3\)</span>, ולכן <span class="m">\(S_{\triangle CED} = 3\cdot 6S = 18S\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(S_{\triangle AEF} = 2S\)</span>, <span class="m">\(S_{\triangle CED} = 18S\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>כל המשולשים שקדקודם <span class="m">\(E\)</span> ובסיסם על הצלע <span class="m">\(AD\)</span> הם בעלי אותו גובה, ולכן יחס השטחים שלהם הוא יחס הבסיסים. כדי להשוות את <span class="m">\(\triangle CED\)</span> משתמשים ביחס הדמיון: יחס השטחים הוא ריבוע יחס הדמיון.</p></div>
+    <ol class="st">
+    <li><span class="lab">הקטעים על <span class="m">\(AD\)</span></span><div class="ml"><div class="ml-t">ביחידות של <span class="m">\(FG\)</span> (מסעיף ג):</div><div class="ml-m"><span class="m">\(AD = 6\)</span></div><div class="ml-m"><span class="m">\(AF = \dfrac{AD}{3} = 2\)</span></div><div class="ml-m"><span class="m">\(FG = 1\)</span></div><div class="ml-m"><span class="m">\(GD = 6 - 2 - 1 = 3\)</span></div></div></li>
+    <li><span class="lab">סעיף (1): <span class="m">\(S_{\triangle AEF}\)</span></span><div class="ml"><div class="ml-t">קדקוד משותף <span class="m">\(E\)</span>, בסיסים על <span class="m">\(AD\)</span>:</div><div class="ml-m"><span class="m">\(\dfrac{S_{\triangle AEF}}{S_{\triangle EFG}} = \dfrac{AF}{FG} = 2\)</span></div><div class="ml-m"><span class="m">\(S_{\triangle AEF} = 2S\)</span></div><div class="ml-t">אם הכוונה היא ל־<span class="m">\(\triangle AEG\)</span>:</div><div class="ml-m"><span class="m">\(S_{\triangle AEG} = 3S\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): <span class="m">\(S_{\triangle CED}\)</span></span><div class="ml"><div class="ml-t">יחס השטחים של משולשים דומים הוא ריבוע יחס הדמיון:</div><div class="ml-m"><span class="m">\(\dfrac{S_{\triangle CED}}{S_{\triangle AEF}} = 3^{2} = 9\)</span></div><div class="ml-m"><span class="m">\(S_{\triangle CED} = 9\cdot 2S = 18S\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(S_{\triangle AEF} = 2S\)</span></div><div class="ml-m"><span class="m">\(S_{\triangle CED} = 18S\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">מהקטעים על <span class="m">\(AD\)</span>:</div><div class="ml-m"><span class="m">\(S_{\triangle AED} = 6S\)</span></div><div class="ml-t">למשולשים <span class="m">\(AED\)</span> ו־<span class="m">\(CED\)</span> קדקוד משותף <span class="m">\(D\)</span> ובסיסים <span class="m">\(AE:EC = 1:3\)</span>:</div><div class="ml-m"><span class="m">\(S_{\triangle CED} = 3\cdot 6S = 18S\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-area">משולשים בעלי גובה משותף</a><a href="#t-ratio">יחס שטחים = k²</a></p>
   </div>
 </section>
@@ -415,41 +453,45 @@ footer{color:var(--muted);font-size:.9rem}
 
   <div class="part">
     <h3><span class="lt">א.</span>הוכחה: <span class="m">\(\triangle BCD \sim \triangle ADE\)</span></h3>
-    <div class="steps">
-      <p>ב־<span class="m">\(\triangle BCD\)</span> (<span class="m">\(BC = BD\)</span>) זוויות הבסיס שוות: <span class="m">\(\measuredangle BCD = \measuredangle BDC\)</span>.</p>
-      <p>ב־<span class="m">\(\triangle ADE\)</span> (<span class="m">\(AD = AE\)</span>) זוויות הבסיס שוות: <span class="m">\(\measuredangle ADE = \measuredangle AED\)</span>.</p>
-      <p><span class="m">\(\measuredangle ADE\)</span> ו־<span class="m">\(\measuredangle BDC\)</span> הן אותה זווית, ולכן ארבע הזוויות שוות. לכן <span class="m">\(\measuredangle BCD = \measuredangle ADE\)</span> ו־<span class="m">\(\measuredangle BDC = \measuredangle AED\)</span>, והמשולשים דומים לפי ז.ז, בהתאמה <span class="m">\(B\leftrightarrow A\)</span>, <span class="m">\(C\leftrightarrow D\)</span>, <span class="m">\(D\leftrightarrow E\)</span>:</p>
-      <p><span class="m">\(\dfrac{BC}{AD} = \dfrac{CD}{DE} = \dfrac{BD}{AE}\)</span></p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>בשני המשולשים יש שתי צלעות שוות, ולכן זוויות בסיס שוות. לשני המשולשים יש גם את הזווית <span class="m">\(D\)</span>, ולכן כל זוויות הבסיס שוות זו לזו, ומקבלים ז.ז.</p></div>
+    <ol class="st">
+    <li><span class="lab">משולש <span class="m">\(BCD\)</span></span><div class="ml"><div class="ml-t"><span class="m">\(BC = BD\)</span>, ולכן זוויות הבסיס שוות:</div><div class="ml-m"><span class="m">\(\measuredangle BCD = \measuredangle BDC\)</span></div></div></li>
+    <li><span class="lab">משולש <span class="m">\(ADE\)</span></span><div class="ml"><div class="ml-t"><span class="m">\(AD = AE\)</span>, ולכן זוויות הבסיס שוות:</div><div class="ml-m"><span class="m">\(\measuredangle ADE = \measuredangle AED\)</span></div></div></li>
+    <li><span class="lab">זווית משותפת</span><div class="ml"><div class="ml-t"><span class="m">\(\measuredangle ADE\)</span> ו־<span class="m">\(\measuredangle BDC\)</span> הן אותה זווית, ולכן:</div><div class="ml-m"><span class="m">\(\measuredangle BCD = \measuredangle ADE\)</span></div><div class="ml-m"><span class="m">\(\measuredangle BDC = \measuredangle AED\)</span></div></div></li>
+    <li><span class="lab">מסקנה</span><div class="ml"><div class="ml-t">לפי ז.ז:</div><div class="ml-m"><span class="m">\(\triangle BCD \sim \triangle ADE\)</span></div><div class="ml-m"><span class="m">\(B \leftrightarrow A,\ C \leftrightarrow D,\ D \leftrightarrow E\)</span></div><div class="ml-m"><span class="m">\(\dfrac{BC}{AD} = \dfrac{CD}{DE} = \dfrac{BD}{AE}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\triangle BCD \sim \triangle ADE\)</span></div><div class="ml-t">לפי ז.ז</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-iso">זוויות בסיס</a><a href="#t-aa">ז.ז</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span><span class="m">\(A\)</span> אמצע <span class="m">\(CD\)</span>, ו־<span class="m">\(\dfrac{BC}{AC} = \dfrac{5}{3}\)</span></h3>
     <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות השנייה במונה. התשובה זהה אם המונה הוא <span class="m">\(BC\)</span> או <span class="m">\(BD\)</span>, כי <span class="m">\(BC = BD\)</span>.</p>
-    <div class="steps">
-      <p>נסמן <span class="m">\(AC = AD = 3k\)</span> ו־<span class="m">\(BC = BD = 5k\)</span>. לכן <span class="m">\(CD = 6k\)</span>.</p>
-      <p><strong>(1) <span class="m">\(\dfrac{DE}{AC}\)</span>.</strong> מהדמיון: <span class="m">\(\dfrac{CD}{DE} = \dfrac{BC}{AD}\)</span>, ולכן <span class="m">\(DE = CD\cdot \dfrac{AD}{BC} = 6k\cdot \dfrac{3k}{5k} = \dfrac{18k}{5}\)</span>.</p>
-      <p><span class="m">\(\dfrac{DE}{AC} = \dfrac{\frac{18k}{5}}{3k} = \dfrac{6}{5}\)</span></p>
-      <p><strong>(2) <span class="m">\(\dfrac{S_{\triangle ADE}}{S_{\triangle ABE}}\)</span>.</strong> לשני המשולשים יש קדקוד משותף <span class="m">\(A\)</span>, והבסיסים <span class="m">\(DE\)</span> ו־<span class="m">\(EB\)</span> על הישר <span class="m">\(BD\)</span>.</p>
-      <p><span class="m">\(EB = BD - DE = 5k - \dfrac{18k}{5} = \dfrac{7k}{5}\)</span>, ולכן היחס הוא <span class="m">\(\dfrac{DE}{EB} = \dfrac{18}{7}\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(\dfrac{DE}{AC} = \dfrac{6}{5}\)</span>, <span class="m">\(S_{\triangle ADE} : S_{\triangle ABE} = 18:7\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מסמנים את הקטעים לפי היחס הנתון (<span class="m">\(3k\)</span> ו־<span class="m">\(5k\)</span>), ומוציאים את <span class="m">\(DE\)</span> מהפרופורציה של סעיף א. לשטחים: למשולשים <span class="m">\(ADE\)</span> ו־<span class="m">\(ABE\)</span> יש קדקוד משותף <span class="m">\(A\)</span> ובסיסים על אותו ישר.</p></div>
+    <ol class="st">
+    <li><span class="lab">נתונים</span><div class="ml"><div class="ml-t"><span class="m">\(A\)</span> אמצע <span class="m">\(CD\)</span>:</div><div class="ml-m"><span class="m">\(AC = AD = 3k\)</span></div><div class="ml-m"><span class="m">\(BC = BD = 5k\)</span></div><div class="ml-m"><span class="m">\(CD = 2\cdot 3k = 6k\)</span></div></div></li>
+    <li><span class="lab">סעיף (1): הקטע <span class="m">\(DE\)</span></span><div class="ml"><div class="ml-t">מהדמיון בסעיף א:</div><div class="ml-m"><span class="m">\(\dfrac{CD}{DE} = \dfrac{BC}{AD}\)</span></div><div class="ml-m"><span class="m">\(DE = \dfrac{CD\cdot AD}{BC} = \dfrac{6k\cdot 3k}{5k} = \dfrac{18k}{5}\)</span></div></div></li>
+    <li><span class="lab">היחס</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{DE}{AC} = \dfrac{18k}{5} : 3k = \dfrac{6}{5}\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): יחס השטחים</span><div class="ml"><div class="ml-t">קדקוד משותף <span class="m">\(A\)</span>, בסיסים <span class="m">\(DE\)</span> ו־<span class="m">\(EB\)</span> על <span class="m">\(BD\)</span>:</div><div class="ml-m"><span class="m">\(\dfrac{S_{\triangle ADE}}{S_{\triangle ABE}} = \dfrac{DE}{EB}\)</span></div><div class="ml-m"><span class="m">\(EB = BD - DE = 5k - \dfrac{18k}{5} = \dfrac{7k}{5}\)</span></div><div class="ml-m"><span class="m">\(\dfrac{S_{\triangle ADE}}{S_{\triangle ABE}} = \dfrac{18k}{5} : \dfrac{7k}{5} = \dfrac{18}{7}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{DE}{AC} = \dfrac{6}{5}\)</span></div><div class="ml-m"><span class="m">\(S_{\triangle ADE} : S_{\triangle ABE} = 18:7\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t"><span class="m">\(E\)</span> אכן על הקטע <span class="m">\(BD\)</span>:</div><div class="ml-m"><span class="m">\(DE = 3.6k &lt; 5k = BD\ \checkmark\)</span></div><div class="ml-t">והיחס השלישי מהדמיון נותן אותו יחס דמיון:</div><div class="ml-m"><span class="m">\(\dfrac{BD}{AE} = \dfrac{5k}{3k} = \dfrac{BC}{AD}\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-ratio">יחסים במשולשים דומים</a><a href="#t-area">משולשים בעלי גובה משותף</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>האנך ל־<span class="m">\(BC\)</span> מ־<span class="m">\(C\)</span> פוגש את המשך <span class="m">\(BA\)</span> בנקודה <span class="m">\(F\)</span></h3>
-    <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">\(\triangle ABC \sim \triangle ACF\)</span>.</strong></p>
-      <p><span class="m">\(BA\)</span> הוא התיכון לבסיס במשולש שווה השוקיים <span class="m">\(BCD\)</span>, ולכן הוא גם גובה: <span class="m">\(\measuredangle BAC = 90^{\circ}\)</span>. גם <span class="m">\(\measuredangle CAF = 90^{\circ}\)</span>, כי היא צמודה לה.</p>
-      <p><span class="m">\(\measuredangle ACF = \measuredangle BCF - \measuredangle BCA = 90^{\circ} - \measuredangle BCA\)</span>. במשולש <span class="m">\(ABC\)</span>: <span class="m">\(\measuredangle ABC = 90^{\circ} - \measuredangle BCA\)</span>. לכן <span class="m">\(\measuredangle ABC = \measuredangle ACF\)</span>.</p>
-      <p>לפי ז.ז: <span class="m">\(\triangle ABC \sim \triangle ACF\)</span>, בהתאמה <span class="m">\(A\leftrightarrow A\)</span>, <span class="m">\(B\leftrightarrow C\)</span>, <span class="m">\(C\leftrightarrow F\)</span>.</p>
-      <p><strong>(2) היחס <span class="m">\(BA:AF\)</span>.</strong> לפי פיתגורס ב־<span class="m">\(\triangle ABC\)</span>: <span class="m">\(AB = \sqrt{25k^{2} - 9k^{2}} = 4k\)</span>.</p>
-      <p>מהדמיון: <span class="m">\(\dfrac{AB}{AC} = \dfrac{AC}{AF}\)</span>, ולכן <span class="m">\(AF = \dfrac{AC^{2}}{AB} = \dfrac{9k^{2}}{4k} = \dfrac{9k}{4}\)</span>.</p>
-      <p><span class="m">\(BA:AF = 4k : \dfrac{9k}{4} = 16:9\)</span></p>
-    </div>
-    <p class="ans"><span class="m">\(BA:AF = 16:9\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>במשולש שווה שוקיים התיכון לבסיס הוא גם גובה, ולכן יש זווית ישרה ב־<span class="m">\(A\)</span>. שני המשולשים ישרי זווית, ומספיקה עוד זווית חדה שווה. אחר כך מוצאים את <span class="m">\(AB\)</span> בפיתגורס ואת <span class="m">\(AF\)</span> מהדמיון.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): זווית ישרה</span><div class="ml"><div class="ml-t"><span class="m">\(BA\)</span> תיכון לבסיס במשולש שווה השוקיים <span class="m">\(BCD\)</span>, ולכן גם גובה:</div><div class="ml-m"><span class="m">\(\measuredangle BAC = 90^{\circ}\)</span></div><div class="ml-t">זווית צמודה:</div><div class="ml-m"><span class="m">\(\measuredangle CAF = 90^{\circ}\)</span></div></div></li>
+    <li><span class="lab">זווית חדה שווה</span><div class="ml"><div class="ml-t">נתון <span class="m">\(FC \perp BC\)</span>:</div><div class="ml-m"><span class="m">\(\measuredangle ACF = 90^{\circ} - \measuredangle BCA\)</span></div><div class="ml-t">במשולש <span class="m">\(ABC\)</span>:</div><div class="ml-m"><span class="m">\(\measuredangle ABC = 90^{\circ} - \measuredangle BCA\)</span></div><div class="ml-m"><span class="m">\(\measuredangle ABC = \measuredangle ACF\)</span></div></div></li>
+    <li><span class="lab">מסקנה</span><div class="ml"><div class="ml-t">לפי ז.ז:</div><div class="ml-m"><span class="m">\(\triangle ABC \sim \triangle ACF\)</span></div><div class="ml-m"><span class="m">\(A \leftrightarrow A,\ B \leftrightarrow C,\ C \leftrightarrow F\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): פיתגורס במשולש <span class="m">\(ABC\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(AB^{2} = BC^{2} - AC^{2}\)</span></div><div class="ml-m"><span class="m">\(AB = \sqrt{25k^{2} - 9k^{2}} = 4k\)</span></div></div></li>
+    <li><span class="lab">הקטע <span class="m">\(AF\)</span> מהדמיון</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{AB}{AC} = \dfrac{AC}{AF}\)</span></div><div class="ml-m"><span class="m">\(AF = \dfrac{AC^{2}}{AB} = \dfrac{9k^{2}}{4k} = \dfrac{9k}{4}\)</span></div></div></li>
+    <li><span class="lab">היחס</span><div class="ml"><div class="ml-m"><span class="m">\(BA:AF = 4k : \dfrac{9k}{4} = 16:9\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\triangle ABC \sim \triangle ACF\)</span></div><div class="ml-m"><span class="m">\(BA:AF = 16:9\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">במשולש ישר הזווית <span class="m">\(BCF\)</span>, <span class="m">\(CA\)</span> הוא הגובה ליתר, ולכן:</div><div class="ml-m"><span class="m">\(CA^{2} = BA\cdot AF = 4k\cdot\dfrac{9k}{4} = 9k^{2}\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-iso">התיכון לבסיס הוא גובה</a><a href="#t-angles">סכום זוויות במשולש</a><a href="#t-aa">ז.ז</a><a href="#t-right">פיתגורס</a></p>
   </div>
 </section>
@@ -467,44 +509,52 @@ footer{color:var(--muted);font-size:.9rem}
 
   <div class="part">
     <h3><span class="lt">א.</span>נתון <span class="m">\(AE = 2BE\)</span> ו־<span class="m">\(BC = 3BD\)</span></h3>
-    <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">\(ED \parallel AC\)</span>.</strong> <span class="m">\(\dfrac{BE}{BA} = \dfrac{BE}{3BE} = \dfrac{1}{3}\)</span> ו־<span class="m">\(\dfrac{BD}{BC} = \dfrac{1}{3}\)</span>. הישר <span class="m">\(ED\)</span> מחלק את <span class="m">\(BA\)</span> ואת <span class="m">\(BC\)</span> באותו יחס, ולכן לפי משפט תאלס ההפוך <span class="m">\(ED \parallel AC\)</span>.</p>
-      <p><strong>(2) <span class="m">\(\dfrac{ED}{AC}\)</span>.</strong> <span class="m">\(\triangle BED \sim \triangle BAC\)</span> ביחס <span class="m">\(1:3\)</span>, ולכן <span class="m">\(\dfrac{ED}{AC} = \dfrac{1}{3}\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(\dfrac{ED}{AC} = \dfrac{1}{3}\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>כדי להוכיח מקבילות מקטעים, משתמשים במשפט תאלס ההפוך: אם ישר מחלק שתי צלעות של משולש באותו יחס, הוא מקביל לצלע השלישית. אחר כך המשולש הקטן דומה לגדול.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): היחסים</span><div class="ml"><div class="ml-m"><span class="m">\(AE = 2BE\)</span></div><div class="ml-m"><span class="m">\(\dfrac{BE}{BA} = \dfrac{BE}{3BE} = \dfrac{1}{3}\)</span></div><div class="ml-m"><span class="m">\(\dfrac{BD}{BC} = \dfrac{BD}{3BD} = \dfrac{1}{3}\)</span></div></div></li>
+    <li><span class="lab">תאלס ההפוך</span><div class="ml"><div class="ml-t">הישר <span class="m">\(ED\)</span> מחלק את <span class="m">\(BA\)</span> ואת <span class="m">\(BC\)</span> באותו יחס:</div><div class="ml-m"><span class="m">\(ED \parallel AC\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): דמיון</span><div class="ml"><div class="ml-m"><span class="m">\(\triangle BED \sim \triangle BAC\)</span></div><div class="ml-m"><span class="m">\(\dfrac{ED}{AC} = \dfrac{BD}{BC} = \dfrac{1}{3}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(ED \parallel AC\)</span></div><div class="ml-m"><span class="m">\(\dfrac{ED}{AC} = \dfrac{1}{3}\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-thales">תאלס ההפוך</a><a href="#t-ratio">יחסים במשולשים דומים</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span><span class="m">\(EF \parallel BC\)</span>, והנקודה <span class="m">\(F\)</span> על <span class="m">\(AC\)</span></h3>
-    <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">\(EDCF\)</span> מקבילית.</strong> <span class="m">\(ED \parallel FC\)</span> (סעיף א, <span class="m">\(FC\)</span> על <span class="m">\(AC\)</span>), ו־<span class="m">\(EF \parallel DC\)</span> (נתון, <span class="m">\(DC\)</span> על <span class="m">\(BC\)</span>). שני זוגות של צלעות נגדיות מקבילות, ולכן המרובע מקבילית.</p>
-      <p><strong>(2) <span class="m">\(\dfrac{EF}{BD}\)</span>.</strong> במקבילית צלעות נגדיות שוות: <span class="m">\(EF = DC = BC - BD = 3BD - BD = 2BD\)</span>, ולכן <span class="m">\(\dfrac{EF}{BD} = 2\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(\dfrac{EF}{BD} = 2\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מרובע שבו שני זוגות צלעות נגדיות מקבילות הוא מקבילית. במקבילית צלעות נגדיות שוות, ולכן <span class="m">\(EF = DC\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): צלעות מקבילות</span><div class="ml"><div class="ml-t">מסעיף א, ו־<span class="m">\(FC\)</span> על <span class="m">\(AC\)</span>:</div><div class="ml-m"><span class="m">\(ED \parallel FC\)</span></div><div class="ml-t">נתון, ו־<span class="m">\(DC\)</span> על <span class="m">\(BC\)</span>:</div><div class="ml-m"><span class="m">\(EF \parallel DC\)</span></div><div class="ml-t">ולכן <span class="m">\(EDCF\)</span> מקבילית.</div></div></li>
+    <li><span class="lab">סעיף (2): צלעות נגדיות</span><div class="ml"><div class="ml-m"><span class="m">\(EF = DC\)</span></div><div class="ml-m"><span class="m">\(DC = BC - BD = 3BD - BD = 2BD\)</span></div><div class="ml-m"><span class="m">\(\dfrac{EF}{BD} = \dfrac{2BD}{BD} = 2\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t"><span class="m">\(EDCF\)</span> מקבילית</div><div class="ml-m"><span class="m">\(\dfrac{EF}{BD} = 2\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">מתאלס המורחב במשולש <span class="m">\(ABC\)</span> (<span class="m">\(EF \parallel BC\)</span>):</div><div class="ml-m"><span class="m">\(\dfrac{EF}{BC} = \dfrac{AE}{AB} = \dfrac{2}{3}\)</span></div><div class="ml-m"><span class="m">\(EF = \dfrac{2}{3}\cdot 3BD = 2BD\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-pgram">הגדרת מקבילית וצלעות נגדיות</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span><span class="m">\(G\)</span> אמצע <span class="m">\(EF\)</span>, והמשך <span class="m">\(BG\)</span> חותך את <span class="m">\(AC\)</span> בנקודה <span class="m">\(H\)</span></h3>
-    <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">\(BEGD\)</span> מקבילית.</strong> <span class="m">\(EG = \dfrac{EF}{2} = BD\)</span>, ו־<span class="m">\(EG \parallel BD\)</span> (כי <span class="m">\(EF \parallel BC\)</span>). זוג צלעות נגדיות שוות ומקבילות, ולכן המרובע מקבילית.</p>
-      <p><strong>(2) הוכחה: <span class="m">\(\triangle HGF \sim \triangle HBC\)</span>.</strong> <span class="m">\(GF \parallel BC\)</span>, ולכן <span class="m">\(\measuredangle HGF = \measuredangle HBC\)</span> ו־<span class="m">\(\measuredangle HFG = \measuredangle HCB\)</span> (זוויות מתאימות). לפי ז.ז המשולשים דומים.</p>
-      <p><strong>(3) הוכחה: <span class="m">\(FC = 2HF\)</span>.</strong> <span class="m">\(GF = \dfrac{EF}{2} = BD = \dfrac{BC}{3}\)</span>, ולכן יחס הדמיון הוא <span class="m">\(\dfrac{GF}{BC} = \dfrac{1}{3}\)</span> ו־<span class="m">\(\dfrac{HF}{HC} = \dfrac{1}{3}\)</span>.</p>
-      <p><span class="m">\(HC = 3HF\)</span>, ולכן <span class="m">\(FC = HC - HF = 2HF\)</span>.</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מרובע שבו זוג צלעות נגדיות שוות ומקבילות הוא מקבילית. הדמיון נובע מכך ש־<span class="m">\(GF \parallel BC\)</span> (זוויות מתאימות). מיחס הדמיון <span class="m">\(GF:BC\)</span> מקבלים את היחס <span class="m">\(HF:HC\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): מקבילית <span class="m">\(BEGD\)</span></span><div class="ml"><div class="ml-t"><span class="m">\(G\)</span> אמצע <span class="m">\(EF\)</span>, ומסעיף ב:</div><div class="ml-m"><span class="m">\(EG = \dfrac{EF}{2} = BD\)</span></div><div class="ml-t"><span class="m">\(EF \parallel BC\)</span>:</div><div class="ml-m"><span class="m">\(EG \parallel BD\)</span></div><div class="ml-t">זוג צלעות נגדיות שוות ומקבילות, ולכן <span class="m">\(BEGD\)</span> מקבילית.</div></div></li>
+    <li><span class="lab">סעיף (2): דמיון</span><div class="ml"><div class="ml-t"><span class="m">\(GF \parallel BC\)</span>, זוויות מתאימות:</div><div class="ml-m"><span class="m">\(\measuredangle HGF = \measuredangle HBC\)</span></div><div class="ml-m"><span class="m">\(\measuredangle HFG = \measuredangle HCB\)</span></div><div class="ml-t">לפי ז.ז:</div><div class="ml-m"><span class="m">\(\triangle HGF \sim \triangle HBC\)</span></div></div></li>
+    <li><span class="lab">סעיף (3): יחס הדמיון</span><div class="ml"><div class="ml-m"><span class="m">\(GF = \dfrac{EF}{2} = BD = \dfrac{BC}{3}\)</span></div><div class="ml-m"><span class="m">\(\dfrac{HF}{HC} = \dfrac{GF}{BC} = \dfrac{1}{3}\)</span></div></div></li>
+    <li><span class="lab">מסקנה</span><div class="ml"><div class="ml-m"><span class="m">\(HC = 3HF\)</span></div><div class="ml-m"><span class="m">\(FC = HC - HF = 3HF - HF = 2HF\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-t"><span class="m">\(BEGD\)</span> מקבילית</div><div class="ml-m"><span class="m">\(\triangle HGF \sim \triangle HBC\)</span></div><div class="ml-m"><span class="m">\(FC = 2HF\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-pgram">משפט: זוג צלעות שוות ומקבילות</a><a href="#t-par">זוויות מתאימות</a><a href="#t-aa">ז.ז</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span><span class="m">\(S_{\triangle HGF} = S\)</span></h3>
-    <div class="steps">
-      <p><strong>(1) <span class="m">\(S_{\triangle BCH}\)</span>.</strong> יחס הדמיון בין <span class="m">\(\triangle HBC\)</span> ל־<span class="m">\(\triangle HGF\)</span> הוא <span class="m">\(3\)</span>, ולכן יחס השטחים הוא <span class="m">\(9\)</span> ו־<span class="m">\(S_{\triangle BCH} = 9S\)</span>.</p>
-      <p><strong>(2) <span class="m">\(S_{\triangle ABC}\)</span>.</strong> <span class="m">\(\triangle AEF \sim \triangle ABC\)</span> (<span class="m">\(EF \parallel BC\)</span>) ביחס <span class="m">\(\dfrac{AE}{AB} = \dfrac{2}{3}\)</span>, ולכן <span class="m">\(AF = \dfrac{2AC}{3}\)</span> ו־<span class="m">\(FC = \dfrac{AC}{3}\)</span>.</p>
-      <p>מסעיף ג(3): <span class="m">\(HF = \dfrac{FC}{2} = \dfrac{AC}{6}\)</span>, ולכן <span class="m">\(HC = HF + FC = \dfrac{AC}{2}\)</span>. כלומר <span class="m">\(H\)</span> אמצע <span class="m">\(AC\)</span>, ו־<span class="m">\(BH\)</span> תיכון.</p>
-      <p>התיכון מחלק את המשולש לשני חלקים שווי שטח: <span class="m">\(S_{\triangle ABC} = 2\cdot S_{\triangle BCH} = 18S\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(S_{\triangle BCH} = 9S\)</span>, <span class="m">\(S_{\triangle ABC} = 18S\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>יחס השטחים של משולשים דומים הוא ריבוע יחס הדמיון. כדי לעבור לכל המשולש <span class="m">\(ABC\)</span> מוצאים איפה נמצאת <span class="m">\(H\)</span> על <span class="m">\(AC\)</span>: מתברר שהיא האמצע, ולכן <span class="m">\(BH\)</span> תיכון.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): <span class="m">\(S_{\triangle BCH}\)</span></span><div class="ml"><div class="ml-t">יחס הדמיון מסעיף ג הוא 3:</div><div class="ml-m"><span class="m">\(\dfrac{S_{\triangle BCH}}{S_{\triangle HGF}} = 3^{2} = 9\)</span></div><div class="ml-m"><span class="m">\(S_{\triangle BCH} = 9S\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): מיקום <span class="m">\(F\)</span></span><div class="ml"><div class="ml-t"><span class="m">\(\triangle AEF \sim \triangle ABC\)</span> (<span class="m">\(EF \parallel BC\)</span>):</div><div class="ml-m"><span class="m">\(\dfrac{AF}{AC} = \dfrac{AE}{AB} = \dfrac{2}{3}\)</span></div><div class="ml-m"><span class="m">\(FC = \dfrac{AC}{3}\)</span></div></div></li>
+    <li><span class="lab">מיקום <span class="m">\(H\)</span></span><div class="ml"><div class="ml-t">מסעיף ג(3):</div><div class="ml-m"><span class="m">\(HF = \dfrac{FC}{2} = \dfrac{AC}{6}\)</span></div><div class="ml-m"><span class="m">\(HC = HF + FC = \dfrac{AC}{6} + \dfrac{AC}{3} = \dfrac{AC}{2}\)</span></div><div class="ml-t"><span class="m">\(H\)</span> אמצע <span class="m">\(AC\)</span>, ולכן <span class="m">\(BH\)</span> תיכון.</div></div></li>
+    <li><span class="lab">שטח המשולש</span><div class="ml"><div class="ml-t">התיכון מחלק את המשולש לשני משולשים שווי שטח:</div><div class="ml-m"><span class="m">\(S_{\triangle ABC} = 2\cdot S_{\triangle BCH} = 2\cdot 9S = 18S\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(S_{\triangle BCH} = 9S\)</span></div><div class="ml-m"><span class="m">\(S_{\triangle ABC} = 18S\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">במספרים: <span class="m">\(A(0,3)\)</span>, <span class="m">\(B(0,0)\)</span>, <span class="m">\(C(3,0)\)</span> נותנים <span class="m">\(E(0,1)\)</span>, <span class="m">\(D(1,0)\)</span>, <span class="m">\(F(2,1)\)</span>, <span class="m">\(G(1,1)\)</span>, <span class="m">\(H(1.5,1.5)\)</span>:</div><div class="ml-m"><span class="m">\(S = \tfrac12\cdot 1\cdot 0.5 = 0.25\)</span></div><div class="ml-m"><span class="m">\(S_{\triangle ABC} = \tfrac12\cdot 3\cdot 3 = 4.5 = 18\cdot 0.25\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-ratio">יחס שטחים = k²</a><a href="#t-thales">תאלס המורחב</a><a href="#t-area">תיכון מחלק לשטחים שווים</a></p>
   </div>
 </section>
@@ -523,52 +573,55 @@ footer{color:var(--muted);font-size:.9rem}
   <div class="part">
     <h3><span class="lt">א.</span>נסמן <span class="m">\(\measuredangle ADE = \alpha\)</span></h3>
     <p class="alt"><strong>השלמה:</strong> בסעיף (1) נחתכה האות האחרונה, והכוונה היא ל־<span class="m">\(\measuredangle ABC\)</span>. בסעיף (2) צריך להוכיח ש־<span class="m">\(E\)</span> נמצאת על הקטע <span class="m">\(DF\)</span>.</p>
-    <div class="steps">
-      <p><strong>(1) <span class="m">\(\measuredangle ABC\)</span>.</strong> המשולש <span class="m">\(ADE\)</span> שווה שוקיים (<span class="m">\(AE = AD\)</span>), ולכן <span class="m">\(\measuredangle AED = \measuredangle ADE = \alpha\)</span> ו־<span class="m">\(\measuredangle DAE = 180^{\circ} - 2\alpha\)</span>.</p>
-      <p>במקבילית זוויות סמוכות משלימות ל־180°: <span class="m">\(\measuredangle ABC = 180^{\circ} - \measuredangle DAB = 2\alpha\)</span>.</p>
-      <p><strong>(2) הוכחה: <span class="m">\(D\)</span>, <span class="m">\(E\)</span>, <span class="m">\(F\)</span> על ישר אחד.</strong> <span class="m">\(F\)</span> על המשך <span class="m">\(CB\)</span>, ולכן <span class="m">\(\measuredangle EBF = 180^{\circ} - \measuredangle ABC = 180^{\circ} - 2\alpha\)</span>.</p>
-      <p>המשולש <span class="m">\(BEF\)</span> שווה שוקיים (<span class="m">\(BE = BF\)</span>), ולכן <span class="m">\(\measuredangle BEF = \measuredangle BFE = \dfrac{180^{\circ} - \measuredangle EBF}{2} = \alpha\)</span>.</p>
-      <p>הנקודות <span class="m">\(A, E, B\)</span> על ישר אחד, ולכן <span class="m">\(\measuredangle DEB = 180^{\circ} - \measuredangle AED = 180^{\circ} - \alpha\)</span>.</p>
-      <p><span class="m">\(\measuredangle DEB + \measuredangle BEF = 180^{\circ} - \alpha + \alpha = 180^{\circ}\)</span>. זו זווית שטוחה, ולכן <span class="m">\(D\)</span>, <span class="m">\(E\)</span>, <span class="m">\(F\)</span> על ישר אחד ו־<span class="m">\(E\)</span> בין <span class="m">\(D\)</span> ל־<span class="m">\(F\)</span>. (הנקודות <span class="m">\(D\)</span> ו־<span class="m">\(F\)</span> נמצאות בצדדים שונים של <span class="m">\(AB\)</span>.)</p>
-    </div>
-    <p class="ans"><span class="m">\(\measuredangle ABC = 2\alpha\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>עובדים עם זוויות: במשולש שווה שוקיים זוויות הבסיס שוות, ובמקבילית זוויות סמוכות משלימות ל־<span class="m">\(180^{\circ}\)</span>. כדי להוכיח ששלוש נקודות על ישר אחד, מראים שהזווית ב־<span class="m">\(E\)</span> היא זווית שטוחה.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): משולש <span class="m">\(ADE\)</span></span><div class="ml"><div class="ml-t"><span class="m">\(AE = AD\)</span>, ולכן:</div><div class="ml-m"><span class="m">\(\measuredangle AED = \measuredangle ADE = \alpha\)</span></div><div class="ml-m"><span class="m">\(\measuredangle DAE = 180^{\circ} - 2\alpha\)</span></div></div></li>
+    <li><span class="lab">זוויות סמוכות במקבילית</span><div class="ml"><div class="ml-m"><span class="m">\(\measuredangle ABC = 180^{\circ} - \measuredangle DAB\)</span></div><div class="ml-m"><span class="m">\(\measuredangle ABC = 180^{\circ} - (180^{\circ} - 2\alpha) = 2\alpha\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): משולש <span class="m">\(BEF\)</span></span><div class="ml"><div class="ml-t"><span class="m">\(F\)</span> על המשך <span class="m">\(CB\)</span>:</div><div class="ml-m"><span class="m">\(\measuredangle EBF = 180^{\circ} - \measuredangle ABC = 180^{\circ} - 2\alpha\)</span></div><div class="ml-t"><span class="m">\(BE = BF\)</span>, ולכן:</div><div class="ml-m"><span class="m">\(\measuredangle BEF = \dfrac{180^{\circ} - \measuredangle EBF}{2} = \dfrac{2\alpha}{2} = \alpha\)</span></div></div></li>
+    <li><span class="lab">זווית שטוחה</span><div class="ml"><div class="ml-t"><span class="m">\(A\)</span>, <span class="m">\(E\)</span>, <span class="m">\(B\)</span> על ישר אחד:</div><div class="ml-m"><span class="m">\(\measuredangle DEB = 180^{\circ} - \measuredangle AED = 180^{\circ} - \alpha\)</span></div><div class="ml-m"><span class="m">\(\measuredangle DEB + \measuredangle BEF = 180^{\circ} - \alpha + \alpha = 180^{\circ}\)</span></div><div class="ml-t">ולכן <span class="m">\(D\)</span>, <span class="m">\(E\)</span>, <span class="m">\(F\)</span> על ישר אחד (<span class="m">\(D\)</span> ו־<span class="m">\(F\)</span> בצדדים שונים של <span class="m">\(AB\)</span>).</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\measuredangle ABC = 2\alpha\)</span></div><div class="ml-t"><span class="m">\(D\)</span>, <span class="m">\(E\)</span>, <span class="m">\(F\)</span> על ישר אחד, ו־<span class="m">\(E\)</span> על הקטע <span class="m">\(DF\)</span>.</div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">הזווית <span class="m">\(C\)</span> שווה לזווית <span class="m">\(A\)</span> במקבילית, והיא קהה:</div><div class="ml-m"><span class="m">\(\measuredangle C = 180^{\circ} - 2\alpha &gt; 90^{\circ}\)</span></div><div class="ml-m"><span class="m">\(\alpha &lt; 45^{\circ}\)</span></div><div class="ml-t">זה מתאים לשרטוט, ולסעיף ג.</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-iso">זוויות בסיס</a><a href="#t-pgram">זוויות סמוכות במקבילית</a><a href="#t-angles">זווית שטוחה</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span><span class="m">\(G\)</span> על המשך <span class="m">\(CE\)</span> כך ש־<span class="m">\(EG = EC\)</span>, ונתון <span class="m">\(BC = BG\)</span></h3>
     <p class="alt"><strong>השלמה:</strong> בסעיף (2) נחתכה האות הראשונה, והכוונה היא כנראה ל־<span class="m">\(\measuredangle ECB\)</span>. בסוף הסעיף מופיעה גם <span class="m">\(\measuredangle GBC\)</span>.</p>
-    <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">\(\measuredangle CEB = 90^{\circ}\)</span>.</strong> המשולש <span class="m">\(BCG\)</span> שווה שוקיים (<span class="m">\(BC = BG\)</span>), ו־<span class="m">\(E\)</span> אמצע הבסיס <span class="m">\(CG\)</span>. לכן <span class="m">\(BE\)</span> הוא התיכון לבסיס, והוא גם גובה: <span class="m">\(BE \perp CG\)</span>.</p>
-      <p><strong>(2) <span class="m">\(\measuredangle ECB\)</span>.</strong> <span class="m">\(\measuredangle EBC = \measuredangle ABC = 2\alpha\)</span>. במשולש <span class="m">\(CEB\)</span>: <span class="m">\(\measuredangle ECB = 180^{\circ} - 90^{\circ} - 2\alpha = 90^{\circ} - 2\alpha\)</span>.</p>
-      <p class="alt">התיכון <span class="m">\(BE\)</span> הוא גם חוצה זווית הראש, ולכן <span class="m">\(\measuredangle GBC = 2\cdot 2\alpha = 4\alpha\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(\measuredangle ECB = 90^{\circ} - 2\alpha\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p><span class="m">\(E\)</span> אמצע <span class="m">\(CG\)</span> ו־<span class="m">\(BC = BG\)</span>, ולכן <span class="m">\(BE\)</span> הוא התיכון לבסיס במשולש שווה שוקיים, והוא גם גובה. את <span class="m">\(\measuredangle ECB\)</span> מקבלים מסכום הזוויות במשולש ישר הזווית <span class="m">\(CEB\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): התיכון לבסיס</span><div class="ml"><div class="ml-t"><span class="m">\(BC = BG\)</span> ו־<span class="m">\(EG = EC\)</span>, ולכן <span class="m">\(BE\)</span> תיכון לבסיס <span class="m">\(CG\)</span> במשולש שווה השוקיים <span class="m">\(BCG\)</span>, והוא גם גובה:</div><div class="ml-m"><span class="m">\(BE \perp CG\)</span></div><div class="ml-m"><span class="m">\(\measuredangle CEB = 90^{\circ}\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): סכום זוויות במשולש <span class="m">\(CEB\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(\measuredangle EBC = \measuredangle ABC = 2\alpha\)</span></div><div class="ml-m"><span class="m">\(\measuredangle ECB = 180^{\circ} - \measuredangle CEB - \measuredangle EBC\)</span></div><div class="ml-m"><span class="m">\(\measuredangle ECB = 180^{\circ} - 90^{\circ} - 2\alpha = 90^{\circ} - 2\alpha\)</span></div></div></li>
+    <li><span class="lab">הזווית <span class="m">\(GBC\)</span></span><div class="ml"><div class="ml-t">התיכון לבסיס הוא גם חוצה זווית הראש:</div><div class="ml-m"><span class="m">\(\measuredangle GBC = 2\cdot\measuredangle EBC = 4\alpha\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\measuredangle CEB = 90^{\circ}\)</span></div><div class="ml-m"><span class="m">\(\measuredangle ECB = 90^{\circ} - 2\alpha\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-iso">התיכון לבסיס הוא גובה</a><a href="#t-angles">סכום זוויות במשולש</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>נתון <span class="m">\(DE = 2EF\)</span>. מצאו את <span class="m">\(\alpha\)</span></h3>
     <p class="alt"><strong>השלמה:</strong> בקובץ נעלם הסמל אחרי "מצאו את". לפי שאר הנתונים, מבקשים את <span class="m">\(\alpha\)</span>.</p>
-    <div class="steps">
-      <p>המשולשים <span class="m">\(ADE\)</span> ו־<span class="m">\(BFE\)</span> שווי שוקיים, ובשניהם זוויות הבסיס שוות ל־<span class="m">\(\alpha\)</span>. לכן הם דומים לפי ז.ז, ויחס הדמיון הוא <span class="m">\(\dfrac{DE}{FE} = 2\)</span>.</p>
-      <p>מכאן <span class="m">\(AE = 2BE\)</span> ו־<span class="m">\(AD = 2BF\)</span>. נסמן <span class="m">\(BE = t\)</span>, ולכן <span class="m">\(AD = AE = 2t\)</span>. במקבילית <span class="m">\(BC = AD = 2t\)</span>.</p>
-      <p>במשולש ישר הזווית <span class="m">\(CEB\)</span> הניצב <span class="m">\(BE = t\)</span> שווה למחצית היתר <span class="m">\(BC = 2t\)</span>. לכן הזווית שמולו היא <span class="m">\(\measuredangle BCE = 30^{\circ}\)</span>, ו־<span class="m">\(\measuredangle EBC = 60^{\circ}\)</span>.</p>
-      <p><span class="m">\(2\alpha = 60^{\circ}\)</span>, ולכן <span class="m">\(\alpha = 30^{\circ}\)</span>. בדיקה: <span class="m">\(\measuredangle C = 180^{\circ} - 60^{\circ} = 120^{\circ}\)</span>, אכן זווית קהה.</p>
-    </div>
-    <p class="ans"><span class="m">\(\alpha = 30^{\circ}\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>שני המשולשים <span class="m">\(ADE\)</span> ו־<span class="m">\(BFE\)</span> שווי שוקיים עם אותן זוויות בסיס, ולכן דומים, והיחס הנתון <span class="m">\(DE = 2EF\)</span> הוא יחס הדמיון. מכאן מקבלים <span class="m">\(BC = 2BE\)</span>, ובמשולש ישר זווית ניצב שהוא חצי היתר נמצא מול זווית של <span class="m">\(30^{\circ}\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">דמיון</span><div class="ml"><div class="ml-t">בשני המשולשים זוויות הבסיס שוות ל־<span class="m">\(\alpha\)</span> (סעיף א):</div><div class="ml-m"><span class="m">\(\triangle ADE \sim \triangle BFE\)</span></div><div class="ml-t">יחס הדמיון:</div><div class="ml-m"><span class="m">\(\dfrac{DE}{FE} = 2\)</span></div></div></li>
+    <li><span class="lab">הצלעות</span><div class="ml"><div class="ml-m"><span class="m">\(BE = t\)</span></div><div class="ml-m"><span class="m">\(AE = 2BE = 2t\)</span></div><div class="ml-m"><span class="m">\(AD = AE = 2t\)</span></div><div class="ml-t">במקבילית:</div><div class="ml-m"><span class="m">\(BC = AD = 2t\)</span></div></div></li>
+    <li><span class="lab">משולש <span class="m">\(CEB\)</span></span><div class="ml"><div class="ml-t">במשולש ישר הזווית <span class="m">\(CEB\)</span> הניצב <span class="m">\(BE\)</span> הוא חצי היתר <span class="m">\(BC\)</span>:</div><div class="ml-m"><span class="m">\(BE = \dfrac{BC}{2}\)</span></div><div class="ml-t">ולכן הזווית שמולו:</div><div class="ml-m"><span class="m">\(\measuredangle BCE = 30^{\circ}\)</span></div><div class="ml-m"><span class="m">\(\measuredangle EBC = 90^{\circ} - 30^{\circ} = 60^{\circ}\)</span></div></div></li>
+    <li><span class="lab"><span class="m">\(\alpha\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(2\alpha = 60^{\circ}\)</span></div><div class="ml-m"><span class="m">\(\alpha = 30^{\circ}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\alpha = 30^{\circ}\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">מסעיף ב:</div><div class="ml-m"><span class="m">\(\measuredangle ECB = 90^{\circ} - 2\cdot 30^{\circ} = 30^{\circ}\ \checkmark\)</span></div><div class="ml-t">והזווית <span class="m">\(C\)</span> קהה:</div><div class="ml-m"><span class="m">\(\measuredangle C = 180^{\circ} - 60^{\circ} = 120^{\circ}\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-aa">ז.ז</a><a href="#t-pgram">צלעות נגדיות במקבילית</a><a href="#t-right">ניצב שווה למחצית היתר</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span><span class="m">\(S_{\triangle BEF} = S\)</span>. הביעו את שטח המקבילית <span class="m">\(ABCD\)</span></h3>
-    <div class="steps">
-      <p>למשולשים <span class="m">\(BEF\)</span> ו־<span class="m">\(BEC\)</span> יש קדקוד משותף <span class="m">\(E\)</span>, והבסיסים <span class="m">\(BF = t\)</span> ו־<span class="m">\(BC = 2t\)</span> על הישר <span class="m">\(CF\)</span>. לכן <span class="m">\(S_{\triangle BEC} = 2S\)</span>.</p>
-      <p><span class="m">\(CE\)</span> הוא גובה המקבילית לצלע <span class="m">\(AB = AE + EB = 3t\)</span>.</p>
-      <p><span class="m">\(S_{ABCD} = AB\cdot CE = 3t\cdot CE = 6\cdot (\tfrac{1}{2}\cdot t\cdot CE) = 6\cdot S_{\triangle BEC} = 12S\)</span></p>
-      <p class="alt"><strong>בדיקה עם טריגונומטריה:</strong> <span class="m">\(S = \tfrac{1}{2}t^{2}\cdot \sin 120^{\circ} = \left(\dfrac{\sqrt{3}}{4}\right)t^{2}\)</span>, ו־<span class="m">\(CE = \sqrt{3}\cdot t\)</span>, ולכן <span class="m">\(S_{ABCD} = 3\sqrt{3}\cdot t^{2} = 12S\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(S_{ABCD} = 12S\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>משולשים עם קדקוד משותף <span class="m">\(E\)</span> ובסיסים על הישר <span class="m">\(CF\)</span> הם בעלי אותו גובה. שטח מקבילית הוא צלע כפול הגובה אליה, ו־<span class="m">\(CE\)</span> הוא הגובה לצלע <span class="m">\(AB\)</span> (כי <span class="m">\(CE \perp BE\)</span>).</p></div>
+    <ol class="st">
+    <li><span class="lab">שטח <span class="m">\(\triangle BEC\)</span></span><div class="ml"><div class="ml-t">קדקוד משותף <span class="m">\(E\)</span>, בסיסים <span class="m">\(BF = t\)</span> ו־<span class="m">\(BC = 2t\)</span>:</div><div class="ml-m"><span class="m">\(\dfrac{S_{\triangle BEC}}{S_{\triangle BEF}} = \dfrac{BC}{BF} = \dfrac{2t}{t} = 2\)</span></div><div class="ml-m"><span class="m">\(S_{\triangle BEC} = 2S\)</span></div></div></li>
+    <li><span class="lab">שטח המקבילית</span><div class="ml"><div class="ml-m"><span class="m">\(S_{ABCD} = AB\cdot h\)</span></div><div class="ml-m"><span class="m">\(AB = AE + EB = 2t + t = 3t\)</span></div><div class="ml-m"><span class="m">\(h = CE\)</span></div><div class="ml-m"><span class="m">\(S_{ABCD} = 3t\cdot CE = 6\cdot\left(\tfrac12\cdot t\cdot CE\right) = 6\cdot S_{\triangle BEC} = 12S\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(S_{ABCD} = 12S\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">בטריגונומטריה, עם <span class="m">\(\measuredangle EBF = 120^{\circ}\)</span>:</div><div class="ml-m"><span class="m">\(S = \tfrac12 t^{2}\sin 120^{\circ} = \dfrac{\sqrt3}{4}t^{2}\)</span></div><div class="ml-m"><span class="m">\(CE = \sqrt3\, t\)</span></div><div class="ml-m"><span class="m">\(S_{ABCD} = 3t\cdot\sqrt3\, t = 3\sqrt3\, t^{2} = 12S\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-area">משולשים בעלי גובה משותף</a><a href="#t-pgram">שטח מקבילית</a></p>
   </div>
 </section>
@@ -586,37 +639,47 @@ footer{color:var(--muted);font-size:.9rem}
 
   <div class="part">
     <h3><span class="lt">א.</span>נתון <span class="m">\(\measuredangle DGB = \measuredangle BDE\)</span></h3>
-    <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">\(\triangle BDG \sim \triangle BED\)</span>.</strong> <span class="m">\(\measuredangle B\)</span> משותפת, ו־<span class="m">\(\measuredangle BGD = \measuredangle BDE\)</span> לפי הנתון. לכן המשולשים דומים לפי ז.ז, בהתאמה <span class="m">\(B\leftrightarrow B\)</span>, <span class="m">\(D\leftrightarrow E\)</span>, <span class="m">\(G\leftrightarrow D\)</span>.</p>
-      <p><strong>(2) הוכחה: <span class="m">\(BD^{2} = BE\cdot BG\)</span>.</strong> מהדמיון: <span class="m">\(\dfrac{BD}{BE} = \dfrac{BG}{BD}\)</span>. נכפיל בהצלבה ונקבל <span class="m">\(BD^{2} = BE\cdot BG\)</span>.</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>זווית משותפת ועוד זווית נתונה נותנות דמיון ז.ז. מכפלה של צלעות (<span class="m">\(BD^{2} = BE\cdot BG\)</span>) מקבלים תמיד מפרופורציה של משולשים דומים בהכפלה בהצלבה.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): זוויות</span><div class="ml"><div class="ml-t">זווית משותפת:</div><div class="ml-m"><span class="m">\(\measuredangle DBG = \measuredangle EBD\)</span></div><div class="ml-t">נתון:</div><div class="ml-m"><span class="m">\(\measuredangle BGD = \measuredangle BDE\)</span></div></div></li>
+    <li><span class="lab">מסקנה</span><div class="ml"><div class="ml-t">לפי ז.ז:</div><div class="ml-m"><span class="m">\(\triangle BDG \sim \triangle BED\)</span></div><div class="ml-m"><span class="m">\(B \leftrightarrow B,\ D \leftrightarrow E,\ G \leftrightarrow D\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): פרופורציה</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{BD}{BE} = \dfrac{BG}{BD}\)</span></div><div class="ml-t">הכפלה בהצלבה:</div><div class="ml-m"><span class="m">\(BD^{2} = BE\cdot BG\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\triangle BDG \sim \triangle BED\)</span></div><div class="ml-m"><span class="m">\(BD^{2} = BE\cdot BG\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-aa">ז.ז</a><a href="#t-ratio">יחסים במשולשים דומים</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span><span class="m">\(F\)</span> על <span class="m">\(AC\)</span>, ונתון <span class="m">\(\measuredangle GFC = \measuredangle FEC\)</span>. הוכחה: <span class="m">\(FC^{2} = GC\cdot CE\)</span></h3>
-    <div class="steps">
-      <p>נשווה את <span class="m">\(\triangle CFG\)</span> ו־<span class="m">\(\triangle CEF\)</span>: <span class="m">\(\measuredangle C\)</span> משותפת, ו־<span class="m">\(\measuredangle CFG = \measuredangle CEF\)</span> לפי הנתון. לפי ז.ז המשולשים דומים.</p>
-      <p>מכאן <span class="m">\(\dfrac{CF}{CE} = \dfrac{CG}{CF}\)</span>, ולכן <span class="m">\(FC^{2} = GC\cdot CE\)</span>.</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>אותו מבנה כמו בסעיף א, בצד השני של המשולש: זווית משותפת <span class="m">\(C\)</span> וזווית נתונה, ואחר כך הכפלה בהצלבה.</p></div>
+    <ol class="st">
+    <li><span class="lab">זוויות</span><div class="ml"><div class="ml-t">זווית משותפת:</div><div class="ml-m"><span class="m">\(\measuredangle FCG = \measuredangle ECF\)</span></div><div class="ml-t">נתון:</div><div class="ml-m"><span class="m">\(\measuredangle CFG = \measuredangle CEF\)</span></div></div></li>
+    <li><span class="lab">מסקנה</span><div class="ml"><div class="ml-t">לפי ז.ז:</div><div class="ml-m"><span class="m">\(\triangle CFG \sim \triangle CEF\)</span></div><div class="ml-m"><span class="m">\(C \leftrightarrow C,\ F \leftrightarrow E,\ G \leftrightarrow F\)</span></div></div></li>
+    <li><span class="lab">פרופורציה</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{CF}{CE} = \dfrac{CG}{CF}\)</span></div><div class="ml-t">הכפלה בהצלבה:</div><div class="ml-m"><span class="m">\(FC^{2} = GC\cdot CE\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(FC^{2} = GC\cdot CE\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-aa">ז.ז</a><a href="#t-ratio">יחסים במשולשים דומים</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>נתון <span class="m">\(GC = BE\)</span>. הוכחה: <span class="m">\(BD = FC\)</span></h3>
-    <div class="steps">
-      <p><span class="m">\(BG = BE + EG = GC + EG = CE\)</span>.</p>
-      <p>מסעיפים א ו־ב: <span class="m">\(BD^{2} = BE\cdot BG\)</span> ו־<span class="m">\(FC^{2} = GC\cdot CE\)</span>. הגורמים שווים בזוגות (<span class="m">\(BE = GC\)</span>, <span class="m">\(BG = CE\)</span>), ולכן <span class="m">\(BD^{2} = FC^{2}\)</span>, כלומר <span class="m">\(BD = FC\)</span>.</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>משווים את שתי המכפלות מסעיפים א ו־ב. מספיק להראות שהגורמים שווים בזוגות.</p></div>
+    <ol class="st">
+    <li><span class="lab">הקטע <span class="m">\(BG\)</span></span><div class="ml"><div class="ml-t">הסדר על <span class="m">\(BC\)</span> הוא <span class="m">\(B, E, G, C\)</span>, ונתון <span class="m">\(GC = BE\)</span>:</div><div class="ml-m"><span class="m">\(BG = BE + EG = GC + EG = CE\)</span></div></div></li>
+    <li><span class="lab">השוואת המכפלות</span><div class="ml"><div class="ml-m"><span class="m">\(BD^{2} = BE\cdot BG\)</span></div><div class="ml-m"><span class="m">\(FC^{2} = GC\cdot CE\)</span></div><div class="ml-m"><span class="m">\(BE = GC,\ BG = CE\)</span></div><div class="ml-m"><span class="m">\(BD^{2} = FC^{2}\)</span></div><div class="ml-m"><span class="m">\(BD = FC\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(BD = FC\)</span></div></div></div>
     <p class="uses">שימוש ב: חיבור קטעים והצבה בתוצאות הקודמות</p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span>נתון <span class="m">\(AD = AF\)</span>. הוכחה: <span class="m">\(DF \parallel BC\)</span></h3>
-    <div class="steps">
-      <p><span class="m">\(AD = AF\)</span> ומסעיף ג <span class="m">\(DB = FC\)</span>, ולכן <span class="m">\(\dfrac{AD}{DB} = \dfrac{AF}{FC}\)</span>.</p>
-      <p>הישר <span class="m">\(DF\)</span> מחלק את הצלעות <span class="m">\(AB\)</span> ו־<span class="m">\(AC\)</span> באותו יחס, ולכן לפי משפט תאלס ההפוך <span class="m">\(DF \parallel BC\)</span>.</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>כדי להוכיח מקבילות משתמשים בתאלס ההפוך: צריך להראות ש־<span class="m">\(DF\)</span> מחלק את <span class="m">\(AB\)</span> ואת <span class="m">\(AC\)</span> באותו יחס.</p></div>
+    <ol class="st">
+    <li><span class="lab">היחסים</span><div class="ml"><div class="ml-t">נתון, ומסעיף ג:</div><div class="ml-m"><span class="m">\(AD = AF\)</span></div><div class="ml-m"><span class="m">\(DB = FC\)</span></div><div class="ml-m"><span class="m">\(\dfrac{AD}{DB} = \dfrac{AF}{FC}\)</span></div></div></li>
+    <li><span class="lab">תאלס ההפוך</span><div class="ml"><div class="ml-t">הישר <span class="m">\(DF\)</span> מחלק את <span class="m">\(AB\)</span> ואת <span class="m">\(AC\)</span> באותו יחס:</div><div class="ml-m"><span class="m">\(DF \parallel BC\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(DF \parallel BC\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-thales">תאלס ההפוך</a></p>
   </div>
 </section>
@@ -634,46 +697,55 @@ footer{color:var(--muted);font-size:.9rem}
 
   <div class="part">
     <h3><span class="lt">א.</span>הוכחה: <span class="m">\(AE = EC\)</span></h3>
-    <div class="steps">
-      <p><span class="m">\(\measuredangle ADC = 90^{\circ}\)</span>, כי היא צמודה ל־<span class="m">\(\measuredangle ADB\)</span>.</p>
-      <p>המשולש <span class="m">\(AED\)</span> שווה שוקיים, ולכן <span class="m">\(\measuredangle EAD = \measuredangle EDA\)</span>. נסמן את שתיהן ב־<span class="m">\(x\)</span>.</p>
-      <p><span class="m">\(\measuredangle EDC = 90^{\circ} - x\)</span>, ובמשולש <span class="m">\(ADC\)</span>: <span class="m">\(\measuredangle ACD = 180^{\circ} - 90^{\circ} - x = 90^{\circ} - x\)</span>.</p>
-      <p>לכן <span class="m">\(\measuredangle EDC = \measuredangle ECD\)</span>, ובמשולש <span class="m">\(EDC\)</span> מול זוויות שוות יש צלעות שוות: <span class="m">\(ED = EC\)</span>. מכאן <span class="m">\(AE = ED = EC\)</span>.</p>
-      <p class="alt">במילים אחרות, <span class="m">\(DE\)</span> הוא התיכון ליתר במשולש ישר הזווית <span class="m">\(ADC\)</span>.</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>כדי להוכיח ש־<span class="m">\(E\)</span> אמצע <span class="m">\(AC\)</span>, מראים שגם <span class="m">\(ED = EC\)</span>. לזה מספיק להראות שבמשולש <span class="m">\(EDC\)</span> הזוויות שמול הצלעות האלה שוות, בעזרת הזווית הישרה ב־<span class="m">\(D\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">זווית ישרה</span><div class="ml"><div class="ml-t">זווית צמודה ל־<span class="m">\(\measuredangle ADB\)</span>:</div><div class="ml-m"><span class="m">\(\measuredangle ADC = 90^{\circ}\)</span></div></div></li>
+    <li><span class="lab">משולש <span class="m">\(AED\)</span></span><div class="ml"><div class="ml-t"><span class="m">\(AE = DE\)</span>, ולכן:</div><div class="ml-m"><span class="m">\(\measuredangle EAD = \measuredangle EDA = x\)</span></div></div></li>
+    <li><span class="lab">זוויות במשולש <span class="m">\(EDC\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(\measuredangle EDC = 90^{\circ} - x\)</span></div><div class="ml-t">במשולש <span class="m">\(ADC\)</span>:</div><div class="ml-m"><span class="m">\(\measuredangle ACD = 180^{\circ} - 90^{\circ} - x = 90^{\circ} - x\)</span></div><div class="ml-m"><span class="m">\(\measuredangle EDC = \measuredangle ECD\)</span></div></div></li>
+    <li><span class="lab">מסקנה</span><div class="ml"><div class="ml-t">מול זוויות שוות צלעות שוות:</div><div class="ml-m"><span class="m">\(ED = EC\)</span></div><div class="ml-m"><span class="m">\(AE = ED = EC\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(AE = EC\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">זה המשפט על התיכון ליתר: <span class="m">\(DE\)</span> הוא התיכון ליתר <span class="m">\(AC\)</span> במשולש ישר הזווית <span class="m">\(ADC\)</span>, ואורכו חצי היתר ✓</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-angles">זוויות צמודות, סכום זוויות</a><a href="#t-iso">שווה שוקיים וההפך שלו</a><a href="#t-right">התיכון ליתר</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span>נתון <span class="m">\(\measuredangle BAC = 90^{\circ}\)</span></h3>
     <p class="alt"><strong>השלמה:</strong> בקובץ נעלם שם הזווית. לפי השרטוט והמשך הסעיף, הזווית הישרה היא <span class="m">\(\measuredangle BAC\)</span>.</p>
-    <div class="steps">
-      <p><strong>(1) הוכחה: <span class="m">\(\triangle ADC \sim \triangle BAC\)</span>.</strong> <span class="m">\(\measuredangle C\)</span> משותפת, ו־<span class="m">\(\measuredangle ADC = \measuredangle BAC = 90^{\circ}\)</span>. לפי ז.ז המשולשים דומים, בהתאמה <span class="m">\(A\leftrightarrow B\)</span>, <span class="m">\(D\leftrightarrow A\)</span>, <span class="m">\(C\leftrightarrow C\)</span>.</p>
-      <p><strong>(2) הוכחה: <span class="m">\(AC^{2} = BC\cdot DC\)</span>.</strong> מהדמיון: <span class="m">\(\dfrac{AC}{BC} = \dfrac{DC}{AC}\)</span>, ובהכפלה בהצלבה <span class="m">\(AC^{2} = BC\cdot DC\)</span>.</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>שני משולשים ישרי זווית עם זווית חדה משותפת (<span class="m">\(C\)</span>) דומים. מהדמיון מקבלים פרופורציה, ובהכפלה בהצלבה את <span class="m">\(AC^{2}\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): זוויות</span><div class="ml"><div class="ml-t">זווית משותפת:</div><div class="ml-m"><span class="m">\(\measuredangle ACD = \measuredangle BCA\)</span></div><div class="ml-t">סעיף א והנתון:</div><div class="ml-m"><span class="m">\(\measuredangle ADC = \measuredangle BAC = 90^{\circ}\)</span></div></div></li>
+    <li><span class="lab">מסקנה</span><div class="ml"><div class="ml-t">לפי ז.ז:</div><div class="ml-m"><span class="m">\(\triangle ADC \sim \triangle BAC\)</span></div><div class="ml-m"><span class="m">\(A \leftrightarrow B,\ D \leftrightarrow A,\ C \leftrightarrow C\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): פרופורציה</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{AC}{BC} = \dfrac{DC}{AC}\)</span></div><div class="ml-t">הכפלה בהצלבה:</div><div class="ml-m"><span class="m">\(AC^{2} = BC\cdot DC\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\triangle ADC \sim \triangle BAC\)</span></div><div class="ml-m"><span class="m">\(AC^{2} = BC\cdot DC\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-aa">ז.ז</a><a href="#t-ratio">יחסים במשולשים דומים</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>נתון <span class="m">\(\dfrac{DC}{AE} = \dfrac{2}{3}\)</span></h3>
     <p class="alt"><strong>השלמה:</strong> בקובץ נחתכה האות הראשונה במונים. הקריאה <span class="m">\(DC\)</span> מתאימה לשלושת השברים בסעיף.</p>
-    <div class="steps">
-      <p><strong>(1) <span class="m">\(\dfrac{DC}{AC}\)</span>.</strong> מסעיף א, <span class="m">\(AC = 2AE\)</span>. לכן <span class="m">\(\dfrac{DC}{AC} = \dfrac{DC}{2AE} = \dfrac{1}{2}\cdot \dfrac{2}{3} = \dfrac{1}{3}\)</span>.</p>
-      <p><strong>(2) <span class="m">\(\dfrac{DC}{DB}\)</span>.</strong> נסמן <span class="m">\(DC = k\)</span> ו־<span class="m">\(AC = 3k\)</span>. מסעיף ב(2): <span class="m">\(BC = \dfrac{AC^{2}}{DC} = \dfrac{9k^{2}}{k} = 9k\)</span>.</p>
-      <p><span class="m">\(DB = BC - DC = 8k\)</span>, ולכן <span class="m">\(\dfrac{DC}{DB} = \dfrac{1}{8}\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(\dfrac{DC}{AC} = \dfrac{1}{3}\)</span>, <span class="m">\(\dfrac{DC}{DB} = \dfrac{1}{8}\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מסעיף א <span class="m">\(AC = 2AE\)</span>, ולכן היחס הנתון נותן את <span class="m">\(DC:AC\)</span>. מסמנים <span class="m">\(DC = k\)</span>, ומהנוסחה של סעיף ב מוצאים את <span class="m">\(BC\)</span> ואת <span class="m">\(DB\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): היחס <span class="m">\(\dfrac{DC}{AC}\)</span></span><div class="ml"><div class="ml-t">מסעיף א:</div><div class="ml-m"><span class="m">\(AC = 2AE\)</span></div><div class="ml-m"><span class="m">\(\dfrac{DC}{AC} = \dfrac{DC}{2AE} = \dfrac{1}{2}\cdot\dfrac{2}{3} = \dfrac{1}{3}\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): סימון</span><div class="ml"><div class="ml-m"><span class="m">\(DC = k\)</span></div><div class="ml-m"><span class="m">\(AC = 3k\)</span></div></div></li>
+    <li><span class="lab">הצלע <span class="m">\(BC\)</span></span><div class="ml"><div class="ml-t">מסעיף ב(2):</div><div class="ml-m"><span class="m">\(AC^{2} = BC\cdot DC\)</span></div><div class="ml-m"><span class="m">\(BC = \dfrac{AC^{2}}{DC} = \dfrac{9k^{2}}{k} = 9k\)</span></div></div></li>
+    <li><span class="lab">היחס <span class="m">\(\dfrac{DC}{DB}\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(DB = BC - DC = 9k - k = 8k\)</span></div><div class="ml-m"><span class="m">\(\dfrac{DC}{DB} = \dfrac{k}{8k} = \dfrac{1}{8}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{DC}{AC} = \dfrac{1}{3}\)</span></div><div class="ml-m"><span class="m">\(\dfrac{DC}{DB} = \dfrac{1}{8}\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">גם <span class="m">\(AB\)</span> מקיים נוסחה דומה, ופיתגורס במשולש <span class="m">\(ABC\)</span> מתקיים:</div><div class="ml-m"><span class="m">\(AB^{2} = BC\cdot BD = 9k\cdot 8k = 72k^{2}\)</span></div><div class="ml-m"><span class="m">\(AB^{2} + AC^{2} = 72k^{2} + 9k^{2} = 81k^{2} = BC^{2}\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: תוצאות סעיפים א ו־ב</p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ד.</span>נתון <span class="m">\(S_{\triangle CED} = 4\)</span></h3>
-    <div class="steps">
-      <p><strong>(1) <span class="m">\(S_{\triangle ACD}\)</span>.</strong> <span class="m">\(E\)</span> אמצע <span class="m">\(AC\)</span>, ולכן <span class="m">\(DE\)</span> תיכון במשולש <span class="m">\(ACD\)</span> ומחלק אותו לשני משולשים שווי שטח: <span class="m">\(S_{\triangle ACD} = 2\cdot 4 = 8\)</span>.</p>
-      <p><strong>(2) <span class="m">\(S_{\triangle ABC}\)</span>.</strong> למשולשים <span class="m">\(ADC\)</span> ו־<span class="m">\(ABC\)</span> יש קדקוד משותף <span class="m">\(A\)</span>, והבסיסים <span class="m">\(DC\)</span> ו־<span class="m">\(BC\)</span> על אותו ישר. <span class="m">\(BC = 9\cdot DC\)</span>, ולכן <span class="m">\(S_{\triangle ABC} = 9\cdot 8 = 72\)</span>.</p>
-      <p class="alt"><strong>בדיקה:</strong> יחס הדמיון בין <span class="m">\(\triangle ADC\)</span> ל־<span class="m">\(\triangle BAC\)</span> הוא <span class="m">\(\dfrac{AC}{BC} = \dfrac{1}{3}\)</span>, ולכן יחס השטחים הוא <span class="m">\(\dfrac{1}{9}\)</span>. אותה תוצאה.</p>
-    </div>
-    <p class="ans"><span class="m">\(S_{\triangle ACD} = 8\)</span>, <span class="m">\(S_{\triangle ABC} = 72\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p><span class="m">\(E\)</span> אמצע <span class="m">\(AC\)</span>, ולכן <span class="m">\(DE\)</span> תיכון שמחלק את המשולש <span class="m">\(ACD\)</span> לשני משולשים שווי שטח. ל־<span class="m">\(\triangle ABC\)</span> עוברים דרך קדקוד משותף <span class="m">\(A\)</span> ובסיסים על הישר <span class="m">\(BC\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">סעיף (1): תיכון</span><div class="ml"><div class="ml-t"><span class="m">\(DE\)</span> תיכון במשולש <span class="m">\(ACD\)</span>:</div><div class="ml-m"><span class="m">\(S_{\triangle ACD} = 2\cdot S_{\triangle CED} = 2\cdot 4 = 8\)</span></div></div></li>
+    <li><span class="lab">סעיף (2): קדקוד משותף <span class="m">\(A\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{S_{\triangle ABC}}{S_{\triangle ADC}} = \dfrac{BC}{DC} = \dfrac{9k}{k} = 9\)</span></div><div class="ml-m"><span class="m">\(S_{\triangle ABC} = 9\cdot 8 = 72\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(S_{\triangle ACD} = 8\)</span></div><div class="ml-m"><span class="m">\(S_{\triangle ABC} = 72\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">יחס הדמיון בין <span class="m">\(\triangle ADC\)</span> ל־<span class="m">\(\triangle BAC\)</span>, ויחס השטחים הוא ריבועו:</div><div class="ml-m"><span class="m">\(\dfrac{AC}{BC} = \dfrac{3k}{9k} = \dfrac{1}{3}\)</span></div><div class="ml-m"><span class="m">\(\dfrac{S_{\triangle ADC}}{S_{\triangle BAC}} = \left(\dfrac13\right)^{2} = \dfrac{1}{9}\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-area">תיכון וגובה משותף</a><a href="#t-ratio">יחס שטחים = k²</a></p>
   </div>
 </section>
@@ -691,32 +763,38 @@ footer{color:var(--muted);font-size:.9rem}
 
   <div class="part">
     <h3><span class="lt">א.</span>הוכחה: <span class="m">\(\dfrac{AB}{BC} = \dfrac{AD}{EC}\)</span></h3>
-    <div class="steps">
-      <p>לפי משפט חוצה הזווית במשולש <span class="m">\(ABC\)</span>: <span class="m">\(\dfrac{AB}{BC} = \dfrac{AD}{DC}\)</span>.</p>
-      <p>נציב <span class="m">\(DC = EC\)</span> ונקבל <span class="m">\(\dfrac{AB}{BC} = \dfrac{AD}{EC}\)</span>.</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>חוצה זווית במשולש מחלק את הצלע שמולו ביחס הצלעות שלידו. אחר כך מציבים <span class="m">\(DC = EC\)</span>.</p></div>
+    <ol class="st">
+    <li><span class="lab">משפט חוצה הזווית</span><div class="ml"><div class="ml-t">במשולש <span class="m">\(ABC\)</span>:</div><div class="ml-m"><span class="m">\(\dfrac{AB}{BC} = \dfrac{AD}{DC}\)</span></div></div></li>
+    <li><span class="lab">הצבה</span><div class="ml"><div class="ml-t">נתון:</div><div class="ml-m"><span class="m">\(DC = EC\)</span></div><div class="ml-m"><span class="m">\(\dfrac{AB}{BC} = \dfrac{AD}{EC}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{AB}{BC} = \dfrac{AD}{EC}\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-bisector">חוצה הזווית</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ב.</span>נתון <span class="m">\(\measuredangle BAD = \measuredangle BCE\)</span>. הוכחה: <span class="m">\(\triangle ABD \sim \triangle CBE\)</span></h3>
-    <div class="steps">
-      <p>מסעיף א: <span class="m">\(\dfrac{AB}{CB} = \dfrac{AD}{CE}\)</span>, כלומר שתי צלעות במשולש <span class="m">\(ABD\)</span> פרופורציוניות לשתי צלעות במשולש <span class="m">\(CBE\)</span>.</p>
-      <p>הזווית שבין <span class="m">\(AB\)</span> ל־<span class="m">\(AD\)</span> היא <span class="m">\(\measuredangle BAD\)</span>, והזווית שבין <span class="m">\(CB\)</span> ל־<span class="m">\(CE\)</span> היא <span class="m">\(\measuredangle BCE\)</span>, והן שוות לפי הנתון.</p>
-      <p>לפי צ.ז.צ המשולשים דומים, בהתאמה <span class="m">\(A\leftrightarrow C\)</span>, <span class="m">\(B\leftrightarrow B\)</span>, <span class="m">\(D\leftrightarrow E\)</span>.</p>
-    </div>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>לדמיון צ.ז.צ צריך שתי צלעות פרופורציוניות (יש מסעיף א) והזווית שביניהן שווה (נתונה). בודקים שהזווית הנתונה היא באמת הזווית שבין הצלעות האלה.</p></div>
+    <ol class="st">
+    <li><span class="lab">צלעות פרופורציוניות</span><div class="ml"><div class="ml-t">מסעיף א:</div><div class="ml-m"><span class="m">\(\dfrac{AB}{CB} = \dfrac{AD}{CE}\)</span></div></div></li>
+    <li><span class="lab">הזווית שביניהן</span><div class="ml"><div class="ml-t">הזווית שבין <span class="m">\(AB\)</span> ל־<span class="m">\(AD\)</span> היא <span class="m">\(\measuredangle BAD\)</span>, והזווית שבין <span class="m">\(CB\)</span> ל־<span class="m">\(CE\)</span> היא <span class="m">\(\measuredangle BCE\)</span>. נתון:</div><div class="ml-m"><span class="m">\(\measuredangle BAD = \measuredangle BCE\)</span></div></div></li>
+    <li><span class="lab">מסקנה</span><div class="ml"><div class="ml-t">לפי צ.ז.צ:</div><div class="ml-m"><span class="m">\(\triangle ABD \sim \triangle CBE\)</span></div><div class="ml-m"><span class="m">\(A \leftrightarrow C,\ B \leftrightarrow B,\ D \leftrightarrow E\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\triangle ABD \sim \triangle CBE\)</span></div><div class="ml-t">לפי צ.ז.צ</div></div></div>
     <p class="uses">שימוש ב: <a href="#t-sas">צ.ז.צ</a></p>
   </div>
 
   <div class="part">
     <h3><span class="lt">ג.</span>נתון <span class="m">\(AB \perp BE\)</span>. מצאו את <span class="m">\(\measuredangle ABD\)</span></h3>
-    <div class="steps">
-      <p>נסמן <span class="m">\(\measuredangle ABD = \beta\)</span>. <span class="m">\(BD\)</span> חוצה זווית, ולכן גם <span class="m">\(\measuredangle DBC = \beta\)</span>.</p>
-      <p>מהדמיון בסעיף ב: <span class="m">\(\measuredangle CBE = \measuredangle ABD = \beta\)</span> (זוויות מתאימות).</p>
-      <p>המשולש <span class="m">\(BCE\)</span> בנוי מחוץ למשולש <span class="m">\(ABC\)</span>, ולכן <span class="m">\(\measuredangle ABE = \measuredangle ABD + \measuredangle DBC + \measuredangle CBE = 3\beta\)</span>.</p>
-      <p><span class="m">\(AB \perp BE\)</span>, ולכן <span class="m">\(3\beta = 90^{\circ}\)</span> ו־<span class="m">\(\beta = 30^{\circ}\)</span>.</p>
-    </div>
-    <p class="ans"><span class="m">\(\measuredangle ABD = 30^{\circ}\)</span></p>
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>הזווית <span class="m">\(ABE\)</span> מורכבת משלוש זוויות שוות: שתיים מחוצה הזווית ועוד אחת מהדמיון בסעיף ב. הזווית כולה ישרה, ולכן כל אחת היא שליש ממנה.</p></div>
+    <ol class="st">
+    <li><span class="lab">סימון</span><div class="ml"><div class="ml-m"><span class="m">\(\measuredangle ABD = \beta\)</span></div><div class="ml-t"><span class="m">\(BD\)</span> חוצה זווית:</div><div class="ml-m"><span class="m">\(\measuredangle DBC = \beta\)</span></div></div></li>
+    <li><span class="lab">מהדמיון</span><div class="ml"><div class="ml-t">זוויות מתאימות בסעיף ב:</div><div class="ml-m"><span class="m">\(\measuredangle CBE = \measuredangle ABD = \beta\)</span></div></div></li>
+    <li><span class="lab">הזווית <span class="m">\(ABE\)</span></span><div class="ml"><div class="ml-t"><span class="m">\(\triangle BCE\)</span> בנוי מחוץ ל־<span class="m">\(\triangle ABC\)</span>:</div><div class="ml-m"><span class="m">\(\measuredangle ABE = \measuredangle ABD + \measuredangle DBC + \measuredangle CBE = 3\beta\)</span></div></div></li>
+    <li><span class="lab"><span class="m">\(\beta\)</span></span><div class="ml"><div class="ml-t"><span class="m">\(AB \perp BE\)</span>:</div><div class="ml-m"><span class="m">\(3\beta = 90^{\circ}\)</span></div><div class="ml-m"><span class="m">\(\beta = 30^{\circ}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\measuredangle ABD = 30^{\circ}\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(\measuredangle ABE = 3\cdot 30^{\circ} = 90^{\circ}\ \checkmark\)</span></div></div></div>
     <p class="uses">שימוש ב: <a href="#t-ratio">זוויות מתאימות</a><a href="#t-bisector">חוצה זווית</a></p>
   </div>
 </section>
