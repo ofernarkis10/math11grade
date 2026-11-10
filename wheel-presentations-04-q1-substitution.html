@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מצגת מונפשת – שאלה 1: הצבה בנוסחת המיקום</title>
+<style>
+  :root{
+    --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#f8fafc;
+    --cab:#f97316; --R:#2563eb; --L:#16a34a; --ang:#9333ea; --B:#dc2626; --D:#0891b2;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;overflow:hidden}
+  header{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 16px;background:#fff;border-bottom:1px solid var(--line)}
+  header h1{font-size:18px;margin:0}
+  header a{color:var(--R);text-decoration:none;font-size:14px}
+  .wrap{flex:1;min-height:0;display:flex;gap:10px;padding:10px}
+  /* RTL: הילד הראשון (הטקסט) בצד ימין, הסימולטור בצד שמאל */
+  .panel{flex:0 0 47%;overflow-y:auto;padding-left:6px;scroll-behavior:smooth}
+  .stage{flex:1;min-width:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px;display:flex;align-items:center;justify-content:center}
+  svg{width:100%;height:100%;display:block;direction:ltr}
+  @media (max-width:700px){body{overflow:auto;display:block}.wrap{flex-direction:column}.panel{flex:none;overflow:visible}.stage{order:-1}}
+
+  .qfull,.qbox{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;line-height:1.75}
+  .qfull{font-size:17px}
+  .qbox summary{cursor:pointer;font-weight:700;color:var(--muted)}
+  .qfull ol,.qbox ol{margin:6px 0 0;padding-right:22px}
+  .hint{color:var(--muted);margin-top:12px}
+
+  ol.items{list-style:none;margin:12px 0 0;padding:0}
+  ol.items li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:8px;cursor:pointer}
+  ol.items li.new{animation:pop .5s ease both}
+  ol.items li.ahead{opacity:.5}
+  ol.items li.cur{cursor:default}
+  ol.items li.cur{border:2px solid var(--cab);box-shadow:0 4px 14px rgba(249,115,22,.15)}
+  ol.items li.done{opacity:.8}
+  .chip{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;margin-left:8px;background:#e0f2fe;color:#075985}
+  .chip.sec{background:#ffedd5;color:#9a3412}
+  .chip.type{background:#f3e8ff;color:#6b21a8}
+  .qtext{font-size:17px;line-height:1.6}
+  .ans{margin-top:6px;color:#166534;font-weight:600}
+  .ans span{margin-left:14px}
+  .ans span,.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+  .sol{margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}
+  li.new .sol{animation:pop .6s .5s ease both}
+  .sol details{margin:6px 0}
+  .sol summary{cursor:pointer;font-weight:700;line-height:1.5}
+  .math{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;font-size:17px;background:#f8fafc;border-radius:8px;padding:6px 12px;margin-top:4px}
+  .math div{padding:2px 0}
+  @keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* svg */
+  .se{transition:opacity .6s}
+  .hid{opacity:0}
+  .instant .se{transition:none}
+  .lbl{font:700 15px "Segoe UI",Arial,sans-serif;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round;fill:var(--ink)}
+  .gond rect{fill:#e2e8f0;stroke:#64748b;stroke-width:1.5}
+  .cab.hl rect{fill:var(--cab);stroke:#9a3412}
+  .dash{stroke-dasharray:6 5}
+
+  .bar{flex:none;background:#fff;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:10px;padding:7px;flex-wrap:wrap}
+  .bar button{font:inherit;font-size:16px;border:0;border-radius:10px;padding:8px 18px;cursor:pointer;background:#e2e8f0}
+  .bar button.main{background:var(--cab);color:#fff;font-weight:700}
+  .bar button:disabled{opacity:.4;cursor:default}
+  .dots{display:flex;gap:5px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:#cbd5e1;cursor:pointer}
+  .dots i.on{background:var(--cab)}
+</style>
+<style>.pdot.hl{fill:#f97316;stroke:#9a3412} .pdot{opacity:0} .pdot.hl{opacity:1}</style>
+</head>
+<body>
+<header>
+  <h1>🎡 שאלה 1: הצבה בנוסחת המיקום – מצגת מונפשת</h1>
+  <a href="index.html#wheel-presentations">→ למצגות תנועה על גלגל</a>
+</header>
+<div class="wrap">
+  <section class="panel" id="panel"></section>
+  <section class="stage"><svg id="sv" viewBox="0 0 500 520" aria-label="שרטוט הגלגל"></svg></section>
+</div>
+<div class="bar">
+  <button id="prev">→ הקודם</button>
+  <button id="replay">↻ נגן שוב</button>
+  <div class="dots" id="dots"></div>
+  <span id="cnt" style="color:var(--muted);min-width:50px;text-align:center"></span>
+  <button id="next" class="main">הבא ←</button>
+</div>
+<script>
+const s=(v,p)=>`${v}<sub>${p}</sub>`;
+const m=lines=>`<div class="math">${lines.map(l=>`<div>${l}</div>`).join('')}</div>`;
+const sol=(type,parts)=>`<div class="sol"><span class="chip type">סוג התרגיל: ${type}</span>`+parts.map(([h,l])=>`<details open><summary>${h}</summary>${m(l)}</details>`).join('')+`</div>`;
+const heb=t=>`<span style="font-family:Segoe UI,Arial;font-size:15px;color:#6b21a8" dir="rtl">${t}</span>`;
+const LTR=t=>`<span class="ltr">${t}</span>`;
+const BASE_H='רושמים את נוסחת הבסיס לסיבוב: זווית = מהירות זוויתית × זמן – בדיוק כמו דרך = מהירות × זמן';
+const BASE=['α = ω · t &nbsp;&nbsp;⟷&nbsp;&nbsp; s = v · t',heb('זווית ↔ דרך &nbsp;|&nbsp; מהירות זוויתית ↔ מהירות &nbsp;|&nbsp; זמן ↔ זמן')];
+const BASE_S=['s = v · t'];
+const SV=(sub)=>`<tspan>${sub}</tspan>`;
+const ts=(v,i)=>`${v}<tspan dy="5" font-size="11">${i}</tspan><tspan dy="-5"></tspan>`;
+
+const CFG={
+ mode:'grid', xc:4, yc:6, R:10, th0:30, w:45,
+ Q:`<b>שאלה 1 מתרגול החזרה, מחולקת לסעיפים:</b><br>
+נקודה P על גלגל נעה כך שבזמן t (בשניות) המיקום שלה הוא:
+<div class="math"><div>x(t) = 4 + 10 · cos(30° + 45t)</div><div>y(t) = 6 + 10 · sin(30° + 45t)</div></div>
+<ol type="א">
+<li>מזהים בנוסחה את המרכז, הרדיוס, זווית ההתחלה והמהירות הזוויתית.</li>
+<li>מצאו את זמן המחזור T.</li>
+<li>מצאו את מיקום P אחרי 2 שניות (נקודה B).</li>
+<li>מצאו את מיקום P אחרי 8 שניות (נקודה D).</li>
+</ol>`,
+ draw:[
+  {id:'vX',kind:'vline',x:4,color:'R',label:ts('x','C')+' = 4',lx:8,anchor:'start',lypx:60},
+  {id:'hY',kind:'hline',y:6,color:'R',label:ts('y','C')+' = 6',lxpx:14},
+  {id:'C',kind:'C',label:'C(4, 6)',dx:10,dy:22},
+  {id:'Rs',kind:'seg',from:'C',to:{th:-60},color:'L',label:'R = 10',lx:22,ly:0,anchor:'start'},
+  {id:'th',kind:'arc',to:30,r:60,label:ts('θ','A')+' = 30°',lth:15,lr:96},
+  {id:'A',kind:'pt',at:{th:30},ring:true,color:'cab',label:'A',lx:12,ly:-12},
+  {id:'dir',kind:'dir',at:105,lines:['נגד כיוון השעון']},
+  {id:'i1',kind:'info',line:0,text:'R = 10'},
+  {id:'i2',kind:'info',line:1,text:ts('θ','A')+' = 30°',color:'ang'},
+  {id:'i3',kind:'info',line:2,text:'ω = 45° לשנייה'},
+  {id:'i4',kind:'info',line:3,text:'T = 8 שניות'},
+  {id:'wB',kind:'wedge',from:30,to:120,label:'α = 90°',lr:66},
+  {id:'B',kind:'pt',at:{th:120},color:'B',label:'B(−1, 14.66)',lx:-12,ly:-12,anchor:'end'},
+  {id:'pB',kind:'proj',at:{th:120},xl:'−1',yl:'14.66',color:'B'},
+  {id:'wD',kind:'wedge',from:30,to:390,r:30,label:'α = 360°',lth:250,lr:52},
+  {id:'D',kind:'pt',at:{th:30},color:'D',label:'D(12.66, 11) = A',lx:-6,ly:26,anchor:'end'},
+  {id:'pD',kind:'proj',at:{th:30},xl:'12.66',yl:'11',color:'D'},
+ ],
+ steps:[
+  {tag:'נתון',text:`נוסחת x של P: ${LTR('x(t) = 4 + 10 · cos(30° + 45t)')}`,temp:['vX'],seq:['axes','vX']},
+  {tag:'נתון',text:`נוסחת y של P: ${LTR('y(t) = 6 + 10 · sin(30° + 45t)')}`,temp:['hY'],seq:['hY','C']},
+  {tag:'סעיף א',sec:true,text:'מזהים בנוסחה את המרכז, הרדיוס, זווית ההתחלה והמהירות הזוויתית.',
+   ans:['C(4, 6)','R = 10',`${s('θ','A')} = 30°`,'ω = 45° לשנייה'],
+   sol:['קריאת נוסחה',[
+    ['רושמים את הנוסחה הכללית למיקום נקודה על גלגל',[`x = ${s('x','C')} + R · cos(${s('θ','A')} + ω · t)`,`y = ${s('y','C')} + R · sin(${s('θ','A')} + ω · t)`]],
+    ['משווים לנוסחה הנתונה ומוצאים את המרכז ואת הרדיוס',[`${s('x','C')} = 4`,`${s('y','C')} = 6`,'R = 10']],
+    ['משווים את מה שבתוך הסוגריים ומוצאים את זווית ההתחלה ואת המהירות הזוויתית',[`${s('θ','A')} = 30°`,'ω = 45° לשנייה']],
+    ['ω חיובית, לכן הזווית עולה והגלגל מסתובב נגד כיוון השעון',['ω > 0']]]],
+   temp:['Rs','th'],seq:[{draw:'wheel'},'Rs','i1','th','A',{hl:1},'i2','dir','i3']},
+  {tag:'סעיף ב',sec:true,text:'מצאו את זמן המחזור T.',ans:'T = 8 שניות',
+   sol:['שאלת מרחק זוויתי',[
+    [BASE_H,BASE],['מבודדים את הזמן',['t = α / ω']],
+    ['מציבים סיבוב שלם (360°) ומקבלים את זמן המחזור',['T = 360° / ω','T = 360° / 45 = 8 שניות']]]],
+   seq:['i4',{spin:{label:'סיבוב שלם = 8 שניות (מואץ ×2)',dur:4000}}]},
+  {tag:'סעיף ג',sec:true,text:'מצאו את מיקום P אחרי 2 שניות (נקודה B).',ans:'B(−1, 6 + 5√3) ≈ (−1, 14.66)',
+   sol:['שאלת מרחק זוויתי, ואחר כך שאלת מיקום',[
+    [BASE_H,BASE],
+    ['מציבים את המהירות הזוויתית ואת הזמן, ומקבלים בכמה מעלות הסתובבה P',[`${s('t','B')} = 2`,`α = 45 · ${s('t','B')}`,'α = 45 · 2 = 90°']],
+    ['מוסיפים את הסיבוב לזווית ההתחלה, ומקבלים את הזווית של B',[`${s('θ','B')} = ${s('θ','A')} + α`,`${s('θ','B')} = 30° + 90° = 120°`]],
+    ['מציבים את הזווית של B בנוסחת x',[`${s('x','B')} = ${s('x','C')} + R · cos ${s('θ','B')}`,`${s('x','B')} = 4 + 10 · cos 120°`,`${s('x','B')} = 4 + 10 · (−1/2) = −1`]],
+    ['מציבים את הזווית של B בנוסחת y',[`${s('y','B')} = ${s('y','C')} + R · sin ${s('θ','B')}`,`${s('y','B')} = 6 + 10 · sin 120°`,`${s('y','B')} = 6 + 10 · (√3/2) = 6 + 5√3 ≈ 14.66`]],
+    ['כותבים את שיעורי הנקודה',['B(−1, 6 + 5√3) ≈ B(−1, 14.66)']]]],
+   temp:['wB','pB'],seq:[{move:{from:30,to:120,t2:2,dur:2500}},'wB','B','pB']},
+  {tag:'סעיף ד',sec:true,text:'מצאו את מיקום P אחרי 8 שניות (נקודה D).',ans:'D(4 + 5√3, 11) ≈ (12.66, 11)',
+   sol:['שאלת מרחק זוויתי, ואחר כך שאלת מיקום',[
+    [BASE_H,BASE],
+    ['מציבים את המהירות הזוויתית ואת הזמן, ומקבלים בכמה מעלות הסתובבה P',[`${s('t','D')} = 8`,`α = 45 · ${s('t','D')}`,'α = 45 · 8 = 360°']],
+    ['מוסיפים את הסיבוב לזווית ההתחלה. 360° הוא סיבוב שלם, ולכן מורידים אותו: P חזרה לנקודה A',[`${s('θ','D')} = ${s('θ','A')} + α`,`${s('θ','D')} = 30° + 360° = 390°`,`${s('θ','D')} = 390° − 360° = 30°`]],
+    ['מציבים את הזווית של D בנוסחת x',[`${s('x','D')} = ${s('x','C')} + R · cos ${s('θ','D')}`,`${s('x','D')} = 4 + 10 · cos 30°`,`${s('x','D')} = 4 + 10 · (√3/2) = 4 + 5√3 ≈ 12.66`]],
+    ['מציבים את הזווית של D בנוסחת y',[`${s('y','D')} = ${s('y','C')} + R · sin ${s('θ','D')}`,`${s('y','D')} = 6 + 10 · sin 30°`,`${s('y','D')} = 6 + 10 · (1/2) = 11`]],
+    ['כותבים את שיעורי הנקודה: זו בדיוק נקודת ההתחלה A, כי 8 שניות הן זמן מחזור שלם',['D(4 + 5√3, 11) ≈ D(12.66, 11)']]]],
+   seq:[{move:{from:30,to:390,t2:8,dur:5000}},'wD','D','pD']},
+ ]};
+
+/* ===== מנוע מצגת: נקודה על גלגל ===== */
+const NS='http://www.w3.org/2000/svg';
+const svg=document.getElementById('sv');
+const F=CFG, MODE=F.mode;            // 'ground' | 'grid' | 'windmill'
+const GROUND=MODE!=='grid';
+let S,X,Y,GY=470;
+if(GROUND){
+  S=Math.min(390/(F.yc+F.R),165/F.R);
+  X=x=>250+x*S; Y=y=>GY-y*S;
+}else{
+  const xmin=Math.min(F.xc-F.R,0)-1.5,xmax=Math.max(F.xc+F.R,0)+1.5,ymin=Math.min(F.yc-F.R,0)-1.2,ymax=Math.max(F.yc+F.R,0)+1.2;
+  S=Math.min(480/(xmax-xmin),420/(ymax-ymin));
+  const ox=(500-(xmax-xmin)*S)/2, oy=95+(420-(ymax-ymin)*S)/2;
+  X=x=>ox+(x-xmin)*S; Y=y=>oy+(ymax-y)*S;
+}
+const CX=X(F.xc),CY=Y(F.yc),R=F.R*S,START=F.th0,DIR=Math.sign(F.w)||1;
+const P=(th,r=R)=>{const a=th*Math.PI/180;return [CX+r*Math.cos(a),CY-r*Math.sin(a)];};
+function el(tag,a,p){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;}
+function txt(x,y,s,a,p){const t=el('text',Object.assign({x,y,class:'lbl'},a||{}),p);if(/[<&]/.test(s))t.innerHTML=s;else t.textContent=s;return t;}
+const sub=(v,i)=>`${v}<tspan dy="5" font-size="11">${i}</tspan><tspan dy="-5"></tspan>`;
+const line=(x1,y1,x2,y2,a,p)=>el('line',Object.assign({x1,y1,x2,y2},a),p);
+function arcD(t1,t2,r=R){
+  const span=t2-t1, sw=span<0?1:0;
+  if(Math.abs(span)>=359.9){const[a,b]=P(t1,r),[c,d]=P(t1+180*Math.sign(span),r);return `M${a} ${b} A${r} ${r} 0 1 ${sw} ${c} ${d} A${r} ${r} 0 1 ${sw} ${a} ${b}`;}
+  const[a,b]=P(t1,r),[c,d]=P(t2,r);return `M${a} ${b} A${r} ${r} 0 ${Math.abs(span)>180?1:0} ${sw} ${c} ${d}`;
+}
+const wedgeD=(t1,t2,r)=>`M${CX} ${CY} L${P(t1,r)} `+arcD(t1,t2,r).replace(/^M[^A]*/,'')+' Z';
+function spec(p){ // נקודה: {th}, 'C', [x,y] ביחידות
+  if(p==='C')return[CX,CY]; if(Array.isArray(p))return[X(p[0]),Y(p[1])]; if(p.th!==undefined)return P(p.th,p.r!==undefined?p.r*S:R); if(p.px)return p.px; return[0,0];}
+
+const defs=el('defs',{});
+const MK={'#334155':'ar','#f97316':'arO','#9333ea':'arP','#dc2626':'arR','#16a34a':'arG','#2563eb':'arB','#0891b2':'arD'};
+const COL={ink:'#0f172a',cab:'#f97316',R:'#2563eb',L:'#16a34a',ang:'#9333ea',B:'#dc2626',D:'#0891b2',gray:'#334155'};
+for(const c in MK){const m=el('marker',{id:MK[c],viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs);el('path',{d:'M0 0 L10 5 L0 10 z',fill:c},m);}
+const col=c=>COL[c]||c||COL.gray, mk=c=>`url(#${MK[col(c)]||'ar'})`;
+
+/* ---------- רקע ---------- */
+if(GROUND){
+  el('rect',{x:0,y:GY,width:500,height:50,fill:'#dcfce7'});
+  line(0,GY,500,GY,{stroke:'#166534','stroke-width':2});
+}else{
+  const st=S>32?1:S>16?2:5;
+  for(let x=Math.ceil(-250/S)-20;x<=40;x++)line(X(x),0,X(x),520,{stroke:'#eef2f7'});
+  for(let y=-40;y<=40;y++)line(0,Y(y),500,Y(y),{stroke:'#eef2f7'});
+}
+/* ---------- גלגל ---------- */
+const wheel=el('g',{});
+if(MODE==='windmill'){
+  el('path',{d:`M${CX-14} ${CY} L${CX-34} ${GY} L${CX+34} ${GY} L${CX+14} ${CY} Z`,fill:'#e2e8f0',stroke:'#94a3b8','stroke-width':2},wheel);
+  el('circle',{cx:CX,cy:CY,r:R,fill:'none',stroke:'#cbd5e1','stroke-width':2,'stroke-dasharray':'5 6'},wheel);
+}else{
+  if(GROUND)el('path',{d:`M${CX-Math.min(80,R*.55)} ${GY} L${CX} ${CY} L${CX+Math.min(80,R*.55)} ${GY}`,fill:'none',stroke:'#94a3b8','stroke-width':7,'stroke-linejoin':'round'},wheel);
+  el('circle',{cx:CX,cy:CY,r:R,fill:'none',stroke:'#64748b','stroke-width':4},wheel);
+  el('circle',{cx:CX,cy:CY,r:R-8,fill:'none',stroke:'#cbd5e1','stroke-width':1.5},wheel);
+}
+const spokes=el('g',{},wheel);
+if(MODE==='windmill'){for(let k=0;k<3;k++){const a=k*120,[x1,y1]=P(START+a+5,R*.25),[x2,y2]=P(START+a,R),[x3,y3]=P(START+a-5,R*.25);
+  el('path',{d:`M${CX} ${CY} L${x1} ${y1} L${x2} ${y2} L${x3} ${y3} Z`,fill:k?'#cbd5e1':'#94a3b8',stroke:'#64748b','stroke-width':1.5},spokes);}}
+else{const n=GROUND?8:8;for(let k=0;k<n;k++){const[x,y]=P(START+k*360/n);line(CX,CY,x,y,{stroke:GROUND?'#94a3b8':'#cbd5e1','stroke-width':2},spokes);}}
+el('circle',{cx:CX,cy:CY,r:MODE==='windmill'?10:8,fill:'#475569'},wheel);
+if(!GROUND&&!F.wheelVisible)wheel.setAttribute('class','se hid');
+const rimDraw=el('circle',{cx:CX,cy:CY,r:R,fill:'none',stroke:'#64748b','stroke-width':4,pathLength:1,'stroke-dasharray':1,'stroke-dashoffset':1,class:'se hid',transform:`rotate(${-START} ${CX} ${CY})`});
+
+const trace=el('path',{d:'',fill:'none',stroke:'#f97316','stroke-width':7,'stroke-linecap':'round',opacity:.85});
+const under=el('g',{}); // שכבה לגזרות זווית
+/* ---------- צירים ---------- */
+const G={};
+G.axes=el('g',{class:'se hid'});
+{const a=G.axes;
+ line(5,GROUND?GY:Y(0),490,GROUND?GY:Y(0),{stroke:'#334155','stroke-width':2,'marker-end':'url(#ar)'},a);
+ line(X(0),515,X(0),8,{stroke:'#334155','stroke-width':2,'marker-end':'url(#ar)'},a);
+ txt(488,(GROUND?GY:Y(0))-8,'x',{},a); txt(X(0)+8,16,'y',{},a); txt(X(0)-14,(GROUND?GY:Y(0))+18,'O',{},a);
+ if(!GROUND){const st=S>32?1:S>16?2:5;
+   for(let x=-40;x<=40;x+=st){if(!x)continue;const px=X(x);if(px<12||px>480)continue;txt(px,Y(0)+16,String(x).replace('-','−'),{'text-anchor':'middle',style:'font-size:11px;font-weight:500'},a);}
+   for(let y=-40;y<=40;y+=st){if(!y)continue;const py=Y(y);if(py<20||py>510)continue;txt(X(0)-6,py+4,String(y).replace('-','−'),{'text-anchor':'end',style:'font-size:11px;font-weight:500'},a);}}
+}
+/* ---------- הקרונית / הנקודה ---------- */
+function makeGond(cls){const g=el('g',{class:cls});line(0,0,0,8,{stroke:'#475569','stroke-width':2},g);el('rect',{x:-10,y:8,width:20,height:14,rx:4},g);el('circle',{cx:0,cy:0,r:2.5,fill:'#475569'},g);return g;}
+let decor=[],cab;
+const front=el('g',{});
+if(MODE==='ground'){decor=[...Array(7)].map(()=>makeGond('gond'));cab=makeGond('gond cab');}
+else{cab=el('circle',{r:8,fill:'#94a3b8',stroke:'#fff','stroke-width':2,class:'pdot'});}
+
+/* ---------- בניית קבוצות השרטוט ---------- */
+const BUILD={
+  C:(g,o)=>{el('circle',{cx:CX,cy:CY,r:6,fill:COL.ink},g);txt(CX+(o.dx??12),CY+(o.dy??-10),o.label||`C(${F.xc}, ${F.yc})`.replace(/-/g,'−'),{'text-anchor':o.anchor||'start'},g);},
+  vdim:(g,o)=>{const x=o.xpx??X(o.x),y1=Y(o.y1),y2=Y(o.y2),c=col(o.color);
+    if(o.guide)line(...spec(o.guide),x,spec(o.guide)[1],{stroke:'#334155',class:'dash'},g);
+    line(x,y1-(o.y1>o.y2?-3:3),x,y2+(o.y1>o.y2?3:-3),{stroke:c,'stroke-width':2,'marker-start':mk(c),'marker-end':mk(c)},g);
+    txt(x+(o.side==='left'?-7:7),(y1+y2)/2+5,o.label,{fill:c,'text-anchor':o.side==='left'?'end':'start'},g);},
+  hdim:(g,o)=>{const y=o.ypx??Y(o.y),x1=spec(o.from)[0],x2=spec(o.to)[0],c=col(o.color);
+    line(x1,y,x2,y,{stroke:c,'stroke-width':2,'marker-start':mk(c),'marker-end':mk(c)},g);
+    txt((x1+x2)/2,y+(o.below?20:-8),o.label,{fill:c,'text-anchor':'middle'},g);},
+  seg:(g,o)=>{const[a,b]=spec(o.from),[c2,d]=spec(o.to),c=col(o.color);
+    line(a,b,c2,d,{stroke:c,'stroke-width':o.w||(o.dash?2:4),class:o.dash?'dash':'', ...(o.arrow?{'marker-end':mk(c)}:{})},g);
+    if(o.label){const t=o.lt??.5;txt(a+(c2-a)*t+(o.lx||0),b+(d-b)*t+(o.ly||0),o.label,{fill:c,'text-anchor':o.anchor||'middle'},g);}},
+  pt:(g,o)=>{const[x,y]=spec(o.at),c=col(o.color);
+    if(o.ring)el('circle',{cx:x,cy:y,r:9,fill:'none',stroke:c,'stroke-width':3},g);else el('circle',{cx:x,cy:y,r:7,fill:c,stroke:'#fff','stroke-width':2},g);
+    if(o.label)txt(x+(o.lx??12),y+(o.ly??-10),o.label,{fill:o.lc?col(o.lc):c,'text-anchor':o.anchor||'start'},g);},
+  hline:(g,o)=>{const y=Y(o.y),c=col(o.color);line(10,y,490,y,{stroke:c,'stroke-width':2,class:'dash'},g);
+    if(o.label)txt(o.lxpx??14,y-7,o.label,{fill:c},g);},
+  vline:(g,o)=>{const x=X(o.x),c=col(o.color);line(x,40,x,GROUND?GY:510,{stroke:c,'stroke-width':2,class:'dash'},g);
+    if(o.label)txt(x+(o.lx??-6),o.lypx??(CY-R-14),o.label,{fill:c,'text-anchor':o.anchor||'end'},g);},
+  arc:(g,o)=>{const c=col(o.color??'ang'),r=o.r??34;
+    if(o.ray!==false)line(CX,CY,CX+r+36,CY,{stroke:c,'stroke-width':2,class:'dash'},g);
+    el('path',{d:arcD(o.from??0,o.to,r),fill:'none',stroke:c,'stroke-width':3,'marker-end':mk(c)},g);
+    if(o.label){const[x,y]=P(o.lth??((o.from??0)+o.to)/2,o.lr??r+24);txt(x+(o.lx||0),y+(o.ly||0),o.label,{fill:c,'text-anchor':o.anchor||'middle'},g);}},
+  wedge:(g,o)=>{const c=col('ang'),r=o.r??42;el('path',{d:wedgeD(o.from,o.to,r),fill:'rgba(147,51,234,.16)',stroke:c,'stroke-width':2},under).setAttribute('data-g',o.id);
+    if(o.label){const[x,y]=P(o.lth??(o.from+o.to)/2,o.lr??r+22);txt(x+(o.lx||0),y+(o.ly||0),o.label,{fill:c,'text-anchor':o.anchor||'middle'},g);}},
+  rim:(g,o)=>{el('path',{d:arcD(o.from,o.to,R),fill:'none',stroke:col(o.color),'stroke-width':8,'stroke-linecap':'round',opacity:.75},g);
+    if(o.label){const[x,y]=P(o.lth??(o.from+o.to)/2,R+(o.lr??26));txt(x+(o.lx||0),y+(o.ly||0),o.label,{fill:col(o.color),'text-anchor':o.anchor||'middle'},g);}},
+  dir:(g,o)=>{const c=COL.cab,a=o.at??110,sp=DIR>0?40:-40;
+    el('path',{d:arcD(a-sp/2,a+sp/2,R+26),fill:'none',stroke:c,'stroke-width':4,'marker-end':mk(c)},g);
+    (o.lines||[]).forEach((l,i)=>txt(12,62+22*i,l,{fill:'#c2410c'},g));},
+  info:(g,o)=>{txt(490,30+22*(o.line||0),o.text,{fill:col(o.color??'L'),'text-anchor':'end'},g);},
+  text:(g,o)=>{const[tx,ty]=o.at?spec(o.at):[o.x,o.y];txt(tx,ty,o.text,{fill:col(o.color??'ink'),'text-anchor':o.anchor||'start',style:o.size?`font-size:${o.size}px`:''},g);},
+  marker:(g,o)=>{const[x,y]=spec(o.at),c=col(o.color);const d=o.dir??DIR,a=(o.th)*Math.PI/180,vx=-Math.sin(a)*d,vy=-Math.cos(a)*d;
+    line(x,y,x+vx*38,y+vy*38,{stroke:c,'stroke-width':4,'marker-end':mk(c)},g);
+    if(o.label)txt(x+vx*44+(o.lx||0),y+vy*44+(o.ly||0)+5,o.label,{fill:c,'text-anchor':o.anchor||(vx<0?'end':'start')},g);},
+  proj:(g,o)=>{const[x,y]=spec(o.at),y0=GROUND?GY:Y(0),x0=X(0);
+    if(o.toX!==false)line(x,y,x,y0,{stroke:'#334155',class:'dash'},g);
+    if(o.toY!==false)line(x,y,x0,y,{stroke:'#334155',class:'dash'},g);
+    if(o.xl)txt(x,y0+(GROUND?20:30),o.xl,{'text-anchor':'middle',fill:col(o.color??'ink')},g);
+    if(o.yl)txt(x0+(x<x0?8:-8),y+(o.yly??-6),o.yl,{'text-anchor':x<x0?'start':'end',fill:col(o.color??'ink')},g);},
+};
+(F.draw||[]).forEach(o=>{const g=el('g',{class:'se hid'},(o.top||o.kind==='pt')?front:svg);G[o.id]=g;BUILD[o.kind](g,o);});
+svg.appendChild(cab);svg.appendChild(front);
+const timer=txt(12,30,'',{class:'lbl se hid',fill:'#c2410c',style:'font-size:20px'});
+
+/* ---------- מצב ---------- */
+let theta=START;
+function setTheta(th){
+  theta=th;spokes.setAttribute('transform',`rotate(${START-th} ${CX} ${CY})`);
+  const[x,y]=P(th);
+  if(MODE==='ground'){cab.setAttribute('transform',`translate(${x} ${y})`);decor.forEach((g,i)=>{const[a,b]=P(th+45*(i+1));g.setAttribute('transform',`translate(${a} ${b})`);});}
+  else{cab.setAttribute('cx',x);cab.setAttribute('cy',y);}
+}
+const show=e=>e&&e.classList.remove('hid');
+const grpEl=id=>id==='wheel'?wheel:G[id];
+function showG(id){show(grpEl(id));under.querySelectorAll(`[data-g="${id}"]`).forEach(w=>w.style.display='');}
+function hideG(id){const e=grpEl(id);if(e)e.classList.add('hid');under.querySelectorAll(`[data-g="${id}"]`).forEach(w=>w.style.display='none');}
+let token=0;
+const wait=(ms,my)=>new Promise(r=>setTimeout(()=>r(my===token),ms));
+function tween(dur,f,my){return new Promise(res=>{const t0=performance.now();
+  function fr(now){if(my!==token)return res(false);const p=Math.min(1,(now-t0)/dur);f(p);p<1?requestAnimationFrame(fr):res(true);}requestAnimationFrame(fr);});}
+const fmt=t=>{const r=Math.round(t*100)/100;return Number.isInteger(r)?String(r):r.toFixed(2).replace(/0$/,'');};
+function setTimer(t,note){timer.textContent=`t = ${fmt(t)} שניות${note?'  '+note:''}`;show(timer);}
+async function runSeq(seq,a,my){
+  for(const it of seq||[]){
+    if(my!==token)return;
+    if(typeof it==='string'){if(a&&!(await wait(600,my)))return;showG(it);continue;}
+    if(it.wait){if(a&&!(await wait(it.wait,my)))return;continue;}
+    if(it.hl){cab.classList.add('hl');continue;}
+    if(it.timer!==undefined){if(it.timer===false)timer.classList.add('hid');else{timer.textContent=it.timer;show(timer);}continue;}
+    if(it.draw){const e=it.draw==='wheel'?rimDraw:G[it.draw];show(e);if(it.draw==='wheel'){if(a){if(!await tween(1600,p=>rimDraw.setAttribute('stroke-dashoffset',1-p),my))return;}rimDraw.classList.add('hid');showG('wheel');}continue;}
+    if(it.spin){if(!a)continue;const d=it.spin.dur||4000,from=theta;timer.textContent=it.spin.label;show(timer);
+      if(!await tween(d,p=>setTheta(from+DIR*360*p*(it.spin.turns||1)),my))return;setTheta(from);timer.classList.add('hid');continue;}
+    if(it.set!==undefined){setTheta(it.set);if(it.clear)trace.setAttribute('d','');continue;}
+    if(it.move){const m=it.move,from=m.from??theta,t1=m.t1??0,t2=m.t2,real=(t2-t1)*1000,dur=m.dur??real;
+      const note=dur<real*0.7?`(מואץ ×${Math.round(real/dur)})`:dur>real*1.4?'(הילוך איטי)':'';
+      const f=p=>{const th=from+(m.to-from)*p;setTheta(th);trace.setAttribute('d',Math.abs(th-from)>0.05?arcD(from,th):'');setTimer(t1+(t2-t1)*p,p<1?note:'');};
+      if(a){f(0);if(!await wait(300,my))return;if(!await tween(dur,f,my))return;}else f(1);continue;}
+  }
+}
+
+/* ---------- תוכן ---------- */
+const panel=document.getElementById('panel');
+const steps=[{intro:true}].concat(F.steps);
+let cur=0,shown=0;
+function renderPanel(i){
+  const isNew=i>shown;if(isNew)shown=i;const keep=panel.scrollTop;
+  let h=`<details class="qbox" ${i===0?'open':''}><summary>השאלה המלאה</summary>${F.Q}</details>`;
+  if(shown===0)h+=`<p class="hint">לחצו "הבא" – כל נתון וכל סעיף יתווסף בתחתית הרשימה, ומשמעותו תסומן בסימולטור משמאל. אפשר לגלול למעלה וללחוץ על סעיף קודם כדי לחזור למצב שלו.</p>`;
+  h+='<ol class="items">';
+  for(let k=1;k<=shown;k++){const st=steps[k];
+    const cls=(k===i?'cur':k<i?'done':'ahead')+(isNew&&k===i?' new':'');
+    h+=`<li class="${cls}" data-k="${k}"><span class="chip ${st.sec?'sec':''}">${st.tag}</span><span class="qtext">${st.text}</span>`;
+    if(k===i&&st.sol)h+=sol(st.sol[0],st.sol[1]);else if(k!==i&&st.ans)h+=`<div class="ans">✓ ${[].concat(st.ans).map(x=>`<span>${x}</span>`).join('')}</div>`;
+    h+='</li>';}
+  panel.innerHTML=h+'</ol>';
+  panel.querySelectorAll('li[data-k]').forEach(li=>li.onclick=()=>{const k=+li.dataset.k;if(k!==cur)go(k);});
+  panel.style.scrollBehavior='auto';panel.scrollTop=keep;panel.style.scrollBehavior='';
+  const c=panel.querySelector('li.cur');if(isNew)panel.scrollTo({top:panel.scrollHeight});else if(c)c.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function resetDrawing(){
+  svg.querySelectorAll('.se').forEach(e=>e.classList.add('hid'));under.querySelectorAll('[data-g]').forEach(w=>w.style.display='none');
+  cab.classList.remove('hl');trace.setAttribute('d','');rimDraw.setAttribute('stroke-dashoffset',1);setTheta(START);
+  if(!GROUND&&!F.wheelVisible)wheel.classList.add('hid');
+}
+async function go(i){
+  cur=Math.max(0,Math.min(steps.length-1,i));const my=++token;window.__done=-1;
+  renderPanel(cur);svg.classList.add('instant');resetDrawing();
+  for(let k=1;k<cur;k++)await runSeq(steps[k].seq,false,my);
+  for(let k=1;k<cur;k++)(steps[k].temp||[]).forEach(hideG);
+  void svg.getBoundingClientRect();svg.classList.remove('instant');
+  document.getElementById('prev').disabled=cur===0;document.getElementById('next').disabled=cur===steps.length-1;
+  document.getElementById('cnt').textContent=`${cur} / ${steps.length-1}`;
+  document.querySelectorAll('#dots i').forEach((d,k)=>d.classList.toggle('on',k<=cur));
+  if(!(await wait(700,my)))return;
+  if(cur>0)await runSeq(steps[cur].seq,true,my);
+  if(my===token)window.__done=cur;
+}
+const dots=document.getElementById('dots');
+steps.forEach((_,k)=>{const d=document.createElement('i');d.title=k?steps[k].tag:'השאלה';d.onclick=()=>go(k);dots.appendChild(d);});
+document.getElementById('next').onclick=()=>go(cur+1);
+document.getElementById('prev').onclick=()=>go(cur-1);
+document.getElementById('replay').onclick=()=>go(cur);
+document.addEventListener('keydown',e=>{if(e.target.tagName==='SUMMARY')return;
+  if(e.key==='ArrowLeft'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(cur+1);}
+  if(e.key==='ArrowRight'||e.key==='PageUp'){e.preventDefault();go(cur-1);}});
+setTheta(START);go(0);
+
+</script>
+</body>
+</html>
