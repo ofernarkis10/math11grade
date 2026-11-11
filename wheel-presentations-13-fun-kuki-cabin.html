@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>מצגת עם סיפור – קוקי הקרונית והגלגל המטורף</title>
+<title>מצגת קומיקס – קוקי הקרונית והגלגל המטורף</title>
 <style>
   :root{
     --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#f8fafc;
@@ -67,29 +67,59 @@
   .dots i{width:9px;height:9px;border-radius:50%;background:#cbd5e1;cursor:pointer}
   .dots i.on{background:var(--cab)}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Varela+Round&display=swap" rel="stylesheet">
 <style>
-.bub{direction:rtl;text-align:right;background:#fff;border:2.5px solid #f97316;border-radius:16px;padding:6px 10px;font:600 14px "Segoe UI",Arial,sans-serif;line-height:1.4;color:#0f172a;box-shadow:0 3px 8px rgba(0,0,0,.18)}
-.bub .who{display:inline-block;background:#f97316;color:#fff;border-radius:999px;padding:0 9px;margin-left:6px;font-size:12px}
-.bulb{animation:blink 1.2s infinite}.b1{animation-delay:.4s}.b2{animation-delay:.8s}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+body{font-family:"Varela Round","Segoe UI",Arial,sans-serif;background:#fff8e7;
+  background-image:radial-gradient(#f3d9a4 1.2px,transparent 1.3px);background-size:12px 12px}
+header{background:#fde047;border-bottom:4px solid #111}
+header h1{font-family:"Secular One","Segoe UI",sans-serif;font-weight:400;color:#111;letter-spacing:.3px}
+header a{color:#111;font-weight:700}
+.stage{background:linear-gradient(#a5e3ff 50%,#86d36b 50%);border:4px solid #111;border-radius:6px;box-shadow:6px 6px 0 #111;padding:0}
+.qbox{background:#fff;border:3px solid #111;border-radius:6px;box-shadow:4px 4px 0 #111}
+.qbox summary{font-family:"Secular One",sans-serif;font-weight:400;color:#111}
+ol.items li{border:3px solid #111;border-radius:6px;box-shadow:4px 4px 0 #111;background:#fff}
+ol.items li.cur{border:3px solid #111;background:#fffbe6;box-shadow:6px 6px 0 #f97316}
+.chip{background:#38bdf8;color:#111;border:2px solid #111;font-family:"Secular One",sans-serif;font-weight:400}
+.chip.sec{background:#f97316;color:#fff}
+.chip.type{background:#e9d5ff;color:#111}
+.math{border:2px solid #111;background:#fff}
+.bar{background:#fde047;border-top:4px solid #111}
+.bar button{background:#fff;border:3px solid #111;border-radius:6px;box-shadow:3px 3px 0 #111;font-family:"Secular One",sans-serif;color:#111}
+.bar button.main{background:#f97316;color:#fff}
+.bar button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #111}
+.dots i{border:2px solid #111;background:#fff;width:11px;height:11px}
+.dots i.on{background:#f97316}
+.lbl{font-family:"Varela Round","Segoe UI",Arial,sans-serif;font-weight:700}
+.powtxt{font-family:"Secular One",sans-serif;stroke:#111;stroke-width:1.2px;paint-order:stroke}
+.kname{font-family:"Secular One",sans-serif;font-size:13px}
+.bubwrap{padding:0 2px 16px 2px}
+.bub{position:relative;direction:rtl;text-align:right;background:#fff;border:3px solid #111;border-radius:22px;padding:7px 13px;
+  font:15px "Varela Round","Segoe UI",Arial,sans-serif;line-height:1.38;color:#111;box-shadow:3px 3px 0 #111}
+.bub::after{content:"";position:absolute;bottom:-14px;left:46%;border:12px solid transparent;border-top:14px solid #111;border-bottom:0}
+.bub::before{content:"";position:absolute;bottom:-9px;left:calc(46% + 3px);border:9px solid transparent;border-top:11px solid #fff;border-bottom:0;z-index:1}
+.bub .who{display:inline-block;background:#fde047;border:2px solid #111;border-radius:6px;padding:0 8px;margin-left:7px;font-family:"Secular One",sans-serif;font-size:13px}
+.bulb{animation:blink 1.1s infinite}.b1{animation-delay:.37s}.b2{animation-delay:.74s}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
 .clouds{animation:drift 30s ease-in-out infinite alternate}
-@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-90px)}}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-80px)}}
 .burst{animation:boom 1.8s ease-out infinite}
-@keyframes boom{0%{transform:scale(.15);opacity:0}15%{opacity:1}100%{transform:scale(1.35);opacity:0}}
+@keyframes boom{0%{transform:scale(.15);opacity:0}15%{opacity:1}100%{transform:scale(1.3);opacity:0}}
+  .pop{animation:popin .5s cubic-bezier(.3,1.8,.5,1) both}
+@keyframes popin{from{transform:scale(0) rotate(-20deg)}to{transform:scale(1) rotate(-6deg)}}
 .face .oh,.face .brows,.face .sweat{display:none}
 .cab.scared .oh,.cab.scared .brows,.cab.scared .sweat{display:inline}
 .cab.scared .smile{display:none}
 .cab:not(.hl) .face,.cab:not(.hl) .kname{display:none}
-.cab.scared rect{animation:shake .12s infinite}
+.cab.scared .body{animation:shake .12s infinite}
 @keyframes shake{0%{transform:translateX(-1.5px)}50%{transform:translateX(1.5px)}100%{transform:translateX(-1.5px)}}
-.qbox,.qfull{background:#fffbeb}
 </style>
 
 <style>.pdot.hl{fill:#f97316;stroke:#9a3412} .pdot{opacity:0} .pdot.hl{opacity:1}</style>
 </head>
 <body>
 <header>
-  <h1>🎡 קוקי הקרונית והגלגל המטורף – מצגת עם סיפור</h1>
+  <h1>🎡 קוקי הקרונית והגלגל המטורף – מצגת קומיקס</h1>
   <a href="index.html#wheel-presentations">→ למצגות תנועה על גלגל</a>
 </header>
 <div class="wrap">
@@ -123,7 +153,6 @@ const CFG={
 <b>מוטי המפעיל</b> מסובב את "הגלגל המטורף": מרכזו C בגובה <b>22 מ׳</b> ורדיוסו <b>18 מ׳</b>.
 הגלגל מסתובב <b>נגד כיוון השעון</b>, סיבוב שלם בכל <b>2 דקות</b> (מוטי נשבע שזה 2 דקות ולא 2 שנים).
 קוקי עולה ב<b>נקודה הנמוכה ביותר</b>, A. יש לה בעיה קטנה: <b>מעל 31 מ׳ היא צורחת</b>.
-ובראש הגלגל מחכה <b>יוני היונה</b>, שזוממת לגנוב לנוסעים את הבמבה.
 <ol type="א">
 <li>מה המהירות הזוויתית ω של הגלגל?</li>
 <li>מה מהירות הקרונית v? (קוקי טוענת שהיא "טסה כמו טיל")</li>
@@ -131,7 +160,7 @@ const CFG={
 <li>מתי קוקי מתחילה לצרוח (נקודה B)?</li>
 <li>מתי היא מפסיקה לצרוח (נקודה D)?</li>
 <li>כמה שניות של צרחות יש בכל סיבוב?</li>
-<li>מתי קוקי מגיעה לראש הגלגל (נקודה E), ובאיזה גובה יוני מחכה לה?</li>
+<li>מתי קוקי מגיעה לראש הגלגל (נקודה E), ובאיזה גובה היא אז?</li>
 </ol>`,
  draw:[
   {id:'C',kind:'C',label:'C(0, 22)',dx:-12,dy:22,anchor:'end'},
@@ -140,7 +169,6 @@ const CFG={
   {id:'dir',kind:'dir',at:155},
   {id:'A',kind:'pt',at:{th:270},ring:true,color:'cab',label:'A',lx:18,ly:14},
   {id:'h31',kind:'hline',y:31,color:'B',label:'y = 31 – קו הצרחות'},
-  {id:'pig',kind:'pigeon'},
   {id:'iW',kind:'info',line:4,text:'ω = 3° לשנייה'},
   {id:'L',kind:'rim',from:0,to:360,color:'L'},
   {id:'iV',kind:'info',line:5,text:'v = 0.3π ≈ 0.94 מ׳ לשנייה'},
@@ -154,20 +182,22 @@ const CFG={
   {id:'wE',kind:'wedge',from:270,to:450,r:40,label:'α = 180°',lth:0,lr:62},
   {id:'E',kind:'pt',at:{th:90},color:'D',label:'E: t = 60, h = 40 מ׳',lx:-20,ly:34,anchor:'end'},
   {id:'fw',kind:'fireworks'},
+  {id:'pow1',kind:'pow',x:428,y:262,text:'אאאא!',color:'#ef4444'},
+  {id:'pow2',kind:'pow',x:74,y:262,text:'פיו...',color:'#38bdf8'},
+  {id:'pow3',kind:'pow',x:415,y:180,text:'בום!',color:'#f59e0b'},
   // בועות דיבור
   {id:'b1',kind:'bubble',who:'מוטי',text:'22 מטר! זה גבוה יותר מהג׳ירפה של הדוד שלי. וגם מהדוד עצמו.'},
   {id:'b2',kind:'bubble',who:'מוטי',text:'רדיוס 18 מטר. מדדתי בצעדים פעמיים: יצא 17 ו־19, אז עשיתי ממוצע. אני מדען.'},
   {id:'b3',kind:'bubble',who:'מוטי',text:'סיבוב שלם בכל 2 דקות. או 2 שעות? לא, דקות. כמעט בטוח. 87% בטוח.'},
   {id:'b4',kind:'bubble',who:'קוקי',text:'אני עולה! אני אמיצה! ...רגע, למה כולם מנופפים לי לשלום כאילו אני יוצאת לחלל?'},
   {id:'b5',kind:'bubble',who:'קוקי',text:'מעל 31 מטר אני רואה את הבית של סבתא שלי. ואת הבית של הסבתא של כולם. זה יותר מדי סבתות.'},
-  {id:'b6',kind:'bubble',who:'יוני היונה',text:'קוּ־קוּ. זאת אומרת: במבה. אני מחכה למעלה. יש לי זמן. יש לי המון זמן.'},
   {id:'b7',kind:'bubble',who:'מוטי',text:'3 מעלות בשנייה. בדיוק המהירות שבה אני מסתובב כשהבוס מחפש אותי.'},
   {id:'b8',kind:'bubble',who:'קוקי',text:'0.94 מטר לשנייה?! סיפרתי לכל הלונה־פארק שאני טסה כמו טיל... סבתא בתור לקופה יותר מהירה ממני.'},
   {id:'b9',kind:'bubble',who:'מוטי',text:'שתי נקודות על קו הצרחות. באחת היא מתחילה, ובשנייה היא מפסיקה. תבחרו בחוכמה.'},
   {id:'b10',kind:'bubble',who:'קוקי',text:'אאאאאאאאאאאאא!!! אני רואה את הים! אני רואה את אילת! אני רואה את העתיד!'},
   {id:'b11',kind:'bubble',who:'קוקי',text:'...זה נגמר? אני כבר לא צורחת. אני רק רועדת. בקצב של 3 מעלות בשנייה.'},
-  {id:'b12',kind:'bubble',who:'מוטי',text:'40 שניות צרחות בכל סיבוב. הזמנתי אטמי אוזניים לכל הלונה־פארק. וגם ליונה.'},
-  {id:'b13',kind:'bubble',who:'יוני היונה',text:'40 מטר, דקה בדיוק, כמו שתכננתי. הבמבה שלי! ...רגע, למה יש זיקוקים?'},
+  {id:'b12',kind:'bubble',who:'מוטי',text:'40 שניות צרחות בכל סיבוב. הזמנתי אטמי אוזניים לכל הלונה־פארק. וגם לעצמי. שניים.'},
+  {id:'b13',kind:'bubble',who:'קוקי',text:'40 מטר! אני בראש העולם! ...רגע, זיקוקים? בשבילי? באמת בשבילי?! אני כבר לא מפחדת. טוב, קצת.'},
  ],
  steps:[
   {tag:'סיפור',text:'מרכז הגלגל C נמצא בגובה 22 מ׳.',temp:['hC','b1'],seq:['axes','C','hC','b1']},
@@ -175,7 +205,6 @@ const CFG={
   {tag:'סיפור',text:'הגלגל מסתובב נגד כיוון השעון, סיבוב שלם בכל 2 דקות.',temp:['b3'],seq:['dir','b3',{spin:{label:'סיבוב שלם (מואץ – מוטי לחץ על הכפתור הלא נכון)',dur:4000}}]},
   {tag:'סיפור',text:'קוקי עולה בנקודה הנמוכה ביותר – נקודה A.',temp:['b4'],seq:['A',{hl:1},'b4']},
   {tag:'סיפור',text:'מעל 31 מ׳ קוקי צורחת.',temp:['b5'],seq:['h31','b5']},
-  {tag:'סיפור',text:'יוני היונה מחכה בראש הגלגל.',temp:['b6'],seq:['pig','b6']},
   {tag:'סעיף א',sec:true,text:'מה המהירות הזוויתית ω של הגלגל?',ans:'ω = 3° לשנייה',
    sol:['שאלת מרחק זוויתי',[[BASE_H,BASE],['מבודדים את המהירות הזוויתית',['ω = α / t']],
     ['מציבים סיבוב שלם בזמן מחזור אחד: 2 דקות = 120 שניות. נגד כיוון השעון הזווית עולה, לכן ω חיובית',['T = 2 · 60 = 120','ω = 360° / T','ω = 360° / 120 = 3° לשנייה']]]],
@@ -200,96 +229,127 @@ const CFG={
     ['מחשבים בכמה מעלות קוקי מסתובבת מ-A עד B',[`α = ${s('θ','B')} − ${s('θ','A')}`,'α = 390° − 270° = 120°']],
     ['רושמים את נוסחת הבסיס (כמו דרך = מהירות × זמן) ומבודדים את הזמן',['α = ω · t','t = α / ω']],
     ['מציבים',[`${s('t','B')} = 120 / 3 = 40 שניות`]]]],
-   temp:['wB','b10'],seq:[{move:{from:270,to:390,t2:40,dur:4000}},'wB','B','b10']},
+   temp:['wB','b10','pow1'],seq:[{move:{from:270,to:390,t2:40,dur:4000}},'wB','B','pow1','b10']},
   {tag:'סעיף ה',sec:true,text:'מתי היא מפסיקה לצרוח (נקודה D)?',ans:`${s('t','D')} = 80 שניות`,
    sol:['שאלת מרחק זוויתי',[
     ['ממשיכים לעלות בזווית עד שקוקי חוצה את הקו שוב, בצד שמאל: 150° + 360°',[`${s('θ','D')} = 150° + 360° = 510°`]],
     ['מחשבים בכמה מעלות קוקי מסתובבת מ-A עד D',[`α = ${s('θ','D')} − ${s('θ','A')}`,'α = 510° − 270° = 240°']],
     ['מבודדים את הזמן מנוסחת הבסיס ומציבים',['t = α / ω',`${s('t','D')} = 240 / 3 = 80 שניות`]]]],
-   temp:['wD','b11'],seq:[{move:{from:270,to:510,t2:80,dur:5000}},'wD','D','b11']},
+   temp:['wD','b11','pow2'],seq:[{move:{from:270,to:510,t2:80,dur:5000}},'wD','D','pow2','b11']},
   {tag:'סעיף ו',sec:true,text:'כמה שניות של צרחות יש בכל סיבוב?',ans:'40 שניות',
    sol:['שאלת מרחק זוויתי',[
     ['קוקי צורחת בדרך מ-B ל-D (הקשת העליונה). מחסירים את שני הזמנים',[`Δt = ${s('t','D')} − ${s('t','B')}`,'Δt = 80 − 40 = 40 שניות']],
     ['בדיקה עם נוסחת הבסיס: מ-30° עד 150° קוקי מסתובבת 120°',['Δt = α / ω = 120 / 3 = 40 ✓']]]],
    temp:['b12'],seq:['scream',{move:{from:390,to:510,t1:40,t2:80,dur:4000}},'b12']},
-  {tag:'סעיף ז',sec:true,text:'מתי קוקי מגיעה לראש הגלגל (נקודה E), ובאיזה גובה יוני מחכה לה?',ans:[`${s('t','E')} = 60 שניות`,`${s('h','E')} = 40 מ׳`],
+  {tag:'סעיף ז',sec:true,text:'מתי קוקי מגיעה לראש הגלגל (נקודה E), ובאיזה גובה היא אז?',ans:[`${s('t','E')} = 60 שניות`,`${s('h','E')} = 40 מ׳`],
    sol:['שאלת מרחק זוויתי, ואחר כך שאלת מיקום',[
     ['ראש הגלגל ב-90°. הזווית עולה מ-270°, ולכן מגיעים לראש אחרי 360°: 90° + 360°',[`${s('θ','E')} = 90° + 360° = 450°`]],
     ['מחשבים בכמה מעלות קוקי מסתובבת מ-A עד E',[`α = ${s('θ','E')} − ${s('θ','A')}`,'α = 450° − 270° = 180°']],
     ['מבודדים את הזמן מנוסחת הבסיס ומציבים',['t = α / ω',`${s('t','E')} = 180 / 3 = 60 שניות`]],
     ['מחשבים את הגובה של ראש הגלגל: גובה המרכז ועוד רדיוס',[`${s('h','E')} = ${s('y','C')} + R`,`${s('h','E')} = 22 + 18 = 40 מ׳`]]]],
-   seq:[{move:{from:270,to:450,t2:60,dur:4500}},'wE','E','fw','b13']},
+   seq:[{move:{from:270,to:450,t2:60,dur:4500}},'wE','E','fw','pow3','b13']},
  ]};
 
-/* ---------- עיצוב יריד ---------- */
+/* ===== עיצוב קומיקס: קווי מתאר עבים, צבעים שטוחים, רסטר ===== */
+const K='#111', OUT={stroke:K,'stroke-width':3,'stroke-linejoin':'round'};
 const EXTRA_BUILD={
-  bubble:(g,o)=>{const fo=el('foreignObject',{x:o.x??150,y:o.y??6,width:o.w??342,height:o.h??96},g);
-    fo.innerHTML=`<div xmlns="http://www.w3.org/1999/xhtml" class="bub"><span class="who">${o.who}</span>${o.text}</div>`;},
-  pigeon:(g)=>{const[x,y]=P(62,R+20);const b=el('g',{transform:`translate(${x} ${y})`},g);
-    el('ellipse',{cx:0,cy:0,rx:16,ry:11,fill:'#94a3b8',stroke:'#475569','stroke-width':1.5},b);
-    el('circle',{cx:13,cy:-9,r:7,fill:'#a5b4c6',stroke:'#475569','stroke-width':1.5},b);
-    el('circle',{cx:15,cy:-10,r:1.8,fill:'#0f172a'},b);
-    el('path',{d:'M19 -9 L26 -7 L19 -5 Z',fill:'#f59e0b'},b);
-    el('path',{d:'M-14 -2 L-26 -8 L-22 2 Z',fill:'#64748b'},b);
-    el('path',{d:'M-2 10 L-4 16 M4 10 L4 16',stroke:'#f59e0b','stroke-width':2},b);
-    txt(x,y+30,'יוני',{fill:'#475569','text-anchor':'middle',style:'font-size:12px'},g);},
-  fireworks:(g)=>{[[110,150,'#f43f5e'],[390,140,'#22c55e'],[250,60,'#eab308'],[60,250,'#3b82f6'],[440,260,'#a855f7']].forEach(([x,y,c],k)=>{
+  bubble:(g,o)=>{const fo=el('foreignObject',{x:o.x??132,y:o.y??4,width:o.w??362,height:o.h??112},g);
+    fo.innerHTML=`<div xmlns="http://www.w3.org/1999/xhtml" class="bubwrap"><div class="bub"><span class="who">${o.who}</span>${o.text}</div></div>`;},
+  fireworks:(g)=>{[[110,150,'#ef4444'],[395,140,'#22c55e'],[250,60,'#f59e0b'],[60,255,'#3b82f6'],[445,265,'#ec4899']].forEach(([x,y,c],k)=>{
     const f=el('g',{class:'burst',style:`animation-delay:${k*0.35}s;transform-origin:${x}px ${y}px`},g);
-    for(let i=0;i<12;i++){const a=i*30*Math.PI/180;line(x+Math.cos(a)*6,y+Math.sin(a)*6,x+Math.cos(a)*30,y+Math.sin(a)*30,{stroke:c,'stroke-width':3,'stroke-linecap':'round'},f);}
-    el('circle',{cx:x,cy:y,r:4,fill:'#fff7ed'},f);});},
+    for(let i=0;i<10;i++){const a=i*36*Math.PI/180;
+      el('path',{d:`M${x+Math.cos(a)*7} ${y+Math.sin(a)*7} L${x+Math.cos(a+.12)*30} ${y+Math.sin(a+.12)*30} L${x+Math.cos(a-.12)*30} ${y+Math.sin(a-.12)*30} Z`,fill:c,stroke:K,'stroke-width':1.5},f);}
+    el('circle',{cx:x,cy:y,r:5,fill:'#fff',stroke:K,'stroke-width':1.5},f);});},
+  pow:(g,o)=>{const n=14,pts=[];for(let i=0;i<n*2;i++){const a=i*Math.PI/n,r=i%2?26:46;pts.push(`${o.x+Math.cos(a)*r*1.25},${o.y+Math.sin(a)*r*.8}`);}
+    const b=el('g',{class:'pop',style:`transform-origin:${o.x}px ${o.y}px`},g);
+    el('polygon',{points:pts.join(' '),fill:'#fde047',stroke:K,'stroke-width':3},b);
+    txt(o.x,o.y+8,o.text,{'text-anchor':'middle',class:'powtxt',style:`fill:${o.color};font-size:22px`},b);},
 };
 function THEME(phase){
   if(phase==='bg'){
     const d=defs;
-    const lg=el('linearGradient',{id:'sky',x1:0,y1:0,x2:0,y2:1},d);
-    el('stop',{offset:'0','stop-color':'#7dd3fc'},lg);el('stop',{offset:'1','stop-color':'#e0f2fe'},lg);
-    const bg=el('g',{});svg.insertBefore(bg,svg.firstChild.nextSibling);
-    el('rect',{x:0,y:0,width:500,height:GY,fill:'url(#sky)'},bg);
-    el('circle',{cx:455,cy:120,r:26,fill:'#fde047',opacity:.9},bg);
+    const dots=el('pattern',{id:'dots',width:10,height:10,patternUnits:'userSpaceOnUse',patternTransform:'rotate(30)'},d);
+    el('rect',{width:10,height:10,fill:'#a5e3ff'},dots);el('circle',{cx:5,cy:5,r:1.6,fill:'#7cc9f2'},dots);
+    const dotsY=el('pattern',{id:'dotsY',width:9,height:9,patternUnits:'userSpaceOnUse'},d);
+    el('rect',{width:9,height:9,fill:'#ffe066'},dotsY);el('circle',{cx:4.5,cy:4.5,r:1.8,fill:'#ffc933'},dotsY);
+    const grass=el('pattern',{id:'grass',width:12,height:12,patternUnits:'userSpaceOnUse'},d);
+    el('rect',{width:12,height:12,fill:'#86d36b'},grass);el('circle',{cx:6,cy:6,r:2,fill:'#6cbf52'},grass);
+    const cp=el('clipPath',{id:'vb'},d);el('rect',{x:0,y:0,width:500,height:520},cp);
+    const bg=el('g',{});svg.insertBefore(bg,svg.firstChild.nextSibling);bg.setAttribute('clip-path','url(#vb)');
+    el('rect',{x:0,y:0,width:500,height:GY,fill:'url(#dots)'},bg);
+    // קרני פעולה צהובות מאחורי הגלגל
+    const rays=el('g',{},bg);
+    for(let k=0;k<24;k++){const a1=k*15*Math.PI/180,a2=(k*15+7.5)*Math.PI/180;
+      el('path',{d:`M${CX} ${CY} L${CX+Math.cos(a1)*700} ${CY+Math.sin(a1)*700} L${CX+Math.cos(a2)*700} ${CY+Math.sin(a2)*700} Z`,fill:'#fff6c2',opacity:.75},rays);}
+    // עננים עם קו מתאר
     const cl=el('g',{class:'clouds'},bg);
-    [[60,130,1],[300,170,.8],[520,110,1.1]].forEach(([x,y,sc])=>{const c=el('g',{transform:`translate(${x} ${y}) scale(${sc})`,opacity:.9},cl);
-      [[0,0,18],[18,-8,22],[40,0,18],[20,6,18]].forEach(([a,b,r])=>el('circle',{cx:a,cy:b,r,fill:'#fff'},c));});
-    // אוהלים
-    [[40,'#ef4444'],[460,'#8b5cf6']].forEach(([x,c])=>{const t=el('g',{},bg);
-      for(let i=0;i<6;i++)el('path',{d:`M${x} ${GY-70} L${x-36+i*12} ${GY} L${x-24+i*12} ${GY} Z`,fill:i%2?'#fff':c},t);
-      el('path',{d:`M${x} ${GY-70} L${x} ${GY-86} L${x+16} ${GY-80} L${x} ${GY-74}`,fill:'#facc15',stroke:'#92400e'},t);});
-    // שרשרת דגלונים
-    const fl=el('g',{},bg);el('path',{d:`M0 ${GY-120} Q125 ${GY-95} 250 ${GY-120} T500 ${GY-120}`,fill:'none',stroke:'#64748b'},fl);
-    const cols=['#ef4444','#f59e0b','#22c55e','#3b82f6','#a855f7','#ec4899'];
-    for(let i=0;i<20;i++){const x=12+i*25,yy=GY-120+Math.sin((x/250)*Math.PI)*12*(x<250?1:-1)+ (x<250?12:12);
-      el('path',{d:`M${x-8} ${yy-8} L${x+8} ${yy-8} L${x} ${yy+8} Z`,fill:cols[i%6]},fl);}
+    [[40,150,1],[330,175,.85],[520,120,1.05],[-60,95,.9]].forEach(([x,y,sc])=>{const c=el('g',{transform:`translate(${x} ${y}) scale(${sc})`},cl);
+      el('path',{d:'M0 10 Q-4 -8 14 -6 Q20 -22 38 -12 Q52 -20 58 -4 Q72 -2 66 12 Z',fill:'#fff',...OUT},c);});
+    // עיר שטוחה בצבעי פסטל
+    const city=el('g',{},bg);
+    [[0,46,95,'#f9a8d4'],[42,38,135,'#c4b5fd'],[78,30,70,'#fdba74'],[300,36,80,'#93c5fd'],[332,40,120,'#fca5a5'],[372,34,90,'#a7f3d0'],[402,50,140,'#fde68a'],[450,52,100,'#c4b5fd']].forEach(([x,w,h,c])=>{
+      el('rect',{x,y:GY-h,width:w,height:h,fill:c,...OUT},city);
+      for(let yy=GY-h+10;yy<GY-10;yy+=16)for(let xx=x+6;xx<x+w-8;xx+=12)el('rect',{x:xx,y:yy,width:6,height:8,fill:'#fff',stroke:K,'stroke-width':1.5},city);});
+    const ground=svg.querySelector('rect[fill="#dcfce7"]');if(ground)ground.setAttribute('fill','url(#grass)');
+    const gl=svg.querySelector('line[stroke="#166534"]');if(gl){gl.setAttribute('stroke',K);gl.setAttribute('stroke-width',4);}
   }
   if(phase==='after'){
-    // נורות על החישוק – מסתובבות עם הגלגל
-    for(let k=0;k<24;k++){const[x,y]=P(START+k*15,R);el('circle',{cx:x,cy:y,r:4.5,class:'bulb b'+(k%3),fill:['#fde047','#f472b6','#60a5fa'][k%3]},spokes);}
-    // קרוניות צבעוניות
-    const gc=['#f87171','#34d399','#60a5fa','#fbbf24','#a78bfa','#f472b6','#2dd4bf'];
-    decor.forEach((g,i)=>{const r=g.querySelector('rect');r.setAttribute('fill',gc[i]);r.style.fill=gc[i];});
-    // קוקי: קרונית גדולה עם פרצוף
-    const r=cab.querySelector('rect');r.setAttribute('x',-15);r.setAttribute('width',30);r.setAttribute('height',22);r.setAttribute('rx',7);
+    [...wheel.children].forEach(c=>{if(c!==spokes)c.style.display='none';});
+    [...spokes.children].forEach(c=>c.style.display='none');
+    // רגליים
+    const legs=el('g',{});wheel.insertBefore(legs,spokes);
+    const L=R*0.6;
+    el('path',{d:`M${CX-L} ${GY} L${CX-8} ${CY} L${CX+8} ${CY} L${CX+L} ${GY} L${CX+L-22} ${GY} L${CX} ${CY+40} L${CX-L+22} ${GY} Z`,fill:'#2563eb',...OUT},legs);
+    for(let k=1;k<5;k++){const t=k/5;el('line',{x1:CX-L*t+4,y1:CY+(GY-CY)*t,x2:CX+L*t-4,y2:CY+(GY-CY)*t,stroke:K,'stroke-width':2.5},legs);}
+    el('rect',{x:CX-L-20,y:GY-14,width:2*L+40,height:14,fill:'#f97316',...OUT},legs);
+    // חלקים מסתובבים
+    const rot=el('g',{});spokes.appendChild(rot);
+    const r1=R+4,r2=R-12;
+    for(let k=0;k<16;k++){const[x,y]=P(START+k*22.5,r2);el('line',{x1:CX,y1:CY,x2:x,y2:y,stroke:K,'stroke-width':2.5},rot);}
+    el('circle',{cx:CX,cy:CY,r:(r1+r2)/2,fill:'none',stroke:K,'stroke-width':r1-r2+6},rot);
+    el('circle',{cx:CX,cy:CY,r:(r1+r2)/2,fill:'none',stroke:'#ef4444','stroke-width':r1-r2},rot);
+    el('circle',{cx:CX,cy:CY,r:R*0.45,fill:'none',stroke:K,'stroke-width':6},rot);
+    el('circle',{cx:CX,cy:CY,r:R*0.45,fill:'none',stroke:'#facc15','stroke-width':3},rot);
+    for(let k=0;k<32;k++){const[x,y]=P(START+k*11.25,(r1+r2)/2);
+      el('circle',{cx:x,cy:y,r:3.6,fill:['#fde047','#fff','#67e8f9'][k%3],stroke:K,'stroke-width':1.3,class:'bulb b'+(k%3)},rot);}
+    const hub=el('g',{});wheel.appendChild(hub);
+    el('circle',{cx:CX,cy:CY,r:16,fill:'url(#dotsY)',...OUT},hub);el('circle',{cx:CX,cy:CY,r:6,fill:K},hub);
+    // קרוניות קומיקס
+    const pal=['#22c55e','#3b82f6','#a855f7','#ec4899','#14b8a6','#f59e0b','#ef4444'];
+    const comic=(g,fill,big)=>{g.querySelectorAll('rect,circle,line').forEach(e=>e.style.display='none');
+      const w=big?34:24,h=big?26:18;
+      el('line',{x1:0,y1:0,x2:0,y2:8,stroke:K,'stroke-width':3},g);
+      el('circle',{cx:0,cy:0,r:3.5,fill:'#facc15',stroke:K,'stroke-width':2},g);
+      el('path',{d:`M${-w/2-3} 11 Q0 1 ${w/2+3} 11 Z`,fill:fill,stroke:K,'stroke-width':2.5},g);
+      el('rect',{x:-w/2,y:10,width:w,height:h,rx:big?10:7,style:`fill:${fill};stroke:${K};stroke-width:2.5`,class:'body'},g);
+      if(!big)el('rect',{x:-w/2+4,y:13,width:w-8,height:7,rx:3,style:'fill:#fff;stroke:#111;stroke-width:1.5'},g);
+      el('path',{d:`M${-w/2+4} ${13} L${-w/2+4} ${10+h-5}`,stroke:'#fff','stroke-width':2,'stroke-linecap':'round',opacity:.8},g);};
+    decor.forEach((g,i)=>comic(g,pal[i],false));
+    comic(cab,'#f97316',true);
     const face=el('g',{class:'face'},cab);
-    el('circle',{cx:-5,cy:16,r:3.6,fill:'#fff'},face);el('circle',{cx:5,cy:16,r:3.6,fill:'#fff'},face);
-    el('circle',{cx:-5,cy:16.5,r:1.7,fill:'#0f172a',class:'pupil'},face);el('circle',{cx:5,cy:16.5,r:1.7,fill:'#0f172a',class:'pupil'},face);
-    el('path',{d:'M-5 23 Q0 27 5 23',fill:'none',stroke:'#7c2d12','stroke-width':1.8,'stroke-linecap':'round',class:'smile'},face);
-    el('ellipse',{cx:0,cy:24.5,rx:3,ry:3.4,fill:'#7c2d12',class:'oh'},face);
-    el('path',{d:'M-9 10 L-2 12 M9 10 L2 12',stroke:'#7c2d12','stroke-width':1.6,class:'brows'},face);
-    el('path',{d:'M15 8 Q19 13 15 15 Q12 12 15 8',fill:'#7dd3fc',class:'sweat'},face);
-    txt(0,46,'קוקי',{'text-anchor':'middle',style:'font-size:12px',class:'lbl kname'},cab);
-    // מוטי המפעיל
-    const mo=el('g',{transform:`translate(440 ${GY})`},front);
-    el('rect',{x:-26,y:-40,width:30,height:40,fill:'#fde68a',stroke:'#92400e','stroke-width':2,rx:3},mo);
-    el('line',{x1:-11,y1:-40,x2:-4,y2:-56,stroke:'#475569','stroke-width':3},mo);el('circle',{cx:-4,cy:-58,r:4,fill:'#ef4444'},mo);
-    el('circle',{cx:22,cy:-50,r:9,fill:'#fcd5b5',stroke:'#7c2d12','stroke-width':1.5},mo);
-    el('path',{d:'M12 -54 Q22 -66 32 -54 Z',fill:'#2563eb'},mo);el('rect',{x:20,y:-57,width:16,height:3,fill:'#2563eb'},mo);
-    el('circle',{cx:19,cy:-50,r:1.3,fill:'#0f172a'},mo);el('circle',{cx:25,cy:-50,r:1.3,fill:'#0f172a'},mo);
-    el('path',{d:'M18 -46 Q22 -43 26 -46',fill:'none',stroke:'#7c2d12','stroke-width':1.3},mo);
-    el('line',{x1:22,y1:-41,x2:22,y2:-16,stroke:'#0f172a','stroke-width':3},mo);
-    el('line',{x1:22,y1:-34,x2:6,y2:-28,stroke:'#0f172a','stroke-width':3},mo);el('line',{x1:22,y1:-34,x2:36,y2:-26,stroke:'#0f172a','stroke-width':3},mo);
-    el('line',{x1:22,y1:-16,x2:14,y2:0,stroke:'#0f172a','stroke-width':3},mo);el('line',{x1:22,y1:-16,x2:30,y2:0,stroke:'#0f172a','stroke-width':3},mo);
-    txt(22,16,'מוטי',{'text-anchor':'middle',style:'font-size:12px'},mo);
-    // השעון עובר לתחתית
-    timer.setAttribute('x',14);timer.setAttribute('y',506);timer.style.fontSize='17px';timer.setAttribute('fill','#14532d');
-    // פרצוף לפי גובה
+    el('ellipse',{cx:-5.5,cy:19,rx:4.3,ry:5,fill:'#fff',stroke:K,'stroke-width':1.5},face);el('ellipse',{cx:5.5,cy:19,rx:4.3,ry:5,fill:'#fff',stroke:K,'stroke-width':1.5},face);
+    el('circle',{cx:-4.8,cy:20,r:2,fill:K,class:'pupil'},face);el('circle',{cx:6.2,cy:20,r:2,fill:K,class:'pupil'},face);
+    el('path',{d:'M-6 27 Q0 33 6 27',fill:'#fff',stroke:K,'stroke-width':2,'stroke-linecap':'round',class:'smile'},face);
+    el('ellipse',{cx:0,cy:29,rx:3.6,ry:4,fill:'#7f1d1d',stroke:K,'stroke-width':1.5,class:'oh'},face);
+    el('path',{d:'M-10 12 L-2 15 M10 12 L2 15',stroke:K,'stroke-width':2.2,'stroke-linecap':'round',class:'brows'},face);
+    el('path',{d:'M20 10 Q25 17 20 19 Q16 15 20 10',fill:'#7dd3fc',stroke:K,'stroke-width':1.3,class:'sweat'},face);
+    el('path',{d:'M-24 6 L-30 2 M-24 14 L-31 14 M-24 22 L-30 26',stroke:K,'stroke-width':2,'stroke-linecap':'round',class:'sweat'},face);
+    txt(0,52,'קוקי',{'text-anchor':'middle',class:'lbl kname'},cab);
+    // מוטי ודוכן הכרטיסים
+    const mo=el('g',{transform:`translate(430 ${GY})`},front);
+    el('rect',{x:-36,y:-44,width:40,height:44,fill:'#fde68a',...OUT},mo);
+    for(let k=0;k<5;k++)el('path',{d:`M${-40+k*9.6} -44 L${-40+(k+1)*9.6} -44 L${-40+(k+1)*9.6} -52 Q${-40+(k+.5)*9.6} -46 ${-40+k*9.6} -52 Z`,fill:k%2?'#fff':'#ef4444',stroke:K,'stroke-width':1.8},mo);
+    el('rect',{x:-30,y:-36,width:28,height:16,fill:'#fff',stroke:K,'stroke-width':2},mo);
+    el('circle',{cx:30,cy:-52,r:10,fill:'#fcd5b5',...OUT},mo);
+    el('path',{d:'M19 -55 Q30 -70 41 -55 Z',fill:'#2563eb',stroke:K,'stroke-width':2.5},mo);el('path',{d:'M38 -57 L50 -55',stroke:K,'stroke-width':3,'stroke-linecap':'round'},mo);
+    el('circle',{cx:26,cy:-52,r:1.8,fill:K},mo);el('circle',{cx:34,cy:-52,r:1.8,fill:K},mo);
+    el('path',{d:'M25 -47 Q30 -43 35 -47',fill:'none',stroke:K,'stroke-width':2,'stroke-linecap':'round'},mo);
+    el('path',{d:'M21 -42 L39 -42 L41 -16 L19 -16 Z',fill:'#22c55e',...OUT},mo);
+    el('line',{x1:21,y1:-38,x2:8,y2:-30,stroke:K,'stroke-width':4,'stroke-linecap':'round'},mo);
+    el('line',{x1:39,y1:-38,x2:50,y2:-28,stroke:K,'stroke-width':4,'stroke-linecap':'round'},mo);
+    el('line',{x1:25,y1:-16,x2:23,y2:-1,stroke:K,'stroke-width':5,'stroke-linecap':'round'},mo);el('line',{x1:35,y1:-16,x2:37,y2:-1,stroke:K,'stroke-width':5,'stroke-linecap':'round'},mo);
+    txt(30,16,'מוטי',{'text-anchor':'middle',class:'lbl'},mo);
+    timer.setAttribute('x',14);timer.setAttribute('y',507);timer.style.fontSize='18px';timer.style.fill='#111';
     const base=setTheta;
     setTheta=function(th){base(th);const h=F.yc+F.R*Math.sin(th*Math.PI/180);cab.classList.toggle('scared',h>31.01);};
   }
