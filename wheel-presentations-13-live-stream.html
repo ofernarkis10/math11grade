@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>מצגת עם סיפור – קוקי הקרונית והגלגל המטורף</title>
+<title>מצגת עם סיפור – שידור חי מגובה 40 מטר</title>
 <style>
   :root{
     --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#f8fafc;
@@ -76,20 +76,19 @@
 @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-90px)}}
 .burst{animation:boom 1.8s ease-out infinite}
 @keyframes boom{0%{transform:scale(.15);opacity:0}15%{opacity:1}100%{transform:scale(1.35);opacity:0}}
-.face .oh,.face .brows,.face .sweat{display:none}
-.cab.scared .oh,.cab.scared .brows,.cab.scared .sweat{display:inline}
-.cab.scared .smile{display:none}
-.cab:not(.hl) .face,.cab:not(.hl) .kname{display:none}
-.cab.scared rect{animation:shake .12s infinite}
-@keyframes shake{0%{transform:translateX(-1.5px)}50%{transform:translateX(1.5px)}100%{transform:translateX(-1.5px)}}
 .qbox,.qfull{background:#fffbeb}
+.livebadge,.bars{display:none}
+.cab.hl.live .livebadge,.cab.hl.live .bars{display:inline}
+.cab.hl:not(.live) .nosig{display:inline}.nosig{display:none}
+.cab:not(.hl) .kname{display:none}
+.rec{animation:rec 1s infinite}@keyframes rec{50%{opacity:.2}}
 </style>
 
 <style>.pdot.hl{fill:#f97316;stroke:#9a3412} .pdot{opacity:0} .pdot.hl{opacity:1}</style>
 </head>
 <body>
 <header>
-  <h1>🎡 קוקי הקרונית והגלגל המטורף – מצגת עם סיפור</h1>
+  <h1>📡 שידור חי מגובה 40 מטר – מצגת עם סיפור</h1>
   <a href="index.html#wheel-presentations">→ למצגות תנועה על גלגל</a>
 </header>
 <div class="wrap">
@@ -115,22 +114,22 @@ const BASE_S=['s = v · t'];
 const SV=(sub)=>`<tspan>${sub}</tspan>`;
 const ts=(v,i)=>`${v}<tspan dy="5" font-size="11">${i}</tspan><tspan dy="-5"></tspan>`;
 
-/* ===== קוקי הקרונית: סיפור מצחיק על גלגל ענק ===== */
+/* ===== שידור חי מגובה 40 מטר ===== */
 const CFG={
  mode:'ground', xc:0, yc:22, R:18, th0:270, w:3,
- Q:`<b>🎡 קוקי הקרונית והגלגל המטורף</b><br>
-זה היום הגדול של <b>קוקי</b>, הקרונית הכי דרמטית בלונה־פארק.
-<b>מוטי המפעיל</b> מסובב את "הגלגל המטורף": מרכזו C בגובה <b>22 מ׳</b> ורדיוסו <b>18 מ׳</b>.
-הגלגל מסתובב <b>נגד כיוון השעון</b>, סיבוב שלם בכל <b>2 דקות</b> (מוטי נשבע שזה 2 דקות ולא 2 שנים).
-קוקי עולה ב<b>נקודה הנמוכה ביותר</b>, A. יש לה בעיה קטנה: <b>מעל 31 מ׳ היא צורחת</b>.
+ Q:`<b>📡 שידור חי מגובה 40 מטר</b><br>
+<b>עומר</b>, יוצר תוכן עם 80 אלף עוקבים, החליט לשדר לייב מגלגל ענק בלונה־פארק.
+מרכז הגלגל C בגובה <b>22 מ׳</b>, רדיוסו <b>18 מ׳</b>, והוא מסתובב <b>נגד כיוון השעון</b>, סיבוב שלם בכל <b>2 דקות</b>.
+עומר עולה לקרונית ב<b>נקודה הנמוכה ביותר</b>, A.
+הבעיה: אנטנת הסלולר מוסתרת מאחורי בניין, ו<b>הקליטה טובה רק מעל 31 מ׳</b>. מתחת לזה השידור תקוע על "מתחבר...".
 <ol type="א">
 <li>מה המהירות הזוויתית ω של הגלגל?</li>
-<li>מה מהירות הקרונית v? (קוקי טוענת שהיא "טסה כמו טיל")</li>
-<li>באילו זוויות קוקי בגובה 31 מ׳?</li>
-<li>מתי קוקי מתחילה לצרוח (נקודה B)?</li>
-<li>מתי היא מפסיקה לצרוח (נקודה D)?</li>
-<li>כמה שניות של צרחות יש בכל סיבוב?</li>
-<li>מתי קוקי מגיעה לראש הגלגל (נקודה E), ובאיזה גובה היא אז?</li>
+<li>רחפן צריך לטוס לצד הקרונית ולצלם אותה. באיזו מהירות v הוא צריך לטוס?</li>
+<li>באילו זוויות הקרונית בגובה 31 מ׳?</li>
+<li>מתי השידור עולה לאוויר (נקודה B)?</li>
+<li>מתי השידור נקטע (נקודה D)?</li>
+<li>כמה שניות של שידור יש בכל סיבוב?</li>
+<li>עומר רוצה לצלם את השקיעה בדיוק מראש הגלגל. מתי הוא מגיע לשם (נקודה E), ובאיזה גובה?</li>
 </ol>`,
  draw:[
   {id:'C',kind:'C',label:'C(0, 22)',dx:-12,dy:22,anchor:'end'},
@@ -138,86 +137,83 @@ const CFG={
   {id:'Rs',kind:'seg',from:'C',to:{th:135},color:'L',label:'R = 18 מ׳',lx:-8,anchor:'end'},
   {id:'dir',kind:'dir',at:155},
   {id:'A',kind:'pt',at:{th:270},ring:true,color:'cab',label:'A',lx:18,ly:14},
-  {id:'h31',kind:'hline',y:31,color:'B',label:'y = 31 – קו הצרחות'},
+  {id:'h31',kind:'hline',y:31,color:'B',label:'y = 31 – גבול הקליטה'},
   {id:'iW',kind:'info',line:4,text:'ω = 3° לשנייה'},
   {id:'L',kind:'rim',from:0,to:360,color:'L'},
   {id:'iV',kind:'info',line:5,text:'v = 0.3π ≈ 0.94 מ׳ לשנייה'},
   {id:'c1',kind:'pt',at:{th:30},color:'#94a3b8',label:'30°',lx:14,ly:22,lc:'ang'},
   {id:'c2',kind:'pt',at:{th:150},color:'#94a3b8',label:'150°',lx:-14,ly:22,anchor:'end',lc:'ang'},
   {id:'wB',kind:'wedge',from:270,to:390,r:44,label:'α = 120°',lth:330,lr:66},
-  {id:'B',kind:'pt',at:{th:30},color:'B',label:'B: t = 40',lx:14,ly:20},
+  {id:'B',kind:'pt',at:{th:30},color:'B',label:'B: t = 40',lx:-14,ly:-10,anchor:'end'},
   {id:'wD',kind:'wedge',from:270,to:510,r:36,label:'α = 240°',lth:20,lr:56},
   {id:'D',kind:'pt',at:{th:150},color:'D',label:'D: t = 80',lx:-14,ly:20,anchor:'end'},
-  {id:'scream',kind:'rim',from:30,to:150,color:'B',label:'',lr:30},
+  {id:'onair',kind:'rim',from:30,to:150,color:'B'},
   {id:'wE',kind:'wedge',from:270,to:450,r:40,label:'α = 180°',lth:0,lr:62},
   {id:'E',kind:'pt',at:{th:90},color:'D',label:'E: t = 60, h = 40 מ׳',lx:-20,ly:34,anchor:'end'},
   {id:'fw',kind:'fireworks'},
-  // בועות דיבור
-  {id:'b1',kind:'bubble',who:'מוטי',text:'22 מטר! זה גבוה יותר מהג׳ירפה של הדוד שלי. וגם מהדוד עצמו.'},
-  {id:'b2',kind:'bubble',who:'מוטי',text:'רדיוס 18 מטר. מדדתי בצעדים פעמיים: יצא 17 ו־19, אז עשיתי ממוצע. אני מדען.'},
-  {id:'b3',kind:'bubble',who:'מוטי',text:'סיבוב שלם בכל 2 דקות. או 2 שעות? לא, דקות. כמעט בטוח. 87% בטוח.'},
-  {id:'b4',kind:'bubble',who:'קוקי',text:'אני עולה! אני אמיצה! ...רגע, למה כולם מנופפים לי לשלום כאילו אני יוצאת לחלל?'},
-  {id:'b5',kind:'bubble',who:'קוקי',text:'מעל 31 מטר אני רואה את הבית של סבתא שלי. ואת הבית של הסבתא של כולם. זה יותר מדי סבתות.'},
-  {id:'b7',kind:'bubble',who:'מוטי',text:'3 מעלות בשנייה. בדיוק המהירות שבה אני מסתובב כשהבוס מחפש אותי.'},
-  {id:'b8',kind:'bubble',who:'קוקי',text:'0.94 מטר לשנייה?! סיפרתי לכל הלונה־פארק שאני טסה כמו טיל... סבתא בתור לקופה יותר מהירה ממני.'},
-  {id:'b9',kind:'bubble',who:'מוטי',text:'שתי נקודות על קו הצרחות. באחת היא מתחילה, ובשנייה היא מפסיקה. תבחרו בחוכמה.'},
-  {id:'b10',kind:'bubble',who:'קוקי',text:'אאאאאאאאאאאאא!!! אני רואה את הים! אני רואה את אילת! אני רואה את העתיד!'},
-  {id:'b11',kind:'bubble',who:'קוקי',text:'...זה נגמר? אני כבר לא צורחת. אני רק רועדת. בקצב של 3 מעלות בשנייה.'},
-  {id:'b12',kind:'bubble',who:'מוטי',text:'40 שניות צרחות בכל סיבוב. הזמנתי אטמי אוזניים לכל הלונה־פארק. וגם לעצמי. שניים.'},
-  {id:'b13',kind:'bubble',who:'קוקי',text:'40 מטר! אני בראש העולם! ...רגע, זיקוקים? בשבילי? באמת בשבילי?! אני כבר לא מפחדת. טוב, קצת.'},
+  {id:'b1',kind:'bubble',who:'אבי, המפעיל',text:'22 מטר עד הציר. 31 שנה אני מפעיל את הגלגל הזה, ואף אחד עוד לא שאל אותי על קליטה.'},
+  {id:'b2',kind:'bubble',who:'אבי, המפעיל',text:'רדיוס 18 מטר. ולא, הוא לא יסתובב מהר יותר אם תבקש יפה בתגובות.'},
+  {id:'b3',kind:'bubble',who:'אבי, המפעיל',text:'סיבוב בכל 2 דקות. זה גלגל ענק, לא שיעור ספינינג.'},
+  {id:'b4',kind:'bubble',who:'עומר',text:'אהלן לכולם! אני עולה עכשיו לגלגל, תכף אנחנו באוויר. ...תכף. ברגע שתהיה קליטה.'},
+  {id:'b5',kind:'bubble',who:'עומר',text:'האפליקציה כותבת "מתחבר...". מתחת ל־31 מטר אני בעצם מדבר לעצמי.'},
+  {id:'b7',kind:'bubble',who:'אבי, המפעיל',text:'3 מעלות בשנייה. בקצב הזה אני מספיק לגמור קפה ולקרוא את כל העיתון. כולל המודעות.'},
+  {id:'b8',kind:'bubble',who:'עומר',text:'0.94 מטר לשנייה. הרחפן שלי טס 15 מטר לשנייה, אז רוב הזמן הוא סתם ירחף לידי במבוכה.'},
+  {id:'b9',kind:'bubble',who:'אבי, המפעיל',text:'שתי נקודות על גבול הקליטה: באחת השידור עולה, ובשנייה הוא נופל. כמו רוב הקריירות ברשת.'},
+  {id:'b10',kind:'bubble',who:'עומר',text:'אנחנו באוויר! 2,000 צופים! תכתבו בתגובות מאיפה אתם צופים!'},
+  {id:'b11',kind:'bubble',who:'עומר',text:'...הלו? נתקע. מישהו עוד שומע? אמא, את עדיין שם?'},
+  {id:'b12',kind:'bubble',who:'אבי, המפעיל',text:'40 שניות שידור בכל סיבוב. בדיוק מספיק כדי להגיד "אל תשכחו להירשם לערוץ".'},
+  {id:'b13',kind:'bubble',who:'עומר',text:'40 מטר, שקיעה, קליטה מלאה. זה הצילום של השנה. ...רגע, למה הסוללה על 1%?'},
  ],
  steps:[
   {tag:'סיפור',text:'מרכז הגלגל C נמצא בגובה 22 מ׳.',temp:['hC','b1'],seq:['axes','C','hC','b1']},
   {tag:'סיפור',text:'רדיוס הגלגל 18 מ׳.',temp:['Rs','b2'],seq:['Rs','b2']},
-  {tag:'סיפור',text:'הגלגל מסתובב נגד כיוון השעון, סיבוב שלם בכל 2 דקות.',temp:['b3'],seq:['dir','b3',{spin:{label:'סיבוב שלם (מואץ – מוטי לחץ על הכפתור הלא נכון)',dur:4000}}]},
-  {tag:'סיפור',text:'קוקי עולה בנקודה הנמוכה ביותר – נקודה A.',temp:['b4'],seq:['A',{hl:1},'b4']},
-  {tag:'סיפור',text:'מעל 31 מ׳ קוקי צורחת.',temp:['b5'],seq:['h31','b5']},
+  {tag:'סיפור',text:'הגלגל מסתובב נגד כיוון השעון, סיבוב שלם בכל 2 דקות.',temp:['b3'],seq:['dir','b3',{spin:{label:'סיבוב שלם (מואץ)',dur:4000}}]},
+  {tag:'סיפור',text:'עומר עולה לקרונית בנקודה הנמוכה ביותר – נקודה A.',temp:['b4'],seq:['A',{hl:1},'b4']},
+  {tag:'סיפור',text:'הקליטה טובה רק מעל 31 מ׳. מתחת לזה השידור לא עולה.',temp:['b5'],seq:['h31','b5']},
   {tag:'סעיף א',sec:true,text:'מה המהירות הזוויתית ω של הגלגל?',ans:'ω = 3° לשנייה',
    sol:['שאלת מרחק זוויתי',[[BASE_H,BASE],['מבודדים את המהירות הזוויתית',['ω = α / t']],
     ['מציבים סיבוב שלם בזמן מחזור אחד: 2 דקות = 120 שניות. נגד כיוון השעון הזווית עולה, לכן ω חיובית',['T = 2 · 60 = 120','ω = 360° / T','ω = 360° / 120 = 3° לשנייה']]]],
    temp:['b7'],seq:['iW','b7']},
-  {tag:'סעיף ב',sec:true,text:'מה מהירות הקרונית v? (קוקי טוענת שהיא "טסה כמו טיל")',ans:'v = 0.3π ≈ 0.94 מ׳ לשנייה',
+  {tag:'סעיף ב',sec:true,text:'רחפן צריך לטוס לצד הקרונית ולצלם אותה. באיזו מהירות v הוא צריך לטוס?',ans:'v = 0.3π ≈ 0.94 מ׳ לשנייה',
    sol:['שאלת מרחק (מהירות)',[
-    ['רושמים את נוסחת היקף המעגל – זו הדרך שקוקי עוברת בסיבוב אחד',['L = 2πR','L = 2π · 18 = 36π ≈ 113.1 מ׳']],
+    ['הרחפן טס במהירות של הקרונית. בסיבוב אחד הקרונית עוברת היקף שלם, לכן רושמים את נוסחת ההיקף',['L = 2πR','L = 2π · 18 = 36π ≈ 113.1 מ׳']],
     ['רושמים את נוסחת הבסיס: דרך = מהירות × זמן',['s = v · t']],
     ['מבודדים את המהירות',['v = s / t']],
     ['מציבים: בזמן מחזור אחד הקרונית עוברת היקף שלם',['v = L / T','v = 36π / 120 = 0.3π ≈ 0.94 מ׳ לשנייה']]]],
    temp:['L','b8'],seq:['L','iV','b8']},
-  {tag:'סעיף ג',sec:true,text:'באילו זוויות קוקי בגובה 31 מ׳?',ans:'θ = 30° או θ = 150°',
+  {tag:'סעיף ג',sec:true,text:'באילו זוויות הקרונית בגובה 31 מ׳?',ans:'θ = 30° או θ = 150°',
    sol:['שאלת מיקום',[
     ['רושמים את הנוסחה הכללית לגובה של נקודה על הגלגל',[`y = ${s('y','C')} + R · sin θ`]],
-    ['מציבים את גובה קו הצרחות',['31 = 22 + 18 · sin θ']],
+    ['מציבים את גובה גבול הקליטה',['31 = 22 + 18 · sin θ']],
     ['מבודדים את sin θ',['18 · sin θ = 31 − 22 = 9','sin θ = 9 / 18 = 1/2']],
-    ['מוצאים את שתי הזוויות – שתי הנקודות על קו הצרחות',['θ = 30° &nbsp;&nbsp;או&nbsp;&nbsp; θ = 150°']]]],
+    ['מוצאים את שתי הזוויות – שתי הנקודות על גבול הקליטה',['θ = 30° &nbsp;&nbsp;או&nbsp;&nbsp; θ = 150°']]]],
    temp:['c1','c2','b9'],seq:['c1','c2','b9']},
-  {tag:'סעיף ד',sec:true,text:'מתי קוקי מתחילה לצרוח (נקודה B)?',ans:`${s('t','B')} = 40 שניות`,
+  {tag:'סעיף ד',sec:true,text:'מתי השידור עולה לאוויר (נקודה B)?',ans:`${s('t','B')} = 40 שניות`,
    sol:['שאלת מרחק זוויתי',[
-    ['הזווית עולה מ-270°. אחרי 360° מגיעים לצד ימין, ושם קוקי חוצה את הקו ב-30° + 360°',[`${s('θ','B')} = 30° + 360° = 390°`]],
-    ['מחשבים בכמה מעלות קוקי מסתובבת מ-A עד B',[`α = ${s('θ','B')} − ${s('θ','A')}`,'α = 390° − 270° = 120°']],
+    ['הזווית עולה מ-270°. אחרי 360° מגיעים לצד ימין, ושם הקרונית חוצה את הקו ב-30° + 360°',[`${s('θ','B')} = 30° + 360° = 390°`]],
+    ['מחשבים בכמה מעלות הקרונית מסתובבת מ-A עד B',[`α = ${s('θ','B')} − ${s('θ','A')}`,'α = 390° − 270° = 120°']],
     ['רושמים את נוסחת הבסיס (כמו דרך = מהירות × זמן) ומבודדים את הזמן',['α = ω · t','t = α / ω']],
     ['מציבים',[`${s('t','B')} = 120 / 3 = 40 שניות`]]]],
    temp:['wB','b10'],seq:[{move:{from:270,to:390,t2:40,dur:4000}},'wB','B','b10']},
-  {tag:'סעיף ה',sec:true,text:'מתי היא מפסיקה לצרוח (נקודה D)?',ans:`${s('t','D')} = 80 שניות`,
+  {tag:'סעיף ה',sec:true,text:'מתי השידור נקטע (נקודה D)?',ans:`${s('t','D')} = 80 שניות`,
    sol:['שאלת מרחק זוויתי',[
-    ['ממשיכים לעלות בזווית עד שקוקי חוצה את הקו שוב, בצד שמאל: 150° + 360°',[`${s('θ','D')} = 150° + 360° = 510°`]],
-    ['מחשבים בכמה מעלות קוקי מסתובבת מ-A עד D',[`α = ${s('θ','D')} − ${s('θ','A')}`,'α = 510° − 270° = 240°']],
+    ['ממשיכים לעלות בזווית עד שהקרונית חוצה את הקו שוב, בצד שמאל: 150° + 360°',[`${s('θ','D')} = 150° + 360° = 510°`]],
+    ['מחשבים בכמה מעלות הקרונית מסתובבת מ-A עד D',[`α = ${s('θ','D')} − ${s('θ','A')}`,'α = 510° − 270° = 240°']],
     ['מבודדים את הזמן מנוסחת הבסיס ומציבים',['t = α / ω',`${s('t','D')} = 240 / 3 = 80 שניות`]]]],
    temp:['wD','b11'],seq:[{move:{from:270,to:510,t2:80,dur:5000}},'wD','D','b11']},
-  {tag:'סעיף ו',sec:true,text:'כמה שניות של צרחות יש בכל סיבוב?',ans:'40 שניות',
+  {tag:'סעיף ו',sec:true,text:'כמה שניות של שידור יש בכל סיבוב?',ans:'40 שניות',
    sol:['שאלת מרחק זוויתי',[
-    ['קוקי צורחת בדרך מ-B ל-D (הקשת העליונה). מחסירים את שני הזמנים',[`Δt = ${s('t','D')} − ${s('t','B')}`,'Δt = 80 − 40 = 40 שניות']],
-    ['בדיקה עם נוסחת הבסיס: מ-30° עד 150° קוקי מסתובבת 120°',['Δt = α / ω = 120 / 3 = 40 ✓']]]],
-   temp:['b12'],seq:['scream',{move:{from:390,to:510,t1:40,t2:80,dur:4000}},'b12']},
-  {tag:'סעיף ז',sec:true,text:'מתי קוקי מגיעה לראש הגלגל (נקודה E), ובאיזה גובה היא אז?',ans:[`${s('t','E')} = 60 שניות`,`${s('h','E')} = 40 מ׳`],
+    ['השידור באוויר בדרך מ-B ל-D (הקשת העליונה). מחסירים את שני הזמנים',[`Δt = ${s('t','D')} − ${s('t','B')}`,'Δt = 80 − 40 = 40 שניות']],
+    ['בדיקה עם נוסחת הבסיס: מ-30° עד 150° הקרונית מסתובבת 120°',['Δt = α / ω = 120 / 3 = 40 ✓']]]],
+   temp:['b12'],seq:['onair',{move:{from:390,to:510,t1:40,t2:80,dur:4000}},'b12']},
+  {tag:'סעיף ז',sec:true,text:'עומר רוצה לצלם את השקיעה בדיוק מראש הגלגל. מתי הוא מגיע לשם (נקודה E), ובאיזה גובה?',ans:[`${s('t','E')} = 60 שניות`,`${s('h','E')} = 40 מ׳`],
    sol:['שאלת מרחק זוויתי, ואחר כך שאלת מיקום',[
     ['ראש הגלגל ב-90°. הזווית עולה מ-270°, ולכן מגיעים לראש אחרי 360°: 90° + 360°',[`${s('θ','E')} = 90° + 360° = 450°`]],
-    ['מחשבים בכמה מעלות קוקי מסתובבת מ-A עד E',[`α = ${s('θ','E')} − ${s('θ','A')}`,'α = 450° − 270° = 180°']],
+    ['מחשבים בכמה מעלות הקרונית מסתובבת מ-A עד E',[`α = ${s('θ','E')} − ${s('θ','A')}`,'α = 450° − 270° = 180°']],
     ['מבודדים את הזמן מנוסחת הבסיס ומציבים',['t = α / ω',`${s('t','E')} = 180 / 3 = 60 שניות`]],
     ['מחשבים את הגובה של ראש הגלגל: גובה המרכז ועוד רדיוס',[`${s('h','E')} = ${s('y','C')} + R`,`${s('h','E')} = 22 + 18 = 40 מ׳`]]]],
    seq:[{move:{from:270,to:450,t2:60,dur:4500}},'wE','E','fw','b13']},
  ]};
-
-
 /* ---------- עיצוב יריד ---------- */
 const EXTRA_BUILD={
   bubble:(g,o)=>{const fo=el('foreignObject',{x:o.x??150,y:o.y??6,width:o.w??342,height:o.h??96},g);
@@ -247,9 +243,17 @@ function THEME(phase){
     [[60,130,1],[300,170,.8],[520,110,1.1]].forEach(([x,y,sc])=>{const c=el('g',{transform:`translate(${x} ${y}) scale(${sc})`,opacity:.9},cl);
       [[0,0,18],[18,-8,22],[40,0,18],[20,6,18]].forEach(([a,b,r])=>el('circle',{cx:a,cy:b,r,fill:'#fff'},c));});
     // אוהלים
-    [[40,'#ef4444'],[460,'#8b5cf6']].forEach(([x,c])=>{const t=el('g',{},bg);
+    [[40,'#ef4444']].forEach(([x,c])=>{const t=el('g',{},bg);
       for(let i=0;i<6;i++)el('path',{d:`M${x} ${GY-70} L${x-36+i*12} ${GY} L${x-24+i*12} ${GY} Z`,fill:i%2?'#fff':c},t);
       el('path',{d:`M${x} ${GY-70} L${x} ${GY-86} L${x+16} ${GY-80} L${x} ${GY-74}`,fill:'#facc15',stroke:'#92400e'},t);});
+    // אנטנה סלולרית מאחורי בניין
+    const tw=el('g',{opacity:.9},bg);const tx=468,ty=GY-210;
+    el('path',{d:`M${tx-12} ${GY-60} L${tx} ${ty} L${tx+12} ${GY-60}`,fill:'none',stroke:'#64748b','stroke-width':2},tw);
+    for(let k=1;k<8;k++){const yy=ty+k*(GY-60-ty)/8,dx=12*k/8;el('line',{x1:tx-dx,y1:yy,x2:tx+dx,y2:yy,stroke:'#94a3b8','stroke-width':1},tw);}
+    el('rect',{x:tx-4,y:ty+8,width:8,height:16,fill:'#e2e8f0',stroke:'#64748b'},tw);
+    [12,20,28].forEach(r=>el('path',{d:`M${tx-r*.7} ${ty-r*.7+4} A${r} ${r} 0 0 1 ${tx+r*.7} ${ty-r*.7+4}`,fill:'none',stroke:'#94a3b8','stroke-width':1.5},tw));
+    el('rect',{x:418,y:GY-120,width:64,height:120,fill:'#cbd5e1',stroke:'#94a3b8'},tw);
+    for(let yy=GY-110;yy<GY-10;yy+=16)for(let xx=424;xx<476;xx+=14)el('rect',{x:xx,y:yy,width:7,height:9,fill:'#f8fafc'},tw);
     // שרשרת דגלונים
     const fl=el('g',{},bg);el('path',{d:`M0 ${GY-120} Q125 ${GY-95} 250 ${GY-120} T500 ${GY-120}`,fill:'none',stroke:'#64748b'},fl);
     const cols=['#ef4444','#f59e0b','#22c55e','#3b82f6','#a855f7','#ec4899'];
@@ -262,16 +266,19 @@ function THEME(phase){
     // קרוניות צבעוניות
     const gc=['#f87171','#34d399','#60a5fa','#fbbf24','#a78bfa','#f472b6','#2dd4bf'];
     decor.forEach((g,i)=>{const r=g.querySelector('rect');r.setAttribute('fill',gc[i]);r.style.fill=gc[i];});
-    // קוקי: קרונית גדולה עם פרצוף
-    const r=cab.querySelector('rect');r.setAttribute('x',-15);r.setAttribute('width',30);r.setAttribute('height',22);r.setAttribute('rx',7);
-    const face=el('g',{class:'face'},cab);
-    el('circle',{cx:-5,cy:16,r:3.6,fill:'#fff'},face);el('circle',{cx:5,cy:16,r:3.6,fill:'#fff'},face);
-    el('circle',{cx:-5,cy:16.5,r:1.7,fill:'#0f172a',class:'pupil'},face);el('circle',{cx:5,cy:16.5,r:1.7,fill:'#0f172a',class:'pupil'},face);
-    el('path',{d:'M-5 23 Q0 27 5 23',fill:'none',stroke:'#7c2d12','stroke-width':1.8,'stroke-linecap':'round',class:'smile'},face);
-    el('ellipse',{cx:0,cy:24.5,rx:3,ry:3.4,fill:'#7c2d12',class:'oh'},face);
-    el('path',{d:'M-9 10 L-2 12 M9 10 L2 12',stroke:'#7c2d12','stroke-width':1.6,class:'brows'},face);
-    el('path',{d:'M15 8 Q19 13 15 15 Q12 12 15 8',fill:'#7dd3fc',class:'sweat'},face);
-    txt(0,46,'קוקי',{'text-anchor':'middle',style:'font-size:12px',class:'lbl kname'},cab);
+    // הקרונית של עומר: חלון, טלפון, ותג LIVE מעל קו הקליטה
+    const r=cab.querySelector('rect');r.setAttribute('x',-15);r.setAttribute('width',30);r.setAttribute('height',22);r.setAttribute('rx',6);
+    el('rect',{x:-11,y:11,width:22,height:9,rx:2,style:'fill:#e0f2fe;stroke:#475569;stroke-width:1'},cab);
+    el('rect',{x:-3,y:12.5,width:6,height:7,rx:1,style:'fill:#0f172a;stroke:none'},cab);
+    const live=el('g',{class:'livebadge'},cab);
+    el('rect',{x:18,y:-2,width:34,height:15,rx:4,style:'fill:#dc2626;stroke:#fff;stroke-width:1.5'},live);
+    el('circle',{cx:25,cy:5.5,r:2.6,fill:'#fff',class:'rec'},live);
+    txt(31,10,'LIVE',{style:'font-size:10px;fill:#fff;stroke:none;font-weight:800'},live);
+    const bars=el('g',{class:'bars'},cab);
+    [0,1,2,3].forEach(i=>el('rect',{x:20+i*5,y:26-i*3-4,width:3.5,height:4+i*3,rx:.8,style:'fill:#16a34a;stroke:none'},bars));
+    const nos=el('g',{class:'nosig'},cab);
+    txt(22,22,'⋯',{style:'font-size:16px;fill:#64748b;stroke:#fff'},nos);
+    txt(0,44,'עומר',{'text-anchor':'middle',style:'font-size:12px',class:'lbl kname'},cab);
     // מוטי המפעיל
     const mo=el('g',{transform:`translate(440 ${GY})`},front);
     el('rect',{x:-26,y:-40,width:30,height:40,fill:'#fde68a',stroke:'#92400e','stroke-width':2,rx:3},mo);
@@ -283,12 +290,12 @@ function THEME(phase){
     el('line',{x1:22,y1:-41,x2:22,y2:-16,stroke:'#0f172a','stroke-width':3},mo);
     el('line',{x1:22,y1:-34,x2:6,y2:-28,stroke:'#0f172a','stroke-width':3},mo);el('line',{x1:22,y1:-34,x2:36,y2:-26,stroke:'#0f172a','stroke-width':3},mo);
     el('line',{x1:22,y1:-16,x2:14,y2:0,stroke:'#0f172a','stroke-width':3},mo);el('line',{x1:22,y1:-16,x2:30,y2:0,stroke:'#0f172a','stroke-width':3},mo);
-    txt(22,16,'מוטי',{'text-anchor':'middle',style:'font-size:12px'},mo);
+    txt(22,16,'אבי',{'text-anchor':'middle',style:'font-size:12px'},mo);
     // השעון עובר לתחתית
     timer.setAttribute('x',14);timer.setAttribute('y',506);timer.style.fontSize='17px';timer.setAttribute('fill','#14532d');
     // פרצוף לפי גובה
     const base=setTheta;
-    setTheta=function(th){base(th);const h=F.yc+F.R*Math.sin(th*Math.PI/180);cab.classList.toggle('scared',h>31.01);};
+    setTheta=function(th){base(th);const h=F.yc+F.R*Math.sin(th*Math.PI/180);cab.classList.toggle('live',h>30.99);};
   }
 }
 
