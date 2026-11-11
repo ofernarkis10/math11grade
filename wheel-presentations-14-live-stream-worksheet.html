@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>דף עבודה: שידור חי מגובה 40 מטר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: same worksheet style as the rest of the site (copied from composite-derivatives-02-exercises.html) */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:middle}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td .m{font-size:1rem}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.big{background:var(--accent-soft);border-radius:10px;padding:16px 18px;text-align:center;display:flex;flex-direction:column;gap:6px}
+.big .m{font-size:1.25rem;font-weight:600;white-space:normal}
+.big small{color:var(--muted);font-size:.92rem}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ul.mistakes{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+.steps .m{white-space:normal}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+
+/* inner/outer machine diagram, drawn left-to-right like the formula */
+.machine{direction:ltr;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:14px 8px;font-family:var(--f-math);font-size:.95rem}
+.machine .box{border:2px solid var(--accent);border-radius:8px;padding:8px 12px;text-align:center;line-height:1.3;background:var(--paper)}
+.machine .box.out{border-color:var(--mark)}
+.machine .box small{display:block;font-family:var(--f-body);font-size:.75rem;color:var(--muted)}
+.machine .val{padding:6px 10px;background:var(--accent-soft);border-radius:99px}
+.machine .arr{color:var(--muted)}
+.inner{color:var(--accent);font-weight:600}
+.outer{color:var(--mark);font-weight:600}
+
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+@media print{body{background:#fff} details{display:block} details .sol{display:block} summary{display:none} nav{display:none}}
+.lead a{color:var(--accent);font-weight:600}
+/* Every solution: "דרך החשיבה" (how to recognise the structure and choose the rule), numbered steps, and the answer */
+.think{background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.think-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.think p{margin:0}
+ol.st{margin:6px 0 0;padding-inline-start:24px;display:flex;flex-direction:column;gap:6px}
+ol.st li::marker{font-weight:700;color:var(--mark)}
+ol.st b{color:var(--mark)}
+.sol .ans{font-weight:700;border-top:1px dashed var(--line);padding-top:8px;margin-top:4px}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+<style>
+/* wheel-motion topic additions */
+.fig{display:flex;justify-content:center}
+.fig svg{max-width:440px;width:100%;height:auto}
+.sol .fig{margin:8px 0}
+.sol .fig svg{min-width:300px}
+.fig svg text{font-family:var(--f-body);fill:var(--ink)}
+.cap{color:var(--muted);font-size:.9rem;text-align:center}
+.blue{color:var(--accent);font-weight:700}
+.orange{color:var(--mark);font-weight:700}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+.toolbar button{font-family:var(--f-body);font-size:.95rem;border:1px solid var(--accent);background:var(--paper);color:var(--accent);padding:6px 14px;border-radius:8px;cursor:pointer}
+.toolbar button:hover{background:var(--accent-soft)}
+body.nosol details{display:none}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pager a{color:var(--accent);font-weight:600;text-decoration:none}
+.pager a:hover{text-decoration:underline}
+ol.method{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:4px}
+ol.method li::marker{font-weight:700;color:var(--accent)}
+.sol .chk{color:var(--muted);font-size:.95rem}
+.blank td{height:2.2em}
+</style>
+<script src="font-size.js"></script>
+<style>
+/* solution layout: heading on the right, each expression on its own line on the left */
+ol.st > li > .lab{display:block;font-weight:700;color:var(--mark)}
+.ml{display:flex;flex-direction:column;gap:3px;margin:2px 0 4px}
+.ml-m{direction:ltr;text-align:left;unicode-bidi:isolate}
+.ml-m .m{white-space:normal}
+.ml-m .u{direction:rtl;unicode-bidi:isolate;margin-left:.35em;color:var(--muted)}
+.ml-t{text-align:right}
+.sol p.ans,.sol p.chk{display:block}
+.sol .ans .lab,.sol .chk .lab{display:block;font-weight:700}
+
+ol.st > li > .lab .kind{display:inline-block;font-size:.72rem;font-weight:700;padding:1px 8px;border-radius:99px;margin-inline-start:8px;vertical-align:middle}
+.kind.k-dist{background:var(--accent-soft);color:var(--accent)}
+.kind.k-ang{background:var(--accent-soft);color:var(--accent);border:1px dashed var(--accent)}
+.kind.k-pos{background:var(--mark-soft);color:var(--mark)}
+.kind.k-conv{background:var(--line);color:var(--muted)}
+</style>
+<style>
+/* Answer template under each question: headings and formulas are printed, every value is a blank to fill in */
+.tpl{border:1px dashed var(--accent);border-radius:10px;padding:12px 14px;margin-top:10px;background:var(--paper)}
+.ptag{display:block;font-size:.85rem;color:var(--accent);margin-bottom:4px}
+.blank{display:inline-block;min-width:2.6em;border-bottom:1.2px solid var(--ink);margin:0 3px;vertical-align:baseline}
+.tpl-h{font-size:.8rem;font-weight:700;color:var(--accent);margin-bottom:6px}
+.tpl .ml-m{line-height:2.4}
+.tpl .katex .underline .underline-line{border-bottom-width:1.2px!important}
+ol.exercises > li{margin-bottom:28px}
+@media print{.tpl{break-inside:auto;border-color:#999}.tpl .ml-m{line-height:2.8}ol.exercises > li{break-before:page}ol.exercises > li:first-child{break-before:auto}}
+</style>
+<style>
+.fields{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+.fields div{display:flex;gap:8px;align-items:flex-end;font-weight:700}
+.fields span{flex:1;border-bottom:1.2px solid var(--ink);min-height:1.6em}
+.story{background:var(--mark-soft);border-radius:10px;padding:14px 18px;line-height:1.7}
+.story .who{display:inline-block;background:var(--mark);color:#fff;border-radius:6px;padding:0 8px;font-size:.85rem;font-weight:700;margin-left:6px}
+ol.secs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px}
+ol.secs > li > b{font-size:1.05rem}
+.key .kv{color:#b4561e;direction:ltr;unicode-bidi:isolate}
+.tpl .ml-m{line-height:1.9}
+.ml{gap:0;margin:0 0 2px}
+ol.st{gap:2px}
+.think{padding:6px 12px}
+.links{display:flex;gap:18px;flex-wrap:wrap}
+.links a{color:var(--accent);font-weight:600;text-decoration:none}
+@page{size:A4;margin:10mm 12mm}
+@media print{.noprint{display:none}.tpl-h{display:none}body{font-size:15px;line-height:1.35}.wrap{padding:0;gap:12px}
+  ol.secs > li{break-inside:avoid}.tpl{break-inside:avoid;margin-top:4px;padding:8px 10px}.tpl .ml-m{line-height:2.1}
+  .think{font-size:13.5px;padding:3px 10px}.story{background:#fff;border:1px solid #bbb}footer{display:none}h1{font-size:1.8rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="links noprint"><a class="back" href="index.html#wheel-presentations">→ למצגות תנועה על גלגל</a><a href="wheel-presentations-13-live-stream.html">למצגת "שידור חי מגובה 40 מטר" ←</a></div>
+<header><span class="eyebrow">מתמטיקה · 5 יחידות · טריגונומטריה · תנועה על גלגל</span>
+<h1>דף עבודה: שידור חי מגובה 40 מטר</h1>
+<p class="lead">דף חזרה שמלווה את המצגת. בכל סעיף כותרות השלבים והנוסחאות כבר כתובות, ובמקום כל ערך יש קו. עקבו אחרי המצגת, והשלימו את הקווים בכתב יד לפי הסדר.</p></header>
+<div class="fields"><div>שם:<span></span></div><div>כיתה:<span></span></div><div>תאריך:<span></span></div></div>
+<div class="story"><span class="who">הסיפור</span><b>יהודה</b>, יוצר תוכן עם 80 אלף עוקבים, החליט לשדר לייב מגלגל ענק בלונה־פארק. מרכז הגלגל C בגובה <b>22 מ׳</b>, רדיוסו <b>18 מ׳</b>, והוא מסתובב <b>נגד כיוון השעון</b>, סיבוב שלם בכל <b>2 דקות</b>. יהודה עולה לקרונית ב<b>נקודה הנמוכה ביותר</b>, A. הבעיה: אנטנת הסלולר מוסתרת מאחורי בניין, ו<b>הקליטה טובה רק מעל 31 מ׳</b>. מתחת לזה השידור תקוע על "מתחבר...".</div>
+<ol class="secs">
+<li><b>א. מה המהירות הזוויתית ω של הגלגל?</b>
+<div class="sol steps tpl">
+<div class="think"><span class="think-h">דרך החשיבה</span><p>ω היא כמה מעלות הגלגל מסתובב בשנייה. בזמן מחזור אחד הוא מסתובב סיבוב שלם, 360°. נגד כיוון השעון הזווית עולה, ולכן ω חיובית.</p></div>
+<ol class="st">
+<li><span class="lab">רושמים את הנתונים בסימני הנוסחה<span class="kind k-conv">המרת יחידות</span></span><div class="ml"><div class="ml-m"><span class="m">\(y_C = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">מ׳</span></div><div class="ml-m"><span class="m">\(R = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">מ׳</span></div><div class="ml-m"><span class="m">\(T = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\cdot 60 = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">שניות</span></div><div class="ml-m"><span class="m">\(\theta_A = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span></div></div></li>
+<li><span class="lab">רושמים את נוסחת הבסיס לסיבוב – בדיוק כמו דרך = מהירות × זמן – ומבודדים את ω<span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(\alpha = \omega\, t \quad\longleftrightarrow\quad s = v\, t\)</span></div><div class="ml-m"><span class="m">\(\omega = \tfrac{\alpha}{t}\)</span></div></div></li>
+<li><span class="lab">מציבים סיבוב שלם בזמן מחזור אחד<span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(\omega = \tfrac{360^\circ}{T} = \tfrac{360^\circ}{{\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span></div></div></li>
+</ol>
+<div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\omega = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span></div></div></div>
+</div></li>
+<li><b>ב. רחפן צריך לטוס לצד הקרונית ולצלם אותה. באיזו מהירות v הוא צריך לטוס?</b>
+<div class="sol steps tpl">
+<div class="think"><span class="think-h">דרך החשיבה</span><p>הרחפן טס במהירות של הקרונית. בסיבוב אחד הקרונית עוברת דרך של היקף שלם, בזמן של זמן מחזור אחד.</p></div>
+<ol class="st">
+<li><span class="lab">מחשבים את היקף הגלגל – הדרך שהקרונית עוברת בסיבוב אחד<span class="kind k-dist">שאלת מרחק</span></span><div class="ml"><div class="ml-m"><span class="m">\(L = 2\pi R\)</span></div><div class="ml-m"><span class="m">\(L = 2\pi\cdot{\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">מ׳</span></div></div></li>
+<li><span class="lab">רושמים את נוסחת הבסיס: דרך = מהירות × זמן, ומבודדים את המהירות<span class="kind k-dist">שאלת מרחק</span></span><div class="ml"><div class="ml-m"><span class="m">\(s = v\, t \ \Rightarrow\ v = \tfrac{s}{t}\)</span></div></div></li>
+<li><span class="lab">מציבים: בזמן מחזור אחד הקרונית עוברת היקף שלם<span class="kind k-dist">שאלת מרחק</span></span><div class="ml"><div class="ml-m"><span class="m">\(v = \tfrac{L}{T} = \tfrac{{\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}}{{\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">מ׳ לשנייה</span></div></div></li>
+</ol>
+<div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(v = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">מ׳ לשנייה</span></div></div></div>
+</div></li>
+<li><b>ג. באילו זוויות הקרונית בגובה 31 מ׳ (גבול הקליטה)?</b>
+<div class="sol steps tpl">
+<div class="think"><span class="think-h">דרך החשיבה</span><p>נתון גובה, ולכן משתמשים בנוסחת הגובה ומבודדים את sin θ. בסיבוב אחד יש שתי זוויות עם אותו sin – שתי נקודות על קו הקליטה.</p></div>
+<ol class="st">
+<li><span class="lab">רושמים את הנוסחה הכללית לגובה, ומציבים את גובה הקליטה<span class="kind k-pos">שאלת מיקום</span></span><div class="ml"><div class="ml-m"><span class="m">\(y = y_C + R\sin\theta\)</span></div><div class="ml-m"><span class="m">\({\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} + {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\sin\theta\)</span></div></div></li>
+<li><span class="lab">מבודדים את sin θ<span class="kind k-pos">שאלת מיקום</span></span><div class="ml"><div class="ml-m"><span class="m">\(\sin\theta = \tfrac{{\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} - {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}}{{\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span></div></div></li>
+<li><span class="lab">מוצאים את שתי הזוויות בסיבוב אחד<span class="kind k-pos">שאלת מיקום</span></span><div class="ml"><div class="ml-m"><span class="m">\(\theta = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\ \ \text{or}\ \ \theta = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span></div></div></li>
+</ol>
+<div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\theta = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\ \ \text{or}\ \ \theta = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span></div></div></div>
+</div></li>
+<li><b>ד. מתי השידור עולה לאוויר (נקודה B)?</b>
+<div class="sol steps tpl">
+<div class="think"><span class="think-h">דרך החשיבה</span><p>הקרונית מתחילה ב־270° והזווית עולה. אחרי 360° היא מגיעה לצד ימין, ושם היא חוצה את קו הקליטה בפעם הראשונה.</p></div>
+<ol class="st">
+<li><span class="lab">מוצאים את הזווית של B: הזווית הימנית מסעיף ג, ועוד סיבוב שלם<span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(\theta_B = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} + 360^\circ = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span></div></div></li>
+<li><span class="lab">מחשבים בכמה מעלות הקרונית מסתובבת מ־A עד B<span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(\alpha = \theta_B - \theta_A = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} - {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span></div></div></li>
+<li><span class="lab">מבודדים את הזמן מנוסחת הבסיס, ומציבים<span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(\alpha = \omega\, t \ \Rightarrow\ t = \tfrac{\alpha}{\omega}\)</span></div><div class="ml-m"><span class="m">\(t_B = \tfrac{{\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}}{{\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">שניות</span></div></div></li>
+</ol>
+<div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(t_B = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">שניות</span></div></div></div>
+</div></li>
+<li><b>ה. מתי השידור נקטע (נקודה D)?</b>
+<div class="sol steps tpl">
+<div class="think"><span class="think-h">דרך החשיבה</span><p>ממשיכים לעלות בזווית עד שהקרונית חוצה את קו הקליטה שוב, הפעם בצד שמאל.</p></div>
+<ol class="st">
+<li><span class="lab">מוצאים את הזווית של D: הזווית השמאלית מסעיף ג, ועוד סיבוב שלם<span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(\theta_D = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} + 360^\circ = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span></div></div></li>
+<li><span class="lab">מחשבים בכמה מעלות הקרונית מסתובבת מ־A עד D<span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(\alpha = \theta_D - \theta_A = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} - {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span></div></div></li>
+<li><span class="lab">מבודדים את הזמן מנוסחת הבסיס, ומציבים<span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(t_D = \tfrac{\alpha}{\omega} = \tfrac{{\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}}{{\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">שניות</span></div></div></li>
+</ol>
+<div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(t_D = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">שניות</span></div></div></div>
+</div></li>
+<li><b>ו. כמה שניות של שידור יש בכל סיבוב?</b>
+<div class="sol steps tpl">
+<div class="think"><span class="think-h">דרך החשיבה</span><p>השידור באוויר בדרך מ־B ל־D, על הקשת העליונה. אפשר להחסיר את הזמנים, ואפשר לבדוק עם הזווית שבין B ל־D.</p></div>
+<ol class="st">
+<li><span class="lab">מחסירים את הזמן שבו השידור עולה מהזמן שבו הוא נקטע<span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(\Delta t = t_D - t_B = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} - {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">שניות</span></div></div></li>
+<li><span class="lab">בודקים עם נוסחת הבסיס: מ־30° עד 150° הקרונית מסתובבת<span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(\alpha = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} - {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span></div><div class="ml-m"><span class="m">\(\Delta t = \tfrac{\alpha}{\omega} = \tfrac{{\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}}{{\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">שניות</span></div></div></li>
+</ol>
+<div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(\Delta t = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">שניות</span></div></div></div>
+</div></li>
+<li><b>ז. יהודה רוצה לצלם את השקיעה בדיוק מראש הגלגל. מתי הוא מגיע לשם (נקודה E), ובאיזה גובה?</b>
+<div class="sol steps tpl">
+<div class="think"><span class="think-h">דרך החשיבה</span><p>ראש הגלגל ב־90°. הזווית עולה מ־270°, ולכן מגיעים לראש רק אחרי שעוברים את 360°. הגובה של ראש הגלגל הוא גובה המרכז ועוד רדיוס.</p></div>
+<ol class="st">
+<li><span class="lab">מוצאים את הזווית של E<span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(\theta_E = 90^\circ + 360^\circ = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span></div></div></li>
+<li><span class="lab">מחשבים בכמה מעלות הקרונית מסתובבת מ־A עד E, ומבודדים את הזמן<span class="kind k-ang">שאלת מרחק זוויתי</span></span><div class="ml"><div class="ml-m"><span class="m">\(\alpha = \theta_E - \theta_A = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} - {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span></div><div class="ml-m"><span class="m">\(t_E = \tfrac{\alpha}{\omega} = \tfrac{{\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}}{{\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">שניות</span></div></div></li>
+<li><span class="lab">מחשבים את הגובה של ראש הגלגל<span class="kind k-pos">שאלת מיקום</span></span><div class="ml"><div class="ml-m"><span class="m">\(h_E = y_C + R = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} + {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}} = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">מ׳</span></div></div></li>
+</ol>
+<div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(t_E = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}},\ \ h_E = {\underline{\hspace{2.6em}}\rule[-0.45em]{0pt}{0.45em}}\)</span><span class="u">שניות, מ׳</span></div></div></div>
+</div></li>
+</ol>
+<footer>דף עבודה שמלווה את המצגת "שידור חי מגובה 40 מטר" · נקודה על גלגל</footer>
+</div>
+</body>
+</html>
