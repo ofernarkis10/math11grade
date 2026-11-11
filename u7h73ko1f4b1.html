@@ -177,7 +177,7 @@ ol.exercises > li{margin-bottom:28px}
 .key .kv{color:#b4561e;direction:ltr;unicode-bidi:isolate}
 .key{border-color:#b4561e}
 .keybadge{display:inline-block;background:#b4561e;color:#fff;border-radius:6px;padding:2px 10px;font-size:.85rem;font-weight:700}
-@media print{.noprint{display:none}.fields{break-inside:avoid}}
+@media print{.noprint{display:none}.fields{break-inside:avoid}ol.exercises > li{break-before:page}ol.exercises > li:first-child{break-before:page}section.ch{border:0;padding:0}}
 </style>
 </head>
 <body>
@@ -188,7 +188,7 @@ ol.exercises > li{margin-bottom:28px}
 <p class="lead">הפתרון המלא של כל שאלה, באותה תבנית שקיבלו התלמידים. הערכים שהתלמידים צריכים להשלים מסומנים בכתום.</p>
 </header>
 <div class="big"><span class="m">\(x = x_C + R\cos(\theta_A + \omega t)\)</span><br><span class="m">\(y = y_C + R\sin(\theta_A + \omega t)\)</span><br><span class="m">\(\alpha = \omega\, t \qquad \omega = \tfrac{360^\circ}{T}\)</span></div>
-<section class="ch level" id="lvl1"><h2>רמה א׳: הצבה וביטוי לגובה <small>שאלות 1–2</small></h2><ol class="exercises" start="1">
+<section class="ch"><ol class="exercises" start="1">
 <li>נקודה P על גלגל נעה כך שבזמן <span class="m">\(t\)</span> (בשניות) המיקום שלה הוא:<div class="ml"><div class="ml-m"><span class="m">\(x(t) = -3 + 8\cos(120^\circ + 15t)\)</span></div><div class="ml-m"><span class="m">\(y(t) = 4 + 8\sin(120^\circ + 15t)\)</span></div></div>מצאו את מיקום P אחרי 2 שניות (נקודה B) ואחרי 18 שניות (נקודה D).
 <div class="sol steps tpl key">
 <div class="tpl-h">פתרון מלא: הערכים מסומנים בצבע</div>
@@ -216,8 +216,6 @@ ol.exercises > li{margin-bottom:28px}
 <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(h(t) = \textcolor{#b4561e}{20} + \textcolor{#b4561e}{16}\sin(\textcolor{#b4561e}{270^\circ} + \textcolor{#b4561e}{2}t)\)</span></div><div class="ml-m"><span class="m">\(h_B = \textcolor{#b4561e}{20},\ \ h_D = \textcolor{#b4561e}{12}\)</span><span class="u">מ׳</span></div><div class="ml-m"><span class="m">\(|x_D - x_C| = \textcolor{#b4561e}{13.86}\)</span><span class="u">מ׳</span></div></div></div>
 <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">45 שניות הן רבע מזמן המחזור, ולכן הקרונית עלתה מהתחתית בדיוק לגובה המרכז:</div><div class="ml-m"><span class="m">\(h_B = y_C = \textcolor{#b4561e}{20}\ \checkmark\)</span></div></div></div>
 </div></li>
-</ol></section>
-<section class="ch level" id="lvl3"><h2>רמה ג׳: מחשבים נתון חסר בנוסחה <small>שאלות 3–4</small></h2><ol class="exercises" start="3">
 <li>מרכז C של גלגל ענק נמצא בגובה 15 מ׳, ורדיוס הגלגל 12 מ׳. הגלגל מסתובב עם כיוון השעון. קרונית P נמצאת בהתחלה בנקודה הגבוהה ביותר, A, ומגיעה לראשונה לגובה של המרכז אחרי 20 שניות (נקודה B). מצאו את המהירות הזוויתית ואת זמן המחזור. באיזה גובה P אחרי 50 שניות (נקודה D)? מתי היא מגיעה לראשונה לנקודה הנמוכה ביותר (נקודה E)?
 <div class="sol steps tpl key">
 <div class="tpl-h">פתרון מלא: הערכים מסומנים בצבע</div>
