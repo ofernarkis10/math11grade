@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>גידול ודעיכה – שיעור 1</title>
+<title>גידול ודעיכה – דף דוגמאות 1</title>
 <style>
   :root{
     --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
@@ -51,16 +51,138 @@
   .g{color:var(--grow);font-weight:600}.d{color:var(--decay);font-weight:600}
   .note{color:var(--muted);font-size:.95rem}
   .eq{background:#fff3c4;color:#5a4300;border-radius:6px;padding:2px 8px;font-weight:600}
+  .math{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;font-size:1.1rem;background:var(--code);border-radius:6px;padding:3px 10px;margin:4px 0;display:block}
+  .work{border:1px dashed var(--border);border-radius:8px;padding:8px 10px;margin:8px 0}
+  .work .wt{font-weight:700;margin-bottom:4px}
+  .tablewrap{overflow-x:auto}
+  table.fill{border-collapse:collapse;margin:8px auto;direction:ltr}
+  table.fill th,table.fill td{border:1px solid var(--border);padding:4px 10px;text-align:center;min-width:70px;white-space:nowrap}
+  table.fill th{background:var(--code)}
+  table.fill td.ans{background:#fffbe8}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) table.fill td.ans{background:#2b2a20}}
+  table.fill td.ans .v{visibility:hidden}
+  table.fill.show td.ans .v{visibility:visible}
+  details.step{border:1px solid var(--border);border-radius:8px;margin:6px 0;background:var(--card)}
+  details.step summary{cursor:pointer;padding:6px 10px;font-weight:600}
+  details.step .body{padding:2px 12px 10px}
+  .type{color:var(--muted);font-size:.9rem;font-weight:400}
+  .key{border-inline-start:5px solid var(--accent)}
 </style>
 </head>
 <body>
 <main>
 <a href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
-<h1>גידול ודעיכה – שיעור ראשון: דוגמאות עם סימולציה</h1>
-<p>בכל דוגמה לחצו "צעד ▶" כדי להתקדם שנה (או שעה) אחת, או "הפעל" כדי לראות את כל התהליך. בכל צעד מוצג החישוב: הערך הקודם כפול המספר הקבוע.
-אפשר גם לגרור את המחוון לשנה מסוימת.</p>
+<h1>שיעור ראשון – דף דוגמאות: גידול ודעיכה</h1>
+<p>בכל דוגמה עובדים בשני שלבים: קודם מחשבים במחברת – משלימים את הטבלה בעזרת מחשבון, כל ערך מהערך שלפניו – ואחר כך מפעילים את הסימולציה ורואים את התהליך.</p>
+<div class="card key">
+  <b>עבודה במחברת:</b> העתיקו את הטבלה למחברת והשלימו אותה. כשיוצא מספר עשרוני, עגלו לשתי ספרות אחרי הנקודה רק את התוצאה שאתם רושמים (המשיכו לחשב מהערך המלא שבמחשבון). בסיום לחצו "הצג / הסתר ערכים" ופתחו את השלבים לבדיקה.<br>
+  <b>סימולציה:</b> "צעד ▶" מתקדם שנה (או שעה) אחת, "הפעל" מריץ את כל התהליך, ואפשר לגרור את המחוון.
+</div>
+<div class="controls">
+  <button type="button" onclick="document.querySelectorAll('details.step').forEach(function(d){d.open=true})">פתח את כל השלבים</button>
+  <button type="button" onclick="document.querySelectorAll('details.step').forEach(function(d){d.open=false})">סגור את כל השלבים</button>
+  <button type="button" onclick="document.querySelectorAll('table.fill').forEach(function(t){t.classList.add('show')})">הצג את כל הערכים</button>
+  <button type="button" onclick="document.querySelectorAll('table.fill').forEach(function(t){t.classList.remove('show')})">הסתר את כל הערכים</button>
+</div>
 
 <h2>דוגמאות</h2>
+<template id="w-ex1"><div class="tablewrap"><table class="fill" id="t1">
+  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+  <tr><th>דולפינים</th><td>256</td>
+    <td class="ans"><span class="v">384</span></td><td class="ans"><span class="v">576</span></td><td class="ans"><span class="v">864</span></td>
+    <td class="ans"><span class="v">1296</span></td><td class="ans"><span class="v">1944</span></td><td class="ans"><span class="v">2916</span></td>
+    <td class="ans"><span class="v">4374</span></td><td class="ans"><span class="v">6561</span></td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="toggleFill('t1')">הצג / הסתר ערכים</button></div>
+<details class="step"><summary>מכפילים ב-1.5 את מספר הדולפינים של השנה הקודמת, שנה אחרי שנה <span class="type">(חישוב ערכים)</span></summary><div class="body">
+  <span class="math">t = 1:   256 · 1.5 = 384</span>
+  <span class="math">t = 2:   384 · 1.5 = 576</span>
+  <span class="math">t = 3:   576 · 1.5 = 864</span>
+  <span class="math">t = 4:   864 · 1.5 = 1296</span>
+  <span class="math">t = 5:   1296 · 1.5 = 1944</span>
+  <span class="math">t = 6:   1944 · 1.5 = 2916</span>
+  <span class="math">t = 7:   2916 · 1.5 = 4374</span>
+  <span class="math">t = 8:   4374 · 1.5 = 6561</span>
+</div></details>
+<details class="step"><summary>כותבים את החישוב לשנה 3 ישירות מהמספר ההתחלתי, כדי לגלות תבנית</summary><div class="body">
+  <span class="math">256 · 1.5 · 1.5 · 1.5 = 256 · 1.5<sup>3</sup> = 864</span>
+  <p>אחרי <span class="im">t</span> שנים הכפלנו ב-1.5 בדיוק <span class="im">t</span> פעמים:</p>
+  <span class="math">D(t) = 256 · 1.5<sup>t</sup></span>
+</div></details></template>
+<template id="w-ex2"><details class="step"><summary>מבינים שהוספת 5% לסכום שקולה להכפלה שלו ב-1.05</summary><div class="body">
+  <span class="math">S + 0.05 · S = S · (1 + 0.05) = S · 1.05</span>
+</div></details>
+<div class="tablewrap"><table class="fill" id="t2">
+  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+  <tr><th>סכום (₪)</th><td>10000</td>
+    <td class="ans"><span class="v">10500</span></td><td class="ans"><span class="v">11025</span></td><td class="ans"><span class="v">11576.25</span></td>
+    <td class="ans"><span class="v">12155.06</span></td><td class="ans"><span class="v">12762.82</span></td><td class="ans"><span class="v">13400.96</span></td>
+    <td class="ans"><span class="v">14071.00</span></td><td class="ans"><span class="v">14774.55</span></td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="toggleFill('t2')">הצג / הסתר ערכים</button></div>
+<details class="step"><summary>מכפילים ב-1.05 את הסכום של השנה הקודמת, שנה אחרי שנה <span class="type">(חישוב ערכים)</span></summary><div class="body">
+  <span class="math">t = 1:   10000 · 1.05 = 10500</span>
+  <span class="math">t = 2:   10500 · 1.05 = 11025</span>
+  <span class="math">t = 3:   11025 · 1.05 = 11576.25</span>
+  <span class="math">t = 4:   11576.25 · 1.05 = 12155.0625 ≈ 12155.06</span>
+  <span class="math">t = 5:   12155.0625 · 1.05 ≈ 12762.82</span>
+  <span class="math">t = 6:   12762.8156 · 1.05 ≈ 13400.96</span>
+  <span class="math">t = 7:   13400.9564 · 1.05 ≈ 14071.00</span>
+  <span class="math">t = 8:   14071.0042 · 1.05 ≈ 14774.55</span>
+  <p>שימו לב: בכל שנה הרווח גדל (500, אחר כך 525, אחר כך 551.25 ...), כי האחוזים מחושבים על סכום גדול יותר.</p>
+</div></details>
+<details class="step"><summary>כותבים את הסכום אחרי t שנים ישירות מהסכום ההתחלתי</summary><div class="body">
+  <span class="math">10000 · 1.05 · 1.05 · 1.05 = 10000 · 1.05<sup>3</sup></span>
+  <span class="math">S(t) = 10000 · 1.05<sup>t</sup></span>
+</div></details></template>
+<template id="w-ex3"><details class="step"><summary>מבינים שהורדת 15% מהערך שקולה להכפלה שלו ב-0.85</summary><div class="body">
+  <span class="math">V − 0.15 · V = V · (1 − 0.15) = V · 0.85</span>
+</div></details>
+<div class="tablewrap"><table class="fill" id="t3">
+  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+  <tr><th>ערך (₪)</th><td>80000</td>
+    <td class="ans"><span class="v">68000</span></td><td class="ans"><span class="v">57800</span></td><td class="ans"><span class="v">49130</span></td>
+    <td class="ans"><span class="v">41760.50</span></td><td class="ans"><span class="v">35496.43</span></td><td class="ans"><span class="v">30171.96</span></td>
+    <td class="ans"><span class="v">25646.17</span></td><td class="ans"><span class="v">21799.24</span></td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="toggleFill('t3')">הצג / הסתר ערכים</button></div>
+<details class="step"><summary>מכפילים ב-0.85 את ערך הרכב של השנה הקודמת, שנה אחרי שנה <span class="type">(חישוב ערכים)</span></summary><div class="body">
+  <span class="math">t = 1:   80000 · 0.85 = 68000</span>
+  <span class="math">t = 2:   68000 · 0.85 = 57800</span>
+  <span class="math">t = 3:   57800 · 0.85 = 49130</span>
+  <span class="math">t = 4:   49130 · 0.85 = 41760.5</span>
+  <span class="math">t = 5:   41760.5 · 0.85 = 35496.425 ≈ 35496.43</span>
+  <span class="math">t = 6:   35496.425 · 0.85 ≈ 30171.96</span>
+  <span class="math">t = 7:   30171.9613 · 0.85 ≈ 25646.17</span>
+  <span class="math">t = 8:   25646.1671 · 0.85 ≈ 21799.24</span>
+  <p>בשנה הראשונה הרכב איבד 12,000 ₪, ובשנה השמינית פחות מ-4,000 ₪ – הירידה עצמה הולכת וקטנה.</p>
+</div></details>
+<details class="step"><summary>כותבים את ערך הרכב אחרי t שנים ישירות מהמחיר ההתחלתי</summary><div class="body">
+  <span class="math">V(t) = 80000 · 0.85<sup>t</sup></span>
+</div></details></template>
+<template id="w-ex4"><div class="tablewrap"><table class="fill" id="t4">
+  <tr><th>שעות t</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+  <tr><th>תרופה (מ"ג)</th><td>200</td>
+    <td class="ans"><span class="v">160</span></td><td class="ans"><span class="v">128</span></td><td class="ans"><span class="v">102.4</span></td>
+    <td class="ans"><span class="v">81.92</span></td><td class="ans"><span class="v">65.54</span></td><td class="ans"><span class="v">52.43</span></td>
+    <td class="ans"><span class="v">41.94</span></td><td class="ans"><span class="v">33.55</span></td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="toggleFill('t4')">הצג / הסתר ערכים</button></div>
+<details class="step"><summary>מכפילים ב-0.8 את כמות התרופה של השעה הקודמת, שעה אחרי שעה <span class="type">(חישוב ערכים)</span></summary><div class="body">
+  <span class="math">t = 1:   200 · 0.8 = 160</span>
+  <span class="math">t = 2:   160 · 0.8 = 128</span>
+  <span class="math">t = 3:   128 · 0.8 = 102.4</span>
+  <span class="math">t = 4:   102.4 · 0.8 = 81.92</span>
+  <span class="math">t = 5:   81.92 · 0.8 = 65.536 ≈ 65.54</span>
+  <span class="math">t = 6:   65.536 · 0.8 = 52.4288 ≈ 52.43</span>
+  <span class="math">t = 7:   52.4288 · 0.8 = 41.94304 ≈ 41.94</span>
+  <span class="math">t = 8:   41.94304 · 0.8 = 33.554432 ≈ 33.55</span>
+  <p>אחרי 3 שעות נשארה כמעט חצי מהכמות, ואחרי 8 שעות פחות משישית ממנה – אבל הכמות אף פעם לא מגיעה ל-0.</p>
+</div></details>
+<details class="step"><summary>כותבים את כמות התרופה אחרי t שעות ישירות מהכמות ההתחלתית</summary><div class="body">
+  <span class="math">M(t) = 200 · 0.8<sup>t</sup></span>
+</div></details></template>
+
 <div id="ex1"></div>
 <div id="ex2"></div>
 <div id="ex3"></div>
@@ -90,6 +212,7 @@ var EX = [
   icon:'💊', per:10, iconLabel:'כל 💊 = 10 מ"ג', dec:2, showDiff:'ירידה בשעה'}
 ];
 
+function toggleFill(id){document.getElementById(id).classList.toggle('show');}
 function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
 function fmt(x,dec){var r=Math.round(x*100)/100; if(dec===0&&Math.abs(r-Math.round(r))<1e-9) return Math.round(r).toLocaleString('en-US');
   return r.toLocaleString('en-US',{minimumFractionDigits:(Number.isInteger(r)?0:2),maximumFractionDigits:2});}
@@ -99,7 +222,8 @@ function val(s,t){return s.a*Math.pow(s.b,t);}
 function build(ex){
   var root=document.getElementById(ex.id);
   root.className='card';
-  root.innerHTML='<h3>'+ex.title+'</h3><p>'+ex.text+'</p>'+
+  var wt=document.getElementById('w-'+ex.id);
+  root.innerHTML='<h3>'+ex.title+'</h3><p>'+ex.text+'</p>'+(wt?'<div class="work"><div class="wt">✏️ חישוב במחברת</div>'+wt.innerHTML+'</div><div class="work" style="border-style:solid"><div class="wt">▶ סימולציה</div>':'<div>')+
    '<div class="controls">'+
      '<button data-a="reset">⏮ התחלה</button><button data-a="prev">◀ צעד</button>'+
      '<button data-a="play">▶ הפעל</button><button data-a="next">צעד ▶</button>'+
@@ -108,7 +232,7 @@ function build(ex){
    '<div class="status"><span>'+ex.unit+' <span class="im big" data-s="t">0</span></span><span data-s="vals"></span></div>'+
    '<div class="calc" data-s="calc"></div>'+
    '<div class="sim"><div class="panel"><svg viewBox="0 0 420 240" data-s="chart"></svg></div>'+
-   '<div class="panel"><div class="picto" data-s="picto"></div><div class="legend">'+ex.iconLabel+'</div></div></div>';
+   '<div class="panel"><div class="picto" data-s="picto"></div><div class="legend">'+ex.iconLabel+'</div></div></div></div>';
   var st={t: ex.backward? 0 : 0, timer:null, phase: ex.backward? 'fwd':'fwd'};
   var range=root.querySelector('input'), playBtn=root.querySelector('[data-a=play]');
   function q(k){return root.querySelector('[data-s='+k+']');}
