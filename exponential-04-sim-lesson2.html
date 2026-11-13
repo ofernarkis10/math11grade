@@ -55,7 +55,7 @@
   .work{border:1px dashed var(--border);border-radius:8px;padding:8px 10px;margin:8px 0}
   .work .wt{font-weight:700;margin-bottom:4px}
   .tablewrap{overflow-x:auto}
-  table.fill{border-collapse:collapse;margin:8px auto;direction:ltr}
+  table.fill{border-collapse:collapse;margin:8px auto;direction:rtl}
   table.fill th,table.fill td{border:1px solid var(--border);padding:4px 10px;text-align:center;min-width:70px;white-space:nowrap}
   table.fill th{background:var(--code);direction:rtl;unicode-bidi:isolate}
   table.fill td.ans{background:#fffbe8}
@@ -67,6 +67,9 @@
   details.step .body{padding:2px 12px 10px}
   .type{color:var(--muted);font-size:.9rem;font-weight:400}
   .key{border-inline-start:5px solid var(--accent)}
+  td{direction:ltr;unicode-bidi:isolate}
+  td.he{direction:rtl}
+  th{direction:rtl;unicode-bidi:isolate}
 </style>
 </head>
 <body>

@@ -39,7 +39,7 @@
   .decay{color:var(--decay);font-weight:600}
   .key{border-inline-start:5px solid var(--accent)}
   .task{background:var(--code);border-radius:8px;padding:8px 12px;margin:8px 0}
-  table{border-collapse:collapse;margin:8px auto;direction:ltr}
+  table{border-collapse:collapse;margin:8px auto;direction:rtl}
   th,td{border:1px solid var(--border);padding:4px 10px;text-align:center}
   th{background:var(--code)}
   .tablewrap{overflow-x:auto}
@@ -61,6 +61,9 @@
   .verify td{min-width:0;white-space:nowrap}
   .verify td.ok{color:var(--grow);font-weight:700}
   .verify td.f{font-family:"Cambria Math","Times New Roman",serif}
+  td{direction:ltr;unicode-bidi:isolate}
+  td.he{direction:rtl}
+  th{direction:rtl;unicode-bidi:isolate}
 </style>
 </head>
 <body>

@@ -39,7 +39,7 @@
   .decay{color:var(--decay);font-weight:600}
   .key{border-inline-start:5px solid var(--accent)}
   .task{background:var(--code);border-radius:8px;padding:8px 12px;margin:8px 0}
-  table{border-collapse:collapse;margin:8px auto;direction:ltr}
+  table{border-collapse:collapse;margin:8px auto;direction:rtl}
   th,td{border:1px solid var(--border);padding:4px 10px;text-align:center}
   th{background:var(--code)}
   .tablewrap{overflow-x:auto}
@@ -58,6 +58,9 @@
   .controls{margin:6px 0;display:flex;flex-wrap:wrap;gap:6px}
   button{font:inherit;padding:4px 12px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
   ul{padding-inline-start:22px}
+  td{direction:ltr;unicode-bidi:isolate}
+  td.he{direction:rtl}
+  th{direction:rtl;unicode-bidi:isolate}
 </style>
 </head>
 <body>
@@ -76,10 +79,10 @@
 <div class="tablewrap">
 <table>
   <tr><th>דוגמה</th><th>ערך התחלתי</th><th>בכל צעד מכפילים ב-</th><th>מה קורה</th><th>הפונקציה</th></tr>
-  <tr><td>דולפינים</td><td>256</td><td>1.5</td><td class="grow">גדל</td><td>256 · 1.5<sup>t</sup></td></tr>
-  <tr><td>חיסכון</td><td>10000</td><td>1.05</td><td class="grow">גדל</td><td>10000 · 1.05<sup>t</sup></td></tr>
-  <tr><td>רכב</td><td>80000</td><td>0.85</td><td class="decay">קטן</td><td>80000 · 0.85<sup>t</sup></td></tr>
-  <tr><td>תרופה</td><td>200</td><td>0.8</td><td class="decay">קטן</td><td>200 · 0.8<sup>t</sup></td></tr>
+  <tr><td class="he">דולפינים</td><td>256</td><td>1.5</td><td class="he grow">גדל</td><td>256 · 1.5<sup>t</sup></td></tr>
+  <tr><td class="he">חיסכון</td><td>10000</td><td>1.05</td><td class="he grow">גדל</td><td>10000 · 1.05<sup>t</sup></td></tr>
+  <tr><td class="he">רכב</td><td>80000</td><td>0.85</td><td class="he decay">קטן</td><td>80000 · 0.85<sup>t</sup></td></tr>
+  <tr><td class="he">תרופה</td><td>200</td><td>0.8</td><td class="he decay">קטן</td><td>200 · 0.8<sup>t</sup></td></tr>
 </table>
 </div>
 <div class="card key">
@@ -129,11 +132,11 @@
 <div class="tablewrap">
 <table>
   <tr><th>תיאור במילים</th><th>b</th><th>סוג</th></tr>
-  <tr><td>מכפיל את עצמו בכל צעד</td><td>2</td><td class="grow">גידול</td></tr>
-  <tr><td>גדל ב-50% בכל שנה</td><td>1.5</td><td class="grow">גידול</td></tr>
-  <tr><td>גדל ב-5% בכל שנה</td><td>1.05</td><td class="grow">גידול</td></tr>
-  <tr><td>קטן ב-15% בכל שנה</td><td>0.85</td><td class="decay">דעיכה</td></tr>
-  <tr><td>קטן לחצי בכל צעד</td><td>0.5</td><td class="decay">דעיכה</td></tr>
+  <tr><td class="he">מכפיל את עצמו בכל צעד</td><td>2</td><td class="he grow">גידול</td></tr>
+  <tr><td class="he">גדל ב-50% בכל שנה</td><td>1.5</td><td class="he grow">גידול</td></tr>
+  <tr><td class="he">גדל ב-5% בכל שנה</td><td>1.05</td><td class="he grow">גידול</td></tr>
+  <tr><td class="he">קטן ב-15% בכל שנה</td><td>0.85</td><td class="he decay">דעיכה</td></tr>
+  <tr><td class="he">קטן לחצי בכל צעד</td><td>0.5</td><td class="he decay">דעיכה</td></tr>
 </table>
 </div>
 
