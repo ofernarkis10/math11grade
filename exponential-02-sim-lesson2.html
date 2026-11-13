@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>גידול ודעיכה – שיעור 2</title>
+<style>
+  :root{
+    --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
+    --accent:#2f6fde; --grow:#1f9d55; --decay:#d04a3a; --border:#dde2ea;
+    --code:#eef2f8; --b2:#e08a1e;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+      --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+      --code:#252d3c; --b2:#ffb050;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+    --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+    --code:#252d3c; --b2:#ffb050;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:"Segoe UI",Arial,"Noto Sans Hebrew",sans-serif;line-height:1.6;font-size:17px}
+  main{max-width:980px;margin:0 auto;padding:16px}
+  a{color:var(--accent)}
+  h1{font-size:1.8rem;margin:.3em 0}
+  h2{font-size:1.35rem;margin:1.6em 0 .5em;border-bottom:2px solid var(--accent);padding-bottom:4px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:14px 0}
+  .card h3{margin:.1em 0 .4em;font-size:1.15rem}
+  .im{direction:ltr;unicode-bidi:isolate;font-family:"Cambria Math","Times New Roman",serif;white-space:nowrap}
+  .controls{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+  button{font:inherit;padding:4px 12px;border-radius:6px;border:1px solid var(--border);background:var(--code);color:var(--text);cursor:pointer;min-width:44px}
+  button:hover{border-color:var(--accent)}
+  input[type=range]{flex:1;min-width:140px}
+  .status{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:baseline;margin:6px 0}
+  .big{font-size:1.6rem;font-weight:700}
+  .calc{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;font-size:1.15rem;
+    background:var(--code);border-radius:6px;padding:4px 10px;min-height:2em}
+  .sim{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;margin-top:8px}
+  @media (max-width:700px){.sim{grid-template-columns:1fr}}
+  .panel{border:1px solid var(--border);border-radius:8px;padding:6px;background:var(--bg)}
+  .panel svg{width:100%;height:auto;display:block}
+  .picto{direction:ltr;display:flex;flex-wrap:wrap;gap:2px;align-content:flex-start;min-height:180px;font-size:22px;line-height:1}
+  .picto span{display:inline-block;overflow:hidden;white-space:nowrap;transition:opacity .3s}
+  .picto .row2{border-top:1px dashed var(--border);margin-top:6px;padding-top:6px;width:100%;display:flex;flex-wrap:wrap;gap:2px}
+  .legend{color:var(--muted);font-size:.9rem;margin-top:4px}
+  .g{color:var(--grow);font-weight:600}.d{color:var(--decay);font-weight:600}
+  .note{color:var(--muted);font-size:.95rem}
+  .eq{background:#fff3c4;color:#5a4300;border-radius:6px;padding:2px 8px;font-weight:600}
+</style>
+</head>
+<body>
+<main>
+<a href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+<h1>גידול ודעיכה – שיעור שני: השוואה בין שתי קבוצות</h1>
+<p>בכל דוגמה לחצו "צעד ▶" כדי להתקדם שנה (או שעה) אחת, או "הפעל" כדי לראות את כל התהליך. בכל צעד מוצג החישוב: הערך הקודם כפול המספר הקבוע.
+אפשר גם לגרור את המחוון לשנה מסוימת.</p>
+<p>בשיעור הקודם ראינו קבוצה אחת שגדלה או קטנה. עכשיו יש שתי קבוצות שגדלות בקצב שונה – ונחפש מתי הן משתוות, או מה היה הערך ההתחלתי של אחת מהן.</p>
+<h2>שאלות</h2>
+<div id="ex5"></div>
+<div id="ex6"></div>
+
+<p><a href="exponential-01-sim-lesson1.html">→ חזרה לשיעור ראשון</a></p>
+<a href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+</main>
+
+<script>
+var EX = [ {id:'ex5', title:'שאלה 1 – שתי שמורות דולפינים', kind:'g',
+  text:'בשמורה א\' יש 1,728 דולפינים וגדלים ב-25% בשנה (פי 1.25). בשמורה ב\' יש 1,000 דולפינים וגדלים ב-50% בשנה (פי 1.5). מתי יהיה בשתי השמורות אותו מספר?',
+  unit:'שנה', T:5, series:[{name:'שמורה א\'', a:1728, b:1.25, color:'--accent'},{name:'שמורה ב\'', a:1000, b:1.5, color:'--b2'}],
+  icon:'🐬', per:250, iconLabel:'כל 🐬 = 250 דולפינים', dec:2, findEq:true},
+ {id:'ex6', title:'שאלה 2 – שני עדרי כבשים (הולכים אחורה)', kind:'g',
+  text:'בעדר א\' 500 כבשים וגדלות ב-20% בשנה. בעדר ב\' גדלות ב-50% בשנה. אחרי 3 שנים יש בשני העדרים אותו מספר. כמה כבשים היו בהתחלה בעדר ב\'? – מחשבים את עדר א\' קדימה עד שנה 3, ואז הולכים בעדר ב\' אחורה (מחלקים ב-1.5).',
+  unit:'שנה', T:3, series:[{name:'עדר א\'', a:500, b:1.2, color:'--accent'},{name:'עדר ב\'', a:256, b:1.5, color:'--b2'}],
+  icon:'🐑', per:50, iconLabel:'כל 🐑 = 50 כבשים', dec:0, backward:true}
+];
+
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+function fmt(x,dec){var r=Math.round(x*100)/100; if(dec===0&&Math.abs(r-Math.round(r))<1e-9) return Math.round(r).toLocaleString('en-US');
+  return r.toLocaleString('en-US',{minimumFractionDigits:(Number.isInteger(r)?0:2),maximumFractionDigits:2});}
+function N(h){return '<div dir="rtl" style="text-align:right;font-family:inherit;font-size:.95rem">'+h+'</div>';}
+function val(s,t){return s.a*Math.pow(s.b,t);}
+
+function build(ex){
+  var root=document.getElementById(ex.id);
+  root.className='card';
+  root.innerHTML='<h3>'+ex.title+'</h3><p>'+ex.text+'</p>'+
+   '<div class="controls">'+
+     '<button data-a="reset">⏮ התחלה</button><button data-a="prev">◀ צעד</button>'+
+     '<button data-a="play">▶ הפעל</button><button data-a="next">צעד ▶</button>'+
+     '<input type="range" min="0" max="'+ex.T+'" value="0" step="1">'+
+   '</div>'+
+   '<div class="status"><span>'+ex.unit+' <span class="im big" data-s="t">0</span></span><span data-s="vals"></span></div>'+
+   '<div class="calc" data-s="calc"></div>'+
+   '<div class="sim"><div class="panel"><svg viewBox="0 0 420 240" data-s="chart"></svg></div>'+
+   '<div class="panel"><div class="picto" data-s="picto"></div><div class="legend">'+ex.iconLabel+'</div></div></div>';
+  var st={t: ex.backward? 0 : 0, timer:null, phase: ex.backward? 'fwd':'fwd'};
+  var range=root.querySelector('input'), playBtn=root.querySelector('[data-a=play]');
+  function q(k){return root.querySelector('[data-s='+k+']');}
+  // backward mode: steps 0..T forward for series A, then T..0 backward for B => total 2T steps
+  var maxStep = ex.backward ? ex.T*2 : ex.T;
+  range.max=maxStep;
+
+  function known(si,t,step){ // is value of series si at time t revealed at this step
+    if(!ex.backward) return t<=step;
+    if(si===0) return t<=step;
+    if(step<ex.T) return false;
+    return t >= ex.T-(step-ex.T);
+  }
+  function render(){
+    var step=st.t; range.value=step;
+    var tShow = ex.backward ? (step<=ex.T? step : ex.T-(step-ex.T)) : step;
+    q('t').textContent=tShow;
+    // values text
+    var vt=ex.series.map(function(s,i){var k=known(i,tShow,step);
+      return '<span style="color:'+css(s.color)+';font-weight:600">'+s.name+': <span class="im big">'+(k?fmt(val(s,tShow),ex.dec):'?')+'</span></span>';}).join('  ');
+    var eq='';
+    if(ex.series.length===2 && known(0,tShow,step)&&known(1,tShow,step) && Math.abs(val(ex.series[0],tShow)-val(ex.series[1],tShow))<1e-6)
+      eq=' <span class="eq">שוויון!</span>';
+    q('vals').innerHTML=vt+eq;
+    // calc line
+    var c='';
+    if(ex.backward){
+      if(step===0) c=N('עדר א\' בהתחלה: 500.  עדר ב\' בהתחלה: ?');
+      else if(step<=ex.T){var s=ex.series[0]; c='t = '+step+':   '+fmt(val(s,step-1),0)+' · 1.2 = '+fmt(val(s,step),0);}
+      else if(step===ex.T+0){}
+      if(step===ex.T) c+=N('בשנה 3 יש בעדר ב\' אותו מספר כבשים: '+fmt(val(ex.series[1],ex.T),0));
+      if(step>ex.T){var s2=ex.series[1], tt=tShow; c='t = '+tt+':   '+fmt(val(s2,tt+1),0)+' / 1.5 = '+fmt(val(s2,tt),0);
+        if(tt===0) c+=N('בהתחלה היו בעדר ב\' 256 כבשים.');}
+    } else if(step===0){
+      c=ex.series.map(function(s){return (ex.series.length>1?s.name+': ':'')+'t = 0:   '+fmt(s.a,ex.dec);}).join('     ');
+    } else {
+      c=ex.series.map(function(s){return (ex.series.length>1?s.name+':  ':'')+'t = '+step+':   '+fmt(val(s,step-1),ex.dec)+' · '+s.b+' = '+fmt(val(s,step),ex.dec);}).join('<br>');
+      if(ex.showDiff){var s0=ex.series[0], d=val(s0,step)-val(s0,step-1); c+=N(ex.showDiff+': '+fmt(Math.abs(d),2));}
+    }
+    if(ex.findEq && step===ex.T) c+=N('מכאן והלאה שמורה ב\' עוברת את שמורה א\' – היא גדלה מהר יותר.');
+    q('calc').innerHTML=c;
+    drawChart(ex,q('chart'),step,tShow,known);
+    drawPicto(ex,q('picto'),step,tShow,known);
+    playBtn.textContent=st.timer?'⏸ עצור':'▶ הפעל';
+  }
+  function go(n){st.t=Math.max(0,Math.min(maxStep,n));render();}
+  function stop(){if(st.timer){clearInterval(st.timer);st.timer=null;}}
+  root.querySelector('[data-a=reset]').onclick=function(){stop();go(0);};
+  root.querySelector('[data-a=prev]').onclick=function(){stop();go(st.t-1);};
+  root.querySelector('[data-a=next]').onclick=function(){stop();go(st.t+1);};
+  playBtn.onclick=function(){
+    if(st.timer){stop();render();return;}
+    if(st.t>=maxStep) st.t=0;
+    st.timer=setInterval(function(){ if(st.t>=maxStep){stop();render();return;} go(st.t+1); },1100);
+    render();
+  };
+  range.oninput=function(){stop();go(+range.value);};
+  ex._render=render;
+  render();
+}
+
+function drawChart(ex,svg,step,tShow,known){
+  var W=420,H=240,L=46,R=10,Tp=12,B=26;
+  var max=0; ex.series.forEach(function(s){for(var t=0;t<=ex.T;t++) max=Math.max(max,val(s,t));});
+  max*=1.08;
+  var n=ex.T+1, gw=(W-L-R)/n, ns=ex.series.length, bw=Math.min(34,(gw-8)/ns);
+  var mu=css('--muted'), bd=css('--border'), tx=css('--text');
+  var s='';
+  for(var k=0;k<=4;k++){var y=H-B-(H-B-Tp)*k/4, v=max*k/4;
+    s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'" stroke="'+bd+'"/>';
+    s+='<text x="'+(L-4)+'" y="'+(y+4)+'" font-size="10" fill="'+mu+'" text-anchor="end">'+Math.round(v).toLocaleString('en-US')+'</text>';}
+  for(var t=0;t<=ex.T;t++){
+    var gx=L+gw*t+(gw-bw*ns)/2;
+    s+='<text x="'+(L+gw*t+gw/2)+'" y="'+(H-8)+'" font-size="12" fill="'+(t===tShow?tx:mu)+'" font-weight="'+(t===tShow?'700':'400')+'" text-anchor="middle">'+t+'</text>';
+    ex.series.forEach(function(se,i){
+      if(!known(i,t,step)) return;
+      var v=val(se,t), h=(H-B-Tp)*v/max, x=gx+i*bw, y=H-B-h;
+      s+='<rect x="'+x+'" y="'+y+'" width="'+(bw-2)+'" height="'+h+'" rx="2" fill="'+css(se.color)+'" opacity="'+(t===tShow?1:.55)+'"/>';
+      if(t===tShow) s+='<text x="'+(x+bw/2-1)+'" y="'+(y-3)+'" font-size="10" fill="'+tx+'" text-anchor="middle">'+fmt(v,ex.dec)+'</text>';
+    });
+  }
+  // curve through known points of each series
+  ex.series.forEach(function(se,i){
+    var d='';
+    for(var t=0;t<=ex.T;t++){ if(!known(i,t,step)) continue;
+      var x=L+gw*t+gw/2, y=H-B-(H-B-Tp)*val(se,t)/max; d+=(d?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);}
+    if(d) s+='<path d="'+d+'" fill="none" stroke="'+css(se.color)+'" stroke-width="1.5" stroke-dasharray="4 3"/>';
+  });
+  svg.innerHTML=s;
+}
+
+function icons(ex,v){
+  var full=Math.floor(v/ex.per), frac=v/ex.per-full, h='';
+  for(var i=0;i<full;i++) h+='<span>'+ex.icon+'</span>';
+  if(frac>0.02) h+='<span style="width:'+(frac*1.15).toFixed(2)+'em">'+ex.icon+'</span>';
+  return h;
+}
+function drawPicto(ex,div,step,tShow,known){
+  if(ex.series.length===1){div.innerHTML=icons(ex,val(ex.series[0],tShow));return;}
+  div.innerHTML=ex.series.map(function(se,i){
+    var k=known(i,tShow,step);
+    return '<div class="row2"><b dir="rtl" style="color:'+css(se.color)+';font-size:14px;width:100%;text-align:right">'+se.name+'</b>'+(k?icons(ex,val(se,tShow)):'<span style="font-size:28px">?</span>')+'</div>';
+  }).join('');
+}
+
+EX.forEach(build);
+try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){EX.forEach(function(e){e._render();});});}catch(e){}
+</script>
+</body>
+</html>

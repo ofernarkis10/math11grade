@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>פונקציות גידול ודעיכה</title>
+<style>
+  :root{
+    --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
+    --accent:#2f6fde; --grow:#1f9d55; --decay:#d04a3a; --border:#dde2ea;
+    --code:#eef2f8; --blank:#fffbe8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+      --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+      --code:#252d3c; --blank:#2b2a20;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+    --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+    --code:#252d3c; --blank:#2b2a20;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:"Segoe UI",Arial,"Noto Sans Hebrew",sans-serif;line-height:1.7;font-size:17px}
+  main{max-width:900px;margin:0 auto;padding:16px}
+  a{color:var(--accent)}
+  .back{display:inline-block;margin:8px 0 4px}
+  h1{font-size:1.8rem;margin:.3em 0}
+  h2{font-size:1.35rem;margin:1.6em 0 .5em;border-bottom:2px solid var(--accent);padding-bottom:4px}
+  h3{font-size:1.1rem;margin:1.2em 0 .4em}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0}
+  .math{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;
+    font-size:1.12rem;background:var(--code);border-radius:6px;padding:4px 10px;margin:4px 0;display:block}
+  .im{direction:ltr;unicode-bidi:isolate;font-family:"Cambria Math","Times New Roman",serif;white-space:nowrap}
+  .grow{color:var(--grow);font-weight:600}
+  .decay{color:var(--decay);font-weight:600}
+  .key{border-inline-start:5px solid var(--accent)}
+  .task{background:var(--code);border-radius:8px;padding:8px 12px;margin:8px 0}
+  table{border-collapse:collapse;margin:8px auto;direction:ltr}
+  th,td{border:1px solid var(--border);padding:4px 10px;text-align:center}
+  th{background:var(--code)}
+  .tablewrap{overflow-x:auto}
+  .calc td{min-width:74px;white-space:nowrap}
+  .calc td.ans{background:var(--blank)}
+  .calc td.ans .v{visibility:hidden}
+  .calc.show td.ans .v{visibility:visible}
+  .graphs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .graphs figure{margin:0;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px}
+  figcaption{text-align:center;color:var(--muted);font-size:.95rem}
+  svg{width:100%;height:auto;display:block}
+  details.step{border:1px solid var(--border);border-radius:8px;margin:6px 0;background:var(--card)}
+  details.step summary{cursor:pointer;padding:6px 10px;font-weight:600}
+  details.step .body{padding:2px 12px 10px}
+  .type{color:var(--muted);font-size:.9rem;font-weight:400}
+  .controls{margin:6px 0;display:flex;flex-wrap:wrap;gap:6px}
+  button{font:inherit;padding:4px 12px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
+  ul{padding-inline-start:22px}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+<h1>פונקציות גידול ודעיכה</h1>
+<p>נתחיל מכמה מצבים מהחיים, נחשב בהם צעד אחר צעד, ונחפש מה משותף להם. רק אחרי זה נכתוב נוסחה כללית.</p>
+<div class="controls">
+  <button type="button" onclick="toggleAll(true)">פתח את כל השלבים</button>
+  <button type="button" onclick="toggleAll(false)">סגור את כל השלבים</button>
+  <button type="button" onclick="showAllTables(true)">הצג את כל הערכים</button>
+  <button type="button" onclick="showAllTables(false)">הסתר את כל הערכים</button>
+</div>
+
+<h2>1. מתחילים מדוגמאות</h2>
+<div class="card key">
+  <b>עבודה במחברת:</b> בכל דוגמה העתיקו את הטבלה למחברת והשלימו אותה בעזרת מחשבון – כל ערך מחושב מהערך שלפניו.
+  כשיוצא מספר עשרוני, עגלו לשתי ספרות אחרי הנקודה רק את התוצאה הסופית שאתם רושמים (המשיכו לחשב מהערך המלא שבמחשבון).
+  בסיום לחצו על "הצג ערכים" ובדקו את עצמכם.
+</div>
+
+<!-- Example 1 -->
+<div class="card">
+<h3>דוגמה 1 – דולפינים</h3>
+<p>בשמורה ימית חיים 256 דולפינים. בכל שנה מספר הדולפינים גדל פי 1.5 (כלומר גדל ב-50%). כמה דולפינים יהיו בשמורה בכל אחת מ-8 השנים הבאות?</p>
+<div class="tablewrap"><table class="calc" id="t1">
+  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+  <tr><th>דולפינים</th><td>256</td>
+    <td class="ans"><span class="v">384</span></td><td class="ans"><span class="v">576</span></td><td class="ans"><span class="v">864</span></td>
+    <td class="ans"><span class="v">1296</span></td><td class="ans"><span class="v">1944</span></td><td class="ans"><span class="v">2916</span></td>
+    <td class="ans"><span class="v">4374</span></td><td class="ans"><span class="v">6561</span></td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="toggleTable('t1')">הצג / הסתר ערכים</button></div>
+<details class="step"><summary>מכפילים ב-1.5 את מספר הדולפינים של השנה הקודמת, שנה אחרי שנה <span class="type">(חישוב ערכים)</span></summary><div class="body">
+  <span class="math">t = 1:   256 · 1.5 = 384</span>
+  <span class="math">t = 2:   384 · 1.5 = 576</span>
+  <span class="math">t = 3:   576 · 1.5 = 864</span>
+  <span class="math">t = 4:   864 · 1.5 = 1296</span>
+  <span class="math">t = 5:   1296 · 1.5 = 1944</span>
+  <span class="math">t = 6:   1944 · 1.5 = 2916</span>
+  <span class="math">t = 7:   2916 · 1.5 = 4374</span>
+  <span class="math">t = 8:   4374 · 1.5 = 6561</span>
+</div></details>
+<details class="step"><summary>כותבים את החישוב לשנה 3 ישירות מהמספר ההתחלתי, כדי לגלות תבנית</summary><div class="body">
+  <span class="math">256 · 1.5 · 1.5 · 1.5 = 256 · 1.5<sup>3</sup> = 864</span>
+  <p>אחרי <span class="im">t</span> שנים הכפלנו ב-1.5 בדיוק <span class="im">t</span> פעמים:</p>
+  <span class="math">D(t) = 256 · 1.5<sup>t</sup></span>
+</div></details>
+</div>
+
+<!-- Example 2 -->
+<div class="card">
+<h3>דוגמה 2 – חיסכון בבנק</h3>
+<p>מפקידים 10,000 ₪ בתוכנית חיסכון שמוסיפה 5% בכל שנה על הסכום שנצבר. כמה כסף יהיה בחיסכון בכל אחת מ-8 השנים הראשונות?</p>
+<details class="step"><summary>מבינים שהוספת 5% לסכום שקולה להכפלה שלו ב-1.05</summary><div class="body">
+  <span class="math">S + 0.05 · S = S · (1 + 0.05) = S · 1.05</span>
+</div></details>
+<div class="tablewrap"><table class="calc" id="t2">
+  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+  <tr><th>סכום (₪)</th><td>10000</td>
+    <td class="ans"><span class="v">10500</span></td><td class="ans"><span class="v">11025</span></td><td class="ans"><span class="v">11576.25</span></td>
+    <td class="ans"><span class="v">12155.06</span></td><td class="ans"><span class="v">12762.82</span></td><td class="ans"><span class="v">13400.96</span></td>
+    <td class="ans"><span class="v">14071.00</span></td><td class="ans"><span class="v">14774.55</span></td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="toggleTable('t2')">הצג / הסתר ערכים</button></div>
+<details class="step"><summary>מכפילים ב-1.05 את הסכום של השנה הקודמת, שנה אחרי שנה <span class="type">(חישוב ערכים)</span></summary><div class="body">
+  <span class="math">t = 1:   10000 · 1.05 = 10500</span>
+  <span class="math">t = 2:   10500 · 1.05 = 11025</span>
+  <span class="math">t = 3:   11025 · 1.05 = 11576.25</span>
+  <span class="math">t = 4:   11576.25 · 1.05 = 12155.0625 ≈ 12155.06</span>
+  <span class="math">t = 5:   12155.0625 · 1.05 ≈ 12762.82</span>
+  <span class="math">t = 6:   12762.8156 · 1.05 ≈ 13400.96</span>
+  <span class="math">t = 7:   13400.9564 · 1.05 ≈ 14071.00</span>
+  <span class="math">t = 8:   14071.0042 · 1.05 ≈ 14774.55</span>
+  <p>שימו לב: בכל שנה הרווח גדל (500, אחר כך 525, אחר כך 551.25 ...), כי האחוזים מחושבים על סכום גדול יותר.</p>
+</div></details>
+<details class="step"><summary>כותבים את הסכום אחרי t שנים ישירות מהסכום ההתחלתי</summary><div class="body">
+  <span class="math">10000 · 1.05 · 1.05 · 1.05 = 10000 · 1.05<sup>3</sup></span>
+  <span class="math">S(t) = 10000 · 1.05<sup>t</sup></span>
+</div></details>
+</div>
+
+<!-- Example 3 -->
+<div class="card">
+<h3>דוגמה 3 – ירידת ערך של רכב</h3>
+<p>רכב נקנה ב-80,000 ₪. ערכו יורד ב-15% בכל שנה. מה ערך הרכב בכל אחת מ-8 השנים הראשונות?</p>
+<details class="step"><summary>מבינים שהורדת 15% מהערך שקולה להכפלה שלו ב-0.85</summary><div class="body">
+  <span class="math">V − 0.15 · V = V · (1 − 0.15) = V · 0.85</span>
+</div></details>
+<div class="tablewrap"><table class="calc" id="t3">
+  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+  <tr><th>ערך (₪)</th><td>80000</td>
+    <td class="ans"><span class="v">68000</span></td><td class="ans"><span class="v">57800</span></td><td class="ans"><span class="v">49130</span></td>
+    <td class="ans"><span class="v">41760.50</span></td><td class="ans"><span class="v">35496.43</span></td><td class="ans"><span class="v">30171.96</span></td>
+    <td class="ans"><span class="v">25646.17</span></td><td class="ans"><span class="v">21799.24</span></td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="toggleTable('t3')">הצג / הסתר ערכים</button></div>
+<details class="step"><summary>מכפילים ב-0.85 את ערך הרכב של השנה הקודמת, שנה אחרי שנה <span class="type">(חישוב ערכים)</span></summary><div class="body">
+  <span class="math">t = 1:   80000 · 0.85 = 68000</span>
+  <span class="math">t = 2:   68000 · 0.85 = 57800</span>
+  <span class="math">t = 3:   57800 · 0.85 = 49130</span>
+  <span class="math">t = 4:   49130 · 0.85 = 41760.5</span>
+  <span class="math">t = 5:   41760.5 · 0.85 = 35496.425 ≈ 35496.43</span>
+  <span class="math">t = 6:   35496.425 · 0.85 ≈ 30171.96</span>
+  <span class="math">t = 7:   30171.9613 · 0.85 ≈ 25646.17</span>
+  <span class="math">t = 8:   25646.1671 · 0.85 ≈ 21799.24</span>
+  <p>בשנה הראשונה הרכב איבד 12,000 ₪, ובשנה השמינית פחות מ-4,000 ₪ – הירידה עצמה הולכת וקטנה.</p>
+</div></details>
+<details class="step"><summary>כותבים את ערך הרכב אחרי t שנים ישירות מהמחיר ההתחלתי</summary><div class="body">
+  <span class="math">V(t) = 80000 · 0.85<sup>t</sup></span>
+</div></details>
+</div>
+
+<!-- Example 4 -->
+<div class="card">
+<h3>דוגמה 4 – תרופה בגוף</h3>
+<p>מטופל קיבל 200 מ"ג של תרופה. בכל שעה כמות התרופה בגוף קטנה ב-20%. כמה תרופה נשארת בגוף בכל אחת מ-8 השעות הראשונות?</p>
+<div class="tablewrap"><table class="calc" id="t4">
+  <tr><th>שעות t</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+  <tr><th>תרופה (מ"ג)</th><td>200</td>
+    <td class="ans"><span class="v">160</span></td><td class="ans"><span class="v">128</span></td><td class="ans"><span class="v">102.4</span></td>
+    <td class="ans"><span class="v">81.92</span></td><td class="ans"><span class="v">65.54</span></td><td class="ans"><span class="v">52.43</span></td>
+    <td class="ans"><span class="v">41.94</span></td><td class="ans"><span class="v">33.55</span></td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="toggleTable('t4')">הצג / הסתר ערכים</button></div>
+<details class="step"><summary>מכפילים ב-0.8 את כמות התרופה של השעה הקודמת, שעה אחרי שעה <span class="type">(חישוב ערכים)</span></summary><div class="body">
+  <span class="math">t = 1:   200 · 0.8 = 160</span>
+  <span class="math">t = 2:   160 · 0.8 = 128</span>
+  <span class="math">t = 3:   128 · 0.8 = 102.4</span>
+  <span class="math">t = 4:   102.4 · 0.8 = 81.92</span>
+  <span class="math">t = 5:   81.92 · 0.8 = 65.536 ≈ 65.54</span>
+  <span class="math">t = 6:   65.536 · 0.8 = 52.4288 ≈ 52.43</span>
+  <span class="math">t = 7:   52.4288 · 0.8 = 41.94304 ≈ 41.94</span>
+  <span class="math">t = 8:   41.94304 · 0.8 = 33.554432 ≈ 33.55</span>
+  <p>אחרי 3 שעות נשארה כמעט חצי מהכמות, ואחרי 8 שעות פחות משישית ממנה – אבל הכמות אף פעם לא מגיעה ל-0.</p>
+</div></details>
+<details class="step"><summary>כותבים את כמות התרופה אחרי t שעות ישירות מהכמות ההתחלתית</summary><div class="body">
+  <span class="math">M(t) = 200 · 0.8<sup>t</sup></span>
+</div></details>
+</div>
+
+<h2>2. מה משותף לכל הדוגמאות?</h2>
+<div class="tablewrap">
+<table>
+  <tr><th>דוגמה</th><th>ערך התחלתי</th><th>בכל צעד מכפילים ב-</th><th>מה קורה</th><th>הפונקציה</th></tr>
+  <tr><td>דולפינים</td><td>256</td><td>1.5</td><td class="grow">גדל</td><td>256 · 1.5<sup>t</sup></td></tr>
+  <tr><td>חיסכון</td><td>10000</td><td>1.05</td><td class="grow">גדל</td><td>10000 · 1.05<sup>t</sup></td></tr>
+  <tr><td>רכב</td><td>80000</td><td>0.85</td><td class="decay">קטן</td><td>80000 · 0.85<sup>t</sup></td></tr>
+  <tr><td>תרופה</td><td>200</td><td>0.8</td><td class="decay">קטן</td><td>200 · 0.8<sup>t</sup></td></tr>
+</table>
+</div>
+<div class="card key">
+  <b>בכל הדוגמאות:</b> יש ערך התחלתי, ובכל צעד <b>מכפילים</b> באותו מספר קבוע. לכן הפונקציה היא תמיד:
+  <span class="math">(ערך התחלתי) · (המספר שמכפילים בו)<sup>(מספר הצעדים)</sup></span>
+</div>
+
+<h3>להוסיף או להכפיל?</h3>
+<p>כדי לראות שזה משהו חדש, נשווה לפונקציה קווית שמתחילה גם היא ב-3:</p>
+<div class="tablewrap">
+<table>
+  <tr><th>x</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+  <tr><th>מוסיפים 2 בכל צעד</th><td>3</td><td>5</td><td>7</td><td>9</td><td>11</td><td>13</td><td>15</td><td>17</td><td>19</td></tr>
+  <tr><th>מכפילים ב-2 בכל צעד</th><td>3</td><td>6</td><td>12</td><td>24</td><td>48</td><td>96</td><td>192</td><td>384</td><td>768</td></tr>
+</table>
+</div>
+<p>כשמוסיפים מספר קבוע – השינוי קבוע (פונקציה קווית). כשמכפילים במספר קבוע – השינוי תלוי בגודל הנוכחי: ככל שיש יותר, נוסף (או נגרע) יותר.</p>
+
+<h2>3. הנוסחה הכללית</h2>
+<p>עכשיו אפשר לכתוב את מה שגילינו בצורה כללית. פונקציית גידול או דעיכה היא פונקציה מהצורה:</p>
+<span class="math">f(x) = a · b<sup>x</sup> ,   a ≠ 0 ,   b &gt; 0 ,   b ≠ 1</span>
+<ul>
+  <li><b><span class="im">a</span> – הערך ההתחלתי</b> (256, 10000, 80000, 200 בדוגמאות). מציבים <span class="im">x = 0</span>:
+    <span class="math">f(0) = a · b<sup>0</sup> = a · 1 = a</span></li>
+  <li><b><span class="im">b</span> – הבסיס, המספר שמכפילים בו בכל צעד</b> (1.5, 1.05, 0.85, 0.8 בדוגמאות):
+    <span class="math">f(x + 1) = a · b<sup>x+1</sup> = (a · b<sup>x</sup>) · b = f(x) · b</span>
+    <span class="math">f(x + 1) / f(x) = b</span></li>
+  <li>המשתנה <span class="im">x</span> נמצא <b>במעריך</b> – זה מה שמבדיל אותה מפונקציה כמו <span class="im">x<sup>2</sup></span>, שבה <span class="im">x</span> נמצא בבסיס.</li>
+</ul>
+
+<h3>למה דורשים <span class="im">b &gt; 0</span> ו-<span class="im">b ≠ 1</span>?</h3>
+<ul>
+  <li>אם <span class="im">b = 1</span>: <span class="im">f(x) = a · 1<sup>x</sup> = a</span> – פונקציה קבועה, אין גידול ואין דעיכה.</li>
+  <li>אם <span class="im">b &lt; 0</span>: למשל <span class="im">(−2)<sup>1/2</sup></span> אינו מוגדר, והסימן מתחלף בין חיובי לשלילי – זו לא פונקציה של גידול או דעיכה.</li>
+</ul>
+
+<h2>4. גידול או דעיכה? – תלוי בבסיס</h2>
+<div class="card">
+  <p><span class="grow">גידול:</span> כאשר <span class="im">b &gt; 1</span> (ו-<span class="im">a &gt; 0</span>) – בכל צעד הערך גדל. הפונקציה עולה. (דולפינים, חיסכון)</p>
+  <p><span class="decay">דעיכה:</span> כאשר <span class="im">0 &lt; b &lt; 1</span> (ו-<span class="im">a &gt; 0</span>) – בכל צעד הערך קטן. הפונקציה יורדת, אבל לעולם לא מגיעה ל-0. (רכב, תרופה)</p>
+</div>
+
+<h3>חיבור לאחוזים</h3>
+<p>כמו שראינו בדוגמאות – גידול של <span class="im">p%</span> בכל צעד פירושו הכפלה ב-<span class="im">1 + p/100</span>, ודעיכה של <span class="im">p%</span> פירושה הכפלה ב-<span class="im">1 − p/100</span>:</p>
+<span class="math">גידול:  b = 1 + p/100</span>
+<span class="math">דעיכה:  b = 1 − p/100</span>
+<div class="tablewrap">
+<table>
+  <tr><th>תיאור במילים</th><th>b</th><th>סוג</th></tr>
+  <tr><td>מכפיל את עצמו בכל צעד</td><td>2</td><td class="grow">גידול</td></tr>
+  <tr><td>גדל ב-50% בכל שנה</td><td>1.5</td><td class="grow">גידול</td></tr>
+  <tr><td>גדל ב-5% בכל שנה</td><td>1.05</td><td class="grow">גידול</td></tr>
+  <tr><td>קטן ב-15% בכל שנה</td><td>0.85</td><td class="decay">דעיכה</td></tr>
+  <tr><td>קטן לחצי בכל צעד</td><td>0.5</td><td class="decay">דעיכה</td></tr>
+</table>
+</div>
+
+<h2>5. הגרפים ותכונותיהם</h2>
+<div class="graphs">
+  <figure><svg id="g1" viewBox="0 0 300 260"></svg><figcaption>גידול: <span class="im">y = 2<sup>x</sup></span> , <span class="im">y = 3<sup>x</sup></span></figcaption></figure>
+  <figure><svg id="g2" viewBox="0 0 300 260"></svg><figcaption>דעיכה: <span class="im">y = (1/2)<sup>x</sup></span> , <span class="im">y = (1/3)<sup>x</sup></span></figcaption></figure>
+</div>
+<div class="card">
+  <p>תכונות הגרף של <span class="im">f(x) = a · b<sup>x</sup></span> כאשר <span class="im">a &gt; 0</span>:</p>
+  <ul>
+    <li><b>תחום הגדרה:</b> כל <span class="im">x</span>.</li>
+    <li><b>טווח:</b> <span class="im">y &gt; 0</span> – הגרף כולו מעל ציר <span class="im">x</span>.</li>
+    <li><b>נקודת חיתוך עם ציר <span class="im">y</span>:</b> <span class="im">(0, a)</span>.</li>
+    <li><b>אין חיתוך עם ציר <span class="im">x</span>.</b></li>
+    <li><b>אסימפטוטה אופקית:</b> <span class="im">y = 0</span> (בגידול – כאשר <span class="im">x → −∞</span>; בדעיכה – כאשר <span class="im">x → +∞</span>).</li>
+    <li><b>מונוטוניות:</b> <span class="im">b &gt; 1</span> – עולה בכל התחום; <span class="im">0 &lt; b &lt; 1</span> – יורדת בכל התחום.</li>
+    <li>הגרפים של <span class="im">y = b<sup>x</sup></span> ו-<span class="im">y = (1/b)<sup>x</sup></span> סימטריים זה לזה ביחס לציר <span class="im">y</span>, כי <span class="im">(1/b)<sup>x</sup> = b<sup>−x</sup></span>.</li>
+  </ul>
+</div>
+
+<h2>6. משתמשים בנוסחה</h2>
+
+<!-- Example 5 -->
+<div class="card">
+<h3>דוגמה 5 – חזרה לדולפינים: קפיצה ישר לשנה 8</h3>
+<p>בדוגמה 1 חישבנו שנה אחרי שנה, 8 פעמים. בעזרת הנוסחה אפשר לחשב ישר: כמה דולפינים יהיו אחרי 8 שנים? השוו לטבלה.</p>
+<details class="step"><summary>מציבים t = 8 בפונקציה שמצאנו <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">D(t) = a · b<sup>t</sup></span>
+  <span class="math">D(8) = 256 · 1.5<sup>8</sup></span>
+  <span class="math">D(8) = 256 · 25.62890625</span>
+  <span class="math">D(8) = 6561</span>
+  <p>קיבלנו בחישוב אחד את אותה תוצאה שקיבלנו אחרי 8 הכפלות בטבלה.</p>
+</div></details>
+</div>
+
+<!-- Example 6 -->
+<div class="card">
+<h3>דוגמה 6 – מציאת הפונקציה משתי נקודות</h3>
+<p>הפונקציה <span class="im">f(x) = a · b<sup>x</sup></span> עוברת בנקודות <span class="im">(0, 3)</span> ו-<span class="im">(2, 48)</span>. מצאו את <span class="im">a</span> ואת <span class="im">b</span>, וקבעו אם זו פונקציית גידול או דעיכה.</p>
+<details class="step"><summary>מציבים את הנקודה (0, 3) כדי למצוא את a <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">f(0) = a · b<sup>0</sup></span>
+  <span class="math">3 = a · 1</span>
+  <span class="math">a = 3</span>
+</div></details>
+<details class="step"><summary>מציבים את הנקודה (2, 48) ואת a = 3 כדי למצוא את b <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">f(2) = a · b<sup>2</sup></span>
+  <span class="math">48 = 3 · b<sup>2</sup></span>
+  <span class="math">b<sup>2</sup> = 16</span>
+  <span class="math">b = 4</span>
+  <p>הפתרון <span class="im">b = −4</span> נפסל, כי בסיס חייב להיות חיובי.</p>
+</div></details>
+<details class="step"><summary>כותבים את הפונקציה וקובעים את סוגה לפי הבסיס</summary><div class="body">
+  <span class="math">f(x) = 3 · 4<sup>x</sup></span>
+  <p>מכיוון ש-<span class="im">b = 4 &gt; 1</span>, זו פונקציית <span class="grow">גידול</span>.</p>
+</div></details>
+</div>
+
+<!-- Example 7 -->
+<div class="card">
+<h3>דוגמה 7 – זיהוי מטבלה</h3>
+<p>לפניכם שתי טבלאות. קבעו לגבי כל אחת אם היא מתארת פונקציית גידול/דעיכה, ואם כן – מצאו את הפונקציה.</p>
+<div class="tablewrap">
+<table>
+  <tr><th>x</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
+  <tr><th>טבלה א'</th><td>81</td><td>27</td><td>9</td><td>3</td></tr>
+  <tr><th>טבלה ב'</th><td>2</td><td>5</td><td>8</td><td>11</td></tr>
+</table>
+</div>
+<details class="step"><summary>מחלקים כל ערך בערך שלפניו בטבלה א' כדי לבדוק אם מכפילים במספר קבוע <span class="type">(זיהוי פונקציה)</span></summary><div class="body">
+  <span class="math">27 / 81 = 1/3</span>
+  <span class="math">9 / 27 = 1/3</span>
+  <span class="math">3 / 9 = 1/3</span>
+  <p>בכל צעד מכפילים ב-<span class="im">1/3</span>, ולכן זו פונקציית <span class="decay">דעיכה</span> עם <span class="im">b = 1/3</span> ו-<span class="im">a = 81</span>:</p>
+  <span class="math">f(x) = a · b<sup>x</sup></span>
+  <span class="math">f(x) = 81 · (1/3)<sup>x</sup></span>
+</div></details>
+<details class="step"><summary>מחלקים כל ערך בערך שלפניו בטבלה ב' כדי לבדוק אם מכפילים במספר קבוע <span class="type">(זיהוי פונקציה)</span></summary><div class="body">
+  <span class="math">5 / 2 = 2.5</span>
+  <span class="math">8 / 5 = 1.6</span>
+  <p>לא מכפילים במספר קבוע, ולכן זו <b>לא</b> פונקציית גידול/דעיכה. בודקים הפרשים:</p>
+  <span class="math">5 − 2 = 3 ,  8 − 5 = 3 ,  11 − 8 = 3</span>
+  <p>מוסיפים מספר קבוע – זו פונקציה קווית:</p>
+  <span class="math">g(x) = 2 + 3x</span>
+</div></details>
+</div>
+
+<h2>7. שיעור שני – שאלות מורכבות: השוואה בין שתי קבוצות</h2>
+<div class="card key">
+  בשאלות האלה יש שתי קבוצות שגדלות בקצב שונה. נתחיל בטבלה – שנה אחרי שנה – ונראה מתי הקבוצות משתוות. אחר כך נכתוב את אותו שוויון כמשוואה, ונמצא את החזקה המתאימה בלי לבנות טבלה. בסיום לחצו על "הצג ערכים" ופתחו את השלבים לבדיקה.
+</div>
+
+<!-- Question 1 -->
+<div class="card">
+<h3>שאלה 1 – שתי שמורות דולפינים</h3>
+<p>בשמורה א' יש 1,728 דולפינים, ומספרם גדל ב-25% בכל שנה.<br>
+בשמורה ב' יש 1,000 דולפינים, ומספרם גדל ב-50% בכל שנה.<br>
+אחרי כמה שנים יהיה בשתי השמורות אותו מספר דולפינים? כמה דולפינים יהיו אז בכל שמורה?</p>
+<div class="tablewrap"><table class="calc" id="q1">
+  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
+  <tr><th>שמורה א'</th><td>1728</td>
+    <td class="ans"><span class="v">2160</span></td><td class="ans"><span class="v">2700</span></td><td class="ans"><span class="v">3375</span></td></tr>
+  <tr><th>שמורה ב'</th><td>1000</td>
+    <td class="ans"><span class="v">1500</span></td><td class="ans"><span class="v">2250</span></td><td class="ans"><span class="v">3375</span></td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="toggleTable('q1')">הצג / הסתר ערכים</button></div>
+<details class="step"><summary>מתרגמים את אחוזי הגידול של כל שמורה למספר שמכפילים בו <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">b = 1 + p/100</span>
+  <span class="math">b<sub>A</sub> = 1 + 25/100 = 1.25</span>
+  <span class="math">b<sub>B</sub> = 1 + 50/100 = 1.5</span>
+</div></details>
+<details class="step"><summary>שלב א' – טבלה: ממלאים שנה אחרי שנה עד שהמספרים משתווים <span class="type">(חישוב ערכים)</span></summary><div class="body">
+  <span class="math">שמורה א':  1728 · 1.25 = 2160</span>
+  <span class="math">2160 · 1.25 = 2700</span>
+  <span class="math">2700 · 1.25 = 3375</span>
+  <span class="math">שמורה ב':  1000 · 1.5 = 1500</span>
+  <span class="math">1500 · 1.5 = 2250</span>
+  <span class="math">2250 · 1.5 = 3375</span>
+  <p>אחרי 3 שנים יש בשתי השמורות 3,375 דולפינים. מכאן והלאה שמורה ב' עוברת את שמורה א', כי היא גדלה מהר יותר.</p>
+  <p>אבל מה אם השוויון היה מגיע רק אחרי 20 שנה? הטבלה הייתה ארוכה מאוד. לכן נעבור למשוואה.</p>
+</div></details>
+<details class="step"><summary>שלב ב' – מהטבלה למשוואה: כותבים פונקציה לכל שמורה ומשווים ביניהן <span class="type">(פתרון משוואה)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">A(t) = 1728 · 1.25<sup>t</sup></span>
+  <span class="math">B(t) = 1000 · 1.5<sup>t</sup></span>
+  <span class="math">1728 · 1.25<sup>t</sup> = 1000 · 1.5<sup>t</sup></span>
+</div></details>
+<details class="step"><summary>מעבירים אגפים כך שהחזקות יהיו באגף אחד והמספרים באגף השני</summary><div class="body">
+  <span class="math">1.5<sup>t</sup> / 1.25<sup>t</sup> = 1728 / 1000</span>
+  <span class="math">(1.5 / 1.25)<sup>t</sup> = 1.728</span>
+  <span class="math">1.2<sup>t</sup> = 1.728</span>
+</div></details>
+<details class="step"><summary>מוצאים איזו חזקה של 1.2 נותנת 1.728</summary><div class="body">
+  <span class="math">1.2<sup>2</sup> = 1.44</span>
+  <span class="math">1.2<sup>3</sup> = 1.728</span>
+  <span class="math">t = 3</span>
+</div></details>
+<details class="step"><summary>מציבים t = 3 באחת הפונקציות כדי למצוא את מספר הדולפינים <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">B(3) = 1000 · 1.5<sup>3</sup></span>
+  <span class="math">B(3) = 1000 · 3.375</span>
+  <span class="math">B(3) = 3375</span>
+  <p>תשובה: אחרי 3 שנים יהיו בכל שמורה 3,375 דולפינים.</p>
+</div></details>
+</div>
+
+<!-- Question 2 -->
+<div class="card">
+<h3>שאלה 2 – שני עדרי כבשים</h3>
+<p>בעדר א' היו בהתחלה 500 כבשים, ומספרן גדל ב-20% בכל שנה.<br>
+בעדר ב' מספר הכבשים גדל ב-50% בכל שנה.<br>
+אחרי 3 שנים היה בשני העדרים אותו מספר כבשים. כמה כבשים היו בהתחלה בעדר ב'?</p>
+<div class="tablewrap"><table class="calc" id="q2">
+  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
+  <tr><th>עדר א'</th><td>500</td>
+    <td class="ans"><span class="v">600</span></td><td class="ans"><span class="v">720</span></td><td class="ans"><span class="v">864</span></td></tr>
+  <tr><th>עדר ב'</th>
+    <td class="ans"><span class="v">256</span></td><td class="ans"><span class="v">384</span></td><td class="ans"><span class="v">576</span></td><td class="ans"><span class="v">864</span></td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="toggleTable('q2')">הצג / הסתר ערכים</button></div>
+<details class="step"><summary>מתרגמים את אחוזי הגידול של כל עדר למספר שמכפילים בו <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">b = 1 + p/100</span>
+  <span class="math">b<sub>A</sub> = 1 + 20/100 = 1.2</span>
+  <span class="math">b<sub>B</sub> = 1 + 50/100 = 1.5</span>
+</div></details>
+<details class="step"><summary>מחשבים כמה כבשים יש בעדר א' אחרי 3 שנים <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">500 · 1.2 = 600</span>
+  <span class="math">600 · 1.2 = 720</span>
+  <span class="math">720 · 1.2 = 864</span>
+  <p>אחרי 3 שנים יש בעדר א' 864 כבשים – ולכן גם בעדר ב' יש אז 864 כבשים.</p>
+</div></details>
+<details class="step"><summary>שלב א' – טבלה: הולכים אחורה בטבלה של עדר ב' – מחלקים ב-1.5 בכל שנה <span class="type">(מציאת ערך התחלתי)</span></summary><div class="body">
+  <p>אם בכל שנה מכפילים ב-1.5, אז כדי לחזור שנה אחורה מחלקים ב-1.5:</p>
+  <span class="math">t = 2:   864 / 1.5 = 576</span>
+  <span class="math">t = 1:   576 / 1.5 = 384</span>
+  <span class="math">t = 0:   384 / 1.5 = 256</span>
+</div></details>
+<details class="step"><summary>שלב ב' – מהטבלה למשוואה: כותבים את הפונקציה של עדר ב' עם ערך התחלתי לא ידוע ומשווים ל-864 <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">B(t) = a · 1.5<sup>t</sup></span>
+  <span class="math">B(3) = a · 1.5<sup>3</sup></span>
+  <span class="math">864 = a · 3.375</span>
+  <span class="math">a = 864 / 3.375</span>
+  <span class="math">a = 256</span>
+  <p>תשובה: בהתחלה היו בעדר ב' 256 כבשים.</p>
+</div></details>
+</div>
+
+<h2>8. סיכום</h2>
+<div class="card key">
+  <ul>
+    <li>פונקציית גידול/דעיכה: <span class="im">f(x) = a · b<sup>x</sup></span>, עם <span class="im">b &gt; 0</span>, <span class="im">b ≠ 1</span>.</li>
+    <li><span class="im">a</span> הוא הערך ההתחלתי, <span class="im">f(0) = a</span>.</li>
+    <li>בכל צעד של 1 ב-<span class="im">x</span>, הערך <b>מוכפל</b> ב-<span class="im">b</span>.</li>
+    <li><span class="im">b &gt; 1</span> – <span class="grow">גידול</span>; <span class="im">0 &lt; b &lt; 1</span> – <span class="decay">דעיכה</span>.</li>
+    <li>שינוי של <span class="im">p%</span>: <span class="im">b = 1 ± p/100</span>.</li>
+    <li>זיהוי מטבלה: מכפילים במספר קבוע ← גידול/דעיכה; מוסיפים מספר קבוע ← פונקציה קווית.</li>
+  </ul>
+</div>
+
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+</main>
+
+<script>
+function plot(id, fns){
+  var svg=document.getElementById(id), W=300,H=260, xmin=-3,xmax=3, ymin=-0.5, ymax=8;
+  var css=getComputedStyle(document.documentElement);
+  var axis=css.getPropertyValue('--muted').trim(), grid=css.getPropertyValue('--border').trim();
+  function X(x){return (x-xmin)/(xmax-xmin)*W}
+  function Y(y){return H-(y-ymin)/(ymax-ymin)*H}
+  var s='';
+  for(var gx=xmin;gx<=xmax;gx++) s+='<line x1="'+X(gx)+'" y1="0" x2="'+X(gx)+'" y2="'+H+'" stroke="'+grid+'"/>';
+  for(var gy=0;gy<=ymax;gy++) s+='<line x1="0" y1="'+Y(gy)+'" x2="'+W+'" y2="'+Y(gy)+'" stroke="'+grid+'"/>';
+  s+='<line x1="0" y1="'+Y(0)+'" x2="'+W+'" y2="'+Y(0)+'" stroke="'+axis+'" stroke-width="1.5"/>';
+  s+='<line x1="'+X(0)+'" y1="0" x2="'+X(0)+'" y2="'+H+'" stroke="'+axis+'" stroke-width="1.5"/>';
+  for(var t=xmin;t<=xmax;t++) if(t) s+='<text x="'+X(t)+'" y="'+(Y(0)+14)+'" font-size="11" fill="'+axis+'" text-anchor="middle">'+t+'</text>';
+  for(var u=2;u<=ymax;u+=2) s+='<text x="'+(X(0)+4)+'" y="'+(Y(u)+4)+'" font-size="11" fill="'+axis+'">'+u+'</text>';
+  fns.forEach(function(f){
+    var d='';
+    for(var i=0;i<=300;i++){var x=xmin+(xmax-xmin)*i/300, y=f.f(x); if(y>ymax+1) y=ymax+1; d+=(d?'L':'M')+X(x).toFixed(1)+' '+Y(y).toFixed(1);}
+    s+='<path d="'+d+'" fill="none" stroke="'+css.getPropertyValue(f.c).trim()+'" stroke-width="2.5" stroke-dasharray="'+(f.dash||'')+'"/>';
+    s+='<text x="'+X(f.lx)+'" y="'+Y(f.ly)+'" font-size="13" fill="'+css.getPropertyValue(f.c).trim()+'" direction="ltr">'+f.label+'</text>';
+  });
+  s+='<circle cx="'+X(0)+'" cy="'+Y(1)+'" r="3.5" fill="'+axis+'"/><text x="'+(X(0)+6)+'" y="'+(Y(1)+16)+'" font-size="11" fill="'+axis+'">(0,1)</text>';
+  svg.innerHTML=s;
+}
+function draw(){
+  plot('g1',[{f:function(x){return Math.pow(2,x)},c:'--grow',label:'2^x',lx:2.2,ly:5.2},
+             {f:function(x){return Math.pow(3,x)},c:'--accent',label:'3^x',lx:1.15,ly:7.3,dash:'6 4'}]);
+  plot('g2',[{f:function(x){return Math.pow(0.5,x)},c:'--decay',label:'(1/2)^x',lx:-2.9,ly:5.2},
+             {f:function(x){return Math.pow(1/3,x)},c:'--accent',label:'(1/3)^x',lx:-1.75,ly:7.3,dash:'6 4'}]);
+}
+draw();
+try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);}catch(e){}
+function toggleAll(open){document.querySelectorAll('details.step').forEach(function(d){d.open=open;});}
+function toggleTable(id){document.getElementById(id).classList.toggle('show');}
+function showAllTables(on){document.querySelectorAll('table.calc').forEach(function(t){t.classList.toggle('show',on);});}
+</script>
+</body>
+</html>
