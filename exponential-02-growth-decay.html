@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>שיעור ראשון - בניית פונקציות גידול ודעיכה</title>
+<title>שיעור ראשון - בניית פונקציות גדילה ודעיכה</title>
 <style>
   :root{
     --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
@@ -66,7 +66,7 @@
 <body>
 <main>
 <a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
-<h1>שיעור ראשון - בניית פונקציות גידול ודעיכה</h1>
+<h1>שיעור ראשון - בניית פונקציות גדילה ודעיכה</h1>
 <p>בדף <a href="exponential-01-sim-lesson1.html">דף הדוגמאות של שיעור ראשון</a> חישבנו צעד אחר צעד את הדולפינים, החיסכון, הרכב והתרופה. עכשיו נחפש מה משותף לדוגמאות האלה, ונבנה מהן נוסחה כללית.</p>
 <div class="controls">
   <button type="button" onclick="toggleAll(true)">פתח את כל השלבים</button>
@@ -91,7 +91,7 @@
 </div>
 
 <h2>2. הנוסחה הכללית</h2>
-<p>עכשיו אפשר לכתוב את מה שגילינו בצורה כללית. פונקציית גידול או דעיכה היא פונקציה מהצורה:</p>
+<p>עכשיו אפשר לכתוב את מה שגילינו בצורה כללית. פונקציית גדילה או דעיכה היא פונקציה מהצורה:</p>
 <span class="math">f(t) = a · b<sup>t</sup> ,   a ≠ 0 ,   b &gt; 0 ,   b ≠ 1</span>
 <ul>
   <li><b><span class="im">a</span> – הערך ההתחלתי</b> (256, 10000, 80000, 200 בדוגמאות). מציבים <span class="im">t = 0</span>:
@@ -104,26 +104,26 @@
 
 <h3>למה דורשים <span class="im">b &gt; 0</span> ו-<span class="im">b ≠ 1</span>?</h3>
 <ul>
-  <li>אם <span class="im">b = 1</span>: <span class="im">f(t) = a · 1<sup>t</sup> = a</span> – פונקציה קבועה, אין גידול ואין דעיכה.</li>
-  <li>אם <span class="im">b &lt; 0</span>: למשל <span class="im">(−2)<sup>1/2</sup></span> אינו מוגדר, והסימן מתחלף בין חיובי לשלילי – זו לא פונקציה של גידול או דעיכה.</li>
+  <li>אם <span class="im">b = 1</span>: <span class="im">f(t) = a · 1<sup>t</sup> = a</span> – פונקציה קבועה, אין גדילה ואין דעיכה.</li>
+  <li>אם <span class="im">b &lt; 0</span>: למשל <span class="im">(−2)<sup>1/2</sup></span> אינו מוגדר, והסימן מתחלף בין חיובי לשלילי – זו לא פונקציה של גדילה או דעיכה.</li>
 </ul>
 
-<h2>3. גידול או דעיכה? – תלוי בבסיס</h2>
+<h2>3. גדילה או דעיכה? – תלוי בבסיס</h2>
 <div class="card">
-  <p><span class="grow">גידול:</span> כאשר <span class="im">b &gt; 1</span> (ו-<span class="im">a &gt; 0</span>) – בכל צעד הערך גדל. הפונקציה עולה. (דולפינים, חיסכון)</p>
+  <p><span class="grow">גדילה:</span> כאשר <span class="im">b &gt; 1</span> (ו-<span class="im">a &gt; 0</span>) – בכל צעד הערך גדל. הפונקציה עולה. (דולפינים, חיסכון)</p>
   <p><span class="decay">דעיכה:</span> כאשר <span class="im">0 &lt; b &lt; 1</span> (ו-<span class="im">a &gt; 0</span>) – בכל צעד הערך קטן. הפונקציה יורדת, אבל לעולם לא מגיעה ל-0. (רכב, תרופה)</p>
 </div>
 
 <h3>חיבור לאחוזים</h3>
 <p>כמו שראינו בדוגמאות – גידול של <span class="im">p%</span> בכל צעד פירושו הכפלה ב-<span class="im">1 + p/100</span>, ודעיכה של <span class="im">p%</span> פירושה הכפלה ב-<span class="im">1 − p/100</span>:</p>
-<span class="math">גידול:  b = 1 + p/100</span>
+<span class="math">גדילה:  b = 1 + p/100</span>
 <span class="math">דעיכה:  b = 1 − p/100</span>
 <div class="tablewrap">
 <table>
   <tr><th>תיאור במילים</th><th>b</th><th>סוג</th></tr>
-  <tr><td class="he">מכפיל את עצמו בכל צעד</td><td>2</td><td class="he grow">גידול</td></tr>
-  <tr><td class="he">גדל ב-50% בכל שנה</td><td>1.5</td><td class="he grow">גידול</td></tr>
-  <tr><td class="he">גדל ב-5% בכל שנה</td><td>1.05</td><td class="he grow">גידול</td></tr>
+  <tr><td class="he">מכפיל את עצמו בכל צעד</td><td>2</td><td class="he grow">גדילה</td></tr>
+  <tr><td class="he">גדל ב-50% בכל שנה</td><td>1.5</td><td class="he grow">גדילה</td></tr>
+  <tr><td class="he">גדל ב-5% בכל שנה</td><td>1.05</td><td class="he grow">גדילה</td></tr>
   <tr><td class="he">קטן ב-15% בכל שנה</td><td>0.85</td><td class="he decay">דעיכה</td></tr>
   <tr><td class="he">קטן לחצי בכל צעד</td><td>0.5</td><td class="he decay">דעיכה</td></tr>
 </table>
@@ -131,7 +131,7 @@
 
 <h2>4. הגרפים ותכונותיהם</h2>
 <div class="graphs">
-  <figure><svg id="g1" viewBox="0 0 300 260"></svg><figcaption>גידול: <span class="im">y = 2<sup>t</sup></span> , <span class="im">y = 3<sup>t</sup></span></figcaption></figure>
+  <figure><svg id="g1" viewBox="0 0 300 260"></svg><figcaption>גדילה: <span class="im">y = 2<sup>t</sup></span> , <span class="im">y = 3<sup>t</sup></span></figcaption></figure>
   <figure><svg id="g2" viewBox="0 0 300 260"></svg><figcaption>דעיכה: <span class="im">y = (1/2)<sup>t</sup></span> , <span class="im">y = (1/3)<sup>t</sup></span></figcaption></figure>
 </div>
 <div class="card">
@@ -141,7 +141,7 @@
     <li><b>טווח:</b> <span class="im">y &gt; 0</span> – הגרף כולו מעל ציר <span class="im">t</span>.</li>
     <li><b>נקודת חיתוך עם ציר <span class="im">y</span>:</b> <span class="im">(0, a)</span>.</li>
     <li><b>אין חיתוך עם ציר <span class="im">t</span>.</b></li>
-    <li><b>אסימפטוטה אופקית:</b> <span class="im">y = 0</span> (בגידול – כאשר <span class="im">t → −∞</span>; בדעיכה – כאשר <span class="im">t → +∞</span>).</li>
+    <li><b>אסימפטוטה אופקית:</b> <span class="im">y = 0</span> (בגדילה – כאשר <span class="im">t → −∞</span>; בדעיכה – כאשר <span class="im">t → +∞</span>).</li>
     <li><b>מונוטוניות:</b> <span class="im">b &gt; 1</span> – עולה בכל התחום; <span class="im">0 &lt; b &lt; 1</span> – יורדת בכל התחום.</li>
     <li>הגרפים של <span class="im">y = b<sup>t</sup></span> ו-<span class="im">y = (1/b)<sup>t</sup></span> סימטריים זה לזה ביחס לציר <span class="im">y</span>, כי <span class="im">(1/b)<sup>t</sup> = b<sup>−t</sup></span>.</li>
   </ul>
@@ -165,7 +165,7 @@
 <!-- Example 6 -->
 <div class="card">
 <h3>דוגמה 6 – מציאת הפונקציה משתי נקודות</h3>
-<p>הפונקציה <span class="im">f(t) = a · b<sup>t</sup></span> עוברת בנקודות <span class="im">(0, 3)</span> ו-<span class="im">(2, 48)</span>. מצאו את <span class="im">a</span> ואת <span class="im">b</span>, וקבעו אם זו פונקציית גידול או דעיכה.</p>
+<p>הפונקציה <span class="im">f(t) = a · b<sup>t</sup></span> עוברת בנקודות <span class="im">(0, 3)</span> ו-<span class="im">(2, 48)</span>. מצאו את <span class="im">a</span> ואת <span class="im">b</span>, וקבעו אם זו פונקציית גדילה או דעיכה.</p>
 <details class="step"><summary>מציבים את הנקודה (0, 3) כדי למצוא את a <span class="type">(מציאת פרמטר)</span></summary><div class="body">
   <span class="math">f(0) = a · b<sup>0</sup></span>
   <span class="math">3 = a · 1</span>
@@ -180,14 +180,14 @@
 </div></details>
 <details class="step"><summary>כותבים את הפונקציה וקובעים את סוגה לפי הבסיס</summary><div class="body">
   <span class="math">f(t) = 3 · 4<sup>t</sup></span>
-  <p>מכיוון ש-<span class="im">b = 4 &gt; 1</span>, זו פונקציית <span class="grow">גידול</span>.</p>
+  <p>מכיוון ש-<span class="im">b = 4 &gt; 1</span>, זו פונקציית <span class="grow">גדילה</span>.</p>
 </div></details>
 </div>
 
 <!-- Example 7 -->
 <div class="card">
 <h3>דוגמה 7 – זיהוי מטבלה</h3>
-<p>לפניכם שתי טבלאות. קבעו לגבי כל אחת אם היא מתארת פונקציית גידול/דעיכה, ואם כן – מצאו את הפונקציה.</p>
+<p>לפניכם שתי טבלאות. קבעו לגבי כל אחת אם היא מתארת פונקציית גדילה/דעיכה, ואם כן – מצאו את הפונקציה.</p>
 <div class="tablewrap">
 <table>
   <tr><th>t</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
@@ -206,7 +206,7 @@
 <details class="step"><summary>מחלקים כל ערך בערך שלפניו בטבלה ב' כדי לבדוק אם מכפילים במספר קבוע <span class="type">(זיהוי פונקציה)</span></summary><div class="body">
   <span class="math">5 / 2 = 2.5</span>
   <span class="math">8 / 5 = 1.6</span>
-  <p>לא מכפילים במספר קבוע, ולכן זו <b>לא</b> פונקציית גידול/דעיכה. בודקים הפרשים:</p>
+  <p>לא מכפילים במספר קבוע, ולכן זו <b>לא</b> פונקציית גדילה/דעיכה. בודקים הפרשים:</p>
   <span class="math">5 − 2 = 3 ,  8 − 5 = 3 ,  11 − 8 = 3</span>
   <p>מוסיפים מספר קבוע – זו פונקציה קווית:</p>
   <span class="math">g(t) = 2 + 3t</span>
@@ -216,12 +216,12 @@
 <h2>6. סיכום</h2>
 <div class="card key">
   <ul>
-    <li>פונקציית גידול/דעיכה: <span class="im">f(t) = a · b<sup>t</sup></span>, עם <span class="im">b &gt; 0</span>, <span class="im">b ≠ 1</span>.</li>
+    <li>פונקציית גדילה/דעיכה: <span class="im">f(t) = a · b<sup>t</sup></span>, עם <span class="im">b &gt; 0</span>, <span class="im">b ≠ 1</span>.</li>
     <li><span class="im">a</span> הוא הערך ההתחלתי, <span class="im">f(0) = a</span>.</li>
     <li>בכל צעד של 1 ב-<span class="im">t</span>, הערך <b>מוכפל</b> ב-<span class="im">b</span>.</li>
-    <li><span class="im">b &gt; 1</span> – <span class="grow">גידול</span>; <span class="im">0 &lt; b &lt; 1</span> – <span class="decay">דעיכה</span>.</li>
+    <li><span class="im">b &gt; 1</span> – <span class="grow">גדילה</span>; <span class="im">0 &lt; b &lt; 1</span> – <span class="decay">דעיכה</span>.</li>
     <li>שינוי של <span class="im">p%</span>: <span class="im">b = 1 ± p/100</span>.</li>
-    <li>זיהוי מטבלה: מכפילים במספר קבוע ← גידול/דעיכה; מוסיפים מספר קבוע ← פונקציה קווית.</li>
+    <li>זיהוי מטבלה: מכפילים במספר קבוע ← גדילה/דעיכה; מוסיפים מספר קבוע ← פונקציה קווית.</li>
   </ul>
 </div>
 
