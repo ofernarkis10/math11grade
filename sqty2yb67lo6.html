@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<title>פתרונות: עבודת בית – שיעור שלישי – נוסחת הסכום</title>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a worksheet-style single column on graph-paper ground; each sequence type is a "chapter" with meaning, formulas, worked example, exercises with folding solutions */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem;margin-top:6px}
+p{margin:0}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:65ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+
+nav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover,nav a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav ol{columns:1}}
+
+.tablebox{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.95rem}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.num{font-family:var(--f-math);color:var(--muted);font-size:.85rem}
+.meaning{max-width:68ch;display:flex;flex-direction:column;gap:10px}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.example .tag,.ex-head{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:14px}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0}
+.steps{display:flex;flex-direction:column;gap:4px}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<style>
+.level{display:flex;flex-direction:column;gap:14px}
+.level h2{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.level h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+.method{display:flex;flex-direction:column;gap:6px}
+ol.exercises li{break-inside:avoid}
+</style>
+<style>.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}.back:hover,.back:focus-visible{text-decoration:underline}</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* KaTeX inside the site's math spans: a bit larger than the old monospace, kept left-to-right inside Hebrew text */
+.m .katex{font-size:1.14em;position:relative}
+/* long formulas may wrap at = and operators on narrow screens */
+.m:has(.katex){white-space:normal}
+/* rows that hold a full-size fraction get extra line height */
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.2em}
+</style>
+<script src="font-size.js"></script>
+<style>
+/* Detailed explanation under each learning-level solution */
+.why{margin-top:10px;padding:12px 16px;background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;display:flex;flex-direction:column;gap:8px}
+.why-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.why p{margin:0}
+.why strong{color:var(--accent)}
+</style>
+<style>
+/* homework / test pages */
+.meta{display:flex;flex-wrap:wrap;gap:10px 28px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.meta span{min-width:12rem;border-bottom:1px solid var(--muted);padding-bottom:2px;color:var(--muted)}
+.rules{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.rules ul{margin:6px 0 0;padding-inline-start:20px}
+.part-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.part-h small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600}
+ol.hw{margin:0;padding-inline-start:28px;display:flex;flex-direction:column;gap:16px}
+ol.hw > li::marker{font-weight:700;color:var(--accent)}
+ol.sub{list-style:hebrew;margin:6px 0 0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+.pts{font-size:.82rem;font-weight:700;color:var(--mark);white-space:nowrap}
+.ans{margin-top:6px;padding:8px 12px;background:var(--mark-soft);border-radius:6px;display:flex;flex-direction:column;gap:4px}
+.ans b{color:var(--mark)}
+.ans .final{font-weight:600}
+.ref{font-size:.82rem;color:var(--muted)}
+.private{background:var(--mark-soft);border:1px solid var(--mark);border-radius:10px;padding:10px 14px;font-weight:600;color:var(--mark)}
+@media print{
+  :root:not([data-p1]):not([data-p2]){--bg:#fff;--paper:#fff;--ink:#1c2633;--muted:#5b6878;--line:#d9dfe6;--accent:#1f6f8b;--accent-soft:#e3f0f5;--mark:#b4561e;--mark-soft:#fbeee5;--grid:transparent;color-scheme:light}
+  body{background:#fff}
+  .back,.no-print,#font-size-control,.fs-control{display:none!important}
+  section.ch{border:0;padding:0;box-shadow:none}
+  ol.hw > li{break-inside:avoid}
+  .work ol.hw > li{padding-bottom:2.2cm}
+  .test ol.hw > li{padding-bottom:4cm}
+}
+</style>
+<style>
+.key-steps{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.kstep{border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:var(--paper)}
+.kstep h4{margin:0 0 4px;font-size:.98rem;font-family:var(--f-body)}
+.kstep h4 small{color:var(--muted);font-weight:600}
+.ln{direction:ltr;text-align:left;margin:2px 0}
+.kstep p{margin:4px 0 0;font-size:.95rem}
+.final{margin-top:8px;padding:8px 12px;background:var(--mark-soft);border-radius:6px;font-weight:600}
+.final b{color:var(--mark)}
+.tablebox{margin:8px 0}
+.tablebox table{min-width:0;width:auto}
+.tablebox th,.tablebox td{text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back no-print" href="tests.html">→ חזרה לרשימת המבחנים</a>
+<div class="private">דף פתרונות למורה – לא מקושר מהאתר, רק מרשימת המבחנים.</div>
+<header><span class="eyebrow">מתמטיקה · 5 יחידות · פונקציות גדילה ודעיכה · פתרונות לעבודת בית</span>
+<h1>פתרונות: עבודת בית – שיעור שלישי – נוסחת הסכום</h1>
+<p class="lead">פתרון מלא לכל אחת מ־20 השאלות. כותרת כל שלב מתארת את הפעולה, ובסוגריים סוג התרגיל. בכל שלב שמשתמשים בו בנוסחה, הנוסחה הכללית כתובה לפני ההצבה.</p></header>
+<section class="ch"><ol class="hw">
+<li>חשבו בעזרת נוסחת הסכום: <span class="m">\(3+6+12+\dots+3\cdot 2^{5}\)</span><div class="key-steps"><div class="kstep"><h4>מזהים את a (המחובר הראשון), את b (המספר שמכפילים בו) ואת n (מספר המחוברים) <small>(בניית נוסחה)</small></h4><div class="ln"><span class="m">\(a=3\)</span></div><div class="ln"><span class="m">\(b=2\)</span></div><div class="ln"><span class="m">\(n=6\)</span></div></div><div class="kstep"><h4>מציבים בנוסחת הסכום <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(S_{6}=3\cdot \dfrac{2^{6}-1}{2-1}\)</span></div><div class="ln"><span class="m">\(S_{6}=3\cdot 63=189\)</span></div><p>המעריך האחרון הוא 5, ולכן יש 6 מחוברים (המעריכים 0 עד 5).</p></div></div><div class="final"><b>תשובה:</b> 189</div></li>
+<li>חשבו: <span class="m">\(5+15+45+\dots+5\cdot 3^{4}\)</span><div class="key-steps"><div class="kstep"><h4>מזהים את a (המחובר הראשון), את b (המספר שמכפילים בו) ואת n (מספר המחוברים) <small>(בניית נוסחה)</small></h4><div class="ln"><span class="m">\(a=5\)</span></div><div class="ln"><span class="m">\(b=3\)</span></div><div class="ln"><span class="m">\(n=5\)</span></div></div><div class="kstep"><h4>מציבים בנוסחת הסכום <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(S_{5}=5\cdot \dfrac{3^{5}-1}{3-1}\)</span></div><div class="ln"><span class="m">\(S_{5}=5\cdot \dfrac{242}{2}=605\)</span></div></div></div><div class="final"><b>תשובה:</b> 605</div></li>
+<li>חשבו את סכום 6 המחוברים הראשונים: <span class="m">\(1000+500+250+\dots\)</span><div class="key-steps"><div class="kstep"><h4>מזהים את a (המחובר הראשון), את b (המספר שמכפילים בו) ואת n (מספר המחוברים) <small>(בניית נוסחה)</small></h4><div class="ln"><span class="m">\(a=1000\)</span></div><div class="ln"><span class="m">\(b=0.5\)</span></div><div class="ln"><span class="m">\(n=6\)</span></div></div><div class="kstep"><h4>מציבים בצורה הנוחה לדעיכה <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{1-b^{n}}{1-b}\)</span></div><div class="ln"><span class="m">\(S_{6}=1000\cdot \dfrac{1-0.5^{6}}{1-0.5}\)</span></div><div class="ln"><span class="m">\(S_{6}=1000\cdot \dfrac{1-0.015625}{0.5}\)</span></div><div class="ln"><span class="m">\(S_{6}=1968.75\)</span></div></div></div><div class="final"><b>תשובה:</b> 1968.75</div></li>
+<li>חשבו את סכום 5 המחוברים הראשונים: <span class="m">\(2+8+32+\dots\)</span><div class="key-steps"><div class="kstep"><h4>מוצאים את b – מחלקים מחובר במחובר שלפניו <small>(בניית נוסחה)</small></h4><div class="ln"><span class="m">\(b=\dfrac{8}{2}=4\)</span></div></div><div class="kstep"><h4>מזהים את a (המחובר הראשון), את b (המספר שמכפילים בו) ואת n (מספר המחוברים) <small>(בניית נוסחה)</small></h4><div class="ln"><span class="m">\(a=2\)</span></div><div class="ln"><span class="m">\(b=4\)</span></div><div class="ln"><span class="m">\(n=5\)</span></div></div><div class="kstep"><h4>מציבים בנוסחת הסכום <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(S_{5}=2\cdot \dfrac{4^{5}-1}{4-1}\)</span></div><div class="ln"><span class="m">\(S_{5}=2\cdot \dfrac{1023}{3}=682\)</span></div></div></div><div class="final"><b>תשובה:</b> 682</div></li>
+<li>נתונה <span class="m">\(f(t)=4\cdot 3^{t}\)</span>. חשבו את <span class="m">\(f(0)+f(1)+\dots+f(5)\)</span>.<div class="key-steps"><div class="kstep"><h4>מזהים: המחובר הראשון הוא f(0), ויש 6 מחוברים (t = 0 עד 5) <small>(בניית נוסחה)</small></h4><div class="ln"><span class="m">\(a=f(0)=4\)</span></div><div class="ln"><span class="m">\(b=3\)</span></div><div class="ln"><span class="m">\(n=6\)</span></div></div><div class="kstep"><h4>מציבים בנוסחת הסכום <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(S_{6}=4\cdot \dfrac{3^{6}-1}{3-1}\)</span></div><div class="ln"><span class="m">\(S_{6}=4\cdot \dfrac{728}{2}=1456\)</span></div></div></div><div class="final"><b>תשובה:</b> 1456</div></li>
+<li>מפעל ייצר 1,000 מוצרים בשנה הראשונה, ובכל שנה הוא מייצר 10% יותר מבשנה הקודמת. כמה מוצרים ייצר המפעל בסך הכול ב־5 השנים הראשונות?<div class="key-steps"><div class="kstep"><h4>מזהים את a (המחובר הראשון), את b (המספר שמכפילים בו) ואת n (מספר המחוברים) <small>(בניית נוסחה)</small></h4><div class="ln"><span class="m">\(a=1000\)</span></div><div class="ln"><span class="m">\(b=1.1\)</span></div><div class="ln"><span class="m">\(n=5\)</span></div></div><div class="kstep"><h4>מציבים בנוסחת הסכום <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(S_{5}=1000\cdot \dfrac{1.1^{5}-1}{1.1-1}\)</span></div><div class="ln"><span class="m">\(S_{5}=1000\cdot \dfrac{1.61051-1}{0.1}\)</span></div><div class="ln"><span class="m">\(S_{5}=6105.1\)</span></div></div></div><div class="final"><b>תשובה:</b> בערך 6,105 מוצרים (6,105.1).</div></li>
+<li>בתחילת כל שנה מפקידים 2,000 ₪ בתוכנית חיסכון שמוסיפה 4% בשנה. כמה כסף יש בחיסכון מיד אחרי ההפקדה החמישית?<div class="key-steps"><div class="kstep"><h4>מזהים: ההפקדה החדשה היא המחובר הראשון, וכל הפקדה ישנה גדלה פי 1.04 בכל שנה <small>(בניית נוסחה)</small></h4><div class="ln"><span class="m">\(a=2000\)</span></div><div class="ln"><span class="m">\(b=1.04\)</span></div><div class="ln"><span class="m">\(n=5\)</span></div></div><div class="kstep"><h4>מציבים בנוסחת הסכום ומחשבים במחשבון <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(S_{5}=2000\cdot \dfrac{1.04^{5}-1}{0.04}\)</span></div><div class="ln"><span class="m">\(S_{5}\approx 2000\cdot \dfrac{0.2166529}{0.04}\)</span></div><div class="ln"><span class="m">\(S_{5}\approx 10832.65\)</span></div></div></div><div class="final"><b>תשובה:</b> כ־10,832.65 ₪.</div></li>
+<li>כל בוקר לוקחים 200 מ״ג של תרופה, ועד הבוקר הבא נשארים בגוף 40% מהכמות. כמה תרופה יש בגוף מיד אחרי המנה הרביעית?<div class="key-steps"><div class="kstep"><h4>מזהים את a (המחובר הראשון), את b (המספר שמכפילים בו) ואת n (מספר המחוברים) <small>(בניית נוסחה)</small></h4><div class="ln"><span class="m">\(a=200\)</span></div><div class="ln"><span class="m">\(b=0.4\)</span></div><div class="ln"><span class="m">\(n=4\)</span></div></div><div class="kstep"><h4>מציבים בצורה הנוחה לדעיכה <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{1-b^{n}}{1-b}\)</span></div><div class="ln"><span class="m">\(S_{4}=200\cdot \dfrac{1-0.4^{4}}{1-0.4}\)</span></div><div class="ln"><span class="m">\(S_{4}=200\cdot \dfrac{1-0.0256}{0.6}\)</span></div><div class="ln"><span class="m">\(S_{4}=324.8\)</span></div></div></div><div class="final"><b>תשובה:</b> 324.8 מ״ג.</div></li>
+<li>בהמשך לשאלה הקודמת: לאיזו כמות מתקרבת כמות התרופה בגוף אם ממשיכים לקחת את התרופה ימים רבים? נמקו.<div class="key-steps"><div class="kstep"><h4>כותבים את הסכום אחרי n מנות <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{1-b^{n}}{1-b}\)</span></div><div class="ln"><span class="m">\(S_{n}=200\cdot \dfrac{1-0.4^{n}}{0.6}\)</span></div></div><div class="kstep"><h4>בודקים מה קורה כש־n גדל <small>(השוואה)</small></h4><div class="ln"><span class="m">\(0.4^{n}\to 0\)</span></div><div class="ln"><span class="m">\(S_{n}\to \dfrac{200}{0.6}\approx 333.33\)</span></div><p>ככל ש־n גדל, 0.4ⁿ קטן ומתקרב ל־0, ולכן הכמות מתקרבת ל־333.33 מ״ג ולא עוברת אותה.</p></div></div><div class="final"><b>תשובה:</b> בערך 333.33 מ״ג.</div></li>
+<li>ביום הראשון 4 אנשים קיבלו הודעה, ובכל יום מספר האנשים החדשים שמקבלים אותה מוכפל. כמה אנשים קיבלו את ההודעה בסך הכול ב־7 הימים הראשונים?<div class="key-steps"><div class="kstep"><h4>מזהים את a (המחובר הראשון), את b (המספר שמכפילים בו) ואת n (מספר המחוברים) <small>(בניית נוסחה)</small></h4><div class="ln"><span class="m">\(a=4\)</span></div><div class="ln"><span class="m">\(b=2\)</span></div><div class="ln"><span class="m">\(n=7\)</span></div></div><div class="kstep"><h4>מציבים בנוסחת הסכום <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(S_{7}=4\cdot \dfrac{2^{7}-1}{2-1}\)</span></div><div class="ln"><span class="m">\(S_{7}=4\cdot 127=508\)</span></div></div></div><div class="final"><b>תשובה:</b> 508 אנשים.</div></li>
+<li>כדור נזרק מגובה 8 מטרים. אחרי כל פגיעה ברצפה הוא עולה לחצי מהגובה הקודם (בפעם הראשונה ל־4 מטרים). כמה מטרים עלה הכדור בסך הכול ב־5 העליות הראשונות?<div class="key-steps"><div class="kstep"><h4>מזהים את העלייה הראשונה, את b ואת n <small>(בניית נוסחה)</small></h4><div class="ln"><span class="m">\(a=4\)</span></div><div class="ln"><span class="m">\(b=0.5\)</span></div><div class="ln"><span class="m">\(n=5\)</span></div></div><div class="kstep"><h4>מציבים בצורה הנוחה לדעיכה <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{1-b^{n}}{1-b}\)</span></div><div class="ln"><span class="m">\(S_{5}=4\cdot \dfrac{1-0.5^{5}}{1-0.5}\)</span></div><div class="ln"><span class="m">\(S_{5}=4\cdot \dfrac{0.96875}{0.5}=7.75\)</span></div></div><div class="kstep"><h4>בודקים בחיבור ישיר <small>(בדיקה)</small></h4><div class="ln"><span class="m">\(4+2+1+0.5+0.25=7.75\)</span></div></div></div><div class="final"><b>תשובה:</b> 7.75 מטרים.</div></li>
+<li>כמה מחוברים מהסכום <span class="m">\(3+6+12+\dots\)</span> צריך לחבר כדי לקבל 381?<div class="key-steps"><div class="kstep"><h4>כותבים את נוסחת הסכום עם a = 3 ו־b = 2, ומשווים ל־381 <small>(מציאת n)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(3\cdot \dfrac{2^{n}-1}{2-1}=381\)</span></div><div class="ln"><span class="m">\(2^{n}-1=127\)</span></div><div class="ln"><span class="m">\(2^{n}=128\)</span></div></div><div class="kstep"><h4>מוצאים את החזקה המתאימה <small>(מציאת n)</small></h4><div class="ln"><span class="m">\(2^{7}=128\)</span></div><div class="ln"><span class="m">\(n=7\)</span></div></div></div><div class="final"><b>תשובה:</b> 7 מחוברים.</div></li>
+<li>כמה מחוברים מהסכום <span class="m">\(1+3+9+\dots\)</span> צריך לחבר כדי לקבל 1093?<div class="key-steps"><div class="kstep"><h4>כותבים את נוסחת הסכום ומשווים ל־1093 <small>(מציאת n)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(1\cdot \dfrac{3^{n}-1}{3-1}=1093\)</span></div><div class="ln"><span class="m">\(3^{n}-1=2186\)</span></div><div class="ln"><span class="m">\(3^{n}=2187\)</span></div></div><div class="kstep"><h4>מוצאים את החזקה המתאימה <small>(מציאת n)</small></h4><div class="ln"><span class="m">\(3^{7}=2187\)</span></div><div class="ln"><span class="m">\(n=7\)</span></div></div></div><div class="final"><b>תשובה:</b> 7 מחוברים.</div></li>
+<li>סכום של 4 מחוברים, שכל אחד מהם גדול פי 2 מהקודם, הוא 300. מהו המחובר הראשון? רשמו את 4 המחוברים.<div class="key-steps"><div class="kstep"><h4>מציבים b = 2 ו־n = 4 ומשווים ל־300 <small>(מציאת פרמטר)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(a\cdot \dfrac{2^{4}-1}{2-1}=300\)</span></div><div class="ln"><span class="m">\(15a=300\)</span></div><div class="ln"><span class="m">\(a=20\)</span></div></div><div class="kstep"><h4>רושמים את המחוברים ובודקים <small>(בדיקה)</small></h4><div class="ln"><span class="m">\(20+40+80+160=300\)</span></div></div></div><div class="final"><b>תשובה:</b> המחובר הראשון 20; המחוברים: 20, 40, 80, 160.</div></li>
+<li>בתחילת כל שנה מפקידים סכום קבוע בתוכנית שמוסיפה 10% בשנה. מיד אחרי ההפקדה השלישית יש בחיסכון 6,620 ₪. כמה מפקידים בכל שנה?<div class="key-steps"><div class="kstep"><h4>מציבים b = 1.1 ו־n = 3 ומשווים ל־6620 <small>(מציאת פרמטר)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(a\cdot \dfrac{1.1^{3}-1}{1.1-1}=6620\)</span></div><div class="ln"><span class="m">\(a\cdot \dfrac{0.331}{0.1}=6620\)</span></div><div class="ln"><span class="m">\(3.31a=6620\)</span></div><div class="ln"><span class="m">\(a=2000\)</span></div></div><div class="kstep"><h4>בודקים שלב אחרי שלב <small>(בדיקה)</small></h4><div class="ln"><span class="m">\(2000\to 2000\cdot 1.1+2000=4200\)</span></div><div class="ln"><span class="m">\(4200\cdot 1.1+2000=6620\)</span></div></div></div><div class="final"><b>תשובה:</b> 2,000 ₪ בכל שנה.</div></li>
+<li>בשנה הראשונה צרכה שמורה 500 טון מזון, ובכל שנה הצריכה מוכפלת. אחרי כמה שנים הצריכה הכוללת תעבור לראשונה 10,000 טון?<div class="key-steps"><div class="kstep"><h4>כותבים את נוסחת הסכום ואת התנאי <small>(מציאת n)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(500\cdot (2^{n}-1)>10000\)</span></div><div class="ln"><span class="m">\(2^{n}-1>20\)</span></div><div class="ln"><span class="m">\(2^{n}>21\)</span></div></div><div class="kstep"><h4>מנסים חזקות של 2 <small>(מציאת n)</small></h4><div class="ln"><span class="m">\(2^{4}=16<21\)</span></div><div class="ln"><span class="m">\(2^{5}=32>21\)</span></div><div class="ln"><span class="m">\(n=5\)</span></div></div><div class="kstep"><h4>בודקים <small>(בדיקה)</small></h4><div class="ln"><span class="m">\(S_{4}=500\cdot 15=7500\)</span></div><div class="ln"><span class="m">\(S_{5}=500\cdot 31=15500\)</span></div></div></div><div class="final"><b>תשובה:</b> בשנה החמישית.</div></li>
+<li>שתי תוכניות לאיסוף תרומות, כל אחת למשך 6 חודשים: <br>תוכנית א׳: בחודש הראשון 100 ₪, ובכל חודש פי 1.5 מהחודש הקודם. <br>תוכנית ב׳: בחודש הראשון 300 ₪, ובכל חודש פי 1.2 מהחודש הקודם. <br>באיזו תוכנית ייאסף יותר כסף בסך הכול?<div class="key-steps"><div class="kstep"><h4>מחשבים את הסכום בתוכנית א׳ <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(S_{A}=100\cdot \dfrac{1.5^{6}-1}{0.5}\)</span></div><div class="ln"><span class="m">\(S_{A}=100\cdot \dfrac{10.390625}{0.5}\)</span></div><div class="ln"><span class="m">\(S_{A}\approx 2078.13\)</span></div></div><div class="kstep"><h4>מחשבים את הסכום בתוכנית ב׳ <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{B}=300\cdot \dfrac{1.2^{6}-1}{0.2}\)</span></div><div class="ln"><span class="m">\(S_{B}\approx 300\cdot \dfrac{1.985984}{0.2}\)</span></div><div class="ln"><span class="m">\(S_{B}\approx 2978.98\)</span></div></div><div class="kstep"><h4>משווים <small>(השוואה)</small></h4><div class="ln"><span class="m">\(2978.98>2078.13\)</span></div><p>אף שתוכנית א׳ גדלה מהר יותר, ב־6 חודשים היא עוד לא מספיקה להשלים את הפער.</p></div></div><div class="final"><b>תשובה:</b> בתוכנית ב׳ (כ־2,978.98 ₪ לעומת כ־2,078.13 ₪).</div></li>
+<li>מפעל ייצר 5,000 מוצרים בשנה הראשונה, ובכל שנה הייצור קטן ב־20%. כמה מוצרים ייצר המפעל בסך הכול ב־5 השנים הראשונות?<div class="key-steps"><div class="kstep"><h4>מזהים את a, b ו־n <small>(בניית נוסחה)</small></h4><div class="ln"><span class="m">\(a=5000\)</span></div><div class="ln"><span class="m">\(b=1-\dfrac{20}{100}=0.8\)</span></div><div class="ln"><span class="m">\(n=5\)</span></div></div><div class="kstep"><h4>מציבים בצורה הנוחה לדעיכה <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{1-b^{n}}{1-b}\)</span></div><div class="ln"><span class="m">\(S_{5}=5000\cdot \dfrac{1-0.8^{5}}{0.2}\)</span></div><div class="ln"><span class="m">\(S_{5}=5000\cdot \dfrac{0.67232}{0.2}\)</span></div><div class="ln"><span class="m">\(S_{5}=16808\)</span></div></div></div><div class="final"><b>תשובה:</b> 16,808 מוצרים.</div></li>
+<li>נתונה <span class="m">\(f(t)=7\cdot 2^{t}\)</span>. מחברים את הערכים <span class="m">\(f(0)+f(1)+\dots\)</span> עד שמגיעים לערך 448. <br>א. כמה מחוברים יש בסכום? &nbsp; ב. מהו הסכום?<div class="key-steps"><div class="kstep"><h4>מוצאים עבור איזה t הערך הוא 448 <small>(מציאת n)</small></h4><div class="ln"><span class="m">\(7\cdot 2^{t}=448\)</span></div><div class="ln"><span class="m">\(2^{t}=64\)</span></div><div class="ln"><span class="m">\(t=6\)</span></div><p>המחוברים הם f(0) עד f(6), כלומר 7 מחוברים.</p></div><div class="kstep"><h4>מציבים בנוסחת הסכום <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(S_{7}=7\cdot \dfrac{2^{7}-1}{2-1}\)</span></div><div class="ln"><span class="m">\(S_{7}=7\cdot 127=889\)</span></div></div></div><div class="final"><b>תשובה:</b> א׳ 7 מחוברים; ב׳ 889.</div></li>
+<li>בלוח השחמט שמים גרגיר אחד במשבצת הראשונה, ובכל משבצת פי 2 מהקודמת. <br>א. כמה גרגירים יש בסך הכול ב־20 המשבצות הראשונות? <br>ב. מאיזו משבצת הסך הכול עובר לראשונה מיליון גרגירים?<div class="key-steps"><div class="kstep"><h4>מציבים a = 1, b = 2, n = 20 <small>(חישוב סכום)</small></h4><div class="ln"><span class="m">\(S_{n}=a\cdot \dfrac{b^{n}-1}{b-1}\)</span></div><div class="ln"><span class="m">\(S_{20}=1\cdot \dfrac{2^{20}-1}{2-1}\)</span></div><div class="ln"><span class="m">\(S_{20}=1048575\)</span></div></div><div class="kstep"><h4>בודקים את המשבצת הקודמת <small>(מציאת n)</small></h4><div class="ln"><span class="m">\(S_{19}=2^{19}-1=524287<1000000\)</span></div><div class="ln"><span class="m">\(S_{20}=1048575>1000000\)</span></div></div></div><div class="final"><b>תשובה:</b> א׳ 1,048,575 גרגירים; ב׳ מהמשבצת ה־20.</div></li>
+</ol></section>
+</div>
+</body>
+</html>
