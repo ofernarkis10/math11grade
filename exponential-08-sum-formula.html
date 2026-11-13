@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>שיעור שלישי - בניית נוסחת הסכום</title>
+<title>שיעור שלישי - נוסחת הסכום</title>
 <style>
   :root{
     --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
@@ -70,8 +70,8 @@
 <body>
 <main>
 <a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
-<h1>שיעור שלישי - בניית נוסחת הסכום</h1>
-<p>ב<a href="exponential-07-sim-lesson3.html">דף הדוגמאות של שיעור שלישי</a> חישבנו כמה יש בסך הכול – מזון לדולפינים, חיסכון עם הפקדה שנתית ותרופה שלוקחים כל יום. חישבנו שלב אחרי שלב. עכשיו נחפש מה משותף לדוגמאות, ונבנה נוסחה שנותנת את הסך הכול בבת אחת.</p>
+<h1>שיעור שלישי - נוסחת הסכום</h1>
+<p>ב<a href="exponential-07-sim-lesson3.html">דף הדוגמאות של שיעור שלישי</a> חישבנו כמה יש בסך הכול – מזון לדולפינים, חיסכון עם הפקדה שנתית ותרופה שלוקחים כל יום. חישבנו שלב אחרי שלב. עכשיו נראה מה משותף לדוגמאות, נכיר נוסחה שנותנת את הסך הכול בבת אחת, ונשתמש בה.</p>
 <div class="controls"><button type="button" onclick="toggleAll(true)">פתח את כל השלבים</button> <button type="button" onclick="toggleAll(false)">סגור את כל השלבים</button></div>
 
 <h2>1. מה משותף לכל הדוגמאות?</h2>
@@ -89,76 +89,38 @@
   יש <span class="im">n</span> מחוברים, והמעריך האחרון הוא <span class="im">n − 1</span> (בדוגמאות: 8 מחוברים, המעריך האחרון 7).
 </div>
 
-<h2>2. רמז מלוח השחמט</h2>
-<p>לפי האגדה, ממציא השחמט ביקש מהמלך פרס: גרגיר אורז אחד במשבצת הראשונה, 2 בשנייה, 4 בשלישית – ובכל משבצת פי 2 מהמשבצת הקודמת. כמה גרגירים יש בכל המשבצות עד משבצת <span class="im">n</span>?</p>
-<div class="tablewrap"><table>
-  <tr><th>משבצת n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
-  <tr><th>גרגירים במשבצת n</th><td>1</td><td>2</td><td>4</td><td>8</td><td>16</td><td>32</td><td>64</td><td>128</td></tr>
-  <tr><th>סה״כ עד משבצת n</th><td>1</td><td>3</td><td>7</td><td>15</td><td>31</td><td>63</td><td>127</td><td>255</td></tr>
-  <tr><th>גרגירים במשבצת הבאה</th><td>2</td><td>4</td><td>8</td><td>16</td><td>32</td><td>64</td><td>128</td><td>256</td></tr>
-</table></div>
-
-<div class="card">
-  <p>שימו לב לשורה האחרונה: <b>הסך הכול עד משבצת <span class="im">n</span> קטן ב-1 מהמשבצת הבאה.</b></p>
-  <span class="math">1 + 2 + 4 + … + 2<sup>n − 1</sup> = 2<sup>n</sup> − 1</span>
-  <p>למה? נוסיף לסכום גרגיר אחד: 1 + 1 = 2, ועוד 2 זה 4, ועוד 4 זה 8 … כל פעם מקבלים בדיוק את המשבצת הבאה. בסוף מקבלים <span class="im">2<sup>n</sup></span>, ולכן בלי הגרגיר שהוספנו הסכום הוא <span class="im">2<sup>n</sup> − 1</span>.</p>
-</div>
-
-<h2>3. בונים את הנוסחה הכללית</h2>
-<p>הרעיון מלוח השחמט: לכפול את הסכום במספר שמכפילים בו, ולהשוות לסכום המקורי. רוב המחוברים זהים – והם מתבטלים.</p>
-<details class="step" open><summary>כותבים את הסכום של n מחוברים</summary><div class="body">
-  <span class="math">S = a + a · b + a · b<sup>2</sup> + … + a · b<sup>n − 1</sup></span>
-</div></details>
-
-<details class="step" open><summary>כופלים את שני האגפים ב-b: כל מחובר עובר למקום של המחובר הבא</summary><div class="body">
-  <span class="math">b · S = a · b + a · b<sup>2</sup> + … + a · b<sup>n − 1</sup> + a · b<sup>n</sup></span>
-</div></details>
-
-<details class="step" open><summary>מחסרים: <span class="im">b · S − S</span>. כל המחוברים באמצע מופיעים בשני הסכומים ומתבטלים</summary><div class="body">
-  <span class="math">b · S − S = a · b<sup>n</sup> − a</span>
-  <p>מ-<span class="im">b · S</span> נשאר רק המחובר האחרון <span class="im">a · b<sup>n</sup></span>, ומ-<span class="im">S</span> נשאר רק המחובר הראשון <span class="im">a</span>.</p>
-</div></details>
-
-<details class="step" open><summary>מוציאים גורם משותף בשני האגפים</summary><div class="body">
-  <span class="math">S · (b − 1) = a · (b<sup>n</sup> − 1)</span>
-</div></details>
-
-<details class="step" open><summary>מחלקים ב-<span class="im">(b − 1)</span> כדי לבודד את <span class="im">S</span> (מותר כי <span class="im">b ≠ 1</span>)</summary><div class="body">
-  <span class="math">S<sub>n</sub> = a · (b<sup>n</sup> − 1) / (b − 1)</span>
-</div></details>
-
+<h2>2. נוסחת הסכום</h2>
+<p>כדי לא לחבר את כל המחוברים אחד אחד, משתמשים בנוסחה שנותנת את הסכום בבת אחת:</p>
 <div class="card key">
-  <b>נוסחת הסכום:</b>
   <span class="math">S<sub>n</sub> = a · (b<sup>n</sup> − 1) / (b − 1)</span>
   <ul>
     <li><span class="im">a</span> – המחובר הראשון (המזון של השנה הראשונה, ההפקדה החדשה, המנה של היום).</li>
-    <li><span class="im">b</span> – המספר שמכפילים בו בכל שלב.</li>
+    <li><span class="im">b</span> – המספר שמכפילים בו בכל שלב (<span class="im">b ≠ 1</span>).</li>
     <li><span class="im">n</span> – מספר המחוברים (מספר השנים, ההפקדות או המנות).</li>
   </ul>
-  כאשר <span class="im">0 &lt; b &lt; 1</span> (דעיכה) נוח לכתוב את אותה נוסחה כך (כופלים מונה ומכנה ב-<span class="im">−1</span>), כדי לא לעבוד עם מספרים שליליים:
+  כאשר <span class="im">0 &lt; b &lt; 1</span> (דעיכה) נוח לכתוב את אותה נוסחה כך, כדי לא לעבוד עם מספרים שליליים:
   <span class="math">S<sub>n</sub> = a · (1 − b<sup>n</sup>) / (1 − b)</span>
 </div>
 
-<h2>4. בודקים את הנוסחה על לוח השחמט</h2>
-<details class="step" open><summary>מציבים <span class="im">a = 1</span> ו-<span class="im">b = 2</span> בנוסחה <span class="type">(בדיקה)</span></summary><div class="body">
+<h2>3. בודקים את הנוסחה על דוגמת הדולפינים</h2>
+<p>בדף הדוגמאות חיברנו את המזון שנה אחרי שנה וקיבלנו 12,610 טון אחרי 8 שנים. נבדוק שהנוסחה נותנת אותו דבר.</p>
+<details class="step" open><summary>מזהים את <span class="im">a</span>, <span class="im">b</span> ו-<span class="im">n</span> <span class="type">(בניית נוסחה)</span></summary><div class="body">
+  <span class="math">a = 256</span>
+  <span class="math">b = 1.5</span>
+  <span class="math">n = 8</span>
+</div></details>
+<details class="step" open><summary>מציבים בנוסחה ומחשבים במחשבון <span class="type">(בדיקה)</span></summary><div class="body">
   <span class="math">S<sub>n</sub> = a · (b<sup>n</sup> − 1) / (b − 1)</span>
-  <span class="math">S<sub>n</sub> = 1 · (2<sup>n</sup> − 1) / (2 − 1)</span>
-  <span class="math">S<sub>n</sub> = 2<sup>n</sup> − 1</span>
-  <p>קיבלנו בדיוק את מה שגילינו בטבלה.</p>
+  <span class="math">S<sub>8</sub> = 256 · (1.5<sup>8</sup> − 1) / (1.5 − 1)</span>
+  <span class="math">S<sub>8</sub> = 256 · (25.62890625 − 1) / 0.5</span>
+  <span class="math">S<sub>8</sub> = 12610</span>
+  <p>בדיוק כמו בטבלה. ✓ במקום 7 חיבורים – חישוב אחד.</p>
 </div></details>
 
-<details class="step" open><summary>מציבים <span class="im">n = 8</span> ומשווים לטבלה <span class="type">(בדיקה)</span></summary><div class="body">
-  <span class="math">S<sub>8</sub> = 2<sup>8</sup> − 1</span>
-  <span class="math">S<sub>8</sub> = 256 − 1</span>
-  <span class="math">S<sub>8</sub> = 255</span>
-  <p>וזה הסך הכול שבטבלה עד משבצת 8. ✓</p>
-</div></details>
-
-
-<h2>5. משתמשים בנוסחה</h2>
+<h2>4. משתמשים בנוסחה</h2>
 <div class="card">
 <h3>דוגמה א – כל לוח השחמט</h3>
-<p>כמה גרגירי אורז יש בכל 64 המשבצות?</p>
+<p>לפי האגדה, ממציא השחמט ביקש מהמלך פרס: גרגיר אורז אחד במשבצת הראשונה, 2 בשנייה, 4 בשלישית – ובכל משבצת פי 2 מהקודמת. כמה גרגירי אורז יש בכל 64 המשבצות?</p>
 <details class="step"><summary>מזהים את a, b ו-n <span class="type">(בניית נוסחה)</span></summary><div class="body">
   <span class="math">a = 1</span>
   <span class="math">b = 2</span>
@@ -210,7 +172,7 @@
 
 </div>
 
-<h2>6. בשפת הסדרות</h2>
+<h2>5. בשפת הסדרות</h2>
 <div class="card">
   <p>כשרושמים את הערכים של <span class="im">f(t) = a · b<sup>t</sup></span> אחד אחרי השני – <span class="im">a, a · b, a · b<sup>2</sup>, …</span> – מקבלים סדרה שבה כל איבר גדול פי מספר קבוע מהאיבר הקודם. סדרה כזו נקראת <b>סדרה הנדסית</b>.</p>
   <div class="tablewrap"><table>
@@ -223,11 +185,10 @@
   <p>שימו לב: אצלנו הזמן מתחיל ב-<span class="im">t = 0</span>, ובסדרה המספור מתחיל ב-<span class="im">n = 1</span>. לכן האיבר ה-<span class="im">n</span> הוא <span class="im">f(n − 1)</span>, והמעריך בנוסחת האיבר הכללי הוא <span class="im">n − 1</span>. המשך הנושא בדף <a href="sequences-02-geometric.html">סדרה הנדסית</a>.</p>
 </div>
 
-<h2>7. סיכום</h2>
+<h2>6. סיכום</h2>
 <div class="card key">
   <ul>
     <li>סך הכול של כמות שגדלה או קטנה בכל שלב פי <span class="im">b</span> הוא סכום: <span class="im">a + a · b + … + a · b<sup>n − 1</sup></span>.</li>
-    <li>כופלים את הסכום ב-<span class="im">b</span> ומחסרים – המחוברים באמצע מתבטלים.</li>
     <li>נוסחת הסכום: <span class="im">S<sub>n</sub> = a · (b<sup>n</sup> − 1) / (b − 1)</span>, ובדעיכה נוח: <span class="im">a · (1 − b<sup>n</sup>) / (1 − b)</span>.</li>
     <li><span class="im">n</span> הוא מספר המחוברים, והמעריך האחרון בסכום הוא <span class="im">n − 1</span>.</li>
     <li>בדעיכה הסכום מתקרב ל-<span class="im">a / (1 − b)</span> ולא עובר אותו.</li>
