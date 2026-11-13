@@ -94,7 +94,7 @@
 <p>כדי לראות שזה משהו חדש, נשווה לפונקציה קווית שמתחילה גם היא ב-3:</p>
 <div class="tablewrap">
 <table>
-  <tr><th>x</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+  <tr><th>t</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
   <tr><th>מוסיפים 2 בכל צעד</th><td>3</td><td>5</td><td>7</td><td>9</td><td>11</td><td>13</td><td>15</td><td>17</td><td>19</td></tr>
   <tr><th>מכפילים ב-2 בכל צעד</th><td>3</td><td>6</td><td>12</td><td>24</td><td>48</td><td>96</td><td>192</td><td>384</td><td>768</td></tr>
 </table>
@@ -103,19 +103,19 @@
 
 <h2>2. הנוסחה הכללית</h2>
 <p>עכשיו אפשר לכתוב את מה שגילינו בצורה כללית. פונקציית גידול או דעיכה היא פונקציה מהצורה:</p>
-<span class="math">f(x) = a · b<sup>x</sup> ,   a ≠ 0 ,   b &gt; 0 ,   b ≠ 1</span>
+<span class="math">f(t) = a · b<sup>t</sup> ,   a ≠ 0 ,   b &gt; 0 ,   b ≠ 1</span>
 <ul>
-  <li><b><span class="im">a</span> – הערך ההתחלתי</b> (256, 10000, 80000, 200 בדוגמאות). מציבים <span class="im">x = 0</span>:
+  <li><b><span class="im">a</span> – הערך ההתחלתי</b> (256, 10000, 80000, 200 בדוגמאות). מציבים <span class="im">t = 0</span>:
     <span class="math">f(0) = a · b<sup>0</sup> = a · 1 = a</span></li>
   <li><b><span class="im">b</span> – הבסיס, המספר שמכפילים בו בכל צעד</b> (1.5, 1.05, 0.85, 0.8 בדוגמאות):
-    <span class="math">f(x + 1) = a · b<sup>x+1</sup> = (a · b<sup>x</sup>) · b = f(x) · b</span>
-    <span class="math">f(x + 1) / f(x) = b</span></li>
-  <li>המשתנה <span class="im">x</span> נמצא <b>במעריך</b> – זה מה שמבדיל אותה מפונקציה כמו <span class="im">x<sup>2</sup></span>, שבה <span class="im">x</span> נמצא בבסיס.</li>
+    <span class="math">f(t + 1) = a · b<sup>t+1</sup> = (a · b<sup>t</sup>) · b = f(t) · b</span>
+    <span class="math">f(t + 1) / f(t) = b</span></li>
+  <li>המשתנה <span class="im">t</span> נמצא <b>במעריך</b> – זה מה שמבדיל אותה מפונקציה כמו <span class="im">t<sup>2</sup></span>, שבה <span class="im">t</span> נמצא בבסיס.</li>
 </ul>
 
 <h3>למה דורשים <span class="im">b &gt; 0</span> ו-<span class="im">b ≠ 1</span>?</h3>
 <ul>
-  <li>אם <span class="im">b = 1</span>: <span class="im">f(x) = a · 1<sup>x</sup> = a</span> – פונקציה קבועה, אין גידול ואין דעיכה.</li>
+  <li>אם <span class="im">b = 1</span>: <span class="im">f(t) = a · 1<sup>t</sup> = a</span> – פונקציה קבועה, אין גידול ואין דעיכה.</li>
   <li>אם <span class="im">b &lt; 0</span>: למשל <span class="im">(−2)<sup>1/2</sup></span> אינו מוגדר, והסימן מתחלף בין חיובי לשלילי – זו לא פונקציה של גידול או דעיכה.</li>
 </ul>
 
@@ -142,19 +142,19 @@
 
 <h2>4. הגרפים ותכונותיהם</h2>
 <div class="graphs">
-  <figure><svg id="g1" viewBox="0 0 300 260"></svg><figcaption>גידול: <span class="im">y = 2<sup>x</sup></span> , <span class="im">y = 3<sup>x</sup></span></figcaption></figure>
-  <figure><svg id="g2" viewBox="0 0 300 260"></svg><figcaption>דעיכה: <span class="im">y = (1/2)<sup>x</sup></span> , <span class="im">y = (1/3)<sup>x</sup></span></figcaption></figure>
+  <figure><svg id="g1" viewBox="0 0 300 260"></svg><figcaption>גידול: <span class="im">y = 2<sup>t</sup></span> , <span class="im">y = 3<sup>t</sup></span></figcaption></figure>
+  <figure><svg id="g2" viewBox="0 0 300 260"></svg><figcaption>דעיכה: <span class="im">y = (1/2)<sup>t</sup></span> , <span class="im">y = (1/3)<sup>t</sup></span></figcaption></figure>
 </div>
 <div class="card">
-  <p>תכונות הגרף של <span class="im">f(x) = a · b<sup>x</sup></span> כאשר <span class="im">a &gt; 0</span>:</p>
+  <p>תכונות הגרף של <span class="im">f(t) = a · b<sup>t</sup></span> כאשר <span class="im">a &gt; 0</span>:</p>
   <ul>
-    <li><b>תחום הגדרה:</b> כל <span class="im">x</span>.</li>
-    <li><b>טווח:</b> <span class="im">y &gt; 0</span> – הגרף כולו מעל ציר <span class="im">x</span>.</li>
+    <li><b>תחום הגדרה:</b> כל <span class="im">t</span>.</li>
+    <li><b>טווח:</b> <span class="im">y &gt; 0</span> – הגרף כולו מעל ציר <span class="im">t</span>.</li>
     <li><b>נקודת חיתוך עם ציר <span class="im">y</span>:</b> <span class="im">(0, a)</span>.</li>
-    <li><b>אין חיתוך עם ציר <span class="im">x</span>.</b></li>
-    <li><b>אסימפטוטה אופקית:</b> <span class="im">y = 0</span> (בגידול – כאשר <span class="im">x → −∞</span>; בדעיכה – כאשר <span class="im">x → +∞</span>).</li>
+    <li><b>אין חיתוך עם ציר <span class="im">t</span>.</b></li>
+    <li><b>אסימפטוטה אופקית:</b> <span class="im">y = 0</span> (בגידול – כאשר <span class="im">t → −∞</span>; בדעיכה – כאשר <span class="im">t → +∞</span>).</li>
     <li><b>מונוטוניות:</b> <span class="im">b &gt; 1</span> – עולה בכל התחום; <span class="im">0 &lt; b &lt; 1</span> – יורדת בכל התחום.</li>
-    <li>הגרפים של <span class="im">y = b<sup>x</sup></span> ו-<span class="im">y = (1/b)<sup>x</sup></span> סימטריים זה לזה ביחס לציר <span class="im">y</span>, כי <span class="im">(1/b)<sup>x</sup> = b<sup>−x</sup></span>.</li>
+    <li>הגרפים של <span class="im">y = b<sup>t</sup></span> ו-<span class="im">y = (1/b)<sup>t</sup></span> סימטריים זה לזה ביחס לציר <span class="im">y</span>, כי <span class="im">(1/b)<sup>t</sup> = b<sup>−t</sup></span>.</li>
   </ul>
 </div>
 
@@ -176,7 +176,7 @@
 <!-- Example 6 -->
 <div class="card">
 <h3>דוגמה 6 – מציאת הפונקציה משתי נקודות</h3>
-<p>הפונקציה <span class="im">f(x) = a · b<sup>x</sup></span> עוברת בנקודות <span class="im">(0, 3)</span> ו-<span class="im">(2, 48)</span>. מצאו את <span class="im">a</span> ואת <span class="im">b</span>, וקבעו אם זו פונקציית גידול או דעיכה.</p>
+<p>הפונקציה <span class="im">f(t) = a · b<sup>t</sup></span> עוברת בנקודות <span class="im">(0, 3)</span> ו-<span class="im">(2, 48)</span>. מצאו את <span class="im">a</span> ואת <span class="im">b</span>, וקבעו אם זו פונקציית גידול או דעיכה.</p>
 <details class="step"><summary>מציבים את הנקודה (0, 3) כדי למצוא את a <span class="type">(מציאת פרמטר)</span></summary><div class="body">
   <span class="math">f(0) = a · b<sup>0</sup></span>
   <span class="math">3 = a · 1</span>
@@ -190,7 +190,7 @@
   <p>הפתרון <span class="im">b = −4</span> נפסל, כי בסיס חייב להיות חיובי.</p>
 </div></details>
 <details class="step"><summary>כותבים את הפונקציה וקובעים את סוגה לפי הבסיס</summary><div class="body">
-  <span class="math">f(x) = 3 · 4<sup>x</sup></span>
+  <span class="math">f(t) = 3 · 4<sup>t</sup></span>
   <p>מכיוון ש-<span class="im">b = 4 &gt; 1</span>, זו פונקציית <span class="grow">גידול</span>.</p>
 </div></details>
 </div>
@@ -201,7 +201,7 @@
 <p>לפניכם שתי טבלאות. קבעו לגבי כל אחת אם היא מתארת פונקציית גידול/דעיכה, ואם כן – מצאו את הפונקציה.</p>
 <div class="tablewrap">
 <table>
-  <tr><th>x</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
+  <tr><th>t</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
   <tr><th>טבלה א'</th><td>81</td><td>27</td><td>9</td><td>3</td></tr>
   <tr><th>טבלה ב'</th><td>2</td><td>5</td><td>8</td><td>11</td></tr>
 </table>
@@ -211,8 +211,8 @@
   <span class="math">9 / 27 = 1/3</span>
   <span class="math">3 / 9 = 1/3</span>
   <p>בכל צעד מכפילים ב-<span class="im">1/3</span>, ולכן זו פונקציית <span class="decay">דעיכה</span> עם <span class="im">b = 1/3</span> ו-<span class="im">a = 81</span>:</p>
-  <span class="math">f(x) = a · b<sup>x</sup></span>
-  <span class="math">f(x) = 81 · (1/3)<sup>x</sup></span>
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">f(t) = 81 · (1/3)<sup>t</sup></span>
 </div></details>
 <details class="step"><summary>מחלקים כל ערך בערך שלפניו בטבלה ב' כדי לבדוק אם מכפילים במספר קבוע <span class="type">(זיהוי פונקציה)</span></summary><div class="body">
   <span class="math">5 / 2 = 2.5</span>
@@ -220,7 +220,7 @@
   <p>לא מכפילים במספר קבוע, ולכן זו <b>לא</b> פונקציית גידול/דעיכה. בודקים הפרשים:</p>
   <span class="math">5 − 2 = 3 ,  8 − 5 = 3 ,  11 − 8 = 3</span>
   <p>מוסיפים מספר קבוע – זו פונקציה קווית:</p>
-  <span class="math">g(x) = 2 + 3x</span>
+  <span class="math">g(t) = 2 + 3t</span>
 </div></details>
 </div>
 
@@ -376,9 +376,9 @@
 <h2>7. סיכום</h2>
 <div class="card key">
   <ul>
-    <li>פונקציית גידול/דעיכה: <span class="im">f(x) = a · b<sup>x</sup></span>, עם <span class="im">b &gt; 0</span>, <span class="im">b ≠ 1</span>.</li>
+    <li>פונקציית גידול/דעיכה: <span class="im">f(t) = a · b<sup>t</sup></span>, עם <span class="im">b &gt; 0</span>, <span class="im">b ≠ 1</span>.</li>
     <li><span class="im">a</span> הוא הערך ההתחלתי, <span class="im">f(0) = a</span>.</li>
-    <li>בכל צעד של 1 ב-<span class="im">x</span>, הערך <b>מוכפל</b> ב-<span class="im">b</span>.</li>
+    <li>בכל צעד של 1 ב-<span class="im">t</span>, הערך <b>מוכפל</b> ב-<span class="im">b</span>.</li>
     <li><span class="im">b &gt; 1</span> – <span class="grow">גידול</span>; <span class="im">0 &lt; b &lt; 1</span> – <span class="decay">דעיכה</span>.</li>
     <li>שינוי של <span class="im">p%</span>: <span class="im">b = 1 ± p/100</span>.</li>
     <li>זיהוי מטבלה: מכפילים במספר קבוע ← גידול/דעיכה; מוסיפים מספר קבוע ← פונקציה קווית.</li>
@@ -413,10 +413,10 @@ function plot(id, fns){
   svg.innerHTML=s;
 }
 function draw(){
-  plot('g1',[{f:function(x){return Math.pow(2,x)},c:'--grow',label:'2^x',lx:2.2,ly:5.2},
-             {f:function(x){return Math.pow(3,x)},c:'--accent',label:'3^x',lx:1.15,ly:7.3,dash:'6 4'}]);
-  plot('g2',[{f:function(x){return Math.pow(0.5,x)},c:'--decay',label:'(1/2)^x',lx:-2.9,ly:5.2},
-             {f:function(x){return Math.pow(1/3,x)},c:'--accent',label:'(1/3)^x',lx:-1.75,ly:7.3,dash:'6 4'}]);
+  plot('g1',[{f:function(x){return Math.pow(2,x)},c:'--grow',label:'2^t',lx:2.2,ly:5.2},
+             {f:function(x){return Math.pow(3,x)},c:'--accent',label:'3^t',lx:1.15,ly:7.3,dash:'6 4'}]);
+  plot('g2',[{f:function(x){return Math.pow(0.5,x)},c:'--decay',label:'(1/2)^t',lx:-2.9,ly:5.2},
+             {f:function(x){return Math.pow(1/3,x)},c:'--accent',label:'(1/3)^t',lx:-1.75,ly:7.3,dash:'6 4'}]);
 }
 draw();
 try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',draw);}catch(e){}
