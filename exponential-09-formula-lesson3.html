@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור שלישי – חישוב הדוגמאות בנוסחה</title>
+<style>
+  :root{
+    --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
+    --accent:#2f6fde; --grow:#1f9d55; --decay:#d04a3a; --border:#dde2ea;
+    --code:#eef2f8; --blank:#fffbe8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+      --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+      --code:#252d3c; --blank:#2b2a20;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+    --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+    --code:#252d3c; --blank:#2b2a20;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:"Segoe UI",Arial,"Noto Sans Hebrew",sans-serif;line-height:1.7;font-size:17px}
+  main{max-width:900px;margin:0 auto;padding:16px}
+  a{color:var(--accent)}
+  .back{display:inline-block;margin:8px 0 4px}
+  h1{font-size:1.8rem;margin:.3em 0}
+  h2{font-size:1.35rem;margin:1.6em 0 .5em;border-bottom:2px solid var(--accent);padding-bottom:4px}
+  h3{font-size:1.1rem;margin:1.2em 0 .4em}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0}
+  .math{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;
+    font-size:1.12rem;background:var(--code);border-radius:6px;padding:4px 10px;margin:4px 0;display:block}
+  .im{direction:ltr;unicode-bidi:isolate;font-family:"Cambria Math","Times New Roman",serif;white-space:nowrap}
+  .grow{color:var(--grow);font-weight:600}
+  .decay{color:var(--decay);font-weight:600}
+  .key{border-inline-start:5px solid var(--accent)}
+  .task{background:var(--code);border-radius:8px;padding:8px 12px;margin:8px 0}
+  table{border-collapse:collapse;margin:8px auto;direction:rtl}
+  th,td{border:1px solid var(--border);padding:4px 10px;text-align:center}
+  th{background:var(--code)}
+  .tablewrap{overflow-x:auto}
+  .calc td{min-width:74px;white-space:nowrap}
+  .calc td.ans{background:var(--blank)}
+  .calc td.ans .v{visibility:hidden}
+  .calc.show td.ans .v{visibility:visible}
+  .graphs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .graphs figure{margin:0;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px}
+  figcaption{text-align:center;color:var(--muted);font-size:.95rem}
+  svg{width:100%;height:auto;display:block}
+  details.step{border:1px solid var(--border);border-radius:8px;margin:6px 0;background:var(--card)}
+  details.step summary{cursor:pointer;padding:6px 10px;font-weight:600}
+  details.step .body{padding:2px 12px 10px}
+  .type{color:var(--muted);font-size:.9rem;font-weight:400}
+  .controls{margin:6px 0;display:flex;flex-wrap:wrap;gap:6px}
+  button{font:inherit;padding:4px 12px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
+  ul{padding-inline-start:22px}
+  .verify td{min-width:0;white-space:nowrap}
+  .verify td.ok{color:var(--grow);font-weight:700}
+  .verify td.f{font-family:"Cambria Math","Times New Roman",serif}
+  td{direction:ltr;unicode-bidi:isolate}
+  td.he{direction:rtl}
+  th{direction:rtl;unicode-bidi:isolate}
+  td.f{white-space:nowrap}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+<h1>שיעור שלישי – חישוב הדוגמאות בנוסחה</h1>
+<p>ב<a href="exponential-07-sim-lesson3.html">דף הדוגמאות</a> חישבנו את הסך הכול שלב אחרי שלב. ב<a href="exponential-08-sum-formula.html">דף ההסבר</a> בנינו את נוסחת הסכום:</p>
+<span class="math">S<sub>n</sub> = a · (b<sup>n</sup> − 1) / (b − 1)</span>
+<p>עכשיו נפתור את אותן דוגמאות בעזרת הנוסחה, ובסוף כל דוגמה נבדוק בטבלה שהנוסחה נותנת בדיוק את אותו סכום כמו החישוב שלב אחרי שלב.</p>
+<div class="card key">
+  <b>סדר הפתרון בכל דוגמה:</b> מזהים את <span class="im">a</span> (המחובר הראשון), את <span class="im">b</span> (המספר שמכפילים בו) ואת <span class="im">n</span> (מספר המחוברים), מציבים בנוסחה, ובודקים בטבלה.
+</div>
+<div class="controls"><button type="button" onclick="toggleAll(true)">פתח את כל השלבים</button> <button type="button" onclick="toggleAll(false)">סגור את כל השלבים</button></div>
+
+<!-- Example 1 -->
+<div class="card">
+<h3>דוגמה 1 – מזון לדולפינים 🐬</h3>
+<p>בשמורה יש 256 דולפינים, ומספרם גדל ב-50% בכל שנה. כל דולפין אוכל טון דגים בשנה. כמה מזון צריך בסך הכול ב-8 השנים הראשונות?</p>
+<details class="step"><summary>מזהים את <span class="im">a</span> – המחובר הראשון <span class="type">(בניית נוסחה)</span></summary><div class="body">
+  <span class="math">a = 256</span>
+  <p>המזון של השנה הראשונה: 256 דולפינים כפול טון.</p>
+</div></details>
+<details class="step"><summary>מזהים את <span class="im">b</span> – המספר שמכפילים בו <span class="type">(בניית נוסחה)</span></summary><div class="body">
+  <span class="math">b = 1.5</span>
+  <p>מספר הדולפינים גדל פי 1.5 בכל שנה.</p>
+</div></details>
+<details class="step"><summary>מזהים את <span class="im">n</span> – מספר המחוברים <span class="type">(בניית נוסחה)</span></summary><div class="body">
+  <span class="math">n = 8</span>
+  <p>8 שנים.</p>
+</div></details>
+<details class="step"><summary>מציבים בנוסחת הסכום ומחשבים במחשבון <span class="type">(חישוב סכום)</span></summary><div class="body">
+  <span class="math">S<sub>n</sub> = a · (b<sup>n</sup> − 1) / (b − 1)</span>
+  <span class="math">S<sub>8</sub> = 256 · (1.5<sup>8</sup> − 1) / (1.5 − 1)</span>
+  <span class="math">S<sub>8</sub> = 256 · (25.62890625 − 1) / 0.5</span>
+  <span class="math">S<sub>8</sub> = 12,610</span>
+  <p>תשובה: בסך הכול צריך 12,610 טון מזון.</p>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה נותנת את אותו סכום כמו החישוב שלב אחרי שלב <span class="type">(בדיקה)</span></summary><div class="body">
+  <div class="tablewrap"><table class="verify">
+  <tr><th>n</th><th>בנוסחה: <span class="im">S<sub>n</sub></span></th><th>שלב אחרי שלב: הסה״כ הקודם + המזון של השנה</th><th>שווה?</th></tr>
+  <tr><td>1</td><td class="f">256 · (1.5<sup>1</sup> − 1) / 0.5 = 256</td><td class="f">—</td><td class="ok">✓</td></tr>
+  <tr><td>2</td><td class="f">256 · (1.5<sup>2</sup> − 1) / 0.5 = 640</td><td class="f">256 + 384 = 640</td><td class="ok">✓</td></tr>
+  <tr><td>3</td><td class="f">256 · (1.5<sup>3</sup> − 1) / 0.5 = 1,216</td><td class="f">640 + 576 = 1,216</td><td class="ok">✓</td></tr>
+  <tr><td>4</td><td class="f">256 · (1.5<sup>4</sup> − 1) / 0.5 = 2,080</td><td class="f">1,216 + 864 = 2,080</td><td class="ok">✓</td></tr>
+  <tr><td>5</td><td class="f">256 · (1.5<sup>5</sup> − 1) / 0.5 = 3,376</td><td class="f">2,080 + 1,296 = 3,376</td><td class="ok">✓</td></tr>
+  <tr><td>6</td><td class="f">256 · (1.5<sup>6</sup> − 1) / 0.5 = 5,320</td><td class="f">3,376 + 1,944 = 5,320</td><td class="ok">✓</td></tr>
+  <tr><td>7</td><td class="f">256 · (1.5<sup>7</sup> − 1) / 0.5 = 8,236</td><td class="f">5,320 + 2,916 = 8,236</td><td class="ok">✓</td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>8</td><td class="f">256 · (1.5<sup>8</sup> − 1) / 0.5 = 12,610</td><td class="f">8,236 + 4,374 = 12,610</td><td class="ok">✓</td></tr>
+  </table></div>
+</div></details>
+</div>
+
+<!-- Example 2 -->
+<div class="card">
+<h3>דוגמה 2 – חיסכון עם הפקדה שנתית 💰</h3>
+<p>בתחילת כל שנה מפקידים 1,000 ₪ בתוכנית שמוסיפה 5% בשנה. כמה כסף יש בחיסכון מיד אחרי ההפקדה ה-8?</p>
+<details class="step"><summary>מזהים את <span class="im">a</span> – המחובר הראשון <span class="type">(בניית נוסחה)</span></summary><div class="body">
+  <span class="math">a = 1000</span>
+  <p>ההפקדה החדשה (היא עוד לא גדלה).</p>
+</div></details>
+<details class="step"><summary>מזהים את <span class="im">b</span> – המספר שמכפילים בו <span class="type">(בניית נוסחה)</span></summary><div class="body">
+  <span class="math">b = 1.05</span>
+  <p>כל הפקדה גדלה ב-5% בכל שנה.</p>
+</div></details>
+<details class="step"><summary>מזהים את <span class="im">n</span> – מספר המחוברים <span class="type">(בניית נוסחה)</span></summary><div class="body">
+  <span class="math">n = 8</span>
+  <p>8 הפקדות.</p>
+</div></details>
+<details class="step"><summary>מציבים בנוסחת הסכום ומחשבים במחשבון <span class="type">(חישוב סכום)</span></summary><div class="body">
+  <span class="math">S<sub>n</sub> = a · (b<sup>n</sup> − 1) / (b − 1)</span>
+  <span class="math">S<sub>8</sub> = 1000 · (1.05<sup>8</sup> − 1) / (1.05 − 1)</span>
+  <span class="math">S<sub>8</sub> = 1000 · (1.4774554… − 1) / 0.05</span>
+  <span class="math">S<sub>8</sub> ≈ 9,549.11</span>
+  <p>תשובה: מיד אחרי ההפקדה ה-8 יש בחיסכון כ-9,549.11 ₪.</p>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה נותנת את אותו סכום כמו החישוב שלב אחרי שלב <span class="type">(בדיקה)</span></summary><div class="body">
+  <div class="tablewrap"><table class="verify">
+  <tr><th>n</th><th>בנוסחה: <span class="im">S<sub>n</sub></span></th><th>שלב אחרי שלב: היתרה הקודמת · 1.05 + 1000</th><th>שווה?</th></tr>
+  <tr><td>1</td><td class="f">1000 · (1.05<sup>1</sup> − 1) / 0.05 = 1,000</td><td class="f">—</td><td class="ok">✓</td></tr>
+  <tr><td>2</td><td class="f">1000 · (1.05<sup>2</sup> − 1) / 0.05 = 2,050</td><td class="f">1,000 · 1.05 + 1000 = 2,050</td><td class="ok">✓</td></tr>
+  <tr><td>3</td><td class="f">1000 · (1.05<sup>3</sup> − 1) / 0.05 = 3,152.50</td><td class="f">2,050 · 1.05 + 1000 = 3,152.50</td><td class="ok">✓</td></tr>
+  <tr><td>4</td><td class="f">1000 · (1.05<sup>4</sup> − 1) / 0.05 = 4,310.13</td><td class="f">3,152.50 · 1.05 + 1000 = 4,310.13</td><td class="ok">✓</td></tr>
+  <tr><td>5</td><td class="f">1000 · (1.05<sup>5</sup> − 1) / 0.05 = 5,525.63</td><td class="f">4,310.13 · 1.05 + 1000 = 5,525.63</td><td class="ok">✓</td></tr>
+  <tr><td>6</td><td class="f">1000 · (1.05<sup>6</sup> − 1) / 0.05 = 6,801.91</td><td class="f">5,525.63 · 1.05 + 1000 = 6,801.91</td><td class="ok">✓</td></tr>
+  <tr><td>7</td><td class="f">1000 · (1.05<sup>7</sup> − 1) / 0.05 = 8,142.01</td><td class="f">6,801.91 · 1.05 + 1000 = 8,142.01</td><td class="ok">✓</td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>8</td><td class="f">1000 · (1.05<sup>8</sup> − 1) / 0.05 = 9,549.11</td><td class="f">8,142.01 · 1.05 + 1000 = 9,549.11</td><td class="ok">✓</td></tr>
+  </table></div>
+</div></details>
+</div>
+
+<!-- Example 3 -->
+<div class="card">
+<h3>דוגמה 3 – תרופה שלוקחים כל יום 💊</h3>
+<p>כל בוקר לוקחים 100 מ"ג תרופה, ועד הבוקר הבא נשארת חצי. כמה תרופה יש בגוף מיד אחרי המנה ה-8?</p>
+<details class="step"><summary>מזהים את <span class="im">a</span> – המחובר הראשון <span class="type">(בניית נוסחה)</span></summary><div class="body">
+  <span class="math">a = 100</span>
+  <p>המנה של היום (עוד לא התפרקה).</p>
+</div></details>
+<details class="step"><summary>מזהים את <span class="im">b</span> – המספר שמכפילים בו <span class="type">(בניית נוסחה)</span></summary><div class="body">
+  <span class="math">b = 0.5</span>
+  <p>מכל מנה נשארת חצי בכל יום.</p>
+</div></details>
+<details class="step"><summary>מזהים את <span class="im">n</span> – מספר המחוברים <span class="type">(בניית נוסחה)</span></summary><div class="body">
+  <span class="math">n = 8</span>
+  <p>8 מנות.</p>
+</div></details>
+<details class="step"><summary>מציבים בנוסחת הסכום ומחשבים במחשבון <span class="type">(חישוב סכום)</span></summary><div class="body">
+  <span class="math">S<sub>n</sub> = a · (1 − b<sup>n</sup>) / (1 − b)</span>
+  <span class="math">S<sub>8</sub> = 100 · (1 − 0.5<sup>8</sup>) / (1 − 0.5)</span>
+  <span class="math">S<sub>8</sub> = 100 · (1 − 0.00390625) / 0.5</span>
+  <span class="math">S<sub>8</sub> = 199.21875</span>
+  <p>בדעיכה משתמשים בצורה <span class="im">(1 − b<sup>n</sup>) / (1 − b)</span>, כדי שהמונה והמכנה יהיו חיוביים.</p>
+  <p>תשובה: מיד אחרי המנה ה-8 יש בגוף 199.22 מ"ג.</p>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה נותנת את אותו סכום כמו החישוב שלב אחרי שלב <span class="type">(בדיקה)</span></summary><div class="body">
+  <div class="tablewrap"><table class="verify">
+  <tr><th>n</th><th>בנוסחה: <span class="im">S<sub>n</sub></span></th><th>שלב אחרי שלב: הכמות הקודמת · 0.5 + 100</th><th>שווה?</th></tr>
+  <tr><td>1</td><td class="f">100 · (1 − 0.5<sup>1</sup>) / 0.5 = 100</td><td class="f">—</td><td class="ok">✓</td></tr>
+  <tr><td>2</td><td class="f">100 · (1 − 0.5<sup>2</sup>) / 0.5 = 150</td><td class="f">100 · 0.5 + 100 = 150</td><td class="ok">✓</td></tr>
+  <tr><td>3</td><td class="f">100 · (1 − 0.5<sup>3</sup>) / 0.5 = 175</td><td class="f">150 · 0.5 + 100 = 175</td><td class="ok">✓</td></tr>
+  <tr><td>4</td><td class="f">100 · (1 − 0.5<sup>4</sup>) / 0.5 = 187.50</td><td class="f">175 · 0.5 + 100 = 187.50</td><td class="ok">✓</td></tr>
+  <tr><td>5</td><td class="f">100 · (1 − 0.5<sup>5</sup>) / 0.5 = 193.75</td><td class="f">187.50 · 0.5 + 100 = 193.75</td><td class="ok">✓</td></tr>
+  <tr><td>6</td><td class="f">100 · (1 − 0.5<sup>6</sup>) / 0.5 = 196.88</td><td class="f">193.75 · 0.5 + 100 = 196.88</td><td class="ok">✓</td></tr>
+  <tr><td>7</td><td class="f">100 · (1 − 0.5<sup>7</sup>) / 0.5 = 198.44</td><td class="f">196.88 · 0.5 + 100 = 198.44</td><td class="ok">✓</td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>8</td><td class="f">100 · (1 − 0.5<sup>8</sup>) / 0.5 = 199.22</td><td class="f">198.44 · 0.5 + 100 = 199.22</td><td class="ok">✓</td></tr>
+  </table></div>
+</div></details>
+</div>
+
+<!-- Example 4 -->
+<div class="card">
+<h3>דוגמה 4 – שאלה הפוכה: אחרי כמה שנים? 🐬</h3>
+<p>בשמורת הדולפינים (דוגמה 1) יש מחסן שמספיק ל-20,000 טון מזון בסך הכול. אחרי כמה שנים הסך הכול של המזון יעבור את 20,000 טון?</p>
+<details class="step"><summary>כותבים את נוסחת הסכום עם <span class="im">a = 256</span> ו-<span class="im">b = 1.5</span>, ומפשטים <span class="type">(בניית נוסחה)</span></summary><div class="body">
+  <span class="math">S<sub>n</sub> = a · (b<sup>n</sup> − 1) / (b − 1)</span>
+  <span class="math">S<sub>n</sub> = 256 · (1.5<sup>n</sup> − 1) / 0.5</span>
+  <span class="math">S<sub>n</sub> = 512 · (1.5<sup>n</sup> − 1)</span>
+</div></details>
+
+<details class="step"><summary>כותבים את התנאי: הסכום גדול מ-20,000 <span class="type">(מציאת n)</span></summary><div class="body">
+  <span class="math">512 · (1.5<sup>n</sup> − 1) &gt; 20000</span>
+  <span class="math">1.5<sup>n</sup> − 1 &gt; 39.0625</span>
+  <span class="math">1.5<sup>n</sup> &gt; 40.0625</span>
+</div></details>
+
+<details class="step"><summary>מוצאים את החזקה המתאימה – מנסים ערכים של <span class="im">n</span> <span class="type">(מציאת n)</span></summary><div class="body">
+  <span class="math">1.5<sup>9</sup> ≈ 38.44 &lt; 40.0625</span>
+  <span class="math">1.5<sup>10</sup> ≈ 57.67 &gt; 40.0625</span>
+  <span class="math">n = 10</span>
+  <p>תשובה: במהלך השנה ה-10 הסך הכול יעבור את 20,000 טון (אחרי 9 שנים הוא עוד מתחת).</p>
+</div></details>
+
+<details class="step" open><summary>בודקים בטבלה <span class="type">(בדיקה)</span></summary><div class="body">
+  <div class="tablewrap"><table class="verify">
+  <tr><th>n</th><th><span class="im">S<sub>n</sub></span></th><th>האם עברנו 20,000?</th></tr>
+  <tr><td>7</td><td class="f">512 · (1.5<sup>7</sup> − 1) = 8,236</td><td class="he">פחות מ-20,000</td></tr>
+  <tr><td>8</td><td class="f">512 · (1.5<sup>8</sup> − 1) = 12,610</td><td class="he">פחות מ-20,000</td></tr>
+  <tr><td>9</td><td class="f">512 · (1.5<sup>9</sup> − 1) = 19,171</td><td class="he">פחות מ-20,000</td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>10</td><td class="f">512 · (1.5<sup>10</sup> − 1) = 29,012.50</td><td class="he">מעל 20,000 ✓</td></tr>
+  <tr><td>11</td><td class="f">512 · (1.5<sup>11</sup> − 1) = 43,774.75</td><td class="he">מעל 20,000 ✓</td></tr>
+  </table></div>
+</div></details>
+
+</div>
+
+<h2>סיכום</h2>
+<div class="card key">
+  <ul>
+    <li>לפני שמציבים – מזהים שלושה דברים: <span class="im">a</span>, <span class="im">b</span> ו-<span class="im">n</span>.</li>
+    <li>בגדילה (<span class="im">b &gt; 1</span>) משתמשים ב-<span class="im">a · (b<sup>n</sup> − 1) / (b − 1)</span>, ובדעיכה (<span class="im">0 &lt; b &lt; 1</span>) ב-<span class="im">a · (1 − b<sup>n</sup>) / (1 − b)</span>.</li>
+    <li>את <span class="im">b<sup>n</sup></span> מחשבים במחשבון ומעגלים רק את התוצאה הסופית.</li>
+    <li>כשהסכום ידוע ו-<span class="im">n</span> לא ידוע – מפשטים עד <span class="im">b<sup>n</sup></span> ומוצאים את החזקה המתאימה.</li>
+  </ul>
+</div>
+
+<p><a href="exponential-08-sum-formula.html">→ חזרה לדף ההסבר</a></p>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+</main>
+<script>
+function toggleAll(open){document.querySelectorAll('details.step').forEach(function(d){d.open=open;});}
+</script>
+</body>
+</html>
