@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור ראשון – חישוב הדוגמאות בנוסחה</title>
+<style>
+  :root{
+    --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
+    --accent:#2f6fde; --grow:#1f9d55; --decay:#d04a3a; --border:#dde2ea;
+    --code:#eef2f8; --blank:#fffbe8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+      --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+      --code:#252d3c; --blank:#2b2a20;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+    --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+    --code:#252d3c; --blank:#2b2a20;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:"Segoe UI",Arial,"Noto Sans Hebrew",sans-serif;line-height:1.7;font-size:17px}
+  main{max-width:900px;margin:0 auto;padding:16px}
+  a{color:var(--accent)}
+  .back{display:inline-block;margin:8px 0 4px}
+  h1{font-size:1.8rem;margin:.3em 0}
+  h2{font-size:1.35rem;margin:1.6em 0 .5em;border-bottom:2px solid var(--accent);padding-bottom:4px}
+  h3{font-size:1.1rem;margin:1.2em 0 .4em}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0}
+  .math{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;
+    font-size:1.12rem;background:var(--code);border-radius:6px;padding:4px 10px;margin:4px 0;display:block}
+  .im{direction:ltr;unicode-bidi:isolate;font-family:"Cambria Math","Times New Roman",serif;white-space:nowrap}
+  .grow{color:var(--grow);font-weight:600}
+  .decay{color:var(--decay);font-weight:600}
+  .key{border-inline-start:5px solid var(--accent)}
+  .task{background:var(--code);border-radius:8px;padding:8px 12px;margin:8px 0}
+  table{border-collapse:collapse;margin:8px auto;direction:ltr}
+  th,td{border:1px solid var(--border);padding:4px 10px;text-align:center}
+  th{background:var(--code)}
+  .tablewrap{overflow-x:auto}
+  .calc td{min-width:74px;white-space:nowrap}
+  .calc td.ans{background:var(--blank)}
+  .calc td.ans .v{visibility:hidden}
+  .calc.show td.ans .v{visibility:visible}
+  .graphs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .graphs figure{margin:0;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px}
+  figcaption{text-align:center;color:var(--muted);font-size:.95rem}
+  svg{width:100%;height:auto;display:block}
+  details.step{border:1px solid var(--border);border-radius:8px;margin:6px 0;background:var(--card)}
+  details.step summary{cursor:pointer;padding:6px 10px;font-weight:600}
+  details.step .body{padding:2px 12px 10px}
+  .type{color:var(--muted);font-size:.9rem;font-weight:400}
+  .controls{margin:6px 0;display:flex;flex-wrap:wrap;gap:6px}
+  button{font:inherit;padding:4px 12px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
+  ul{padding-inline-start:22px}
+  .verify td{min-width:0;white-space:nowrap}
+  .verify td.ok{color:var(--grow);font-weight:700}
+  .verify td.f{font-family:"Cambria Math","Times New Roman",serif}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+<h1>שיעור ראשון – חישוב הדוגמאות בנוסחה</h1>
+<p>ב<a href="exponential-01-sim-lesson1.html">דף הדוגמאות</a> חישבנו את הדולפינים, החיסכון, הרכב והתרופה שנה אחרי שנה. ב<a href="exponential-02-growth-decay.html">דף ההסבר</a> בנינו את הנוסחה:</p>
+<span class="math">f(t) = a · b<sup>t</sup></span>
+<p>עכשיו נפתור את אותן דוגמאות בעזרת הנוסחה – ישר לשנה 3 ולשנה 8 – ובסוף כל דוגמה נבדוק בטבלה שהנוסחה נותנת בדיוק את אותם ערכים כמו ההכפלה צעד אחר צעד.</p>
+<div class="card key">
+  <b>סדר הפתרון בכל דוגמה:</b> מזהים את <span class="im">a</span> (הערך ההתחלתי), מוצאים את <span class="im">b</span> (המספר שמכפילים בו), כותבים את הפונקציה, מציבים את <span class="im">t</span>, ובודקים בטבלה.
+</div>
+<div class="controls"><button type="button" onclick="toggleAll(true)">פתח את כל השלבים</button> <button type="button" onclick="toggleAll(false)">סגור את כל השלבים</button></div>
+
+<!-- Example 1 -->
+<div class="card">
+<h3>דוגמה 1 – דולפינים 🐬</h3>
+<p>בשמורה ימית חיים 256 דולפינים. בכל שנה מספר הדולפינים גדל ב-50%. כמה דולפינים יהיו אחרי 3 שנים? ואחרי 8 שנים?</p>
+<details class="step"><summary>מזהים את הערך ההתחלתי <span class="im">a</span> <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">a = 256</span>
+</div></details>
+<details class="step"><summary>מתרגמים את אחוז הגידול למספר שמכפילים בו, <span class="im">b</span> <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">b = 1 + p/100</span>
+  <span class="math">b = 1 + 50/100</span>
+  <span class="math">b = 1.5</span>
+  <p>מכיוון ש-<span class="im">b &gt; 1</span>, זו פונקציית <span class="grow">גידול</span>.</p>
+</div></details>
+<details class="step"><summary>מציבים את a ואת b בנוסחה הכללית ומקבלים את הפונקציה</summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">D(t) = 256 · 1.5<sup>t</sup></span>
+</div></details>
+<details class="step"><summary>מציבים t = 3 בפונקציה ומחשבים במחשבון <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">D(t) = a · b<sup>t</sup></span>
+  <span class="math">D(3) = 256 · 1.5<sup>3</sup></span>
+  <span class="math">D(3) = 256 · 3.375</span>
+  <span class="math">D(3) = 864</span>
+  <p>תשובה: אחרי 3 שנים – 864 דולפינים.</p>
+</div></details>
+<details class="step"><summary>מציבים t = 8 בפונקציה ומחשבים במחשבון <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">D(t) = a · b<sup>t</sup></span>
+  <span class="math">D(8) = 256 · 1.5<sup>8</sup></span>
+  <span class="math">D(8) = 256 · 25.6289062…</span>
+  <span class="math">D(8) = 6561</span>
+  <p>תשובה: אחרי 8 שנים – 6,561 דולפינים.</p>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה נותנת את אותם ערכים כמו הכפלה צעד אחר צעד <span class="type">(בדיקה)</span></summary><div class="body">
+  <div class="tablewrap"><table class="verify">
+  <tr><th>t</th><th>בנוסחה: <span class="im">a · b<sup>t</sup></span></th><th>צעד אחר צעד: הקודם · 1.5</th><th>שווה?</th></tr>
+  <tr><td>0</td><td class="f">256 · 1.5<sup>0</sup> = 256</td><td class="f">—</td><td class="ok">✓</td></tr>
+  <tr><td>1</td><td class="f">256 · 1.5<sup>1</sup> = 384</td><td class="f">256 · 1.5 = 384</td><td class="ok">✓</td></tr>
+  <tr><td>2</td><td class="f">256 · 1.5<sup>2</sup> = 576</td><td class="f">384 · 1.5 = 576</td><td class="ok">✓</td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>3</td><td class="f">256 · 1.5<sup>3</sup> = 864</td><td class="f">576 · 1.5 = 864</td><td class="ok">✓</td></tr>
+  <tr><td>4</td><td class="f">256 · 1.5<sup>4</sup> = 1,296</td><td class="f">864 · 1.5 = 1,296</td><td class="ok">✓</td></tr>
+  <tr><td>5</td><td class="f">256 · 1.5<sup>5</sup> = 1,944</td><td class="f">1,296 · 1.5 = 1,944</td><td class="ok">✓</td></tr>
+  <tr><td>6</td><td class="f">256 · 1.5<sup>6</sup> = 2,916</td><td class="f">1,944 · 1.5 = 2,916</td><td class="ok">✓</td></tr>
+  <tr><td>7</td><td class="f">256 · 1.5<sup>7</sup> = 4,374</td><td class="f">2,916 · 1.5 = 4,374</td><td class="ok">✓</td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>8</td><td class="f">256 · 1.5<sup>8</sup> = 6,561</td><td class="f">4,374 · 1.5 = 6,561</td><td class="ok">✓</td></tr>
+  </table></div>
+  <p>בכל שורה שתי הדרכים נותנות אותה תוצאה. הנוסחה מאפשרת לקפוץ ישר לכל <span class="im">t</span>, בלי לחשב את כל השלבים שלפניו.</p>
+</div></details>
+</div>
+
+<!-- Example 2 -->
+<div class="card">
+<h3>דוגמה 2 – חיסכון בבנק 💰</h3>
+<p>מפקידים 10,000 ₪ בתוכנית חיסכון שמוסיפה 5% בכל שנה על הסכום שנצבר. כמה כסף יהיה בחיסכון אחרי 3 שנים? ואחרי 8 שנים?</p>
+<details class="step"><summary>מזהים את הערך ההתחלתי <span class="im">a</span> <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">a = 10000</span>
+</div></details>
+<details class="step"><summary>מתרגמים את אחוז הגידול למספר שמכפילים בו, <span class="im">b</span> <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">b = 1 + p/100</span>
+  <span class="math">b = 1 + 5/100</span>
+  <span class="math">b = 1.05</span>
+  <p>מכיוון ש-<span class="im">b &gt; 1</span>, זו פונקציית <span class="grow">גידול</span>.</p>
+</div></details>
+<details class="step"><summary>מציבים את a ואת b בנוסחה הכללית ומקבלים את הפונקציה</summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">S(t) = 10000 · 1.05<sup>t</sup></span>
+</div></details>
+<details class="step"><summary>מציבים t = 3 בפונקציה ומחשבים במחשבון <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">S(t) = a · b<sup>t</sup></span>
+  <span class="math">S(3) = 10000 · 1.05<sup>3</sup></span>
+  <span class="math">S(3) = 10000 · 1.157625</span>
+  <span class="math">S(3) = 11576.25</span>
+  <p>תשובה: אחרי 3 שנים – 11,576.25 ₪.</p>
+</div></details>
+<details class="step"><summary>מציבים t = 8 בפונקציה ומחשבים במחשבון <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">S(t) = a · b<sup>t</sup></span>
+  <span class="math">S(8) = 10000 · 1.05<sup>8</sup></span>
+  <span class="math">S(8) = 10000 · 1.4774554…</span>
+  <span class="math">S(8) ≈ 14,774.55</span>
+  <p>תשובה: אחרי 8 שנים – 14,774.55 ₪.</p>
+  <p class="note">את <span class="im">b<sup>t</sup></span> מחשבים במחשבון בלחיצה אחת (מקש החזקה), ומעגלים רק את התוצאה הסופית.</p>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה נותנת את אותם ערכים כמו הכפלה צעד אחר צעד <span class="type">(בדיקה)</span></summary><div class="body">
+  <div class="tablewrap"><table class="verify">
+  <tr><th>t</th><th>בנוסחה: <span class="im">a · b<sup>t</sup></span></th><th>צעד אחר צעד: הקודם · 1.05</th><th>שווה?</th></tr>
+  <tr><td>0</td><td class="f">10000 · 1.05<sup>0</sup> = 10,000</td><td class="f">—</td><td class="ok">✓</td></tr>
+  <tr><td>1</td><td class="f">10000 · 1.05<sup>1</sup> = 10,500</td><td class="f">10,000 · 1.05 = 10,500</td><td class="ok">✓</td></tr>
+  <tr><td>2</td><td class="f">10000 · 1.05<sup>2</sup> = 11,025</td><td class="f">10,500 · 1.05 = 11,025</td><td class="ok">✓</td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>3</td><td class="f">10000 · 1.05<sup>3</sup> = 11,576.25</td><td class="f">11,025 · 1.05 = 11,576.25</td><td class="ok">✓</td></tr>
+  <tr><td>4</td><td class="f">10000 · 1.05<sup>4</sup> = 12,155.06</td><td class="f">11,576.25 · 1.05 = 12,155.06</td><td class="ok">✓</td></tr>
+  <tr><td>5</td><td class="f">10000 · 1.05<sup>5</sup> = 12,762.82</td><td class="f">12,155.06 · 1.05 = 12,762.82</td><td class="ok">✓</td></tr>
+  <tr><td>6</td><td class="f">10000 · 1.05<sup>6</sup> = 13,400.96</td><td class="f">12,762.82 · 1.05 = 13,400.96</td><td class="ok">✓</td></tr>
+  <tr><td>7</td><td class="f">10000 · 1.05<sup>7</sup> = 14,071</td><td class="f">13,400.96 · 1.05 = 14,071</td><td class="ok">✓</td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>8</td><td class="f">10000 · 1.05<sup>8</sup> = 14,774.55</td><td class="f">14,071 · 1.05 = 14,774.55</td><td class="ok">✓</td></tr>
+  </table></div>
+  <p>בכל שורה שתי הדרכים נותנות אותה תוצאה. הנוסחה מאפשרת לקפוץ ישר לכל <span class="im">t</span>, בלי לחשב את כל השלבים שלפניו.</p>
+</div></details>
+</div>
+
+<!-- Example 3 -->
+<div class="card">
+<h3>דוגמה 3 – ירידת ערך של רכב 🚗</h3>
+<p>רכב נקנה ב-80,000 ₪. ערכו יורד ב-15% בכל שנה. מה ערך הרכב אחרי 3 שנים? ואחרי 8 שנים?</p>
+<details class="step"><summary>מזהים את הערך ההתחלתי <span class="im">a</span> <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">a = 80000</span>
+</div></details>
+<details class="step"><summary>מתרגמים את אחוז הירידה למספר שמכפילים בו, <span class="im">b</span> <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">b = 1 − p/100</span>
+  <span class="math">b = 1 − 15/100</span>
+  <span class="math">b = 0.85</span>
+  <p>מכיוון ש-<span class="im">0 &lt; b &lt; 1</span>, זו פונקציית <span class="decay">דעיכה</span>.</p>
+</div></details>
+<details class="step"><summary>מציבים את a ואת b בנוסחה הכללית ומקבלים את הפונקציה</summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">V(t) = 80000 · 0.85<sup>t</sup></span>
+</div></details>
+<details class="step"><summary>מציבים t = 3 בפונקציה ומחשבים במחשבון <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">V(t) = a · b<sup>t</sup></span>
+  <span class="math">V(3) = 80000 · 0.85<sup>3</sup></span>
+  <span class="math">V(3) = 80000 · 0.614125</span>
+  <span class="math">V(3) = 49130</span>
+  <p>תשובה: אחרי 3 שנים – 49,130 ₪.</p>
+</div></details>
+<details class="step"><summary>מציבים t = 8 בפונקציה ומחשבים במחשבון <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">V(t) = a · b<sup>t</sup></span>
+  <span class="math">V(8) = 80000 · 0.85<sup>8</sup></span>
+  <span class="math">V(8) = 80000 · 0.2724905…</span>
+  <span class="math">V(8) ≈ 21,799.24</span>
+  <p>תשובה: אחרי 8 שנים – 21,799.24 ₪.</p>
+  <p class="note">את <span class="im">b<sup>t</sup></span> מחשבים במחשבון בלחיצה אחת (מקש החזקה), ומעגלים רק את התוצאה הסופית.</p>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה נותנת את אותם ערכים כמו הכפלה צעד אחר צעד <span class="type">(בדיקה)</span></summary><div class="body">
+  <div class="tablewrap"><table class="verify">
+  <tr><th>t</th><th>בנוסחה: <span class="im">a · b<sup>t</sup></span></th><th>צעד אחר צעד: הקודם · 0.85</th><th>שווה?</th></tr>
+  <tr><td>0</td><td class="f">80000 · 0.85<sup>0</sup> = 80,000</td><td class="f">—</td><td class="ok">✓</td></tr>
+  <tr><td>1</td><td class="f">80000 · 0.85<sup>1</sup> = 68,000</td><td class="f">80,000 · 0.85 = 68,000</td><td class="ok">✓</td></tr>
+  <tr><td>2</td><td class="f">80000 · 0.85<sup>2</sup> = 57,800</td><td class="f">68,000 · 0.85 = 57,800</td><td class="ok">✓</td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>3</td><td class="f">80000 · 0.85<sup>3</sup> = 49,130</td><td class="f">57,800 · 0.85 = 49,130</td><td class="ok">✓</td></tr>
+  <tr><td>4</td><td class="f">80000 · 0.85<sup>4</sup> = 41,760.5</td><td class="f">49,130 · 0.85 = 41,760.5</td><td class="ok">✓</td></tr>
+  <tr><td>5</td><td class="f">80000 · 0.85<sup>5</sup> = 35,496.42</td><td class="f">41,760.5 · 0.85 = 35,496.42</td><td class="ok">✓</td></tr>
+  <tr><td>6</td><td class="f">80000 · 0.85<sup>6</sup> = 30,171.96</td><td class="f">35,496.42 · 0.85 = 30,171.96</td><td class="ok">✓</td></tr>
+  <tr><td>7</td><td class="f">80000 · 0.85<sup>7</sup> = 25,646.17</td><td class="f">30,171.96 · 0.85 = 25,646.17</td><td class="ok">✓</td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>8</td><td class="f">80000 · 0.85<sup>8</sup> = 21,799.24</td><td class="f">25,646.17 · 0.85 = 21,799.24</td><td class="ok">✓</td></tr>
+  </table></div>
+  <p>בכל שורה שתי הדרכים נותנות אותה תוצאה. הנוסחה מאפשרת לקפוץ ישר לכל <span class="im">t</span>, בלי לחשב את כל השלבים שלפניו.</p>
+</div></details>
+</div>
+
+<!-- Example 4 -->
+<div class="card">
+<h3>דוגמה 4 – תרופה בגוף 💊</h3>
+<p>מטופל קיבל 200 מ"ג של תרופה. בכל שעה כמות התרופה בגוף קטנה ב-20%. כמה תרופה תישאר אחרי 3 שעות? ואחרי 8 שעות?</p>
+<details class="step"><summary>מזהים את הערך ההתחלתי <span class="im">a</span> <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">a = 200</span>
+</div></details>
+<details class="step"><summary>מתרגמים את אחוז הירידה למספר שמכפילים בו, <span class="im">b</span> <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">b = 1 − p/100</span>
+  <span class="math">b = 1 − 20/100</span>
+  <span class="math">b = 0.8</span>
+  <p>מכיוון ש-<span class="im">0 &lt; b &lt; 1</span>, זו פונקציית <span class="decay">דעיכה</span>.</p>
+</div></details>
+<details class="step"><summary>מציבים את a ואת b בנוסחה הכללית ומקבלים את הפונקציה</summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">M(t) = 200 · 0.8<sup>t</sup></span>
+</div></details>
+<details class="step"><summary>מציבים t = 3 בפונקציה ומחשבים במחשבון <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">M(t) = a · b<sup>t</sup></span>
+  <span class="math">M(3) = 200 · 0.8<sup>3</sup></span>
+  <span class="math">M(3) = 200 · 0.512</span>
+  <span class="math">M(3) = 102.4</span>
+  <p>תשובה: אחרי 3 שעות – 102.4 מ"ג.</p>
+</div></details>
+<details class="step"><summary>מציבים t = 8 בפונקציה ומחשבים במחשבון <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">M(t) = a · b<sup>t</sup></span>
+  <span class="math">M(8) = 200 · 0.8<sup>8</sup></span>
+  <span class="math">M(8) = 200 · 0.16777216</span>
+  <span class="math">M(8) = 33.554432</span>
+  <p>תשובה: אחרי 8 שעות – 33.55 מ"ג.</p>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה נותנת את אותם ערכים כמו הכפלה צעד אחר צעד <span class="type">(בדיקה)</span></summary><div class="body">
+  <div class="tablewrap"><table class="verify">
+  <tr><th>t</th><th>בנוסחה: <span class="im">a · b<sup>t</sup></span></th><th>צעד אחר צעד: הקודם · 0.8</th><th>שווה?</th></tr>
+  <tr><td>0</td><td class="f">200 · 0.8<sup>0</sup> = 200</td><td class="f">—</td><td class="ok">✓</td></tr>
+  <tr><td>1</td><td class="f">200 · 0.8<sup>1</sup> = 160</td><td class="f">200 · 0.8 = 160</td><td class="ok">✓</td></tr>
+  <tr><td>2</td><td class="f">200 · 0.8<sup>2</sup> = 128</td><td class="f">160 · 0.8 = 128</td><td class="ok">✓</td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>3</td><td class="f">200 · 0.8<sup>3</sup> = 102.4</td><td class="f">128 · 0.8 = 102.4</td><td class="ok">✓</td></tr>
+  <tr><td>4</td><td class="f">200 · 0.8<sup>4</sup> = 81.92</td><td class="f">102.4 · 0.8 = 81.92</td><td class="ok">✓</td></tr>
+  <tr><td>5</td><td class="f">200 · 0.8<sup>5</sup> = 65.54</td><td class="f">81.92 · 0.8 = 65.54</td><td class="ok">✓</td></tr>
+  <tr><td>6</td><td class="f">200 · 0.8<sup>6</sup> = 52.43</td><td class="f">65.54 · 0.8 = 52.43</td><td class="ok">✓</td></tr>
+  <tr><td>7</td><td class="f">200 · 0.8<sup>7</sup> = 41.94</td><td class="f">52.43 · 0.8 = 41.94</td><td class="ok">✓</td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>8</td><td class="f">200 · 0.8<sup>8</sup> = 33.55</td><td class="f">41.94 · 0.8 = 33.55</td><td class="ok">✓</td></tr>
+  </table></div>
+  <p>בכל שורה שתי הדרכים נותנות אותה תוצאה. הנוסחה מאפשרת לקפוץ ישר לכל <span class="im">t</span>, בלי לחשב את כל השלבים שלפניו.</p>
+</div></details>
+</div>
+
+<h2>סיכום</h2>
+<div class="card key">
+  <ul>
+    <li>כדי לחשב ערך אחרי <span class="im">t</span> צעדים לא צריך לעבור את כל הצעדים: מציבים בנוסחה <span class="im">f(t) = a · b<sup>t</sup></span>.</li>
+    <li><span class="im">b<sup>t</sup></span> הוא בדיוק "להכפיל ב-<span class="im">b</span>, <span class="im">t</span> פעמים" – ולכן הנוסחה והטבלה תמיד מסכימות.</li>
+    <li>מעגלים רק את התוצאה הסופית, לא את <span class="im">b<sup>t</sup></span> באמצע החישוב.</li>
+  </ul>
+</div>
+
+<p><a href="exponential-02-growth-decay.html">→ חזרה לדף ההסבר</a> · <a href="exponential-04-sim-lesson2.html">המשך לשיעור שני – דף דוגמאות ←</a></p>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+</main>
+<script>
+function toggleAll(open){document.querySelectorAll('details.step').forEach(function(d){d.open=open;});}
+</script>
+</body>
+</html>
