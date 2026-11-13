@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור שני – חישוב הדוגמאות בנוסחה</title>
+<style>
+  :root{
+    --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
+    --accent:#2f6fde; --grow:#1f9d55; --decay:#d04a3a; --border:#dde2ea;
+    --code:#eef2f8; --blank:#fffbe8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+      --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+      --code:#252d3c; --blank:#2b2a20;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+    --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+    --code:#252d3c; --blank:#2b2a20;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:"Segoe UI",Arial,"Noto Sans Hebrew",sans-serif;line-height:1.7;font-size:17px}
+  main{max-width:900px;margin:0 auto;padding:16px}
+  a{color:var(--accent)}
+  .back{display:inline-block;margin:8px 0 4px}
+  h1{font-size:1.8rem;margin:.3em 0}
+  h2{font-size:1.35rem;margin:1.6em 0 .5em;border-bottom:2px solid var(--accent);padding-bottom:4px}
+  h3{font-size:1.1rem;margin:1.2em 0 .4em}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0}
+  .math{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;
+    font-size:1.12rem;background:var(--code);border-radius:6px;padding:4px 10px;margin:4px 0;display:block}
+  .im{direction:ltr;unicode-bidi:isolate;font-family:"Cambria Math","Times New Roman",serif;white-space:nowrap}
+  .grow{color:var(--grow);font-weight:600}
+  .decay{color:var(--decay);font-weight:600}
+  .key{border-inline-start:5px solid var(--accent)}
+  .task{background:var(--code);border-radius:8px;padding:8px 12px;margin:8px 0}
+  table{border-collapse:collapse;margin:8px auto;direction:rtl}
+  th,td{border:1px solid var(--border);padding:4px 10px;text-align:center}
+  th{background:var(--code)}
+  .tablewrap{overflow-x:auto}
+  .calc td{min-width:74px;white-space:nowrap}
+  .calc td.ans{background:var(--blank)}
+  .calc td.ans .v{visibility:hidden}
+  .calc.show td.ans .v{visibility:visible}
+  .graphs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .graphs figure{margin:0;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px}
+  figcaption{text-align:center;color:var(--muted);font-size:.95rem}
+  svg{width:100%;height:auto;display:block}
+  details.step{border:1px solid var(--border);border-radius:8px;margin:6px 0;background:var(--card)}
+  details.step summary{cursor:pointer;padding:6px 10px;font-weight:600}
+  details.step .body{padding:2px 12px 10px}
+  .type{color:var(--muted);font-size:.9rem;font-weight:400}
+  .controls{margin:6px 0;display:flex;flex-wrap:wrap;gap:6px}
+  button{font:inherit;padding:4px 12px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
+  ul{padding-inline-start:22px}
+  .verify td{min-width:0;white-space:nowrap}
+  .verify td.ok{color:var(--grow);font-weight:700}
+  .verify td.f{font-family:"Cambria Math","Times New Roman",serif}
+  td{direction:ltr;unicode-bidi:isolate}
+  td.he{direction:rtl}
+  th{direction:rtl;unicode-bidi:isolate}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+<h1>שיעור שני – חישוב הדוגמאות בנוסחה</h1>
+<p>ב<a href="exponential-04-sim-lesson2.html">דף הדוגמאות של שיעור שני</a> פתרנו את השאלות בטבלה – שנה אחרי שנה. עכשיו נפתור אותן בעזרת הנוסחה:</p>
+<span class="math">f(t) = a · b<sup>t</sup></span>
+<p>כותבים פונקציה לכל קבוצה, משווים ביניהן, ופותרים את המשוואה. בסוף כל שאלה טבלת בדיקה מראה שהתשובה נכונה.</p>
+<div class="card key">
+  <b>סדר הפתרון בכל שאלה:</b> מוצאים את <span class="im">b</span> של כל קבוצה, כותבים פונקציה לכל קבוצה (את מה שלא ידוע מסמנים באות), משווים בין הפונקציות בזמן המתאים, פותרים, ובודקים בטבלה.
+</div>
+<div class="controls"><button type="button" onclick="toggleAll(true)">פתח את כל השלבים</button> <button type="button" onclick="toggleAll(false)">סגור את כל השלבים</button></div>
+
+<!-- Question 1 -->
+<div class="card">
+<h3>שאלה 1 – שתי שמורות דולפינים 🐬</h3>
+<p>בשמורה א' יש 1,728 דולפינים, ומספרם גדל ב-25% בכל שנה.<br>בשמורה ב' יש 1,000 דולפינים, ומספרם גדל ב-50% בכל שנה.<br>אחרי כמה שנים יהיה בשתי השמורות אותו מספר דולפינים? כמה דולפינים יהיו אז בכל שמורה?</p>
+<details class="step"><summary>מתרגמים את אחוזי הגידול של כל שמורה למספר שמכפילים בו <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">b = 1 + p/100</span>
+  <span class="math">b<sub>A</sub> = 1 + 25/100 = 1.25</span>
+  <span class="math">b<sub>B</sub> = 1 + 50/100 = 1.5</span>
+</div></details>
+<details class="step"><summary>כותבים פונקציה לכל שמורה <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">A(t) = 1728 · 1.25<sup>t</sup></span>
+  <span class="math">B(t) = 1000 · 1.5<sup>t</sup></span>
+</div></details>
+<details class="step"><summary>משווים בין הפונקציות, כי מחפשים את השנה שבה מספר הדולפינים שווה <span class="type">(פתרון משוואה)</span></summary><div class="body">
+  <span class="math">A(t) = B(t)</span>
+  <span class="math">1728 · 1.25<sup>t</sup> = 1000 · 1.5<sup>t</sup></span>
+</div></details>
+<details class="step"><summary>מעבירים אגפים: החזקות לאגף אחד והמספרים לאגף השני</summary><div class="body">
+  <span class="math">1.5<sup>t</sup> / 1.25<sup>t</sup> = 1728 / 1000</span>
+  <span class="math">(1.5 / 1.25)<sup>t</sup> = 1.728</span>
+  <span class="math">1.2<sup>t</sup> = 1.728</span>
+  <p>חילוק של שתי חזקות עם אותו מעריך: <span class="im">x<sup>t</sup> / y<sup>t</sup> = (x / y)<sup>t</sup></span>.</p>
+</div></details>
+<details class="step"><summary>מוצאים איזו חזקה של 1.2 נותנת 1.728 <span class="type">(פתרון משוואה)</span></summary><div class="body">
+  <span class="math">1.2<sup>1</sup> = 1.2</span>
+  <span class="math">1.2<sup>2</sup> = 1.44</span>
+  <span class="math">1.2<sup>3</sup> = 1.728</span>
+  <span class="math">t = 3</span>
+</div></details>
+<details class="step"><summary>מציבים t = 3 בשתי הפונקציות, כדי למצוא את מספר הדולפינים ולוודא שהוא שווה <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">A(3) = 1728 · 1.25<sup>3</sup> = 1728 · 1.953125 = 3375</span>
+  <span class="math">B(3) = 1000 · 1.5<sup>3</sup> = 1000 · 3.375 = 3375</span>
+  <p>תשובה: אחרי 3 שנים יהיו בכל שמורה 3,375 דולפינים.</p>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: השוויון מתקבל בדיוק בשנה 3 <span class="type">(בדיקה)</span></summary><div class="body">
+  <div class="tablewrap"><table class="verify">
+  <tr><th>t</th><th>שמורה א': <span class="im">A(t)</span></th><th>שמורה ב': <span class="im">B(t)</span></th><th>השוואה</th></tr>
+  <tr><td>0</td><td class="f">1728 · 1.25<sup>0</sup> = 1,728</td><td class="f">1000 · 1.5<sup>0</sup> = 1,000</td><td class="he">א' גדולה</td></tr>
+  <tr><td>1</td><td class="f">1728 · 1.25<sup>1</sup> = 2,160</td><td class="f">1000 · 1.5<sup>1</sup> = 1,500</td><td class="he">א' גדולה</td></tr>
+  <tr><td>2</td><td class="f">1728 · 1.25<sup>2</sup> = 2,700</td><td class="f">1000 · 1.5<sup>2</sup> = 2,250</td><td class="he">א' גדולה</td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>3</td><td class="f">1728 · 1.25<sup>3</sup> = 3,375</td><td class="f">1000 · 1.5<sup>3</sup> = 3,375</td><td class="he">✓ שוויון</td></tr>
+  <tr><td>4</td><td class="f">1728 · 1.25<sup>4</sup> = 4,218.75</td><td class="f">1000 · 1.5<sup>4</sup> = 5,062.50</td><td class="he">ב' גדולה</td></tr>
+  <tr><td>5</td><td class="f">1728 · 1.25<sup>5</sup> = 5,273.44</td><td class="f">1000 · 1.5<sup>5</sup> = 7,593.75</td><td class="he">ב' גדולה</td></tr>
+  </table></div>
+  <p>עד שנה 3 שמורה א' גדולה יותר; אחרי שנה 3 שמורה ב' עוברת אותה, כי היא גדלה מהר יותר.</p>
+</div></details>
+</div>
+
+<!-- Question 2 -->
+<div class="card">
+<h3>שאלה 2 – שני עדרי כבשים 🐑</h3>
+<p>בעדר א' היו בהתחלה 500 כבשים, ומספרן גדל ב-20% בכל שנה.<br>בעדר ב' מספר הכבשים גדל ב-50% בכל שנה.<br>אחרי 3 שנים היה בשני העדרים אותו מספר כבשים. כמה כבשים היו בהתחלה בעדר ב'?</p>
+<details class="step"><summary>מתרגמים את אחוזי הגידול של כל עדר למספר שמכפילים בו <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">b = 1 + p/100</span>
+  <span class="math">b<sub>A</sub> = 1 + 20/100 = 1.2</span>
+  <span class="math">b<sub>B</sub> = 1 + 50/100 = 1.5</span>
+</div></details>
+<details class="step"><summary>כותבים פונקציה לכל עדר; הערך ההתחלתי של עדר ב' לא ידוע, ומסמנים אותו a <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">A(t) = 500 · 1.2<sup>t</sup></span>
+  <span class="math">B(t) = a · 1.5<sup>t</sup></span>
+</div></details>
+<details class="step"><summary>מציבים t = 3 בפונקציה של עדר א' כדי למצוא כמה כבשים יש בו אחרי 3 שנים <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">A(3) = 500 · 1.2<sup>3</sup></span>
+  <span class="math">A(3) = 500 · 1.728</span>
+  <span class="math">A(3) = 864</span>
+</div></details>
+<details class="step"><summary>משווים: אחרי 3 שנים יש בעדר ב' אותו מספר כבשים, ומחלצים את a <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">B(3) = A(3)</span>
+  <span class="math">a · 1.5<sup>3</sup> = 864</span>
+  <span class="math">a · 3.375 = 864</span>
+  <span class="math">a = 864 / 3.375</span>
+  <span class="math">a = 256</span>
+  <p>תשובה: בהתחלה היו בעדר ב' 256 כבשים.</p>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: עם a = 256 שני העדרים שווים בשנה 3 <span class="type">(בדיקה)</span></summary><div class="body">
+  <div class="tablewrap"><table class="verify">
+  <tr><th>t</th><th>עדר א': <span class="im">A(t)</span></th><th>עדר ב': <span class="im">B(t)</span></th><th>השוואה</th></tr>
+  <tr style="background:var(--code);font-weight:700"><td>0</td><td class="f">500 · 1.2<sup>0</sup> = 500</td><td class="f">256 · 1.5<sup>0</sup> = 256</td><td></td></tr>
+  <tr><td>1</td><td class="f">500 · 1.2<sup>1</sup> = 600</td><td class="f">256 · 1.5<sup>1</sup> = 384</td><td></td></tr>
+  <tr><td>2</td><td class="f">500 · 1.2<sup>2</sup> = 720</td><td class="f">256 · 1.5<sup>2</sup> = 576</td><td></td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>3</td><td class="f">500 · 1.2<sup>3</sup> = 864</td><td class="f">256 · 1.5<sup>3</sup> = 864</td><td class="he">✓ שוויון</td></tr>
+  </table></div>
+</div></details>
+</div>
+
+<!-- Question 3 -->
+<div class="card">
+<h3>שאלה 3 – שתי בריכות דגים שהתחילו בזמנים שונים 🐟</h3>
+<p>בבריכה א' הכניסו 256 דגים, ומספרם גדל ב-50% בכל שנה.<br>שנתיים אחרי זה הכניסו דגים לבריכה ב', ושם מספר הדגים מוכפל בכל שנה.<br>5 שנים אחרי שהכניסו את הדגים לבריכה א', היה בשתי הבריכות אותו מספר דגים. כמה דגים הכניסו לבריכה ב'?</p>
+<details class="step"><summary>מתרגמים את קצב הגידול של כל בריכה למספר שמכפילים בו <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">b = 1 + p/100</span>
+  <span class="math">b<sub>A</sub> = 1 + 50/100 = 1.5</span>
+  <span class="math">b<sub>B</sub> = 2</span>
+  <p>בבריכה ב' מספר הדגים מוכפל בכל שנה – גידול של 100%.</p>
+</div></details>
+<details class="step"><summary>כותבים פונקציה לכל בריכה; בבריכה ב' המעריך הוא מספר השנים מאז שהוכנסו אליה הדגים, t − 2 <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">A(t) = 256 · 1.5<sup>t</sup></span>
+  <span class="math">B(t) = a · 2<sup>t − 2</sup> ,   t ≥ 2</span>
+  <p><span class="im">t</span> נמדד מהשנה שבה הכניסו דגים לבריכה א'. בבריכה ב' הדגים הוכנסו בשנה 2, ולכן בשנה <span class="im">t</span> הם גדלו רק <span class="im">t − 2</span> שנים.</p>
+</div></details>
+<details class="step"><summary>מציבים t = 5 בפונקציה של בריכה א' <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">A(5) = 256 · 1.5<sup>5</sup></span>
+  <span class="math">A(5) = 256 · 7.59375</span>
+  <span class="math">A(5) = 1944</span>
+</div></details>
+<details class="step"><summary>משווים: בשנה 5 יש בבריכה ב' אותו מספר דגים, ומחלצים את a <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">B(5) = A(5)</span>
+  <span class="math">a · 2<sup>5 − 2</sup> = 1944</span>
+  <span class="math">a · 2<sup>3</sup> = 1944</span>
+  <span class="math">8a = 1944</span>
+  <span class="math">a = 1944 / 8</span>
+  <span class="math">a = 243</span>
+  <p>תשובה: לבריכה ב' הכניסו 243 דגים. אם היינו כותבים <span class="im">2<sup>5</sup></span> במקום <span class="im">2<sup>3</sup></span>, היינו מקבלים <span class="im">1944 / 32 = 60.75</span> – תשובה שגויה (ואפילו לא מספר שלם).</p>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: עם a = 243 שתי הבריכות שוות בשנה 5 <span class="type">(בדיקה)</span></summary><div class="body">
+  <div class="tablewrap"><table class="verify">
+  <tr><th>t</th><th>בריכה א': <span class="im">A(t)</span></th><th>בריכה ב': <span class="im">B(t)</span></th><th>השוואה</th></tr>
+  <tr><td>0</td><td class="f">256 · 1.5<sup>0</sup> = 256</td><td>—</td><td></td></tr>
+  <tr><td>1</td><td class="f">256 · 1.5<sup>1</sup> = 384</td><td>—</td><td></td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>2</td><td class="f">256 · 1.5<sup>2</sup> = 576</td><td class="f">243 · 2<sup>0</sup> = 243</td><td></td></tr>
+  <tr><td>3</td><td class="f">256 · 1.5<sup>3</sup> = 864</td><td class="f">243 · 2<sup>1</sup> = 486</td><td></td></tr>
+  <tr><td>4</td><td class="f">256 · 1.5<sup>4</sup> = 1,296</td><td class="f">243 · 2<sup>2</sup> = 972</td><td></td></tr>
+  <tr style="background:var(--code);font-weight:700"><td>5</td><td class="f">256 · 1.5<sup>5</sup> = 1,944</td><td class="f">243 · 2<sup>3</sup> = 1,944</td><td class="he">✓ שוויון</td></tr>
+  </table></div>
+</div></details>
+</div>
+
+<h2>סיכום</h2>
+<div class="card key">
+  <ul>
+    <li>כשמשווים שתי קבוצות, כותבים פונקציה לכל אחת ומשווים: <span class="im">A(t) = B(t)</span>.</li>
+    <li>כשהזמן לא ידוע – מעבירים אגפים ומגיעים למשוואה מהצורה <span class="im">c<sup>t</sup> = d</span>, ומוצאים את החזקה המתאימה.</li>
+    <li>כשהערך ההתחלתי לא ידוע – מציבים את הזמן הידוע ומחלקים: <span class="im">a = d / b<sup>t</sup></span>.</li>
+    <li>כשקבוצה התחילה מאוחר יותר, המעריך שלה הוא מספר השנים שהיא גדלה, למשל <span class="im">t − 2</span>.</li>
+  </ul>
+</div>
+
+<p><a href="exponential-04-sim-lesson2.html">→ חזרה לדף הדוגמאות של שיעור שני</a></p>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+</main>
+<script>
+function toggleAll(open){document.querySelectorAll('details.step').forEach(function(d){d.open=open;});}
+</script>
+</body>
+</html>
