@@ -51,16 +51,122 @@
   .g{color:var(--grow);font-weight:600}.d{color:var(--decay);font-weight:600}
   .note{color:var(--muted);font-size:.95rem}
   .eq{background:#fff3c4;color:#5a4300;border-radius:6px;padding:2px 8px;font-weight:600}
+  .math{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;font-size:1.1rem;background:var(--code);border-radius:6px;padding:3px 10px;margin:4px 0;display:block}
+  .work{border:1px dashed var(--border);border-radius:8px;padding:8px 10px;margin:8px 0}
+  .work .wt{font-weight:700;margin-bottom:4px}
+  .tablewrap{overflow-x:auto}
+  table.fill{border-collapse:collapse;margin:8px auto;direction:ltr}
+  table.fill th,table.fill td{border:1px solid var(--border);padding:4px 10px;text-align:center;min-width:70px;white-space:nowrap}
+  table.fill th{background:var(--code)}
+  table.fill td.ans{background:#fffbe8}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) table.fill td.ans{background:#2b2a20}}
+  table.fill td.ans .v{visibility:hidden}
+  table.fill.show td.ans .v{visibility:visible}
+  details.step{border:1px solid var(--border);border-radius:8px;margin:6px 0;background:var(--card)}
+  details.step summary{cursor:pointer;padding:6px 10px;font-weight:600}
+  details.step .body{padding:2px 12px 10px}
+  .type{color:var(--muted);font-size:.9rem;font-weight:400}
+  .key{border-inline-start:5px solid var(--accent)}
 </style>
 </head>
 <body>
 <main>
 <a href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
 <h1>שיעור שני – דף דוגמאות: השוואה בין שתי קבוצות</h1>
-<p>בכל דוגמה לחצו "צעד ▶" כדי להתקדם שנה (או שעה) אחת, או "הפעל" כדי לראות את כל התהליך. בכל צעד מוצג החישוב: הערך הקודם כפול המספר הקבוע.
-אפשר גם לגרור את המחוון לשנה מסוימת.</p>
+<p>בכל שאלה עובדים בשני שלבים: קודם מחשבים במחברת בטבלה – שנה אחרי שנה – ואחר כך מפעילים את הסימולציה. הפתרון בשלבים מראה גם איך עוברים מהטבלה למשוואה.</p>
 <p>בשיעור הקודם ראינו קבוצה אחת שגדלה או קטנה. עכשיו יש שתי קבוצות שגדלות בקצב שונה – ונחפש מתי הן משתוות, או מה היה הערך ההתחלתי של אחת מהן.</p>
+<div class="card key">
+  <b>עבודה במחברת:</b> העתיקו את הטבלה למחברת והשלימו אותה. כשיוצא מספר עשרוני, עגלו לשתי ספרות אחרי הנקודה רק את התוצאה שאתם רושמים (המשיכו לחשב מהערך המלא שבמחשבון). בסיום לחצו "הצג / הסתר ערכים" ופתחו את השלבים לבדיקה.<br>
+  <b>סימולציה:</b> "צעד ▶" מתקדם שנה אחת, "הפעל" מריץ את כל התהליך, ואפשר לגרור את המחוון.
+</div>
+<div class="controls">
+  <button type="button" onclick="document.querySelectorAll('details.step').forEach(function(d){d.open=true})">פתח את כל השלבים</button>
+  <button type="button" onclick="document.querySelectorAll('details.step').forEach(function(d){d.open=false})">סגור את כל השלבים</button>
+  <button type="button" onclick="document.querySelectorAll('table.fill').forEach(function(t){t.classList.add('show')})">הצג את כל הערכים</button>
+  <button type="button" onclick="document.querySelectorAll('table.fill').forEach(function(t){t.classList.remove('show')})">הסתר את כל הערכים</button>
+</div>
+
 <h2>שאלות</h2>
+<template id="w-ex5"><div class="tablewrap"><table class="fill" id="q1">
+  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
+  <tr><th>שמורה א'</th><td>1728</td>
+    <td class="ans"><span class="v">2160</span></td><td class="ans"><span class="v">2700</span></td><td class="ans"><span class="v">3375</span></td></tr>
+  <tr><th>שמורה ב'</th><td>1000</td>
+    <td class="ans"><span class="v">1500</span></td><td class="ans"><span class="v">2250</span></td><td class="ans"><span class="v">3375</span></td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="toggleFill('q1')">הצג / הסתר ערכים</button></div>
+<details class="step"><summary>מתרגמים את אחוזי הגידול של כל שמורה למספר שמכפילים בו <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">b = 1 + p/100</span>
+  <span class="math">b<sub>A</sub> = 1 + 25/100 = 1.25</span>
+  <span class="math">b<sub>B</sub> = 1 + 50/100 = 1.5</span>
+</div></details>
+<details class="step"><summary>שלב א' – טבלה: ממלאים שנה אחרי שנה עד שהמספרים משתווים <span class="type">(חישוב ערכים)</span></summary><div class="body">
+  <span class="math">שמורה א':  1728 · 1.25 = 2160</span>
+  <span class="math">2160 · 1.25 = 2700</span>
+  <span class="math">2700 · 1.25 = 3375</span>
+  <span class="math">שמורה ב':  1000 · 1.5 = 1500</span>
+  <span class="math">1500 · 1.5 = 2250</span>
+  <span class="math">2250 · 1.5 = 3375</span>
+  <p>אחרי 3 שנים יש בשתי השמורות 3,375 דולפינים. מכאן והלאה שמורה ב' עוברת את שמורה א', כי היא גדלה מהר יותר.</p>
+  <p>אבל מה אם השוויון היה מגיע רק אחרי 20 שנה? הטבלה הייתה ארוכה מאוד. לכן נעבור למשוואה.</p>
+</div></details>
+<details class="step"><summary>שלב ב' – מהטבלה למשוואה: כותבים פונקציה לכל שמורה ומשווים ביניהן <span class="type">(פתרון משוואה)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">A(t) = 1728 · 1.25<sup>t</sup></span>
+  <span class="math">B(t) = 1000 · 1.5<sup>t</sup></span>
+  <span class="math">1728 · 1.25<sup>t</sup> = 1000 · 1.5<sup>t</sup></span>
+</div></details>
+<details class="step"><summary>מעבירים אגפים כך שהחזקות יהיו באגף אחד והמספרים באגף השני</summary><div class="body">
+  <span class="math">1.5<sup>t</sup> / 1.25<sup>t</sup> = 1728 / 1000</span>
+  <span class="math">(1.5 / 1.25)<sup>t</sup> = 1.728</span>
+  <span class="math">1.2<sup>t</sup> = 1.728</span>
+</div></details>
+<details class="step"><summary>מוצאים איזו חזקה של 1.2 נותנת 1.728</summary><div class="body">
+  <span class="math">1.2<sup>2</sup> = 1.44</span>
+  <span class="math">1.2<sup>3</sup> = 1.728</span>
+  <span class="math">t = 3</span>
+</div></details>
+<details class="step"><summary>מציבים t = 3 באחת הפונקציות כדי למצוא את מספר הדולפינים <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">B(3) = 1000 · 1.5<sup>3</sup></span>
+  <span class="math">B(3) = 1000 · 3.375</span>
+  <span class="math">B(3) = 3375</span>
+  <p>תשובה: אחרי 3 שנים יהיו בכל שמורה 3,375 דולפינים.</p>
+</div></details></template>
+<template id="w-ex6"><div class="tablewrap"><table class="fill" id="q2">
+  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
+  <tr><th>עדר א'</th><td>500</td>
+    <td class="ans"><span class="v">600</span></td><td class="ans"><span class="v">720</span></td><td class="ans"><span class="v">864</span></td></tr>
+  <tr><th>עדר ב'</th>
+    <td class="ans"><span class="v">256</span></td><td class="ans"><span class="v">384</span></td><td class="ans"><span class="v">576</span></td><td class="ans"><span class="v">864</span></td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="toggleFill('q2')">הצג / הסתר ערכים</button></div>
+<details class="step"><summary>מתרגמים את אחוזי הגידול של כל עדר למספר שמכפילים בו <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">b = 1 + p/100</span>
+  <span class="math">b<sub>A</sub> = 1 + 20/100 = 1.2</span>
+  <span class="math">b<sub>B</sub> = 1 + 50/100 = 1.5</span>
+</div></details>
+<details class="step"><summary>מחשבים כמה כבשים יש בעדר א' אחרי 3 שנים <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">500 · 1.2 = 600</span>
+  <span class="math">600 · 1.2 = 720</span>
+  <span class="math">720 · 1.2 = 864</span>
+  <p>אחרי 3 שנים יש בעדר א' 864 כבשים – ולכן גם בעדר ב' יש אז 864 כבשים.</p>
+</div></details>
+<details class="step"><summary>שלב א' – טבלה: הולכים אחורה בטבלה של עדר ב' – מחלקים ב-1.5 בכל שנה <span class="type">(מציאת ערך התחלתי)</span></summary><div class="body">
+  <p>אם בכל שנה מכפילים ב-1.5, אז כדי לחזור שנה אחורה מחלקים ב-1.5:</p>
+  <span class="math">t = 2:   864 / 1.5 = 576</span>
+  <span class="math">t = 1:   576 / 1.5 = 384</span>
+  <span class="math">t = 0:   384 / 1.5 = 256</span>
+</div></details>
+<details class="step"><summary>שלב ב' – מהטבלה למשוואה: כותבים את הפונקציה של עדר ב' עם ערך התחלתי לא ידוע ומשווים ל-864 <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">B(t) = a · 1.5<sup>t</sup></span>
+  <span class="math">B(3) = a · 1.5<sup>3</sup></span>
+  <span class="math">864 = a · 3.375</span>
+  <span class="math">a = 864 / 3.375</span>
+  <span class="math">a = 256</span>
+  <p>תשובה: בהתחלה היו בעדר ב' 256 כבשים.</p>
+</div></details></template>
+
 <div id="ex5"></div>
 <div id="ex6"></div>
 
@@ -79,6 +185,7 @@ var EX = [ {id:'ex5', title:'שאלה 1 – שתי שמורות דולפינים
   icon:'🐑', per:50, iconLabel:'כל 🐑 = 50 כבשים', dec:0, backward:true}
 ];
 
+function toggleFill(id){document.getElementById(id).classList.toggle('show');}
 function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
 function fmt(x,dec){var r=Math.round(x*100)/100; if(dec===0&&Math.abs(r-Math.round(r))<1e-9) return Math.round(r).toLocaleString('en-US');
   return r.toLocaleString('en-US',{minimumFractionDigits:(Number.isInteger(r)?0:2),maximumFractionDigits:2});}
@@ -88,7 +195,8 @@ function val(s,t){return s.a*Math.pow(s.b,t);}
 function build(ex){
   var root=document.getElementById(ex.id);
   root.className='card';
-  root.innerHTML='<h3>'+ex.title+'</h3><p>'+ex.text+'</p>'+
+  var wt=document.getElementById('w-'+ex.id);
+  root.innerHTML='<h3>'+ex.title+'</h3><p>'+ex.text+'</p>'+(wt?'<div class="work"><div class="wt">✏️ חישוב במחברת</div>'+wt.innerHTML+'</div><div class="work" style="border-style:solid"><div class="wt">▶ סימולציה</div>':'<div>')+
    '<div class="controls">'+
      '<button data-a="reset">⏮ התחלה</button><button data-a="prev">◀ צעד</button>'+
      '<button data-a="play">▶ הפעל</button><button data-a="next">צעד ▶</button>'+
@@ -97,7 +205,7 @@ function build(ex){
    '<div class="status"><span>'+ex.unit+' <span class="im big" data-s="t">0</span></span><span data-s="vals"></span></div>'+
    '<div class="calc" data-s="calc"></div>'+
    '<div class="sim"><div class="panel"><svg viewBox="0 0 420 240" data-s="chart"></svg></div>'+
-   '<div class="panel"><div class="picto" data-s="picto"></div><div class="legend">'+ex.iconLabel+'</div></div></div>';
+   '<div class="panel"><div class="picto" data-s="picto"></div><div class="legend">'+ex.iconLabel+'</div></div></div></div>';
   var st={t: ex.backward? 0 : 0, timer:null, phase: ex.backward? 'fwd':'fwd'};
   var range=root.querySelector('input'), playBtn=root.querySelector('[data-a=play]');
   function q(k){return root.querySelector('[data-s='+k+']');}
