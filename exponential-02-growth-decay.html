@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>פונקציות גידול ודעיכה</title>
+<title>שיעור ראשון - בניית פונקציות גידול ודעיכה</title>
 <style>
   :root{
     --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
@@ -63,8 +63,8 @@
 <body>
 <main>
 <a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
-<h1>פונקציות גידול ודעיכה</h1>
-<p>נתחיל מכמה מצבים מהחיים, נחשב בהם צעד אחר צעד, ונחפש מה משותף להם. רק אחרי זה נכתוב נוסחה כללית.</p>
+<h1>שיעור ראשון - בניית פונקציות גידול ודעיכה</h1>
+<p>בדף <a href="exponential-01-sim-lesson1.html">הדוגמאות של שיעור ראשון</a> חישבנו צעד אחר צעד את הדולפינים, החיסכון, הרכב והתרופה. עכשיו נחפש מה משותף לדוגמאות האלה, ונבנה מהן נוסחה כללית.</p>
 <div class="controls">
   <button type="button" onclick="toggleAll(true)">פתח את כל השלבים</button>
   <button type="button" onclick="toggleAll(false)">סגור את כל השלבים</button>
@@ -72,134 +72,7 @@
   <button type="button" onclick="showAllTables(false)">הסתר את כל הערכים</button>
 </div>
 
-<h2>1. מתחילים מדוגמאות</h2>
-<div class="card key">
-  <b>עבודה במחברת:</b> בכל דוגמה העתיקו את הטבלה למחברת והשלימו אותה בעזרת מחשבון – כל ערך מחושב מהערך שלפניו.
-  כשיוצא מספר עשרוני, עגלו לשתי ספרות אחרי הנקודה רק את התוצאה הסופית שאתם רושמים (המשיכו לחשב מהערך המלא שבמחשבון).
-  בסיום לחצו על "הצג ערכים" ובדקו את עצמכם.
-</div>
-
-<!-- Example 1 -->
-<div class="card">
-<h3>דוגמה 1 – דולפינים</h3>
-<p>בשמורה ימית חיים 256 דולפינים. בכל שנה מספר הדולפינים גדל פי 1.5 (כלומר גדל ב-50%). כמה דולפינים יהיו בשמורה בכל אחת מ-8 השנים הבאות?</p>
-<div class="tablewrap"><table class="calc" id="t1">
-  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
-  <tr><th>דולפינים</th><td>256</td>
-    <td class="ans"><span class="v">384</span></td><td class="ans"><span class="v">576</span></td><td class="ans"><span class="v">864</span></td>
-    <td class="ans"><span class="v">1296</span></td><td class="ans"><span class="v">1944</span></td><td class="ans"><span class="v">2916</span></td>
-    <td class="ans"><span class="v">4374</span></td><td class="ans"><span class="v">6561</span></td></tr>
-</table></div>
-<div class="controls"><button type="button" onclick="toggleTable('t1')">הצג / הסתר ערכים</button></div>
-<details class="step"><summary>מכפילים ב-1.5 את מספר הדולפינים של השנה הקודמת, שנה אחרי שנה <span class="type">(חישוב ערכים)</span></summary><div class="body">
-  <span class="math">t = 1:   256 · 1.5 = 384</span>
-  <span class="math">t = 2:   384 · 1.5 = 576</span>
-  <span class="math">t = 3:   576 · 1.5 = 864</span>
-  <span class="math">t = 4:   864 · 1.5 = 1296</span>
-  <span class="math">t = 5:   1296 · 1.5 = 1944</span>
-  <span class="math">t = 6:   1944 · 1.5 = 2916</span>
-  <span class="math">t = 7:   2916 · 1.5 = 4374</span>
-  <span class="math">t = 8:   4374 · 1.5 = 6561</span>
-</div></details>
-<details class="step"><summary>כותבים את החישוב לשנה 3 ישירות מהמספר ההתחלתי, כדי לגלות תבנית</summary><div class="body">
-  <span class="math">256 · 1.5 · 1.5 · 1.5 = 256 · 1.5<sup>3</sup> = 864</span>
-  <p>אחרי <span class="im">t</span> שנים הכפלנו ב-1.5 בדיוק <span class="im">t</span> פעמים:</p>
-  <span class="math">D(t) = 256 · 1.5<sup>t</sup></span>
-</div></details>
-</div>
-
-<!-- Example 2 -->
-<div class="card">
-<h3>דוגמה 2 – חיסכון בבנק</h3>
-<p>מפקידים 10,000 ₪ בתוכנית חיסכון שמוסיפה 5% בכל שנה על הסכום שנצבר. כמה כסף יהיה בחיסכון בכל אחת מ-8 השנים הראשונות?</p>
-<details class="step"><summary>מבינים שהוספת 5% לסכום שקולה להכפלה שלו ב-1.05</summary><div class="body">
-  <span class="math">S + 0.05 · S = S · (1 + 0.05) = S · 1.05</span>
-</div></details>
-<div class="tablewrap"><table class="calc" id="t2">
-  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
-  <tr><th>סכום (₪)</th><td>10000</td>
-    <td class="ans"><span class="v">10500</span></td><td class="ans"><span class="v">11025</span></td><td class="ans"><span class="v">11576.25</span></td>
-    <td class="ans"><span class="v">12155.06</span></td><td class="ans"><span class="v">12762.82</span></td><td class="ans"><span class="v">13400.96</span></td>
-    <td class="ans"><span class="v">14071.00</span></td><td class="ans"><span class="v">14774.55</span></td></tr>
-</table></div>
-<div class="controls"><button type="button" onclick="toggleTable('t2')">הצג / הסתר ערכים</button></div>
-<details class="step"><summary>מכפילים ב-1.05 את הסכום של השנה הקודמת, שנה אחרי שנה <span class="type">(חישוב ערכים)</span></summary><div class="body">
-  <span class="math">t = 1:   10000 · 1.05 = 10500</span>
-  <span class="math">t = 2:   10500 · 1.05 = 11025</span>
-  <span class="math">t = 3:   11025 · 1.05 = 11576.25</span>
-  <span class="math">t = 4:   11576.25 · 1.05 = 12155.0625 ≈ 12155.06</span>
-  <span class="math">t = 5:   12155.0625 · 1.05 ≈ 12762.82</span>
-  <span class="math">t = 6:   12762.8156 · 1.05 ≈ 13400.96</span>
-  <span class="math">t = 7:   13400.9564 · 1.05 ≈ 14071.00</span>
-  <span class="math">t = 8:   14071.0042 · 1.05 ≈ 14774.55</span>
-  <p>שימו לב: בכל שנה הרווח גדל (500, אחר כך 525, אחר כך 551.25 ...), כי האחוזים מחושבים על סכום גדול יותר.</p>
-</div></details>
-<details class="step"><summary>כותבים את הסכום אחרי t שנים ישירות מהסכום ההתחלתי</summary><div class="body">
-  <span class="math">10000 · 1.05 · 1.05 · 1.05 = 10000 · 1.05<sup>3</sup></span>
-  <span class="math">S(t) = 10000 · 1.05<sup>t</sup></span>
-</div></details>
-</div>
-
-<!-- Example 3 -->
-<div class="card">
-<h3>דוגמה 3 – ירידת ערך של רכב</h3>
-<p>רכב נקנה ב-80,000 ₪. ערכו יורד ב-15% בכל שנה. מה ערך הרכב בכל אחת מ-8 השנים הראשונות?</p>
-<details class="step"><summary>מבינים שהורדת 15% מהערך שקולה להכפלה שלו ב-0.85</summary><div class="body">
-  <span class="math">V − 0.15 · V = V · (1 − 0.15) = V · 0.85</span>
-</div></details>
-<div class="tablewrap"><table class="calc" id="t3">
-  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
-  <tr><th>ערך (₪)</th><td>80000</td>
-    <td class="ans"><span class="v">68000</span></td><td class="ans"><span class="v">57800</span></td><td class="ans"><span class="v">49130</span></td>
-    <td class="ans"><span class="v">41760.50</span></td><td class="ans"><span class="v">35496.43</span></td><td class="ans"><span class="v">30171.96</span></td>
-    <td class="ans"><span class="v">25646.17</span></td><td class="ans"><span class="v">21799.24</span></td></tr>
-</table></div>
-<div class="controls"><button type="button" onclick="toggleTable('t3')">הצג / הסתר ערכים</button></div>
-<details class="step"><summary>מכפילים ב-0.85 את ערך הרכב של השנה הקודמת, שנה אחרי שנה <span class="type">(חישוב ערכים)</span></summary><div class="body">
-  <span class="math">t = 1:   80000 · 0.85 = 68000</span>
-  <span class="math">t = 2:   68000 · 0.85 = 57800</span>
-  <span class="math">t = 3:   57800 · 0.85 = 49130</span>
-  <span class="math">t = 4:   49130 · 0.85 = 41760.5</span>
-  <span class="math">t = 5:   41760.5 · 0.85 = 35496.425 ≈ 35496.43</span>
-  <span class="math">t = 6:   35496.425 · 0.85 ≈ 30171.96</span>
-  <span class="math">t = 7:   30171.9613 · 0.85 ≈ 25646.17</span>
-  <span class="math">t = 8:   25646.1671 · 0.85 ≈ 21799.24</span>
-  <p>בשנה הראשונה הרכב איבד 12,000 ₪, ובשנה השמינית פחות מ-4,000 ₪ – הירידה עצמה הולכת וקטנה.</p>
-</div></details>
-<details class="step"><summary>כותבים את ערך הרכב אחרי t שנים ישירות מהמחיר ההתחלתי</summary><div class="body">
-  <span class="math">V(t) = 80000 · 0.85<sup>t</sup></span>
-</div></details>
-</div>
-
-<!-- Example 4 -->
-<div class="card">
-<h3>דוגמה 4 – תרופה בגוף</h3>
-<p>מטופל קיבל 200 מ"ג של תרופה. בכל שעה כמות התרופה בגוף קטנה ב-20%. כמה תרופה נשארת בגוף בכל אחת מ-8 השעות הראשונות?</p>
-<div class="tablewrap"><table class="calc" id="t4">
-  <tr><th>שעות t</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
-  <tr><th>תרופה (מ"ג)</th><td>200</td>
-    <td class="ans"><span class="v">160</span></td><td class="ans"><span class="v">128</span></td><td class="ans"><span class="v">102.4</span></td>
-    <td class="ans"><span class="v">81.92</span></td><td class="ans"><span class="v">65.54</span></td><td class="ans"><span class="v">52.43</span></td>
-    <td class="ans"><span class="v">41.94</span></td><td class="ans"><span class="v">33.55</span></td></tr>
-</table></div>
-<div class="controls"><button type="button" onclick="toggleTable('t4')">הצג / הסתר ערכים</button></div>
-<details class="step"><summary>מכפילים ב-0.8 את כמות התרופה של השעה הקודמת, שעה אחרי שעה <span class="type">(חישוב ערכים)</span></summary><div class="body">
-  <span class="math">t = 1:   200 · 0.8 = 160</span>
-  <span class="math">t = 2:   160 · 0.8 = 128</span>
-  <span class="math">t = 3:   128 · 0.8 = 102.4</span>
-  <span class="math">t = 4:   102.4 · 0.8 = 81.92</span>
-  <span class="math">t = 5:   81.92 · 0.8 = 65.536 ≈ 65.54</span>
-  <span class="math">t = 6:   65.536 · 0.8 = 52.4288 ≈ 52.43</span>
-  <span class="math">t = 7:   52.4288 · 0.8 = 41.94304 ≈ 41.94</span>
-  <span class="math">t = 8:   41.94304 · 0.8 = 33.554432 ≈ 33.55</span>
-  <p>אחרי 3 שעות נשארה כמעט חצי מהכמות, ואחרי 8 שעות פחות משישית ממנה – אבל הכמות אף פעם לא מגיעה ל-0.</p>
-</div></details>
-<details class="step"><summary>כותבים את כמות התרופה אחרי t שעות ישירות מהכמות ההתחלתית</summary><div class="body">
-  <span class="math">M(t) = 200 · 0.8<sup>t</sup></span>
-</div></details>
-</div>
-
-<h2>2. מה משותף לכל הדוגמאות?</h2>
+<h2>1. מה משותף לכל הדוגמאות?</h2>
 <div class="tablewrap">
 <table>
   <tr><th>דוגמה</th><th>ערך התחלתי</th><th>בכל צעד מכפילים ב-</th><th>מה קורה</th><th>הפונקציה</th></tr>
@@ -225,7 +98,7 @@
 </div>
 <p>כשמוסיפים מספר קבוע – השינוי קבוע (פונקציה קווית). כשמכפילים במספר קבוע – השינוי תלוי בגודל הנוכחי: ככל שיש יותר, נוסף (או נגרע) יותר.</p>
 
-<h2>3. הנוסחה הכללית</h2>
+<h2>2. הנוסחה הכללית</h2>
 <p>עכשיו אפשר לכתוב את מה שגילינו בצורה כללית. פונקציית גידול או דעיכה היא פונקציה מהצורה:</p>
 <span class="math">f(x) = a · b<sup>x</sup> ,   a ≠ 0 ,   b &gt; 0 ,   b ≠ 1</span>
 <ul>
@@ -243,7 +116,7 @@
   <li>אם <span class="im">b &lt; 0</span>: למשל <span class="im">(−2)<sup>1/2</sup></span> אינו מוגדר, והסימן מתחלף בין חיובי לשלילי – זו לא פונקציה של גידול או דעיכה.</li>
 </ul>
 
-<h2>4. גידול או דעיכה? – תלוי בבסיס</h2>
+<h2>3. גידול או דעיכה? – תלוי בבסיס</h2>
 <div class="card">
   <p><span class="grow">גידול:</span> כאשר <span class="im">b &gt; 1</span> (ו-<span class="im">a &gt; 0</span>) – בכל צעד הערך גדל. הפונקציה עולה. (דולפינים, חיסכון)</p>
   <p><span class="decay">דעיכה:</span> כאשר <span class="im">0 &lt; b &lt; 1</span> (ו-<span class="im">a &gt; 0</span>) – בכל צעד הערך קטן. הפונקציה יורדת, אבל לעולם לא מגיעה ל-0. (רכב, תרופה)</p>
@@ -264,7 +137,7 @@
 </table>
 </div>
 
-<h2>5. הגרפים ותכונותיהם</h2>
+<h2>4. הגרפים ותכונותיהם</h2>
 <div class="graphs">
   <figure><svg id="g1" viewBox="0 0 300 260"></svg><figcaption>גידול: <span class="im">y = 2<sup>x</sup></span> , <span class="im">y = 3<sup>x</sup></span></figcaption></figure>
   <figure><svg id="g2" viewBox="0 0 300 260"></svg><figcaption>דעיכה: <span class="im">y = (1/2)<sup>x</sup></span> , <span class="im">y = (1/3)<sup>x</sup></span></figcaption></figure>
@@ -282,12 +155,12 @@
   </ul>
 </div>
 
-<h2>6. משתמשים בנוסחה</h2>
+<h2>5. משתמשים בנוסחה</h2>
 
 <!-- Example 5 -->
 <div class="card">
 <h3>דוגמה 5 – חזרה לדולפינים: קפיצה ישר לשנה 8</h3>
-<p>בדוגמה 1 חישבנו שנה אחרי שנה, 8 פעמים. בעזרת הנוסחה אפשר לחשב ישר: כמה דולפינים יהיו אחרי 8 שנים? השוו לטבלה.</p>
+<p>בדף הדוגמאות חישבנו את הדולפינים שנה אחרי שנה, 8 פעמים. בעזרת הנוסחה אפשר לחשב ישר: כמה דולפינים יהיו אחרי 8 שנים? השוו לטבלה.</p>
 <details class="step"><summary>מציבים t = 8 בפונקציה שמצאנו <span class="type">(חישוב ערך)</span></summary><div class="body">
   <span class="math">D(t) = a · b<sup>t</sup></span>
   <span class="math">D(8) = 256 · 1.5<sup>8</sup></span>
@@ -348,7 +221,7 @@
 </div></details>
 </div>
 
-<h2>7. שיעור שני – שאלות מורכבות: השוואה בין שתי קבוצות</h2>
+<h2>6. שיעור שני – שאלות מורכבות: השוואה בין שתי קבוצות</h2>
 <div class="card key">
   בשאלות האלה יש שתי קבוצות שגדלות בקצב שונה. נתחיל בטבלה – שנה אחרי שנה – ונראה מתי הקבוצות משתוות. אחר כך נכתוב את אותו שוויון כמשוואה, ונמצא את החזקה המתאימה בלי לבנות טבלה. בסיום לחצו על "הצג ערכים" ופתחו את השלבים לבדיקה.
 </div>
@@ -448,7 +321,7 @@
 </div></details>
 </div>
 
-<h2>8. סיכום</h2>
+<h2>7. סיכום</h2>
 <div class="card key">
   <ul>
     <li>פונקציית גידול/דעיכה: <span class="im">f(x) = a · b<sup>x</sup></span>, עם <span class="im">b &gt; 0</span>, <span class="im">b ≠ 1</span>.</li>
