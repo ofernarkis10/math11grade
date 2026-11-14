@@ -198,9 +198,72 @@
   <p>שימו לב: הכמות מתקרבת ל-200 אבל לא עוברת אותו. כל יום מוסיפים פחות ממה שחסר עד 200.</p>
 </div></details>
 </template>
+<template id="w-s4"><div class="tablewrap"><table class="vt" id="t4">
+  <tr><th>קפיצה n</th><th>גובה הקפיצה (מ׳)</th><th>סה״כ: הקודם + האיבר החדש</th><th>סה״כ בנוסחה</th></tr>
+  <tr data-n="1"><th>1</th><td class="c">6</td><td class="c">6</td><td class="c form">6 · (1 − 0.6<sup>1</sup>) / 0.4 = 6</td></tr>
+  <tr data-n="2"><th>2</th><td class="c">3.6</td><td class="c">6 + 3.6 = 9.6</td><td class="c form">6 · (1 − 0.6<sup>2</sup>) / 0.4 = 9.6</td></tr>
+  <tr data-n="3"><th>3</th><td class="c">2.16</td><td class="c">9.6 + 2.16 = 11.76</td><td class="c form">6 · (1 − 0.6<sup>3</sup>) / 0.4 = 11.76</td></tr>
+  <tr data-n="4"><th>4</th><td class="c">1.30</td><td class="c">11.76 + 1.30 = 13.06</td><td class="c form">6 · (1 − 0.6<sup>4</sup>) / 0.4 = 13.06</td></tr>
+  <tr data-n="5"><th>5</th><td class="c">0.78</td><td class="c">13.06 + 0.78 = 13.83</td><td class="c form">6 · (1 − 0.6<sup>5</sup>) / 0.4 = 13.83</td></tr>
+  <tr data-n="6"><th>6</th><td class="c">0.47</td><td class="c">13.83 + 0.47 = 14.30</td><td class="c form">6 · (1 − 0.6<sup>6</sup>) / 0.4 = 14.30</td></tr>
+  <tr data-n="7"><th>7</th><td class="c">0.28</td><td class="c">14.30 + 0.28 = 14.58</td><td class="c form">6 · (1 − 0.6<sup>7</sup>) / 0.4 = 14.58</td></tr>
+  <tr data-n="8"><th>8</th><td class="c">0.17</td><td class="c">14.58 + 0.17 = 14.75</td><td class="c form">6 · (1 − 0.6<sup>8</sup>) / 0.4 = 14.75</td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="this.closest('.work').querySelector('table.vt').classList.toggle('fshow')">הצג / הסתר את החישוב בנוסחה</button></div>
+<p class="vt-note">הערכים מופיעים בטבלה יחד עם הגרף, כשמפעילים את הסימולציה ("צעד ▶" או "הפעל").</p>
+<details class="step"><summary>בודקים מה קורה לסכום כשמספר המחוברים גדל מאוד</summary><div class="body">
+  <span class="math">S<sub>n</sub> = 6 · (1 − 0.6<sup>n</sup>) / 0.4</span>
+  <p>ככל ש־<span class="im">n</span> גדל, <span class="im">0.6<sup>n</sup></span> קטן ומתקרב ל־0. לכן הסכום מתקרב ל:</p>
+  <span class="math">6 / (1 − 0.6) = 6 / 0.4 = 15</span>
+  <p>הכדור עולה בסך הכול פחות מ־15 מטרים, גם אם הוא קופץ "לנצח". הסכום <b>מתכנס</b> ל־15.</p>
+</div></details>
+</template>
+<template id="w-s5"><div class="tablewrap"><table class="vt" id="t5">
+  <tr><th>צעד n</th><th>אורך הצעד (מ׳)</th><th>סה״כ: הקודם + האיבר החדש</th><th>סה״כ בנוסחה</th></tr>
+  <tr data-n="1"><th>1</th><td class="c">4</td><td class="c">4</td><td class="c form">4 · (1 − 0.5<sup>1</sup>) / 0.5 = 4</td></tr>
+  <tr data-n="2"><th>2</th><td class="c">2</td><td class="c">4 + 2 = 6</td><td class="c form">4 · (1 − 0.5<sup>2</sup>) / 0.5 = 6</td></tr>
+  <tr data-n="3"><th>3</th><td class="c">1</td><td class="c">6 + 1 = 7</td><td class="c form">4 · (1 − 0.5<sup>3</sup>) / 0.5 = 7</td></tr>
+  <tr data-n="4"><th>4</th><td class="c">0.5</td><td class="c">7 + 0.5 = 7.5</td><td class="c form">4 · (1 − 0.5<sup>4</sup>) / 0.5 = 7.5</td></tr>
+  <tr data-n="5"><th>5</th><td class="c">0.25</td><td class="c">7.5 + 0.25 = 7.75</td><td class="c form">4 · (1 − 0.5<sup>5</sup>) / 0.5 = 7.75</td></tr>
+  <tr data-n="6"><th>6</th><td class="c">0.13</td><td class="c">7.75 + 0.13 = 7.88</td><td class="c form">4 · (1 − 0.5<sup>6</sup>) / 0.5 = 7.88</td></tr>
+  <tr data-n="7"><th>7</th><td class="c">0.06</td><td class="c">7.88 + 0.06 = 7.94</td><td class="c form">4 · (1 − 0.5<sup>7</sup>) / 0.5 = 7.94</td></tr>
+  <tr data-n="8"><th>8</th><td class="c">0.03</td><td class="c">7.94 + 0.03 = 7.97</td><td class="c form">4 · (1 − 0.5<sup>8</sup>) / 0.5 = 7.97</td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="this.closest('.work').querySelector('table.vt').classList.toggle('fshow')">הצג / הסתר את החישוב בנוסחה</button></div>
+<p class="vt-note">הערכים מופיעים בטבלה יחד עם הגרף, כשמפעילים את הסימולציה ("צעד ▶" או "הפעל").</p>
+<details class="step"><summary>בודקים מה קורה לסכום כשמספר המחוברים גדל מאוד</summary><div class="body">
+  <span class="math">S<sub>n</sub> = 4 · (1 − 0.5<sup>n</sup>) / 0.5</span>
+  <p>ככל ש־<span class="im">n</span> גדל, <span class="im">0.5<sup>n</sup></span> קטן ומתקרב ל־0. לכן הסכום מתקרב ל:</p>
+  <span class="math">4 / (1 − 0.5) = 4 / 0.5 = 8</span>
+  <p>נועה מתקרבת לקיר בכל צעד, אבל אף פעם לא מגיעה אליו. הסכום <b>מתכנס</b> ל־8.</p>
+</div></details>
+</template>
+<template id="w-s6"><div class="tablewrap"><table class="vt" id="t6">
+  <tr><th>שנה n</th><th>ייצור השנה</th><th>סה״כ: הקודם + האיבר החדש</th><th>סה״כ בנוסחה</th></tr>
+  <tr data-n="1"><th>1</th><td class="c">5,000</td><td class="c">5,000</td><td class="c form">5,000 · (1 − 0.8<sup>1</sup>) / 0.2 = 5,000</td></tr>
+  <tr data-n="2"><th>2</th><td class="c">4,000</td><td class="c">5,000 + 4,000 = 9,000</td><td class="c form">5,000 · (1 − 0.8<sup>2</sup>) / 0.2 = 9,000</td></tr>
+  <tr data-n="3"><th>3</th><td class="c">3,200</td><td class="c">9,000 + 3,200 = 12,200</td><td class="c form">5,000 · (1 − 0.8<sup>3</sup>) / 0.2 = 12,200</td></tr>
+  <tr data-n="4"><th>4</th><td class="c">2,560</td><td class="c">12,200 + 2,560 = 14,760</td><td class="c form">5,000 · (1 − 0.8<sup>4</sup>) / 0.2 = 14,760</td></tr>
+  <tr data-n="5"><th>5</th><td class="c">2,048</td><td class="c">14,760 + 2,048 = 16,808</td><td class="c form">5,000 · (1 − 0.8<sup>5</sup>) / 0.2 = 16,808</td></tr>
+  <tr data-n="6"><th>6</th><td class="c">1,638.4</td><td class="c">16,808 + 1,638.4 = 18,446.4</td><td class="c form">5,000 · (1 − 0.8<sup>6</sup>) / 0.2 = 18,446.4</td></tr>
+  <tr data-n="7"><th>7</th><td class="c">1,310.72</td><td class="c">18,446.4 + 1,310.72 = 19,757.12</td><td class="c form">5,000 · (1 − 0.8<sup>7</sup>) / 0.2 = 19,757.12</td></tr>
+  <tr data-n="8"><th>8</th><td class="c">1,048.58</td><td class="c">19,757.12 + 1,048.58 = 20,805.70</td><td class="c form">5,000 · (1 − 0.8<sup>8</sup>) / 0.2 = 20,805.70</td></tr>
+</table></div>
+<div class="controls"><button type="button" onclick="this.closest('.work').querySelector('table.vt').classList.toggle('fshow')">הצג / הסתר את החישוב בנוסחה</button></div>
+<p class="vt-note">הערכים מופיעים בטבלה יחד עם הגרף, כשמפעילים את הסימולציה ("צעד ▶" או "הפעל").</p>
+<details class="step"><summary>בודקים מה קורה לסכום כשמספר המחוברים גדל מאוד</summary><div class="body">
+  <span class="math">S<sub>n</sub> = 5,000 · (1 − 0.8<sup>n</sup>) / 0.2</span>
+  <p>ככל ש־<span class="im">n</span> גדל, <span class="im">0.8<sup>n</sup></span> קטן ומתקרב ל־0. לכן הסכום מתקרב ל:</p>
+  <span class="math">5,000 / (1 − 0.8) = 5,000 / 0.2 = 25,000</span>
+  <p>גם אם המפעל ימשיך לעבוד הרבה שנים, הוא לא ייצר יותר מ־25,000 מוצרים. הסכום <b>מתכנס</b> ל־25,000.</p>
+</div></details>
+</template>
 <section class="slide"><div id="s1"></div></section>
 <section class="slide"><div id="s2"></div></section>
-<section class="slide"><div id="s3"></div>
+<section class="slide"><div id="s3"></div></section>
+<section class="slide"><div id="s4"></div></section>
+<section class="slide"><div id="s5"></div></section>
+<section class="slide"><div id="s6"></div>
 <p><a href="exponential-06-formula-lesson2.html">→ חזרה לשיעור רביעי</a> · <a href="exponential-08-sum-formula.html">המשך: נוסחת הסכום ←</a></p></section>
 
 </main>
@@ -216,7 +279,16 @@ var EX=[
   termName:'הפקדה חדשה', totName:'יתרה', segName:'הפקדה'},
  {id:'s3', title:'דוגמה 3 – תרופה שלוקחים כל יום 💊', mode:'grow', a:100, b:0.5, N:8, unit:'יום', u:' מ"ג', limit:200,
   text:'כל בוקר לוקחים 100 מ"ג של תרופה. עד הבוקר הבא נשארת בגוף חצי מהכמות (כפול 0.5). כמה תרופה יש בגוף מיד אחרי המנה של היום ה-8?',
-  termName:'מנה חדשה', totName:'כמות בגוף', segName:'מנה'}
+  termName:'מנה חדשה', totName:'כמות בגוף', segName:'מנה'},
+ {id:'s4', title:'דוגמה 4 – כדור קופץ ⚽', mode:'fixed', a:6, b:0.6, N:8, unit:'קפיצה', u:' מ׳', limit:15,
+  text:'כדור נופל מגובה 10 מטרים. אחרי כל פגיעה ברצפה הוא עולה ל־60% מהגובה הקודם: בקפיצה הראשונה ל־6 מטרים, אחר כך ל־3.6 מטרים, וכן הלאה. כמה מטרים הכדור עולה בסך הכול? האם הסכום גדל בלי סוף?',
+  termName:'גובה הקפיצה', totName:'סה״כ עליות', segName:'קפיצה', segNote:'כל צבע הוא קפיצה אחת. כל שכבה קטנה פי 0.6 מזו שמתחתיה, ולכן הסכום מתקרב ל־15 ולא עובר אותו.'},
+ {id:'s5', title:'דוגמה 5 – הולכים חצי מהדרך שנשארה 🚶', mode:'fixed', a:4, b:0.5, N:8, unit:'צעד', u:' מ׳', limit:8,
+  text:'נועה עומדת 8 מטרים מקיר. בכל צעד היא הולכת חצי מהמרחק שנשאר לה עד הקיר: קודם 4 מטרים, אחר כך 2, אחר כך 1… כמה מטרים היא הלכה בסך הכול אחרי כל צעד? האם היא תגיע לקיר?',
+  termName:'אורך הצעד', totName:'סה״כ דרך', segName:'צעד', segNote:'כל צבע הוא צעד אחד, וכל צעד חצי מהקודם. הסכום מתקרב ל־8 – המרחק עד הקיר – אבל לא מגיע אליו.'},
+ {id:'s6', title:'דוגמה 6 – ייצור שהולך וקטן 🏭', mode:'fixed', a:5000, b:0.8, N:8, unit:'שנה', u:' מוצרים', limit:25000,
+  text:'מפעל ייצר 5,000 מוצרים בשנה הראשונה, ובכל שנה הוא מייצר 20% פחות מבשנה הקודמת. כמה מוצרים ייצר המפעל בסך הכול? האם הסך הכול יכול לעבור 25,000?',
+  termName:'ייצור השנה', totName:'סה״כ ייצור', segName:'שנה', segNote:'כל צבע הוא הייצור של שנה אחת. כל שכבה קטנה פי 0.8 מזו שמתחתיה, והסכום מתקרב ל־25,000.'}
 ];
 function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
 function fmt(x){var r=Math.round(x*100)/100; return r.toLocaleString('en-US',{minimumFractionDigits:(Number.isInteger(r)?0:2),maximumFractionDigits:2});}
@@ -250,7 +322,7 @@ function build(ex){
     // sum written out: a + ab + ab^2 ...
     var parts=[]; for(var j=0;j<n;j++){ var k= ex.mode==='fixed'? j+1 : n-j; parts.push('<span class="seg" style="background:'+segColor(k,ex.N)+'"></span>'+fmt(ex.a*Math.pow(ex.b,j))); }
     q('sum').innerHTML=parts.join(' + ')+' = <b>'+fmt(total(ex,n))+'</b>'+
-      N(ex.mode==='fixed'?'כל צבע הוא המזון של שנה אחת. כל שכבה גדולה פי '+ex.b+' מזו שמתחתיה.':
+      N(ex.segNote? ex.segNote : ex.mode==='fixed'?'כל צבע הוא המזון של שנה אחת. כל שכבה גדולה פי '+ex.b+' מזו שמתחתיה.':
         (ex.b>1?'כל צבע הוא הפקדה אחת. ההפקדות הישנות גדלו יותר שנים, ולכן השכבות שלהן עבות יותר.':'כל צבע הוא מנה אחת. מהמנות הישנות נשאר פחות, ולכן השכבות שלהן דקות יותר.'));
     draw(ex,q('chart'),n);
     var vt=root.querySelector('table.vt'); if(vt) vt.querySelectorAll('tr[data-n]').forEach(function(r){var k=+r.getAttribute('data-n'); r.classList.toggle('cur',k===n); r.querySelectorAll('td.c').forEach(function(td){td.classList.toggle('on',k<=n);});});
