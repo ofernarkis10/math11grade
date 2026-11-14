@@ -168,7 +168,7 @@ In the wheel-motion pages this layout is produced automatically from the solutio
 - **Tests:** the same layout also applies to the questions on the test page and in its answer page.
 - **Hints in tests.** If the test shows the solution path (the answer template with steps and formulas written and values blank), keep the hints. If it does not, ask the teacher, each time a test is prepared, whether to add hints.
 
-The growth/decay homework (`exponential-10/11/12-homework-*.html`) are the reference examples. In those pages the line breaks are produced from the question text automatically; a new homework or test page should follow the same layout.
+The growth/decay homework (`exponential-11/12/16/20-homework-*.html`) are the reference examples. In those pages the line breaks are produced from the question text automatically; a new homework or test page should follow the same layout.
 
 ## Building and updating index.html
 
@@ -283,7 +283,7 @@ Every page is a single self-contained HTML file: styles are inline, there is no 
 
 ## Answer keys and tests
 
-Tests and homework answer keys are listed in `tests.html`, an internal page for the teacher that is **never linked from `index.html`**. Each test and each answer key gets a random file name (12 lowercase letters and digits, for example `d4ypgbldhons.html`), is reachable only from `tests.html`, and carries `<meta name="robots" content="noindex, nofollow">`. Homework pages themselves are published on the site without solutions. Topic plans and lesson plans for the teacher are kept outside this repository, in the private folder `math11grade-tests` next to it.
+Tests and homework answer keys are listed in `tests.html`, an internal page for the teacher that is **never linked from `index.html`**. Each test and each answer key gets a random file name (12 lowercase letters and digits, for example `7b4xhe7jvu33.html`), is reachable only from `tests.html`, and carries `<meta name="robots" content="noindex, nofollow">`. Homework pages themselves are published on the site without solutions. Topic plans and lesson plans for the teacher are kept outside this repository, in the private folder `math11grade-tests` next to it.
 
 ## License
 
