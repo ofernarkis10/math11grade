@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<title>בדיחה לפתיחת השיעור</title>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one column on graph-paper ground; a topic filter and the list of jokes, each with its punchline and an optional explanation */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:32px 80px;display:flex;flex-direction:column;gap:24px}
+h1{font-family:var(--f-display);font-size:2.4rem;line-height:1.25;margin:0}
+p{margin:0}
+a.back{color:var(--accent);font-weight:700;text-decoration:none}
+a.back:hover{text-decoration:underline}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.lead{color:var(--muted);max-width:68ch}
+.filter{display:flex;flex-wrap:wrap;gap:6px}
+.filter button{font:inherit;font-weight:700;font-size:.85rem;cursor:pointer;border:1px solid var(--accent);background:var(--paper);color:var(--accent);border-radius:99px;padding:2px 12px}
+.filter button[aria-pressed="true"]{background:var(--accent);color:var(--paper)}
+ol.bank{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+ol.bank li{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 16px;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;break-inside:avoid}
+ol.bank .no{font-family:var(--f-math);color:var(--muted);font-size:.9rem;padding-top:3px}
+ol.bank .tag{font-size:.78rem;font-weight:700;color:var(--mark)}
+ol.bank .punch{color:var(--accent);font-weight:600}
+details.x{grid-column:2;font-size:.9rem;color:var(--muted)}
+details.x summary{cursor:pointer;color:var(--accent);font-weight:600}
+@media print{
+  body{background:#fff;color:#000;font-size:13pt}
+  a.back,.filter,.fs-ctl{display:none !important}
+  ol.bank li{border-color:#999}
+  details.x{display:block}
+}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="tests.html">→ חזרה לרשימת המבחנים</a>
+<header>
+  <span class="eyebrow">מתמטיקה יא׳ · 5 יחידות · פתיחת שיעור</span>
+  <h1>בדיחות לפתיחת השיעור</h1>
+  <p class="lead">בדיחה אחת על מתמטיקה בתחילת כל שיעור. ליד בדיחות שצריכות רקע מתמטי יש הסבר קצר – שווה שהתלמיד שמספר יקרא אותו לפני השיעור.</p>
+</header>
+<div class="filter" id="filter" aria-label="סינון לפי נושא"></div>
+<ol class="bank" id="bankList"></ol>
+</div>
+<script>
+/* JOKES: { q: setup, p: punchline, tag: topic, x: optional explanation }. Add a joke = add a line. */
+const JOKES = [
+  { tag:"כללי", q:"למה ספר המתמטיקה תמיד נראה עצוב?", p:"כי יש לו יותר מדי בעיות." },
+  { tag:"כללי", q:"מה אמר האפס לשמונה?", p:"״איזו חגורה יפה!״" },
+  { tag:"גאומטריה", q:"איזו זווית אף פעם לא משקרת?", p:"זווית ישרה." },
+  { tag:"גאומטריה", q:"למה הישרים המקבילים כל כך עצובים?", p:"יש להם כל כך הרבה במשותף – והם לעולם לא ייפגשו." },
+  { tag:"חשבון דיפרנציאלי", q:"הנגזרת הזמינה את הקבוע לצאת איתה.", p:"הקבוע סירב: ״כל פעם שאני איתך – אני נעלם.״",
+    x:"הנגזרת של מספר קבוע היא 0, ולכן כשגוזרים פונקציה, הקבוע ״נעלם״." },
+  { tag:"חשבון דיפרנציאלי", q:"במסיבה של פונקציות, כולן בורחות מהגוזר. רק eˣ נשארת רגועה: ״אני לא מפחדת ממך, הנגזרת שלי היא אני.״",
+    p:"הגוזר מחייך: ״נעים מאוד, אני d/dy.״",
+    x:"הנגזרת של eˣ לפי x היא eˣ. אבל הגוזר הזה גוזר לפי y – ולפי y, הביטוי eˣ הוא קבוע, והנגזרת שלו 0." },
+  { tag:"טורים", q:"אינסוף מתמטיקאים נכנסים לבר. הראשון מזמין כוס בירה, השני חצי כוס, השלישי רבע כוס, הרביעי שמינית…",
+    p:"הברמן מוזג שתי כוסות ואומר: ״תכירו את הגבולות שלכם.״",
+    x:"1 + ½ + ¼ + ⅛ + … הוא טור הנדסי אינסופי מתכנס עם a = 1 ו־q = ½. הסכום שלו הוא 1 ÷ (1 − ½) = 2." },
+  { tag:"כללי", q:"יש 10 סוגים של אנשים בעולם.", p:"אלה שמבינים בסיס בינארי, ואלה שלא.",
+    x:"בבסיס 2 (בינארי) המספר 10 פירושו שתיים." },
+  { tag:"כללי", q:"המורה: ״יש לך 5 תפוחים ביד אחת ו־6 תפוחים ביד השנייה. מה יש לך?״", p:"התלמיד: ״ידיים ענקיות.״" },
+  { tag:"כללי", q:"מה אמר π ל־i?", p:"״תהיה ממשי!״ ו־i ענה לו: ״תהיה רציונלי!״",
+    x:"i הוא מספר מדומה (לא ממשי), ו־π הוא מספר אי־רציונלי. כל אחד מבקש מהשני להיות מה שהוא לא." },
+  { tag:"כללי", q:"אופטימיסט רואה כוס חצי מלאה. פסימיסט רואה כוס חצי ריקה.", p:"מהנדס רואה כוס גדולה פי שניים ממה שצריך." },
+  { tag:"פונקציות", q:"איך יודעים שפרבולה במצב רוח טוב?", p:"כשהמקדם של x² חיובי – היא מחייכת.",
+    x:"כש־a > 0 הפרבולה y = ax² + bx + c פתוחה כלפי מעלה, כמו חיוך. כש־a < 0 היא פתוחה כלפי מטה – פרצוף עצוב." },
+  { tag:"טריגונומטריה", q:"למה הגרף של sin אף פעם לא מתרגש מכלום?", p:"כי הוא יודע שאחרי כל עלייה באה ירידה – והכול חוזר על עצמו כל 2π." },
+  { tag:"טריגונומטריה", q:"באיזו זווית הטנגנס אף פעם לא מגיע לשיעור?", p:"ב־90°. שם הוא פשוט בורח לאינסוף.",
+    x:"tan α = sin α ÷ cos α, וב־90° הקוסינוס הוא 0 – לכן הטנגנס לא מוגדר שם, והגרף שואף לאינסוף." },
+  { tag:"אלגברה", q:"למה x תמיד מרגיש בודד?", p:"כי בכל תרגיל מישהו מנסה לבודד אותו." },
+  { tag:"אלגברה", q:"בשאלה במבחן היה כתוב: ״מצא את x.״", p:"התלמיד הקיף את ה־x בעיגול וכתב לידו: ״הנה הוא.״" },
+  { tag:"חשבון דיפרנציאלי", q:"למה המשיק אף פעם לא נשאר לפגישה עד הסוף?", p:"הוא רק נוגע – ונעלם.",
+    x:"משיק נוגע בעקומה בנקודה אחת (בסביבה של הנקודה), ולא חותך אותה שם." },
+  { tag:"כללי", q:"מה הסיכוי שהמורה ייתן מבחן פתע מחר?", p:"עד שמישהו שואל – בערך 0. אחרי שמישהו שואל – 100%." },
+  { tag:"חשבון אינטגרלי", q:"למה האינטגרל תמיד מוסיף C בסוף?", p:"כי הוא לא סומך על אף אחד שמספר לו שהקבוע נעלם.",
+    x:"כשגוזרים, הקבוע נעלם. לכן כשעושים את הפעולה ההפוכה – אינטגרל – לא יודעים מה היה הקבוע, ומוסיפים C." },
+  { tag:"כללי", q:"איך מספר שלילי מעודד את עצמו בבוקר?", p:"הוא שם על עצמו ערך מוחלט." },
+  { tag:"גאומטריה", q:"למה המעגל לא אוהב להתווכח?", p:"כי כל ויכוח איתו חוזר בסוף לאותה נקודה." },
+  { tag:"כללי", q:"המורה שאלה: ״מה זה חצי של 8?״", p:"התלמיד: ״תלוי. אם חותכים לגובה – 3. אם חותכים לרוחב – 0.״",
+    x:"כדאי לצייר על הלוח: הספרה 8 חתוכה לאורכה נראית כמו שני 3, וחתוכה לרוחבה – כמו שני 0." },
+  { tag:"תנועה על גלגל", q:"למה הקרונית בגלגל הענק תמיד רגועה?", p:"כי היא יודעת שבסוף היא תחזור לנקודת ההתחלה – כל T שניות." },
+  { tag:"לוגיקה", q:"שלושה לוגיקנים נכנסים לבר. הברמן שואל: ״כולכם רוצים בירה?״", p:"הראשון: ״לא יודע.״ השני: ״לא יודע.״ השלישי: ״כן!״",
+    x:"אם הראשון לא היה רוצה, הוא היה יודע שהתשובה ״לא״. הוא עונה ״לא יודע״ – כלומר הוא רוצה, אבל לא יודע מה האחרים רוצים. כך גם השני. השלישי מבין שגם שניהם רוצים, וגם הוא – ולכן ״כן״." },
+  { tag:"כללי", q:"מה עושה האפס כל היום בשורה של מספרים?", p:"מחכה שמישהו יעמוד לפניו, כדי שיהיה שווה משהו.",
+    x:"0 לבד שווה אפס, אבל אם שמים ספרה לפניו (למשל 10) – הוא מגדיל את המספר פי 10." },
+  { tag:"אינדוקציה", q:"המורה: ״איך מוכיחים שאפשר לטפס על כל הסולם?״ התלמיד: ״עולים לשלב הראשון, ומוכיחים שמכל שלב אפשר לעלות לשלב הבא.״ המורה: ״מצוין!״",
+    p:"התלמיד: ״אז אפשר עכשיו לא לטפס בכלל?״",
+    x:"זה בדיוק הרעיון של הוכחה באינדוקציה: בסיס (שלב ראשון) וצעד (מ־n ל־n+1) מוכיחים את הטענה לכל n – בלי לבדוק כל אחד בנפרד." },
+  { tag:"כללי", q:"מה אמר האינסוף למספר מיליון?", p:"״חמוד, אתה עוד תגדל.״" },
+  { tag:"גאומטריה", q:"למה המשולש שווה השוקיים כל כך בטוח בעצמו?", p:"כי יש לו שתי צלעות שתמיד מגבות אותו." },
+  { tag:"סדרות", q:"למה הסדרה החשבונית אף פעם לא נלחצת?", p:"כי היא מתקדמת בחיים באותו קצב – יש לה הפרש קבוע.",
+    x:"בסדרה חשבונית ההפרש בין כל שני איברים עוקבים קבוע: aₙ₊₁ − aₙ = d." },
+  { tag:"כללי", q:"המורה: ״יש לי 3 עוגיות ואכלתי 2. מה נשאר לי?״", p:"התלמיד: ״עוגייה אחת ומצפון אשם.״" },
+  { tag:"כללי", q:"למה מספר 0.999… נעלב?", p:"כי כולם אמרו לו שהוא בסך הכול 1.",
+    x:"0.999… (עם אינסוף תשיעיות) שווה בדיוק ל־1: זה טור הנדסי 0.9 + 0.09 + 0.009 + … שסכומו 0.9 ÷ (1 − 0.1) = 1." },
+  { tag:"פונקציות", q:"למה הפונקציה הקבועה אף פעם לא מתעייפת?", p:"כי היא לא עולה ולא יורדת – היא פשוט שוכבת." },
+  { tag:"גאומטריה", q:"מה אמר המשולש למעגל?", p:"״אתה כל כך עגול – אין לך שום נקודה!״ והמעגל ענה: ״ואתה – כל הזמן חד.״",
+    x:"משחק מילים: ״אין לך נקודה״ – אין קודקודים. ״חד״ – זוויות חדות." },
+  { tag:"כללי", q:"למה מתמטיקאי לא מפחד מבעיות?", p:"כי הוא תמיד יכול לצמצם אותן לבעיה שכבר נפתרה." },
+  { tag:"חשבון דיפרנציאלי", q:"למה נקודת המקסימום תמיד רגועה?", p:"כי שם השיפוע שלה אפס – אין לחץ לעלות, ואין לחץ לרדת." },
+  { tag:"כללי", q:"למה ה־π לא מצליח לסיים סיפור?", p:"כי אין לו סוף – והוא אף פעם לא חוזר על עצמו.",
+    x:"π הוא מספר אי־רציונלי: הפיתוח העשרוני שלו אינסופי ולא מחזורי." },
+  { tag:"הסתברות", q:"מה אמר המטבע לפני ההטלה?", p:"״אל תדאג, יש לי סיכוי של חצי להצליח – ושל חצי לא לרדת לך מהראש.״" },
+  { tag:"גדילה ודעיכה", q:"למה החיסכון בבנק כל כך אופטימי?", p:"כי בכל שנה הוא כופל את עצמו במספר גדול מ־1." },
+  { tag:"גדילה ודעיכה", q:"למה התרופה בדם תמיד אומרת ״עוד קצת״?", p:"כי בכל שעה נשאר ממנה רק חלק – אבל היא אף פעם לא מגיעה ממש לאפס.",
+    x:"בדעיכה a·bᵗ עם 0 < b < 1, הכמות קטנה כל הזמן ושואפת ל־0, אבל אף פעם לא שווה 0." },
+  { tag:"כללי", q:"תלמיד שאל את המורה: ״מתי אני אשתמש במתמטיקה בחיים?״", p:"המורה: ״עכשיו – כשאתה מחשב כמה דקות נשארו לסוף השיעור.״" },
+  { tag:"אלגברה", q:"למה המשוואה ביקשה ללכת לפסיכולוג?", p:"כי היו לה יותר מדי נעלמים." },
+  { tag:"כללי", q:"מה ההבדל בין מורה למתמטיקה לבין שעון מעורר?", p:"שעון מעורר מעיר אותך פעם אחת. מורה למתמטיקה – בכל פעם שאתה נרדם." },
+  { tag:"חשבון דיפרנציאלי", q:"למה הפונקציה ביקשה ממורה לנהיגה עוד שיעור?", p:"כי היא עדיין לא הבינה את הנגזרת השנייה – מתי לבלום ומתי להאיץ.",
+    x:"הנגזרת הראשונה של מיקום היא מהירות, והנגזרת השנייה היא תאוצה." },
+];
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let tagFilter = 'הכול';
+function render(){
+  const tags = ['הכול', ...new Set(JOKES.map(j => j.tag))];
+  document.getElementById('filter').innerHTML = tags.map(t => `<button type="button" aria-pressed="${t===tagFilter}" data-tag="${esc(t)}">${esc(t)}</button>`).join('');
+  document.getElementById('bankList').innerHTML = JOKES.map((j,i) => ({...j, no:i+1}))
+    .filter(j => tagFilter === 'הכול' || j.tag === tagFilter).map(j => `
+    <li><span class="no">${j.no}</span>
+      <div><span class="tag">${esc(j.tag)}</span><div>${esc(j.q)}</div><div class="punch">${esc(j.p)}</div></div>
+      ${j.x ? `<details class="x"><summary>למה זה מצחיק?</summary>${esc(j.x)}</details>` : ''}
+    </li>`).join('');
+}
+document.getElementById('filter').addEventListener('click', e => { const t = e.target.dataset.tag; if (t){ tagFilter = t; render(); } });
+render();
+</script>
+</body>
+</html>
