@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>גדילה ודעיכה – דף דוגמאות 3</title>
+<title>גדילה ודעיכה – מצגת דוגמאות 5</title>
 <style>
   :root{
     --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
@@ -40,7 +40,7 @@
   .big{font-size:1.6rem;font-weight:700}
   .calc{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;font-size:1.15rem;
     background:var(--code);border-radius:6px;padding:4px 10px;min-height:2em}
-  .sim{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;margin-top:8px}
+  .sim{display:grid;grid-template-columns:1fr;gap:12px;margin-top:8px}
   @media (max-width:700px){.sim{grid-template-columns:1fr}}
   .panel{border:1px solid var(--border);border-radius:8px;padding:6px;background:var(--bg)}
   .panel svg{width:100%;height:auto;display:block}
@@ -57,7 +57,7 @@
   .tablewrap{overflow-x:auto}
   table.fill{border-collapse:collapse;margin:8px auto;direction:rtl}
   table.fill th,table.fill td{border:1px solid var(--border);padding:4px 10px;text-align:center;min-width:70px;white-space:nowrap}
-  table.fill th{background:var(--code)}
+  table.fill th{background:var(--code);direction:rtl;unicode-bidi:isolate}
   table.fill td.ans{background:#fffbe8}
   @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) table.fill td.ans{background:#2b2a20}}
   table.fill td.ans .v{visibility:hidden}
@@ -70,6 +70,50 @@
   td{direction:ltr;unicode-bidi:isolate}
   td.he{direction:rtl}
   th{direction:rtl;unicode-bidi:isolate}
+  /* presentation mode: one slide at a time */
+  body{padding-bottom:74px}
+  main{max-width:1240px}
+  .slide{display:none;animation:fade .25s}
+  .slide.on{display:block}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .slide > .card{margin-top:6px}
+  .slide-intro{padding:6vh 0 2vh}
+  .slide-intro h1{font-size:2.2rem}
+  .slide-intro ol{line-height:2;font-size:1.1rem}
+  .deck-nav{position:fixed;inset-inline:0;bottom:0;display:flex;align-items:center;justify-content:center;gap:14px;
+    padding:10px 12px;background:var(--card);border-top:1px solid var(--border);box-shadow:0 -2px 10px rgba(0,0,0,.06);z-index:10}
+  .deck-nav button{font-size:1rem;padding:6px 16px}
+  .deck-nav button:disabled{opacity:.4;cursor:default}
+  .dots{display:flex;gap:8px}
+  .dots i{width:12px;height:12px;border-radius:50%;background:var(--border);cursor:pointer}
+  .dots i.on{background:var(--accent)}
+  .deck-count{color:var(--muted);font-size:.95rem;min-width:4.5em;text-align:center;direction:ltr}
+  @media (min-width:1000px){
+    .slide .card{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:0 12px;align-items:start}
+    .slide .card > h3,.slide .card > p{grid-column:1 / -1}
+    .slide .card .work{margin:4px 0}
+    .slide .sim{grid-template-columns:1fr}
+    
+    .slide table.fill th,.slide table.fill td{min-width:0;padding:3px 4px;font-size:.8rem}
+    .slide .card{padding:12px 12px}
+  }
+  @media print{.deck-nav{display:none}.slide{display:block!important;break-after:page}body{padding-bottom:0}}
+  .picto-panel{display:none}
+  table.vt{border-collapse:collapse;margin:8px auto;direction:rtl}
+  table.vt th,table.vt td{border:1px solid var(--border);padding:8px 14px;text-align:center;white-space:nowrap;line-height:1.5}
+  table.vt th{background:var(--code)}
+  table.vt td{direction:ltr;unicode-bidi:isolate;font-family:"Cambria Math","Times New Roman",serif;background:#fffbe8;color:transparent;transition:color .2s}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) table.vt td{background:#2b2a20}}
+  table.vt td .he{font-family:inherit;direction:rtl;unicode-bidi:isolate}
+  table.vt td.on{color:var(--text)}
+  table.vt td.form.on{color:transparent}
+  table.vt.fshow td.form.on{color:var(--text)}
+  table.vt td.na{background:var(--code);color:var(--muted)!important}
+  table.vt tr.cur td, table.vt tr.cur th{outline:2px solid var(--accent);outline-offset:-2px}
+  table.vt th.ga{color:var(--accent)} table.vt th.gb{color:var(--b2)}
+  .vt-note{color:var(--muted);font-size:.9rem;margin:2px 0 6px}
+  table.vt td b{font-weight:700}
+  .slide table.vt th,.slide table.vt td{padding:7px 10px;font-size:.85rem}
   .sumline{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;font-size:1.05rem;padding:4px 10px;line-height:1.9}
   .sumline b{font-weight:700}
   .panel svg{direction:ltr}
@@ -79,101 +123,88 @@
 <body>
 <main>
 <a href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
-<h1>שיעור חמישי – דף דוגמאות: כמה יש בסך הכול?</h1>
-<p>בשיעורים הקודמים חישבנו כמה יש בכל שנה. בשיעור הזה שואלים <b>כמה יש בסך הכול</b> – כמה מזון קנינו בכל השנים, כמה כסף נצבר מכל ההפקדות, כמה תרופה הצטברה בגוף. בכל דוגמה עובדים בשני שלבים: קודם מחשבים במחברת, ואחר כך מפעילים את הסימולציה.</p>
+<section class="slide slide-intro">
+<h1>שיעור חמישי – מצגת דוגמאות: כמה יש בסך הכול?</h1>
+<p>בשיעורים הקודמים חישבנו כמה יש בכל שנה. בשיעור הזה שואלים <b>כמה יש בסך הכול</b> – כמה מזון קנינו בכל השנים, כמה כסף נצבר מכל ההפקדות, כמה תרופה הצטברה בגוף.</p>
 <div class="card key">
-  <b>עבודה במחברת:</b> העתיקו את הטבלה למחברת והשלימו אותה בעזרת מחשבון. כשיוצא מספר עשרוני, עגלו לשתי ספרות אחרי הנקודה רק את מה שרושמים (המשיכו לחשב מהערך המלא שבמחשבון). בסיום לחצו "הצג / הסתר ערכים" ופתחו את השלבים לבדיקה.<br>
-  <b>סימולציה:</b> כל עמודה היא הסך הכול באותו שלב, והיא בנויה משכבות – שכבה לכל שנה (או הפקדה, או מנה). "צעד ▶" מוסיף שלב, "הפעל" מריץ את כל התהליך.
+  <b>עבודה במחברת:</b> העתיקו את הטבלה, וחשבו שלב אחרי שלב את הסך הכול. עגלו לשתי ספרות אחרי הנקודה רק את מה שרושמים (המשיכו לחשב מהערך המלא שבמחשבון).<br>
+  <b>סימולציה:</b> כל עמודה בגרף היא הסך הכול באותו שלב, והיא בנויה משכבה לכל שנה (או הפקדה, או מנה). "צעד ▶" מוסיף שלב, "הפעל" מריץ את כל התהליך, והערכים מופיעים בטבלה יחד עם הגרף. הכפתור "הצג / הסתר את החישוב בנוסחה" ממלא את העמודה האחרונה.
 </div>
 <div class="controls">
   <button type="button" onclick="document.querySelectorAll('details.step').forEach(function(d){d.open=true})">פתח את כל השלבים</button>
   <button type="button" onclick="document.querySelectorAll('details.step').forEach(function(d){d.open=false})">סגור את כל השלבים</button>
-  <button type="button" onclick="document.querySelectorAll('table.fill').forEach(function(t){t.classList.add('show')})">הצג את כל הערכים</button>
-  <button type="button" onclick="document.querySelectorAll('table.fill').forEach(function(t){t.classList.remove('show')})">הסתר את כל הערכים</button>
+  <button type="button" onclick="document.querySelectorAll('table.vt').forEach(function(t){t.classList.add('fshow')})">הצג את כל החישובים בנוסחה</button>
+  <button type="button" onclick="document.querySelectorAll('table.vt').forEach(function(t){t.classList.remove('fshow')})">הסתר את כל החישובים בנוסחה</button>
 </div>
+</section>
 
-<h2>דוגמאות</h2>
-<template id="w-s1"><div class="tablewrap"><table class="fill" id="t1">
-  <tr><th>שנה n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
-  <tr><th>מזון השנה (טון)</th><td>256</td><td class="ans"><span class="v">384</span></td><td class="ans"><span class="v">576</span></td><td class="ans"><span class="v">864</span></td><td class="ans"><span class="v">1296</span></td><td class="ans"><span class="v">1944</span></td><td class="ans"><span class="v">2916</span></td><td class="ans"><span class="v">4374</span></td></tr>
-  <tr><th>סה״כ מזון עד עכשיו (טון)</th><td>256</td><td class="ans"><span class="v">640</span></td><td class="ans"><span class="v">1216</span></td><td class="ans"><span class="v">2080</span></td><td class="ans"><span class="v">3376</span></td><td class="ans"><span class="v">5320</span></td><td class="ans"><span class="v">8236</span></td><td class="ans"><span class="v">12610</span></td></tr>
+<template id="w-s1"><div class="tablewrap"><table class="vt" id="t1">
+  <tr><th>שנה n</th><th>מזון השנה (טון)</th><th>סה״כ: הקודם + מזון השנה</th><th>סה״כ בנוסחה</th></tr>
+  <tr data-n="1"><th>1</th><td class="c">256</td><td class="c">256</td><td class="c form">256 · (1.5<sup>1</sup> − 1) / 0.5 = 256</td></tr>
+  <tr data-n="2"><th>2</th><td class="c">384</td><td class="c">256 + 384 = 640</td><td class="c form">256 · (1.5<sup>2</sup> − 1) / 0.5 = 640</td></tr>
+  <tr data-n="3"><th>3</th><td class="c">576</td><td class="c">640 + 576 = 1,216</td><td class="c form">256 · (1.5<sup>3</sup> − 1) / 0.5 = 1,216</td></tr>
+  <tr data-n="4"><th>4</th><td class="c">864</td><td class="c">1,216 + 864 = 2,080</td><td class="c form">256 · (1.5<sup>4</sup> − 1) / 0.5 = 2,080</td></tr>
+  <tr data-n="5"><th>5</th><td class="c">1,296</td><td class="c">2,080 + 1,296 = 3,376</td><td class="c form">256 · (1.5<sup>5</sup> − 1) / 0.5 = 3,376</td></tr>
+  <tr data-n="6"><th>6</th><td class="c">1,944</td><td class="c">3,376 + 1,944 = 5,320</td><td class="c form">256 · (1.5<sup>6</sup> − 1) / 0.5 = 5,320</td></tr>
+  <tr data-n="7"><th>7</th><td class="c">2,916</td><td class="c">5,320 + 2,916 = 8,236</td><td class="c form">256 · (1.5<sup>7</sup> − 1) / 0.5 = 8,236</td></tr>
+  <tr data-n="8"><th>8</th><td class="c">4,374</td><td class="c">8,236 + 4,374 = 12,610</td><td class="c form">256 · (1.5<sup>8</sup> − 1) / 0.5 = 12,610</td></tr>
 </table></div>
-<div class="controls"><button type="button" onclick="toggleFill('t1')">הצג / הסתר ערכים</button></div>
-<details class="step"><summary>מחשבים את המזון של כל שנה – מספר הדולפינים באותה שנה, כפול טון אחד <span class="type">(חישוב ערכים)</span></summary><div class="body">
-  <span class="math">שנה 2:   256 · 1.5 = 384</span>
-  <span class="math">שנה 3:   384 · 1.5 = 576</span>
-  <span class="math">שנה 4:   576 · 1.5 = 864</span>
-  <span class="math">שנה 5:   864 · 1.5 = 1296</span>
-  <span class="math">שנה 6:   1296 · 1.5 = 1944</span>
-  <span class="math">שנה 7:   1944 · 1.5 = 2916</span>
-  <span class="math">שנה 8:   2916 · 1.5 = 4374</span>
-</div></details>
-<details class="step"><summary>מחברים את המזון שנה אחרי שנה: הסה״כ החדש = הסה״כ הקודם + המזון של השנה <span class="type">(חישוב סכום)</span></summary><div class="body">
-  <span class="math">שנה 2:   256 + 384 = 640</span>
-  <span class="math">שנה 3:   640 + 576 = 1216</span>
-  <span class="math">שנה 4:   1216 + 864 = 2080</span>
-  <span class="math">שנה 5:   2080 + 1296 = 3376</span>
-  <span class="math">שנה 6:   3376 + 1944 = 5320</span>
-  <span class="math">שנה 7:   5320 + 2916 = 8236</span>
-  <span class="math">שנה 8:   8236 + 4374 = 12610</span>
-</div></details>
+<div class="controls"><button type="button" onclick="this.closest('.work').querySelector('table.vt').classList.toggle('fshow')">הצג / הסתר את החישוב בנוסחה</button></div>
+<p class="vt-note">הערכים מופיעים בטבלה יחד עם הגרף, כשמפעילים את הסימולציה ("צעד ▶" או "הפעל").</p>
 <details class="step"><summary>כותבים את הסה״כ אחרי 8 שנים כסכום של חזקות, כדי לגלות תבנית</summary><div class="body">
-  <span class="math">256 + 256 · 1.5 + 256 · 1.5<sup>2</sup> + … + 256 · 1.5<sup>7</sup> = 12610</span>
+  <span class="math">256 + 256 · 1.5 + 256 · 1.5<sup>2</sup> + … + 256 · 1.5<sup>7</sup> = 12,610</span>
   <p>כל מחובר גדול פי 1.5 מהמחובר שלפניו. הסה״כ הוא <b>סכום</b> של ערכי הפונקציה <span class="im">256 · 1.5<sup>t</sup></span> בשנים 0 עד 7.</p>
 </div></details>
 </template>
-<template id="w-s2"><div class="tablewrap"><table class="fill" id="t2">
-  <tr><th>הפקדה מספר n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
-  <tr><th>יתרה אחרי ההפקדה (₪)</th><td>1000</td><td class="ans"><span class="v">2050</span></td><td class="ans"><span class="v">3152.5</span></td><td class="ans"><span class="v">4310.13</span></td><td class="ans"><span class="v">5525.63</span></td><td class="ans"><span class="v">6801.91</span></td><td class="ans"><span class="v">8142.01</span></td><td class="ans"><span class="v">9549.11</span></td></tr>
+<template id="w-s2"><div class="tablewrap"><table class="vt" id="t2">
+  <tr><th>הפקדה n</th><th>יתרה (₪)</th><th>חישוב: יתרה קודמת · 1.05 + 1,000</th><th>יתרה בנוסחה</th></tr>
+  <tr data-n="1"><th>1</th><td class="c">1,000</td><td class="c">1,000</td><td class="c form">1,000 · (1.05<sup>1</sup> − 1) / 0.05 = 1,000</td></tr>
+  <tr data-n="2"><th>2</th><td class="c">2,050</td><td class="c">1,000 · 1.05 + 1,000 = 2,050</td><td class="c form">1,000 · (1.05<sup>2</sup> − 1) / 0.05 = 2,050</td></tr>
+  <tr data-n="3"><th>3</th><td class="c">3,152.5</td><td class="c">2,050 · 1.05 + 1,000 = 3,152.5</td><td class="c form">1,000 · (1.05<sup>3</sup> − 1) / 0.05 = 3,152.5</td></tr>
+  <tr data-n="4"><th>4</th><td class="c">4,310.13</td><td class="c">3,152.5 · 1.05 + 1,000 = 4,310.13</td><td class="c form">1,000 · (1.05<sup>4</sup> − 1) / 0.05 = 4,310.13</td></tr>
+  <tr data-n="5"><th>5</th><td class="c">5,525.63</td><td class="c">4,310.13 · 1.05 + 1,000 = 5,525.63</td><td class="c form">1,000 · (1.05<sup>5</sup> − 1) / 0.05 = 5,525.63</td></tr>
+  <tr data-n="6"><th>6</th><td class="c">6,801.91</td><td class="c">5,525.63 · 1.05 + 1,000 = 6,801.91</td><td class="c form">1,000 · (1.05<sup>6</sup> − 1) / 0.05 = 6,801.91</td></tr>
+  <tr data-n="7"><th>7</th><td class="c">8,142.01</td><td class="c">6,801.91 · 1.05 + 1,000 = 8,142.01</td><td class="c form">1,000 · (1.05<sup>7</sup> − 1) / 0.05 = 8,142.01</td></tr>
+  <tr data-n="8"><th>8</th><td class="c">9,549.11</td><td class="c">8,142.01 · 1.05 + 1,000 = 9,549.11</td><td class="c form">1,000 · (1.05<sup>8</sup> − 1) / 0.05 = 9,549.11</td></tr>
 </table></div>
-<div class="controls"><button type="button" onclick="toggleFill('t2')">הצג / הסתר ערכים</button></div>
-<details class="step"><summary>בכל שנה: היתרה הקודמת גדלה ב-5% (כפול 1.05), ואז מוסיפים את ההפקדה החדשה <span class="type">(חישוב ערכים)</span></summary><div class="body">
-  <span class="math">n = 2:   1000 · 1.05 + 1000 = 2050</span>
-  <span class="math">n = 3:   2050 · 1.05 + 1000 = 3152.5</span>
-  <span class="math">n = 4:   3152.5 · 1.05 + 1000 = 4310.13</span>
-  <span class="math">n = 5:   4310.13 · 1.05 + 1000 = 5525.63</span>
-  <span class="math">n = 6:   5525.63 · 1.05 + 1000 = 6801.91</span>
-  <span class="math">n = 7:   6801.91 · 1.05 + 1000 = 8142.01</span>
-  <span class="math">n = 8:   8142.01 · 1.05 + 1000 = 9549.11</span>
-  <p>עגלו רק את מה שרושמים בטבלה; המשיכו לחשב מהערך המלא שבמחשבון.</p>
-</div></details>
+<div class="controls"><button type="button" onclick="this.closest('.work').querySelector('table.vt').classList.toggle('fshow')">הצג / הסתר את החישוב בנוסחה</button></div>
+<p class="vt-note">הערכים מופיעים בטבלה יחד עם הגרף, כשמפעילים את הסימולציה ("צעד ▶" או "הפעל").</p>
 <details class="step"><summary>בודקים כמה שווה כל הפקדה בנפרד אחרי ההפקדה ה-8</summary><div class="body">
-  <span class="math">הפקדה 8 (חדשה):   1000</span>
-  <span class="math">הפקדה 7:   1000 · 1.05 = 1050</span>
-  <span class="math">הפקדה 6:   1000 · 1.05<sup>2</sup> = 1102.5</span>
+  <span class="math">הפקדה 8 (חדשה):   1,000</span>
+  <span class="math">הפקדה 7:   1,000 · 1.05 = 1,050</span>
+  <span class="math">הפקדה 6:   1,000 · 1.05<sup>2</sup> = 1,102.5</span>
   <span class="math">…</span>
-  <span class="math">הפקדה 1:   1000 · 1.05<sup>7</sup> ≈ 1407.10</span>
+  <span class="math">הפקדה 1:   1,000 · 1.05<sup>7</sup> ≈ 1,407.10</span>
   <p>היתרה היא הסכום של כל ההפקדות, וכל הפקדה גדלה מספר שנים שונה:</p>
-  <span class="math">1000 + 1000 · 1.05 + 1000 · 1.05<sup>2</sup> + … + 1000 · 1.05<sup>7</sup> ≈ 9549.11</span>
+  <span class="math">1,000 + 1,000 · 1.05 + 1,000 · 1.05<sup>2</sup> + … + 1,000 · 1.05<sup>7</sup> ≈ 9,549.11</span>
 </div></details>
 </template>
-<template id="w-s3"><div class="tablewrap"><table class="fill" id="t3">
-  <tr><th>יום n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
-  <tr><th>כמות בגוף אחרי המנה (מ"ג)</th><td>100</td><td class="ans"><span class="v">150</span></td><td class="ans"><span class="v">175</span></td><td class="ans"><span class="v">187.5</span></td><td class="ans"><span class="v">193.75</span></td><td class="ans"><span class="v">196.88</span></td><td class="ans"><span class="v">198.44</span></td><td class="ans"><span class="v">199.22</span></td></tr>
+<template id="w-s3"><div class="tablewrap"><table class="vt" id="t3">
+  <tr><th>יום n</th><th>כמות בגוף (מ"ג)</th><th>חישוב: כמות קודמת · 0.5 + 100</th><th>כמות בנוסחה</th></tr>
+  <tr data-n="1"><th>1</th><td class="c">100</td><td class="c">100</td><td class="c form">100 · (1 − 0.5<sup>1</sup>) / 0.5 = 100</td></tr>
+  <tr data-n="2"><th>2</th><td class="c">150</td><td class="c">100 · 0.5 + 100 = 150</td><td class="c form">100 · (1 − 0.5<sup>2</sup>) / 0.5 = 150</td></tr>
+  <tr data-n="3"><th>3</th><td class="c">175</td><td class="c">150 · 0.5 + 100 = 175</td><td class="c form">100 · (1 − 0.5<sup>3</sup>) / 0.5 = 175</td></tr>
+  <tr data-n="4"><th>4</th><td class="c">187.5</td><td class="c">175 · 0.5 + 100 = 187.5</td><td class="c form">100 · (1 − 0.5<sup>4</sup>) / 0.5 = 187.5</td></tr>
+  <tr data-n="5"><th>5</th><td class="c">193.75</td><td class="c">187.5 · 0.5 + 100 = 193.75</td><td class="c form">100 · (1 − 0.5<sup>5</sup>) / 0.5 = 193.75</td></tr>
+  <tr data-n="6"><th>6</th><td class="c">196.88</td><td class="c">193.75 · 0.5 + 100 = 196.88</td><td class="c form">100 · (1 − 0.5<sup>6</sup>) / 0.5 = 196.88</td></tr>
+  <tr data-n="7"><th>7</th><td class="c">198.44</td><td class="c">196.88 · 0.5 + 100 = 198.44</td><td class="c form">100 · (1 − 0.5<sup>7</sup>) / 0.5 = 198.44</td></tr>
+  <tr data-n="8"><th>8</th><td class="c">199.22</td><td class="c">198.44 · 0.5 + 100 = 199.22</td><td class="c form">100 · (1 − 0.5<sup>8</sup>) / 0.5 = 199.22</td></tr>
 </table></div>
-<div class="controls"><button type="button" onclick="toggleFill('t3')">הצג / הסתר ערכים</button></div>
-<details class="step"><summary>בכל בוקר: נשארה חצי מהכמות של אתמול (כפול 0.5), ומוסיפים מנה חדשה של 100 <span class="type">(חישוב ערכים)</span></summary><div class="body">
-  <span class="math">יום 2:   100 · 0.5 + 100 = 150</span>
-  <span class="math">יום 3:   150 · 0.5 + 100 = 175</span>
-  <span class="math">יום 4:   175 · 0.5 + 100 = 187.5</span>
-  <span class="math">יום 5:   187.5 · 0.5 + 100 = 193.75</span>
-  <span class="math">יום 6:   193.75 · 0.5 + 100 = 196.88</span>
-  <span class="math">יום 7:   196.88 · 0.5 + 100 = 198.44</span>
-  <span class="math">יום 8:   198.44 · 0.5 + 100 = 199.22</span>
-</div></details>
+<div class="controls"><button type="button" onclick="this.closest('.work').querySelector('table.vt').classList.toggle('fshow')">הצג / הסתר את החישוב בנוסחה</button></div>
+<p class="vt-note">הערכים מופיעים בטבלה יחד עם הגרף, כשמפעילים את הסימולציה ("צעד ▶" או "הפעל").</p>
 <details class="step"><summary>כותבים את הכמות ביום 8 כסכום: כמה נשאר מכל מנה</summary><div class="body">
   <span class="math">100 + 100 · 0.5 + 100 · 0.5<sup>2</sup> + … + 100 · 0.5<sup>7</sup> = 199.21875</span>
   <p>המנה של היום שלמה (100), מהמנה של אתמול נשארה חצי (50), ומהמנה של לפני שבוע נשאר רק <span class="im">100 · 0.5<sup>7</sup> ≈ 0.78</span>.</p>
   <p>שימו לב: הכמות מתקרבת ל-200 אבל לא עוברת אותו. כל יום מוסיפים פחות ממה שחסר עד 200.</p>
 </div></details>
 </template>
-<div id="s1"></div>
-<div id="s2"></div>
-<div id="s3"></div>
+<section class="slide"><div id="s1"></div></section>
+<section class="slide"><div id="s2"></div></section>
+<section class="slide"><div id="s3"></div>
+<p><a href="exponential-06-formula-lesson2.html">→ חזרה לשיעור רביעי</a> · <a href="exponential-08-sum-formula.html">המשך: נוסחת הסכום ←</a></p></section>
 
-<p><a href="exponential-08-sum-formula.html">המשך: נוסחת הסכום ←</a></p>
-<a href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
 </main>
+<nav class="deck-nav"><button type="button" id="dPrev">→ הקודם</button><div class="dots" id="dDots"></div><span class="deck-count" id="dCount"></span><button type="button" id="dNext">הבא ←</button></nav>
 
 <script>
 var EX=[
@@ -187,7 +218,6 @@ var EX=[
   text:'כל בוקר לוקחים 100 מ"ג של תרופה. עד הבוקר הבא נשארת בגוף חצי מהכמות (כפול 0.5). כמה תרופה יש בגוף מיד אחרי המנה של היום ה-8?',
   termName:'מנה חדשה', totName:'כמות בגוף', segName:'מנה'}
 ];
-function toggleFill(id){document.getElementById(id).classList.toggle('show');}
 function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
 function fmt(x){var r=Math.round(x*100)/100; return r.toLocaleString('en-US',{minimumFractionDigits:(Number.isInteger(r)?0:2),maximumFractionDigits:2});}
 function N(h){return '<div dir="rtl" style="text-align:right;font-family:inherit;font-size:.95rem">'+h+'</div>';}
@@ -223,6 +253,7 @@ function build(ex){
       N(ex.mode==='fixed'?'כל צבע הוא המזון של שנה אחת. כל שכבה גדולה פי '+ex.b+' מזו שמתחתיה.':
         (ex.b>1?'כל צבע הוא הפקדה אחת. ההפקדות הישנות גדלו יותר שנים, ולכן השכבות שלהן עבות יותר.':'כל צבע הוא מנה אחת. מהמנות הישנות נשאר פחות, ולכן השכבות שלהן דקות יותר.'));
     draw(ex,q('chart'),n);
+    var vt=root.querySelector('table.vt'); if(vt) vt.querySelectorAll('tr[data-n]').forEach(function(r){var k=+r.getAttribute('data-n'); r.classList.toggle('cur',k===n); r.querySelectorAll('td.c').forEach(function(td){td.classList.toggle('on',k<=n);});});
     playBtn.textContent=st.timer?'⏸ עצור':'▶ הפעל';
   }
   function go(v){st.n=Math.max(1,Math.min(ex.N,v));render();}
@@ -254,6 +285,31 @@ function draw(ex,svg,n){
 }
 EX.forEach(build);
 try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){EX.forEach(function(e){e._render();});});}catch(e){}
+// ---- slides ----
+(function(){
+  var S=[].slice.call(document.querySelectorAll('.slide')), cur=0;
+  var dots=document.getElementById('dDots');
+  S.forEach(function(_,i){var d=document.createElement('i');d.title=i?('שאלה '+i):'פתיחה';d.onclick=function(){show(i)};dots.appendChild(d);});
+  function show(i){
+    cur=Math.max(0,Math.min(S.length-1,i));
+    S.forEach(function(x,k){x.classList.toggle('on',k===cur)});
+    [].forEach.call(dots.children,function(d,k){d.classList.toggle('on',k===cur)});
+    document.getElementById('dCount').textContent=(cur+1)+' / '+S.length;
+    document.getElementById('dPrev').disabled=cur===0;
+    document.getElementById('dNext').disabled=cur===S.length-1;
+    try{history.replaceState(null,'','#s'+cur);}catch(e){}
+    window.scrollTo(0,0);
+  }
+  document.getElementById('dPrev').onclick=function(){show(cur-1)};
+  document.getElementById('dNext').onclick=function(){show(cur+1)};
+  document.addEventListener('keydown',function(e){
+    var t=e.target.tagName; if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT') return;
+    if(e.key==='ArrowLeft'||e.key==='PageDown'){show(cur+1);e.preventDefault();}
+    else if(e.key==='ArrowRight'||e.key==='PageUp'){show(cur-1);e.preventDefault();}
+    else if(e.key==='Home'){show(0)} else if(e.key==='End'){show(S.length-1)}
+  });
+  var m=/^#s(\d+)$/.exec(location.hash); show(m?+m[1]:0);
+})();
 </script>
 </body>
 </html>
