@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>גדילה ודעיכה – דף דוגמאות 2</title>
+<title>גדילה ודעיכה – מצגת דוגמאות 2</title>
 <style>
   :root{
     --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
@@ -40,7 +40,7 @@
   .big{font-size:1.6rem;font-weight:700}
   .calc{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;font-size:1.15rem;
     background:var(--code);border-radius:6px;padding:4px 10px;min-height:2em}
-  .sim{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;margin-top:8px}
+  .sim{display:grid;grid-template-columns:1fr;gap:12px;margin-top:8px}
   @media (max-width:700px){.sim{grid-template-columns:1fr}}
   .panel{border:1px solid var(--border);border-radius:8px;padding:6px;background:var(--bg)}
   .panel svg{width:100%;height:auto;display:block}
@@ -70,48 +70,87 @@
   td{direction:ltr;unicode-bidi:isolate}
   td.he{direction:rtl}
   th{direction:rtl;unicode-bidi:isolate}
+  /* presentation mode: one slide at a time */
+  body{padding-bottom:74px}
+  main{max-width:1240px}
+  .slide{display:none;animation:fade .25s}
+  .slide.on{display:block}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .slide > .card{margin-top:6px}
+  .slide-intro{padding:6vh 0 2vh}
+  .slide-intro h1{font-size:2.2rem}
+  .slide-intro ol{line-height:2;font-size:1.1rem}
+  .deck-nav{position:fixed;inset-inline:0;bottom:0;display:flex;align-items:center;justify-content:center;gap:14px;
+    padding:10px 12px;background:var(--card);border-top:1px solid var(--border);box-shadow:0 -2px 10px rgba(0,0,0,.06);z-index:10}
+  .deck-nav button{font-size:1rem;padding:6px 16px}
+  .deck-nav button:disabled{opacity:.4;cursor:default}
+  .dots{display:flex;gap:8px}
+  .dots i{width:12px;height:12px;border-radius:50%;background:var(--border);cursor:pointer}
+  .dots i.on{background:var(--accent)}
+  .deck-count{color:var(--muted);font-size:.95rem;min-width:4.5em;text-align:center;direction:ltr}
+  @media (min-width:1000px){
+    .slide .card{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:0 12px;align-items:start}
+    .slide .card > h3,.slide .card > p{grid-column:1 / -1}
+    .slide .card .work{margin:4px 0}
+    .slide .sim{grid-template-columns:1fr}
+    
+    .slide table.fill th,.slide table.fill td{min-width:0;padding:3px 4px;font-size:.8rem}
+    .slide .card{padding:12px 12px}
+  }
+  @media print{.deck-nav{display:none}.slide{display:block!important;break-after:page}body{padding-bottom:0}}
+  .picto-panel{display:none}
+  table.vt{border-collapse:collapse;margin:8px auto;direction:rtl}
+  table.vt th,table.vt td{border:1px solid var(--border);padding:8px 14px;text-align:center;white-space:nowrap;line-height:1.5}
+  table.vt th{background:var(--code)}
+  table.vt td{direction:ltr;unicode-bidi:isolate;font-family:"Cambria Math","Times New Roman",serif;background:#fffbe8;color:transparent;transition:color .2s}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) table.vt td{background:#2b2a20}}
+  table.vt td .he{font-family:inherit;direction:rtl;unicode-bidi:isolate}
+  table.vt td.on{color:var(--text)}
+  table.vt td.form.on{color:transparent}
+  table.vt.fshow td.form.on{color:var(--text)}
+  table.vt td.na{background:var(--code);color:var(--muted)!important}
+  table.vt tr.cur td, table.vt tr.cur th{outline:2px solid var(--accent);outline-offset:-2px}
+  table.vt th.ga{color:var(--accent)} table.vt th.gb{color:var(--b2)}
+  .vt-note{color:var(--muted);font-size:.9rem;margin:2px 0 6px}
+  table.vt td b{font-weight:700}
+  .slide table.vt th,.slide table.vt td{padding:7px 10px;font-size:.85rem}
 </style>
 </head>
 <body>
 <main>
 <a href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
-<h1>שיעור שני – דף דוגמאות: השוואה בין שתי קבוצות</h1>
+<section class="slide slide-intro">
+<h1>שיעור שני – מצגת דוגמאות: השוואה בין שתי קבוצות</h1>
 <p>בכל שאלה עובדים בשני שלבים: קודם מחשבים במחברת בטבלה – שנה אחרי שנה – ואחר כך מפעילים את הסימולציה. הפתרון בשלבים מראה גם איך עוברים מהטבלה למשוואה.</p>
 <p>בשיעור הקודם ראינו קבוצה אחת שגדלה או קטנה. עכשיו יש שתי קבוצות שגדלות בקצב שונה – ונחפש מתי הן משתוות, או מה היה הערך ההתחלתי של אחת מהן.</p>
 <div class="card key">
-  <b>עבודה במחברת:</b> העתיקו את הטבלה למחברת והשלימו אותה. כשיוצא מספר עשרוני, עגלו לשתי ספרות אחרי הנקודה רק את התוצאה שאתם רושמים (המשיכו לחשב מהערך המלא שבמחשבון). בסיום לחצו "הצג / הסתר ערכים" ופתחו את השלבים לבדיקה.<br>
+  <b>עבודה במחברת:</b> העתיקו את הטבלה למחברת והשלימו אותה. כשיוצא מספר עשרוני, עגלו לשתי ספרות אחרי הנקודה רק את התוצאה שאתם רושמים (המשיכו לחשב מהערך המלא שבמחשבון). כדי לבדוק את עצמכם, הפעילו את הסימולציה: הערכים מופיעים בטבלה יחד עם הגרף. הכפתור "הצג / הסתר את החישוב בנוסחה" ממלא את עמודות הנוסחה.<br>
   <b>סימולציה:</b> "צעד ▶" מתקדם שנה אחת, "הפעל" מריץ את כל התהליך, ואפשר לגרור את המחוון.
 </div>
 <div class="controls">
   <button type="button" onclick="document.querySelectorAll('details.step').forEach(function(d){d.open=true})">פתח את כל השלבים</button>
   <button type="button" onclick="document.querySelectorAll('details.step').forEach(function(d){d.open=false})">סגור את כל השלבים</button>
-  <button type="button" onclick="document.querySelectorAll('table.fill').forEach(function(t){t.classList.add('show')})">הצג את כל הערכים</button>
-  <button type="button" onclick="document.querySelectorAll('table.fill').forEach(function(t){t.classList.remove('show')})">הסתר את כל הערכים</button>
+  <button type="button" onclick="document.querySelectorAll('table.vt').forEach(function(t){t.classList.add('fshow')})">הצג את כל החישובים בנוסחה</button>
+  <button type="button" onclick="document.querySelectorAll('table.vt').forEach(function(t){t.classList.remove('fshow')})">הסתר את כל החישובים בנוסחה</button>
 </div>
 
-<h2>שאלות</h2>
-<template id="w-ex5"><div class="tablewrap"><table class="fill" id="q1">
-  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
-  <tr><th>שמורה א'</th><td>1728</td>
-    <td class="ans"><span class="v">2160</span></td><td class="ans"><span class="v">2700</span></td><td class="ans"><span class="v">3375</span></td></tr>
-  <tr><th>שמורה ב'</th><td>1000</td>
-    <td class="ans"><span class="v">1500</span></td><td class="ans"><span class="v">2250</span></td><td class="ans"><span class="v">3375</span></td></tr>
+</section>
+
+<template id="w-ex5"><div class="tablewrap"><table class="vt" id="v5">
+  <tr><th>שנים t</th><th class="ga">שמורה א׳</th><th class="gb">שמורה ב׳</th><th class="ga">נוסחה שמורה א׳</th><th class="gb">נוסחה שמורה ב׳</th></tr>
+  <tr data-t="0"><th>0</th><td class="c" data-s="0"><b>1,728</b></td><td class="c" data-s="1"><b>1,000</b></td><td class="c form" data-s="0">1,728 · 1.25<sup>0</sup> = 1,728</td><td class="c form" data-s="1">1,000 · 1.5<sup>0</sup> = 1,000</td></tr>
+  <tr data-t="1"><th>1</th><td class="c" data-s="0">1,728 · 1.25 = <b>2,160</b></td><td class="c" data-s="1">1,000 · 1.5 = <b>1,500</b></td><td class="c form" data-s="0">1,728 · 1.25<sup>1</sup> = 2,160</td><td class="c form" data-s="1">1,000 · 1.5<sup>1</sup> = 1,500</td></tr>
+  <tr data-t="2"><th>2</th><td class="c" data-s="0">2,160 · 1.25 = <b>2,700</b></td><td class="c" data-s="1">1,500 · 1.5 = <b>2,250</b></td><td class="c form" data-s="0">1,728 · 1.25<sup>2</sup> = 2,700</td><td class="c form" data-s="1">1,000 · 1.5<sup>2</sup> = 2,250</td></tr>
+  <tr data-t="3" class="eqrow"><th>3</th><td class="c" data-s="0">2,700 · 1.25 = <b>3,375</b></td><td class="c" data-s="1">2,250 · 1.5 = <b>3,375</b></td><td class="c form" data-s="0">1,728 · 1.25<sup>3</sup> = 3,375</td><td class="c form" data-s="1">1,000 · 1.5<sup>3</sup> = 3,375</td></tr>
+  <tr data-t="4"><th>4</th><td class="c" data-s="0">3,375 · 1.25 = <b>4,218.75</b></td><td class="c" data-s="1">3,375 · 1.5 = <b>5,062.5</b></td><td class="c form" data-s="0">1,728 · 1.25<sup>4</sup> = 4,218.75</td><td class="c form" data-s="1">1,000 · 1.5<sup>4</sup> = 5,062.5</td></tr>
+  <tr data-t="5"><th>5</th><td class="c" data-s="0">4,218.75 · 1.25 = <b>5,273.44</b></td><td class="c" data-s="1">5,062.5 · 1.5 = <b>7,593.75</b></td><td class="c form" data-s="0">1,728 · 1.25<sup>5</sup> = 5,273.44</td><td class="c form" data-s="1">1,000 · 1.5<sup>5</sup> = 7,593.75</td></tr>
 </table></div>
-<div class="controls"><button type="button" onclick="toggleFill('q1')">הצג / הסתר ערכים</button></div>
+<div class="controls"><button type="button" onclick="this.closest('.work').querySelector('table.vt').classList.toggle('fshow')">הצג / הסתר את החישוב בנוסחה</button></div>
+<p class="vt-note">כל משבצת מראה את החישוב ואת התוצאה (מודגשת). הערכים מופיעים בטבלה יחד עם הגרף, כשמפעילים את הסימולציה ("צעד ▶" או "הפעל").</p>
 <details class="step"><summary>מתרגמים את אחוזי הגידול של כל שמורה למספר שמכפילים בו <span class="type">(בניית פונקציה)</span></summary><div class="body">
   <span class="math">b = 1 + p/100</span>
   <span class="math">b<sub>A</sub> = 1 + 25/100 = 1.25</span>
   <span class="math">b<sub>B</sub> = 1 + 50/100 = 1.5</span>
-</div></details>
-<details class="step"><summary>שלב א' – טבלה: ממלאים שנה אחרי שנה עד שהמספרים משתווים <span class="type">(חישוב ערכים)</span></summary><div class="body">
-  <span class="math">שמורה א':  1728 · 1.25 = 2160</span>
-  <span class="math">2160 · 1.25 = 2700</span>
-  <span class="math">2700 · 1.25 = 3375</span>
-  <span class="math">שמורה ב':  1000 · 1.5 = 1500</span>
-  <span class="math">1500 · 1.5 = 2250</span>
-  <span class="math">2250 · 1.5 = 3375</span>
-  <p>אחרי 3 שנים יש בשתי השמורות 3,375 דולפינים. מכאן והלאה שמורה ב' עוברת את שמורה א', כי היא גדלה מהר יותר.</p>
-  <p>אבל מה אם השוויון היה מגיע רק אחרי 20 שנה? הטבלה הייתה ארוכה מאוד. לכן נעבור למשוואה.</p>
 </div></details>
 <details class="step"><summary>שלב ב' – מהטבלה למשוואה: כותבים פונקציה לכל שמורה ומשווים ביניהן <span class="type">(פתרון משוואה)</span></summary><div class="body">
   <span class="math">f(t) = a · b<sup>t</sup></span>
@@ -135,30 +174,19 @@
   <span class="math">B(3) = 3375</span>
   <p>תשובה: אחרי 3 שנים יהיו בכל שמורה 3,375 דולפינים.</p>
 </div></details></template>
-<template id="w-ex6"><div class="tablewrap"><table class="fill" id="q2">
-  <tr><th>שנים t</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
-  <tr><th>עדר א'</th><td>500</td>
-    <td class="ans"><span class="v">600</span></td><td class="ans"><span class="v">720</span></td><td class="ans"><span class="v">864</span></td></tr>
-  <tr><th>עדר ב'</th>
-    <td class="ans"><span class="v">256</span></td><td class="ans"><span class="v">384</span></td><td class="ans"><span class="v">576</span></td><td class="ans"><span class="v">864</span></td></tr>
+<template id="w-ex6"><div class="tablewrap"><table class="vt" id="v6">
+  <tr><th>שנים t</th><th class="ga">עדר א׳</th><th class="gb">עדר ב׳</th><th class="ga">נוסחה עדר א׳</th><th class="gb">נוסחה עדר ב׳</th></tr>
+  <tr data-t="0"><th>0</th><td class="c" data-s="0"><b>500</b></td><td class="c" data-s="1">384 : 1.5 = <b>256</b></td><td class="c form" data-s="0">500 · 1.2<sup>0</sup> = 500</td><td class="c form" data-s="1">256 · 1.5<sup>0</sup> = 256</td></tr>
+  <tr data-t="1"><th>1</th><td class="c" data-s="0">500 · 1.2 = <b>600</b></td><td class="c" data-s="1">576 : 1.5 = <b>384</b></td><td class="c form" data-s="0">500 · 1.2<sup>1</sup> = 600</td><td class="c form" data-s="1">256 · 1.5<sup>1</sup> = 384</td></tr>
+  <tr data-t="2"><th>2</th><td class="c" data-s="0">600 · 1.2 = <b>720</b></td><td class="c" data-s="1">864 : 1.5 = <b>576</b></td><td class="c form" data-s="0">500 · 1.2<sup>2</sup> = 720</td><td class="c form" data-s="1">256 · 1.5<sup>2</sup> = 576</td></tr>
+  <tr data-t="3" class="eqrow"><th>3</th><td class="c" data-s="0">720 · 1.2 = <b>864</b></td><td class="c" data-s="1"><b>864</b></td><td class="c form" data-s="0">500 · 1.2<sup>3</sup> = 864</td><td class="c form" data-s="1">256 · 1.5<sup>3</sup> = 864</td></tr>
 </table></div>
-<div class="controls"><button type="button" onclick="toggleFill('q2')">הצג / הסתר ערכים</button></div>
+<div class="controls"><button type="button" onclick="this.closest('.work').querySelector('table.vt').classList.toggle('fshow')">הצג / הסתר את החישוב בנוסחה</button></div>
+<p class="vt-note">הסימולציה ממלאת קודם את עדר א׳ קדימה (כפול 1.2), ואחר כך את עדר ב׳ אחורה – בכל שנה מחלקים ב־1.5.</p>
 <details class="step"><summary>מתרגמים את אחוזי הגידול של כל עדר למספר שמכפילים בו <span class="type">(בניית פונקציה)</span></summary><div class="body">
   <span class="math">b = 1 + p/100</span>
   <span class="math">b<sub>A</sub> = 1 + 20/100 = 1.2</span>
   <span class="math">b<sub>B</sub> = 1 + 50/100 = 1.5</span>
-</div></details>
-<details class="step"><summary>מחשבים כמה כבשים יש בעדר א' אחרי 3 שנים <span class="type">(חישוב ערך)</span></summary><div class="body">
-  <span class="math">500 · 1.2 = 600</span>
-  <span class="math">600 · 1.2 = 720</span>
-  <span class="math">720 · 1.2 = 864</span>
-  <p>אחרי 3 שנים יש בעדר א' 864 כבשים – ולכן גם בעדר ב' יש אז 864 כבשים.</p>
-</div></details>
-<details class="step"><summary>שלב א' – טבלה: הולכים אחורה בטבלה של עדר ב' – מחלקים ב-1.5 בכל שנה <span class="type">(מציאת ערך התחלתי)</span></summary><div class="body">
-  <p>אם בכל שנה מכפילים ב-1.5, אז כדי לחזור שנה אחורה מחלקים ב-1.5:</p>
-  <span class="math">t = 2:   864 / 1.5 = 576</span>
-  <span class="math">t = 1:   576 / 1.5 = 384</span>
-  <span class="math">t = 0:   384 / 1.5 = 256</span>
 </div></details>
 <details class="step"><summary>שלב ב' – מהטבלה למשוואה: כותבים את הפונקציה של עדר ב' עם ערך התחלתי לא ידוע ומשווים ל-864 <span class="type">(מציאת פרמטר)</span></summary><div class="body">
   <span class="math">f(t) = a · b<sup>t</sup></span>
@@ -169,38 +197,28 @@
   <span class="math">a = 256</span>
   <p>תשובה: בהתחלה היו בעדר ב' 256 כבשים.</p>
 </div></details></template>
-<template id="w-ex7"><div class="tablewrap"><table class="fill" id="q3">
-  <tr><th>שנים מאז בריכה א' (t)</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
-  <tr><th>שנים מאז בריכה ב'</th><td>—</td><td>—</td><td>0</td><td>1</td><td>2</td><td>3</td></tr>
-  <tr><th>בריכה א'</th><td>256</td><td class="ans"><span class="v">384</span></td><td class="ans"><span class="v">576</span></td><td class="ans"><span class="v">864</span></td><td class="ans"><span class="v">1296</span></td><td class="ans"><span class="v">1944</span></td></tr>
-  <tr><th>בריכה ב'</th><td>—</td><td>—</td><td class="ans"><span class="v">243</span></td><td class="ans"><span class="v">486</span></td><td class="ans"><span class="v">972</span></td><td class="ans"><span class="v">1944</span></td></tr>
+<template id="w-ex7"><div class="tablewrap"><table class="vt" id="v7">
+  <tr><th>שנים t</th><th class="ga">בריכה א׳</th><th class="gb">בריכה ב׳</th><th class="ga">נוסחה בריכה א׳</th><th class="gb">נוסחה בריכה ב׳</th></tr>
+  <tr data-t="0"><th>0</th><td class="c" data-s="0"><b>256</b></td><td class="na">—</td><td class="c form" data-s="0">256 · 1.5<sup>0</sup> = 256</td><td class="na">—</td></tr>
+  <tr data-t="1"><th>1</th><td class="c" data-s="0">256 · 1.5 = <b>384</b></td><td class="na">—</td><td class="c form" data-s="0">256 · 1.5<sup>1</sup> = 384</td><td class="na">—</td></tr>
+  <tr data-t="2"><th>2</th><td class="c" data-s="0">384 · 1.5 = <b>576</b></td><td class="c" data-s="1">486 : 2 = <b>243</b></td><td class="c form" data-s="0">256 · 1.5<sup>2</sup> = 576</td><td class="c form" data-s="1">243 · 2<sup>2 − 2</sup> = 243</td></tr>
+  <tr data-t="3"><th>3</th><td class="c" data-s="0">576 · 1.5 = <b>864</b></td><td class="c" data-s="1">972 : 2 = <b>486</b></td><td class="c form" data-s="0">256 · 1.5<sup>3</sup> = 864</td><td class="c form" data-s="1">243 · 2<sup>3 − 2</sup> = 486</td></tr>
+  <tr data-t="4"><th>4</th><td class="c" data-s="0">864 · 1.5 = <b>1,296</b></td><td class="c" data-s="1">1,944 : 2 = <b>972</b></td><td class="c form" data-s="0">256 · 1.5<sup>4</sup> = 1,296</td><td class="c form" data-s="1">243 · 2<sup>4 − 2</sup> = 972</td></tr>
+  <tr data-t="5" class="eqrow"><th>5</th><td class="c" data-s="0">1,296 · 1.5 = <b>1,944</b></td><td class="c" data-s="1"><b>1,944</b></td><td class="c form" data-s="0">256 · 1.5<sup>5</sup> = 1,944</td><td class="c form" data-s="1">243 · 2<sup>5 − 2</sup> = 1,944</td></tr>
 </table></div>
-<div class="controls"><button type="button" onclick="toggleFill('q3')">הצג / הסתר ערכים</button></div>
+<div class="controls"><button type="button" onclick="this.closest('.work').querySelector('table.vt').classList.toggle('fshow')">הצג / הסתר את החישוב בנוסחה</button></div>
+<p class="vt-note">הסימולציה ממלאת קודם את בריכה א׳ קדימה (כפול 1.5), ואחר כך את בריכה ב׳ אחורה – בכל שנה מחלקים ב־2.</p>
 <details class="step"><summary>מתרגמים את קצב הגידול של כל בריכה למספר שמכפילים בו <span class="type">(בניית פונקציה)</span></summary><div class="body">
   <span class="math">b = 1 + p/100</span>
   <span class="math">b<sub>A</sub> = 1 + 50/100 = 1.5</span>
   <span class="math">b<sub>B</sub> = 2</span>
   <p>בבריכה ב' מספר הדגים מוכפל בכל שנה – גידול של 100%.</p>
 </div></details>
-<details class="step"><summary>מחשבים כמה דגים יש בבריכה א' אחרי 5 שנים <span class="type">(חישוב ערך)</span></summary><div class="body">
-  <span class="math">256 · 1.5 = 384</span>
-  <span class="math">384 · 1.5 = 576</span>
-  <span class="math">576 · 1.5 = 864</span>
-  <span class="math">864 · 1.5 = 1296</span>
-  <span class="math">1296 · 1.5 = 1944</span>
-  <p>בשנה 5 יש בבריכה א' 1,944 דגים – ולכן גם בבריכה ב' יש אז 1,944 דגים.</p>
-</div></details>
 <details class="step"><summary>מוצאים כמה שנים גדלו הדגים בבריכה ב' עד שהבריכות השתוו <span class="type">(חישוב זמן)</span></summary><div class="body">
   <p>בריכה ב' התחילה שנתיים אחרי בריכה א', ולכן עד שנה 5 הדגים בה גדלו רק 3 שנים:</p>
   <span class="math">5 − 2 = 3</span>
 </div></details>
-<details class="step"><summary>שלב א' – טבלה: הולכים אחורה בבריכה ב' – מחלקים ב-2 בכל שנה, עד השנה שבה הוכנסו הדגים <span class="type">(מציאת ערך התחלתי)</span></summary><div class="body">
-  <span class="math">t = 4:   1944 / 2 = 972</span>
-  <span class="math">t = 3:   972 / 2 = 486</span>
-  <span class="math">t = 2:   486 / 2 = 243</span>
-  <p>עוצרים בשנה 2, כי זו השנה שבה הכניסו את הדגים לבריכה ב'. לפני כן לא היו בה דגים.</p>
-</div></details>
-<details class="step"><summary>שלב ב' – מהטבלה למשוואה: המעריך הוא מספר השנים שבריכה ב' גדלה, t − 2 <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+<details class="step"><summary>שלב ב' – מהטבלה למשוואה: המעריך הוא מספר השנים שבריכה ב' גדלה, <span class="im">t − 2</span> <span class="type">(מציאת פרמטר)</span></summary><div class="body">
   <span class="math">f(t) = a · b<sup>t</sup></span>
   <span class="math">B(t) = a · 2<sup>t − 2</sup></span>
   <span class="math">B(5) = a · 2<sup>5 − 2</sup></span>
@@ -211,13 +229,13 @@
   <p>תשובה: לבריכה ב' הכניסו 243 דגים. שימו לב: אם היינו כותבים <span class="im">2<sup>5</sup></span> (5 שנים מתחילת בריכה א'), היינו מקבלים תשובה שגויה.</p>
 </div></details></template>
 
-<div id="ex5"></div>
-<div id="ex6"></div>
-<div id="ex7"></div>
-
-<p><a href="exponential-01-sim-lesson1.html">→ חזרה לדף הדוגמאות של שיעור ראשון</a> · <a href="exponential-05-lesson2-explanation.html">המשך: השוואה בין שתי קבוצות – הסבר ←</a></p>
+<section class="slide"><div id="ex5"></div></section>
+<section class="slide"><div id="ex6"></div></section>
+<section class="slide"><div id="ex7"></div>
+<p><a href="exponential-01-sim-lesson1.html">→ חזרה לדף הדוגמאות של שיעור ראשון</a> · <a href="exponential-05-lesson2-explanation.html">המשך: השוואה בין שתי קבוצות – הסבר ←</a></p></section>
 <a href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
 </main>
+<nav class="deck-nav"><button type="button" id="dPrev">→ הקודם</button><div class="dots" id="dDots"></div><span class="deck-count" id="dCount"></span><button type="button" id="dNext">הבא ←</button></nav>
 
 <script>
 var EX = [ {id:'ex5', title:'שאלה 1 – שתי שמורות דולפינים', kind:'g',
@@ -257,7 +275,7 @@ function build(ex){
    '<div class="status"><span>'+ex.unit+' <span class="im big" data-s="t">0</span></span><span data-s="vals"></span></div>'+
    '<div class="calc" data-s="calc"></div>'+
    '<div class="sim"><div class="panel"><svg viewBox="0 0 420 240" data-s="chart"></svg></div>'+
-   '<div class="panel"><div class="picto" data-s="picto"></div><div class="legend">'+ex.iconLabel+'</div></div></div></div>';
+   '<div class="panel picto-panel"><div class="picto" data-s="picto"></div><div class="legend">'+ex.iconLabel+'</div></div></div></div>';
   var st={t: ex.backward? 0 : 0, timer:null, phase: ex.backward? 'fwd':'fwd'};
   var range=root.querySelector('input'), playBtn=root.querySelector('[data-a=play]');
   function q(k){return root.querySelector('[data-s='+k+']');}
@@ -300,6 +318,9 @@ function build(ex){
     }
     if(ex.findEq && step===ex.T) c+=N('מכאן והלאה שמורה ב\' עוברת את שמורה א\' – היא גדלה מהר יותר.');
     q('calc').innerHTML=c;
+    var vt=root.querySelector('table.vt'); if(vt) vt.querySelectorAll('tr[data-t]').forEach(function(r){var tt=+r.getAttribute('data-t');
+      r.classList.toggle('cur',tt===tShow);
+      r.querySelectorAll('td.c').forEach(function(td){td.classList.toggle('on',known(+td.getAttribute('data-s'),tt,step));});});
     drawChart(ex,q('chart'),step,tShow,known);
     drawPicto(ex,q('picto'),step,tShow,known);
     playBtn.textContent=st.timer?'⏸ עצור':'▶ הפעל';
@@ -366,6 +387,31 @@ function drawPicto(ex,div,step,tShow,known){
 
 EX.forEach(build);
 try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){EX.forEach(function(e){e._render();});});}catch(e){}
+// ---- slides ----
+(function(){
+  var S=[].slice.call(document.querySelectorAll('.slide')), cur=0;
+  var dots=document.getElementById('dDots');
+  S.forEach(function(_,i){var d=document.createElement('i');d.title=i?('שאלה '+i):'פתיחה';d.onclick=function(){show(i)};dots.appendChild(d);});
+  function show(i){
+    cur=Math.max(0,Math.min(S.length-1,i));
+    S.forEach(function(x,k){x.classList.toggle('on',k===cur)});
+    [].forEach.call(dots.children,function(d,k){d.classList.toggle('on',k===cur)});
+    document.getElementById('dCount').textContent=(cur+1)+' / '+S.length;
+    document.getElementById('dPrev').disabled=cur===0;
+    document.getElementById('dNext').disabled=cur===S.length-1;
+    try{history.replaceState(null,'','#s'+cur);}catch(e){}
+    window.scrollTo(0,0);
+  }
+  document.getElementById('dPrev').onclick=function(){show(cur-1)};
+  document.getElementById('dNext').onclick=function(){show(cur+1)};
+  document.addEventListener('keydown',function(e){
+    var t=e.target.tagName; if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT') return;
+    if(e.key==='ArrowLeft'||e.key==='PageDown'){show(cur+1);e.preventDefault();}
+    else if(e.key==='ArrowRight'||e.key==='PageUp'){show(cur-1);e.preventDefault();}
+    else if(e.key==='Home'){show(0)} else if(e.key==='End'){show(S.length-1)}
+  });
+  var m=/^#s(\d+)$/.exec(location.hash); show(m?+m[1]:0);
+})();
 </script>
 </body>
 </html>

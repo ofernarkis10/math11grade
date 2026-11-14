@@ -66,6 +66,32 @@
   td.he{direction:rtl}
   th{direction:rtl;unicode-bidi:isolate}
 </style>
+<style>
+/* decision tree */
+.dt{overflow-x:auto;padding:6px 0 10px}
+.dt-col{display:flex;flex-direction:column;align-items:center}
+.dt-node{border:2px solid var(--border);border-radius:10px;padding:6px 10px;max-width:185px;text-align:center;background:var(--card);font-size:.86rem;line-height:1.45}
+.dt-q{border-color:var(--accent);background:var(--code);font-weight:700}
+.dt-q::before{content:"?";display:inline-block;width:1.3em;height:1.3em;line-height:1.3em;border-radius:50%;background:var(--accent);color:#fff;font-size:.8rem;margin-inline-end:6px;text-align:center}
+.dt-r{border-color:var(--grow);font-weight:600}
+.dt-line{width:2px;height:16px;background:var(--muted)}
+.dt-arrow{width:2px;height:18px;background:var(--muted);position:relative;margin-bottom:6px}
+.dt-arrow::after{content:"";position:absolute;bottom:-6px;left:-4px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--muted)}
+.dt-br{display:flex;align-items:flex-start;width:max-content;max-width:none;margin:0 auto}
+.dt-branch{position:relative;display:flex;flex-direction:column;align-items:center;padding:20px 5px 0;flex:0 0 auto;min-width:105px}
+.dt-branch::before{content:"";position:absolute;top:0;inset-inline:0;border-top:2px solid var(--muted)}
+.dt-branch:first-child::before{inset-inline-start:50%}
+.dt-branch:last-child::before{inset-inline-end:50%}
+.dt-branch:only-child::before{display:none}
+.dt-branch::after{content:"";position:absolute;top:0;inset-inline-start:50%;height:20px;border-inline-start:2px solid var(--muted)}
+.dt-edge{display:inline-block;font-size:.78rem;font-weight:700;color:var(--accent);background:var(--card);border:1px solid var(--accent);border-radius:99px;padding:0 8px;margin:2px 0 0}
+.dt-legend{display:flex;flex-wrap:wrap;gap:10px;font-size:.85rem;color:var(--muted);margin:2px 0 6px}
+.dt-legend span{display:inline-flex;align-items:center;gap:5px}
+.dt-legend i{display:inline-block;width:14px;height:10px;border-radius:3px;border:2px solid var(--border)}
+.dt-legend i.q{border-color:var(--accent);background:var(--code)}
+.dt-legend i.r{border-color:var(--grow)}
+@media print{.dt{overflow:visible}.dt-node{font-size:.78rem;padding:4px 6px}.dt-branch{min-width:0}h2.dt-h{break-before:page}}
+</style>
 </head>
 <body>
 <main>
@@ -185,7 +211,10 @@
   <p>שימו לב: אצלנו הזמן מתחיל ב-<span class="im">t = 0</span>, ובסדרה המספור מתחיל ב-<span class="im">n = 1</span>. לכן האיבר ה-<span class="im">n</span> הוא <span class="im">f(n − 1)</span>, והמעריך בנוסחת האיבר הכללי הוא <span class="im">n − 1</span>. המשך הנושא בדף <a href="sequences-02-geometric.html">סדרה הנדסית</a>.</p>
 </div>
 
-<h2>6. סיכום</h2>
+<h2 class="dt-h">6. עץ החלטה: מתי ואיך משתמשים בנוסחת הסכום</h2>
+<p>העץ מראה את הפעולות לפי הסדר. מתחילים מלמעלה, עונים על השאלה שבמסגרת הכחולה, והולכים בענף של התשובה עד התוצאה.</p><div class="dt-legend"><span><i class="q"></i>שאלה שעונים עליה</span><span><i></i>פעולה</span><span><i class="r"></i>תוצאה</span></div>
+<h3>שאלת כמות או שאלת סכום?</h3><div class="dt"><div class="dt-col"><div class="dt-node dt-q">מה שואלים?</div><div class="dt-line"></div><div class="dt-br"><div class="dt-branch"><span class="dt-edge">כמות ברגע מסוים</span><div class="dt-arrow"></div><div class="dt-col"><div class="dt-node dt-r">זו לא שאלת סכום:<br><span class="im">f(t) = a · b<sup>t</sup></span>, מציבים <span class="im">t</span></div></div></div><div class="dt-branch"><span class="dt-edge">סך הכול שהצטבר</span><div class="dt-arrow"></div><div class="dt-col"><div class="dt-node dt-a">מזהים את <span class="im">a</span>: המחובר הראשון</div><div class="dt-arrow"></div><div class="dt-col"><div class="dt-node dt-a">מזהים את <span class="im">b</span>: פי כמה גדל כל מחובר לעומת הקודם</div><div class="dt-arrow"></div><div class="dt-col"><div class="dt-node dt-a">מזהים את <span class="im">n</span>: מספר המחוברים (המעריך האחרון הוא <span class="im">n − 1</span>)</div><div class="dt-arrow"></div><div class="dt-col"><div class="dt-node dt-q">כמה הבסיס <span class="im">b</span>?</div><div class="dt-line"></div><div class="dt-br"><div class="dt-branch"><span class="dt-edge"><span class="im">b > 1</span></span><div class="dt-arrow"></div><div class="dt-col"><div class="dt-node dt-r"><span class="im">S<sub>n</sub> = a · (b<sup>n</sup> − 1) / (b − 1)</span></div></div></div><div class="dt-branch"><span class="dt-edge"><span class="im">0 < b < 1</span></span><div class="dt-arrow"></div><div class="dt-col"><div class="dt-node dt-a"><span class="im">S<sub>n</sub> = a · (1 − b<sup>n</sup>) / (1 − b)</span></div><div class="dt-arrow"></div><div class="dt-col"><div class="dt-node dt-q">שואלים על זמן ארוך מאוד?</div><div class="dt-line"></div><div class="dt-br"><div class="dt-branch"><span class="dt-edge">כן</span><div class="dt-arrow"></div><div class="dt-col"><div class="dt-node dt-r">הסכום מתקרב ל־<span class="im">a / (1 − b)</span> ולא עובר אותו</div></div></div><div class="dt-branch"><span class="dt-edge">לא</span><div class="dt-arrow"></div><div class="dt-col"><div class="dt-node dt-r">מחשבים במחשבון</div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
+<h2>7. סיכום</h2>
 <div class="card key">
   <ul>
     <li>סך הכול של כמות שגדלה או קטנה בכל שלב פי <span class="im">b</span> הוא סכום: <span class="im">a + a · b + … + a · b<sup>n − 1</sup></span>.</li>

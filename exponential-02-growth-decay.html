@@ -40,7 +40,7 @@
   .key{border-inline-start:5px solid var(--accent)}
   .task{background:var(--code);border-radius:8px;padding:8px 12px;margin:8px 0}
   table{border-collapse:collapse;margin:8px auto;direction:rtl}
-  th,td{border:1px solid var(--border);padding:4px 10px;text-align:center}
+  th,td{border:1px solid var(--border);padding:8px 14px;text-align:center;line-height:1.5}
   th{background:var(--code)}
   .tablewrap{overflow-x:auto}
   .calc td{min-width:74px;white-space:nowrap}
@@ -62,6 +62,22 @@
   td.he{direction:rtl}
   th{direction:rtl;unicode-bidi:isolate}
 </style>
+<style>
+/* text step lists */
+.st-main{font-weight:700;font-size:1.1rem;margin:22px 0 6px}
+.st-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;margin:14px 0 34px;align-items:start}
+.st-opt{border:1px solid var(--border);border-radius:16px;padding:18px 20px 8px;background:var(--card);box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.st-opt h4{font-size:1.05rem;color:var(--accent);margin:0 0 12px}
+.st-opt ol{margin:0;padding-inline-start:1.6em;line-height:1.8}
+.st-opt li{margin-bottom:14px}
+.st-opt li::marker{font-weight:700;color:var(--accent)}
+.st-m{display:block;margin-top:4px}
+.st-sub{list-style:disc;padding-inline-start:1.4em;margin:8px 0 0}
+.st-sub li{margin-bottom:8px}
+.st-sub li::marker{color:var(--muted)}
+.st-note{color:var(--muted);font-size:.9rem;margin:0 0 12px}
+@media print{h2.st-h{break-before:page}.st-opt{break-inside:avoid;box-shadow:none}.st-cols{gap:12px}}
+</style>
 </head>
 <body>
 <main>
@@ -80,8 +96,8 @@
 <table>
   <tr><th>דוגמה</th><th>ערך התחלתי</th><th>בכל צעד מכפילים ב-</th><th>מה קורה</th><th>הפונקציה</th></tr>
   <tr><td class="he">דולפינים</td><td>256</td><td>1.5</td><td class="he grow">גדל</td><td>256 · 1.5<sup>t</sup></td></tr>
-  <tr><td class="he">חיסכון</td><td>10000</td><td>1.05</td><td class="he grow">גדל</td><td>10000 · 1.05<sup>t</sup></td></tr>
-  <tr><td class="he">רכב</td><td>80000</td><td>0.85</td><td class="he decay">קטן</td><td>80000 · 0.85<sup>t</sup></td></tr>
+  <tr><td class="he">חיסכון</td><td>10,000</td><td>1.05</td><td class="he grow">גדל</td><td>10,000 · 1.05<sup>t</sup></td></tr>
+  <tr><td class="he">רכב</td><td>80,000</td><td>0.85</td><td class="he decay">קטן</td><td>80,000 · 0.85<sup>t</sup></td></tr>
   <tr><td class="he">תרופה</td><td>200</td><td>0.8</td><td class="he decay">קטן</td><td>200 · 0.8<sup>t</sup></td></tr>
 </table>
 </div>
@@ -157,7 +173,7 @@
   <span class="math">D(t) = a · b<sup>t</sup></span>
   <span class="math">D(8) = 256 · 1.5<sup>8</sup></span>
   <span class="math">D(8) = 256 · 25.62890625</span>
-  <span class="math">D(8) = 6561</span>
+  <span class="math">D(8) = 6,561</span>
   <p>קיבלנו בחישוב אחד את אותה תוצאה שקיבלנו אחרי 8 הכפלות בטבלה.</p>
 </div></details>
 </div>
@@ -213,7 +229,21 @@
 </div></details>
 </div>
 
-<h2>6. סיכום</h2>
+<h2 class="st-h">6. איך ניגשים לשאלה</h2>
+<p>בכל חלק מחליטים קודם מה סוג השאלה. אחר כך עושים את הצעדים לפי הסדר.</p>
+<h3>חלק א׳: בונים את הפונקציה</h3>
+<p class="st-main">בצע את התהליך המתאים לסוג השאלה:</p>
+<div class="st-cols"><div class="st-opt"><h4>נתון תיאור במילים</h4><ol><li>מוצאים את הכמות בהתחלה. זה <span class="im">a</span>.</li><li>מוצאים איך הכמות משתנה בכל צעד.</li><li>מתרגמים את השינוי ל־<span class="im">b</span>:<ul class="st-sub"><li>גדלה באחוזים:<span class="st-m"><span class="im">b = 1 + p/100</span></span></li><li>קטנה באחוזים:<span class="st-m"><span class="im">b = 1 − p/100</span></span></li><li>גדלה פי k:<span class="st-m"><span class="im">b = k</span></span></li></ul></li><li>כותבים את הפונקציה:<span class="st-m"><span class="im">f(t) = a · b<sup>t</sup></span></span></li></ol></div>
+<div class="st-opt"><h4>נתונה טבלת ערכים</h4><ol><li>מחלקים כל ערך בערך שלפניו.</li><li>בודקים שהמנה תמיד אותו מספר. המנה היא <span class="im">b</span>.</li><li>מוצאים בטבלה את הערך כאשר <span class="im">t = 0</span>. זה <span class="im">a</span>.</li><li>כותבים את הפונקציה:<span class="st-m"><span class="im">f(t) = a · b<sup>t</sup></span></span></li></ol><p class="st-note">אם המנה משתנה, זו לא פונקציית גדילה או דעיכה.</p></div>
+<div class="st-opt"><h4>נתונות שתי נקודות</h4><ol><li>מהנקודה שבה <span class="im">t = 0</span> מקבלים את <span class="im">a</span>.</li><li>מציבים את הנקודה השנייה בפונקציה.</li><li>מבודדים את <span class="im">b<sup>t</sup></span>.</li><li>מוצאים את <span class="im">b</span>. מתאים רק מספר חיובי.</li><li>כותבים את הפונקציה:<span class="st-m"><span class="im">f(t) = a · b<sup>t</sup></span></span></li></ol></div>
+</div>
+<h3>חלק ב׳: משתמשים בפונקציה</h3>
+<p class="st-main">בצע את התהליך המתאים לסוג השאלה:</p>
+<div class="st-cols"><div class="st-opt"><h4>מחשבים ערך אחרי זמן t</h4><ol><li>כותבים את הפונקציה.</li><li>מציבים את הזמן <span class="im">t</span>.</li><li>מחשבים במחשבון.</li><li>כותבים תשובה עם יחידות.</li></ol></div>
+<div class="st-opt"><h4>גדילה או דעיכה?</h4><ol><li>מוצאים את הבסיס <span class="im">b</span>.</li><li>אם <span class="im">b</span> גדול מ־1, זו גדילה.</li><li>אם <span class="im">b</span> בין 0 ל־1, זו דעיכה.</li><li>אחוז השינוי בכל צעד:<span class="st-m"><span class="im">(b − 1) · 100</span></span></li></ol></div>
+<div class="st-opt"><h4>תכונות הגרף</h4><ol><li>הגרף חותך את ציר y בנקודה:<span class="st-m"><span class="im">(0, a)</span></span></li><li>הגרף עולה בגדילה ויורד בדעיכה.</li><li>הגרף תמיד מעל ציר x:<span class="st-m"><span class="im">y > 0</span></span></li><li>הגרף מתקרב לציר x ולא נוגע בו:<span class="st-m"><span class="im">y = 0</span></span></li></ol></div>
+</div>
+<h2>7. סיכום</h2>
 <div class="card key">
   <ul>
     <li>פונקציית גדילה/דעיכה: <span class="im">f(t) = a · b<sup>t</sup></span>, עם <span class="im">b &gt; 0</span>, <span class="im">b ≠ 1</span>.</li>
