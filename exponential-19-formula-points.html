@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור שלישי – חישוב הדוגמאות בנוסחה</title>
+<style>
+  :root{
+    --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
+    --accent:#2f6fde; --grow:#1f9d55; --decay:#d04a3a; --border:#dde2ea;
+    --code:#eef2f8; --blank:#fffbe8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+      --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+      --code:#252d3c; --blank:#2b2a20;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+    --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+    --code:#252d3c; --blank:#2b2a20;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:"Segoe UI",Arial,"Noto Sans Hebrew",sans-serif;line-height:1.7;font-size:17px}
+  main{max-width:900px;margin:0 auto;padding:16px}
+  a{color:var(--accent)}
+  .back{display:inline-block;margin:8px 0 4px}
+  h1{font-size:1.8rem;margin:.3em 0}
+  h2{font-size:1.35rem;margin:1.6em 0 .5em;border-bottom:2px solid var(--accent);padding-bottom:4px}
+  h3{font-size:1.1rem;margin:1.2em 0 .4em}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0}
+  .math{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;
+    font-size:1.12rem;background:var(--code);border-radius:6px;padding:4px 10px;margin:4px 0;display:block}
+  .im{direction:ltr;unicode-bidi:isolate;font-family:"Cambria Math","Times New Roman",serif;white-space:nowrap}
+  .grow{color:var(--grow);font-weight:600}
+  .decay{color:var(--decay);font-weight:600}
+  .key{border-inline-start:5px solid var(--accent)}
+  .task{background:var(--code);border-radius:8px;padding:8px 12px;margin:8px 0}
+  table{border-collapse:collapse;margin:8px auto;direction:rtl}
+  th,td{border:1px solid var(--border);padding:8px 14px;text-align:center;line-height:1.5}
+  th{background:var(--code)}
+  .tablewrap{overflow-x:auto}
+  .calc td{min-width:74px;white-space:nowrap}
+  .calc td.ans{background:var(--blank)}
+  .calc td.ans .v{visibility:hidden}
+  .calc.show td.ans .v{visibility:visible}
+  .graphs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .graphs figure{margin:0;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px}
+  figcaption{text-align:center;color:var(--muted);font-size:.95rem}
+  svg{width:100%;height:auto;display:block}
+  details.step{border:1px solid var(--border);border-radius:8px;margin:6px 0;background:var(--card)}
+  details.step summary{cursor:pointer;padding:6px 10px;font-weight:600}
+  details.step .body{padding:2px 12px 10px}
+  .type{color:var(--muted);font-size:.9rem;font-weight:400}
+  .controls{margin:6px 0;display:flex;flex-wrap:wrap;gap:6px}
+  button{font:inherit;padding:4px 12px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
+  ul{padding-inline-start:22px}
+  .verify td{min-width:0;white-space:nowrap}
+  .verify td.ok{color:var(--grow);font-weight:700}
+  .verify td.f{font-family:"Cambria Math","Times New Roman",serif}
+  td{direction:ltr;unicode-bidi:isolate}
+  td.he{direction:rtl}
+  th{direction:rtl;unicode-bidi:isolate}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+<h1>שיעור שלישי – חישוב הדוגמאות בנוסחה</h1>
+<p>ב<a href="exponential-17-sim-points.html">מצגת הדוגמאות</a> מצאנו את הפונקציה משתי נקודות והשלמנו את הערכים החסרים. כאן נפתור את אותן דוגמאות במשוואות, ונבדוק בטבלה שהנוסחה עוברת בשתי הנקודות הנתונות.</p>
+<div class="controls"><button type="button" onclick="toggleAll(true)">פתח את כל השלבים</button> <button type="button" onclick="toggleAll(false)">סגור את כל השלבים</button></div>
+<div class="card">
+<h3>דוגמה 1 – חיידקים 🧫</h3>
+<p>בתחילת ניסוי היו במושבה 5 חיידקים, ואחרי שעה אחת היו בה 20 חיידקים. מספר החיידקים מתאים לפונקציה מהצורה <span class="im">f(t) = a · b<sup>t</sup></span>. מצאו את הפונקציה, וחשבו כמה חיידקים יהיו אחרי 4 שעות.</p>
+<details class="step"><summary>מציבים את הנקודה <span class="im">(0, 5)</span> כדי למצוא את a <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">f(0) = a · b<sup>0</sup> = a</span>
+  <span class="math">a = 5</span>
+</div></details>
+<details class="step"><summary>מציבים את הנקודה <span class="im">(1, 20)</span> ומבודדים את b <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">5 · b<sup>1</sup> = 20</span>
+  <span class="math">b = 20 : 5 = 4</span>
+  <span class="math">b = 4</span>
+</div></details>
+<details class="step"><summary>כותבים את הפונקציה ומציבים <span class="im">t = 4</span> <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">f(t) = 5 · 4<sup>t</sup></span>
+  <span class="math">f(4) = 5 · 4<sup>4</sup> = 1,280</span>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה עוברת בשתי הנקודות הנתונות <span class="type">(בדיקה)</span></summary><div class="body">
+<div class="tablewrap"><table class="verify"><tr><th>t</th><th>בנוסחה</th><th>נתון</th><th>מתאים?</th></tr>
+<tr><td>0</td><td class="f">5 · 4<sup>0</sup> = 5</td><td class="f">5</td><td class="ok">✓</td></tr>
+<tr><td>1</td><td class="f">5 · 4<sup>1</sup> = 20</td><td class="f">20</td><td class="ok">✓</td></tr>
+<tr><td>2</td><td class="f">5 · 4<sup>2</sup> = 80</td><td class="f">—</td><td class="ok"></td></tr>
+<tr><td>3</td><td class="f">5 · 4<sup>3</sup> = 320</td><td class="f">—</td><td class="ok"></td></tr>
+<tr><td>4</td><td class="f">5 · 4<sup>4</sup> = 1,280</td><td class="f">—</td><td class="ok"></td></tr>
+</table></div>
+</div></details>
+</div>
+<div class="card">
+<h3>דוגמה 2 – עלים על צמח 🌱</h3>
+<p>לצמח היו 2 עלים בהתחלה, ואחרי 3 שבועות היו לו 54 עלים. מספר העלים מתאים לפונקציה מהצורה <span class="im">f(t) = a · b<sup>t</sup></span>. מצאו את הפונקציה ואת מספר העלים בכל שבוע.</p>
+<details class="step"><summary>מציבים את הנקודה <span class="im">(0, 2)</span> כדי למצוא את a <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">f(0) = a · b<sup>0</sup> = a</span>
+  <span class="math">a = 2</span>
+</div></details>
+<details class="step"><summary>מציבים את הנקודה <span class="im">(3, 54)</span> ומבודדים את b <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">2 · b<sup>3</sup> = 54</span>
+  <span class="math">b<sup>3</sup> = 54 : 2 = 27</span>
+  <span class="math">b = 3</span>
+</div></details>
+<details class="step"><summary>כותבים את הפונקציה ומציבים <span class="im">t = 4</span> <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">f(t) = 2 · 3<sup>t</sup></span>
+  <span class="math">f(4) = 2 · 3<sup>4</sup> = 162</span>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה עוברת בשתי הנקודות הנתונות <span class="type">(בדיקה)</span></summary><div class="body">
+<div class="tablewrap"><table class="verify"><tr><th>t</th><th>בנוסחה</th><th>נתון</th><th>מתאים?</th></tr>
+<tr><td>0</td><td class="f">2 · 3<sup>0</sup> = 2</td><td class="f">2</td><td class="ok">✓</td></tr>
+<tr><td>1</td><td class="f">2 · 3<sup>1</sup> = 6</td><td class="f">—</td><td class="ok"></td></tr>
+<tr><td>2</td><td class="f">2 · 3<sup>2</sup> = 18</td><td class="f">—</td><td class="ok"></td></tr>
+<tr><td>3</td><td class="f">2 · 3<sup>3</sup> = 54</td><td class="f">54</td><td class="ok">✓</td></tr>
+<tr><td>4</td><td class="f">2 · 3<sup>4</sup> = 162</td><td class="f">—</td><td class="ok"></td></tr>
+</table></div>
+</div></details>
+</div>
+<div class="card">
+<h3>דוגמה 3 – ערך של מכונה 🏭</h3>
+<p>מכונה נקנתה ב־1,000 אלף ₪. אחרי שנתיים היא שווה 810 אלף ₪. הערך מתאים לפונקציה מהצורה <span class="im">f(t) = a · b<sup>t</sup></span>. מצאו את הפונקציה, ובכמה אחוזים יורד הערך בכל שנה.</p>
+<details class="step"><summary>מציבים את הנקודה <span class="im">(0, 1,000)</span> כדי למצוא את a <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">f(0) = a · b<sup>0</sup> = a</span>
+  <span class="math">a = 1,000</span>
+</div></details>
+<details class="step"><summary>מציבים את הנקודה <span class="im">(2, 810)</span> ומבודדים את b <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">1,000 · b<sup>2</sup> = 810</span>
+  <span class="math">b<sup>2</sup> = 810 : 1,000 = 0.81</span>
+  <span class="math">b = 0.9</span>
+  <p>הפתרון השלילי נפסל, כי בסיס חייב להיות חיובי.</p>
+</div></details>
+<details class="step"><summary>כותבים את הפונקציה ומציבים <span class="im">t = 4</span> <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">f(t) = 1,000 · 0.9<sup>t</sup></span>
+  <span class="math">f(4) = 1,000 · 0.9<sup>4</sup> = 656.1</span>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה עוברת בשתי הנקודות הנתונות <span class="type">(בדיקה)</span></summary><div class="body">
+<div class="tablewrap"><table class="verify"><tr><th>t</th><th>בנוסחה</th><th>נתון</th><th>מתאים?</th></tr>
+<tr><td>0</td><td class="f">1,000 · 0.9<sup>0</sup> = 1,000</td><td class="f">1,000</td><td class="ok">✓</td></tr>
+<tr><td>1</td><td class="f">1,000 · 0.9<sup>1</sup> = 900</td><td class="f">—</td><td class="ok"></td></tr>
+<tr><td>2</td><td class="f">1,000 · 0.9<sup>2</sup> = 810</td><td class="f">810</td><td class="ok">✓</td></tr>
+<tr><td>3</td><td class="f">1,000 · 0.9<sup>3</sup> = 729</td><td class="f">—</td><td class="ok"></td></tr>
+<tr><td>4</td><td class="f">1,000 · 0.9<sup>4</sup> = 656.1</td><td class="f">—</td><td class="ok"></td></tr>
+</table></div>
+</div></details>
+</div>
+<div class="card">
+<h3>דוגמה 4 – משתמשים באפליקציה 📲</h3>
+<p>חודש אחרי שאפליקציה עלתה היו בה 12 אלף משתמשים, ואחרי 3 חודשים היו 108 אלף. מספר המשתמשים מתאים לפונקציה מהצורה <span class="im">f(t) = a · b<sup>t</sup></span>. כמה משתמשים היו ביום שהאפליקציה עלתה?</p>
+<details class="step"><summary>מציבים את שתי הנקודות ומקבלים שתי משוואות <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">a · b<sup>1</sup> = 12</span>
+  <span class="math">a · b<sup>3</sup> = 108</span>
+</div></details>
+<details class="step"><summary>מחלקים את המשוואה השנייה בראשונה ומוצאים את b <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">b<sup>3 − 1</sup> = 108 : 12</span>
+  <span class="math">b<sup>2</sup> = 9</span>
+  <span class="math">b = 3</span>
+</div></details>
+<details class="step"><summary>מציבים את b באחת המשוואות ומוצאים את a <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">a · 3<sup>1</sup> = 12</span>
+  <span class="math">a = 12 : 3 = 4</span>
+</div></details>
+<details class="step"><summary>כותבים את הפונקציה ומציבים <span class="im">t = 4</span> <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">f(t) = 4 · 3<sup>t</sup></span>
+  <span class="math">f(4) = 4 · 3<sup>4</sup> = 324</span>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה עוברת בשתי הנקודות הנתונות <span class="type">(בדיקה)</span></summary><div class="body">
+<div class="tablewrap"><table class="verify"><tr><th>t</th><th>בנוסחה</th><th>נתון</th><th>מתאים?</th></tr>
+<tr><td>0</td><td class="f">4 · 3<sup>0</sup> = 4</td><td class="f">—</td><td class="ok"></td></tr>
+<tr><td>1</td><td class="f">4 · 3<sup>1</sup> = 12</td><td class="f">12</td><td class="ok">✓</td></tr>
+<tr><td>2</td><td class="f">4 · 3<sup>2</sup> = 36</td><td class="f">—</td><td class="ok"></td></tr>
+<tr><td>3</td><td class="f">4 · 3<sup>3</sup> = 108</td><td class="f">108</td><td class="ok">✓</td></tr>
+<tr><td>4</td><td class="f">4 · 3<sup>4</sup> = 324</td><td class="f">—</td><td class="ok"></td></tr>
+</table></div>
+</div></details>
+</div>
+<h2>סיכום</h2>
+<div class="card key"><ul><li>נקודה ב־<span class="im">t = 0</span> נותנת את <span class="im">a</span>.</li><li>מהנקודה השנייה מבודדים את <span class="im">b<sup>t</sup></span> ומוצאים את <span class="im">b</span> (רק חיובי).</li><li>בלי נקודה ב־<span class="im">t = 0</span>: מחלקים את המשוואות, ואז מוצאים את <span class="im">a</span>.</li></ul></div>
+<p><a href="exponential-18-points-explanation.html">→ חזרה לדף ההסבר</a> · <a href="exponential-04-sim-lesson2.html">המשך לשיעור רביעי ←</a></p>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+</main>
+<script>
+function toggleAll(open){document.querySelectorAll('details.step').forEach(function(d){d.open=open;});}
+</script>
+</body>
+</html>

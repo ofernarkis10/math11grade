@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור שלישי - מציאת הפונקציה משתי נקודות</title>
+<style>
+  :root{
+    --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
+    --accent:#2f6fde; --grow:#1f9d55; --decay:#d04a3a; --border:#dde2ea;
+    --code:#eef2f8; --blank:#fffbe8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+      --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+      --code:#252d3c; --blank:#2b2a20;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+    --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+    --code:#252d3c; --blank:#2b2a20;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:"Segoe UI",Arial,"Noto Sans Hebrew",sans-serif;line-height:1.7;font-size:17px}
+  main{max-width:900px;margin:0 auto;padding:16px}
+  a{color:var(--accent)}
+  .back{display:inline-block;margin:8px 0 4px}
+  h1{font-size:1.8rem;margin:.3em 0}
+  h2{font-size:1.35rem;margin:1.6em 0 .5em;border-bottom:2px solid var(--accent);padding-bottom:4px}
+  h3{font-size:1.1rem;margin:1.2em 0 .4em}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0}
+  .math{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;
+    font-size:1.12rem;background:var(--code);border-radius:6px;padding:4px 10px;margin:4px 0;display:block}
+  .im{direction:ltr;unicode-bidi:isolate;font-family:"Cambria Math","Times New Roman",serif;white-space:nowrap}
+  .grow{color:var(--grow);font-weight:600}
+  .decay{color:var(--decay);font-weight:600}
+  .key{border-inline-start:5px solid var(--accent)}
+  .task{background:var(--code);border-radius:8px;padding:8px 12px;margin:8px 0}
+  table{border-collapse:collapse;margin:8px auto;direction:rtl}
+  th,td{border:1px solid var(--border);padding:4px 10px;text-align:center}
+  th{background:var(--code)}
+  .tablewrap{overflow-x:auto}
+  .calc td{min-width:74px;white-space:nowrap}
+  .calc td.ans{background:var(--blank)}
+  .calc td.ans .v{visibility:hidden}
+  .calc.show td.ans .v{visibility:visible}
+  .graphs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .graphs figure{margin:0;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px}
+  figcaption{text-align:center;color:var(--muted);font-size:.95rem}
+  svg{width:100%;height:auto;display:block}
+  details.step{border:1px solid var(--border);border-radius:8px;margin:6px 0;background:var(--card)}
+  details.step summary{cursor:pointer;padding:6px 10px;font-weight:600}
+  details.step .body{padding:2px 12px 10px}
+  .type{color:var(--muted);font-size:.9rem;font-weight:400}
+  .controls{margin:6px 0;display:flex;flex-wrap:wrap;gap:6px}
+  button{font:inherit;padding:4px 12px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
+  ul{padding-inline-start:22px}
+  td{direction:ltr;unicode-bidi:isolate}
+  td.he{direction:rtl}
+  th{direction:rtl;unicode-bidi:isolate}
+</style>
+<style>
+/* decision tree */
+.dt{overflow-x:auto;padding:6px 0 10px}
+.dt-col{display:flex;flex-direction:column;align-items:center}
+.dt-node{border:2px solid var(--border);border-radius:10px;padding:6px 10px;max-width:185px;text-align:center;background:var(--card);font-size:.86rem;line-height:1.45}
+.dt-q{border-color:var(--accent);background:var(--code);font-weight:700}
+.dt-q::before{content:"?";display:inline-block;width:1.3em;height:1.3em;line-height:1.3em;border-radius:50%;background:var(--accent);color:#fff;font-size:.8rem;margin-inline-end:6px;text-align:center}
+.dt-r{border-color:var(--grow);font-weight:600}
+.dt-line{width:2px;height:16px;background:var(--muted)}
+.dt-arrow{width:2px;height:18px;background:var(--muted);position:relative;margin-bottom:6px}
+.dt-arrow::after{content:"";position:absolute;bottom:-6px;left:-4px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--muted)}
+.dt-br{display:flex;align-items:flex-start;width:max-content;max-width:none;margin:0 auto}
+.dt-branch{position:relative;display:flex;flex-direction:column;align-items:center;padding:20px 5px 0;flex:0 0 auto;min-width:105px}
+.dt-branch::before{content:"";position:absolute;top:0;inset-inline:0;border-top:2px solid var(--muted)}
+.dt-branch:first-child::before{inset-inline-start:50%}
+.dt-branch:last-child::before{inset-inline-end:50%}
+.dt-branch:only-child::before{display:none}
+.dt-branch::after{content:"";position:absolute;top:0;inset-inline-start:50%;height:20px;border-inline-start:2px solid var(--muted)}
+.dt-edge{display:inline-block;font-size:.78rem;font-weight:700;color:var(--accent);background:var(--card);border:1px solid var(--accent);border-radius:99px;padding:0 8px;margin:2px 0 0}
+.dt-legend{display:flex;flex-wrap:wrap;gap:10px;font-size:.85rem;color:var(--muted);margin:2px 0 6px}
+.dt-legend span{display:inline-flex;align-items:center;gap:5px}
+.dt-legend i{display:inline-block;width:14px;height:10px;border-radius:3px;border:2px solid var(--border)}
+.dt-legend i.q{border-color:var(--accent);background:var(--code)}
+.dt-legend i.r{border-color:var(--grow)}
+@media print{.dt{overflow:visible}.dt-node{font-size:.78rem;padding:4px 6px}.dt-branch{min-width:0}h2.dt-h{break-before:page}}
+</style>
+<style>
+/* text step lists */
+.st-main{font-weight:700;font-size:1.1rem;margin:22px 0 6px}
+.st-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;margin:14px 0 34px;align-items:start}
+.st-opt{border:1px solid var(--border);border-radius:16px;padding:18px 20px 8px;background:var(--card);box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.st-opt h4{font-size:1.05rem;color:var(--accent);margin:0 0 12px}
+.st-opt ol{margin:0;padding-inline-start:1.6em;line-height:1.8}
+.st-opt li{margin-bottom:14px}
+.st-opt li::marker{font-weight:700;color:var(--accent)}
+.st-m{display:block;margin-top:4px}
+.st-sub{list-style:disc;padding-inline-start:1.4em;margin:8px 0 0}
+.st-sub li{margin-bottom:8px}
+.st-sub li::marker{color:var(--muted)}
+.st-note{color:var(--muted);font-size:.9rem;margin:0 0 12px}
+@media print{h2.st-h{break-before:page}.st-opt{break-inside:avoid;box-shadow:none}.st-cols{gap:12px}}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+<h1>שיעור שלישי - מציאת הפונקציה משתי נקודות</h1>
+<p>ב<a href="exponential-17-sim-points.html">מצגת הדוגמאות של שיעור שלישי</a> ידענו רק שני ערכים – שתי נקודות על הגרף – ומצאנו מהם את כל הפונקציה. בדף הזה נסכם איך עושים את זה.</p>
+<div class="controls"><button type="button" onclick="toggleAll(true)">פתח את כל השלבים</button> <button type="button" onclick="toggleAll(false)">סגור את כל השלבים</button></div>
+<h2>1. כשאחת הנקודות היא ב־t = 0</h2>
+<div class="card key"><ol>
+  <li>הערך ב־<span class="im">t = 0</span> הוא <span class="im">a</span>, כי <span class="im">f(0) = a · b<sup>0</sup> = a</span>.</li>
+  <li>מציבים את הנקודה השנייה <span class="im">(t, y)</span>: <span class="im">a · b<sup>t</sup> = y</span>, ולכן <span class="im">b<sup>t</sup> = y : a</span>.</li>
+  <li>מוצאים איזה מספר חיובי בחזקת <span class="im">t</span> נותן את המנה. זה <span class="im">b</span>.</li>
+</ol></div>
+<div class="card">
+<h3>דוגמה – נקודה אחת ב־t = 0</h3>
+<p>הפונקציה <span class="im">f(t) = a · b<sup>t</sup></span> עוברת בנקודות <span class="im">(0, 3)</span> ו־<span class="im">(2, 48)</span>. מצאו את <span class="im">a</span> ואת <span class="im">b</span>, וקבעו אם זו פונקציית גדילה או דעיכה.</p>
+<details class="step"><summary>מציבים את הנקודה <span class="im">(0, 3)</span> כדי למצוא את a <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">f(0) = a · b<sup>0</sup></span>
+  <span class="math">3 = a · 1</span>
+  <span class="math">a = 3</span>
+</div></details>
+<details class="step"><summary>מציבים את הנקודה <span class="im">(2, 48)</span> ואת <span class="im">a = 3</span> כדי למצוא את b <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">f(2) = a · b<sup>2</sup></span>
+  <span class="math">48 = 3 · b<sup>2</sup></span>
+  <span class="math">b<sup>2</sup> = 16</span>
+  <span class="math">b = 4</span>
+  <p>הפתרון <span class="im">b = −4</span> נפסל, כי בסיס חייב להיות חיובי.</p>
+</div></details>
+<details class="step"><summary>כותבים את הפונקציה וקובעים את סוגה לפי הבסיס</summary><div class="body">
+  <span class="math">f(t) = 3 · 4<sup>t</sup></span>
+  <p>מכיוון ש־<span class="im">b = 4 &gt; 1</span>, זו פונקציית <span class="grow">גדילה</span>.</p>
+</div></details>
+</div>
+
+<div class="card">
+<h3>דוגמה – דעיכה</h3>
+<p>בבריכה היו 500 ליטר מים. בגלל דליפה נשארו בה אחרי שעתיים 320 ליטר. כמות המים מתאימה לפונקציה <span class="im">f(t) = a · b<sup>t</sup></span>. מצאו את הפונקציה, ובכמה אחוזים קטנה הכמות בכל שעה.</p>
+<details class="step"><summary>מציבים את שתי הנקודות <span class="im">(0, 500)</span> ו־<span class="im">(2, 320)</span> <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">a = 500</span>
+  <span class="math">500 · b<sup>2</sup> = 320</span>
+  <span class="math">b<sup>2</sup> = 0.64</span>
+  <span class="math">b = 0.8</span>
+</div></details>
+<details class="step"><summary>כותבים את הפונקציה ומתרגמים את b לאחוזים <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">f(t) = 500 · 0.8<sup>t</sup></span>
+  <span class="math">p = (1 − b) · 100 = (1 − 0.8) · 100 = 20</span>
+  <p>הכמות קטנה ב־20% בכל שעה.</p>
+</div></details>
+</div>
+
+<h2>2. כשאין נקודה ב־t = 0</h2>
+<p>מציבים את שתי הנקודות, ומחלקים את המשוואות זו בזו. <span class="im">a</span> מתבטל, ונשאר <span class="im">b</span> בחזקת ההפרש בין הזמנים. אחר כך מוצאים את <span class="im">a</span>.</p>
+<div class="card">
+<h3>דוגמה – שתי נקודות בלי t = 0</h3>
+<p>הפונקציה <span class="im">f(t) = a · b<sup>t</sup></span> עוברת בנקודות <span class="im">(2, 45)</span> ו־<span class="im">(4, 405)</span>. מצאו את הפונקציה.</p>
+<details class="step"><summary>מציבים את שתי הנקודות <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">a · b<sup>2</sup> = 45</span>
+  <span class="math">a · b<sup>4</sup> = 405</span>
+</div></details>
+<details class="step"><summary>מחלקים את המשוואה השנייה בראשונה: a מתבטל, ונשאר b בחזקת ההפרש בין הזמנים <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">b<sup>4 − 2</sup> = 405 : 45</span>
+  <span class="math">b<sup>2</sup> = 9</span>
+  <span class="math">b = 3</span>
+</div></details>
+<details class="step"><summary>מציבים את b באחת המשוואות ומוצאים את a <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">a · 3<sup>2</sup> = 45</span>
+  <span class="math">9a = 45</span>
+  <span class="math">a = 5</span>
+</div></details>
+<details class="step"><summary>כותבים את הפונקציה ובודקים בנקודה השנייה <span class="type">(בדיקה)</span></summary><div class="body">
+  <span class="math">f(t) = 5 · 3<sup>t</sup></span>
+  <span class="math">f(4) = 5 · 81 = 405 ✓</span>
+</div></details>
+</div>
+
+<h2 class="st-h">3. איך ניגשים לשאלה</h2>
+<p class="st-main">בצע את התהליך המתאים לסוג השאלה:</p>
+<div class="st-cols"><div class="st-opt"><h4>אחת הנקודות ב־t = 0</h4><ol><li>מהנקודה שבה <span class="im">t = 0</span> מקבלים את <span class="im">a</span>.</li><li>מציבים את הנקודה השנייה בפונקציה.</li><li>מבודדים את <span class="im">b<sup>t</sup></span>.</li><li>מוצאים את <span class="im">b</span>. מתאים רק מספר חיובי.</li><li>כותבים את הפונקציה:<span class="st-m"><span class="im">f(t) = a · b<sup>t</sup></span></span></li></ol></div><div class="st-opt"><h4>אין נקודה ב־t = 0</h4><ol><li>מציבים את שתי הנקודות ומקבלים שתי משוואות.</li><li>מחלקים את המשוואות זו בזו:<span class="st-m"><span class="im">b<sup>t<sub>2</sub> − t<sub>1</sub></sup> = f(t<sub>2</sub>) : f(t<sub>1</sub>)</span></span></li><li>מוצאים את <span class="im">b</span>.</li><li>מציבים את <span class="im">b</span> באחת המשוואות ומוצאים את <span class="im">a</span>.</li><li>בודקים בנקודה השנייה.</li></ol></div><div class="st-opt"><h4>משלימים ערכים חסרים</h4><ol><li>קדימה: מכפילים ב־<span class="im">b</span>.</li><li>אחורה: מחלקים ב־<span class="im">b</span>.</li><li>או מציבים ישר בפונקציה את הזמן המבוקש.</li></ol></div></div>
+
+<h2>4. סיכום</h2>
+<div class="card key"><ul>
+  <li>נקודה ב־<span class="im">t = 0</span> נותנת ישר את <span class="im">a</span>.</li>
+  <li>מהנקודה השנייה: <span class="im">b<sup>t</sup> = y : a</span>. רק <span class="im">b</span> חיובי מתאים.</li>
+  <li>בלי נקודה ב־<span class="im">t = 0</span>: מחלקים את שני הערכים ומקבלים <span class="im">b<sup>t<sub>2</sub> − t<sub>1</sub></sup></span>, ואז מוצאים את <span class="im">a</span>.</li>
+  <li>ערכים חסרים: קדימה מכפילים ב־<span class="im">b</span>, אחורה מחלקים ב־<span class="im">b</span>.</li>
+</ul></div>
+<p><a href="exponential-17-sim-points.html">→ חזרה למצגת הדוגמאות</a> · <a href="exponential-19-formula-points.html">המשך: חישוב הדוגמאות בנוסחה ←</a></p>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+</main>
+<script>
+function toggleAll(open){document.querySelectorAll('details.step').forEach(function(d){d.open=open;});}
+</script>
+</body>
+</html>

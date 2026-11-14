@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור שני – חישוב הדוגמאות בנוסחה</title>
+<style>
+  :root{
+    --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
+    --accent:#2f6fde; --grow:#1f9d55; --decay:#d04a3a; --border:#dde2ea;
+    --code:#eef2f8; --blank:#fffbe8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+      --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+      --code:#252d3c; --blank:#2b2a20;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+    --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+    --code:#252d3c; --blank:#2b2a20;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:"Segoe UI",Arial,"Noto Sans Hebrew",sans-serif;line-height:1.7;font-size:17px}
+  main{max-width:900px;margin:0 auto;padding:16px}
+  a{color:var(--accent)}
+  .back{display:inline-block;margin:8px 0 4px}
+  h1{font-size:1.8rem;margin:.3em 0}
+  h2{font-size:1.35rem;margin:1.6em 0 .5em;border-bottom:2px solid var(--accent);padding-bottom:4px}
+  h3{font-size:1.1rem;margin:1.2em 0 .4em}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0}
+  .math{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;
+    font-size:1.12rem;background:var(--code);border-radius:6px;padding:4px 10px;margin:4px 0;display:block}
+  .im{direction:ltr;unicode-bidi:isolate;font-family:"Cambria Math","Times New Roman",serif;white-space:nowrap}
+  .grow{color:var(--grow);font-weight:600}
+  .decay{color:var(--decay);font-weight:600}
+  .key{border-inline-start:5px solid var(--accent)}
+  .task{background:var(--code);border-radius:8px;padding:8px 12px;margin:8px 0}
+  table{border-collapse:collapse;margin:8px auto;direction:rtl}
+  th,td{border:1px solid var(--border);padding:8px 14px;text-align:center;line-height:1.5}
+  th{background:var(--code)}
+  .tablewrap{overflow-x:auto}
+  .calc td{min-width:74px;white-space:nowrap}
+  .calc td.ans{background:var(--blank)}
+  .calc td.ans .v{visibility:hidden}
+  .calc.show td.ans .v{visibility:visible}
+  .graphs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .graphs figure{margin:0;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px}
+  figcaption{text-align:center;color:var(--muted);font-size:.95rem}
+  svg{width:100%;height:auto;display:block}
+  details.step{border:1px solid var(--border);border-radius:8px;margin:6px 0;background:var(--card)}
+  details.step summary{cursor:pointer;padding:6px 10px;font-weight:600}
+  details.step .body{padding:2px 12px 10px}
+  .type{color:var(--muted);font-size:.9rem;font-weight:400}
+  .controls{margin:6px 0;display:flex;flex-wrap:wrap;gap:6px}
+  button{font:inherit;padding:4px 12px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
+  ul{padding-inline-start:22px}
+  .verify td{min-width:0;white-space:nowrap}
+  .verify td.ok{color:var(--grow);font-weight:700}
+  .verify td.f{font-family:"Cambria Math","Times New Roman",serif}
+  td{direction:ltr;unicode-bidi:isolate}
+  td.he{direction:rtl}
+  th{direction:rtl;unicode-bidi:isolate}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+<h1>שיעור שני – חישוב הדוגמאות בנוסחה</h1>
+<p>ב<a href="exponential-13-sim-table.html">מצגת הדוגמאות</a> חילקנו ערכים בטבלה אחד אחרי השני. כאן נפתור את אותן דוגמאות בקיצור: מוצאים את <span class="im">b</span> ממנה אחת, את <span class="im">a</span> מהערך ב־<span class="im">t = 0</span> (או בחישוב אחורה), ובודקים בטבלה שהנוסחה נותנת את כל הערכים הנתונים.</p>
+<div class="controls"><button type="button" onclick="toggleAll(true)">פתח את כל השלבים</button> <button type="button" onclick="toggleAll(false)">סגור את כל השלבים</button></div>
+<div class="card">
+<h3>דוגמה 1 – חיידקים במעבדה 🧫</h3>
+<p>מדענית ספרה את החיידקים במושבה בכל שעה, ורשמה את התוצאות בטבלה. האם המספרים מתאימים לפונקציה מהצורה <span class="im">f(t) = a · b<sup>t</sup></span>? ואם כן – מהי הפונקציה?</p>
+<div class="tablewrap"><table><tr><th>t</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr><tr><th>חיידקים</th><td>50</td><td>100</td><td>200</td><td>400</td><td>800</td><td>1,600</td></tr></table></div>
+<details class="step"><summary>מוצאים את b – מחלקים שני ערכים עוקבים <span class="type">(זיהוי פונקציה)</span></summary><div class="body">
+  <span class="math">b = f(1) : f(0)</span>
+  <span class="math">b = 100 : 50 = 2</span>
+</div></details>
+<details class="step"><summary>קוראים את a – הערך ב־<span class="im">t = 0</span> <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">a = f(0) = 50</span>
+</div></details>
+<details class="step"><summary>כותבים את הפונקציה <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">f(t) = 50 · 2<sup>t</sup></span>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה נותנת את כל הערכים הנתונים <span class="type">(בדיקה)</span></summary><div class="body">
+<div class="tablewrap"><table class="verify"><tr><th>t</th><th>בנוסחה</th><th>בטבלה</th><th>מתאים?</th></tr>
+<tr><td>0</td><td class="f">50 · 2<sup>0</sup> = 50</td><td class="f">50</td><td class="ok">✓</td></tr>
+<tr><td>1</td><td class="f">50 · 2<sup>1</sup> = 100</td><td class="f">100</td><td class="ok">✓</td></tr>
+<tr><td>2</td><td class="f">50 · 2<sup>2</sup> = 200</td><td class="f">200</td><td class="ok">✓</td></tr>
+<tr><td>3</td><td class="f">50 · 2<sup>3</sup> = 400</td><td class="f">400</td><td class="ok">✓</td></tr>
+<tr><td>4</td><td class="f">50 · 2<sup>4</sup> = 800</td><td class="f">800</td><td class="ok">✓</td></tr>
+<tr><td>5</td><td class="f">50 · 2<sup>5</sup> = 1,600</td><td class="f">1,600</td><td class="ok">✓</td></tr>
+</table></div>
+</div></details>
+</div>
+<div class="card">
+<h3>דוגמה 2 – חיסכון בבנק 💰</h3>
+<p>דני בדק את היתרה בתוכנית החיסכון שלו בסוף כל שנה. מצאו את הפונקציה, וכתבו בכמה אחוזים גדל החיסכון בכל שנה.</p>
+<div class="tablewrap"><table><tr><th>t</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr><th>יתרה (₪)</th><td>5,000</td><td>5,500</td><td>6,050</td><td>6,655</td><td>7,320.5</td></tr></table></div>
+<details class="step"><summary>מוצאים את b – מחלקים שני ערכים עוקבים <span class="type">(זיהוי פונקציה)</span></summary><div class="body">
+  <span class="math">b = f(1) : f(0)</span>
+  <span class="math">b = 5,500 : 5,000 = 1.1</span>
+</div></details>
+<details class="step"><summary>קוראים את a – הערך ב־<span class="im">t = 0</span> <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">a = f(0) = 5,000</span>
+</div></details>
+<details class="step"><summary>כותבים את הפונקציה <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">f(t) = 5,000 · 1.1<sup>t</sup></span>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה נותנת את כל הערכים הנתונים <span class="type">(בדיקה)</span></summary><div class="body">
+<div class="tablewrap"><table class="verify"><tr><th>t</th><th>בנוסחה</th><th>בטבלה</th><th>מתאים?</th></tr>
+<tr><td>0</td><td class="f">5,000 · 1.1<sup>0</sup> = 5,000</td><td class="f">5,000</td><td class="ok">✓</td></tr>
+<tr><td>1</td><td class="f">5,000 · 1.1<sup>1</sup> = 5,500</td><td class="f">5,500</td><td class="ok">✓</td></tr>
+<tr><td>2</td><td class="f">5,000 · 1.1<sup>2</sup> = 6,050</td><td class="f">6,050</td><td class="ok">✓</td></tr>
+<tr><td>3</td><td class="f">5,000 · 1.1<sup>3</sup> = 6,655</td><td class="f">6,655</td><td class="ok">✓</td></tr>
+<tr><td>4</td><td class="f">5,000 · 1.1<sup>4</sup> = 7,320.5</td><td class="f">7,320.5</td><td class="ok">✓</td></tr>
+</table></div>
+</div></details>
+</div>
+<div class="card">
+<h3>דוגמה 3 – ערך של טלפון 📱</h3>
+<p>חנות רשמה בכל שנה כמה שווה טלפון משומש. מצאו את הפונקציה, וכתבו בכמה אחוזים יורד ערך הטלפון בכל שנה.</p>
+<div class="tablewrap"><table><tr><th>t</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr><th>ערך (₪)</th><td>6,400</td><td>4,800</td><td>3,600</td><td>2,700</td><td>2,025</td></tr></table></div>
+<details class="step"><summary>מוצאים את b – מחלקים שני ערכים עוקבים <span class="type">(זיהוי פונקציה)</span></summary><div class="body">
+  <span class="math">b = f(1) : f(0)</span>
+  <span class="math">b = 4,800 : 6,400 = 0.75</span>
+</div></details>
+<details class="step"><summary>קוראים את a – הערך ב־<span class="im">t = 0</span> <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">a = f(0) = 6,400</span>
+</div></details>
+<details class="step"><summary>כותבים את הפונקציה <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">f(t) = 6,400 · 0.75<sup>t</sup></span>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה נותנת את כל הערכים הנתונים <span class="type">(בדיקה)</span></summary><div class="body">
+<div class="tablewrap"><table class="verify"><tr><th>t</th><th>בנוסחה</th><th>בטבלה</th><th>מתאים?</th></tr>
+<tr><td>0</td><td class="f">6,400 · 0.75<sup>0</sup> = 6,400</td><td class="f">6,400</td><td class="ok">✓</td></tr>
+<tr><td>1</td><td class="f">6,400 · 0.75<sup>1</sup> = 4,800</td><td class="f">4,800</td><td class="ok">✓</td></tr>
+<tr><td>2</td><td class="f">6,400 · 0.75<sup>2</sup> = 3,600</td><td class="f">3,600</td><td class="ok">✓</td></tr>
+<tr><td>3</td><td class="f">6,400 · 0.75<sup>3</sup> = 2,700</td><td class="f">2,700</td><td class="ok">✓</td></tr>
+<tr><td>4</td><td class="f">6,400 · 0.75<sup>4</sup> = 2,025</td><td class="f">2,025</td><td class="ok">✓</td></tr>
+</table></div>
+</div></details>
+</div>
+<div class="card">
+<h3>דוגמה 4 – טבלה שלא מתחילה ב־t = 0 🐟</h3>
+<p>חוקר התחיל לספור דגים באגם רק בשנה השנייה. בטבלה יש את המספרים משנה 2 עד שנה 5. כמה דגים היו באגם בהתחלה, ומהי הפונקציה?</p>
+<div class="tablewrap"><table><tr><th>t</th><td>2</td><td>3</td><td>4</td><td>5</td></tr><tr><th>דגים</th><td>72</td><td>216</td><td>648</td><td>1,944</td></tr></table></div>
+<details class="step"><summary>מוצאים את b – מחלקים שני ערכים עוקבים <span class="type">(זיהוי פונקציה)</span></summary><div class="body">
+  <span class="math">b = f(3) : f(2)</span>
+  <span class="math">b = 216 : 72 = 3</span>
+</div></details>
+<details class="step"><summary>מוצאים את a: מציבים את הנקודה <span class="im">(2, 72)</span> בפונקציה ומחלקים <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">a · b<sup>2</sup> = 72</span>
+  <span class="math">a · 3<sup>2</sup> = 72</span>
+  <span class="math">a = 72 : 9 = 8</span>
+</div></details>
+<details class="step"><summary>כותבים את הפונקציה <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">f(t) = 8 · 3<sup>t</sup></span>
+</div></details>
+<details class="step" open><summary>בודקים בטבלה: הנוסחה נותנת את כל הערכים הנתונים <span class="type">(בדיקה)</span></summary><div class="body">
+<div class="tablewrap"><table class="verify"><tr><th>t</th><th>בנוסחה</th><th>בטבלה</th><th>מתאים?</th></tr>
+<tr><td>0</td><td class="f">8 · 3<sup>0</sup> = 8</td><td class="f">—</td><td class="ok"></td></tr>
+<tr><td>1</td><td class="f">8 · 3<sup>1</sup> = 24</td><td class="f">—</td><td class="ok"></td></tr>
+<tr><td>2</td><td class="f">8 · 3<sup>2</sup> = 72</td><td class="f">72</td><td class="ok">✓</td></tr>
+<tr><td>3</td><td class="f">8 · 3<sup>3</sup> = 216</td><td class="f">216</td><td class="ok">✓</td></tr>
+<tr><td>4</td><td class="f">8 · 3<sup>4</sup> = 648</td><td class="f">648</td><td class="ok">✓</td></tr>
+<tr><td>5</td><td class="f">8 · 3<sup>5</sup> = 1,944</td><td class="f">1,944</td><td class="ok">✓</td></tr>
+</table></div>
+</div></details>
+</div>
+<h2>סיכום</h2>
+<div class="card key"><ul><li><span class="im">b</span> = ערך חלקי הערך שלפניו.</li><li><span class="im">a</span> = הערך ב־<span class="im">t = 0</span>; אם אינו בטבלה – <span class="im">a = f(t) : b<sup>t</sup></span>.</li><li>תמיד בודקים שהנוסחה נותנת את הערכים שבטבלה.</li></ul></div>
+<p><a href="exponential-14-table-explanation.html">→ חזרה לדף ההסבר</a> · <a href="exponential-17-sim-points.html">המשך לשיעור שלישי ←</a></p>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+</main>
+<script>
+function toggleAll(open){document.querySelectorAll('details.step').forEach(function(d){d.open=open;});}
+</script>
+</body>
+</html>

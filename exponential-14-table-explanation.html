@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שיעור שני - זיהוי הפונקציה מטבלה</title>
+<style>
+  :root{
+    --bg:#f7f8fb; --card:#ffffff; --text:#1d2330; --muted:#5a6475;
+    --accent:#2f6fde; --grow:#1f9d55; --decay:#d04a3a; --border:#dde2ea;
+    --code:#eef2f8; --blank:#fffbe8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+      --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+      --code:#252d3c; --blank:#2b2a20;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#141820; --card:#1d2330; --text:#e8ecf3; --muted:#a3adbd;
+    --accent:#6ea0ff; --grow:#4cd38a; --decay:#ff7b6b; --border:#2e3646;
+    --code:#252d3c; --blank:#2b2a20;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:"Segoe UI",Arial,"Noto Sans Hebrew",sans-serif;line-height:1.7;font-size:17px}
+  main{max-width:900px;margin:0 auto;padding:16px}
+  a{color:var(--accent)}
+  .back{display:inline-block;margin:8px 0 4px}
+  h1{font-size:1.8rem;margin:.3em 0}
+  h2{font-size:1.35rem;margin:1.6em 0 .5em;border-bottom:2px solid var(--accent);padding-bottom:4px}
+  h3{font-size:1.1rem;margin:1.2em 0 .4em}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0}
+  .math{direction:ltr;text-align:left;font-family:"Cambria Math","Times New Roman",serif;
+    font-size:1.12rem;background:var(--code);border-radius:6px;padding:4px 10px;margin:4px 0;display:block}
+  .im{direction:ltr;unicode-bidi:isolate;font-family:"Cambria Math","Times New Roman",serif;white-space:nowrap}
+  .grow{color:var(--grow);font-weight:600}
+  .decay{color:var(--decay);font-weight:600}
+  .key{border-inline-start:5px solid var(--accent)}
+  .task{background:var(--code);border-radius:8px;padding:8px 12px;margin:8px 0}
+  table{border-collapse:collapse;margin:8px auto;direction:rtl}
+  th,td{border:1px solid var(--border);padding:4px 10px;text-align:center}
+  th{background:var(--code)}
+  .tablewrap{overflow-x:auto}
+  .calc td{min-width:74px;white-space:nowrap}
+  .calc td.ans{background:var(--blank)}
+  .calc td.ans .v{visibility:hidden}
+  .calc.show td.ans .v{visibility:visible}
+  .graphs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .graphs figure{margin:0;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px}
+  figcaption{text-align:center;color:var(--muted);font-size:.95rem}
+  svg{width:100%;height:auto;display:block}
+  details.step{border:1px solid var(--border);border-radius:8px;margin:6px 0;background:var(--card)}
+  details.step summary{cursor:pointer;padding:6px 10px;font-weight:600}
+  details.step .body{padding:2px 12px 10px}
+  .type{color:var(--muted);font-size:.9rem;font-weight:400}
+  .controls{margin:6px 0;display:flex;flex-wrap:wrap;gap:6px}
+  button{font:inherit;padding:4px 12px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
+  ul{padding-inline-start:22px}
+  td{direction:ltr;unicode-bidi:isolate}
+  td.he{direction:rtl}
+  th{direction:rtl;unicode-bidi:isolate}
+</style>
+<style>
+/* decision tree */
+.dt{overflow-x:auto;padding:6px 0 10px}
+.dt-col{display:flex;flex-direction:column;align-items:center}
+.dt-node{border:2px solid var(--border);border-radius:10px;padding:6px 10px;max-width:185px;text-align:center;background:var(--card);font-size:.86rem;line-height:1.45}
+.dt-q{border-color:var(--accent);background:var(--code);font-weight:700}
+.dt-q::before{content:"?";display:inline-block;width:1.3em;height:1.3em;line-height:1.3em;border-radius:50%;background:var(--accent);color:#fff;font-size:.8rem;margin-inline-end:6px;text-align:center}
+.dt-r{border-color:var(--grow);font-weight:600}
+.dt-line{width:2px;height:16px;background:var(--muted)}
+.dt-arrow{width:2px;height:18px;background:var(--muted);position:relative;margin-bottom:6px}
+.dt-arrow::after{content:"";position:absolute;bottom:-6px;left:-4px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--muted)}
+.dt-br{display:flex;align-items:flex-start;width:max-content;max-width:none;margin:0 auto}
+.dt-branch{position:relative;display:flex;flex-direction:column;align-items:center;padding:20px 5px 0;flex:0 0 auto;min-width:105px}
+.dt-branch::before{content:"";position:absolute;top:0;inset-inline:0;border-top:2px solid var(--muted)}
+.dt-branch:first-child::before{inset-inline-start:50%}
+.dt-branch:last-child::before{inset-inline-end:50%}
+.dt-branch:only-child::before{display:none}
+.dt-branch::after{content:"";position:absolute;top:0;inset-inline-start:50%;height:20px;border-inline-start:2px solid var(--muted)}
+.dt-edge{display:inline-block;font-size:.78rem;font-weight:700;color:var(--accent);background:var(--card);border:1px solid var(--accent);border-radius:99px;padding:0 8px;margin:2px 0 0}
+.dt-legend{display:flex;flex-wrap:wrap;gap:10px;font-size:.85rem;color:var(--muted);margin:2px 0 6px}
+.dt-legend span{display:inline-flex;align-items:center;gap:5px}
+.dt-legend i{display:inline-block;width:14px;height:10px;border-radius:3px;border:2px solid var(--border)}
+.dt-legend i.q{border-color:var(--accent);background:var(--code)}
+.dt-legend i.r{border-color:var(--grow)}
+@media print{.dt{overflow:visible}.dt-node{font-size:.78rem;padding:4px 6px}.dt-branch{min-width:0}h2.dt-h{break-before:page}}
+</style>
+<style>
+/* text step lists */
+.st-main{font-weight:700;font-size:1.1rem;margin:22px 0 6px}
+.st-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;margin:14px 0 34px;align-items:start}
+.st-opt{border:1px solid var(--border);border-radius:16px;padding:18px 20px 8px;background:var(--card);box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.st-opt h4{font-size:1.05rem;color:var(--accent);margin:0 0 12px}
+.st-opt ol{margin:0;padding-inline-start:1.6em;line-height:1.8}
+.st-opt li{margin-bottom:14px}
+.st-opt li::marker{font-weight:700;color:var(--accent)}
+.st-m{display:block;margin-top:4px}
+.st-sub{list-style:disc;padding-inline-start:1.4em;margin:8px 0 0}
+.st-sub li{margin-bottom:8px}
+.st-sub li::marker{color:var(--muted)}
+.st-note{color:var(--muted);font-size:.9rem;margin:0 0 12px}
+@media print{h2.st-h{break-before:page}.st-opt{break-inside:avoid;box-shadow:none}.st-cols{gap:12px}}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+<h1>שיעור שני - זיהוי הפונקציה מטבלה</h1>
+<p>ב<a href="exponential-13-sim-table.html">מצגת הדוגמאות של שיעור שני</a> קיבלנו טבלאות של מדידות – חיידקים, חיסכון, ערך של טלפון ודגים – ומצאנו מהן את הפונקציה. בדף הזה נסכם איך עושים את זה.</p>
+<div class="controls"><button type="button" onclick="toggleAll(true)">פתח את כל השלבים</button> <button type="button" onclick="toggleAll(false)">סגור את כל השלבים</button></div>
+<h2>1. איך מזהים פונקציה מטבלה</h2>
+<div class="card key">
+  <ol>
+    <li><b>מחלקים כל ערך בערך שלפניו.</b> המנה אומרת פי כמה הכמות גדלה (או קטנה) בצעד אחד.</li>
+    <li><b>בודקים שכל המנות שוות.</b> אם כן – זו פונקציה מהצורה <span class="im">f(t) = a · b<sup>t</sup></span>, והמנה היא <span class="im">b</span>. אם המנות שונות – זו לא פונקציה כזו.</li>
+    <li><b>מוצאים את הערך כאשר <span class="im">t = 0</span>.</b> זה <span class="im">a</span>.</li>
+    <li><b>כותבים את הפונקציה ובודקים</b> ערך אחד מהטבלה.</li>
+  </ol>
+</div>
+<h2>2. האם הטבלה מתאימה בכלל?</h2>
+<div class="card">
+<h3>דוגמה – האם הטבלה מתאימה לפונקציה כזו?</h3>
+<p>לפניכם שתי טבלאות. קבעו לגבי כל אחת אם היא מתארת פונקציית גדילה או דעיכה, ואם כן – מצאו את הפונקציה.</p>
+<div class="tablewrap"><table><tr><th>t</th><td>0</td><td>1</td><td>2</td><td>3</td></tr><tr><th>טבלה א׳</th><td>81</td><td>27</td><td>9</td><td>3</td></tr><tr><th>טבלה ב׳</th><td>2</td><td>5</td><td>8</td><td>11</td></tr></table></div>
+<details class="step"><summary>מחלקים כל ערך בערך שלפניו בטבלה א׳ כדי לבדוק אם מכפילים במספר קבוע <span class="type">(זיהוי פונקציה)</span></summary><div class="body">
+  <span class="math">27 : 81 = 1/3</span>
+  <span class="math">9 : 27 = 1/3</span>
+  <span class="math">3 : 9 = 1/3</span>
+  <p>בכל צעד מכפילים ב־<span class="im">1/3</span>, ולכן זו פונקציית <span class="decay">דעיכה</span> עם <span class="im">b = 1/3</span> ו־<span class="im">a = 81</span>:</p>
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">f(t) = 81 · (1/3)<sup>t</sup></span>
+</div></details>
+<details class="step"><summary>מחלקים כל ערך בערך שלפניו בטבלה ב׳ כדי לבדוק אם מכפילים במספר קבוע <span class="type">(זיהוי פונקציה)</span></summary><div class="body">
+  <span class="math">5 : 2 = 2.5</span>
+  <span class="math">8 : 5 = 1.6</span>
+  <p>המנות שונות – לא מכפילים באותו מספר, ולכן טבלה ב׳ <b>לא</b> מתארת פונקציית גדילה או דעיכה.</p>
+</div></details>
+</div>
+
+<h2>3. כשהטבלה לא מתחילה ב־t = 0</h2>
+<p>כשאין בטבלה ערך ב־<span class="im">t = 0</span>, מוצאים קודם את <span class="im">b</span>, ואז הולכים אחורה: בכל צעד אחורה <b>מחלקים</b> ב־<span class="im">b</span>.</p>
+<div class="card">
+<h3>דוגמה – טבלה שמתחילה ב־t = 1</h3>
+<p>הטבלה מתארת פונקציה מהצורה <span class="im">f(t) = a · b<sup>t</sup></span>. מצאו את הפונקציה.</p>
+<div class="tablewrap"><table><tr><th>t</th><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr><th>f(t)</th><td>12</td><td>36</td><td>108</td><td>324</td></tr></table></div>
+<details class="step"><summary>מחלקים כל ערך בערך שלפניו ומוצאים את b <span class="type">(זיהוי פונקציה)</span></summary><div class="body">
+  <span class="math">36 : 12 = 3</span>
+  <span class="math">108 : 36 = 3</span>
+  <span class="math">324 : 108 = 3</span>
+  <span class="math">b = 3</span>
+</div></details>
+<details class="step"><summary>הולכים צעד אחד אחורה – מחלקים ב־b – כדי למצוא את הערך ב־<span class="im">t = 0</span> <span class="type">(מציאת פרמטר)</span></summary><div class="body">
+  <span class="math">a = f(0) = 12 : 3 = 4</span>
+</div></details>
+<details class="step"><summary>כותבים את הפונקציה ובודקים ערך אחד <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">f(t) = a · b<sup>t</sup></span>
+  <span class="math">f(t) = 4 · 3<sup>t</sup></span>
+  <span class="math">f(4) = 4 · 3<sup>4</sup> = 4 · 81 = 324 ✓</span>
+</div></details>
+</div>
+
+<h2>4. מהטבלה לאחוזים</h2>
+<div class="card">
+<h3>דוגמה – מהטבלה לאחוזים</h3>
+<p>מספר הציפורים בשמורה נספר בכל שנה. מצאו את הפונקציה, ובכמה אחוזים משתנה מספר הציפורים בכל שנה.</p>
+<div class="tablewrap"><table><tr><th>t</th><td>0</td><td>1</td><td>2</td><td>3</td></tr><tr><th>ציפורים</th><td>800</td><td>760</td><td>722</td><td>685.9</td></tr></table></div>
+<details class="step"><summary>מחלקים כל ערך בערך שלפניו ומוצאים את b <span class="type">(זיהוי פונקציה)</span></summary><div class="body">
+  <span class="math">760 : 800 = 0.95</span>
+  <span class="math">722 : 760 = 0.95</span>
+  <span class="math">685.9 : 722 = 0.95</span>
+  <span class="math">b = 0.95</span>
+</div></details>
+<details class="step"><summary>קוראים את a מהטבלה וכותבים את הפונקציה <span class="type">(בניית פונקציה)</span></summary><div class="body">
+  <span class="math">a = f(0) = 800</span>
+  <span class="math">f(t) = 800 · 0.95<sup>t</sup></span>
+</div></details>
+<details class="step"><summary>מתרגמים את b לאחוזים <span class="type">(חישוב ערך)</span></summary><div class="body">
+  <span class="math">p = (1 − b) · 100</span>
+  <span class="math">p = (1 − 0.95) · 100 = 5</span>
+  <p>מספר הציפורים קטן ב־5% בכל שנה.</p>
+</div></details>
+</div>
+
+<h2 class="st-h">5. איך ניגשים לשאלה</h2>
+<p class="st-main">בצע את התהליך המתאים לסוג השאלה:</p>
+<div class="st-cols"><div class="st-opt"><h4>נתונה טבלת ערכים</h4><ol><li>מחלקים כל ערך בערך שלפניו.</li><li>בודקים שהמנה תמיד אותו מספר. המנה היא <span class="im">b</span>.</li><li>מוצאים בטבלה את הערך כאשר <span class="im">t = 0</span>. זה <span class="im">a</span>.</li><li>כותבים את הפונקציה:<span class="st-m"><span class="im">f(t) = a · b<sup>t</sup></span></span></li></ol><p class="st-note">אם המנה משתנה, זו לא פונקציית גדילה או דעיכה.</p></div><div class="st-opt"><h4>הטבלה לא מתחילה ב־t = 0</h4><ol><li>מוצאים את <span class="im">b</span> כמו קודם.</li><li>הולכים אחורה: מחלקים ב־<span class="im">b</span> עד <span class="im">t = 0</span>.</li><li>הערך שמתקבל ב־<span class="im">t = 0</span> הוא <span class="im">a</span>.</li><li>כותבים את הפונקציה ובודקים ערך אחד מהטבלה.</li></ol></div><div class="st-opt"><h4>שואלים על אחוזים</h4><ol><li>מוצאים את <span class="im">b</span> מהטבלה.</li><li>גדילה (<span class="im">b &gt; 1</span>):<span class="st-m"><span class="im">p = (b − 1) · 100</span></span></li><li>דעיכה (<span class="im">b &lt; 1</span>):<span class="st-m"><span class="im">p = (1 − b) · 100</span></span></li></ol></div></div>
+
+<h2>6. סיכום</h2>
+<div class="card key"><ul>
+  <li>המנה בין ערכים עוקבים היא <span class="im">b</span>. אם כל המנות שוות – זו פונקציה מהצורה <span class="im">a · b<sup>t</sup></span>.</li>
+  <li><span class="im">a</span> הוא הערך ב־<span class="im">t = 0</span>. אם הוא לא בטבלה – מחלקים ב־<span class="im">b</span> אחורה עד <span class="im">t = 0</span>.</li>
+  <li>מהמנה לאחוזים: <span class="im">p = (b − 1) · 100</span> בגדילה, <span class="im">p = (1 − b) · 100</span> בדעיכה.</li>
+</ul></div>
+<p><a href="exponential-13-sim-table.html">→ חזרה למצגת הדוגמאות</a> · <a href="exponential-15-formula-table.html">המשך: חישוב הדוגמאות בנוסחה ←</a></p>
+<a class="back" href="index.html#exponential">→ חזרה לרשימת הנושאים</a>
+</main>
+<script>
+function toggleAll(open){document.querySelectorAll('details.step').forEach(function(d){d.open=open;});}
+</script>
+</body>
+</html>

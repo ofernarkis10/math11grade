@@ -178,64 +178,11 @@
 </div></details>
 </div>
 
-<!-- Example 6 -->
-<div class="card">
-<h3>דוגמה 6 – מציאת הפונקציה משתי נקודות</h3>
-<p>הפונקציה <span class="im">f(t) = a · b<sup>t</sup></span> עוברת בנקודות <span class="im">(0, 3)</span> ו-<span class="im">(2, 48)</span>. מצאו את <span class="im">a</span> ואת <span class="im">b</span>, וקבעו אם זו פונקציית גדילה או דעיכה.</p>
-<details class="step"><summary>מציבים את הנקודה (0, 3) כדי למצוא את a <span class="type">(מציאת פרמטר)</span></summary><div class="body">
-  <span class="math">f(0) = a · b<sup>0</sup></span>
-  <span class="math">3 = a · 1</span>
-  <span class="math">a = 3</span>
-</div></details>
-<details class="step"><summary>מציבים את הנקודה (2, 48) ואת a = 3 כדי למצוא את b <span class="type">(מציאת פרמטר)</span></summary><div class="body">
-  <span class="math">f(2) = a · b<sup>2</sup></span>
-  <span class="math">48 = 3 · b<sup>2</sup></span>
-  <span class="math">b<sup>2</sup> = 16</span>
-  <span class="math">b = 4</span>
-  <p>הפתרון <span class="im">b = −4</span> נפסל, כי בסיס חייב להיות חיובי.</p>
-</div></details>
-<details class="step"><summary>כותבים את הפונקציה וקובעים את סוגה לפי הבסיס</summary><div class="body">
-  <span class="math">f(t) = 3 · 4<sup>t</sup></span>
-  <p>מכיוון ש-<span class="im">b = 4 &gt; 1</span>, זו פונקציית <span class="grow">גדילה</span>.</p>
-</div></details>
-</div>
-
-<!-- Example 7 -->
-<div class="card">
-<h3>דוגמה 7 – זיהוי מטבלה</h3>
-<p>לפניכם שתי טבלאות. קבעו לגבי כל אחת אם היא מתארת פונקציית גדילה/דעיכה, ואם כן – מצאו את הפונקציה.</p>
-<div class="tablewrap">
-<table>
-  <tr><th>t</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
-  <tr><th>טבלה א'</th><td>81</td><td>27</td><td>9</td><td>3</td></tr>
-  <tr><th>טבלה ב'</th><td>2</td><td>5</td><td>8</td><td>11</td></tr>
-</table>
-</div>
-<details class="step"><summary>מחלקים כל ערך בערך שלפניו בטבלה א' כדי לבדוק אם מכפילים במספר קבוע <span class="type">(זיהוי פונקציה)</span></summary><div class="body">
-  <span class="math">27 / 81 = 1/3</span>
-  <span class="math">9 / 27 = 1/3</span>
-  <span class="math">3 / 9 = 1/3</span>
-  <p>בכל צעד מכפילים ב-<span class="im">1/3</span>, ולכן זו פונקציית <span class="decay">דעיכה</span> עם <span class="im">b = 1/3</span> ו-<span class="im">a = 81</span>:</p>
-  <span class="math">f(t) = a · b<sup>t</sup></span>
-  <span class="math">f(t) = 81 · (1/3)<sup>t</sup></span>
-</div></details>
-<details class="step"><summary>מחלקים כל ערך בערך שלפניו בטבלה ב' כדי לבדוק אם מכפילים במספר קבוע <span class="type">(זיהוי פונקציה)</span></summary><div class="body">
-  <span class="math">5 / 2 = 2.5</span>
-  <span class="math">8 / 5 = 1.6</span>
-  <p>לא מכפילים במספר קבוע, ולכן זו <b>לא</b> פונקציית גדילה/דעיכה. בודקים הפרשים:</p>
-  <span class="math">5 − 2 = 3 ,  8 − 5 = 3 ,  11 − 8 = 3</span>
-  <p>מוסיפים מספר קבוע – זו פונקציה קווית:</p>
-  <span class="math">g(t) = 2 + 3t</span>
-</div></details>
-</div>
-
 <h2 class="st-h">6. איך ניגשים לשאלה</h2>
 <p>בכל חלק מחליטים קודם מה סוג השאלה. אחר כך עושים את הצעדים לפי הסדר.</p>
-<h3>חלק א׳: בונים את הפונקציה</h3>
-<p class="st-main">בצע את התהליך המתאים לסוג השאלה:</p>
+<h3>חלק א׳: בונים את הפונקציה מתיאור במילים</h3>
+<p class="st-main">בצע את התהליך לפי הסדר:</p>
 <div class="st-cols"><div class="st-opt"><h4>נתון תיאור במילים</h4><ol><li>מוצאים את הכמות בהתחלה. זה <span class="im">a</span>.</li><li>מוצאים איך הכמות משתנה בכל צעד.</li><li>מתרגמים את השינוי ל־<span class="im">b</span>:<ul class="st-sub"><li>גדלה באחוזים:<span class="st-m"><span class="im">b = 1 + p/100</span></span></li><li>קטנה באחוזים:<span class="st-m"><span class="im">b = 1 − p/100</span></span></li><li>גדלה פי k:<span class="st-m"><span class="im">b = k</span></span></li></ul></li><li>כותבים את הפונקציה:<span class="st-m"><span class="im">f(t) = a · b<sup>t</sup></span></span></li></ol></div>
-<div class="st-opt"><h4>נתונה טבלת ערכים</h4><ol><li>מחלקים כל ערך בערך שלפניו.</li><li>בודקים שהמנה תמיד אותו מספר. המנה היא <span class="im">b</span>.</li><li>מוצאים בטבלה את הערך כאשר <span class="im">t = 0</span>. זה <span class="im">a</span>.</li><li>כותבים את הפונקציה:<span class="st-m"><span class="im">f(t) = a · b<sup>t</sup></span></span></li></ol><p class="st-note">אם המנה משתנה, זו לא פונקציית גדילה או דעיכה.</p></div>
-<div class="st-opt"><h4>נתונות שתי נקודות</h4><ol><li>מהנקודה שבה <span class="im">t = 0</span> מקבלים את <span class="im">a</span>.</li><li>מציבים את הנקודה השנייה בפונקציה.</li><li>מבודדים את <span class="im">b<sup>t</sup></span>.</li><li>מוצאים את <span class="im">b</span>. מתאים רק מספר חיובי.</li><li>כותבים את הפונקציה:<span class="st-m"><span class="im">f(t) = a · b<sup>t</sup></span></span></li></ol></div>
 </div>
 <h3>חלק ב׳: משתמשים בפונקציה</h3>
 <p class="st-main">בצע את התהליך המתאים לסוג השאלה:</p>
@@ -251,7 +198,6 @@
     <li>בכל צעד של 1 ב-<span class="im">t</span>, הערך <b>מוכפל</b> ב-<span class="im">b</span>.</li>
     <li><span class="im">b &gt; 1</span> – <span class="grow">גדילה</span>; <span class="im">0 &lt; b &lt; 1</span> – <span class="decay">דעיכה</span>.</li>
     <li>שינוי של <span class="im">p%</span>: <span class="im">b = 1 ± p/100</span>.</li>
-    <li>זיהוי מטבלה: מכפילים במספר קבוע ← גדילה/דעיכה; מוסיפים מספר קבוע ← פונקציה קווית.</li>
   </ul>
 </div>
 
