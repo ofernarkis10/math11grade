@@ -152,6 +152,20 @@ In the wheel-motion pages this layout is produced automatically from the solutio
 
 **This rule applies to the whole site.** Every homework (עבודת בית) and assignment must appear both in the list of its own topic and in the homework list (`index.html#homework`). This happens automatically: when you add the homework's line to its topic in the `TOPICS` data in `index.html`, mark it with `homework:true`. The homework list, its numbering and its counts (on the list and on the home-page card) are computed from these marks, so there is nothing else to update.
 
+## Rule: how homework questions are written
+
+**This rule applies to homework (עבודות בית) only.** Homework is read alone at home by students aged 16–17, who find short, condensed wording hard to follow. Questions in class pages (study pages, examples, exercises with solutions, presentations) keep the usual concise format.
+
+- **Long, friendly wording.** Tell the situation in full sentences, often as a short story with a person or a place ("דנה קנתה טלפון חדש…"). Say explicitly what is given, what is asked and what to write ("כתבו קודם מהו a, b ו־n").
+- **At most 15 words per line.** A formula counts as one word. A longer sentence is split into lines of about equal length, not a full line followed by one or two leftover words.
+- **A new line after every sentence that ends with "."** A period inside a number (1.5) or a formula does not count. Part labels ("א.", "ב.") stay on the line of their question.
+- **One piece of data per line.** When there are several groups or objects, each gets its own line, starting with "•".
+- **Small steps.** Split a long task into parts א׳, ב׳, ג׳, so each part asks one thing, and earlier parts lead to the later ones.
+- **Hints in brackets** at the tricky points: "(רמז: …)", "(שימו לב: …)".
+- **Same math as the answer key.** Rewording never changes the numbers, so the answer key stays valid.
+
+The growth/decay homework (`exponential-10/11/12-homework-*.html`) are the reference examples. In those pages the line breaks are produced from the question text automatically; a new homework page should follow the same layout.
+
 ## Building and updating index.html
 
 `index.html` is the only navigation file of the site. These rules apply every time it is created or changed.
@@ -265,7 +279,7 @@ Every page is a single self-contained HTML file: styles are inline, there is no 
 
 ## Answer keys and tests
 
-Solutions to homework and all tests are kept **outside this repository**, in a private folder next to it, so students cannot see them on GitHub or on the published site. Never add them to this folder.
+Tests and homework answer keys are listed in `tests.html`, an internal page for the teacher that is **never linked from `index.html`**. Each test and each answer key gets a random file name (12 lowercase letters and digits, for example `d4ypgbldhons.html`), is reachable only from `tests.html`, and carries `<meta name="robots" content="noindex, nofollow">`. Homework pages themselves are published on the site without solutions. Topic plans and lesson plans for the teacher are kept outside this repository, in the private folder `math11grade-tests` next to it.
 
 ## License
 
