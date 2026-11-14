@@ -152,9 +152,11 @@ In the wheel-motion pages this layout is produced automatically from the solutio
 
 **This rule applies to the whole site.** Every homework (עבודת בית) and assignment must appear both in the list of its own topic and in the homework list (`index.html#homework`). This happens automatically: when you add the homework's line to its topic in the `TOPICS` data in `index.html`, mark it with `homework:true`. The homework list, its numbering and its counts (on the list and on the home-page card) are computed from these marks, so there is nothing else to update.
 
-## Rule: how homework questions are written
+## Rule: how homework and test questions are written
 
-**This rule applies to homework (עבודות בית) only.** Homework is read alone at home by students aged 16–17, who find short, condensed wording hard to follow. Questions in class pages (study pages, examples, exercises with solutions, presentations) keep the usual concise format.
+**This rule applies to homework (עבודות בית) and tests (מבחנים) only.** Homework and tests are read alone by students aged 16–17, who find short, condensed wording hard to follow. Questions in class pages (study pages, examples, exercises with solutions, presentations) keep the usual concise format.
+
+**Time limit:** the rule applies to homework and tests **until the end of March 2027**. **From 1 April 2027** homework and test questions return to the usual concise format, like class questions. Existing pages are not rewritten when the period ends.
 
 - **Long, friendly wording.** Tell the situation in full sentences, often as a short story with a person or a place ("דנה קנתה טלפון חדש…"). Say explicitly what is given, what is asked and what to write ("כתבו קודם מהו a, b ו־n").
 - **At most 15 words per line.** A formula counts as one word. A longer sentence is split into lines of about equal length, not a full line followed by one or two leftover words.
@@ -163,8 +165,9 @@ In the wheel-motion pages this layout is produced automatically from the solutio
 - **Small steps.** Split a long task into parts א׳, ב׳, ג׳, so each part asks one thing, and earlier parts lead to the later ones.
 - **Hints in brackets** at the tricky points: "(רמז: …)", "(שימו לב: …)".
 - **Same math as the answer key.** Rewording never changes the numbers, so the answer key stays valid.
+- **Tests:** the same layout also applies to the questions on the test page and in its answer page.
 
-The growth/decay homework (`exponential-10/11/12-homework-*.html`) are the reference examples. In those pages the line breaks are produced from the question text automatically; a new homework page should follow the same layout.
+The growth/decay homework (`exponential-10/11/12-homework-*.html`) are the reference examples. In those pages the line breaks are produced from the question text automatically; a new homework or test page should follow the same layout.
 
 ## Building and updating index.html
 
