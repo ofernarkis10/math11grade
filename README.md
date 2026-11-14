@@ -166,6 +166,7 @@ In the wheel-motion pages this layout is produced automatically from the solutio
 - **Hints in brackets** at the tricky points: "(רמז: …)", "(שימו לב: …)".
 - **Same math as the answer key.** Rewording never changes the numbers, so the answer key stays valid.
 - **Tests:** the same layout also applies to the questions on the test page and in its answer page.
+- **Hints in tests.** If the test shows the solution path (the answer template with steps and formulas written and values blank), keep the hints. If it does not, ask the teacher, each time a test is prepared, whether to add hints.
 
 The growth/decay homework (`exponential-10/11/12-homework-*.html`) are the reference examples. In those pages the line breaks are produced from the question text automatically; a new homework or test page should follow the same layout.
 
