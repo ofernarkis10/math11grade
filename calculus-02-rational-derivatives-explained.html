@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>נגזרת של פונקציה רציונלית · דף הסבר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* Layout: same worksheet style as the calculus solutions page. Explanation cards (order of work, factoring, asymptotes, quotient rule, sign table), then worked examples in the site solution format, then common mistakes */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --ok:#2f7a4a; --ok-soft:#e5f3ea; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --ok:#7fd09a; --ok-soft:#1d3326; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --ok:#7fd09a; --ok-soft:#1d3326; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:32px 72px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.3rem}
+h2{font-size:1.65rem;color:var(--accent)}
+h3{font-size:1.15rem}
+p{margin:0}
+.m{direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+.m .katex{font-size:1.08em;position:relative}
+.m:has(.katex){white-space:normal}
+.steps .m,.alt .m{white-space:normal}
+/* room for full-size fractions (\dfrac) between lines */
+.part p,.part h3,.given p,td{line-height:2.15}
+*:has(> .m .mfrac){line-height:2.15}
+.lead{color:var(--muted);max-width:68ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav.qnav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px;display:flex;flex-direction:column;gap:10px}
+nav.qnav ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+nav.qnav a{display:block;padding:6px 10px;border:1px solid var(--line);border-radius:8px;color:var(--accent);font-weight:700;text-decoration:none;font-size:.95rem}
+nav.qnav a small{display:block;color:var(--muted);font-weight:400;font-size:.8rem}
+nav.qnav a:hover,nav.qnav a:focus-visible{border-color:var(--accent);background:var(--accent-soft);outline:none}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+
+/* theorem toolbox */
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.tool{background:var(--accent-soft);border-radius:8px;padding:10px 14px;scroll-margin-top:16px}
+.tool b{display:flex;gap:8px;align-items:baseline}
+.tool b .tag{font-family:var(--f-math);font-size:.8rem;color:var(--paper);background:var(--accent);border-radius:4px;padding:0 6px}
+.tool p{font-size:.93rem;color:var(--ink)}
+
+/* answers table */
+.tablebox{position:relative;overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.93rem}
+th,td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:700;color:var(--accent);white-space:nowrap}
+
+/* question card */
+.q-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.q-head small{font-family:var(--f-body);font-size:.92rem;color:var(--muted);font-weight:600}
+.setup{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px);gap:18px;align-items:start}
+@media (max-width:680px){.setup{grid-template-columns:1fr}}
+.given{display:flex;flex-direction:column;gap:6px}
+.given .lbl{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--muted)}
+figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:4px}
+figure img{width:100%;height:auto;display:block}
+figure figcaption{font-size:.78rem;color:#5b6878;text-align:center}
+
+.part{border-inline-start:3px solid var(--accent);padding-inline-start:14px;display:flex;flex-direction:column;gap:6px}
+.part h3{color:var(--ink)}
+.part h3 .lt{color:var(--accent);margin-inline-end:6px}
+.steps{display:flex;flex-direction:column;gap:5px}
+.steps .m{white-space:normal}
+.ans{background:var(--ok-soft);border-radius:6px;padding:6px 12px;width:fit-content;max-width:100%;font-weight:600}
+.ans .m .katex{font-size:1.15em}
+.uses{font-size:.88rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.uses a{font-size:.82rem;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:1px 10px;text-decoration:none;font-weight:600}
+.uses a:hover,.uses a:focus-visible{text-decoration:underline}
+.alt{font-size:.93rem;color:var(--muted)}
+.alt strong{color:var(--ink)}
+
+footer{color:var(--muted);font-size:.9rem}
+.to-top{position:fixed;left:16px;bottom:16px;background:var(--accent);color:var(--paper);text-decoration:none;font-weight:700;font-size:.9rem;padding:8px 14px;border-radius:99px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.to-top:hover,.to-top:focus-visible{filter:brightness(1.1);outline:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* sign tables (left-to-right like a number line) */
+.signs{direction:ltr;border-collapse:collapse;font-size:.9rem;margin:4px 0;width:auto}
+.signs th,.signs td{border:1px solid var(--line);padding:4px 10px;text-align:center;min-width:56px;white-space:nowrap}
+.signs th{background:var(--accent-soft);font-weight:600}
+.signs td.up{color:var(--ok);font-weight:700}.signs td.down{color:var(--mark);font-weight:700}
+.signwrap{overflow-x:auto;max-width:100%;position:relative;direction:ltr}
+figure.graph{max-width:560px;margin-top:4px}
+.part .note{margin-top:2px}
+@media (max-width:560px){
+  .card{padding:18px 14px 22px}
+  .m .katex{font-size:1em}
+  .steps p,.ans{overflow-x:auto;overflow-y:hidden}
+}
+@media print{.to-top,nav.qnav{display:none}body{background:#fff}.card{break-inside:avoid-page}}
+
+/* Solutions in the site format: the thinking, numbered steps (heading on the right, every expression on its own line on the left), the answer and a check */
+.think{background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.think-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.think p{margin:0}
+ol.st{margin:2px 0 0;padding-inline-start:24px;display:flex;flex-direction:column;gap:8px}
+ol.st li::marker{font-weight:700;color:var(--mark)}
+ol.st > li > .lab{display:block;font-weight:700;color:var(--mark)}
+.ml{display:flex;flex-direction:column;gap:3px;margin:2px 0 4px}
+.ml-m{direction:ltr;text-align:left;unicode-bidi:isolate;line-height:2.15}
+.ml-m .m{white-space:normal}
+.ml-t{text-align:right;line-height:2.15}
+.ml .signwrap{direction:rtl}
+div.ans{background:var(--ok-soft);border-radius:6px;padding:8px 12px;font-weight:600;width:auto}
+div.ans .lab{display:block;font-weight:700;color:var(--ok)}
+.chk{color:var(--muted);font-size:.95rem;border:1px dashed var(--line);border-radius:6px;padding:8px 12px}
+.chk .lab{display:block;font-weight:700;color:var(--ink)}
+
+/* explanation page extras */
+.card > h3{color:var(--ink);margin-top:4px}
+ul.list{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:12px 16px;display:flex;flex-direction:column;gap:4px}
+.tool .ml-m{margin:4px 0}
+.tool p b{display:inline}
+.ml{gap:4px}
+ol.st > li > p{margin:0;color:var(--ink)}
+td .m{white-space:nowrap}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <a class="back" href="index.html#calculus">→ חזרה לנושא: חשבון דיפרנציאלי</a>
+  <span class="eyebrow">חשבון דיפרנציאלי · 5 יחידות · דף הסבר</span>
+  <h1>נגזרת של פונקציה רציונלית: פולינום במונה ובמכנה</h1>
+  <p class="lead">איך פותרים שאלת חקירה של פונקציה מהצורה <span class="m">\(f(x) = \dfrac{u(x)}{v(x)}\)</span>, כש־<span class="m">\(u\)</span> ו־<span class="m">\(v\)</span> פולינומים: סדר העבודה, פירוק לגורמים, "חור" מול אסימפטוטה, כלל המנה, טבלת סימנים, ארבע דוגמאות פתורות וטעויות נפוצות. אחרי הדף אפשר לתרגל בשאלות הרציונליות של <a href="calculus-01-questions-slides.html#q8">מצגת השאלות</a>.</p>
+</header>
+
+<nav class="qnav" aria-label="תוכן הדף">
+  <h3>תוכן הדף</h3>
+  <ol>
+    <li><a href="#order">סדר העבודה<small>מפת הדרכים</small></a></li>
+    <li><a href="#factor">פירוק לגורמים<small>הצעד שלפני הכול</small></a></li>
+    <li><a href="#domain">תחום, חור ואסימפטוטה<small>המכנה מתאפס</small></a></li>
+    <li><a href="#horizontal">אסימפטוטה אופקית<small>השוואת מעלות</small></a></li>
+    <li><a href="#quotient">כלל המנה<small>גזירה וסימן</small></a></li>
+    <li><a href="#power">מכנה בחזקה<small>הוצאת גורם משותף</small></a></li>
+    <li><a href="#signs">טבלת סימנים<small>מה נכנס לטבלה</small></a></li>
+    <li><a href="#ex1">דוגמה 1<small>חקירה מלאה</small></a></li>
+    <li><a href="#ex2">דוגמה 2<small>פונקציה עם חור</small></a></li>
+    <li><a href="#ex3">דוגמה 3<small>מונה ממעלה גבוהה</small></a></li>
+    <li><a href="#ex4">דוגמה 4<small>פרמטר מנקודת קיצון</small></a></li>
+    <li><a href="#mistakes">טעויות נפוצות<small>ואיך להימנע</small></a></li>
+  </ol>
+</nav>
+
+<!-- ===== 1. Order of work ===== -->
+<section class="card" id="order">
+  <h2>1. סדר העבודה בשאלת חקירה</h2>
+  <p>בשאלה על פונקציה רציונלית כמעט תמיד שואלים את אותם דברים, ובאותו סדר. כל שלב משתמש בתוצאות של השלבים שלפניו, ולכן כדאי לעבוד לפי הסדר הזה גם כשהשאלה לא מבקשת את כל השלבים.</p>
+  <div class="tablebox"><table>
+    <tr><th>שלב</th><th>מה עושים</th><th>למה זה חשוב</th></tr>
+    <tr><td>0. פירוק</td><td>מפרקים את המונה ואת המכנה לגורמים</td><td>מהצורה המפורקת קוראים כמעט הכול: תחום, חורים, אסימפטוטות, חיתוך</td></tr>
+    <tr><td>1. תחום</td><td>מוציאים את הנקודות שבהן המכנה מתאפס</td><td>הנקודות האלה נשארות מחוץ לתחום גם אחרי צמצום</td></tr>
+    <tr><td>2. אסימפטוטות</td><td>אנכיות מהמכנה, אופקית מהשוואת המעלות</td><td>הן "השלד" של הסקיצה</td></tr>
+    <tr><td>3. חיתוך</td><td>ציר <span class="m">\(x\)</span>: המונה מתאפס. ציר <span class="m">\(y\)</span>: מציבים <span class="m">\(x=0\)</span></td><td>נקודות לסקיצה, ובדיקה לתוצאות הבאות</td></tr>
+    <tr><td>4. נגזרת</td><td>כלל המנה, צמצום ופירוק של מונה הנגזרת</td><td>הסימן של <span class="m">\(f'\)</span> קובע עלייה, ירידה וקיצון</td></tr>
+    <tr><td>5. טבלת סימנים</td><td>אפסי הנגזרת וגם הנקודות שמחוץ לתחום</td><td>סוג הקיצון ותחומי העלייה והירידה</td></tr>
+    <tr><td>6. ערכי הקיצון</td><td>מציבים את שיעורי ה־<span class="m">\(x\)</span> בפונקציה <b>המקורית</b> (או המצומצמת)</td><td>שיעורי נקודות הקיצון</td></tr>
+    <tr><td>7. סקיצה</td><td>אסימפטוטות, נקודות, ומהלך הגרף לפי הטבלה</td><td>מחברים את כל התוצאות לתמונה אחת</td></tr>
+  </table></div>
+</section>
+
+<!-- ===== 2. Factoring ===== -->
+<section class="card" id="factor">
+  <h2>2. פירוק לגורמים: הצעד שלפני הכול</h2>
+  <p>לפני שעושים משהו אחר, מפרקים את המונה ואת המכנה. חמש שיטות מכסות כמעט את כל השאלות:</p>
+  <div class="tablebox"><table>
+    <tr><th>שיטה</th><th>מתי</th><th>דוגמה</th></tr>
+    <tr><td>גורם משותף</td><td>בכל האיברים יש מספר או חזקה של <span class="m">\(x\)</span></td><td><span class="m">\(x^{5} - 4x^{3} = x^{3}(x^{2}-4)\)</span></td></tr>
+    <tr><td>הפרש ריבועים</td><td>שני איברים עם מינוס ביניהם, שניהם ריבועים</td><td><span class="m">\(x^{2} - 9 = (x-3)(x+3)\)</span></td></tr>
+    <tr><td>טרינום</td><td><span class="m">\(ax^{2}+bx+c\)</span>: פותרים <span class="m">\(=0\)</span> ומפרקים</td><td><span class="m">\(2x^{2} - 13x + 15 = (2x-3)(x-5)\)</span></td></tr>
+    <tr><td>ריבוע שלם</td><td>דיסקרימיננטה 0</td><td><span class="m">\(x^{2} - 4x + 4 = (x-2)^{2}\)</span></td></tr>
+    <tr><td>דו־ריבועי</td><td>רק <span class="m">\(x^{4}\)</span>, <span class="m">\(x^{2}\)</span> ומספר: מציבים <span class="m">\(t = x^{2}\)</span></td><td><span class="m">\(x^{4} - 2x^{2} + 1 = (x^{2}-1)^{2}\)</span></td></tr>
+  </table></div>
+  <div class="note"><strong>טיפ:</strong> בטרינום <span class="m">\(ax^{2}+bx+c\)</span> עם שורשים <span class="m">\(x_1, x_2\)</span> הפירוק הוא <span class="m">\(a(x-x_1)(x-x_2)\)</span>. לא לשכוח את <span class="m">\(a\)</span>: <span class="m">\(4x^{2} - 28x + 24 = 4(x-1)(x-6)\)</span>.</div>
+</section>
+
+<!-- ===== 3. Domain, hole, vertical asymptote ===== -->
+<section class="card" id="domain">
+  <h2>3. תחום הגדרה, "חור" ואסימפטוטה אנכית</h2>
+  <p>הפונקציה לא מוגדרת בנקודות שבהן <b>המכנה</b> מתאפס. בכל נקודה כזאת <span class="m">\(x=c\)</span> בודקים מה קורה למונה:</p>
+  <div class="tools">
+    <div class="tool"><b><span class="tag">x=c</span>המונה לא מתאפס</b><p>הישר <span class="m">\(x=c\)</span> הוא <b>אסימפטוטה אנכית</b>. הגרף "בורח" ל־<span class="m">\(+\infty\)</span> או ל־<span class="m">\(-\infty\)</span> משני צדי הישר.</p></div>
+    <div class="tool"><b><span class="tag">○</span>גם המונה מתאפס</b><p>הגורם <span class="m">\((x-c)\)</span> מצטמצם. אם אחרי הצמצום הוא לא נשאר במכנה, בנקודה יש <b>"חור"</b>: נקודת אי־רציפות סליקה. בסקיצה מסמנים עיגול ריק.</p></div>
+  </div>
+  <div class="note"><strong>חשוב:</strong> גם אחרי צמצום, הנקודה <span class="m">\(x=c\)</span> <b>נשארת מחוץ לתחום</b>. את שיעור ה־<span class="m">\(y\)</span> של החור מקבלים מהצבה בפונקציה <b>המצומצמת</b>. ואם הגורם מופיע במכנה בחזקה גבוהה יותר מבמונה (למשל <span class="m">\(\tfrac{(x-2)}{(x-2)^{2}}\)</span>), אחרי הצמצום הוא עדיין במכנה, ולכן זו אסימפטוטה ולא חור.</div>
+</section>
+
+<!-- ===== 4. Horizontal asymptote ===== -->
+<section class="card" id="horizontal">
+  <h2>4. אסימפטוטה אופקית: משווים מעלות</h2>
+  <p>האסימפטוטה האופקית מתארת לאן הפונקציה מתקרבת כש־<span class="m">\(x \to \pm\infty\)</span>. משווים את המעלה של המונה למעלה של המכנה:</p>
+  <div class="tablebox"><table>
+    <tr><th>מצב</th><th>האסימפטוטה האופקית</th><th>דוגמה</th></tr>
+    <tr><td>מעלת המונה קטנה</td><td><span class="m">\(y = 0\)</span></td><td><span class="m">\(\dfrac{2x+1}{x^{4}-1} \to 0\)</span></td></tr>
+    <tr><td>המעלות שוות</td><td><span class="m">\(y = \dfrac{\text{המקדם המוביל במונה}}{\text{המקדם המוביל במכנה}}\)</span></td><td><span class="m">\(\dfrac{4x^{2}-28x+24}{2x^{2}-13x+15} \to \dfrac{4}{2} = 2\)</span></td></tr>
+    <tr><td>מעלת המונה גדולה</td><td>אין אסימפטוטה אופקית</td><td><span class="m">\(\dfrac{x^{2}+3}{x-1}\)</span></td></tr>
+  </table></div>
+  <div class="note"><strong>שימו לב:</strong> הגרף <b>יכול לחתוך</b> אסימפטוטה אופקית (בניגוד לאנכית). כדי למצוא נקודת חיתוך עם <span class="m">\(y=k\)</span> פותרים <span class="m">\(f(x) = k\)</span>.</div>
+</section>
+
+<!-- ===== 5. Quotient rule ===== -->
+<section class="card" id="quotient">
+  <h2>5. כלל המנה: איך גוזרים ואיך קובעים סימן</h2>
+  <div class="tools">
+    <div class="tool" style="grid-column:1/-1"><b><span class="tag">(u/v)′</span>כלל המנה</b>
+      <div class="ml"><div class="ml-m"><span class="m">\(\left(\dfrac{u}{v}\right)' = \dfrac{u'\cdot v - u\cdot v'}{v^{2}}\)</span></div></div>
+      <p>בעל פה: "נגזרת המונה כפול המכנה, <b>פחות</b> המונה כפול נגזרת המכנה, חלקי המכנה בריבוע". הסדר במונה חשוב, כי יש מינוס.</p></div>
+  </div>
+  <h3>ארבעה צעדים בגזירה</h3>
+  <ol class="st">
+    <li><span class="lab">רושמים בנפרד את <span class="m">\(u, u', v, v'\)</span></span><p>כך לא מתבלבלים באמצע ההצבה.</p></li>
+    <li><span class="lab">מציבים בכלל המנה עם סוגריים סביב כל גורם</span><p>בעיקר סביב <span class="m">\(u\cdot v'\)</span>, שאחריו מינוס: <span class="m">\(-(2x^{2}-8)\cdot 2x\)</span> ולא <span class="m">\(-2x^{2}-8\cdot 2x\)</span>.</p></li>
+    <li><span class="lab">מכנסים איברים במונה <b>בלבד</b> ומפרקים אותו</span><p>את המכנה <span class="m">\(v^{2}\)</span> משאירים מפורק, לא פותחים סוגריים.</p></li>
+    <li><span class="lab">קובעים את הסימן לפי המונה</span><p>המכנה <span class="m">\(v^{2}\)</span> הוא ריבוע, ולכן חיובי בכל תחום ההגדרה. סימן הנגזרת שווה לסימן המונה שלה, וקיצון יכול להיות רק היכן שמונה הנגזרת מתאפס.</p></li>
+  </ol>
+  <div class="note"><strong>קיצור דרך:</strong> אם בשלב 0 צמצמתם גורם (חור), גזרו את הפונקציה <b>המצומצמת</b>. הגזירה קצרה יותר, והתוצאה זהה בכל התחום. רק אל תשכחו שהנקודה של החור עדיין מחוץ לתחום.</div>
+</section>
+
+<!-- ===== 6. Denominator in a power ===== -->
+<section class="card" id="power">
+  <h2>6. כשהמכנה בחזקה: הוצאת גורם משותף</h2>
+  <p>כשהמכנה הוא חזקה, למשל <span class="m">\(v = (x^{2}-1)^{2}\)</span>, גוזרים את <span class="m">\(v\)</span> בכלל השרשרת, ובמונה של הנגזרת מופיע הבסיס <span class="m">\((x^{2}-1)\)</span> בשני האיברים. מוציאים אותו כגורם משותף ומצמצמים. לא פותחים סוגריים!</p>
+  <div class="example">
+    <span class="think-h">דוגמה קצרה</span>
+    <div class="ml">
+      <div class="ml-m"><span class="m">\(f(x) = \dfrac{x^{2}}{(x^{2}-1)^{2}}\)</span></div>
+      <div class="ml-t">רושמים את הרכיבים:</div>
+      <div class="ml-m"><span class="m">\(u = x^{2}\qquad u' = 2x\)</span></div>
+      <div class="ml-m"><span class="m">\(v = (x^{2}-1)^{2}\qquad v' = 2(x^{2}-1)\cdot 2x = 4x(x^{2}-1)\)</span></div>
+      <div class="ml-t">מציבים בכלל המנה:</div>
+      <div class="ml-m"><span class="m">\(f'(x) = \dfrac{2x(x^{2}-1)^{2} - x^{2}\cdot 4x(x^{2}-1)}{(x^{2}-1)^{4}}\)</span></div>
+      <div class="ml-t">מוציאים גורם משותף <span class="m">\(2x(x^{2}-1)\)</span> מהמונה:</div>
+      <div class="ml-m"><span class="m">\(f'(x) = \dfrac{2x(x^{2}-1)\left[(x^{2}-1) - 2x^{2}\right]}{(x^{2}-1)^{4}}\)</span></div>
+      <div class="ml-t">מצמצמים <span class="m">\((x^{2}-1)\)</span> אחד ומכנסים בסוגריים:</div>
+      <div class="ml-m"><span class="m">\(f'(x) = \dfrac{2x(-x^{2}-1)}{(x^{2}-1)^{3}} = \dfrac{-2x(x^{2}+1)}{(x^{2}-1)^{3}}\)</span></div>
+    </div>
+  </div>
+  <div class="note"><strong>זהירות:</strong> אחרי הצמצום המכנה בחזקה <b>אי־זוגית</b> <span class="m">\((x^{2}-1)^{3}\)</span>, ולכן הוא <b>לא</b> תמיד חיובי: הוא מחליף סימן ב־<span class="m">\(x = \pm 1\)</span>. במקרה כזה הסימן של <span class="m">\(f'\)</span> נקבע גם לפי המכנה, והנקודות <span class="m">\(\pm 1\)</span> חייבות להיכנס לטבלת הסימנים.</div>
+</section>
+
+<!-- ===== 7. Sign table ===== -->
+<section class="card" id="signs">
+  <h2>7. טבלת סימנים: מה נכנס לטבלה</h2>
+  <ul class="list">
+    <li>כל הנקודות שבהן <span class="m">\(f'(x) = 0\)</span> (אפסי המונה של הנגזרת).</li>
+    <li>כל הנקודות <b>שמחוץ לתחום</b>: אסימפטוטות אנכיות וחורים. הנגזרת יכולה להחליף בהן סימן, אבל אין בהן קיצון, כי הפונקציה לא מוגדרת שם.</li>
+    <li>את הנקודות מסדרים מהקטנה לגדולה, כמו על ציר המספרים, ובכל קטע בודקים סימן: מציבים נקודה מהקטע, או קובעים לפי הגורמים (גורם בריבוע לא מחליף סימן).</li>
+    <li>מעבר מ־<span class="m">\(+\)</span> ל־<span class="m">\(-\)</span> בנקודה שבתחום: <b>מקסימום</b>. מעבר מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span>: <b>מינימום</b>. אין החלפת סימן: אין קיצון.</li>
+  </ul>
+  <div class="note"><strong>שימו לב:</strong> בפונקציה רציונלית ערך המקסימום יכול להיות <b>קטן</b> מערך המינימום, כשהם בענפים שונים משני צדי אסימפטוטה (דוגמה 3). זו לא טעות.</div>
+</section>
+
+<!-- ===== Example 1 ===== -->
+<section class="card" id="ex1">
+  <div class="q-head"><h2>דוגמה 1: חקירה מלאה</h2><small>מעלות שוות, שתי אסימפטוטות אנכיות</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>נתונה הפונקציה <span class="m">\(f(x) = \dfrac{2x^{2}-8}{x^{2}-9}\)</span>. חקרו את הפונקציה: תחום, אסימפטוטות, חיתוך עם הצירים, קיצון ותחומי עלייה וירידה.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>קודם מפרקים: המונה והמכנה הם הפרשי ריבועים. אין גורם משותף ולכן אין חור. המעלות שוות, ולכן יש אסימפטוטה אופקית לפי יחס המקדמים. בגזירה מכנה הנגזרת הוא ריבוע, והסימן נקבע לפי המונה.</p></div>
+    <ol class="st">
+      <li><span class="lab">מפרקים את המונה ואת המכנה לגורמים</span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = \dfrac{2(x^{2}-4)}{x^{2}-9} = \dfrac{2(x-2)(x+2)}{(x-3)(x+3)}\)</span></div></div></li>
+      <li><span class="lab">מוציאים מהתחום את אפסי המכנה</span><div class="ml"><div class="ml-m"><span class="m">\(x \neq 3,\quad x \neq -3\)</span></div></div></li>
+      <li><span class="lab">בודקים שהמונה לא מתאפס באפסי המכנה, ולכן אלה אסימפטוטות אנכיות</span><div class="ml"><div class="ml-m"><span class="m">\(2\cdot 3^{2} - 8 = 10 \neq 0\)</span></div><div class="ml-m"><span class="m">\(x = 3,\quad x = -3\)</span></div></div></li>
+      <li><span class="lab">המעלות שוות, ולכן מחלקים את המקדמים המובילים</span><div class="ml"><div class="ml-m"><span class="m">\(y = \dfrac{2}{1} = 2\)</span></div></div></li>
+      <li><span class="lab">משווים את המונה ל־0 ומציבים <span class="m">\(x=0\)</span> לחיתוך עם הצירים</span><div class="ml"><div class="ml-t">ציר <span class="m">\(x\)</span>:</div><div class="ml-m"><span class="m">\(2(x-2)(x+2) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 2,\quad x = -2\)</span></div><div class="ml-t">ציר <span class="m">\(y\)</span>:</div><div class="ml-m"><span class="m">\(f(0) = \dfrac{2\cdot 0 - 8}{0 - 9} = \dfrac{8}{9}\)</span></div></div></li>
+      <li><span class="lab">רושמים את רכיבי כלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(u = 2x^{2}-8\qquad u' = 4x\)</span></div><div class="ml-m"><span class="m">\(v = x^{2}-9\qquad v' = 2x\)</span></div></div></li>
+      <li><span class="lab">מציבים בכלל המנה ומכנסים את המונה</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{u'v - uv'}{v^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{4x(x^{2}-9) - (2x^{2}-8)\cdot 2x}{(x^{2}-9)^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{4x^{3} - 36x - 4x^{3} + 16x}{(x^{2}-9)^{2}} = \dfrac{-20x}{(x^{2}-9)^{2}}\)</span></div></div></li>
+      <li><span class="lab">משווים את מונה הנגזרת ל־0</span><div class="ml"><div class="ml-m"><span class="m">\(-20x = 0\)</span></div><div class="ml-m"><span class="m">\(x = 0\)</span></div></div></li>
+      <li><span class="lab">בונים טבלת סימנים עם אפס הנגזרת ועם שתי האסימפטוטות</span><div class="ml"><div class="ml-t">המכנה חיובי, והסימן נקבע לפי <span class="m">\(-20x\)</span>:</div><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-3\)</td><td>\(-3\)</td><td>\(-3&lt;x&lt;0\)</td><td>\(0\)</td><td>\(0&lt;x&lt;3\)</td><td>\(3\)</td><td>\(x&gt;3\)</td></tr><tr><th>f′</th><td>+</td><td>אסימ'</td><td>+</td><td>0</td><td>−</td><td>אסימ'</td><td>−</td></tr><tr><th>f</th><td class="up">↗</td><td>—</td><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td>—</td><td class="down">↘</td></tr></table></div></div></li>
+      <li><span class="lab">מציבים את שיעור ה־<span class="m">\(x\)</span> של הקיצון בפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(0) = \dfrac{8}{9}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml">
+      <div class="ml-t">תחום:</div><div class="ml-m"><span class="m">\(x \neq \pm 3\)</span></div>
+      <div class="ml-t">אסימפטוטות:</div><div class="ml-m"><span class="m">\(x = 3,\quad x = -3,\quad y = 2\)</span></div>
+      <div class="ml-t">חיתוך עם הצירים:</div><div class="ml-m"><span class="m">\((2,0),\ (-2,0),\ (0,\tfrac89)\)</span></div>
+      <div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\((0,\tfrac89)\)</span></div>
+      <div class="ml-t">עולה:</div><div class="ml-m"><span class="m">\(x &lt; -3,\quad -3 &lt; x &lt; 0\)</span></div>
+      <div class="ml-t">יורדת:</div><div class="ml-m"><span class="m">\(0 &lt; x &lt; 3,\quad x &gt; 3\)</span></div>
+    </div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">נקודה ליד המקסימום צריכה לתת ערך קטן יותר:</div><div class="ml-m"><span class="m">\(f(1) = \dfrac{2-8}{1-9} = \dfrac{-6}{-8} = 0.75 &lt; \dfrac{8}{9}\ \checkmark\)</span></div></div></div>
+  </div>
+</section>
+
+<!-- ===== Example 2 ===== -->
+<section class="card" id="ex2">
+  <div class="q-head"><h2>דוגמה 2: פונקציה עם "חור"</h2><small>גורם משותף שמצטמצם</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>נתונה הפונקציה <span class="m">\(f(x) = \dfrac{x^{2}-4x+3}{x^{2}-x}\)</span>. מצאו את התחום, נקודות אי־הרציפות, האסימפטוטות, החיתוך עם הצירים ותחומי העלייה והירידה.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>אחרי הפירוק רואים את הגורם <span class="m">\((x-1)\)</span> גם במונה וגם במכנה. הוא מצטמצם, ולכן ב־<span class="m">\(x=1\)</span> יש חור ולא אסימפטוטה. את הנגזרת מחשבים מהפונקציה המצומצמת, שהיא קצרה יותר.</p></div>
+    <ol class="st">
+      <li><span class="lab">מפרקים את המונה (טרינום) ואת המכנה (גורם משותף)</span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = \dfrac{(x-1)(x-3)}{x(x-1)}\)</span></div></div></li>
+      <li><span class="lab">מוציאים מהתחום את אפסי המכנה</span><div class="ml"><div class="ml-m"><span class="m">\(x \neq 0,\quad x \neq 1\)</span></div></div></li>
+      <li><span class="lab">מצמצמים את הגורם המשותף ומקבלים את הפונקציה המצומצמת</span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = \dfrac{x-3}{x},\qquad x \neq 0,\ x \neq 1\)</span></div></div></li>
+      <li><span class="lab">מציבים <span class="m">\(x=1\)</span> בפונקציה המצומצמת ומוצאים את גובה החור</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{1-3}{1} = -2\)</span></div><div class="ml-m"><span class="m">\((1,-2)\)</span></div></div></li>
+      <li><span class="lab">בודקים את <span class="m">\(x=0\)</span>: המונה המצומצם לא מתאפס, ולכן זו אסימפטוטה אנכית</span><div class="ml"><div class="ml-m"><span class="m">\(0 - 3 = -3 \neq 0\)</span></div><div class="ml-m"><span class="m">\(x = 0\)</span></div></div></li>
+      <li><span class="lab">המעלות שוות, ולכן מחלקים את המקדמים המובילים</span><div class="ml"><div class="ml-m"><span class="m">\(y = \dfrac{1}{1} = 1\)</span></div></div></li>
+      <li><span class="lab">משווים את המונה המצומצם ל־0, ובודקים את ציר <span class="m">\(y\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(x - 3 = 0\)</span></div><div class="ml-m"><span class="m">\(x = 3\)</span></div><div class="ml-t">ל־<span class="m">\(x=1\)</span> אין חיתוך, כי הוא מחוץ לתחום. ו־<span class="m">\(x=0\)</span> לא בתחום, ולכן אין חיתוך עם ציר <span class="m">\(y\)</span>.</div></div></li>
+      <li><span class="lab">גוזרים את הפונקציה המצומצמת בכלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(u = x-3\qquad u' = 1\)</span></div><div class="ml-m"><span class="m">\(v = x\qquad v' = 1\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{u'v - uv'}{v^{2}} = \dfrac{1\cdot x - (x-3)\cdot 1}{x^{2}} = \dfrac{3}{x^{2}}\)</span></div></div></li>
+      <li><span class="lab">קובעים את הסימן: מונה ומכנה חיוביים בכל התחום</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{3}{x^{2}} &gt; 0\)</span></div><div class="ml-t">הנגזרת לא מתאפסת, ולכן אין קיצון.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml">
+      <div class="ml-t">תחום:</div><div class="ml-m"><span class="m">\(x \neq 0,\ x \neq 1\)</span></div>
+      <div class="ml-t">חור (אי־רציפות סליקה):</div><div class="ml-m"><span class="m">\((1,-2)\)</span></div>
+      <div class="ml-t">אסימפטוטות:</div><div class="ml-m"><span class="m">\(x = 0,\quad y = 1\)</span></div>
+      <div class="ml-t">חיתוך עם הצירים:</div><div class="ml-m"><span class="m">\((3,0)\)</span></div>
+      <div class="ml-t">עולה:</div><div class="ml-m"><span class="m">\(x &lt; 0,\quad 0 &lt; x &lt; 1,\quad x &gt; 1\)</span></div>
+    </div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">פונקציה עולה בענף הימני:</div><div class="ml-m"><span class="m">\(f(2) = -\tfrac12 &lt; f(3) = 0 &lt; f(4) = \tfrac14\ \checkmark\)</span></div></div></div>
+  </div>
+</section>
+
+<!-- ===== Example 3 ===== -->
+<section class="card" id="ex3">
+  <div class="q-head"><h2>דוגמה 3: מעלת המונה גבוהה ממעלת המכנה</h2><small>אין אסימפטוטה אופקית</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>נתונה הפונקציה <span class="m">\(f(x) = \dfrac{x^{2}+3}{x-1}\)</span>. מצאו את האסימפטוטות, החיתוך עם הצירים ונקודות הקיצון, וקבעו את סוגן.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>המונה <span class="m">\(x^{2}+3\)</span> תמיד חיובי ולא מתפרק, ולכן אין חיתוך עם ציר <span class="m">\(x\)</span>. מעלת המונה גדולה יותר, ולכן אין אסימפטוטה אופקית. בטבלת הסימנים חייבים לשים את האסימפטוטה <span class="m">\(x=1\)</span> בין שתי נקודות הקיצון.</p></div>
+    <ol class="st">
+      <li><span class="lab">מוציאים מהתחום את אפס המכנה ובודקים את המונה שם</span><div class="ml"><div class="ml-m"><span class="m">\(x \neq 1\)</span></div><div class="ml-m"><span class="m">\(1^{2} + 3 = 4 \neq 0\)</span></div><div class="ml-m"><span class="m">\(x = 1\)</span></div></div></li>
+      <li><span class="lab">משווים מעלות: 2 במונה, 1 במכנה</span><div class="ml"><div class="ml-t">אין אסימפטוטה אופקית.</div></div></li>
+      <li><span class="lab">בודקים חיתוך: המונה חיובי תמיד, ומציבים <span class="m">\(x=0\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(x^{2} + 3 &gt; 0\)</span></div><div class="ml-m"><span class="m">\(f(0) = \dfrac{0+3}{0-1} = -3\)</span></div></div></li>
+      <li><span class="lab">רושמים את הרכיבים ומציבים בכלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(u = x^{2}+3\qquad u' = 2x\)</span></div><div class="ml-m"><span class="m">\(v = x-1\qquad v' = 1\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{u'v - uv'}{v^{2}} = \dfrac{2x(x-1) - (x^{2}+3)\cdot 1}{(x-1)^{2}}\)</span></div></div></li>
+      <li><span class="lab">מכנסים את מונה הנגזרת ומפרקים אותו כטרינום</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{2x^{2} - 2x - x^{2} - 3}{(x-1)^{2}} = \dfrac{x^{2} - 2x - 3}{(x-1)^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{(x-3)(x+1)}{(x-1)^{2}}\)</span></div></div></li>
+      <li><span class="lab">משווים את מונה הנגזרת ל־0</span><div class="ml"><div class="ml-m"><span class="m">\(x = 3,\quad x = -1\)</span></div></div></li>
+      <li><span class="lab">בונים טבלת סימנים עם שני האפסים ועם האסימפטוטה ביניהם</span><div class="ml"><div class="ml-t">המונה פרבולה "מחייכת": חיובית מחוץ לשורשים ושלילית ביניהם.</div><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-1\)</td><td>\(-1\)</td><td>\(-1&lt;x&lt;1\)</td><td>\(1\)</td><td>\(1&lt;x&lt;3\)</td><td>\(3\)</td><td>\(x&gt;3\)</td></tr><tr><th>f′</th><td>+</td><td>0</td><td>−</td><td>אסימ'</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td>—</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div></div></li>
+      <li><span class="lab">מציבים את שיעורי ה־<span class="m">\(x\)</span> בפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(-1) = \dfrac{(-1)^{2}+3}{-1-1} = \dfrac{4}{-2} = -2\)</span></div><div class="ml-m"><span class="m">\(f(3) = \dfrac{3^{2}+3}{3-1} = \dfrac{12}{2} = 6\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml">
+      <div class="ml-t">אסימפטוטה אנכית:</div><div class="ml-m"><span class="m">\(x = 1\)</span></div>
+      <div class="ml-t">חיתוך עם הצירים:</div><div class="ml-m"><span class="m">\((0,-3)\)</span></div>
+      <div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\((-1,-2)\)</span></div>
+      <div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((3,6)\)</span></div>
+    </div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">המקסימום (<span class="m">\(-2\)</span>) נמוך מהמינימום (<span class="m">\(6\)</span>), וזה תקין: הם בשני ענפים שונים, משני צדי האסימפטוטה. בענף השמאלי <span class="m">\(f(0) = -3 &lt; -2\ \checkmark\)</span></div></div></div>
+  </div>
+</section>
+
+<!-- ===== Example 4 ===== -->
+<section class="card" id="ex4">
+  <div class="q-head"><h2>דוגמה 4: פרמטר מנקודת קיצון</h2><small>מכנה שלא מתאפס</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>נתונה הפונקציה <span class="m">\(f(x) = \dfrac{x+a}{x^{2}+3}\)</span>, כאשר <span class="m">\(a\)</span> פרמטר. לפונקציה יש נקודת קיצון ב־<span class="m">\(x=1\)</span>. מצאו את <span class="m">\(a\)</span>, ואת נקודות הקיצון וסוגן.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>בנקודת קיצון הנגזרת מתאפסת. לכן גוזרים עם הפרמטר, מציבים <span class="m">\(x=1\)</span> ומשווים ל־0. המכנה <span class="m">\(x^{2}+3\)</span> חיובי תמיד, ולכן הפונקציה מוגדרת לכל <span class="m">\(x\)</span> ואין אסימפטוטה אנכית.</p></div>
+    <ol class="st">
+      <li><span class="lab">רושמים את הרכיבים ומציבים בכלל המנה, עם הפרמטר</span><div class="ml"><div class="ml-m"><span class="m">\(u = x+a\qquad u' = 1\)</span></div><div class="ml-m"><span class="m">\(v = x^{2}+3\qquad v' = 2x\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{1\cdot(x^{2}+3) - (x+a)\cdot 2x}{(x^{2}+3)^{2}} = \dfrac{-x^{2} - 2ax + 3}{(x^{2}+3)^{2}}\)</span></div></div></li>
+      <li><span class="lab">מציבים <span class="m">\(x=1\)</span> במונה הנגזרת ומשווים ל־0</span><div class="ml"><div class="ml-m"><span class="m">\(-(1)^{2} - 2a\cdot 1 + 3 = 0\)</span></div><div class="ml-m"><span class="m">\(2 - 2a = 0\)</span></div><div class="ml-m"><span class="m">\(a = 1\)</span></div></div></li>
+      <li><span class="lab">מציבים <span class="m">\(a=1\)</span> בנגזרת ומפרקים את המונה</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{-x^{2} - 2x + 3}{(x^{2}+3)^{2}} = \dfrac{-(x+3)(x-1)}{(x^{2}+3)^{2}}\)</span></div><div class="ml-m"><span class="m">\(x = -3,\quad x = 1\)</span></div></div></li>
+      <li><span class="lab">בונים טבלת סימנים: המונה פרבולה "בוכה", חיובית בין השורשים</span><div class="ml"><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-3\)</td><td>\(-3\)</td><td>\(-3&lt;x&lt;1\)</td><td>\(1\)</td><td>\(x&gt;1\)</td></tr><tr><th>f′</th><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td></tr><tr><th>f</th><td class="down">↘</td><td>מינ'</td><td class="up">↗</td><td>מקס'</td><td class="down">↘</td></tr></table></div></div></li>
+      <li><span class="lab">מציבים את שיעורי ה־<span class="m">\(x\)</span> בפונקציה עם <span class="m">\(a=1\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = \dfrac{x+1}{x^{2}+3}\)</span></div><div class="ml-m"><span class="m">\(f(-3) = \dfrac{-3+1}{9+3} = -\dfrac{1}{6}\)</span></div><div class="ml-m"><span class="m">\(f(1) = \dfrac{1+1}{1+3} = \dfrac{1}{2}\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml">
+      <div class="ml-m"><span class="m">\(a = 1\)</span></div>
+      <div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((-3,-\tfrac16)\)</span></div>
+      <div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\((1,\tfrac12)\)</span></div>
+    </div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-t">מציבים בנגזרת את <span class="m">\(a=1\)</span> ו־<span class="m">\(x=1\)</span>:</div><div class="ml-m"><span class="m">\(f'(1) = \dfrac{-1 - 2 + 3}{16} = 0\ \checkmark\)</span></div></div></div>
+  </div>
+</section>
+
+<!-- ===== Mistakes ===== -->
+<section class="card" id="mistakes">
+  <h2>טעויות נפוצות</h2>
+  <ul class="list">
+    <li><b>שוכחים סוגריים אחרי המינוס בכלל המנה.</b> <span class="m">\(-(x+a)\cdot 2x = -2x^{2} - 2ax\)</span>: המינוס עובר על כל האיברים.</li>
+    <li><b>מחליפים את הסדר במונה.</b> <span class="m">\(uv' - u'v\)</span> נותן נגזרת עם סימן הפוך, ומקסימום הופך למינימום.</li>
+    <li><b>פותחים את המכנה <span class="m">\(v^{2}\)</span>.</b> אין צורך: משאירים אותו מפורק, כי הוא קובע רק את התחום (ואת הסימן, אם החזקה אי־זוגית).</li>
+    <li><b>מחזירים לתחום נקודה שצומצמה.</b> אחרי צמצום <span class="m">\((x-1)\)</span> הנקודה <span class="m">\(x=1\)</span> עדיין לא בתחום: זה חור, לא נקודת חיתוך ולא קיצון.</li>
+    <li><b>משמיטים את האסימפטוטה מטבלת הסימנים.</b> בלי <span class="m">\(x=1\)</span> בדוגמה 3 נראה כאילו הפונקציה יורדת ברצף מ־<span class="m">\(-1\)</span> עד <span class="m">\(3\)</span>, ותחומי הירידה נכתבים כקטע אחד במקום שניים.</li>
+    <li><b>כותבים "עולה ב־<span class="m">\(x \neq 1\)</span>".</b> תחומי עלייה וירידה כותבים כקטעים נפרדים: <span class="m">\(x &lt; 1\)</span> ו־<span class="m">\(x &gt; 1\)</span>.</li>
+    <li><b>מחפשים חיתוך עם ציר <span class="m">\(y\)</span> כש־0 לא בתחום.</b> אם המכנה מתאפס ב־<span class="m">\(x=0\)</span>, אין חיתוך עם ציר <span class="m">\(y\)</span>.</li>
+    <li><b>שוכחים את המקדם בפירוק טרינום.</b> <span class="m">\(2x^{2} - 13x + 15 = (2x-3)(x-5)\)</span> ולא <span class="m">\((x-1.5)(x-5)\)</span>.</li>
+  </ul>
+  <p>לתרגול: שאלות 1–7 בפונקציות רציונליות ב<a href="calculus-01-questions-slides.html#q8">מצגת השאלות</a>.</p>
+</section>
+
+<footer>חשבון דיפרנציאלי · 5 יחידות · דף הסבר לנגזרת של פונקציה רציונלית</footer>
+</div>
+</body>
+</html>

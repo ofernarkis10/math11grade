@@ -249,7 +249,7 @@ Each document is one entry in its topic's `items`, in the order of study:
 
 ```
 math11grade/
-├── index.html                          all navigation: home page, topic lists (#<topic-id>), homework list (#homework) and search (#q=…); topic ids: curriculum, glossary, summer-work, sequences, composite-derivatives, geometry, trigonometry, wheel-motion, analytic, units
+├── index.html                          all navigation: home page, topic lists (#<topic-id>), homework list (#homework) and search (#q=…); topic ids: curriculum, glossary, summer-work, sequences, calculus, composite-derivatives, geometry, trigonometry, wheel-motion, analytic, units
 ├── curriculum-5units-grade10-11.html   curriculum reference
 ├── glossary.html                       glossary of every term used on the site
 ├── summer-work-grade10-5units.pdf    summer assignment from the end of grade 10 (PDF)
@@ -258,6 +258,7 @@ math11grade/
 ├── summer-work-calculus-solutions.html  worked solutions to the summer-work calculus questions
 ├── img/summer-calculus/              graphs for the calculus solutions page
 ├── sequences-NN-<name>.html            sequences topic, pages 00–09
+├── calculus-NN-<name>.html               differential calculus (01 question deck: 14 investigation questions, no solutions; 02 explanation: derivatives of rational functions)
 ├── composite-derivatives-NN-<name>.html  derivatives of composite functions (01 rules, 02 exercises)
 ├── geometry-NN-<name>.html              Euclidean geometry (01 loci & triangle centers, 02 circle, 03 similarity)
 ├── trigonometry-NN-<name>.html          trigonometric functions (00 unit circle, 01 polar coordinates & the wheel, 02 linear vs wheel, 03 wheel exercises, 04 linear-vs-wheel exercises, 05 wheel homework, 06 radians and the table of special angles)
