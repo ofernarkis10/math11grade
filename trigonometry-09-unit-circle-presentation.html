@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מצגת: הזוויות הידועות על מעגל היחידה · פונקציות טריגונומטריות</title>
+<style>
+  :root{
+    --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#f8fafc;
+    --ray:#f97316; --circ:#2563eb; --cos:#16a34a; --sin:#9333ea; --ang:#c2410c;
+    --tan:#b45309; --cos-soft:#dcfce7; --sin-soft:#f3e8ff; --hl:#ffedd5;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;overflow:hidden}
+  header{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 16px;background:#fff;border-bottom:1px solid var(--line)}
+  header h1{font-size:17px;margin:0;white-space:nowrap}
+  header a{white-space:nowrap}
+  header a{color:var(--circ);text-decoration:none;font-size:14px}
+  .wrap{flex:1;min-height:0;display:flex;gap:10px;padding:10px}
+  /* RTL: הילד הראשון (הטבלה) בצד ימין, הסימולציה בצד שמאל */
+  .panel{flex:0 0 44%;min-height:0;display:flex;flex-direction:column;gap:8px}
+  .tblbox{flex:1;min-height:0;overflow-y:auto;background:#fff;border:1px solid var(--line);border-radius:14px;scroll-behavior:smooth}
+  .side{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+  .stage{flex:1;min-height:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px;display:flex;align-items:center;justify-content:center}
+  svg{width:100%;height:100%;display:block;direction:ltr}
+  @media (max-width:760px){body{overflow:auto;display:block}.wrap{flex-direction:column}.panel{flex:none}.tblbox{max-height:none}.stage{height:70vw}}
+
+  table{border-collapse:separate;border-spacing:0;width:100%;font-size:15px}
+  th{position:sticky;top:0;background:#f1f5f9;font-weight:700;padding:7px 6px;border-bottom:1px solid var(--line);z-index:1}
+  th.c{color:var(--cos)} th.s{color:var(--sin)} th.t{color:var(--tan)}
+  td{padding:4px 6px;text-align:center;border-bottom:1px solid var(--line);transition:background .3s}
+  tr{cursor:pointer}
+  tr:hover td{background:#f8fafc}
+  td.deg{font-weight:700;direction:ltr}
+  td.deg i{font-style:normal;display:inline-block;width:9px;height:9px;border-radius:50%;margin-inline-end:6px;vertical-align:1px}
+  tr.f90 td.deg i{background:#334155} tr.f30 td.deg i{background:#0891b2} tr.f45 td.deg i{background:#db2777}
+  tr.cur td{background:var(--hl)!important}
+  tr.cur td:first-child{box-shadow:inset -5px 0 0 var(--ray)}
+  tr.cur td.deg{color:var(--ang)}
+  tr.next td{background:#fff7ed}
+  tr.seen td.c,tr.seen td.s,tr.seen td.t{opacity:1}
+  td.c{color:var(--cos);font-weight:600} td.s{color:var(--sin);font-weight:600} td.t{color:var(--tan);font-weight:600} td.t .und{font-family:"Segoe UI",Arial,sans-serif;font-size:13px}
+  tr:not(.seen):not(.cur) td.c, tr:not(.seen):not(.cur) td.s, tr:not(.seen):not(.cur) td.t{opacity:.35}
+  .v{direction:ltr;unicode-bidi:isolate;display:inline-flex;align-items:center;gap:1px;font-family:"Cambria Math","Times New Roman",serif;font-size:16px}
+  .fr{display:inline-flex;flex-direction:column;align-items:center;line-height:1.05;font-size:.85em;vertical-align:middle}
+  .fr>span:first-child{border-bottom:1.5px solid currentColor;padding:0 3px}
+  .fr>span:last-child{padding:0 3px}
+  .legend{flex:none;display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);padding:0 6px}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-inline-end:5px}
+
+  .read{flex:none;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px 14px;display:grid;grid-template-columns:auto 1fr 1fr;gap:4px 18px;align-items:center;min-height:92px}
+  .read .ang{grid-row:span 2;font-size:30px;font-weight:800;color:var(--ang);direction:ltr;text-align:center;min-width:120px}
+  .read .ang small{display:block;font-size:15px;font-weight:600;color:var(--muted)}
+  .read .row{display:flex;align-items:center;gap:8px;font-size:18px;direction:ltr;justify-content:flex-start}
+  .read .row b{font-family:"Cambria Math","Times New Roman",serif}
+  .read .row.c{color:var(--cos)} .read .row.s{color:var(--sin)} .read .row.t{color:var(--tan)}
+  .read .row .apx{color:var(--muted);font-size:15px}
+  .read .pt{font-size:14px;color:var(--muted);direction:ltr;text-align:left}
+  .read.moving .row b.ex{opacity:.25}
+
+  .lbl{font:700 15px "Segoe UI",Arial,sans-serif;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round;fill:var(--ink)}
+  .tick{font:600 13px "Segoe UI",Arial,sans-serif;fill:#94a3b8;paint-order:stroke;stroke:#fff;stroke-width:3px}
+  .tick.on{fill:var(--ink)} .tick.cur{fill:var(--ang);font-size:15px;font-weight:800}
+  .vlab{font:700 16px "Cambria Math","Times New Roman",serif;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
+  .dash{stroke-dasharray:6 5}
+  .fade{transition:opacity .35s}
+
+  .bar{flex:none;background:#fff;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:10px;padding:7px;flex-wrap:wrap}
+  .bar button,.bar select{font:inherit;font-size:16px;border:0;border-radius:10px;padding:8px 16px;cursor:pointer;background:#e2e8f0}
+  .bar button.main{background:var(--ray);color:#fff;font-weight:700}
+  .bar button:disabled{opacity:.4;cursor:default}
+  .bar label{font-size:14px;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .bar select{padding:6px 10px;font-size:14px}
+  .dots{display:flex;gap:4px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:#cbd5e1;cursor:pointer}
+  .dots i.on{background:#fdba74} .dots i.cur{background:var(--ray);transform:scale(1.3)}
+  /* slides */
+  .tabs{display:flex;gap:6px}
+  .tabs button{font:inherit;font-size:13px;white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 10px;cursor:pointer;color:var(--muted);font-weight:600}
+  .tabs button[aria-selected="true"]{background:var(--ray);border-color:var(--ray);color:#fff}
+  [hidden]{display:none!important}
+  .wrap2{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px;padding:10px}
+  .stage2{flex:1;min-height:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px;display:flex;align-items:center;justify-content:center}
+  .read2{flex:none;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px 18px;display:flex;gap:28px;align-items:center;justify-content:center;flex-wrap:wrap;font-size:18px}
+  .read2 .ltr{direction:ltr;unicode-bidi:isolate}
+  .read2 .big{font-size:24px;font-weight:800;color:var(--ang)}
+  .read2 .sv{color:var(--sin);font-weight:700;font-family:"Cambria Math","Times New Roman",serif}
+  .read2 .rot{color:var(--muted)}
+  .bar input[type=range]{width:220px;accent-color:var(--ray);direction:ltr}
+  .glab{font:600 14px "Cambria Math","Times New Roman",serif;fill:#475569;paint-order:stroke;stroke:#fff;stroke-width:3px}
+  .rlab{font:700 13px "Segoe UI",Arial,sans-serif;fill:#94a3b8}
+  .rlab.on{fill:var(--ang)}
+  .parity{flex:none;background:#fff;border:2px solid var(--line);border-radius:14px;padding:6px 16px;display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;font-size:17px}
+  .parity .tag{font-weight:800}
+  .parity .ltr{direction:ltr;unicode-bidi:isolate;font-family:"Cambria Math","Times New Roman",serif;font-weight:700}
+  .parity .chk{color:var(--muted);font-size:15px;font-family:"Segoe UI",Arial,sans-serif;font-weight:400}
+  #sv{cursor:pointer}
+  .unit{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .unit button{border-radius:0!important;padding:6px 12px!important;font-size:14px!important;background:#fff!important}
+  .unit button[aria-pressed="true"]{background:var(--ray)!important;color:#fff;font-weight:700}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="title">מעגל היחידה: הזוויות הידועות</h1>
+  <nav class="tabs" role="tablist" aria-label="שקפים">
+    <button role="tab" data-s="1" aria-selected="true">1 · זוויות ידועות</button>
+    <button role="tab" data-s="2" aria-selected="false">2 · סינוס</button>
+    <button role="tab" data-s="3" aria-selected="false">3 · סינוס מקרוב</button>
+    <button role="tab" data-s="4" aria-selected="false">4 · קוסינוס</button>
+    <button role="tab" data-s="5" aria-selected="false">5 · קוסינוס מקרוב</button>
+    <button role="tab" data-s="6" aria-selected="false">6 · טנגנס</button>
+    <button role="tab" data-s="7" aria-selected="false">7 · טנגנס מקרוב</button>
+  </nav>
+  <a href="index.html#trigonometry" title="חזרה לנושא: פונקציות טריגונומטריות">→ לנושא</a>
+</header>
+
+<div class="wrap" id="s1">
+  <section class="panel">
+    <div class="tblbox" id="tblbox">
+      <table aria-label="טבלת הזוויות הידועות וערכי סינוס, קוסינוס וטנגנס">
+        <thead><tr><th>זווית</th><th>רדיאנים</th><th class="c">cos α</th><th class="s">sin α</th><th class="t">tan α</th></tr></thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+    <div class="legend">
+      <span><i style="background:#334155"></i>כפולות של 90°</span>
+      <span><i style="background:#0891b2"></i>כפולות של 30° (ושל 60°)</span>
+      <span><i style="background:#db2777"></i>כפולות של 45°</span>
+    </div>
+  </section>
+  <section class="side">
+    <div class="stage"><svg id="sv" viewBox="0 0 540 540" aria-label="מעגל היחידה עם קרן מסתובבת"></svg></div>
+    <div class="read" id="read" aria-live="polite">
+      <div class="ang" id="rAng">0°<small>0</small></div>
+      <div class="row c"><b>cos α =</b> <b class="ex" id="rCosEx"></b> <span class="apx" id="rCos"></span></div>
+      <div class="row s"><b>sin α =</b> <b class="ex" id="rSinEx"></b> <span class="apx" id="rSin"></span></div>
+      <div class="row t"><b>tan α =</b> <b class="ex" id="rTanEx"></b> <span class="apx" id="rTan"></span></div>
+      <div class="pt" id="rPt"></div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap2" id="s2" hidden>
+  <div class="stage2"><svg id="sv2" viewBox="0 0 1000 450" aria-label="קרן מסתובבת על מעגל היחידה והגרף של הפונקציה שנבנה לצידה"></svg></div>
+  <div class="parity" id="par" hidden>
+    <span class="tag" id="parTag"></span>
+    <span id="parSym"></span>
+    <span class="ltr" id="parRule"></span>
+    <span class="ltr chk" id="parChk"></span>
+  </div>
+  <div class="read2" aria-live="off">
+    <span class="ltr">x = <b class="big" id="gX">0</b> <span id="gXpi" style="color:var(--muted)"></span> <span id="gDeg" style="color:var(--muted)"></span></span>
+    <span class="sv ltr"><span id="gName">sin x =</span> <span id="gVal"></span></span>
+    <span class="rot" id="gRot"></span>
+  </div>
+</div>
+
+<div class="bar">
+ <div class="bar" id="ctl1" style="border:0;padding:0">
+  <button id="prev">→ הקודם</button>
+  <button id="play" class="main">▶ סיבוב אוטומטי</button>
+  <button id="next">הבא ←</button>
+  <div class="dots" id="dots"></div>
+  <label>מהירות
+    <select id="speed"><option value="35">איטית</option><option value="70" selected>רגילה</option><option value="140">מהירה</option></select>
+  </label>
+  <label>עצירה
+    <select id="pause"><option value="1500">1.5 שנ׳</option><option value="3000" selected>3 שנ׳</option><option value="5000">5 שנ׳</option></select>
+  </label>
+  <button id="reset">↺ מההתחלה</button>
+ </div>
+ <div class="bar" id="ctl2" style="border:0;padding:0" hidden>
+  <button id="play2" class="main">▶ הפעל</button>
+  <input type="range" id="gx" min="-12.5664" max="31.4159" step="0.001" value="0" aria-label="הזווית x ברדיאנים">
+  <label>מהירות
+    <select id="speed2"><option value="0.7854">איטית</option><option value="1.5708" selected>רגילה</option><option value="3.1416">מהירה</option></select>
+  </label>
+  <span class="unit" role="group" aria-label="יחידות ציר x"><button id="uRad" aria-pressed="true">רדיאנים</button><button id="uDeg" aria-pressed="false">מעלות</button></span>
+  <button id="reset2">↺ מההתחלה</button>
+ </div>
+</div>
+
+<script>
+/* ---------- הנתונים: כל הזוויות הידועות בסיבוב אחד ---------- */
+const ANG=[];
+for(let a=0;a<=360;a++) if(a%30===0||a%45===0) ANG.push(a);   // 0,30,45,60,90,...,360 (כפולות של 60 ו־90 כלולות בכפולות של 30)
+const fam=a=>a%90===0?'f90':a%45===0?'f45':'f30';
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+/* ערך מדויק: קוד לפי זווית הייחוס */
+const COSREF={0:'1',30:'r3',45:'r2',60:'h',90:'0'}, SINREF={0:'0',30:'h',45:'r2',60:'r3',90:'1'}, TANREF={0:'0',30:'r33',45:'1',60:'q3',90:'u'};
+function refAngle(a){const m=a%180;return Math.min(m,180-m);}
+function sgn(x){return Math.abs(x)<1e-9?0:Math.sign(x);}
+function exact(a,kind){const r=refAngle(a),t=a*Math.PI/180,code=(kind==='c'?COSREF:kind==='s'?SINREF:TANREF)[r],v=kind==='c'?Math.cos(t):kind==='s'?Math.sin(t):Math.sin(t)*Math.cos(t);
+  return {code,neg:sgn(v)<0};}
+const NUM={'0':'0','1':'1','h':['1','2'],'r2':['√2','2'],'r3':['√3','2'],'r33':['√3','3'],'q3':'√3'};
+function html(e){if(e.code==='u')return '<span class="und">לא מוגדר</span>';const n=NUM[e.code];const s=e.neg?'−':'';
+  if(typeof n==='string') return `<span class="v">${s}${n}</span>`;
+  return `<span class="v">${s}<span class="fr"><span>${n[0]}</span><span>${n[1]}</span></span></span>`;}
+function plain(e){if(e.code==='u')return 'לא מוגדר';const n=NUM[e.code];return (e.neg?'−':'')+(typeof n==='string'?n:n[0]+'/'+n[1]);}
+function radHtml(a){if(a===0)return '<span class="v">0</span>';const g=gcd(a,180),n=a/g,d=180/g,num=(n===1?'':n)+'π';
+  return d===1?`<span class="v">${num}</span>`:`<span class="v"><span class="fr"><span>${num}</span><span>${d}</span></span></span>`;}
+function radPlain(a){if(a===0)return '0';const g=gcd(a,180),n=a/g,d=180/g,num=(n===1?'':n)+'π';return d===1?num:num+'/'+d;}
+const f3=x=>{let v=Math.round(x*1000)/1000;if(Object.is(v,-0))v=0;return (v<0?'−':'')+Math.abs(v);};
+
+/* ---------- הטבלה ---------- */
+const tb=document.getElementById('tb'), rows=[];
+ANG.forEach((a,i)=>{const tr=document.createElement('tr');tr.className=fam(a);
+  tr.innerHTML=`<td class="deg"><i></i>${a}°</td><td>${radHtml(a)}</td><td class="c">${html(exact(a,'c'))}</td><td class="s">${html(exact(a,'s'))}</td><td class="t">${html(exact(a,'t'))}</td>`;
+  tr.addEventListener('click',()=>{stopAuto();goTo(i);});tb.appendChild(tr);rows.push(tr);});
+
+/* ---------- השרטוט ---------- */
+const NS='http://www.w3.org/2000/svg', svg=document.getElementById('sv');
+const CX=270, CY=270, R=185;
+const X=x=>CX+R*x, Y=y=>CY-R*y;
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);(parent||svg).appendChild(e);return e;}
+function txt(x,y,s,attrs,parent){const t=el('text',Object.assign({x,y,class:'lbl'},attrs||{}),parent);t.textContent=s;return t;}
+const defs=el('defs',{});
+const mk=el('marker',{id:'ar',viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs);
+el('path',{d:'M0 0 L10 5 L0 10 z',fill:'#334155'},mk);
+/* רשת עדינה */
+for(let k=-1;k<=1;k+=0.5){el('line',{x1:X(k),y1:Y(-1.25),x2:X(k),y2:Y(1.25),stroke:'#f1f5f9'});el('line',{x1:X(-1.25),y1:Y(k),x2:X(1.25),y2:Y(k),stroke:'#f1f5f9'});}
+/* צירים */
+el('line',{x1:X(-1.32),y1:CY,x2:X(1.36),y2:CY,stroke:'#334155','stroke-width':1.6,'marker-end':'url(#ar)'});
+el('line',{x1:CX,y1:Y(-1.32),x2:CX,y2:Y(1.36),stroke:'#334155','stroke-width':1.6,'marker-end':'url(#ar)'});
+txt(X(1.36)-4,CY-10,'x',{'text-anchor':'end'}); txt(CX+10,Y(1.36)+10,'y');
+/* המעגל */
+el('circle',{cx:CX,cy:CY,r:R,fill:'none',stroke:'var(--circ)','stroke-width':3});
+[[1,0,'1',10,18],[-1,0,'−1',-26,18],[0,1,'1',-16,-6],[0,-1,'−1',-26,18]].forEach(([x,y,s,dx,dy])=>txt(X(x)+dx,Y(y)+dy,s,{class:'tick on'}));
+txt(CX-16,CY+18,'O',{class:'tick on'});
+/* סימונים של הזוויות הידועות על המעגל */
+const tickLab=[], tickDot=[];
+ANG.slice(0,-1).forEach((a,i)=>{const t=a*Math.PI/180,c=Math.cos(t),s=Math.sin(t);
+  tickDot[i]=el('circle',{cx:X(c),cy:Y(s),r:3.5,fill:'#cbd5e1'});
+  const rr=1.13, lx=X(rr*c), ly=Math.abs(s)<0.01?CY-8:Y(rr*s)+5;
+  tickLab[i]=txt(lx,ly,a+'°',{class:'tick','text-anchor':Math.abs(c)<0.2?'middle':c>0?'start':'end'});});
+tickLab[ANG.length-1]=tickLab[0]; tickDot[ANG.length-1]=tickDot[0];
+/* שכבת התנועה */
+const angArc=el('path',{fill:'rgba(249,115,22,.12)',stroke:'var(--ray)','stroke-width':2});
+const angTxt=txt(0,0,'',{fill:'var(--ang)','text-anchor':'middle'});
+const dashV=el('line',{stroke:'#94a3b8','stroke-width':1.4,class:'dash'});
+const dashH=el('line',{stroke:'#94a3b8','stroke-width':1.4,class:'dash'});
+const cosSeg=el('line',{stroke:'var(--cos)','stroke-width':6,'stroke-linecap':'round'});
+const sinSeg=el('line',{stroke:'var(--sin)','stroke-width':6,'stroke-linecap':'round'});
+const ray=el('line',{x1:CX,y1:CY,stroke:'var(--ray)','stroke-width':3.5,'stroke-linecap':'round'});
+const rayExt=el('line',{stroke:'var(--ray)','stroke-width':1.5,opacity:.5,class:'dash'});
+el('circle',{cx:CX,cy:CY,r:4.5,fill:'var(--ink)'});
+const pDot=el('circle',{r:8,fill:'var(--ray)',stroke:'#fff','stroke-width':2.5});
+const cosLab=txt(0,0,'',{class:'vlab',fill:'var(--cos)','text-anchor':'middle'});
+const sinLab=txt(0,0,'',{class:'vlab',fill:'var(--sin)'});
+const pLab=txt(0,0,'P',{});
+
+/* ---------- ציור לפי זווית ---------- */
+const rRead=document.getElementById('read');
+function draw(deg,stopIdx){
+  const t=deg*Math.PI/180,c=Math.cos(t),s=Math.sin(t),px=X(c),py=Y(s), atStop=stopIdx!=null;
+  ray.setAttribute('x2',px);ray.setAttribute('y2',py);
+  rayExt.setAttribute('x1',px);rayExt.setAttribute('y1',py);rayExt.setAttribute('x2',X(1.25*c));rayExt.setAttribute('y2',Y(1.25*s));
+  pDot.setAttribute('cx',px);pDot.setAttribute('cy',py);
+  pLab.setAttribute('x',px-s*20-5);pLab.setAttribute('y',py-c*20+5);
+  /* קשת הזווית */
+  const ar=42;
+  if(deg<0.5){angArc.setAttribute('d','');angTxt.textContent='';}
+  else if(deg>=359.5){angArc.setAttribute('d',`M${CX+ar} ${CY} A${ar} ${ar} 0 1 0 ${CX-ar} ${CY} A${ar} ${ar} 0 1 0 ${CX+ar} ${CY}`);}
+  else angArc.setAttribute('d',`M${CX} ${CY} L${CX+ar} ${CY} A${ar} ${ar} 0 ${deg>180?1:0} 0 ${CX+ar*c} ${CY-ar*s} Z`);
+  if(deg>=0.5){const h=(deg/2)*Math.PI/180,rt=ar+18;angTxt.setAttribute('x',CX+rt*Math.cos(h));angTxt.setAttribute('y',CY-rt*Math.sin(h)+5);angTxt.textContent='α';}
+  /* הטלות */
+  cosSeg.setAttribute('x1',CX);cosSeg.setAttribute('y1',CY);cosSeg.setAttribute('x2',px);cosSeg.setAttribute('y2',CY);
+  sinSeg.setAttribute('x1',px);sinSeg.setAttribute('y1',CY);sinSeg.setAttribute('x2',px);sinSeg.setAttribute('y2',py);
+  dashV.setAttribute('x1',px);dashV.setAttribute('y1',py);dashV.setAttribute('x2',px);dashV.setAttribute('y2',CY);
+  dashH.setAttribute('x1',px);dashH.setAttribute('y1',py);dashH.setAttribute('x2',CX);dashH.setAttribute('y2',py);
+  let cTxt=f3(c), sTxt=f3(s);
+  if(atStop){const a=ANG[stopIdx];cTxt=plain(exact(a,'c'));sTxt=plain(exact(a,'s'));}
+  cosLab.textContent=Math.abs(c)<0.02?'':'cos = '+cTxt;
+  cosLab.setAttribute('x',(CX+px)/2);cosLab.setAttribute('y',CY+(s>=0?24:-12));
+  sinLab.textContent=Math.abs(s)<0.02?'':'sin = '+sTxt;
+  sinLab.setAttribute('x',px+(c>=0?10:-10));sinLab.setAttribute('y',(CY+py)/2+5);sinLab.setAttribute('text-anchor',c>=0?'start':'end');
+  /* כרטיס הערכים */
+  document.getElementById('rAng').innerHTML=(atStop?ANG[stopIdx]:Math.round(deg))+'°<small>'+(atStop?radPlain(ANG[stopIdx]):'…')+'</small>';
+  const apx=(e,v)=>['r2','r3','r33','q3'].includes(e.code)?'≈ '+f3(v):e.code==='h'?'= '+f3(v):'';
+  const tv=Math.abs(c)<1e-9?null:s/c;
+  document.getElementById('rTan').textContent=atStop?(tv==null?'':apx(exact(ANG[stopIdx],'t'),tv)):(Math.abs(c)<0.005?'לא מוגדר':f3(tv));
+  document.getElementById('rTanEx').innerHTML=atStop?html(exact(ANG[stopIdx],'t')):'';
+  document.getElementById('rCos').textContent=atStop?apx(exact(ANG[stopIdx],'c'),c):f3(c);
+  document.getElementById('rSin').textContent=atStop?apx(exact(ANG[stopIdx],'s'),s):f3(s);
+  document.getElementById('rCosEx').innerHTML=atStop?html(exact(ANG[stopIdx],'c')):'';
+  document.getElementById('rSinEx').innerHTML=atStop?html(exact(ANG[stopIdx],'s')):'';
+  document.getElementById('rPt').innerHTML=atStop?`P = (cos α, sin α) = (${plain(exact(ANG[stopIdx],'c'))}, ${plain(exact(ANG[stopIdx],'s'))})`:'הקרן בתנועה…';
+  rRead.classList.toggle('moving',!atStop);
+}
+
+/* ---------- מצב ותנועה ---------- */
+let idx=0, cur=0, raf=0, moving=false, auto=false, timer=0;
+const seen=new Set([0]);
+const dotsBox=document.getElementById('dots'), dots=ANG.map((a,i)=>{const d=document.createElement('i');d.title=a+'°';d.addEventListener('click',()=>{stopAuto();goTo(i);});dotsBox.appendChild(d);return d;});
+const btnPrev=document.getElementById('prev'),btnNext=document.getElementById('next'),btnPlay=document.getElementById('play');
+function mark(target){
+  rows.forEach((r,i)=>{r.classList.toggle('cur',!moving&&i===idx);r.classList.toggle('next',moving&&i===target);r.classList.toggle('seen',seen.has(i));});
+  dots.forEach((d,i)=>{d.classList.toggle('on',seen.has(i));d.classList.toggle('cur',i===(moving?target:idx));});
+  tickLab.forEach((t,i)=>{t.classList.toggle('on',seen.has(i));t.classList.toggle('cur',!moving&&i===idx);});
+  tickDot.forEach((t,i)=>t.setAttribute('fill',seen.has(i)?'var(--ray)':'#cbd5e1'));
+  if(!moving&&idx===ANG.length-1){tickLab[0].classList.add('cur');}
+  const r=rows[moving?target:idx];const box=document.getElementById('tblbox');
+  const top=r.offsetTop-box.clientHeight/2+r.offsetHeight/2;box.scrollTo({top:Math.max(0,top)});
+  btnPrev.disabled=idx===0&&!moving; btnNext.disabled=idx===ANG.length-1&&!moving;
+}
+function goTo(target){
+  if(target<0||target>=ANG.length)return;
+  cancelAnimationFrame(raf);
+  const from=cur,to=ANG[target],spd=+document.getElementById('speed').value;
+  if(Math.abs(to-from)<1e-6){moving=false;idx=target;cur=to;seen.add(target);draw(cur,idx);mark();return;}
+  moving=true;mark(target);
+  let last=0;
+  const step=ts=>{if(!last)last=ts;const dt=Math.min(.05,(ts-last)/1000);last=ts;
+    const dir=Math.sign(to-cur);cur+=dir*spd*dt;
+    if((dir>0&&cur>=to)||(dir<0&&cur<=to)){cur=to;moving=false;idx=target;seen.add(target);draw(cur,idx);mark();
+      if(auto){if(idx<ANG.length-1)timer=setTimeout(()=>goTo(idx+1),+document.getElementById('pause').value);else stopAuto();}
+      return;}
+    draw(cur,null);raf=requestAnimationFrame(step);};
+  raf=requestAnimationFrame(step);
+}
+function startAuto(){auto=true;btnPlay.textContent='❚❚ עצור';if(idx===ANG.length-1){reset(false);}
+  if(!moving)goTo(idx+1);}
+function stopAuto(){auto=false;clearTimeout(timer);btnPlay.textContent='▶ סיבוב אוטומטי';}
+function reset(full=true){if(full)stopAuto();cancelAnimationFrame(raf);clearTimeout(timer);moving=false;idx=0;cur=0;seen.clear();seen.add(0);draw(0,0);mark();}
+btnPlay.addEventListener('click',()=>auto?stopAuto():startAuto());
+btnNext.addEventListener('click',()=>{stopAuto();goTo(moving?ANG.findIndex(a=>a>cur+1e-6):idx+1);});
+btnPrev.addEventListener('click',()=>{stopAuto();if(moving){let k=-1;ANG.forEach((a,i)=>{if(a<cur-1e-6)k=i;});goTo(Math.max(0,k));}else goTo(idx-1);});
+document.getElementById('reset').addEventListener('click',()=>reset(true));
+document.addEventListener('keydown',e=>{
+  if(slide>1){if(e.key===' '){e.preventDefault();document.getElementById('play2').click();}else if(e.key==='Home'){reset2();}return;}
+  if(e.key==='ArrowLeft'||e.key==='PageDown'){e.preventDefault();btnNext.click();}
+  else if(e.key==='ArrowRight'||e.key==='PageUp'){e.preventDefault();btnPrev.click();}
+  else if(e.key===' '){e.preventDefault();btnPlay.click();}
+  else if(e.key==='Home'){reset(true);}
+});
+/* לחיצה על השרטוט: מעבירה לזווית הידועה הקרובה ביותר לנקודת הלחיצה */
+svg.addEventListener('click',e=>{
+  const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const q=pt.matrixTransform(svg.getScreenCTM().inverse());
+  const dx=(q.x-CX)/R, dy=(CY-q.y)/R; if(Math.hypot(dx,dy)<0.25)return;
+  let a=Math.atan2(dy,dx)*180/Math.PI; if(a<0)a+=360;
+  let best=0,bd=1e9; ANG.forEach((g,i)=>{if(g===360)return;const d=Math.min(Math.abs(g-a),360-Math.abs(g-a));if(d<bd){bd=d;best=i;}});
+  if(bd<=12){stopAuto();goTo(best);}
+});
+tickDot.forEach(d=>d.setAttribute('r',5));
+reset(true);
+
+/* =================== שקפים 2–4: מהמעגל לגרף של sin, cos ו־tan (2 סיבובים שליליים ו־2 חיוביים) =================== */
+const sv2=document.getElementById('sv2');
+function el2(tag,attrs,parent){return el(tag,attrs,parent||sv2);}
+function txt2(x,y,s,attrs,parent){const t=el2('text',Object.assign({x,y,class:'lbl'},attrs||{}),parent);t.textContent=s;return t;}
+const TP=2*Math.PI; let NEG=2, TURNS=5, XMIN=-TP*NEG, XMAX=TP*TURNS, HALF=false;
+const ISO=s=>'⁦'+s+'⁩';                  // בידוד כיווניות למספר שלילי בתוך טקסט עברי
+const C2Y=215, GX1=972; let C2X=128, GX0=280, KX=1, OX=0;
+const gx=x=>GX0+KX*(x-XMIN);
+/* שקף = פונקציה + כמה סיבובים לכל כיוון. בשקפים "מקרוב": סיבוב אחד שלילי ואחד חיובי, מעגל גדול יותר וסימונים כל π/2 */
+const CFG={2:{kind:'sin',neg:2,turns:5},3:{kind:'sin',neg:1,turns:1,zoom:true},4:{kind:'cos',neg:2,turns:5},5:{kind:'cos',neg:1,turns:1,zoom:true},6:{kind:'tan',neg:2,turns:5},7:{kind:'tan',neg:1,turns:1,zoom:true}};
+let cfg=CFG[2];
+const KIND={
+  sin:{R:112,YR:1.35,col:'var(--sin)',f:Math.sin,name:'sin',ticks:[1,-1]},
+  cos:{R:112,YR:1.35,col:'var(--cos)',f:Math.cos,name:'cos',ticks:[1,-1]},
+  tan:{R:50,YR:3.4,col:'var(--tan)',f:Math.tan,name:'tan',ticks:[1,2,3,-1,-2,-3]}};
+let kind='sin', K=KIND.sin, R2=112, RC=112, TZ=false, gy=y=>C2Y-R2*y, G={}, axLab=[], rotLab=[], unit='rad', gxVal=XMIN, raf2=0, play2=false;
+
+function build(){
+  while(sv2.firstChild)sv2.removeChild(sv2.firstChild);
+  kind=cfg.kind; NEG=cfg.neg; TURNS=cfg.turns; XMIN=-TP*NEG; XMAX=TP*TURNS; HALF=!!cfg.zoom;
+  C2X=HALF?150:128; GX0=HALF?320:280; KX=(GX1-GX0)/(XMAX-XMIN); OX=gx(0);
+  const gxEl=document.getElementById('gx'); gxEl.min=XMIN; gxEl.max=XMAX;
+  K=KIND[kind]; TZ=HALF&&kind==='tan';
+  if(TZ)K=Object.assign({},K,{R:22,YR:8.4,ticks:[2,4,6,8,-2,-4,-6,-8]});   // טנגנס מקרוב: ציר y מ־−8 עד 8
+  R2=HALF&&!TZ?125:K.R; RC=TZ?70:R2; gy=y=>C2Y-R2*y;   // RC = רדיוס המעגל; בטנגנס מקרוב המעגל בקנה מידה משלו axLab=[]; rotLab=[];
+  const top=gy(K.YR), bot=gy(-K.YR);
+  const defs2=el2('defs',{});
+  const mk2=el2('marker',{id:'ar2',viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs2);
+  el2('path',{d:'M0 0 L10 5 L0 10 z',fill:'#334155'},mk2);
+  const cp=el2('clipPath',{id:'clipG'},defs2); el2('rect',{x:GX0-2,y:top,width:GX1-GX0+4,height:bot-top},cp);
+  const cpc=el2('clipPath',{id:'clipC'},defs2); el2('rect',{x:0,y:top,width:GX0-30,height:bot-top},cpc);
+  /* מעגל */
+  const ext=kind==='tan'?RC+40:RC+20;
+  el2('line',{x1:C2X-ext,y1:C2Y,x2:C2X+ext,y2:C2Y,stroke:'#334155','stroke-width':1.4});
+  el2('line',{x1:C2X,y1:C2Y+ext,x2:C2X,y2:C2Y-ext,stroke:'#334155','stroke-width':1.4});
+  el2('circle',{cx:C2X,cy:C2Y,r:RC,fill:'none',stroke:'var(--circ)','stroke-width':3});
+  txt2(C2X+RC+4,C2Y+18,'1',{class:'tick on'});txt2(C2X-RC-20,C2Y+18,'−1',{class:'tick on'});
+  if(TZ)txt2(C2X-10,C2Y-RC-26,'מעגל היחידה',{'text-anchor':'middle',fill:'var(--circ)'});
+  else txt2(C2X,C2Y-135,'מעגל היחידה',{'text-anchor':'middle',fill:'var(--circ)'});
+  if(kind==='tan'){
+    el2('line',{x1:C2X+RC,y1:top,x2:C2X+RC,y2:bot,stroke:'var(--ink)','stroke-width':1.6});
+    txt2(C2X+RC+6,top+12,'x = 1',{class:'tick on',direction:'ltr'});
+    (TZ?[1,2,-1,-2]:K.ticks).forEach(v=>{el2('line',{x1:C2X+RC-4,y1:C2Y-RC*v,x2:C2X+RC+4,y2:C2Y-RC*v,stroke:'#334155'});
+      if(TZ)txt2(C2X+RC-8,C2Y-RC*v+5,(v<0?'−':'')+Math.abs(v),{class:'tick on','text-anchor':'end'});});
+    if(TZ)G.tlab=txt2(0,0,'',{class:'vlab',fill:'var(--tan)',direction:'ltr'});}
+  /* צירי הגרף */
+  el2('rect',{x:GX0,y:top,width:OX-GX0,height:bot-top,fill:'#f8fafc'});
+  if(kind==='tan') K.ticks.forEach(v=>el2('line',{x1:GX0,y1:gy(v),x2:GX1,y2:gy(v),stroke:'#eef2f6'}));
+  else [1,-1].forEach(v=>el2('line',{x1:GX0,y1:gy(v),x2:GX1,y2:gy(v),stroke:'#cbd5e1','stroke-dasharray':'5 5'}));
+  if(HALF&&kind!=='tan') [0.5,-0.5].forEach(v=>{el2('line',{x1:GX0,y1:gy(v),x2:GX1,y2:gy(v),stroke:'#e2e8f0','stroke-dasharray':'3 5'});
+    el2('line',{x1:C2X-R2-20,y1:gy(v),x2:C2X+R2+20,y2:gy(v),stroke:'#e2e8f0','stroke-dasharray':'3 5'});
+    txt2(OX-6,gy(v)+5,(v<0?'−':'')+'0.5',{class:'tick on','text-anchor':'end'});});
+  for(let k=-NEG;k<=TURNS;k++){if(k===0)continue;const xx=gx(TP*k);el2('line',{x1:xx,y1:top,x2:xx,y2:bot,stroke:'#e2e8f0','stroke-width':1.5});}
+  if(kind==='tan') for(let k=-2*NEG;k<2*TURNS;k++){const xx=gx(Math.PI*k+Math.PI/2);el2('line',{x1:xx,y1:top,x2:xx,y2:bot,stroke:'#94a3b8','stroke-dasharray':'6 5'});}
+  for(let k=-NEG;k<TURNS;k++){const no=k<0?k:k+1;
+    rotLab.push(txt2(gx(TP*k+Math.PI),top-4,'סיבוב '+ISO(no<0?'−'+(-no):''+no),{class:'rlab','text-anchor':'middle',direction:'rtl'}));}
+  el2('line',{x1:GX0-6,y1:C2Y,x2:GX1+22,y2:C2Y,stroke:'#334155','stroke-width':1.6,'marker-end':'url(#ar2)'});
+  el2('line',{x1:OX,y1:bot+6,x2:OX,y2:top-14,stroke:'#334155','stroke-width':1.6,'marker-end':'url(#ar2)'});
+  txt2(GX1+20,C2Y-10,'x',{'text-anchor':'end'});txt2(OX+8,top-10,'y');
+  K.ticks.forEach(v=>txt2(OX-6,gy(v)+(v>0?-4:14),(v<0?'−':'')+Math.abs(v),{class:'tick on','text-anchor':'end'}));
+  txt2((GX0+OX)/2,bot+16,'x שלילי',{class:'rlab','text-anchor':'middle',direction:'rtl'});
+  const SUB=HALF?4:2;                                   // תווית כל π (או כל π/2 בשקפים מקרוב)
+  for(let k=-SUB*NEG;k<=SUB*TURNS;k++){if(k===0)continue;const xx=gx(TP*k/SUB);
+    el2('line',{x1:xx,y1:C2Y-4,x2:xx,y2:C2Y+4,stroke:'#334155','stroke-width':1.4});
+    if(HALF)el2('line',{x1:xx,y1:gy(K.YR),x2:xx,y2:gy(-K.YR),stroke:'#f1f5f9'});
+    axLab.push({k,t:txt2(xx,C2Y+20,'',{class:'glab','text-anchor':'middle'})});}
+  for(let k=-SUB*NEG;k<SUB*TURNS;k++){const xx=gx(TP*(k+0.5)/SUB);el2('line',{x1:xx,y1:C2Y-2.5,x2:xx,y2:C2Y+2.5,stroke:'#94a3b8'});}
+  txt2(OX-6,C2Y+20,'0',{class:'glab','text-anchor':'end'});
+  const xm=(OX+GX1)/2-40; G.noteV=txt2(xm,bot+32,'',{class:'rlab','text-anchor':'end',direction:'ltr'}); G.noteH=txt2(xm+8,bot+32,'',{class:'rlab','text-anchor':'end',direction:'rtl'});
+  /* שכבת התנועה */
+  G.arc=el2('path',{fill:'rgba(249,115,22,.12)',stroke:'var(--ray)','stroke-width':2});
+  G.link=el2('line',{stroke:'#94a3b8','stroke-width':1.4,'stroke-dasharray':'6 5'});
+  G.curve=el2('path',{fill:'none',stroke:K.col,'stroke-width':3,'stroke-linecap':'round','stroke-linejoin':'round','clip-path':'url(#clipG)'});
+  G.turnArc=el2('path',{fill:'none',stroke:K.col,'stroke-width':1.6,'stroke-dasharray':'4 4',opacity:.8});
+  G.valC=el2('line',{stroke:K.col,'stroke-width':5,'stroke-linecap':'round','clip-path':kind==='tan'?'url(#clipC)':null});
+  G.valG=el2('line',{stroke:K.col,'stroke-width':3,opacity:.55,'clip-path':'url(#clipG)'});
+  G.tline=el2('line',{stroke:'var(--ray)','stroke-width':1.5,'stroke-dasharray':'5 4','clip-path':'url(#clipC)'});
+  G.ray=el2('line',{x1:C2X,y1:C2Y,stroke:'var(--ray)','stroke-width':3.5,'stroke-linecap':'round'});
+  el2('circle',{cx:C2X,cy:C2Y,r:4,fill:'var(--ink)'});
+  G.p=el2('circle',{r:kind==='tan'?5.5:7,fill:'var(--ray)',stroke:'#fff','stroke-width':2.5});
+  G.mark=el2('circle',{r:5.5,fill:K.col,stroke:'#fff','stroke-width':2});
+  G.g=el2('circle',{r:6.5,fill:K.col,stroke:'#fff','stroke-width':2.5});
+  if(HALF){G.mirLine=el2('line',{stroke:K.col,'stroke-width':1.8,'stroke-dasharray':'2 5',opacity:.9});
+    G.mirV=el2('line',{stroke:K.col,'stroke-width':3,opacity:.35});
+    G.mir=el2('circle',{r:6.5,fill:'#fff',stroke:K.col,'stroke-width':2.5});
+    G.mirLab=txt2(0,0,'−x',{class:'glab','text-anchor':'middle'});G.xLab=txt2(0,0,'x',{class:'glab','text-anchor':'middle'});
+    if(kind==='cos')el2('line',{x1:OX,y1:top,x2:OX,y2:bot,stroke:K.col,'stroke-width':2.5,opacity:.35});   // ציר הסימטריה
+    else el2('circle',{cx:OX,cy:C2Y,r:6,fill:'none',stroke:K.col,'stroke-width':2.5,opacity:.6});        // מרכז הסימטריה
+  }
+  const par=document.getElementById('par'); par.hidden=!HALF;
+  if(HALF){par.style.borderColor=K.col;
+    const odd=kind!=='cos';
+    document.getElementById('parTag').textContent=odd?kind+' היא פונקציה אי־זוגית':'cos היא פונקציה זוגית';
+    document.getElementById('parTag').style.color=K.col;
+    document.getElementById('parSym').textContent=odd?'הגרף סימטרי לראשית הצירים':'הגרף סימטרי לציר y';
+    document.getElementById('parRule').textContent=odd?kind+'(−x) = −'+kind+' x':'cos(−x) = cos x';}
+  G.turn=txt2(C2X,bot+30,'',{'text-anchor':'middle',fill:'var(--ang)',direction:'rtl'});
+  document.getElementById('gName').textContent=K.name+' x =';
+  document.getElementById('gVal').style.color=K.col;document.getElementById('gName').style.color=K.col;
+  setUnit(unit);
+}
+function setUnit(u){unit=u;
+  axLab.forEach(({k,t})=>{const m=k<0?'−':'';let a=Math.abs(k);
+    if(HALF){ if(u==='deg'){t.textContent=m+(90*a)+'°';return;}
+      t.textContent=a%2===0?m+(a===2?'':a/2)+'π':m+(a===1?'':a)+'π/2';return;}
+    if(u==='rad')t.textContent=m+(a===1?'':a)+'π';
+    else t.textContent=k%2===0||TURNS<=2?m+(180*a)+'°':'';});      // במעלות בשקפים הרחבים: תווית כל 360°
+  const per=kind==='tan';
+  G.noteV.textContent=u==='rad'?(per?'π ≈ 3.14':'2π ≈ 6.28'):(per?'180°':'360°');
+  G.noteH.textContent=(u==='rad'?'הציר האופקי ברדיאנים. ':'הציר האופקי במעלות. ')+(per?'המחזור של tan:':'סיבוב שלם:');
+  document.getElementById('uRad').setAttribute('aria-pressed',u==='rad');document.getElementById('uDeg').setAttribute('aria-pressed',u==='deg');
+  document.getElementById('gx').setAttribute('aria-label',u==='rad'?'הזווית x ברדיאנים':'הזווית x במעלות');
+  draw2(gxVal);}
+function turnInfo(x){
+  if(x>=XMAX-1e-6)return {i:NEG+TURNS-1,txt:NEG===1&&TURNS===1?'סוף: סיבוב שלילי וסיבוב חיובי':'סוף: '+NEG+' סיבובים שליליים ו־'+TURNS+' חיוביים'};
+  const k=Math.floor(x/TP+1e-9);
+  if(k<0)return {i:k+NEG,txt:'סיבוב '+ISO('−'+(-k))+' (ערכי x שליליים)'};
+  return {i:k+NEG,txt:'סיבוב '+(k+1)+' מתוך '+TURNS+' (ערכי x חיוביים)'};}
+function setL(e,x1,y1,x2,y2){e.setAttribute('x1',x1);e.setAttribute('y1',y1);e.setAttribute('x2',x2);e.setAttribute('y2',y2);}
+function hide(e){setL(e,0,0,0,0);}
+function draw2(x){
+  if(!G.ray)return;
+  const s=Math.sin(x),c=Math.cos(x),px=C2X+RC*c,py=C2Y-RC*s,qx=gx(x);
+  G.ray.setAttribute('x2',px);G.ray.setAttribute('y2',py);G.p.setAttribute('cx',px);G.p.setAttribute('cy',py);
+  const m=((x%TP)+TP)%TP, ar=kind==='tan'?20:28;
+  G.arc.setAttribute('d',m<0.01?'':`M${C2X} ${C2Y} L${C2X+ar} ${C2Y} A${ar} ${ar} 0 ${m>Math.PI?1:0} 0 ${C2X+ar*Math.cos(m)} ${C2Y-ar*Math.sin(m)} Z`);
+  let v, und=false, hx, hy;                         // v = ערך הפונקציה; (hx,hy) = הנקודה בצד המעגל שגובהה v
+  G.turnArc.setAttribute('d','');hide(G.tline);
+  if(kind==='sin'){v=s;setL(G.valC,px,C2Y,px,py);hx=px;hy=py;}
+  else if(kind==='cos'){v=c;setL(G.valC,C2X,C2Y,px,C2Y);hx=C2X;hy=C2Y-R2*c;
+    /* מסובבים את הקטע הירוק (על ציר x) לציר y, כדי להעביר את אורכו לגובה בגרף */
+    const r=Math.abs(R2*c); if(r>1) G.turnArc.setAttribute('d',`M${px} ${C2Y} A${r} ${r} 0 0 ${c>0?0:1} ${C2X} ${hy}`);}
+  else {und=Math.abs(c)<1e-3; v=und?NaN:s/c;
+    if(!und){const tx=C2X+RC, ty=C2Y-RC*v; setL(G.valC,tx,C2Y,tx,ty); setL(G.tline,px,py,tx,ty); hx=tx; hy=ty;
+      if(TZ){hx=OX; hy=gy(v);                        // קנה מידה שונה: הקו מהגרף מגיע לציר y, והערך כתוב ליד T
+        const tTop=gy(K.YR), tBot=gy(-K.YR), off=ty<tTop+14||ty>tBot-6;
+        G.tlab.setAttribute('x',tx+8);G.tlab.setAttribute('y',Math.max(tTop+14,Math.min(tBot-6,ty+5)));
+        G.tlab.textContent=f3(Math.round(v*100)/100)+(off?(v>0?' ↑':' ↓'):'');}}
+    else{hide(G.valC);if(TZ)G.tlab.textContent='';}}
+  const okV=!und&&Math.abs(v)<=K.YR;
+  if(okV){const qy=gy(v);setL(G.valG,qx,C2Y,qx,qy);setL(G.link,hx,hy,qx,qy);G.g.setAttribute('cx',qx);G.g.setAttribute('cy',qy);G.g.style.display='';
+    G.mark.setAttribute('cx',hx);G.mark.setAttribute('cy',hy);G.mark.style.display=kind==='sin'?'none':'';}
+  else{hide(G.link);G.g.style.display='none';G.mark.style.display='none';if(!und)setL(G.valG,qx,C2Y,qx,gy(Math.sign(v)*K.YR));else hide(G.valG);}
+  /* העקומה עד x */
+  const n=Math.max(2,Math.ceil((x-XMIN)/0.01));let d='',pen=false,prevC=null;
+  for(let i=0;i<=n;i++){const t=XMIN+(x-XMIN)*i/n, ct=Math.cos(t);
+    if(kind==='tan'&&prevC!==null&&Math.sign(ct)!==Math.sign(prevC))pen=false;   // קפיצה באסימפטוטה
+    prevC=ct; let yv=K.f(t); if(kind==='tan')yv=Math.max(-K.YR-1,Math.min(K.YR+1,yv));
+    d+=(pen?'L':'M')+gx(t).toFixed(1)+' '+gy(yv).toFixed(1);pen=true;}
+  G.curve.setAttribute('d',x>XMIN?d:'');
+  if(HALF){const mv=K.f(-x), inR=v=>isFinite(v)&&Math.abs(v)<=K.YR&&!(kind==='tan'&&Math.abs(Math.cos(x))<1e-3), show=Math.abs(x)>0.05&&inR(mv)&&inR(v), mx=gx(-x), my=gy(show?mv:0);
+    [G.mir,G.mirLab,G.xLab].forEach(e=>e.style.display=show?'':'none');
+    if(show){G.mir.setAttribute('cx',mx);G.mir.setAttribute('cy',my);setL(G.mirV,mx,C2Y,mx,my);setL(G.mirLine,mx,my,qx,gy(v));
+      G.mirLab.setAttribute('x',mx);G.mirLab.setAttribute('y',C2Y+(mv>0?-8:38));G.xLab.setAttribute('x',qx);G.xLab.setAttribute('y',C2Y+(v>0?-8:38));}
+    else{hide(G.mirV);hide(G.mirLine);}
+    const a=f3(Math.abs(x)).replace(/(\.\d\d)\d$/,'$1'), nm=K.name, val=f3(K.f(Math.abs(x))), nval=f3(K.f(-Math.abs(x)));
+    document.getElementById('parChk').textContent=(Math.abs(x)>0.05&&!(kind==='tan'&&Math.abs(Math.cos(x))<4e-3))?(kind!=='cos'?`${nm}(−${a}) = ${nval} = −${nm}(${a})`:`${nm}(−${a}) = ${nval} = ${nm}(${a})`):'';}
+  const ti=turnInfo(x);
+  rotLab.forEach((t,k)=>t.classList.toggle('on',k<=ti.i&&x>XMIN));
+  G.turn.textContent=ti.txt;
+  const rad=f3(x).replace(/(\.\d\d)\d$/,'$1'), pi=f3(x/Math.PI).replace(/(\.\d\d)\d$/,'$1')+'π', dg=f3(Math.round(x*180/Math.PI))+'°';
+  if(unit==='rad'){document.getElementById('gX').textContent=rad;document.getElementById('gXpi').textContent='= '+pi;document.getElementById('gDeg').textContent='('+dg+')';}
+  else{document.getElementById('gX').textContent=dg;document.getElementById('gXpi').textContent='';document.getElementById('gDeg').textContent='('+rad+' rad = '+pi+')';}
+  document.getElementById('gVal').textContent=und||(kind==='tan'&&Math.abs(c)<0.004)?'לא מוגדר':f3(v);
+  document.getElementById('gRot').textContent=ti.txt;
+  document.getElementById('gx').value=x;
+}
+const btnPlay2=document.getElementById('play2');
+function stop2(){play2=false;cancelAnimationFrame(raf2);btnPlay2.textContent='▶ הפעל';}
+function start2(){if(gxVal>=XMAX-1e-6)gxVal=XMIN;play2=true;btnPlay2.textContent='❚❚ עצור';let last=0;
+  const step=ts=>{if(!play2)return;if(!last)last=ts;const dt=Math.min(.05,(ts-last)/1000);last=ts;
+    gxVal=Math.min(XMAX,gxVal+(+document.getElementById('speed2').value)*dt);draw2(gxVal);
+    if(gxVal>=XMAX){stop2();return;}raf2=requestAnimationFrame(step);};
+  raf2=requestAnimationFrame(step);}
+function reset2(){stop2();gxVal=XMIN;draw2(XMIN);}
+function setCfg(n){stop2();cfg=CFG[n];XMIN=-TP*cfg.neg;gxVal=XMIN;build();}
+btnPlay2.addEventListener('click',()=>play2?stop2():start2());
+document.getElementById('uRad').addEventListener('click',()=>setUnit('rad'));
+document.getElementById('uDeg').addEventListener('click',()=>setUnit('deg'));
+document.getElementById('reset2').addEventListener('click',reset2);
+document.getElementById('gx').addEventListener('input',e=>{stop2();gxVal=+e.target.value;draw2(gxVal);});
+build();
+
+/* =================== מעבר בין שקפים =================== */
+let slide=1;
+const TITLES={1:'מעגל היחידה: הזוויות הידועות',2:'מהמעגל לגרף: <bdi dir="ltr">y = sin x</bdi>',3:'<bdi dir="ltr">y = sin x</bdi> מקרוב',
+  4:'מהמעגל לגרף: <bdi dir="ltr">y = cos x</bdi>',5:'<bdi dir="ltr">y = cos x</bdi> מקרוב',6:'מהמעגל לגרף: <bdi dir="ltr">y = tan x</bdi>',7:'<bdi dir="ltr">y = tan x</bdi> מקרוב'};
+function showSlide(n){slide=n;
+  document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',+b.dataset.s===n?'true':'false'));
+  document.getElementById('s1').hidden=n!==1;document.getElementById('ctl1').hidden=n!==1;
+  document.getElementById('s2').hidden=n===1;document.getElementById('ctl2').hidden=n===1;
+  document.getElementById('title').innerHTML=TITLES[n];
+  if(n===1)stop2();else{stopAuto();if(CFG[n]!==cfg)setCfg(n);}}
+document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>showSlide(+b.dataset.s)));
+</script>
+</body>
+</html>

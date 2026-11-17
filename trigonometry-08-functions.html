@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>הפונקציות sin, cos ו־tan · פונקציות טריגונומטריות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: the site's worksheet column. Each section explains one idea: the geometric meaning (a locus), the derivation, the parameters and what they do on the graph,
+   with coordinate-plane figures drawn by the Plot script and interactive labs (sliders). Practice questions with folding solutions at the end. */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --grid:rgba(31,111,139,.06);
+  --green:#2f7d4a; --violet:#7a4fb3;
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05);
+  --green:#6fcf8f; --violet:#b796e8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --grid:rgba(108,188,214,.05);
+  --green:#6fcf8f; --violet:#b796e8; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px}
+.wrap{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:32px 72px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.4rem}
+h2{font-size:1.75rem;color:var(--accent)}
+h3{font-size:1.2rem}
+p{margin:0}
+a{color:var(--accent)}
+.m{font-family:var(--f-math);direction:ltr;unicode-bidi:isolate;font-size:.92em;white-space:nowrap}
+.lead{color:var(--muted);max-width:70ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+nav.pagetoc{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px}
+nav.pagetoc ol{margin:6px 0 0;padding-inline-start:22px;columns:2;column-gap:32px}
+nav.pagetoc a{text-decoration:none;font-weight:600}
+nav.pagetoc a:hover,nav.pagetoc a:focus-visible{text-decoration:underline}
+@media (max-width:560px){nav.pagetoc ol{columns:1}}
+nav.series{display:flex;flex-wrap:wrap;gap:6px}
+nav.series a{font-size:.88rem;font-weight:600;text-decoration:none;border:1px solid var(--line);background:var(--paper);border-radius:99px;padding:3px 12px}
+nav.series a[aria-current]{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+nav.series a:hover,nav.series a:focus-visible{border-color:var(--accent)}
+
+section.ch{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+section.ch > h2 small{font-family:var(--f-body);font-size:.9rem;color:var(--muted);font-weight:600;margin-inline-start:8px}
+.meaning{max-width:72ch;display:flex;flex-direction:column;gap:10px}
+.key{font-family:var(--f-display);font-size:1.2rem;font-weight:700;text-align:center;padding:14px 16px;border:2px solid var(--accent);border-radius:10px;background:var(--accent-soft);text-wrap:balance}
+.key .m{font-size:1.05em}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+.teacher{border:1px solid var(--line);border-inline-start:4px solid var(--green);border-radius:0 8px 8px 0;padding:10px 14px;font-size:.95rem}
+.teacher strong{color:var(--green)}
+.formulas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:10px}
+.f{background:var(--accent-soft);border-radius:8px;padding:10px 14px;min-width:0}
+.f b{display:block;font-size:.85rem;color:var(--muted);font-weight:600}
+.f .m{font-size:1.02rem;white-space:normal}
+.dm{direction:ltr;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+.fig-row>*,.figs>*,.meaning>*,section.ch>*,.example>*,ol.derive>li,.f{min-width:0}
+.dm{max-width:100%}
+ol.derive{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:8px}
+ol.derive li::marker{font-weight:700;color:var(--accent)}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.example .tag{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+ul.mist{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:8px}
+ul.mist li::marker{color:var(--mark)}
+
+.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:center;vertical-align:middle}
+th{background:var(--accent-soft);font-weight:700}
+td:first-child{font-weight:700;text-align:start}
+td .m{white-space:normal}
+tr:last-child td{border-bottom:0}
+
+/* figures */
+svg.plot{width:100%;height:auto;display:block;direction:ltr;background:var(--paper);border:1px solid var(--line);border-radius:8px}
+figure{margin:0;display:flex;flex-direction:column;gap:6px;min-width:0}
+figcaption{font-size:.9rem;color:var(--muted)}
+figcaption b{color:var(--ink)}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:14px}
+.figs.four{grid-template-columns:repeat(auto-fit,minmax(min(170px,100%),1fr))}
+.figs.two{grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))}
+.fig-1{max-width:620px;width:100%;margin-inline:auto}
+.fig{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--bg)}
+.fig-cap{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.fig-row{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:680px){.fig-row{grid-template-columns:1fr}}
+.ctl{display:flex;flex-direction:column;gap:8px}
+.ctl label{display:grid;grid-template-columns:6.5rem 1fr 3.8rem;gap:8px;align-items:center;font-weight:600;font-size:.95rem}
+.ctl input[type=range]{width:100%;accent-color:var(--accent);direction:ltr}
+.ctl output{font-family:var(--f-math);font-size:.9rem;direction:ltr;text-align:left}
+.readout{font-family:var(--f-math);font-size:.88rem;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 12px;line-height:1.8;min-width:0;overflow-x:auto}
+.readout div[dir=auto]{unicode-bidi:plaintext;text-align:start}
+.readout .heb{font-family:var(--f-body);font-size:.95rem}
+.readout .acc{color:var(--accent);font-weight:600} .readout .mrk{color:var(--mark);font-weight:600} .readout .grn{color:var(--green);font-weight:600} .readout .vio{color:var(--violet);font-weight:600}
+.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btns button{font:inherit;font-weight:700;font-size:.9rem;padding:6px 14px;border-radius:99px;border:1px solid var(--accent);background:var(--paper);color:var(--accent);cursor:pointer}
+.btns button:hover,.btns button:focus-visible{background:var(--accent-soft);outline:none}
+svg text{font-family:var(--f-math);font-size:14px;fill:var(--ink)}
+svg text.tick{font-size:12px;fill:var(--muted)}
+svg text.heb{font-family:var(--f-body);font-weight:700;font-size:15px}
+svg text.big{font-size:17px;font-weight:600}
+svg text.lab{paint-order:stroke;stroke:var(--paper);stroke-width:4px;stroke-linejoin:round}
+svg .ax{stroke:var(--muted);stroke-width:1.2}
+svg .axh{fill:var(--muted)}
+svg .gr{stroke:var(--line);stroke-width:1}
+svg .cv{fill:none;stroke-width:2.6;stroke-linecap:round}
+svg .cv.acc{stroke:var(--accent)} svg .cv.mrk{stroke:var(--mark)} svg .cv.grn{stroke:var(--green)} svg .cv.vio{stroke:var(--violet)} svg .cv.ink{stroke:var(--ink)}
+svg .cv.aux{stroke:var(--muted);stroke-width:1.4}
+svg .cv.faint{stroke:var(--muted);stroke-width:1.3;stroke-dasharray:5 4;opacity:.8}
+svg .cv.dash{stroke-dasharray:7 5}
+svg .cv.thin{stroke-width:1.6}
+svg .head{stroke:none} svg .head.acc{fill:var(--accent)} svg .head.mrk{fill:var(--mark)} svg .head.grn{fill:var(--green)} svg .head.vio{fill:var(--violet)} svg .head.ink{fill:var(--ink)}
+
+/* practice */
+ol.exercises{margin:0;padding-inline-start:24px;display:flex;flex-direction:column;gap:16px}
+ol.exercises li{break-inside:avoid}
+ol.exercises li::marker{font-weight:700;color:var(--accent)}
+ol.parts{list-style:hebrew;margin:4px 0 0;padding-inline-start:22px}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--mark);font-weight:600;font-size:.92rem;width:fit-content}
+summary:focus-visible{outline:2px solid var(--mark);outline-offset:3px;border-radius:4px}
+details .sol{margin-top:6px;padding:10px 14px;border-inline-start:3px solid var(--mark);background:var(--mark-soft);border-radius:0 6px 6px 0;display:flex;flex-direction:column;gap:6px}
+details .sol svg.plot{max-width:380px;margin-inline:auto}
+.lvl{font-family:var(--f-display);font-size:1.15rem;color:var(--mark);margin-top:6px}
+footer{color:var(--muted);font-size:.9rem;text-align:center}
+@media (max-width:480px){h1{font-size:1.9rem} section.ch{padding:18px 16px 22px}}
+@media print{details{display:block} details>summary{display:none} details .sol{display:flex} .btns,.ctl,nav.series{display:none} section.ch{break-inside:auto} figure,.fig{break-inside:avoid}}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+<!-- KaTeX: renders the LaTeX inside \( ... \) and \[ ... \] (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],ignoredClasses:['readout'],throwOnError:false})"></script>
+<style>
+.m .katex{font-size:1.14em;position:relative}
+.m:has(.katex){white-space:normal}
+*:has(> .m .mfrac){line-height:2.15}
+td .m .katex{font-size:1.1em}
+.dm .katex-display{margin:.4em 0}
+</style>
+<script src="font-size.js"></script>
+<script>
+/* Plot: draws coordinate-plane figures into <svg class="plot"> from a plain spec.
+   Plot.draw(svg, {view:[xmin,xmax,ymin,ymax], w:600, step:1, items:[...]})
+   Items: {fn:f,dom:[a,b]} {par:f,t:[a,b]} {circle:[a,b],r} {ell:[h,k],a,b} {hyp:[h,k],a,b,vert}
+          {abc:[A,B,C]} (Ax+By+C=0)  {line:[P,Q]}  {seg:[P,Q],lbl}  {arrow:[P,Q]}  {poly:[...],closed,fill}
+          {pt:P,lbl,col,hollow,dx,dy,anchor}  {txt:'..',at:P,col,anchor,dx,dy}  {ra:P,u:[..],v:[..]} (right angle)
+   Common: c = stroke class ('acc','mrk','grn','vio','ink','aux','faint', optionally + ' dash'), w = stroke width.
+   Plot.lab(figEl, {sliders:[{id,label,min,max,step,val}], spec:function(v){}, read:function(v){return [lines]}, play:'t'}) */
+var Plot = (function () {
+  var NS = 'http://www.w3.org/2000/svg', uid = 0;
+  var COL = { acc: 'var(--accent)', mrk: 'var(--mark)', grn: 'var(--green)', vio: 'var(--violet)', ink: 'var(--ink)', mut: 'var(--muted)' };
+  function el(p, n, a, t) {
+    var e = document.createElementNS(NS, n);
+    for (var k in a) if (a[k] != null) e.setAttribute(k, a[k]);
+    if (t != null) e.textContent = t;
+    p.appendChild(e); return e;
+  }
+  function r2(v) { return Math.round(v * 100) / 100; }
+  function fmt(v, d) { var p = Math.pow(10, d == null ? 2 : d); v = Math.round(v * p) / p; if (Object.is(v, -0)) v = 0; return (v < 0 ? '−' : '') + Math.abs(v); }
+  function nice(range) { var raw = range / 12, c = [0.5, 1, 2, 5, 10, 20]; for (var i = 0; i < c.length; i++) if (c[i] >= raw) return c[i]; return 50; }
+  var HEB = /[֐-׿]/;
+
+  function text(p, x, y, s, o) {
+    o = o || {};
+    var heb = HEB.test(s), anc = o.anchor || 'start';
+    if (heb) anc = anc === 'start' ? 'end' : anc === 'end' ? 'start' : 'middle';
+    var a = { x: x, y: y, 'text-anchor': anc, 'class': 'lab' + (heb ? ' heb' : '') + (o.big ? ' big' : '') };
+    if (heb) { a.direction = 'rtl'; a['unicode-bidi'] = 'embed'; }
+    if (o.col) a.style = 'fill:' + (COL[o.col] || o.col);
+    return el(p, 'text', a, s);
+  }
+
+  function draw(svg, S) {
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var v = S.view, W = S.w || 600, sc = W / (v[1] - v[0]), H = Math.round((v[3] - v[2]) * sc);
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    var X = function (x) { return (x - v[0]) * sc; }, Y = function (y) { return (v[3] - y) * sc; };
+    var id = 'clp' + (++uid), defs = el(svg, 'defs', {}), cp = el(defs, 'clipPath', { id: id });
+    el(cp, 'rect', { x: 0, y: 0, width: W, height: H });
+    var st = S.step || nice(Math.max(v[1] - v[0], v[3] - v[2])), k;
+    if (S.grid !== false) {
+      for (k = Math.ceil(v[0] / st); k * st <= v[1] + 1e-9; k++) el(svg, 'line', { x1: X(k * st), y1: 0, x2: X(k * st), y2: H, 'class': 'gr' });
+      for (k = Math.ceil(v[2] / st); k * st <= v[3] + 1e-9; k++) el(svg, 'line', { x1: 0, y1: Y(k * st), x2: W, y2: Y(k * st), 'class': 'gr' });
+    }
+    if (S.axes !== false) {
+      var ay = (v[2] <= 0 && v[3] >= 0) ? Y(0) : null, ax = (v[0] <= 0 && v[1] >= 0) ? X(0) : null;
+      if (ay != null) { el(svg, 'line', { x1: 0, y1: ay, x2: W, y2: ay, 'class': 'ax' }); el(svg, 'path', { d: 'M ' + W + ' ' + ay + ' l -9 -4 v 8 z', 'class': 'axh' }); text(svg, W - 6, ay - 8, 'x', { anchor: 'end' }); }
+      if (ax != null) { el(svg, 'line', { x1: ax, y1: 0, x2: ax, y2: H, 'class': 'ax' }); el(svg, 'path', { d: 'M ' + ax + ' 0 l -4 9 h 8 z', 'class': 'axh' }); text(svg, ax + 8, 14, 'y'); }
+      if (S.ticks !== false) {
+        var ts = S.tickStep || st * (S.tickEvery || 1);
+        if (ay != null) for (k = Math.ceil(v[0] / ts); k * ts <= v[1] - ts * 0.3; k++) { if (k === 0) continue; el(svg, 'line', { x1: X(k * ts), y1: ay - 3, x2: X(k * ts), y2: ay + 3, 'class': 'ax' }); text(svg, X(k * ts), ay + 15, fmt(k * ts), { anchor: 'middle' }).setAttribute('class', 'lab tick'); }
+        if (ax != null) for (k = Math.ceil(v[2] / ts); k * ts <= v[3] - ts * 0.3; k++) { if (k === 0) continue; el(svg, 'line', { x1: ax - 3, y1: Y(k * ts), x2: ax + 3, y2: Y(k * ts), 'class': 'ax' }); text(svg, ax - 6, Y(k * ts) + 4, fmt(k * ts), { anchor: 'end' }).setAttribute('class', 'lab tick'); }
+        if (ax != null && ay != null) text(svg, ax - 6, ay + 15, '0', { anchor: 'end' }).setAttribute('class', 'lab tick');
+      }
+    }
+    var g = el(svg, 'g', { 'clip-path': 'url(#' + id + ')' }), top = el(svg, 'g', {});
+    var ctx = { X: X, Y: Y, sc: sc, v: v, W: W, H: H };
+    (S.items || []).forEach(function (it) { if (it) item(ctx, g, top, it); });
+  }
+
+  function cls(it, def) { return 'cv ' + (it.c || def || 'acc'); }
+  function sw(it) { return it.w ? 'stroke-width:' + it.w : null; }
+  function pathFrom(ctx, pts) {
+    var d = '', pen = false, lim = 4 * (ctx.W + ctx.H);
+    pts.forEach(function (p) {
+      if (!p || !isFinite(p[0]) || !isFinite(p[1])) { pen = false; return; }
+      var x = ctx.X(p[0]), y = ctx.Y(p[1]);
+      if (Math.abs(x) > lim || Math.abs(y) > lim) { pen = false; return; }
+      d += (pen ? ' L ' : ' M ') + x.toFixed(2) + ' ' + y.toFixed(2); pen = true;
+    });
+    return d;
+  }
+  function sample(f, a, b, n) { var out = []; for (var i = 0; i <= n; i++) out.push(f(a + (b - a) * i / n)); return out; }
+
+  function item(ctx, g, top, it) {
+    var X = ctx.X, Y = ctx.Y, v = ctx.v, big = 3 * Math.max(v[1] - v[0], v[3] - v[2]);
+    if (it.fn) {
+      var dom = it.dom || [v[0], v[1]], n = it.n || 600, prev = null;
+      var pts = sample(function (x) { var y = it.fn(x); return [x, y]; }, dom[0], dom[1], n).map(function (p) {
+        var q = p; if (prev && isFinite(prev[1]) && isFinite(p[1]) && Math.abs(p[1] - prev[1]) > (v[3] - v[2]) * 1.5) q = null; prev = p; return q; });
+      el(g, 'path', { d: pathFrom(ctx, pts), 'class': cls(it), style: sw(it) });
+    } else if (it.par) {
+      el(g, 'path', { d: pathFrom(ctx, sample(it.par, it.t[0], it.t[1], it.n || 600)), 'class': cls(it), style: sw(it) });
+    } else if (it.circle) {
+      el(g, 'circle', { cx: X(it.circle[0]), cy: Y(it.circle[1]), r: it.r * ctx.sc, 'class': cls(it), style: sw(it) });
+    } else if (it.ell) {
+      el(g, 'ellipse', { cx: X(it.ell[0]), cy: Y(it.ell[1]), rx: it.a * ctx.sc, ry: it.b * ctx.sc, 'class': cls(it), style: sw(it) });
+    } else if (it.hyp) {
+      var h = it.hyp[0], kk = it.hyp[1], a = it.a, b = it.b, T = Math.log(2 * big / Math.min(a, b) + 1) + 0.5;
+      [1, -1].forEach(function (s) {
+        var f = it.vert ? function (t) { return [h + a * Math.sinh(t), kk + s * b * Math.cosh(t)]; }
+                        : function (t) { return [h + s * a * Math.cosh(t), kk + b * Math.sinh(t)]; };
+        el(g, 'path', { d: pathFrom(ctx, sample(f, -T, T, it.n || 800)), 'class': cls(it), style: sw(it) });
+      });
+    } else if (it.abc || it.line) {
+      var P, Q;
+      if (it.line) { P = it.line[0]; Q = it.line[1]; }
+      else { var A = it.abc[0], B = it.abc[1], C = it.abc[2];
+        if (Math.abs(B) > 1e-12) { P = [v[0] - big, -(A * (v[0] - big) + C) / B]; Q = [v[1] + big, -(A * (v[1] + big) + C) / B]; }
+        else { P = [-C / A, v[2] - big]; Q = [-C / A, v[3] + big]; } }
+      var dx = Q[0] - P[0], dy = Q[1] - P[1], L = Math.hypot(dx, dy) || 1, ux = dx / L, uy = dy / L;
+      el(g, 'line', { x1: X(P[0] - ux * big), y1: Y(P[1] - uy * big), x2: X(Q[0] + ux * big), y2: Y(Q[1] + uy * big), 'class': cls(it), style: sw(it) });
+    } else if (it.seg || it.arrow) {
+      var s = it.seg || it.arrow;
+      el(g, 'line', { x1: X(s[0][0]), y1: Y(s[0][1]), x2: X(s[1][0]), y2: Y(s[1][1]), 'class': cls(it), style: sw(it) });
+      if (it.arrow) {
+        var ex = X(s[1][0]), ey = Y(s[1][1]), ang = Math.atan2(ey - Y(s[0][1]), ex - X(s[0][0])), z = 10;
+        el(g, 'path', { d: 'M ' + ex + ' ' + ey + ' L ' + (ex - z * Math.cos(ang - 0.4)) + ' ' + (ey - z * Math.sin(ang - 0.4)) + ' L ' + (ex - z * Math.cos(ang + 0.4)) + ' ' + (ey - z * Math.sin(ang + 0.4)) + ' z', 'class': 'head ' + (it.c || 'acc').split(' ')[0] });
+      }
+      if (it.lbl) { var mx = (X(s[0][0]) + X(s[1][0])) / 2 + (it.dx || 0), my = (Y(s[0][1]) + Y(s[1][1])) / 2 + (it.dy || -6);
+        text(top, mx, my, it.lbl, { anchor: it.anchor || 'middle', col: it.col || (it.c || 'acc').split(' ')[0] }); }
+    } else if (it.poly) {
+      var d = it.poly.map(function (p, i) { return (i ? 'L ' : 'M ') + X(p[0]) + ' ' + Y(p[1]); }).join(' ') + (it.closed ? ' z' : '');
+      el(g, 'path', { d: d, 'class': cls(it, 'aux'), style: (it.fill ? 'fill:' + it.fill + ';' : '') + (sw(it) || '') });
+    } else if (it.ra) {
+      var z2 = 9 / ctx.sc, p0 = it.ra, u = it.u, w = it.v, nu = Math.hypot(u[0], u[1]), nw = Math.hypot(w[0], w[1]);
+      var a1 = [p0[0] + u[0] / nu * z2, p0[1] + u[1] / nu * z2], c2 = [a1[0] + w[0] / nw * z2, a1[1] + w[1] / nw * z2], b1 = [p0[0] + w[0] / nw * z2, p0[1] + w[1] / nw * z2];
+      el(g, 'path', { d: 'M ' + X(a1[0]) + ' ' + Y(a1[1]) + ' L ' + X(c2[0]) + ' ' + Y(c2[1]) + ' L ' + X(b1[0]) + ' ' + Y(b1[1]), 'class': 'cv ' + (it.c || 'aux') });
+    } else if (it.pt) {
+      var col = COL[it.col || 'ink'] || it.col;
+      el(top, 'circle', { cx: X(it.pt[0]), cy: Y(it.pt[1]), r: it.r || 4.5, style: it.hollow ? 'fill:var(--paper);stroke:' + col + ';stroke-width:2' : 'fill:' + col });
+      if (it.lbl) text(top, X(it.pt[0]) + (it.dx == null ? 8 : it.dx), Y(it.pt[1]) + (it.dy == null ? -8 : it.dy), it.lbl, { anchor: it.anchor || 'start', col: it.col || 'ink' });
+    } else if (it.txt != null) {
+      text(top, X(it.at[0]) + (it.dx || 0), Y(it.at[1]) + (it.dy || 0), it.txt, { anchor: it.anchor || 'middle', col: it.col, big: it.big });
+    }
+  }
+
+  /* static figures: <svg class="plot" data-fig="name"></svg>, specs registered in Plot.figs */
+  var figs = {};
+  function renderAll() { document.querySelectorAll('svg.plot[data-fig]').forEach(function (s) { var f = figs[s.dataset.fig]; if (f) draw(s, typeof f === 'function' ? f() : f); }); }
+
+  function lab(root, cfg) {
+    if (typeof root === 'string') root = document.getElementById(root);
+    var svg = root.querySelector('svg.plot'), ctl = root.querySelector('.ctl'), out = root.querySelector('.readout'), inputs = {};
+    cfg.sliders.forEach(function (s) {
+      var L = document.createElement('label');
+      L.innerHTML = '<span></span><input type="range"><output></output>';
+      L.firstChild.textContent = s.label;
+      var inp = L.querySelector('input'); inp.min = s.min; inp.max = s.max; inp.step = s.step; inp.value = s.val;
+      inp.setAttribute('aria-label', s.label);
+      inp.addEventListener('input', upd); inputs[s.id] = { inp: inp, out: L.querySelector('output'), s: s };
+      if (out && out.parentNode === ctl) ctl.insertBefore(L, out); else ctl.appendChild(L);
+    });
+    var playing = false, raf = 0;
+    if (cfg.play) {
+      var b = document.createElement('div'); b.className = 'btns';
+      b.innerHTML = '<button type="button">▶ הפעל תנועה</button>';
+      var btn = b.firstChild; if (out && out.parentNode === ctl) ctl.insertBefore(b, out); else ctl.appendChild(b);
+      btn.addEventListener('click', function () {
+        playing = !playing; btn.textContent = playing ? '❚❚ עצור' : '▶ הפעל תנועה';
+        if (playing) { var last = 0; var step = function (ts) {
+            if (!playing) return; if (!last) last = ts; var dt = Math.min(0.05, (ts - last) / 1000); last = ts;
+            var I = inputs[cfg.play], s = I.s, val = +I.inp.value + (s.max - s.min) * dt / (cfg.period || 8);
+            if (val > s.max) val = s.min + (val - s.max); I.inp.value = val; upd(); raf = requestAnimationFrame(step); };
+          raf = requestAnimationFrame(step); } else cancelAnimationFrame(raf);
+      });
+    }
+    function upd() {
+      var v = {}; for (var k in inputs) { v[k] = +inputs[k].inp.value; inputs[k].out.textContent = fmt(v[k], inputs[k].s.dec == null ? 2 : inputs[k].s.dec) + (inputs[k].s.unit || ''); }
+      draw(svg, cfg.spec(v));
+      if (out && cfg.read) { out.innerHTML = ''; cfg.read(v).forEach(function (line) { var d = document.createElement('div'); d.dir = 'auto'; d.innerHTML = line; out.appendChild(d); }); }
+    }
+    upd();
+    return { update: upd, inputs: inputs };
+  }
+
+  /* text helpers for equations shown in readouts: poly([[2,'x²'],[-4,'x'],[1,'']]) -> "2x² − 4x + 1" */
+  function poly(terms) {
+    var s = '';
+    terms.forEach(function (t) {
+      var c = r2(t[0]), m = t[1]; if (Math.abs(c) < 1e-9) return;
+      var a = Math.abs(c), body = (m && a === 1) ? m : fmt(a) + m;
+      s += s ? (c < 0 ? ' − ' : ' + ') + body : (c < 0 ? '−' : '') + body;
+    });
+    return s || '0';
+  }
+  function sq(vn, c) { c = r2(c); return Math.abs(c) < 1e-9 ? vn + '²' : '(' + vn + (c > 0 ? ' − ' : ' + ') + fmt(Math.abs(c)) + ')²'; }
+  function dist(P, Q) { return Math.hypot(P[0] - Q[0], P[1] - Q[1]); }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderAll); else setTimeout(renderAll, 0);
+  return { draw: draw, lab: lab, figs: figs, fmt: fmt, poly: poly, sq: sq, dist: dist, renderAll: renderAll };
+})();
+
+</script>
+</head>
+<body>
+<style>
+/* Solutions: "דרך החשיבה" box, numbered steps, answer (same pattern as the composite-derivatives exercises) */
+.think{background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.think-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+ol.st{margin:6px 0 0;padding-inline-start:24px;display:flex;flex-direction:column;gap:6px}
+ol.st li::marker{font-weight:700;color:var(--mark)}
+ol.st b{color:var(--mark)}
+.sol .ans{font-weight:700;border-top:1px dashed var(--line);padding-top:8px;margin-top:4px}
+.sv{color:var(--violet);font-weight:700} .cg{color:var(--green);font-weight:700}
+</style>
+<div class="wrap">
+<a class="back" href="index.html#trigonometry">→ חזרה לנושא: פונקציות טריגונומטריות</a>
+<header>
+  <span class="eyebrow">מתמטיקה · 5 יחידות · פונקציות טריגונומטריות · דף 1</span>
+  <h1>הפונקציות sin, ‏cos ו־tan</h1>
+  <p class="lead">בדף הקודם ראינו שלכל זווית <span class="m">\(\alpha\)</span> יש נקודה אחת על מעגל היחידה, <span class="m">\(P(\cos\alpha,\sin\alpha)\)</span>. כאן הופכים את זה לפונקציות: <strong>הזווית היא ה־x, והערך של sin, cos או tan הוא ה־y.</strong> נגדיר את הטנגנס, נבנה את שלושת הגרפים מתוך המעגל, ונקרא מהם את התכונות: תחום הגדרה, טווח, מחזור, אפסים, מקסימום ומינימום וסימטריה. בדף הזה כל הזוויות במעלות. בדף הבא עוברים לרדיאנים ולטבלה של כל הזוויות החשובות.</p>
+</header>
+
+<nav class="pagetoc" aria-label="תוכן"><strong>תוכן</strong><ol>
+  <li><a href="#func">מזווית לפונקציה</a></li>
+  <li><a href="#any">כל זווית: יותר מסיבוב וזווית שלילית</a></li>
+  <li><a href="#tan">הטנגנס</a></li>
+  <li><a href="#identity">זהות היסוד</a></li>
+  <li><a href="#sin">הגרף של y = sin x</a></li>
+  <li><a href="#cos">הגרף של y = cos x</a></li>
+  <li><a href="#tang">הגרף של y = tan x</a></li>
+  <li><a href="#sym">סימטריות במעגל</a></li>
+  <li><a href="#summary">טבלת סיכום</a></li>
+  <li><a href="#mist">טעויות נפוצות</a></li>
+  <li><a href="#practice">תרגול</a></li>
+</ol></nav>
+
+<section class="ch" id="func">
+<h2>1. מזווית לפונקציה</h2>
+<div class="meaning">
+<p><strong>פונקציה</strong> מתאימה לכל ערך של <span class="m">\(x\)</span> ערך <strong>אחד</strong> של <span class="m">\(y\)</span>. במעגל היחידה כל זווית קובעת נקודה אחת בדיוק, ולכן גם ערך אחד של <span class="m">\(\cos\)</span> וערך אחד של <span class="m">\(\sin\)</span>. זה בדיוק מה שצריך כדי לקבל פונקציה.</p>
+<div class="formulas">
+  <div class="f"><b>סינוס</b><span class="m">\(f(x)=\sin x\)</span> = שיעור ה־y של הנקודה</div>
+  <div class="f"><b>קוסינוס</b><span class="m">\(g(x)=\cos x\)</span> = שיעור ה־x של הנקודה</div>
+  <div class="f"><b>טנגנס</b><span class="m">\(h(x)=\tan x=\dfrac{\sin x}{\cos x}\)</span></div>
+</div>
+<p>כשמדברים על פונקציה נוהגים לקרוא לזווית <span class="m">\(x\)</span> ולא <span class="m">\(\alpha\)</span>. זה עלול לבלבל: <span class="m">\(x\)</span> כאן הוא <strong>הזווית</strong> (ציר ה־x בגרף), ולא שיעור ה־x של הנקודה על המעגל.</p>
+<p class="note"><strong>שימו לב:</strong> במעגל היחידה יש שני מישורים שונים. במעגל, הצירים הם שיעורי הנקודה. בגרף, הציר האופקי הוא הזווית והציר האנכי הוא הערך. המעבדות בדף מציירות את שניהם זה לצד זה.</p>
+</div>
+</section>
+
+<section class="ch" id="any">
+<h2>2. כל זווית: יותר מסיבוב וזווית שלילית</h2>
+<div class="fig-row">
+<div class="meaning">
+<p>כדי שהפונקציה תהיה מוגדרת לכל מספר, צריך זווית לכל מספר:</p>
+<ul class="mist">
+<li><strong>יותר מ־<span class="m">\(360^\circ\)</span>:</strong> ממשיכים להסתובב. <span class="m">\(400^\circ\)</span> הוא סיבוב שלם ועוד <span class="m">\(40^\circ\)</span>, ולכן מגיעים לאותה נקודה כמו ב־<span class="m">\(40^\circ\)</span>.</li>
+<li><strong>זווית שלילית:</strong> מסתובבים <strong>עם</strong> כיוון השעון. <span class="m">\(-90^\circ\)</span> מגיעה לנקודה <span class="m">\((0,-1)\)</span>, אותה נקודה כמו <span class="m">\(270^\circ\)</span>.</li>
+</ul>
+<p>כל סיבוב שלם מחזיר לאותה נקודה, ולכן הערכים חוזרים על עצמם:</p>
+<div class="key"><span class="m">\(\sin(x+360^\circ k)=\sin x\)</span><br><span class="m">\(\cos(x+360^\circ k)=\cos x\)</span><br><small>לכל מספר שלם <span class="m">\(k\)</span></small></div>
+<div class="example"><span class="tag">דוגמה</span>
+<p><span class="m">\(\sin 750^\circ\)</span>: מורידים סיבובים שלמים, <span class="m">\(750^\circ-2\cdot360^\circ=30^\circ\)</span>, ולכן <span class="m">\(\sin750^\circ=\sin30^\circ=\tfrac12\)</span>.</p>
+<p><span class="m">\(\cos(-300^\circ)\)</span>: מוסיפים סיבוב, <span class="m">\(-300^\circ+360^\circ=60^\circ\)</span>, ולכן <span class="m">\(\cos(-300^\circ)=\cos60^\circ=\tfrac12\)</span>.</p>
+</div>
+</div>
+<figure><svg class="plot" data-fig="wind" aria-label="זווית של 400 מעלות וזווית של מינוס 90 מעלות על מעגל היחידה"></svg>
+<figcaption><b>כתום:</b> <span class="m">\(400^\circ\)</span>, סיבוב ועוד <span class="m">\(40^\circ\)</span>. <b>סגול:</b> <span class="m">\(-90^\circ\)</span>, עם כיוון השעון.</figcaption></figure>
+</div>
+</section>
+
+<section class="ch" id="tan">
+<h2>3. הטנגנס</h2>
+<div class="fig-row">
+<div class="meaning">
+<p><strong>ההגדרה:</strong> <span class="m">\(\tan\alpha=\dfrac{\sin\alpha}{\cos\alpha}\)</span>, כלומר ה־y של הנקודה חלקי ה־x שלה.</p>
+<p><strong>המשמעות:</strong> <span class="m">\(\dfrac{y}{x}\)</span> הוא <strong>השיפוע</strong> של הרדיוס <span class="m">\(OP\)</span>. ככל שהרדיוס תלול יותר, הטנגנס גדול יותר.</p>
+<p><strong>בשרטוט:</strong> ממשיכים את הרדיוס עד הישר <span class="m">\(x=1\)</span>, המשיק למעגל בנקודה <span class="m">\((1,0)\)</span>. נקודת הפגישה היא <span class="m">\(T(1,\tan\alpha)\)</span>. מכאן השם "טנגנס", משיק בלטינית.</p>
+<p><strong>במשולש ישר זווית</strong> (זווית חדה): <span class="m">\(\tan\alpha=\dfrac{\text{הניצב שמול הזווית}}{\text{הניצב שליד הזווית}}\)</span>.</p>
+<p><strong>מתי לא מוגדר:</strong> כש־<span class="m">\(\cos\alpha=0\)</span>, כלומר ב־<span class="m">\(90^\circ\)</span> וב־<span class="m">\(270^\circ\)</span>. שם הרדיוס אנכי, מקביל לישר <span class="m">\(x=1\)</span>, ולא פוגש אותו.</p>
+</div>
+<figure><svg class="plot" data-fig="tandef" aria-label="הטנגנס כשיעור ה-y של נקודת הפגישה של הרדיוס עם הישר x=1"></svg>
+<figcaption>המשולשים <span class="m">\(OQP\)</span> ו־<span class="m">\(OAT\)</span> דומים, ולכן <span class="m">\(\dfrac{AT}{1}=\dfrac{\sin\alpha}{\cos\alpha}\)</span>.</figcaption></figure>
+</div>
+<h3>סימן הטנגנס לפי רביע</h3>
+<div class="tablebox"><table>
+<tr><th>רביע</th><th>I</th><th>II</th><th>III</th><th>IV</th></tr>
+<tr><td><span class="m">\(\sin\)</span></td><td>+</td><td>+</td><td>−</td><td>−</td></tr>
+<tr><td><span class="m">\(\cos\)</span></td><td>+</td><td>−</td><td>−</td><td>+</td></tr>
+<tr><td><span class="m">\(\tan=\sin/\cos\)</span></td><td><strong>+</strong></td><td><strong>−</strong></td><td><strong>+</strong></td><td><strong>−</strong></td></tr>
+</table></div>
+<p>בשני סימנים זהים המנה חיובית (רביעים I ו־III), ובסימנים שונים שלילית (II ו־IV).</p>
+<h3>ערכי הטנגנס של הזוויות המיוחדות</h3>
+<div class="tablebox"><table>
+<tr><th>זווית</th><th><span class="m">\(0^\circ\)</span></th><th><span class="m">\(30^\circ\)</span></th><th><span class="m">\(45^\circ\)</span></th><th><span class="m">\(60^\circ\)</span></th><th><span class="m">\(90^\circ\)</span></th></tr>
+<tr><td>חישוב</td><td><span class="m">\(\tfrac{0}{1}\)</span></td><td><span class="m">\(\dfrac{1/2}{\sqrt3/2}\)</span></td><td><span class="m">\(\dfrac{\sqrt2/2}{\sqrt2/2}\)</span></td><td><span class="m">\(\dfrac{\sqrt3/2}{1/2}\)</span></td><td><span class="m">\(\tfrac{1}{0}\)</span></td></tr>
+<tr><td><span class="m">\(\tan\)</span></td><td><span class="m">\(0\)</span></td><td><span class="m">\(\tfrac{1}{\sqrt3}=\tfrac{\sqrt3}{3}\)</span></td><td><span class="m">\(1\)</span></td><td><span class="m">\(\sqrt3\)</span></td><td>לא מוגדר</td></tr>
+</table></div>
+<p><span class="m">\(\tan45^\circ=1\)</span> כי ב־<span class="m">\(45^\circ\)</span> הרדיוס הוא הישר <span class="m">\(y=x\)</span>, ששיפועו 1.</p>
+</section>
+
+<section class="ch" id="identity">
+<h2>4. זהות היסוד</h2>
+<div class="meaning">
+<p>הנקודה <span class="m">\((\cos\alpha,\sin\alpha)\)</span> נמצאת על המעגל <span class="m">\(x^2+y^2=1\)</span>. מציבים, ומקבלים זהות שנכונה <strong>לכל</strong> זווית:</p>
+<div class="key"><span class="m">\(\sin^2\alpha+\cos^2\alpha=1\)</span></div>
+<p>(<span class="m">\(\sin^2\alpha\)</span> פירושו <span class="m">\((\sin\alpha)^2\)</span>.) בעזרת הזהות מוצאים את אחד הערכים מתוך השני. הזהות נותנת רק את הגודל, ואת <strong>הסימן</strong> קובע הרביע.</p>
+<div class="example"><span class="tag">דוגמה</span>
+<p>נתון <span class="m">\(\cos\alpha=-0.8\)</span> והזווית ברביע III. מצאו את <span class="m">\(\sin\alpha\)</span> ואת <span class="m">\(\tan\alpha\)</span>.</p>
+<ol class="derive">
+<li><span class="m">\(\sin^2\alpha=1-0.64=0.36\)</span>, ולכן <span class="m">\(\sin\alpha=\pm0.6\)</span>.</li>
+<li>ברביע III הסינוס שלילי: <span class="m">\(\sin\alpha=-0.6\)</span>.</li>
+<li><span class="m">\(\tan\alpha=\dfrac{-0.6}{-0.8}=0.75\)</span>, חיובי כמו שצריך ברביע III.</li>
+</ol>
+</div>
+</div>
+</section>
+
+<section class="ch" id="sin">
+<h2>5. הגרף של <span class="m">\(y=\sin x\)</span></h2>
+<div class="meaning">
+<p>מסובבים את הנקודה על המעגל, ובכל זווית מעבירים את <strong>הגובה</strong> שלה (ה־y) אל הגרף, מעל הזווית המתאימה. הזיזו את המחוון או הפעילו את התנועה.</p>
+</div>
+<div class="fig" id="lab-sin">
+<span class="fig-cap">מעבדה: מהמעגל לגרף של הסינוס</span>
+<svg class="plot" aria-label="מעגל היחידה והגרף של סינוס"></svg>
+<div class="ctl"><div class="readout"></div></div>
+</div>
+<figure><svg class="plot" data-fig="sinG" aria-label="הגרף של y=sin x מ־מינוס 180 עד 540 מעלות"></svg>
+<figcaption>הגרף של <span class="m">\(y=\sin x\)</span>. אחרי <span class="m">\(360^\circ\)</span> הוא חוזר על עצמו.</figcaption></figure>
+<h3>מה קוראים מהגרף</h3>
+<div class="formulas">
+  <div class="f"><b>תחום הגדרה</b>כל <span class="m">\(x\)</span></div>
+  <div class="f"><b>טווח (תמונה)</b><span class="m">\(-1\le\sin x\le1\)</span></div>
+  <div class="f"><b>מחזור</b><span class="m">\(360^\circ\)</span></div>
+  <div class="f"><b>אפסים (חיתוך עם ציר x)</b><span class="m">\(x=180^\circ k\)</span>: ‏<span class="m">\(0^\circ,180^\circ,360^\circ,\dots\)</span></div>
+  <div class="f"><b>מקסימום 1</b><span class="m">\(x=90^\circ+360^\circ k\)</span></div>
+  <div class="f"><b>מינימום −1</b><span class="m">\(x=270^\circ+360^\circ k\)</span></div>
+</div>
+<p>בסיבוב אחד, <span class="m">\(0^\circ\le x\le360^\circ\)</span>: הפונקציה <strong>עולה</strong> ב־<span class="m">\(0^\circ\)</span>–<span class="m">\(90^\circ\)</span> וב־<span class="m">\(270^\circ\)</span>–<span class="m">\(360^\circ\)</span>, <strong>יורדת</strong> ב־<span class="m">\(90^\circ\)</span>–<span class="m">\(270^\circ\)</span>, <strong>חיובית</strong> ב־<span class="m">\(0^\circ\lt x\lt180^\circ\)</span> (רביעים I ו־II) ו<strong>שלילית</strong> ב־<span class="m">\(180^\circ\lt x\lt360^\circ\)</span>.</p>
+</section>
+
+<section class="ch" id="cos">
+<h2>6. הגרף של <span class="m">\(y=\cos x\)</span></h2>
+<div class="meaning">
+<p>אותו דבר, אבל עכשיו מעבירים לגרף את <strong>שיעור ה־x</strong> של הנקודה (הקטע הירוק). כשהנקודה מימין למרכז הערך חיובי, וכשהיא משמאל הערך שלילי.</p>
+</div>
+<div class="fig" id="lab-cos">
+<span class="fig-cap">מעבדה: מהמעגל לגרף של הקוסינוס</span>
+<svg class="plot" aria-label="מעגל היחידה והגרף של קוסינוס"></svg>
+<div class="ctl"><div class="readout"></div></div>
+</div>
+<figure><svg class="plot" data-fig="cosG" aria-label="הגרף של y=cos x ולידו הגרף של sin x בקו מקווקו"></svg>
+<figcaption><b>ירוק:</b> <span class="m">\(y=\cos x\)</span>. <b>מקווקו:</b> <span class="m">\(y=\sin x\)</span>. זו אותה צורה, מוזזת ב־<span class="m">\(90^\circ\)</span>.</figcaption></figure>
+<div class="formulas">
+  <div class="f"><b>תחום הגדרה</b>כל <span class="m">\(x\)</span></div>
+  <div class="f"><b>טווח</b><span class="m">\(-1\le\cos x\le1\)</span></div>
+  <div class="f"><b>מחזור</b><span class="m">\(360^\circ\)</span></div>
+  <div class="f"><b>אפסים</b><span class="m">\(x=90^\circ+180^\circ k\)</span>: ‏<span class="m">\(90^\circ,270^\circ,\dots\)</span></div>
+  <div class="f"><b>מקסימום 1</b><span class="m">\(x=360^\circ k\)</span>: ‏<span class="m">\(0^\circ,360^\circ,\dots\)</span></div>
+  <div class="f"><b>מינימום −1</b><span class="m">\(x=180^\circ+360^\circ k\)</span></div>
+</div>
+<p class="note"><strong>הקשר בין הגרפים:</strong> הגרף של הקוסינוס הוא הגרף של הסינוס מוזז <span class="m">\(90^\circ\)</span> שמאלה: <span class="m">\(\cos x=\sin(x+90^\circ)\)</span>. הקוסינוס "מקדים" את הסינוס ברבע סיבוב: הוא מגיע ל־1 כבר ב־<span class="m">\(0^\circ\)</span>, והסינוס רק ב־<span class="m">\(90^\circ\)</span>.</p>
+</section>
+
+<section class="ch" id="tang">
+<h2>7. הגרף של <span class="m">\(y=\tan x\)</span></h2>
+<div class="meaning">
+<p>כאן מעבירים לגרף את הגובה של הנקודה <span class="m">\(T\)</span> על הישר <span class="m">\(x=1\)</span>. כשהזווית מתקרבת ל־<span class="m">\(90^\circ\)</span> הרדיוס כמעט אנכי, ונקודת הפגישה בורחת למעלה בלי גבול. מיד אחרי <span class="m">\(90^\circ\)</span> ממשיכים את הרדיוס לצד השני של המרכז, והפגישה מגיעה מלמטה.</p>
+</div>
+<div class="fig" id="lab-tan">
+<span class="fig-cap">מעבדה: מהמעגל לגרף של הטנגנס</span>
+<svg class="plot" aria-label="מעגל היחידה עם הישר x=1 והגרף של טנגנס"></svg>
+<div class="ctl"><div class="readout"></div></div>
+</div>
+<figure><svg class="plot" data-fig="tanG" aria-label="הגרף של y=tan x עם אסימפטוטות אנכיות"></svg>
+<figcaption>הגרף של <span class="m">\(y=\tan x\)</span>. הקווים המקווקווים הם אסימפטוטות אנכיות, שבהן הפונקציה לא מוגדרת.</figcaption></figure>
+<div class="formulas">
+  <div class="f"><b>תחום הגדרה</b><span class="m">\(x\ne90^\circ+180^\circ k\)</span></div>
+  <div class="f"><b>טווח</b>כל המספרים</div>
+  <div class="f"><b>מחזור</b><span class="m">\(180^\circ\)</span> (לא 360°!)</div>
+  <div class="f"><b>אפסים</b><span class="m">\(x=180^\circ k\)</span> (שם <span class="m">\(\sin x=0\)</span>)</div>
+  <div class="f"><b>אסימפטוטות אנכיות</b><span class="m">\(x=90^\circ+180^\circ k\)</span> (שם <span class="m">\(\cos x=0\)</span>)</div>
+  <div class="f"><b>מונוטוניות</b>עולה בכל ענף, אין מקסימום ומינימום</div>
+</div>
+<p><strong>למה המחזור הוא <span class="m">\(180^\circ\)</span>?</strong> חצי סיבוב מעביר את <span class="m">\(P\)</span> לנקודה הנגדית <span class="m">\((-\cos x,-\sin x)\)</span>. שני השיעורים מחליפים סימן, והמנה לא משתנה: <span class="m">\(\tan(x+180^\circ)=\tan x\)</span>. גם בשרטוט: הנקודה הנגדית על אותו ישר דרך המרכז, ולכן נפגשת עם <span class="m">\(x=1\)</span> באותה נקודה <span class="m">\(T\)</span>.</p>
+</section>
+
+<section class="ch" id="sym">
+<h2>8. סימטריות במעגל</h2>
+<div class="meaning">
+<p>שלוש סימטריות של המעגל נותנות כללים שנשתמש בהם כל הזמן. כל כלל רואים בשרטוט, אין צורך לשנן אותו.</p>
+</div>
+<div class="figs">
+<figure><svg class="plot" data-fig="symNeg" aria-label="זווית אלפא ומינוס אלפא, שיקוף בציר x"></svg>
+<figcaption><b><span class="m">\(-\alpha\)</span>: שיקוף בציר x.</b> ה־x נשאר, ה־y מחליף סימן.</figcaption></figure>
+<figure><svg class="plot" data-fig="symSup" aria-label="זווית אלפא ו־180 פחות אלפא, שיקוף בציר y"></svg>
+<figcaption><b><span class="m">\(180^\circ-\alpha\)</span>: שיקוף בציר y.</b> ה־y נשאר, ה־x מחליף סימן.</figcaption></figure>
+<figure><svg class="plot" data-fig="symOpp" aria-label="זווית אלפא ו־180 ועוד אלפא, נקודות נגדיות"></svg>
+<figcaption><b><span class="m">\(180^\circ+\alpha\)</span>: הנקודה הנגדית.</b> שני השיעורים מחליפים סימן.</figcaption></figure>
+</div>
+<div class="tablebox"><table>
+<tr><th>הזווית</th><th><span class="m">\(\sin\)</span></th><th><span class="m">\(\cos\)</span></th><th><span class="m">\(\tan\)</span></th></tr>
+<tr><td><span class="m">\(-\alpha\)</span></td><td><span class="m">\(-\sin\alpha\)</span></td><td><span class="m">\(\cos\alpha\)</span></td><td><span class="m">\(-\tan\alpha\)</span></td></tr>
+<tr><td><span class="m">\(180^\circ-\alpha\)</span></td><td><span class="m">\(\sin\alpha\)</span></td><td><span class="m">\(-\cos\alpha\)</span></td><td><span class="m">\(-\tan\alpha\)</span></td></tr>
+<tr><td><span class="m">\(180^\circ+\alpha\)</span></td><td><span class="m">\(-\sin\alpha\)</span></td><td><span class="m">\(-\cos\alpha\)</span></td><td><span class="m">\(\tan\alpha\)</span></td></tr>
+<tr><td><span class="m">\(360^\circ-\alpha\)</span></td><td><span class="m">\(-\sin\alpha\)</span></td><td><span class="m">\(\cos\alpha\)</span></td><td><span class="m">\(-\tan\alpha\)</span></td></tr>
+</table></div>
+<p><strong>בגרפים:</strong> <span class="m">\(\cos(-x)=\cos x\)</span>, ולכן הגרף של הקוסינוס סימטרי לציר y (פונקציה <strong>זוגית</strong>). <span class="m">\(\sin(-x)=-\sin x\)</span> ו־<span class="m">\(\tan(-x)=-\tan x\)</span>, ולכן הגרפים שלהם סימטריים לראשית (פונקציות <strong>אי־זוגיות</strong>).</p>
+<div class="example"><span class="tag">דוגמה: משתמשים בכלל במקום במחשבון</span>
+<p><span class="m">\(\sin150^\circ=\sin(180^\circ-30^\circ)=\sin30^\circ=\tfrac12\)</span>&emsp; <span class="m">\(\cos210^\circ=\cos(180^\circ+30^\circ)=-\cos30^\circ=-\tfrac{\sqrt3}{2}\)</span>&emsp; <span class="m">\(\tan(-45^\circ)=-\tan45^\circ=-1\)</span></p>
+<p>הדף הבא בונה מהכללים האלה טבלה של כל הזוויות החשובות בסיבוב אחד.</p>
+</div>
+</section>
+
+<section class="ch" id="summary">
+<h2>9. טבלת סיכום</h2>
+<div class="tablebox"><table>
+<tr><th></th><th><span class="m">\(y=\sin x\)</span></th><th><span class="m">\(y=\cos x\)</span></th><th><span class="m">\(y=\tan x\)</span></th></tr>
+<tr><td>במעגל היחידה</td><td>שיעור ה־y של <span class="m">\(P\)</span></td><td>שיעור ה־x של <span class="m">\(P\)</span></td><td>שיפוע <span class="m">\(OP\)</span>, הגובה של <span class="m">\(T\)</span></td></tr>
+<tr><td>תחום הגדרה</td><td>כל <span class="m">\(x\)</span></td><td>כל <span class="m">\(x\)</span></td><td><span class="m">\(x\ne90^\circ+180^\circ k\)</span></td></tr>
+<tr><td>טווח</td><td><span class="m">\([-1,1]\)</span></td><td><span class="m">\([-1,1]\)</span></td><td>כל המספרים</td></tr>
+<tr><td>מחזור</td><td><span class="m">\(360^\circ\)</span></td><td><span class="m">\(360^\circ\)</span></td><td><span class="m">\(180^\circ\)</span></td></tr>
+<tr><td>אפסים</td><td><span class="m">\(180^\circ k\)</span></td><td><span class="m">\(90^\circ+180^\circ k\)</span></td><td><span class="m">\(180^\circ k\)</span></td></tr>
+<tr><td>מקסימום</td><td>1 ב־<span class="m">\(90^\circ+360^\circ k\)</span></td><td>1 ב־<span class="m">\(360^\circ k\)</span></td><td>אין</td></tr>
+<tr><td>מינימום</td><td>−1 ב־<span class="m">\(270^\circ+360^\circ k\)</span></td><td>−1 ב־<span class="m">\(180^\circ+360^\circ k\)</span></td><td>אין</td></tr>
+<tr><td>סימטריה</td><td>אי־זוגית: <span class="m">\(\sin(-x)=-\sin x\)</span></td><td>זוגית: <span class="m">\(\cos(-x)=\cos x\)</span></td><td>אי־זוגית: <span class="m">\(\tan(-x)=-\tan x\)</span></td></tr>
+</table></div>
+<p><span class="m">\(k\)</span> הוא מספר שלם כלשהו: <span class="m">\(\dots,-2,-1,0,1,2,\dots\)</span></p>
+</section>
+
+<section class="ch" id="mist">
+<h2>10. טעויות נפוצות</h2>
+<ul class="mist">
+<li><strong>לבלבל בין שני ה־x.</strong> בגרף <span class="m">\(y=\cos x\)</span> המשתנה <span class="m">\(x\)</span> הוא הזווית. הקוסינוס הוא שיעור ה־x של הנקודה על המעגל, לא הזווית.</li>
+<li><strong>"<span class="m">\(\tan90^\circ\)</span> = 0".</strong> לא נכון: <span class="m">\(\tan90^\circ=\tfrac{1}{0}\)</span>, ולכן לא מוגדר. 0 הוא <span class="m">\(\tan0^\circ\)</span>.</li>
+<li><strong>לשכוח את הסימן אחרי זהות היסוד.</strong> מ־<span class="m">\(\sin^2\alpha=0.36\)</span> יוצא <span class="m">\(\pm0.6\)</span>. הרביע מחליט.</li>
+<li><strong>מחזור 360° גם לטנגנס.</strong> המחזור של <span class="m">\(\tan\)</span> הוא <span class="m">\(180^\circ\)</span>, ולכן במשוואה כמו <span class="m">\(\tan x=1\)</span> יש שני פתרונות בכל סיבוב.</li>
+<li><strong>"<span class="m">\(\sin\)</span> של זווית גדולה יותר גדול יותר".</strong> רק בין <span class="m">\(0^\circ\)</span> ל־<span class="m">\(90^\circ\)</span>. למשל <span class="m">\(\sin170^\circ\lt\sin30^\circ\)</span>.</li>
+<li><strong><span class="m">\(\sin^2x\)</span> מול <span class="m">\(\sin x^2\)</span>.</strong> <span class="m">\(\sin^2x=(\sin x)^2\)</span>, ריבוע של הערך. <span class="m">\(\sin(x^2)\)</span> הוא סינוס של זווית בריבוע, משהו אחר לגמרי.</li>
+</ul>
+</section>
+
+<section class="ch" id="practice">
+<h2>11. תרגול <small>12 שאלות</small></h2>
+<p class="lvl">רמה א׳</p>
+<ol class="exercises" start="1">
+<li>בלי מחשבון: מצאו את <span class="m">\(\sin450^\circ\)</span>, <span class="m">\(\cos720^\circ\)</span>, <span class="m">\(\sin(-90^\circ)\)</span> ו־<span class="m">\(\cos(-180^\circ)\)</span>.
+<details><summary>הצג פתרון</summary><div class="sol"><div class="think"><span class="think-h">דרך החשיבה</span><p>מוסיפים או מורידים סיבובים שלמים עד שמגיעים לזווית בין <span class="m">\(0^\circ\)</span> ל־<span class="m">\(360^\circ\)</span>. כל הזוויות כאן נופלות על הצירים.</p></div>
+<ol class="st"><li><b><span class="m">\(450^\circ\)</span>:</b> <span class="m">\(450^\circ-360^\circ=90^\circ\)</span>, הנקודה <span class="m">\((0,1)\)</span>: <span class="m">\(\sin450^\circ=1\)</span>.</li>
+<li><b><span class="m">\(720^\circ\)</span>:</b> שני סיבובים שלמים, חוזרים ל־<span class="m">\((1,0)\)</span>: <span class="m">\(\cos720^\circ=1\)</span>.</li>
+<li><b><span class="m">\(-90^\circ\)</span>:</b> רבע סיבוב עם כיוון השעון, הנקודה <span class="m">\((0,-1)\)</span>: <span class="m">\(\sin(-90^\circ)=-1\)</span>.</li>
+<li><b><span class="m">\(-180^\circ\)</span>:</b> חצי סיבוב, הנקודה <span class="m">\((-1,0)\)</span>: <span class="m">\(\cos(-180^\circ)=-1\)</span>.</li></ol>
+<p class="ans">תשובה: 1, 1, −1, −1.</p></div></details></li>
+
+<li>מצאו את <span class="m">\(\tan0^\circ\)</span>, <span class="m">\(\tan45^\circ\)</span>, <span class="m">\(\tan180^\circ\)</span> ו־<span class="m">\(\tan90^\circ\)</span>. הסבירו את התשובה האחרונה.
+<details><summary>הצג פתרון</summary><div class="sol"><div class="think"><span class="think-h">דרך החשיבה</span><p><span class="m">\(\tan=\dfrac{\sin}{\cos}\)</span>: לוקחים את הנקודה על המעגל ומחלקים y ב־x.</p></div>
+<ol class="st"><li><b><span class="m">\(0^\circ\)</span>:</b> <span class="m">\((1,0)\)</span>, ‏<span class="m">\(\tfrac01=0\)</span>.</li>
+<li><b><span class="m">\(45^\circ\)</span>:</b> <span class="m">\(\tfrac{\sqrt2/2}{\sqrt2/2}=1\)</span>.</li>
+<li><b><span class="m">\(180^\circ\)</span>:</b> <span class="m">\((-1,0)\)</span>, ‏<span class="m">\(\tfrac{0}{-1}=0\)</span>.</li>
+<li><b><span class="m">\(90^\circ\)</span>:</b> <span class="m">\((0,1)\)</span>, ‏<span class="m">\(\tfrac10\)</span>: אי אפשר לחלק באפס. בשרטוט, הרדיוס אנכי ולא פוגש את הישר <span class="m">\(x=1\)</span>.</li></ol>
+<p class="ans">תשובה: 0, 1, 0, לא מוגדר.</p></div></details></li>
+
+<li>הנקודה <span class="m">\(P(-0.6,\ 0.8)\)</span> על מעגל היחידה מתאימה לזווית <span class="m">\(\alpha\)</span>. באיזה רביע <span class="m">\(\alpha\)</span>? מצאו את <span class="m">\(\tan\alpha\)</span>.
+<details><summary>הצג פתרון</summary><div class="sol"><div class="think"><span class="think-h">דרך החשיבה</span><p>הקואורדינטות הן <span class="m">\(\cos\alpha\)</span> ו־<span class="m">\(\sin\alpha\)</span>. הסימנים קובעים את הרביע, והמנה את הטנגנס.</p></div>
+<ol class="st"><li><b>רביע:</b> <span class="m">\(x\lt0\)</span>, <span class="m">\(y\gt0\)</span>, ולכן רביע II.</li>
+<li><b>טנגנס:</b> <span class="m">\(\tan\alpha=\dfrac{0.8}{-0.6}=-\dfrac43\)</span>.</li>
+<li><b>בדיקה:</b> ברביע II הטנגנס שלילי ✓.</li></ol>
+<p class="ans">תשובה: רביע II, <span class="m">\(\tan\alpha=-\tfrac43\approx-1.33\)</span>.</p></div></details></li>
+
+<li>בלי לחשב, קבעו את הסימן: <span class="m">\(\sin200^\circ\)</span>, <span class="m">\(\cos300^\circ\)</span>, <span class="m">\(\tan130^\circ\)</span>, <span class="m">\(\tan225^\circ\)</span>.
+<details><summary>הצג פתרון</summary><div class="sol"><div class="think"><span class="think-h">דרך החשיבה</span><p>קובעים את הרביע של כל זווית, ומשם את הסימן לפי הטבלה.</p></div>
+<ol class="st"><li><b><span class="m">\(200^\circ\)</span>:</b> רביע III, סינוס שלילי.</li>
+<li><b><span class="m">\(300^\circ\)</span>:</b> רביע IV, קוסינוס חיובי.</li>
+<li><b><span class="m">\(130^\circ\)</span>:</b> רביע II, טנגנס שלילי.</li>
+<li><b><span class="m">\(225^\circ\)</span>:</b> רביע III, טנגנס חיובי (שני השיעורים שליליים).</li></ol>
+<p class="ans">תשובה: −, +, −, +.</p></div></details></li>
+</ol>
+
+<p class="lvl">רמה ב׳</p>
+<ol class="exercises" start="5">
+<li>נתון <span class="m">\(\sin\alpha=0.6\)</span> והזווית <span class="m">\(\alpha\)</span> ברביע II. מצאו את <span class="m">\(\cos\alpha\)</span> ואת <span class="m">\(\tan\alpha\)</span>.
+<details><summary>הצג פתרון</summary><div class="sol"><div class="think"><span class="think-h">דרך החשיבה</span><p>זהות היסוד נותנת את הגודל של הקוסינוס, והרביע את הסימן.</p></div>
+<ol class="st"><li><b>זהות היסוד:</b> <span class="m">\(\cos^2\alpha=1-0.36=0.64\)</span>, ‏<span class="m">\(\cos\alpha=\pm0.8\)</span>.</li>
+<li><b>סימן:</b> ברביע II הקוסינוס שלילי, <span class="m">\(\cos\alpha=-0.8\)</span>.</li>
+<li><b>טנגנס:</b> <span class="m">\(\tan\alpha=\dfrac{0.6}{-0.8}=-0.75\)</span>.</li></ol>
+<p class="ans">תשובה: <span class="m">\(\cos\alpha=-0.8\)</span>, <span class="m">\(\tan\alpha=-0.75\)</span>.</p></div></details></li>
+
+<li>היעזרו בגרף של <span class="m">\(y=\sin x\)</span> בתחום <span class="m">\(0^\circ\le x\le360^\circ\)</span>:
+<ol class="parts"><li>מהם האפסים?</li><li>איפה המקסימום ואיפה המינימום, ומה ערכם?</li><li>באיזה תחום הפונקציה שלילית?</li><li>באיזה תחום הפונקציה יורדת?</li></ol>
+<details><summary>הצג פתרון</summary><div class="sol"><div class="think"><span class="think-h">דרך החשיבה</span><p>כל תכונה של הגרף היא תכונה של הנקודה על המעגל: אפס = הנקודה על ציר x, מקסימום = הנקודה למעלה, שלילי = הנקודה מתחת לציר x.</p></div>
+<ol class="st"><li><b>אפסים:</b> <span class="m">\(0^\circ,180^\circ,360^\circ\)</span>.</li>
+<li><b>קיצון:</b> מקסימום 1 ב־<span class="m">\(90^\circ\)</span>, מינימום −1 ב־<span class="m">\(270^\circ\)</span>.</li>
+<li><b>שלילית:</b> <span class="m">\(180^\circ\lt x\lt360^\circ\)</span> (רביעים III ו־IV).</li>
+<li><b>יורדת:</b> <span class="m">\(90^\circ\lt x\lt270^\circ\)</span>, מהנקודה העליונה לתחתונה.</li></ol>
+<p class="ans">תשובה: כמו בסעיפים.</p></div></details></li>
+
+<li>מצאו את כל הפתרונות בתחום <span class="m">\(0^\circ\le x\le360^\circ\)</span>:
+<ol class="parts"><li><span class="m">\(\sin x=\tfrac12\)</span></li><li><span class="m">\(\cos x=\tfrac12\)</span></li></ol>
+<details><summary>הצג פתרון</summary><div class="sol"><div class="think"><span class="think-h">דרך החשיבה</span><p>במעגל, הישר <span class="m">\(y=\tfrac12\)</span> חותך את המעגל בשתי נקודות, וכך גם הישר <span class="m">\(x=\tfrac12\)</span>. בגרף, הישר האופקי חותך את הגל פעמיים בכל מחזור. מוצאים זווית אחת (<span class="m">\(30^\circ\)</span> או <span class="m">\(60^\circ\)</span>), ואת השנייה לפי הסימטריה.</p></div>
+<ol class="st"><li><b><span class="m">\(\sin x=\tfrac12\)</span>:</b> <span class="m">\(x=30^\circ\)</span>, והשנייה <span class="m">\(180^\circ-30^\circ=150^\circ\)</span> (שיקוף בציר y, ה־y נשאר).</li>
+<li><b><span class="m">\(\cos x=\tfrac12\)</span>:</b> <span class="m">\(x=60^\circ\)</span>, והשנייה <span class="m">\(360^\circ-60^\circ=300^\circ\)</span> (שיקוף בציר x, ה־x נשאר).</li></ol>
+<p class="ans">תשובה: <span class="m">\(30^\circ,150^\circ\)</span> ‏· <span class="m">\(60^\circ,300^\circ\)</span>.</p></div></details></li>
+
+<li>נתון <span class="m">\(\sin20^\circ\approx0.342\)</span>. בלי מחשבון, מצאו את <span class="m">\(\sin160^\circ\)</span>, <span class="m">\(\sin380^\circ\)</span>, <span class="m">\(\sin(-20^\circ)\)</span> ו־<span class="m">\(\sin200^\circ\)</span>.
+<details><summary>הצג פתרון</summary><div class="sol"><div class="think"><span class="think-h">דרך החשיבה</span><p>כותבים כל זווית בעזרת <span class="m">\(20^\circ\)</span> ומשתמשים בטבלת הסימטריות או במחזוריות.</p></div>
+<ol class="st"><li><b><span class="m">\(160^\circ=180^\circ-20^\circ\)</span>:</b> הסינוס נשאר, <span class="m">\(0.342\)</span>.</li>
+<li><b><span class="m">\(380^\circ=360^\circ+20^\circ\)</span>:</b> מחזוריות, <span class="m">\(0.342\)</span>.</li>
+<li><b><span class="m">\(-20^\circ\)</span>:</b> אי־זוגית, <span class="m">\(-0.342\)</span>.</li>
+<li><b><span class="m">\(200^\circ=180^\circ+20^\circ\)</span>:</b> הנקודה הנגדית, <span class="m">\(-0.342\)</span>.</li></ol>
+<p class="ans">תשובה: 0.342, 0.342, −0.342, −0.342.</p></div></details></li>
+
+<li>פשטו:
+<ol class="parts"><li><span class="m">\(\sin(180^\circ-\alpha)+\sin(-\alpha)\)</span></li><li><span class="m">\(\cos(-\alpha)+\cos(180^\circ-\alpha)\)</span></li><li><span class="m">\(\tan(180^\circ+\alpha)\cdot\cos\alpha\)</span></li></ol>
+<details><summary>הצג פתרון</summary><div class="sol"><div class="think"><span class="think-h">דרך החשיבה</span><p>מחליפים כל ביטוי לפי טבלת הסימטריות, ורק אז מצמצמים.</p></div>
+<ol class="st"><li><b>א׳:</b> <span class="m">\(\sin\alpha+(-\sin\alpha)=0\)</span>.</li>
+<li><b>ב׳:</b> <span class="m">\(\cos\alpha+(-\cos\alpha)=0\)</span>.</li>
+<li><b>ג׳:</b> <span class="m">\(\tan\alpha\cdot\cos\alpha=\dfrac{\sin\alpha}{\cos\alpha}\cdot\cos\alpha=\sin\alpha\)</span>.</li></ol>
+<p class="ans">תשובה: 0, 0, <span class="m">\(\sin\alpha\)</span>.</p></div></details></li>
+</ol>
+
+<p class="lvl">רמה ג׳</p>
+<ol class="exercises" start="10">
+<li>כמה פתרונות יש למשוואה <span class="m">\(\tan x=1\)</span> בתחום <span class="m">\(0^\circ\le x\le720^\circ\)</span>? מצאו את כולם.
+<details><summary>הצג פתרון</summary><div class="sol"><div class="think"><span class="think-h">דרך החשיבה</span><p>פתרון אחד הוא <span class="m">\(45^\circ\)</span>. המחזור של הטנגנס הוא <span class="m">\(180^\circ\)</span>, ולכן מוסיפים <span class="m">\(180^\circ\)</span> שוב ושוב כל עוד נשארים בתחום.</p></div>
+<ol class="st"><li><b>פתרון בסיסי:</b> <span class="m">\(\tan45^\circ=1\)</span>.</li>
+<li><b>כל הפתרונות:</b> <span class="m">\(x=45^\circ+180^\circ k\)</span>: ‏<span class="m">\(45^\circ,225^\circ,405^\circ,585^\circ\)</span>. הבא, <span class="m">\(765^\circ\)</span>, כבר מחוץ לתחום.</li>
+<li><b>בדיקה:</b> <span class="m">\(225^\circ\)</span> ברביע III, שם הטנגנס חיובי ✓.</li></ol>
+<p class="ans">תשובה: 4 פתרונות: <span class="m">\(45^\circ,225^\circ,405^\circ,585^\circ\)</span>.</p></div></details></li>
+
+<li>נתונה הפונקציה <span class="m">\(f(x)=2+\sin x\)</span>.
+<ol class="parts"><li>מה הטווח שלה?</li><li>מה הערך הגדול ביותר שלה, ובאילו ערכי x בתחום <span class="m">\(0^\circ\le x\le360^\circ\)</span> הוא מתקבל? ומה הערך הקטן ביותר?</li><li>האם לגרף יש נקודות חיתוך עם ציר x?</li></ol>
+<details><summary>הצג פתרון</summary><div class="sol"><div class="think"><span class="think-h">דרך החשיבה</span><p>מתחילים מהטווח של <span class="m">\(\sin x\)</span> ומוסיפים 2 לכל צד. הגרף כולו עולה 2 יחידות למעלה, והקיצון נשאר באותם ערכי x.</p></div>
+<ol class="st"><li><b>טווח:</b> <span class="m">\(-1\le\sin x\le1\ \Rightarrow\ 1\le2+\sin x\le3\)</span>.</li>
+<li><b>קיצון:</b> מקסימום 3 ב־<span class="m">\(x=90^\circ\)</span>, מינימום 1 ב־<span class="m">\(x=270^\circ\)</span>.</li>
+<li><b>חיתוך עם ציר x:</b> צריך <span class="m">\(f(x)=0\)</span>, כלומר <span class="m">\(\sin x=-2\)</span>. אין פתרון, כי <span class="m">\(\sin x\ge-1\)</span>.</li></ol>
+<p class="ans">תשובה: טווח <span class="m">\([1,3]\)</span>; מקסימום 3 ב־<span class="m">\(90^\circ\)</span>, מינימום 1 ב־<span class="m">\(270^\circ\)</span>; אין חיתוך עם ציר x.</p></div></details></li>
+
+<li>הוכיחו ש־<span class="m">\(1+\tan^2\alpha=\dfrac{1}{\cos^2\alpha}\)</span> לכל זווית שבה <span class="m">\(\cos\alpha\ne0\)</span>. היעזרו בזהות כדי למצוא את <span class="m">\(\cos\alpha\)</span> כשנתון <span class="m">\(\tan\alpha=2\)</span> והזווית ברביע III.
+<details><summary>הצג פתרון</summary><div class="sol"><div class="think"><span class="think-h">דרך החשיבה</span><p>כותבים את הטנגנס כ־<span class="m">\(\tfrac{\sin}{\cos}\)</span>, מביאים למכנה משותף ומשתמשים בזהות היסוד.</p></div>
+<ol class="st"><li><b>הוכחה:</b> <span class="m">\(1+\dfrac{\sin^2\alpha}{\cos^2\alpha}=\dfrac{\cos^2\alpha+\sin^2\alpha}{\cos^2\alpha}=\dfrac{1}{\cos^2\alpha}\)</span>.</li>
+<li><b>הצבה:</b> <span class="m">\(1+4=\dfrac{1}{\cos^2\alpha}\ \Rightarrow\ \cos^2\alpha=\tfrac15\ \Rightarrow\ \cos\alpha=\pm\tfrac{1}{\sqrt5}\)</span>.</li>
+<li><b>סימן:</b> ברביע III הקוסינוס שלילי.</li></ol>
+<p class="ans">תשובה: <span class="m">\(\cos\alpha=-\tfrac{1}{\sqrt5}=-\tfrac{\sqrt5}{5}\approx-0.447\)</span>.</p></div></details></li>
+</ol>
+</section>
+
+<footer>פונקציות טריגונומטריות · דף 1 · <a href="trigonometry-00-unit-circle.html">→ לדף הקודם: מעגל היחידה</a> · <a href="trigonometry-06-radians.html">לדף הבא: מעלות ורדיאנים וערכי הזוויות החשובות ←</a></footer>
+</div>
+
+<script>
+(function(){
+  var F=Plot.figs, fmt=Plot.fmt, R=Math.PI/180, U=60;
+  function D(deg){return deg/U;}
+  function arc(cx,a0,a1,r,c){return {par:function(t){return [cx+r*Math.cos(t*R),r*Math.sin(t*R)];},t:[a0,a1],c:c||'mrk thin',n:120};}
+  function xlabels(from,to,step,y){var o=[];for(var d=from;d<=to;d+=step){if(d===0)continue;o.push({seg:[[D(d),-.05],[D(d),.05]],c:'aux'});o.push({txt:(d<0?'−':'')+Math.abs(d)+'°',at:[D(d),y==null?0:y],dy:16,col:'mut'});}return o;}
+  function ylabels(vals){var o=[];vals.forEach(function(v){o.push({txt:(v<0?'−':'')+Math.abs(v),at:[0,v],dx:-6,dy:4,anchor:'end',col:'mut'});o.push({seg:[[-.06,v],[.06,v]],c:'aux'});});return o;}
+  function quad(deg){var a=((deg%360)+360)%360;if(a%90===0)return 'על ציר';return ['I','II','III','IV'][Math.floor(a/90)];}
+  var circ=function(t){return [Math.cos(t),Math.sin(t)];};
+
+  /* winding: 400 and -90 */
+  F.wind={view:[-1.5,1.5,-1.4,1.4],w:360,step:.5,tickStep:1,items:[{circle:[0,0],r:1,c:'acc'},
+    {par:function(t){var r=.25+.08*t/(2*Math.PI);return [r*Math.cos(t),r*Math.sin(t)];},t:[0,400*R],c:'mrk thin',n:300},
+    {seg:[[0,0],[Math.cos(40*R),Math.sin(40*R)]],c:'mrk'},{pt:[Math.cos(40*R),Math.sin(40*R)],lbl:'400° = 40°',col:'mrk',dx:6,dy:-8},
+    {par:function(t){return [.5*Math.cos(t),.5*Math.sin(t)];},t:[0,-90*R],c:'vio thin',n:80},{arrow:[[.08,-.495],[0,-.5]],c:'vio thin'},
+    {seg:[[0,0],[0,-1]],c:'vio'},{pt:[0,-1],lbl:'−90°',col:'vio',dx:8,dy:16}]};
+
+  /* tan definition */
+  var ta=35*R, tc=Math.cos(ta), ts=Math.sin(ta), tt=Math.tan(ta);
+  F.tandef={view:[-1.3,2.25,-1.3,1.3],w:400,step:.5,tickStep:1,items:[{circle:[0,0],r:1,c:'acc'},{abc:[1,0,-1],c:'ink thin'},
+    {seg:[[0,0],[1,tt]],c:'mrk'},{seg:[[tc,0],[tc,ts]],c:'vio',w:4},{seg:[[0,0],[tc,0]],c:'grn',w:4},{seg:[[1,0],[1,tt]],c:'mrk',w:5},
+    arc(0,0,35,.22),{txt:'α',at:[.32,.1],col:'mrk'},
+    {pt:[tc,ts],lbl:'P',dx:-16,dy:-6},{pt:[1,tt],lbl:'T(1, tan α)',col:'mrk',dx:8,dy:-6},{pt:[1,0],lbl:'A',dx:6,dy:16},{pt:[tc,0],lbl:'Q',dx:-4,dy:16,anchor:'end'},{pt:[0,0],lbl:'O',dx:-14,dy:16},
+    {txt:'x = 1',at:[1,-1.15],dx:8,anchor:'start',col:'ink'}]};
+
+  /* static graphs */
+  F.sinG={view:[-3.4,9.4,-1.6,1.95],w:760,step:.5,ticks:false,grid:false,items:[].concat(xlabels(-180,540,90,0),ylabels([1,-1]),[
+    {abc:[0,1,-1],c:'faint'},{abc:[0,1,1],c:'faint'},
+    {fn:function(x){return Math.sin(x*U*R);},c:'vio'},
+    {pt:[D(90),1],col:'vio',lbl:'(90°, 1)',dy:-8},{pt:[D(270),-1],col:'vio',lbl:'(270°, −1)',dy:22},{pt:[D(450),1],col:'vio'},
+    {arrow:[[D(0),1.38],[D(360),1.38]],c:'mrk thin'},{arrow:[[D(360),1.38],[D(0),1.38]],c:'mrk thin'},{txt:'מחזור: 360°',at:[D(180),1.38],dy:-6,col:'mrk'}])};
+  F.cosG={view:[-3.4,9.4,-1.6,1.95],w:760,step:.5,ticks:false,grid:false,items:[].concat(xlabels(-180,540,90,0),ylabels([1,-1]),[
+    {abc:[0,1,-1],c:'faint'},{abc:[0,1,1],c:'faint'},
+    {fn:function(x){return Math.sin(x*U*R);},c:'vio dash thin'},
+    {fn:function(x){return Math.cos(x*U*R);},c:'grn'},
+    {pt:[0,1],col:'grn',lbl:'(0°, 1)',dx:8,dy:-8},{pt:[D(90),1],col:'vio',hollow:true},
+    {arrow:[[D(90),1.55],[D(5),1.55]],c:'mrk thin'},{txt:'90° שמאלה',at:[D(48),1.55],dy:-8,col:'mrk'},
+    {pt:[D(180),-1],col:'grn',lbl:'(180°, −1)',dy:22}])};
+  var asy=[-90,90,270,450];
+  F.tanG={view:[-3.4,9.4,-3.2,3.4],w:760,step:.5,ticks:false,grid:false,items:[].concat(xlabels(-180,540,90,0),ylabels([1,2,3,-1,-2,-3]),
+    asy.map(function(d){return {line:[[D(d),0],[D(d),1]],c:'faint'};}),[
+    {fn:function(x){var c=Math.cos(x*U*R);return Math.abs(c)<1e-6?NaN:Math.tan(x*U*R);},c:'mrk',n:2400},
+    {pt:[D(45),1],col:'mrk',lbl:'(45°, 1)',dx:8,dy:-4},{pt:[D(225),1],col:'mrk'},
+    {arrow:[[D(0),3.05],[D(180),3.05]],c:'acc thin'},{arrow:[[D(180),3.05],[D(0),3.05]],c:'acc thin'},{txt:'מחזור: 180°',at:[D(90),3.05],dy:-6,col:'acc'}])};
+
+  /* symmetry figures */
+  function symFig(a,b,lb){var A=a*R,B=b*R,P=[Math.cos(A),Math.sin(A)],Q=[Math.cos(B),Math.sin(B)];
+    return {view:[-1.95,1.95,-1.3,1.3],w:320,step:.5,ticks:false,items:[{circle:[0,0],r:1,c:'acc'},
+      {seg:[[0,0],P],c:'mrk'},{seg:[[0,0],Q],c:'vio'},{seg:[P,Q],c:'faint'},
+      {pt:P,lbl:'α',col:'mrk',dx:P[0]>=0?8:-8,anchor:P[0]>=0?'start':'end',dy:P[1]>=0?-6:16},
+      {pt:Q,lbl:lb,col:'vio',dx:Q[0]>=0?8:-8,anchor:Q[0]>=0?'start':'end',dy:Q[1]>=0?-6:16}]};}
+  F.symNeg=symFig(40,-40,'−α'); F.symSup=symFig(40,140,'180° − α'); F.symOpp=symFig(40,220,'180° + α');
+
+  /* labs: circle (center at x=C) + graph from 0° to 360° */
+  var C=-1.6;
+  function base(deg,ymin,ymax){var t=deg*R,X=C+Math.cos(t),Y=Math.sin(t);
+    var it=[{seg:[[C-1.25,0],[C+1.25,0]],c:'aux'},{seg:[[C,ymin],[C,ymax]],c:'aux'},{circle:[C,0],r:1,c:'acc'},
+      {seg:[[C,0],[X,Y]],c:'ink'},deg>0.5?arc(C,0,deg,.22):null,{pt:[X,Y],lbl:'P',dx:Math.cos(t)>=0?8:-8,anchor:Math.cos(t)>=0?'start':'end',dy:Y>=0?-8:18},{pt:[C,0],r:3}];
+    return {t:t,X:X,Y:Y,items:it.concat(xlabels(90,360,90,0))};}
+  function lab(id,kind){
+    Plot.lab(id,{sliders:[{id:'a',label:'זווית x',min:0,max:360,step:1,val:kind==='tan'?50:40,dec:0,unit:'°'}],play:'a',period:12,
+      spec:function(v){var deg=v.a, tan=kind==='tan', ymax=tan?3.2:1.5, b=base(deg,-ymax+.1,ymax-.1), it=b.items, g=D(deg);
+        if(kind==='sin'){var f=function(x){return Math.sin(x*U*R);};
+          it=it.concat(ylabels([1,-1]),[{fn:f,dom:[0,D(360)],c:'faint'},deg>0?{fn:f,dom:[0,g],c:'vio'}:null,
+            {seg:[[b.X,0],[b.X,b.Y]],c:'vio',w:4},{seg:[[g,0],[g,b.Y]],c:'vio',w:4},{seg:[[b.X,b.Y],[g,b.Y]],c:'faint'},{pt:[g,b.Y],col:'vio'}]);}
+        else if(kind==='cos'){var f2=function(x){return Math.cos(x*U*R);}, cx=Math.cos(b.t);
+          it=it.concat(ylabels([1,-1]),[{fn:f2,dom:[0,D(360)],c:'faint'},deg>0?{fn:f2,dom:[0,g],c:'grn'}:null,
+            {seg:[[C,0],[b.X,0]],c:'grn',w:5},{seg:[[g,0],[g,cx]],c:'grn',w:4},{pt:[g,cx],col:'grn'}]);}
+        else {var f3=function(x){var c=Math.cos(x*U*R);return Math.abs(c)<1e-6?NaN:Math.tan(x*U*R);}, c3=Math.cos(b.t), T=Math.abs(c3)>1e-3?Math.tan(b.t):null;
+          it=it.concat(ylabels([1,2,3,-1,-2,-3]),[{line:[[D(90),0],[D(90),1]],c:'faint'},{line:[[D(270),0],[D(270),1]],c:'faint'},
+            {seg:[[C+1,-ymax],[C+1,ymax]],c:'ink thin'},{fn:f3,dom:[0,D(360)],c:'faint',n:1600},deg>0?{fn:f3,dom:[0,g],c:'mrk',n:800}:null,
+            T!=null?{line:[[C,0],[b.X,b.Y]],c:'mrk thin'}:null,
+            T!=null?{pt:[C+1,T],col:'mrk',lbl:'T',dx:8,dy:4}:null,T!=null?{seg:[[C+1,T],[g,T]],c:'faint'}:null,T!=null?{pt:[g,T],col:'mrk'}:null]);}
+        return {view:[C-1.35,D(360)+.45,-ymax,ymax],w:720,step:.5,ticks:false,grid:false,items:it};},
+      read:function(v){var t=v.a*R,s=Math.sin(t),c=Math.cos(t),q=quad(v.a),L=['x = '+fmt(v.a,0)+'°'];
+        if(kind==='sin')L.push('<span class="vio">sin x = '+fmt(s,3)+'</span>  (הגובה של P)');
+        else if(kind==='cos')L.push('<span class="grn">cos x = '+fmt(c,3)+'</span>  (שיעור ה־x של P)');
+        else L.push(Math.abs(c)<1e-3?'<span class="mrk">tan x לא מוגדר</span>: הרדיוס אנכי ולא פוגש את x = 1':'<span class="mrk">tan x = '+fmt(s,3)+' / '+fmt(c,3)+' = '+fmt(s/c,3)+'</span>');
+        L.push('<span class="heb">'+(q==='על ציר'?'הנקודה על אחד הצירים':'רביע '+q)+'</span>');
+        return L;}});}
+  lab('lab-sin','sin'); lab('lab-cos','cos'); lab('lab-tan','tan');
+})();
+</script>
+
+</body>
+</html>
