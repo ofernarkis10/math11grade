@@ -260,7 +260,7 @@ math11grade/
 ├── summer-work-calculus-solutions.html  worked solutions to the summer-work calculus questions
 ├── img/summer-calculus/              graphs for the calculus solutions page
 ├── sequences-NN-<name>.html            sequences topic, pages 00–09
-├── calculus-NN-<name>.html               differential calculus (01 question deck: 14 investigation questions, no solutions; 02 explanation: derivatives of rational functions)
+├── calculus-NN-<name>.html               differential calculus (01 question deck: 14 investigation questions, no solutions; 02 explanation: derivatives of rational functions; 03 printable worksheet: derivative and extrema only, 14 functions)
 ├── composite-derivatives-NN-<name>.html  derivatives of composite functions (01 rules, 02 exercises)
 ├── geometry-NN-<name>.html              Euclidean geometry (01 loci & triangle centers, 02 circle, 03 similarity)
 ├── trigonometry-NN-<name>.html          trigonometric functions — topic order: 00 unit circle, 08 sin/cos/tan as functions and their graphs, 06 radians and the table of special angles, 09 presentation: the known angles on the unit circle; circle-motion-basics topic: 01 polar coordinates & the wheel, 02 linear vs wheel, 03 wheel exercises, 04 linear-vs-wheel exercises, 05 wheel homework, 07 moving-wheel exercises
