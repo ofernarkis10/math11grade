@@ -12,7 +12,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
   onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
 <style>
-/* Printable worksheet: one card per function, two parts (derivative, extrema) with ruled space for handwriting. Questions only, no solutions. */
+/* Printable worksheet: the solving recipe, then one card per function with two parts (derivative, extrema) and an empty sign table; the work itself is written in the notebook. Questions only, no solutions. */
 :root{
   --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6; --rule:#c9d2dc;
   --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5;
@@ -34,6 +34,7 @@ header{display:flex;flex-direction:column;gap:8px}
 .namebar{display:flex;gap:28px;flex-wrap:wrap;font-weight:600}
 .namebar span{flex:1;min-width:200px;border-bottom:1px solid var(--ink);padding-bottom:2px}
 .inst{background:var(--accent-soft);border-radius:10px;padding:10px 16px}
+.key{background:var(--mark-soft);border-radius:10px;padding:10px 16px}
 .inst ol{margin:4px 0 0;padding-inline-start:22px}
 .m{direction:ltr;unicode-bidi:isolate;white-space:nowrap}
 .m .katex{font-size:1.1em}
@@ -69,142 +70,88 @@ footer{color:var(--muted);font-size:.9rem}
   <a class="back" href="index.html#calculus">→ חזרה לנושא: חשבון דיפרנציאלי</a>
   <span class="eyebrow">כיתה יא׳ · 5 יחידות · חשבון דיפרנציאלי · דף עבודה</span>
   <h1>דף עבודה: נגזרת ונקודות קיצון</h1>
-  <p class="lead">14 פונקציות: 7 פולינומים ו־7 פונקציות רציונליות. בכל שאלה מוצאים רק את הנגזרת ואת נקודות הקיצון.</p>
+  <p class="lead">10 פונקציות: 3 פולינומים לחימום ו־7 פונקציות עם פולינום במונה ופולינום במכנה. בכל שאלה מוצאים רק את הנגזרת ואת נקודות הקיצון. את הפתרון כותבים במחברת, ובדף משלימים רק את טבלת הקיצון.</p>
 </header>
-<div class="namebar"><span>שם:</span><span>תאריך:</span></div>
-<div class="inst"><b>הנחיות</b><ol>
-  <li>אין צורך למצוא תחום הגדרה, אסימפטוטות או נקודות חיתוך.</li>
-  <li>בפונקציה רציונלית גוזרים בכלל המנה: <span class="m">\(\left(\dfrac{u}{v}\right)' = \dfrac{u'v - uv'}{v^{2}}\)</span>.</li>
-  <li>משווים את הנגזרת ל־0, בונים טבלת סימנים, וקובעים מינימום או מקסימום.</li>
-  <li>שיעור ה־<span class="m">\(y\)</span> של נקודת קיצון מוצאים בהצבה בפונקציה <span class="m">\(f(x)\)</span>. מותר להשאיר שורש או שבר.</li>
-</ol></div>
-<h2>חלק א׳: פולינומים</h2>
+<div class="key"><b>המסר של הדף:</b> שאלות כאלה נראות מסובכות, אבל הן לא קשות. הן <b>ארוכות</b>. הפתרון הוא תמיד אותו מתכון טכני, וכל מה שצריך הוא לעבוד לאט ובדיוק, שורה אחרי שורה.</div>
+<div class="inst"><b>המתכון לפונקציה עם פולינום במונה ובמכנה</b><ol>
+  <li>רושמים בנפרד: <span class="m">\(u,\ u',\ v,\ v'\)</span>.</li>
+  <li>מציבים בכלל המנה: <span class="m">\(f'(x) = \dfrac{u'\cdot v - u\cdot v'}{v^{2}}\)</span>. סוגריים סביב כל גורם, בעיקר אחרי המינוס.</li>
+  <li>פותחים סוגריים <b>רק במונה</b> ומכנסים איברים. את המכנה <span class="m">\(v^{2}\)</span> משאירים כמו שהוא.</li>
+  <li>מפרקים את מונה הנגזרת לגורמים (גורם משותף, טרינום, הפרש ריבועים).</li>
+  <li>משווים את מונה הנגזרת ל־0. המכנה בריבוע חיובי, ולכן הסימן של <span class="m">\(f'\)</span> הוא הסימן של המונה (אם החזקה במכנה אי־זוגית, גם המכנה נכנס לטבלה).</li>
+  <li>ממלאים טבלת סימנים, קובעים מקסימום או מינימום, ומציבים ב־<span class="m">\(f(x)\)</span> כדי למצוא את שיעור ה־<span class="m">\(y\)</span>.</li>
+</ol><p style="margin-top:6px">אין צורך למצוא תחום הגדרה, אסימפטוטות או נקודות חיתוך.</p></div>
+<h2>חלק א׳: חימום — פולינומים</h2>
 <section class="q">
-  <div class="q-head"><b>שאלה 1</b><small>פולינום 1</small></div>
+  <div class="q-head"><b>שאלה 1</b></div>
   <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = -x^{3} - 6x^{2} - 9x\)</span>.</p>
-  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>. כתבו אותה מפורקת לגורמים ככל האפשר.</span></div>
-  <div class="lines" style="--n:5"></div>
-  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן.</span></div>
+  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>, מפורקת לגורמים.</span></div>
+  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן. השלימו את הטבלה:</span></div>
   <table class="tbl"><tr><th>x</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f′</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
-  <div class="lines" style="--n:3"></div>
 </section>
 <section class="q">
-  <div class="q-head"><b>שאלה 2</b><small>פולינום 2</small></div>
-  <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = (5x-1)(x^{2}-9)\)</span>.</p>
-  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>. כתבו אותה מפורקת לגורמים ככל האפשר.</span></div>
-  <div class="lines" style="--n:5"></div>
-  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן.</span></div>
-  <table class="tbl"><tr><th>x</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f′</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
-  <div class="lines" style="--n:3"></div>
-</section>
-<section class="q">
-  <div class="q-head"><b>שאלה 3</b><small>פולינום 3</small></div>
+  <div class="q-head"><b>שאלה 2</b></div>
   <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = (x^{2}-9)^{2}\)</span>.</p>
-  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>. כתבו אותה מפורקת לגורמים ככל האפשר.</span></div>
-  <div class="lines" style="--n:5"></div>
-  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן.</span></div>
+  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>, מפורקת לגורמים.</span></div>
+  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן. השלימו את הטבלה:</span></div>
   <table class="tbl"><tr><th>x</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f′</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
-  <div class="lines" style="--n:3"></div>
 </section>
 <section class="q">
-  <div class="q-head"><b>שאלה 4</b><small>פולינום 4</small></div>
+  <div class="q-head"><b>שאלה 3</b></div>
   <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = (x-2)(x+2)^{3}\)</span>.</p>
-  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>. כתבו אותה מפורקת לגורמים ככל האפשר.</span></div>
-  <div class="lines" style="--n:5"></div>
-  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן.</span></div>
+  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>, מפורקת לגורמים.</span></div>
+  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן. השלימו את הטבלה:</span></div>
   <table class="tbl"><tr><th>x</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f′</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
-  <div class="lines" style="--n:3"></div>
 </section>
-<section class="q">
-  <div class="q-head"><b>שאלה 5</b><small>פולינום 5</small></div>
-  <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = x(x-4)^{3}\)</span>.</p>
-  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>. כתבו אותה מפורקת לגורמים ככל האפשר.</span></div>
-  <div class="lines" style="--n:5"></div>
-  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן.</span></div>
-  <table class="tbl"><tr><th>x</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f′</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
-  <div class="lines" style="--n:3"></div>
-</section>
-<section class="q">
-  <div class="q-head"><b>שאלה 6</b><small>פולינום 6</small></div>
-  <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = (x^{2}-1)(49-x^{2})\)</span>.</p>
-  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>. כתבו אותה מפורקת לגורמים ככל האפשר.</span></div>
-  <div class="lines" style="--n:5"></div>
-  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן.</span></div>
-  <table class="tbl"><tr><th>x</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f′</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
-  <div class="lines" style="--n:3"></div>
-</section>
-<section class="q">
-  <div class="q-head"><b>שאלה 7</b><small>פולינום 7</small></div>
-  <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = (x-3)^{2}(x+6)\)</span>.</p>
-  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>. כתבו אותה מפורקת לגורמים ככל האפשר.</span></div>
-  <div class="lines" style="--n:5"></div>
-  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן.</span></div>
-  <table class="tbl"><tr><th>x</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f′</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
-  <div class="lines" style="--n:3"></div>
-</section>
-<h2 class="r">חלק ב׳: פונקציות רציונליות</h2>
+<h2 class="r">חלק ב׳: פולינום במונה ופולינום במכנה</h2>
 <section class="q r">
-  <div class="q-head"><b>שאלה 8</b><small>רציונלית 1</small></div>
+  <div class="q-head"><b>שאלה 4</b></div>
   <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = \dfrac{4x^{2} - 28x + 24}{2x^{2} - 13x + 15}\)</span>.</p>
-  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>. כתבו אותה מפורקת לגורמים ככל האפשר.</span></div>
-  <div class="lines" style="--n:7"></div>
-  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן.</span></div>
+  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>, מפורקת לגורמים.</span></div>
+  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן. השלימו את הטבלה:</span></div>
   <table class="tbl"><tr><th>x</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f′</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
-  <div class="lines" style="--n:3"></div>
 </section>
 <section class="q r">
-  <div class="q-head"><b>שאלה 9</b><small>רציונלית 2</small></div>
+  <div class="q-head"><b>שאלה 5</b></div>
   <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = \dfrac{2x^{4}}{x^{4} - 2x^{2} + 1}\)</span>.</p>
-  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>. כתבו אותה מפורקת לגורמים ככל האפשר.</span></div>
-  <div class="lines" style="--n:7"></div>
-  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן.</span></div>
+  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>, מפורקת לגורמים.</span></div>
+  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן. השלימו את הטבלה:</span></div>
   <table class="tbl"><tr><th>x</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f′</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
-  <div class="lines" style="--n:3"></div>
 </section>
 <section class="q r">
-  <div class="q-head"><b>שאלה 10</b><small>רציונלית 3</small></div>
+  <div class="q-head"><b>שאלה 6</b></div>
   <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = \dfrac{2x-1}{x^{4}-1}\)</span>.</p>
-  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>. כתבו אותה מפורקת לגורמים ככל האפשר.</span></div>
-  <div class="lines" style="--n:7"></div>
-  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן.</span></div>
+  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>, מפורקת לגורמים.</span></div>
+  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן. השלימו את הטבלה:</span></div>
   <table class="tbl"><tr><th>x</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f′</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
-  <div class="lines" style="--n:3"></div>
 </section>
 <section class="q r">
-  <div class="q-head"><b>שאלה 11</b><small>רציונלית 4</small></div>
-  <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = \dfrac{16(x-10)}{(x-5)^{2} - 16}\)</span>.</p>
-  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>. כתבו אותה מפורקת לגורמים ככל האפשר.</span></div>
-  <div class="lines" style="--n:7"></div>
-  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן.</span></div>
+  <div class="q-head"><b>שאלה 7</b></div>
+  <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = \dfrac{x^{2} - 3x}{x^{2} + 3}\)</span>.</p>
+  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>, מפורקת לגורמים.</span></div>
+  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן. השלימו את הטבלה:</span></div>
   <table class="tbl"><tr><th>x</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f′</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
-  <div class="lines" style="--n:3"></div>
 </section>
 <section class="q r">
-  <div class="q-head"><b>שאלה 12</b><small>רציונלית 5</small></div>
-  <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = \dfrac{3(x-11)^{2}(x-7)}{(x-13)^{2}(x-7)}\)</span>.</p>
-  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>. כתבו אותה מפורקת לגורמים ככל האפשר.</span></div>
-  <div class="lines" style="--n:7"></div>
-  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן.</span></div>
+  <div class="q-head"><b>שאלה 8</b></div>
+  <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = \dfrac{x^{2} - 4x + 6}{x^{2} - 4}\)</span>.</p>
+  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>, מפורקת לגורמים.</span></div>
+  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן. השלימו את הטבלה:</span></div>
   <table class="tbl"><tr><th>x</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f′</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
-  <div class="lines" style="--n:3"></div>
 </section>
 <section class="q r">
-  <div class="q-head"><b>שאלה 13</b><small>רציונלית 6</small></div>
+  <div class="q-head"><b>שאלה 9</b></div>
   <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = \dfrac{x^{4} - 5x^{2} + 4}{x^{5} - 4x^{3}}\)</span>.</p>
-  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>. כתבו אותה מפורקת לגורמים ככל האפשר.</span></div>
-  <div class="lines" style="--n:7"></div>
-  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן.</span></div>
+  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>, מפורקת לגורמים.</span></div>
+  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן. השלימו את הטבלה:</span></div>
   <table class="tbl"><tr><th>x</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f′</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
-  <div class="lines" style="--n:3"></div>
 </section>
 <section class="q r">
-  <div class="q-head"><b>שאלה 14</b><small>רציונלית 7</small></div>
-  <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = \dfrac{x^{2} - 4x + 4}{x-3}\)</span>.</p>
-  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>. כתבו אותה מפורקת לגורמים ככל האפשר.</span></div>
-  <div class="lines" style="--n:7"></div>
-  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן.</span></div>
+  <div class="q-head"><b>שאלה 10</b></div>
+  <p class="fn">נתונה הפונקציה <span class="m">\(f(x) = \dfrac{x^{3}}{x^{2} - 3}\)</span>.</p>
+  <div class="part"><span class="lt">א.</span><span>מצאו את הנגזרת <span class="m">\(f'(x)\)</span>, מפורקת לגורמים.</span></div>
+  <div class="part"><span class="lt">ב.</span><span>מצאו את נקודות הקיצון של הפונקציה וקבעו את סוגן. השלימו את הטבלה:</span></div>
   <table class="tbl"><tr><th>x</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f′</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>f</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>
-  <div class="lines" style="--n:3"></div>
 </section>
 <footer>חשבון דיפרנציאלי · 5 יחידות · דף עבודה: נגזרת ונקודות קיצון</footer>
 </div>
