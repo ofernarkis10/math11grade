@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>פתרונות שיעור 2: נקודות קיצון וסוגן · חשבון דיפרנציאלי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* Layout: full solutions to the lesson-2 worksheet. One card per question: the function, the thinking, numbered steps whose headings describe each action (collapsible to headings only), every expression on its own line, a sign table of the derivative and the type of each point. */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --ok:#2f7a4a; --ok-soft:#e5f3ea; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --ok:#7fd09a; --ok-soft:#1d3326; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --ok:#7fd09a; --ok-soft:#1d3326; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:32px 72px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.3rem}
+h2{font-size:1.65rem;color:var(--accent)}
+h3{font-size:1.15rem}
+p{margin:0}
+.m{direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+.m .katex{font-size:1.08em;position:relative}
+.m:has(.katex){white-space:normal}
+.steps .m,.alt .m{white-space:normal}
+/* room for full-size fractions (\dfrac) between lines */
+.part p,.part h3,.given p,td{line-height:2.15}
+*:has(> .m .mfrac){line-height:2.15}
+.lead{color:var(--muted);max-width:68ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav.qnav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px;display:flex;flex-direction:column;gap:10px}
+nav.qnav ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+nav.qnav a{display:block;padding:6px 10px;border:1px solid var(--line);border-radius:8px;color:var(--accent);font-weight:700;text-decoration:none;font-size:.95rem}
+nav.qnav a small{display:block;color:var(--muted);font-weight:400;font-size:.8rem}
+nav.qnav a:hover,nav.qnav a:focus-visible{border-color:var(--accent);background:var(--accent-soft);outline:none}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+
+/* theorem toolbox */
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.tool{background:var(--accent-soft);border-radius:8px;padding:10px 14px;scroll-margin-top:16px}
+.tool b{display:flex;gap:8px;align-items:baseline}
+.tool b .tag{font-family:var(--f-math);font-size:.8rem;color:var(--paper);background:var(--accent);border-radius:4px;padding:0 6px}
+.tool p{font-size:.93rem;color:var(--ink)}
+
+/* answers table */
+.tablebox{position:relative;overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.93rem}
+th,td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:700;color:var(--accent);white-space:nowrap}
+
+/* question card */
+.q-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.q-head small{font-family:var(--f-body);font-size:.92rem;color:var(--muted);font-weight:600}
+.setup{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px);gap:18px;align-items:start}
+@media (max-width:680px){.setup{grid-template-columns:1fr}}
+.given{display:flex;flex-direction:column;gap:6px}
+.given .lbl{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--muted)}
+figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:4px}
+figure img{width:100%;height:auto;display:block}
+figure figcaption{font-size:.78rem;color:#5b6878;text-align:center}
+
+.part{border-inline-start:3px solid var(--accent);padding-inline-start:14px;display:flex;flex-direction:column;gap:6px}
+.part h3{color:var(--ink)}
+.part h3 .lt{color:var(--accent);margin-inline-end:6px}
+.steps{display:flex;flex-direction:column;gap:5px}
+.steps .m{white-space:normal}
+.ans{background:var(--ok-soft);border-radius:6px;padding:6px 12px;width:fit-content;max-width:100%;font-weight:600}
+.ans .m .katex{font-size:1.15em}
+.uses{font-size:.88rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.uses a{font-size:.82rem;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:1px 10px;text-decoration:none;font-weight:600}
+.uses a:hover,.uses a:focus-visible{text-decoration:underline}
+.alt{font-size:.93rem;color:var(--muted)}
+.alt strong{color:var(--ink)}
+
+footer{color:var(--muted);font-size:.9rem}
+.to-top{position:fixed;left:16px;bottom:16px;background:var(--accent);color:var(--paper);text-decoration:none;font-weight:700;font-size:.9rem;padding:8px 14px;border-radius:99px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.to-top:hover,.to-top:focus-visible{filter:brightness(1.1);outline:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* sign tables (left-to-right like a number line) */
+.signs{direction:ltr;border-collapse:collapse;font-size:.9rem;margin:4px 0;width:auto}
+.signs th,.signs td{border:1px solid var(--line);padding:4px 10px;text-align:center;min-width:56px;white-space:nowrap}
+.signs th{background:var(--accent-soft);font-weight:600}
+.signs td.up{color:var(--ok);font-weight:700}.signs td.down{color:var(--mark);font-weight:700}
+.signwrap{overflow-x:auto;max-width:100%;position:relative;direction:ltr}
+figure.graph{max-width:560px;margin-top:4px}
+.part .note{margin-top:2px}
+@media (max-width:560px){
+  .card{padding:18px 14px 22px}
+  .m .katex{font-size:1em}
+  .steps p,.ans{overflow-x:auto;overflow-y:hidden}
+}
+@media print{.to-top,nav.qnav{display:none}body{background:#fff}.card{break-inside:avoid-page}}
+
+/* Solutions in the site format: the thinking, numbered steps (heading on the right, every expression on its own line on the left), the answer and a check */
+.think{background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.think-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.think p{margin:0}
+ol.st{margin:2px 0 0;padding-inline-start:24px;display:flex;flex-direction:column;gap:8px}
+ol.st li::marker{font-weight:700;color:var(--mark)}
+ol.st > li > .lab{display:block;font-weight:700;color:var(--mark)}
+.ml{display:flex;flex-direction:column;gap:3px;margin:2px 0 4px}
+.ml-m{direction:ltr;text-align:left;unicode-bidi:isolate;line-height:2.15}
+.ml-m .m{white-space:normal}
+.ml-t{text-align:right;line-height:2.15}
+.ml .signwrap{direction:rtl}
+div.ans{background:var(--ok-soft);border-radius:6px;padding:8px 12px;font-weight:600;width:auto}
+div.ans .lab{display:block;font-weight:700;color:var(--ok)}
+.chk{color:var(--muted);font-size:.95rem;border:1px dashed var(--line);border-radius:6px;padding:8px 12px}
+.chk .lab{display:block;font-weight:700;color:var(--ink)}
+
+/* explanation page extras */
+.card > h3{color:var(--ink);margin-top:4px}
+ul.list{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:12px 16px;display:flex;flex-direction:column;gap:4px}
+.tool .ml-m{margin:4px 0}
+.tool p b{display:inline}
+.ml{gap:4px}
+ol.st > li > p{margin:0;color:var(--ink)}
+td .m{white-space:nowrap}
+
+/* solutions page extras */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap}
+.toolbar button{font-family:var(--f-body);font-size:.95rem;font-weight:700;border:1px solid var(--line);background:var(--paper);color:var(--accent);border-radius:8px;padding:6px 14px;cursor:pointer}
+.toolbar button:hover{border-color:var(--accent);background:var(--accent-soft)}
+body.collapsed ol.st .ml, body.collapsed ol.st > li > p{display:none}
+table.pts{border-collapse:collapse;direction:rtl;margin-top:4px;width:auto}
+table.pts td{min-width:70px}
+table.pts .katex{font-size:1.1em}
+table.pts th,table.pts td{border:1px solid var(--line);padding:4px 16px;text-align:center}
+table.pts th{background:var(--accent-soft)}
+.recipe{background:var(--accent-soft);border-radius:10px;padding:10px 16px}
+.recipe ol{margin:4px 0 0;padding-inline-start:22px}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="back" href="tests.html">→ חזרה לרשימת המבחנים</a>
+  <span class="eyebrow">כיתה יא׳ · 5 יחידות · חשבון דיפרנציאלי · פתרונות</span>
+  <h1>פתרונות שיעור 2: נקודות קיצון וסוגן</h1>
+  <p class="lead">פתרונות מלאים ל<a href="calculus-04-lesson-2-extrema-type-worksheet.html">דף העבודה של שיעור 2</a>: בכל שאלה הנגזרת מפורקת לגורמים, הנקודות שבהן היא מתאפסת, טבלת סימנים, וסוג כל נקודה (מקסימום, מינימום או לא קיצון).</p>
+  <div class="toolbar"><button type="button" id="tg">הצג רק את כותרות השלבים</button></div>
+</header>
+<div class="recipe"><b>המתכון שבו פותרים את כל השאלות של חלק ב׳</b><ol>
+  <li>מפרקים את המונה ואת המכנה. אם יש גורם משותף, מצמצמים לפני שגוזרים.</li>
+  <li>מסמנים את המונה <span class="m">\(g(x)\)</span> ואת המכנה <span class="m">\(h(x)\)</span>, ורושמים בנפרד את <span class="m">\(g(x),\ g'(x),\ h(x),\ h'(x)\)</span>.</li>
+  <li>מציבים בכלל המנה <span class="m">\(f'(x) = \dfrac{g'(x)\cdot h(x) - g(x)\cdot h'(x)}{h(x)^{2}}\)</span>, עם סוגריים סביב כל גורם.</li>
+  <li>פותחים סוגריים רק במונה, כל מכפלה בנפרד, ומכנסים.</li>
+  <li>מפרקים את מונה הנגזרת, ומצמצמים עם המכנה אם אפשר.</li>
+  <li>משווים את מונה הנגזרת ל־0, ומציבים כל <span class="m">\(x\)</span> בפונקציה כדי למצוא את <span class="m">\(y\)</span>.</li>
+  <li>בונים טבלת סימנים: אפסי הנגזרת, וגם נקודות שבהן מכנה בחזקה אי־זוגית מתאפס. מעבר מ־+ ל־− הוא מקסימום, מ־− ל־+ מינימום, ובלי החלפת סימן אין קיצון.</li>
+</ol></div>
+<nav class="qnav" aria-label="השאלות"><h3>השאלות</h3><ol><li><a href="#q1">שאלה 1</a></li><li><a href="#q2">שאלה 2</a></li><li><a href="#q3">שאלה 3</a></li><li><a href="#q4">שאלה 4</a></li><li><a href="#q5">שאלה 5</a></li><li><a href="#q6">שאלה 6</a></li><li><a href="#q7">שאלה 7</a></li><li><a href="#q8">שאלה 8</a></li><li><a href="#q9">שאלה 9</a></li><li><a href="#q10">שאלה 10</a></li></ol></nav>
+<h2>חלק א׳: חימום — פולינומים</h2>
+<section class="card" id="q1">
+  <div class="q-head"><h2>שאלה 1</h2><small>פולינום · גזירה איבר איבר</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>נתונה הפונקציה <span class="m">\(f(x) = -x^{3} - 6x^{2} - 9x\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>זה פולינום רגיל, ולכן גוזרים כל איבר לפי כלל החזקה. אחר כך מוציאים גורם משותף ומפרקים טרינום, משווים ל־0, ומציבים בפונקציה. בסוף בונים טבלת סימנים לנגזרת וקובעים את סוג כל נקודה.</p></div>
+    <ol class="st"><li><span class="lab">גוזרים כל איבר לפי כלל החזקה</span><div class="ml"><div class="ml-m"><span class="m">\((x^{n})' = n\cdot x^{n-1}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = -3x^{2} - 12x - 9\)</span></div></div></li><li><span class="lab">מוציאים גורם משותף <span class="m">\(-3\)</span> ומפרקים את הטרינום</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = -3(x^{2} + 4x + 3)\)</span></div><div class="ml-m"><span class="m">\(f'(x) = -3(x+1)(x+3)\)</span></div></div></li><li><span class="lab">משווים את הנגזרת ל־0 ופותרים</span><div class="ml"><div class="ml-m"><span class="m">\(-3(x+1)(x+3) = 0\)</span></div><div class="ml-m"><span class="m">\(x = -1,\quad x = -3\)</span></div></div></li><li><span class="lab">מציבים כל <span class="m">\(x\)</span> בפונקציה כדי למצוא את <span class="m">\(y\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(f(-1) = -(-1)^{3} - 6(-1)^{2} - 9(-1) = 1 - 6 + 9 = 4\)</span></div><div class="ml-m"><span class="m">\(f(-3) = -(-3)^{3} - 6(-3)^{2} - 9(-3) = 27 - 54 + 27 = 0\)</span></div></div></li><li><span class="lab">בונים טבלת סימנים לנגזרת</span><div class="ml"><div class="ml-t">הסימן נקבע לפי <span class="m">\(-3(x+1)(x+3)\)</span>: פרבולה "בוכה", שלילית מחוץ לשורשים וחיובית ביניהם.</div><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-3\)</td><td>\(-3\)</td><td>\(-3&lt;x&lt;-1\)</td><td>\(-1\)</td><td>\(x&gt;-1\)</td></tr><tr><th>f′</th><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td></tr><tr><th>f</th><td class="down">↘</td><td>מינ'</td><td class="up">↗</td><td>מקס'</td><td class="down">↘</td></tr></table></div></div></li><li><span class="lab">קובעים את סוג כל נקודה לפי מעבר הסימן</span><div class="ml"><div class="ml-t"><span class="m">\(x=-3\)</span>: מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span>, ולכן מינימום.</div><div class="ml-t"><span class="m">\(x=-1\)</span>: מ־<span class="m">\(+\)</span> ל־<span class="m">\(-\)</span>, ולכן מקסימום.</div></div></li></ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = -3(x+1)(x+3)\)</span></div></div><table class="pts"><tr><th>x</th><td><span class="m">\(-3\)</span></td><td><span class="m">\(-1\)</span></td></tr><tr><th>y = f(x)</th><td><span class="m">\(0\)</span></td><td><span class="m">\(4\)</span></td></tr><tr><th>סוג</th><td>מינימום</td><td>מקסימום</td></tr></table></div>
+  </div>
+</section>
+<section class="card" id="q2">
+  <div class="q-head"><h2>שאלה 2</h2><small>פולינום בחזקה · כלל השרשרת</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>נתונה הפונקציה <span class="m">\(f(x) = (x^{2}-9)^{2}\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>הפונקציה היא סוגריים בחזקה. לא פותחים את הסוגריים: גוזרים בכלל השרשרת, כך שהנגזרת יוצאת כבר מפורקת. בסוף בונים טבלת סימנים לנגזרת וקובעים את סוג כל נקודה.</p></div>
+    <ol class="st"><li><span class="lab">רושמים את כלל השרשרת לחזקה של פולינום</span><div class="ml"><div class="ml-m"><span class="m">\(\left[g(x)^{n}\right]' = n\cdot g(x)^{n-1}\cdot g'(x)\)</span></div></div></li><li><span class="lab">מציבים: החזקה יורדת, הסוגריים נשארים, וכופלים בנגזרת הפנימית</span><div class="ml"><div class="ml-m"><span class="m">\(g(x) = x^{2}-9\qquad g'(x) = 2x\)</span></div><div class="ml-m"><span class="m">\(f'(x) = 2(x^{2}-9)\cdot 2x\)</span></div><div class="ml-m"><span class="m">\(f'(x) = 4x(x^{2}-9)\)</span></div></div></li><li><span class="lab">מפרקים את הפרש הריבועים</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = 4x(x-3)(x+3)\)</span></div></div></li><li><span class="lab">משווים את הנגזרת ל־0 ופותרים</span><div class="ml"><div class="ml-m"><span class="m">\(4x(x-3)(x+3) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 0,\quad x = 3,\quad x = -3\)</span></div></div></li><li><span class="lab">מציבים כל <span class="m">\(x\)</span> בפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(0) = (0-9)^{2} = 81\)</span></div><div class="ml-m"><span class="m">\(f(3) = (9-9)^{2} = 0\)</span></div><div class="ml-m"><span class="m">\(f(-3) = (9-9)^{2} = 0\)</span></div></div></li><li><span class="lab">בונים טבלת סימנים לנגזרת</span><div class="ml"><div class="ml-t">בודקים את הסימן של כל גורם: <span class="m">\(x\)</span>, <span class="m">\((x-3)\)</span> ו־<span class="m">\((x+3)\)</span>. בכל אחת משלוש הנקודות גורם אחד מחליף סימן.</div><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-3\)</td><td>\(-3\)</td><td>\(-3&lt;x&lt;0\)</td><td>\(0\)</td><td>\(0&lt;x&lt;3\)</td><td>\(3\)</td><td>\(x&gt;3\)</td></tr><tr><th>f′</th><td>−</td><td>0</td><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="down">↘</td><td>מינ'</td><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div></div></li><li><span class="lab">קובעים את סוג כל נקודה לפי מעבר הסימן</span><div class="ml"><div class="ml-t"><span class="m">\(x=-3\)</span>: מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span>, מינימום.</div><div class="ml-t"><span class="m">\(x=0\)</span>: מ־<span class="m">\(+\)</span> ל־<span class="m">\(-\)</span>, מקסימום.</div><div class="ml-t"><span class="m">\(x=3\)</span>: מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span>, מינימום.</div></div></li></ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = 4x(x-3)(x+3)\)</span></div></div><table class="pts"><tr><th>x</th><td><span class="m">\(-3\)</span></td><td><span class="m">\(0\)</span></td><td><span class="m">\(3\)</span></td></tr><tr><th>y = f(x)</th><td><span class="m">\(0\)</span></td><td><span class="m">\(81\)</span></td><td><span class="m">\(0\)</span></td></tr><tr><th>סוג</th><td>מינימום</td><td>מקסימום</td><td>מינימום</td></tr></table></div>
+  </div>
+</section>
+<section class="card" id="q3">
+  <div class="q-head"><h2>שאלה 3</h2><small>מכפלה · כלל המכפלה ושרשרת</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>נתונה הפונקציה <span class="m">\(f(x) = (x-2)(x+2)^{3}\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>הפונקציה היא מכפלה של שני גורמים, ולכן גוזרים בכלל המכפלה. בגורם <span class="m">\((x+2)^{3}\)</span> משתמשים בכלל השרשרת. בסוף מוציאים את <span class="m">\((x+2)^{2}\)</span> כגורם משותף, בלי לפתוח סוגריים. בסוף בונים טבלת סימנים לנגזרת וקובעים את סוג כל נקודה.</p></div>
+    <ol class="st"><li><span class="lab">רושמים את כלל המכפלה</span><div class="ml"><div class="ml-m"><span class="m">\((u\cdot v)' = u'\cdot v + u\cdot v'\)</span></div></div></li><li><span class="lab">רושמים בנפרד את <span class="m">\(u, u', v, v'\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(u = x-2\qquad u' = 1\)</span></div><div class="ml-m"><span class="m">\(v = (x+2)^{3}\qquad v' = 3(x+2)^{2}\)</span></div></div></li><li><span class="lab">מציבים בכלל המכפלה</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = 1\cdot(x+2)^{3} + (x-2)\cdot 3(x+2)^{2}\)</span></div></div></li><li><span class="lab">מוציאים גורם משותף <span class="m">\((x+2)^{2}\)</span> ומכנסים בסוגריים</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = (x+2)^{2}\left[(x+2) + 3(x-2)\right]\)</span></div><div class="ml-m"><span class="m">\(f'(x) = (x+2)^{2}(4x - 4)\)</span></div><div class="ml-m"><span class="m">\(f'(x) = 4(x-1)(x+2)^{2}\)</span></div></div></li><li><span class="lab">משווים את הנגזרת ל־0 ופותרים</span><div class="ml"><div class="ml-m"><span class="m">\(4(x-1)(x+2)^{2} = 0\)</span></div><div class="ml-m"><span class="m">\(x = 1,\quad x = -2\)</span></div></div></li><li><span class="lab">מציבים כל <span class="m">\(x\)</span> בפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(1) = (1-2)(1+2)^{3} = -1\cdot 27 = -27\)</span></div><div class="ml-m"><span class="m">\(f(-2) = (-2-2)(-2+2)^{3} = -4\cdot 0 = 0\)</span></div></div></li><li><span class="lab">בונים טבלת סימנים לנגזרת</span><div class="ml"><div class="ml-t">הגורם <span class="m">\((x+2)^{2}\)</span> בחזקה זוגית, ולכן לא משנה סימן. הסימן נקבע לפי <span class="m">\((x-1)\)</span>.</div><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-2\)</td><td>\(-2\)</td><td>\(-2&lt;x&lt;1\)</td><td>\(1\)</td><td>\(x&gt;1\)</td></tr><tr><th>f′</th><td>−</td><td>0</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="down">↘</td><td>—</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div></div></li><li><span class="lab">קובעים את סוג כל נקודה לפי מעבר הסימן</span><div class="ml"><div class="ml-t"><span class="m">\(x=-2\)</span>: מ־<span class="m">\(-\)</span> ל־<span class="m">\(-\)</span>, אין החלפת סימן, ולכן זו <b>לא</b> נקודת קיצון.</div><div class="ml-t"><span class="m">\(x=1\)</span>: מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span>, מינימום.</div></div></li></ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = 4(x-1)(x+2)^{2}\)</span></div></div><table class="pts"><tr><th>x</th><td><span class="m">\(-2\)</span></td><td><span class="m">\(1\)</span></td></tr><tr><th>y = f(x)</th><td><span class="m">\(0\)</span></td><td><span class="m">\(-27\)</span></td></tr><tr><th>סוג</th><td>לא קיצון</td><td>מינימום</td></tr></table></div>
+  </div>
+</section>
+<h2>חלק ב׳: פולינום במונה ופולינום במכנה</h2>
+<section class="card" id="q4">
+  <div class="q-head"><h2>שאלה 4</h2><small>מונה ומכנה ממעלה שנייה</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>נתונה הפונקציה <span class="m">\(f(x) = \dfrac{x^{2} - 5x + 4}{x^{2} + 5x + 4}\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>פונקציה עם פולינום במונה ובמכנה: עובדים לפי המתכון. מפרקים קודם כדי לבדוק אם יש גורם משותף, ואחר כך גוזרים בכלל המנה ופותחים סוגריים רק במונה. בסוף בונים טבלת סימנים לנגזרת וקובעים את סוג כל נקודה.</p></div>
+    <ol class="st"><li><span class="lab">מפרקים את המונה ואת המכנה ובודקים אם יש גורם משותף</span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = \dfrac{(x-1)(x-4)}{(x+1)(x+4)}\)</span></div><div class="ml-t">אין גורם משותף, ולכן גוזרים את הפונקציה כמו שהיא.</div></div></li><li><span class="lab">רושמים בנפרד את <span class="m">\(g(x),\ g'(x),\ h(x),\ h'(x)\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(g(x) = x^{2} - 5x + 4\qquad g'(x) = 2x - 5\)</span></div><div class="ml-m"><span class="m">\(h(x) = x^{2} + 5x + 4\qquad h'(x) = 2x + 5\)</span></div></div></li><li><span class="lab">מציבים בכלל המנה, עם סוגריים סביב כל גורם</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{g'(x)\cdot h(x) - g(x)\cdot h'(x)}{h(x)^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{(2x-5)(x^{2}+5x+4) - (x^{2}-5x+4)(2x+5)}{(x^{2}+5x+4)^{2}}\)</span></div></div></li><li><span class="lab">פותחים סוגריים במונה, כל מכפלה בנפרד</span><div class="ml"><div class="ml-m"><span class="m">\((2x-5)(x^{2}+5x+4) = 2x^{3} + 5x^{2} - 17x - 20\)</span></div><div class="ml-m"><span class="m">\((x^{2}-5x+4)(2x+5) = 2x^{3} - 5x^{2} - 17x + 20\)</span></div></div></li><li><span class="lab">מחסרים את המכפלה השנייה מהראשונה ומכנסים איברים</span><div class="ml"><div class="ml-m"><span class="m">\((2x^{3} + 5x^{2} - 17x - 20) - (2x^{3} - 5x^{2} - 17x + 20) = 10x^{2} - 40\)</span></div></div></li><li><span class="lab">מפרקים את מונה הנגזרת</span><div class="ml"><div class="ml-m"><span class="m">\(10x^{2} - 40 = 10(x^{2}-4) = 10(x-2)(x+2)\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{10(x-2)(x+2)}{(x^{2}+5x+4)^{2}}\)</span></div></div></li><li><span class="lab">משווים את מונה הנגזרת ל־0 ופותרים</span><div class="ml"><div class="ml-m"><span class="m">\(10(x-2)(x+2) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 2,\quad x = -2\)</span></div></div></li><li><span class="lab">מציבים כל <span class="m">\(x\)</span> בפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(2) = \dfrac{4 - 10 + 4}{4 + 10 + 4} = \dfrac{-2}{18} = -\dfrac{1}{9}\)</span></div><div class="ml-m"><span class="m">\(f(-2) = \dfrac{4 + 10 + 4}{4 - 10 + 4} = \dfrac{18}{-2} = -9\)</span></div></div></li><li><span class="lab">בונים טבלת סימנים לנגזרת</span><div class="ml"><div class="ml-t">המכנה בריבוע, ולכן חיובי. הסימן נקבע לפי המונה <span class="m">\(10(x-2)(x+2)\)</span>: פרבולה "מחייכת".</div><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-2\)</td><td>\(-2\)</td><td>\(-2&lt;x&lt;2\)</td><td>\(2\)</td><td>\(x&gt;2\)</td></tr><tr><th>f′</th><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div></div></li><li><span class="lab">קובעים את סוג כל נקודה לפי מעבר הסימן</span><div class="ml"><div class="ml-t"><span class="m">\(x=-2\)</span>: מ־<span class="m">\(+\)</span> ל־<span class="m">\(-\)</span>, מקסימום.</div><div class="ml-t"><span class="m">\(x=2\)</span>: מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span>, מינימום.</div></div></li></ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{10(x-2)(x+2)}{(x^{2}+5x+4)^{2}}\)</span></div></div><table class="pts"><tr><th>x</th><td><span class="m">\(-2\)</span></td><td><span class="m">\(2\)</span></td></tr><tr><th>y = f(x)</th><td><span class="m">\(-9\)</span></td><td><span class="m">\(-\dfrac19\)</span></td></tr><tr><th>סוג</th><td>מקסימום</td><td>מינימום</td></tr></table></div>
+  </div>
+</section>
+<section class="card" id="q5">
+  <div class="q-head"><h2>שאלה 5</h2><small>מכנה שהוא ריבוע שלם</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>נתונה הפונקציה <span class="m">\(f(x) = \dfrac{x^{2} - 3x}{x^{2} + 6x + 9}\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>המכנה הוא ריבוע שלם, <span class="m">\((x+3)^{2}\)</span>. גוזרים לפי המתכון, ובסוף מונה הנגזרת מתפרק עם גורם <span class="m">\((x+3)\)</span> שמצטמצם עם המכנה. בסוף בונים טבלת סימנים לנגזרת וקובעים את סוג כל נקודה.</p></div>
+    <ol class="st"><li><span class="lab">מפרקים את המונה ואת המכנה ובודקים אם יש גורם משותף</span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = \dfrac{x(x-3)}{(x+3)^{2}}\)</span></div><div class="ml-t">אין גורם משותף.</div></div></li><li><span class="lab">רושמים בנפרד את <span class="m">\(g(x),\ g'(x),\ h(x),\ h'(x)\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(g(x) = x^{2} - 3x\qquad g'(x) = 2x - 3\)</span></div><div class="ml-m"><span class="m">\(h(x) = x^{2} + 6x + 9\qquad h'(x) = 2x + 6\)</span></div></div></li><li><span class="lab">מציבים בכלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{g'(x)\cdot h(x) - g(x)\cdot h'(x)}{h(x)^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{(2x-3)(x^{2}+6x+9) - (x^{2}-3x)(2x+6)}{(x^{2}+6x+9)^{2}}\)</span></div></div></li><li><span class="lab">פותחים סוגריים במונה, כל מכפלה בנפרד</span><div class="ml"><div class="ml-m"><span class="m">\((2x-3)(x^{2}+6x+9) = 2x^{3} + 9x^{2} - 27\)</span></div><div class="ml-m"><span class="m">\((x^{2}-3x)(2x+6) = 2x^{3} - 18x\)</span></div></div></li><li><span class="lab">מחסרים ומכנסים איברים</span><div class="ml"><div class="ml-m"><span class="m">\((2x^{3} + 9x^{2} - 27) - (2x^{3} - 18x) = 9x^{2} + 18x - 27\)</span></div></div></li><li><span class="lab">מפרקים את מונה הנגזרת ומצמצמים עם המכנה</span><div class="ml"><div class="ml-m"><span class="m">\(9x^{2} + 18x - 27 = 9(x^{2} + 2x - 3) = 9(x+3)(x-1)\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{9(x+3)(x-1)}{(x+3)^{4}} = \dfrac{9(x-1)}{(x+3)^{3}}\)</span></div></div></li><li><span class="lab">משווים את מונה הנגזרת ל־0 ופותרים</span><div class="ml"><div class="ml-m"><span class="m">\(9(x-1) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 1\)</span></div></div></li><li><span class="lab">מציבים את <span class="m">\(x\)</span> בפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(1) = \dfrac{1 - 3}{1 + 6 + 9} = \dfrac{-2}{16} = -\dfrac{1}{8}\)</span></div></div></li><li><span class="lab">בונים טבלת סימנים לנגזרת</span><div class="ml"><div class="ml-t">המכנה <span class="m">\((x+3)^{3}\)</span> בחזקה <b>אי־זוגית</b>, ולכן גם הוא מחליף סימן: הנקודה <span class="m">\(x=-3\)</span> נכנסת לטבלה.</div><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-3\)</td><td>\(-3\)</td><td>\(-3&lt;x&lt;1\)</td><td>\(1\)</td><td>\(x&gt;1\)</td></tr><tr><th>f′</th><td>+</td><td>לא מוגדר</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="up">↗</td><td>—</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div></div></li><li><span class="lab">קובעים את סוג כל נקודה לפי מעבר הסימן</span><div class="ml"><div class="ml-t"><span class="m">\(x=-3\)</span>: הפונקציה לא מוגדרת שם, ולכן אין קיצון.</div><div class="ml-t"><span class="m">\(x=1\)</span>: מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span>, מינימום.</div></div></li></ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{9(x-1)}{(x+3)^{3}}\)</span></div></div><table class="pts"><tr><th>x</th><td><span class="m">\(1\)</span></td></tr><tr><th>y = f(x)</th><td><span class="m">\(-\dfrac18\)</span></td></tr><tr><th>סוג</th><td>מינימום</td></tr></table></div>
+  </div>
+</section>
+<section class="card" id="q6">
+  <div class="q-head"><h2>שאלה 6</h2><small>מונה ריבוע שלם, מכנה הפרש ריבועים</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>נתונה הפונקציה <span class="m">\(f(x) = \dfrac{x^{2} - 2x + 1}{x^{2} - 4}\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מפרקים ובודקים שאין גורם משותף, ואז גוזרים לפי המתכון. מונה הנגזרת יוצא טרינום שמתפרק לשורשים שלמים. בסוף בונים טבלת סימנים לנגזרת וקובעים את סוג כל נקודה.</p></div>
+    <ol class="st"><li><span class="lab">מפרקים את המונה ואת המכנה ובודקים אם יש גורם משותף</span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = \dfrac{(x-1)^{2}}{(x-2)(x+2)}\)</span></div><div class="ml-t">אין גורם משותף.</div></div></li><li><span class="lab">רושמים בנפרד את <span class="m">\(g(x),\ g'(x),\ h(x),\ h'(x)\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(g(x) = x^{2} - 2x + 1\qquad g'(x) = 2x - 2\)</span></div><div class="ml-m"><span class="m">\(h(x) = x^{2} - 4\qquad h'(x) = 2x\)</span></div></div></li><li><span class="lab">מציבים בכלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{g'(x)\cdot h(x) - g(x)\cdot h'(x)}{h(x)^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{(2x-2)(x^{2}-4) - (x^{2}-2x+1)\cdot 2x}{(x^{2}-4)^{2}}\)</span></div></div></li><li><span class="lab">פותחים סוגריים במונה, כל מכפלה בנפרד</span><div class="ml"><div class="ml-m"><span class="m">\((2x-2)(x^{2}-4) = 2x^{3} - 2x^{2} - 8x + 8\)</span></div><div class="ml-m"><span class="m">\((x^{2}-2x+1)\cdot 2x = 2x^{3} - 4x^{2} + 2x\)</span></div></div></li><li><span class="lab">מחסרים ומכנסים איברים</span><div class="ml"><div class="ml-m"><span class="m">\((2x^{3} - 2x^{2} - 8x + 8) - (2x^{3} - 4x^{2} + 2x) = 2x^{2} - 10x + 8\)</span></div></div></li><li><span class="lab">מפרקים את מונה הנגזרת</span><div class="ml"><div class="ml-m"><span class="m">\(2x^{2} - 10x + 8 = 2(x^{2} - 5x + 4) = 2(x-1)(x-4)\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{2(x-1)(x-4)}{(x^{2}-4)^{2}}\)</span></div></div></li><li><span class="lab">משווים את מונה הנגזרת ל־0 ופותרים</span><div class="ml"><div class="ml-m"><span class="m">\(2(x-1)(x-4) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 1,\quad x = 4\)</span></div></div></li><li><span class="lab">מציבים כל <span class="m">\(x\)</span> בפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(1) = \dfrac{1 - 2 + 1}{1 - 4} = \dfrac{0}{-3} = 0\)</span></div><div class="ml-m"><span class="m">\(f(4) = \dfrac{16 - 8 + 1}{16 - 4} = \dfrac{9}{12} = \dfrac{3}{4}\)</span></div></div></li><li><span class="lab">בונים טבלת סימנים לנגזרת</span><div class="ml"><div class="ml-t">המכנה בריבוע, ולכן חיובי. הסימן נקבע לפי <span class="m">\(2(x-1)(x-4)\)</span>: פרבולה "מחייכת".</div><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;1\)</td><td>\(1\)</td><td>\(1&lt;x&lt;4\)</td><td>\(4\)</td><td>\(x&gt;4\)</td></tr><tr><th>f′</th><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div></div></li><li><span class="lab">קובעים את סוג כל נקודה לפי מעבר הסימן</span><div class="ml"><div class="ml-t"><span class="m">\(x=1\)</span>: מ־<span class="m">\(+\)</span> ל־<span class="m">\(-\)</span>, מקסימום.</div><div class="ml-t"><span class="m">\(x=4\)</span>: מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span>, מינימום.</div></div></li></ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{2(x-1)(x-4)}{(x^{2}-4)^{2}}\)</span></div></div><table class="pts"><tr><th>x</th><td><span class="m">\(1\)</span></td><td><span class="m">\(4\)</span></td></tr><tr><th>y = f(x)</th><td><span class="m">\(0\)</span></td><td><span class="m">\(\dfrac34\)</span></td></tr><tr><th>סוג</th><td>מקסימום</td><td>מינימום</td></tr></table></div>
+  </div>
+</section>
+<section class="card" id="q7">
+  <div class="q-head"><h2>שאלה 7</h2><small>הנגזרת לא מתאפסת</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>נתונה הפונקציה <span class="m">\(f(x) = \dfrac{x^{2} - 4x}{x^{2} - 4x + 4}\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>כאן <span class="m">\(g'(x)\)</span> ו־<span class="m">\(h'(x)\)</span> שווים, ולכן במונה של כלל המנה אפשר להוציא את <span class="m">\((2x-4)\)</span> כגורם משותף במקום לפתוח סוגריים. מונה הנגזרת יוצא מספר, ולכן הנגזרת לא מתאפסת אף פעם. בסוף בונים טבלת סימנים לנגזרת וקובעים את סוג כל נקודה.</p></div>
+    <ol class="st"><li><span class="lab">מפרקים את המונה ואת המכנה ובודקים אם יש גורם משותף</span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = \dfrac{x(x-4)}{(x-2)^{2}}\)</span></div><div class="ml-t">אין גורם משותף.</div></div></li><li><span class="lab">רושמים בנפרד את <span class="m">\(g(x),\ g'(x),\ h(x),\ h'(x)\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(g(x) = x^{2} - 4x\qquad g'(x) = 2x - 4\)</span></div><div class="ml-m"><span class="m">\(h(x) = x^{2} - 4x + 4\qquad h'(x) = 2x - 4\)</span></div></div></li><li><span class="lab">מציבים בכלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{g'(x)\cdot h(x) - g(x)\cdot h'(x)}{h(x)^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{(2x-4)(x^{2}-4x+4) - (x^{2}-4x)(2x-4)}{(x^{2}-4x+4)^{2}}\)</span></div></div></li><li><span class="lab">מוציאים גורם משותף <span class="m">\((2x-4)\)</span> מהמונה ומכנסים בסוגריים</span><div class="ml"><div class="ml-m"><span class="m">\((2x-4)\left[(x^{2}-4x+4) - (x^{2}-4x)\right] = (2x-4)\cdot 4 = 8(x-2)\)</span></div></div></li><li><span class="lab">כותבים את המכנה מפורק ומצמצמים</span><div class="ml"><div class="ml-m"><span class="m">\((x^{2}-4x+4)^{2} = (x-2)^{4}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{8(x-2)}{(x-2)^{4}} = \dfrac{8}{(x-2)^{3}}\)</span></div></div></li><li><span class="lab">משווים את מונה הנגזרת ל־0</span><div class="ml"><div class="ml-m"><span class="m">\(8 \neq 0\)</span></div><div class="ml-t">אין פתרון: המונה הוא המספר 8, והוא אף פעם לא 0.</div></div></li><li><span class="lab">בונים טבלת סימנים לנגזרת</span><div class="ml"><div class="ml-t">מונה הנגזרת הוא 8, חיובי תמיד. המכנה <span class="m">\((x-2)^{3}\)</span> בחזקה אי־זוגית, ולכן הסימן מתחלף ב־<span class="m">\(x=2\)</span>.</div><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;2\)</td><td>\(2\)</td><td>\(x&gt;2\)</td></tr><tr><th>f′</th><td>−</td><td>לא מוגדר</td><td>+</td></tr><tr><th>f</th><td class="down">↘</td><td>—</td><td class="up">↗</td></tr></table></div></div></li><li><span class="lab">קובעים את סוג כל נקודה לפי מעבר הסימן</span><div class="ml"><div class="ml-t">הנגזרת לא מתאפסת, ו־<span class="m">\(x=2\)</span> לא בתחום. לכן אין לפונקציה נקודות קיצון.</div></div></li></ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{8}{(x-2)^{3}}\)</span></div></div><p>אין נקודות קיצון.</p></div>
+  </div>
+</section>
+<section class="card" id="q8">
+  <div class="q-head"><h2>שאלה 8</h2><small>מונה ממעלה רביעית</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>נתונה הפונקציה <span class="m">\(f(x) = \dfrac{2x^{4}}{x^{2} + 2x + 1}\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>המונה הוא חזקה אחת, ולכן <span class="m">\(g'(x)\)</span> קל. אחרי פתיחת הסוגריים מוציאים גורם משותף <span class="m">\(4x^{3}\)</span>, ונשאר טרינום שמתפרק. גורם <span class="m">\((x+1)\)</span> מצטמצם עם המכנה. בסוף בונים טבלת סימנים לנגזרת וקובעים את סוג כל נקודה.</p></div>
+    <ol class="st"><li><span class="lab">מפרקים את המונה ואת המכנה ובודקים אם יש גורם משותף</span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = \dfrac{2x^{4}}{(x+1)^{2}}\)</span></div><div class="ml-t">אין גורם משותף.</div></div></li><li><span class="lab">רושמים בנפרד את <span class="m">\(g(x),\ g'(x),\ h(x),\ h'(x)\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(g(x) = 2x^{4}\qquad g'(x) = 8x^{3}\)</span></div><div class="ml-m"><span class="m">\(h(x) = x^{2} + 2x + 1\qquad h'(x) = 2x + 2\)</span></div></div></li><li><span class="lab">מציבים בכלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{g'(x)\cdot h(x) - g(x)\cdot h'(x)}{h(x)^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{8x^{3}(x^{2}+2x+1) - 2x^{4}(2x+2)}{(x^{2}+2x+1)^{2}}\)</span></div></div></li><li><span class="lab">פותחים סוגריים במונה, כל מכפלה בנפרד</span><div class="ml"><div class="ml-m"><span class="m">\(8x^{3}(x^{2}+2x+1) = 8x^{5} + 16x^{4} + 8x^{3}\)</span></div><div class="ml-m"><span class="m">\(2x^{4}(2x+2) = 4x^{5} + 4x^{4}\)</span></div></div></li><li><span class="lab">מחסרים ומכנסים איברים</span><div class="ml"><div class="ml-m"><span class="m">\((8x^{5} + 16x^{4} + 8x^{3}) - (4x^{5} + 4x^{4}) = 4x^{5} + 12x^{4} + 8x^{3}\)</span></div></div></li><li><span class="lab">מוציאים גורם משותף, מפרקים את הטרינום ומצמצמים עם המכנה</span><div class="ml"><div class="ml-m"><span class="m">\(4x^{5} + 12x^{4} + 8x^{3} = 4x^{3}(x^{2} + 3x + 2) = 4x^{3}(x+1)(x+2)\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{4x^{3}(x+1)(x+2)}{(x+1)^{4}} = \dfrac{4x^{3}(x+2)}{(x+1)^{3}}\)</span></div></div></li><li><span class="lab">משווים את מונה הנגזרת ל־0 ופותרים</span><div class="ml"><div class="ml-m"><span class="m">\(4x^{3}(x+2) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 0,\quad x = -2\)</span></div></div></li><li><span class="lab">מציבים כל <span class="m">\(x\)</span> בפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(0) = \dfrac{2\cdot 0}{1} = 0\)</span></div><div class="ml-m"><span class="m">\(f(-2) = \dfrac{2\cdot 16}{4 - 4 + 1} = \dfrac{32}{1} = 32\)</span></div></div></li><li><span class="lab">בונים טבלת סימנים לנגזרת</span><div class="ml"><div class="ml-t">המכנה <span class="m">\((x+1)^{3}\)</span> בחזקה אי־זוגית, ולכן <span class="m">\(x=-1\)</span> נכנס לטבלה. גם <span class="m">\(x^{3}\)</span> בחזקה אי־זוגית ומחליף סימן ב־0.</div><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-2\)</td><td>\(-2\)</td><td>\(-2&lt;x&lt;-1\)</td><td>\(-1\)</td><td>\(-1&lt;x&lt;0\)</td><td>\(0\)</td><td>\(x&gt;0\)</td></tr><tr><th>f′</th><td>−</td><td>0</td><td>+</td><td>לא מוגדר</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="down">↘</td><td>מינ'</td><td class="up">↗</td><td>—</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div></div></li><li><span class="lab">קובעים את סוג כל נקודה לפי מעבר הסימן</span><div class="ml"><div class="ml-t"><span class="m">\(x=-2\)</span>: מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span>, מינימום.</div><div class="ml-t"><span class="m">\(x=-1\)</span>: הפונקציה לא מוגדרת שם, אין קיצון.</div><div class="ml-t"><span class="m">\(x=0\)</span>: מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span>, מינימום.</div></div></li></ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{4x^{3}(x+2)}{(x+1)^{3}}\)</span></div></div><table class="pts"><tr><th>x</th><td><span class="m">\(-2\)</span></td><td><span class="m">\(0\)</span></td></tr><tr><th>y = f(x)</th><td><span class="m">\(32\)</span></td><td><span class="m">\(0\)</span></td></tr><tr><th>סוג</th><td>מינימום</td><td>מינימום</td></tr></table></div>
+  </div>
+</section>
+<section class="card" id="q9">
+  <div class="q-head"><h2>שאלה 9</h2><small>מונה ממעלה שלישית</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>נתונה הפונקציה <span class="m">\(f(x) = \dfrac{x^{3}}{x^{2} - 2x + 1}\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>אותו מתכון: אחרי פתיחת הסוגריים מוציאים <span class="m">\(x^{2}\)</span> כגורם משותף, מפרקים את הטרינום שנשאר, ומצמצמים <span class="m">\((x-1)\)</span> עם המכנה. בסוף בונים טבלת סימנים לנגזרת וקובעים את סוג כל נקודה.</p></div>
+    <ol class="st"><li><span class="lab">מפרקים את המונה ואת המכנה ובודקים אם יש גורם משותף</span><div class="ml"><div class="ml-m"><span class="m">\(f(x) = \dfrac{x^{3}}{(x-1)^{2}}\)</span></div><div class="ml-t">אין גורם משותף.</div></div></li><li><span class="lab">רושמים בנפרד את <span class="m">\(g(x),\ g'(x),\ h(x),\ h'(x)\)</span></span><div class="ml"><div class="ml-m"><span class="m">\(g(x) = x^{3}\qquad g'(x) = 3x^{2}\)</span></div><div class="ml-m"><span class="m">\(h(x) = x^{2} - 2x + 1\qquad h'(x) = 2x - 2\)</span></div></div></li><li><span class="lab">מציבים בכלל המנה</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{g'(x)\cdot h(x) - g(x)\cdot h'(x)}{h(x)^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{3x^{2}(x^{2}-2x+1) - x^{3}(2x-2)}{(x^{2}-2x+1)^{2}}\)</span></div></div></li><li><span class="lab">פותחים סוגריים במונה, כל מכפלה בנפרד</span><div class="ml"><div class="ml-m"><span class="m">\(3x^{2}(x^{2}-2x+1) = 3x^{4} - 6x^{3} + 3x^{2}\)</span></div><div class="ml-m"><span class="m">\(x^{3}(2x-2) = 2x^{4} - 2x^{3}\)</span></div></div></li><li><span class="lab">מחסרים ומכנסים איברים</span><div class="ml"><div class="ml-m"><span class="m">\((3x^{4} - 6x^{3} + 3x^{2}) - (2x^{4} - 2x^{3}) = x^{4} - 4x^{3} + 3x^{2}\)</span></div></div></li><li><span class="lab">מוציאים גורם משותף, מפרקים את הטרינום ומצמצמים עם המכנה</span><div class="ml"><div class="ml-m"><span class="m">\(x^{4} - 4x^{3} + 3x^{2} = x^{2}(x^{2} - 4x + 3) = x^{2}(x-1)(x-3)\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{x^{2}(x-1)(x-3)}{(x-1)^{4}} = \dfrac{x^{2}(x-3)}{(x-1)^{3}}\)</span></div></div></li><li><span class="lab">משווים את מונה הנגזרת ל־0 ופותרים</span><div class="ml"><div class="ml-m"><span class="m">\(x^{2}(x-3) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 0,\quad x = 3\)</span></div></div></li><li><span class="lab">מציבים כל <span class="m">\(x\)</span> בפונקציה</span><div class="ml"><div class="ml-m"><span class="m">\(f(0) = \dfrac{0}{1} = 0\)</span></div><div class="ml-m"><span class="m">\(f(3) = \dfrac{27}{9 - 6 + 1} = \dfrac{27}{4}\)</span></div></div></li><li><span class="lab">בונים טבלת סימנים לנגזרת</span><div class="ml"><div class="ml-t"><span class="m">\(x^{2}\)</span> בחזקה זוגית ולא משנה סימן. המכנה <span class="m">\((x-1)^{3}\)</span> בחזקה אי־זוגית, ולכן <span class="m">\(x=1\)</span> נכנס לטבלה.</div><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;0\)</td><td>\(0\)</td><td>\(0&lt;x&lt;1\)</td><td>\(1\)</td><td>\(1&lt;x&lt;3\)</td><td>\(3\)</td><td>\(x&gt;3\)</td></tr><tr><th>f′</th><td>+</td><td>0</td><td>+</td><td>לא מוגדר</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="up">↗</td><td>—</td><td class="up">↗</td><td>—</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div></div></li><li><span class="lab">קובעים את סוג כל נקודה לפי מעבר הסימן</span><div class="ml"><div class="ml-t"><span class="m">\(x=0\)</span>: מ־<span class="m">\(+\)</span> ל־<span class="m">\(+\)</span>, אין החלפת סימן, ולכן <b>לא</b> נקודת קיצון.</div><div class="ml-t"><span class="m">\(x=1\)</span>: הפונקציה לא מוגדרת שם, אין קיצון.</div><div class="ml-t"><span class="m">\(x=3\)</span>: מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span>, מינימום.</div></div></li></ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{x^{2}(x-3)}{(x-1)^{3}}\)</span></div></div><table class="pts"><tr><th>x</th><td><span class="m">\(0\)</span></td><td><span class="m">\(3\)</span></td></tr><tr><th>y = f(x)</th><td><span class="m">\(0\)</span></td><td><span class="m">\(\dfrac{27}{4}\)</span></td></tr><tr><th>סוג</th><td>לא קיצון</td><td>מינימום</td></tr></table></div>
+  </div>
+</section>
+<section class="card" id="q10">
+  <div class="q-head"><h2>שאלה 10</h2><small>צמצום לפני הגזירה</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>נתונה הפונקציה <span class="m">\(f(x) = \dfrac{x^{3} - 2x^{2} - 11x + 12}{x^{2} + 3x}\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>כאן הצעד הראשון של המתכון חוסך הרבה עבודה: מפרקים את המונה (פולינום ממעלה שלישית) ואת המכנה, מגלים גורם משותף <span class="m">\((x+3)\)</span>, מצמצמים, ורק אז גוזרים פונקציה פשוטה יותר. בסוף בונים טבלת סימנים לנגזרת וקובעים את סוג כל נקודה.</p></div>
+    <ol class="st"><li><span class="lab">מחפשים שורש שלם של המונה: מציבים מחלקים של 12</span><div class="ml"><div class="ml-m"><span class="m">\(1 - 2 - 11 + 12 = 0\)</span></div><div class="ml-t"><span class="m">\(x=1\)</span> הוא שורש, ולכן <span class="m">\((x-1)\)</span> הוא גורם של המונה.</div></div></li><li><span class="lab">מוצאים את הגורם השני בהשוואת מקדמים</span><div class="ml"><div class="ml-m"><span class="m">\(x^{3} - 2x^{2} - 11x + 12 = (x-1)(x^{2} + bx + c)\)</span></div><div class="ml-m"><span class="m">\((x-1)(x^{2} + bx + c) = x^{3} + (b-1)x^{2} + (c-b)x - c\)</span></div><div class="ml-m"><span class="m">\(b - 1 = -2 \;\Rightarrow\; b = -1\)</span></div><div class="ml-m"><span class="m">\(-c = 12 \;\Rightarrow\; c = -12\)</span></div><div class="ml-m"><span class="m">\(x^{3} - 2x^{2} - 11x + 12 = (x-1)(x^{2} - x - 12) = (x-1)(x-4)(x+3)\)</span></div></div></li><li><span class="lab">מפרקים את המכנה ומצמצמים את הגורם המשותף</span><div class="ml"><div class="ml-m"><span class="m">\(x^{2} + 3x = x(x+3)\)</span></div><div class="ml-m"><span class="m">\(f(x) = \dfrac{(x-1)(x-4)(x+3)}{x(x+3)} = \dfrac{x^{2} - 5x + 4}{x}\)</span></div></div></li><li><span class="lab">רושמים בנפרד את <span class="m">\(g(x),\ g'(x),\ h(x),\ h'(x)\)</span> של הפונקציה המצומצמת</span><div class="ml"><div class="ml-m"><span class="m">\(g(x) = x^{2} - 5x + 4\qquad g'(x) = 2x - 5\)</span></div><div class="ml-m"><span class="m">\(h(x) = x\qquad h'(x) = 1\)</span></div></div></li><li><span class="lab">מציבים בכלל המנה ומכנסים את המונה</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{g'(x)\cdot h(x) - g(x)\cdot h'(x)}{h(x)^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{(2x-5)\cdot x - (x^{2}-5x+4)\cdot 1}{x^{2}}\)</span></div><div class="ml-m"><span class="m">\(f'(x) = \dfrac{2x^{2} - 5x - x^{2} + 5x - 4}{x^{2}} = \dfrac{x^{2} - 4}{x^{2}}\)</span></div></div></li><li><span class="lab">מפרקים את מונה הנגזרת</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{(x-2)(x+2)}{x^{2}}\)</span></div></div></li><li><span class="lab">משווים את מונה הנגזרת ל־0 ופותרים</span><div class="ml"><div class="ml-m"><span class="m">\((x-2)(x+2) = 0\)</span></div><div class="ml-m"><span class="m">\(x = 2,\quad x = -2\)</span></div></div></li><li><span class="lab">מציבים כל <span class="m">\(x\)</span> בפונקציה המצומצמת</span><div class="ml"><div class="ml-m"><span class="m">\(f(2) = \dfrac{4 - 10 + 4}{2} = \dfrac{-2}{2} = -1\)</span></div><div class="ml-m"><span class="m">\(f(-2) = \dfrac{4 + 10 + 4}{-2} = \dfrac{18}{-2} = -9\)</span></div></div></li><li><span class="lab">בונים טבלת סימנים לנגזרת</span><div class="ml"><div class="ml-t">המכנה <span class="m">\(x^{2}\)</span> חיובי. הסימן נקבע לפי <span class="m">\((x-2)(x+2)\)</span>: פרבולה "מחייכת".</div><div class="signwrap"><table class="signs"><tr><th>x</th><td>\(x&lt;-2\)</td><td>\(-2\)</td><td>\(-2&lt;x&lt;2\)</td><td>\(2\)</td><td>\(x&gt;2\)</td></tr><tr><th>f′</th><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td></tr><tr><th>f</th><td class="up">↗</td><td>מקס'</td><td class="down">↘</td><td>מינ'</td><td class="up">↗</td></tr></table></div></div></li><li><span class="lab">קובעים את סוג כל נקודה לפי מעבר הסימן</span><div class="ml"><div class="ml-t"><span class="m">\(x=-2\)</span>: מ־<span class="m">\(+\)</span> ל־<span class="m">\(-\)</span>, מקסימום.</div><div class="ml-t"><span class="m">\(x=2\)</span>: מ־<span class="m">\(-\)</span> ל־<span class="m">\(+\)</span>, מינימום.</div></div></li></ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(f'(x) = \dfrac{(x-2)(x+2)}{x^{2}}\)</span></div></div><table class="pts"><tr><th>x</th><td><span class="m">\(-2\)</span></td><td><span class="m">\(2\)</span></td></tr><tr><th>y = f(x)</th><td><span class="m">\(-9\)</span></td><td><span class="m">\(-1\)</span></td></tr><tr><th>סוג</th><td>מקסימום</td><td>מינימום</td></tr></table></div>
+  </div>
+</section>
+<footer>חשבון דיפרנציאלי · 5 יחידות · פתרונות שיעור 2: נקודות קיצון וסוגן</footer>
+</div>
+<script>
+(function(){var b=document.getElementById('tg');b.onclick=function(){var c=document.body.classList.toggle('collapsed');b.textContent=c?'הצג את הפתרון המלא':'הצג רק את כותרות השלבים';};})();
+</script>
+</body>
+</html>
