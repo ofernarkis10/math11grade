@@ -26,6 +26,8 @@ The pages are in Hebrew (right-to-left). Each page explains one topic in depth �
 | Summer work | `summer-work-grade10-5units.pdf` | PDF: summer assignment given at the end of grade 10 (29 questions: polynomials, rational functions, geometry without circles, composite functions), with links to answers |
 | | `summer-work-geometry-solutions.html` | Worked solutions to the 10 geometry questions of the summer work, with the theorems used in each step |
 | | `summer-work-calculus-solutions.html` | Worked solutions to the 14 calculus questions of the summer work (polynomials and rational functions), with sign tables and graphs |
+| Equations | `equations-01-quadratic-common-denominator.html` | Explanation: quadratic equations with denominators, solved with a common denominator and factoring; the method in 7 steps, 6 problem types (numeric denominators, variable in the denominator, proportion, two different linear denominators, difference-of-squares denominator, trinomial denominator), one worked example per type with a check, common mistakes and 4 practice equations with final answers |
+| | `equations-02-practice.html` | Practice: 40 equations by problem type (5 numeric denominators, 5 variable in the denominator, 10 proportions, 10 difference-of-squares denominators, 10 trinomial denominators; no type ד, two different linear denominators), some with an excluded solution; folding full solutions in the site format and an answers table |
 | Sequences | `sequences-00-overview.html` | Overview of all sequence types |
 | | `sequences-01-arithmetic.html` | Arithmetic sequences |
 | | `sequences-02-geometric.html` | Geometric sequences |
@@ -251,7 +253,7 @@ Each document is one entry in its topic's `items`, in the order of study:
 
 ```
 math11grade/
-├── index.html                          all navigation: home page, topic lists (#<topic-id>), homework list (#homework) and search (#q=…); topic ids: curriculum, glossary, summer-work, sequences, calculus, composite-derivatives, geometry, trigonometry, circle-motion-basics, wheel-motion, analytic, units
+├── index.html                          all navigation: home page, topic lists (#<topic-id>), homework list (#homework) and search (#q=…); topic ids: curriculum, glossary, summer-work, equations, sequences, calculus, composite-derivatives, geometry, trigonometry, circle-motion-basics, wheel-motion, analytic, units
 ├── curriculum-5units-grade10-11.html   curriculum reference
 ├── glossary.html                       glossary of every term used on the site
 ├── summer-work-grade10-5units.pdf    summer assignment from the end of grade 10 (PDF)
@@ -259,6 +261,7 @@ math11grade/
 ├── img/summer-geometry/              figures for the geometry solutions page
 ├── summer-work-calculus-solutions.html  worked solutions to the summer-work calculus questions
 ├── img/summer-calculus/              graphs for the calculus solutions page
+├── equations-NN-<name>.html            equations (01 explanation: quadratic equations with denominators, common denominator and factoring, 6 problem types; 02 practice: 40 equations with folding solutions)
 ├── sequences-NN-<name>.html            sequences topic, pages 00–09
 ├── calculus-NN-<name>.html               differential calculus (01 question deck: 14 investigation questions, no solutions; 02 explanation: derivatives of rational functions; 03 lesson-1 worksheet: quotient-rule recipe, 3 warm-up polynomials and 7 functions with a quadratic denominator, numerator and denominator both factorable with integer roots, derivative and the points where it is zero (no type), table of points; 04 lesson-2 worksheet: the same 10 functions, extrema and their type with a sign table; 09 answers only for the lesson-1 worksheet (one table: function, reduced derivative, points where it is zero); 10 answers only for the lesson-2 worksheet (function, reduced derivative, points and their type); the full worked solutions of lessons 1 and 2 are random-name pages linked only from tests.html; 05 printable worksheet with all 14 functions of the question deck, derivative and extrema, writing lines and a sign table)
 ├── composite-derivatives-NN-<name>.html  derivatives of composite functions (01 rules, 02 exercises)

@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>משוואה ריבועית עם מכנים: מכנה משותף ופירוק לגורמים · דף הסבר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* Layout: copied from calculus-02. Method card, types table, one worked example per type in the site solution format, common mistakes and practice */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --ok:#2f7a4a; --ok-soft:#e5f3ea; --grid:rgba(31,111,139,.06);
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --ok:#7fd09a; --ok-soft:#1d3326; --grid:rgba(108,188,214,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --ok:#7fd09a; --ok-soft:#1d3326; --grid:rgba(108,188,214,.05); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:32px 72px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.3rem}
+h2{font-size:1.65rem;color:var(--accent)}
+h3{font-size:1.15rem}
+p{margin:0}
+.m{direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+.m .katex{font-size:1.08em;position:relative}
+.m:has(.katex){white-space:normal}
+.steps .m,.alt .m{white-space:normal}
+/* room for full-size fractions (\dfrac) between lines */
+.part p,.part h3,.given p,td{line-height:2.15}
+*:has(> .m .mfrac){line-height:2.15}
+.lead{color:var(--muted);max-width:68ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav.qnav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px;display:flex;flex-direction:column;gap:10px}
+nav.qnav ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+nav.qnav a{display:block;padding:6px 10px;border:1px solid var(--line);border-radius:8px;color:var(--accent);font-weight:700;text-decoration:none;font-size:.95rem}
+nav.qnav a small{display:block;color:var(--muted);font-weight:400;font-size:.8rem}
+nav.qnav a:hover,nav.qnav a:focus-visible{border-color:var(--accent);background:var(--accent-soft);outline:none}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+
+/* theorem toolbox */
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.tool{background:var(--accent-soft);border-radius:8px;padding:10px 14px;scroll-margin-top:16px}
+.tool b{display:flex;gap:8px;align-items:baseline}
+.tool b .tag{font-family:var(--f-math);font-size:.8rem;color:var(--paper);background:var(--accent);border-radius:4px;padding:0 6px}
+.tool p{font-size:.93rem;color:var(--ink)}
+
+/* answers table */
+.tablebox{position:relative;overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.93rem}
+th,td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:700;color:var(--accent);white-space:nowrap}
+
+/* question card */
+.q-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.q-head small{font-family:var(--f-body);font-size:.92rem;color:var(--muted);font-weight:600}
+.setup{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px);gap:18px;align-items:start}
+@media (max-width:680px){.setup{grid-template-columns:1fr}}
+.given{display:flex;flex-direction:column;gap:6px}
+.given .lbl{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--muted)}
+figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:4px}
+figure img{width:100%;height:auto;display:block}
+figure figcaption{font-size:.78rem;color:#5b6878;text-align:center}
+
+.part{border-inline-start:3px solid var(--accent);padding-inline-start:14px;display:flex;flex-direction:column;gap:6px}
+.part h3{color:var(--ink)}
+.part h3 .lt{color:var(--accent);margin-inline-end:6px}
+.steps{display:flex;flex-direction:column;gap:5px}
+.steps .m{white-space:normal}
+.ans{background:var(--ok-soft);border-radius:6px;padding:6px 12px;width:fit-content;max-width:100%;font-weight:600}
+.ans .m .katex{font-size:1.15em}
+.uses{font-size:.88rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.uses a{font-size:.82rem;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:1px 10px;text-decoration:none;font-weight:600}
+.uses a:hover,.uses a:focus-visible{text-decoration:underline}
+.alt{font-size:.93rem;color:var(--muted)}
+.alt strong{color:var(--ink)}
+
+footer{color:var(--muted);font-size:.9rem}
+.to-top{position:fixed;left:16px;bottom:16px;background:var(--accent);color:var(--paper);text-decoration:none;font-weight:700;font-size:.9rem;padding:8px 14px;border-radius:99px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.to-top:hover,.to-top:focus-visible{filter:brightness(1.1);outline:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* sign tables (left-to-right like a number line) */
+.signs{direction:ltr;border-collapse:collapse;font-size:.9rem;margin:4px 0;width:auto}
+.signs th,.signs td{border:1px solid var(--line);padding:4px 10px;text-align:center;min-width:56px;white-space:nowrap}
+.signs th{background:var(--accent-soft);font-weight:600}
+.signs td.up{color:var(--ok);font-weight:700}.signs td.down{color:var(--mark);font-weight:700}
+.signwrap{overflow-x:auto;max-width:100%;position:relative;direction:ltr}
+figure.graph{max-width:560px;margin-top:4px}
+.part .note{margin-top:2px}
+@media (max-width:560px){
+  .card{padding:18px 14px 22px}
+  .m .katex{font-size:1em}
+  .steps p,.ans{overflow-x:auto;overflow-y:hidden}
+}
+@media print{.to-top,nav.qnav{display:none}body{background:#fff}.card{break-inside:avoid-page}}
+
+/* Solutions in the site format: the thinking, numbered steps (heading on the right, every expression on its own line on the left), the answer and a check */
+.think{background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.think-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+.think p{margin:0}
+ol.st{margin:2px 0 0;padding-inline-start:24px;display:flex;flex-direction:column;gap:8px}
+ol.st li::marker{font-weight:700;color:var(--mark)}
+ol.st > li > .lab{display:block;font-weight:700;color:var(--mark)}
+.ml{display:flex;flex-direction:column;gap:3px;margin:2px 0 4px}
+.ml-m{direction:ltr;text-align:left;unicode-bidi:isolate;line-height:2.15}
+.ml-m .m{white-space:normal}
+.ml-t{text-align:right;line-height:2.15}
+.ml .signwrap{direction:rtl}
+div.ans{background:var(--ok-soft);border-radius:6px;padding:8px 12px;font-weight:600;width:auto}
+div.ans .lab{display:block;font-weight:700;color:var(--ok)}
+.chk{color:var(--muted);font-size:.95rem;border:1px dashed var(--line);border-radius:6px;padding:8px 12px}
+.chk .lab{display:block;font-weight:700;color:var(--ink)}
+
+/* explanation page extras */
+.card > h3{color:var(--ink);margin-top:4px}
+ul.list{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+.example{border:1px dashed var(--accent);border-radius:8px;padding:12px 16px;display:flex;flex-direction:column;gap:4px}
+.tool .ml-m{margin:4px 0}
+.tool p b{display:inline}
+.ml{gap:4px}
+ol.st > li > p{margin:0;color:var(--ink)}
+td .m{white-space:nowrap}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <a class="back" href="index.html#equations">→ חזרה לנושא: משוואות</a>
+  <span class="eyebrow">משוואות · 5 יחידות · דף הסבר</span>
+  <h1>משוואה ריבועית עם מכנים: מכנה משותף ופירוק לגורמים</h1>
+  <p class="lead">במשוואה עם שברים מכפילים את שני האגפים במכנה המשותף, וכך השברים נעלמים. לעיתים קרובות מתקבלת משוואה ריבועית, ואותה פותרים בפירוק לגורמים. בדף: שיטת העבודה, שישה סוגי בעיות, דוגמה פתורה לכל סוג, טעויות נפוצות ותרגול.</p>
+</header>
+
+<nav class="qnav" aria-label="תוכן הדף">
+  <h3>תוכן הדף</h3>
+  <ol>
+    <li><a href="#method">שיטת העבודה<small>שבעה שלבים</small></a></li>
+    <li><a href="#types">סוגי הבעיות<small>טבלת סיכום</small></a></li>
+    <li><a href="#ex1">סוג א<small>מכנים מספריים</small></a></li>
+    <li><a href="#ex2">סוג ב<small>משתנה במכנה</small></a></li>
+    <li><a href="#ex3">סוג ג<small>פרופורציה</small></a></li>
+    <li><a href="#ex4">סוג ד<small>שני מכנים שונים</small></a></li>
+    <li><a href="#ex5">סוג ה<small>הפרש ריבועים במכנה</small></a></li>
+    <li><a href="#ex6">סוג ו<small>טרינום במכנה</small></a></li>
+    <li><a href="#mistakes">טעויות נפוצות<small>ואיך להימנע</small></a></li>
+    <li><a href="#practice">תרגול<small>4 משוואות</small></a></li>
+  </ol>
+</nav>
+
+<!-- ===== Method ===== -->
+<section class="card" id="method">
+  <h2>1. שיטת העבודה</h2>
+  <ol class="st">
+    <li><span class="lab">מפרקים את המכנים לגורמים</span><p>גורם משותף, הפרש ריבועים או טרינום.</p></li>
+    <li><span class="lab">רושמים תחום הגדרה</span><p>כל ערך שמאפס מכנה פסול. השלב נדרש רק כשיש משתנה במכנה.</p></li>
+    <li><span class="lab">מוצאים מכנה משותף</span><p>הביטוי הקטן ביותר שכל מכנה מתחלק בו.</p></li>
+    <li><span class="lab">מכפילים את שני האגפים במכנה המשותף</span><p>מכפילים כל איבר, גם איבר שאין לו מכנה. כל שבר מצטמצם.</p></li>
+    <li><span class="lab">מעבירים הכול לאגף אחד ומסדרים</span><div class="ml"><div class="ml-m"><span class="m">\(ax^{2}+bx+c=0\)</span></div></div></li>
+    <li><span class="lab">מפרקים לגורמים ומשווים כל גורם ל־0</span><div class="ml"><div class="ml-m"><span class="m">\(A\cdot B=0 \;\Rightarrow\; A=0 \;\text{ or }\; B=0\)</span></div></div></li>
+    <li><span class="lab">בודקים את הפתרונות מול תחום ההגדרה</span><p>פוסלים פתרון שמאפס מכנה.</p></li>
+  </ol>
+  <p class="note"><strong>שימו לב:</strong> הכפלה במכנה שיש בו משתנה עלולה ליצור פתרון פסול, כלומר ערך שמאפס את המכנה. לכן כותבים את תחום ההגדרה לפני הפתרון ובודקים אותו בסוף.</p>
+</section>
+
+<!-- ===== Types ===== -->
+<section class="card" id="types">
+  <h2>2. סוגי הבעיות</h2>
+  <div class="tablebox"><table>
+    <tr><th>סוג</th><th>תיאור</th><th>מכנה משותף</th><th>פתרון פסול</th></tr>
+    <tr><td>א</td><td>מכנים מספריים בלבד</td><td>הכפולה המשותפת הקטנה של המספרים</td><td>לא ייתכן</td></tr>
+    <tr><td>ב</td><td>משתנה במכנה, מכנה אחד</td><td>הביטוי שבמכנה</td><td>ייתכן</td></tr>
+    <tr><td>ג</td><td>פרופורציה: שבר שווה לשבר</td><td>כפל בהצלבה</td><td>ייתכן</td></tr>
+    <tr><td>ד</td><td>שני מכנים ליניאריים שונים</td><td>מכפלת המכנים</td><td>ייתכן</td></tr>
+    <tr><td>ה</td><td>מכנה שמפרקים בהפרש ריבועים</td><td>הגורמים אחרי הפירוק</td><td>נפוץ</td></tr>
+    <tr><td>ו</td><td>מכנה שהוא טרינום ריבועי</td><td>הגורמים אחרי פירוק הטרינום</td><td>נפוץ</td></tr>
+  </table></div>
+</section>
+
+<!-- ===== Example 1 ===== -->
+<section class="card" id="ex1">
+  <div class="q-head"><h2>סוג א: מכנים מספריים בלבד</h2><small>אין משתנה במכנה, ולכן אין תחום הגדרה</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>פתרו את המשוואה <span class="m">\(\dfrac{x^{2}}{6}-\dfrac{x}{3}=4\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>המכנים הם מספרים בלבד. 6 מתחלק גם ב־6 וגם ב־3, ולכן מכפילים ב־6 ומקבלים משוואה ריבועית בלי שברים.</p></div>
+    <ol class="st">
+      <li><span class="lab">מוצאים את המכנה המשותף של 6 ו־3</span><div class="ml"><div class="ml-m"><span class="m">\(\text{LCD}=6\)</span></div></div></li>
+      <li><span class="lab">מכפילים כל איבר ב־6 כדי להיפטר מהשברים</span><div class="ml"><div class="ml-m"><span class="m">\(6\cdot\dfrac{x^{2}}{6}-6\cdot\dfrac{x}{3}=6\cdot 4\)</span></div><div class="ml-m"><span class="m">\(x^{2}-2x=24\)</span></div></div></li>
+      <li><span class="lab">מעבירים הכול לאגף אחד</span><div class="ml"><div class="ml-m"><span class="m">\(x^{2}-2x-24=0\)</span></div></div></li>
+      <li><span class="lab">מחפשים שני מספרים שמכפלתם −24 וסכומם −2, ומפרקים</span><div class="ml"><div class="ml-t">המספרים הם <span class="m">\(-6\)</span> ו־<span class="m">\(4\)</span>:</div><div class="ml-m"><span class="m">\((x-6)(x+4)=0\)</span></div></div></li>
+      <li><span class="lab">משווים כל גורם ל־0</span><div class="ml"><div class="ml-m"><span class="m">\(x-6=0 \;\Rightarrow\; x=6\)</span></div><div class="ml-m"><span class="m">\(x+4=0 \;\Rightarrow\; x=-4\)</span></div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(x=6\quad\text{or}\quad x=-4\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{36}{6}-\dfrac{6}{3}=6-2=4\ \checkmark\)</span></div></div></div>
+  </div>
+</section>
+
+<!-- ===== Example 2 ===== -->
+<section class="card" id="ex2">
+  <div class="q-head"><h2>סוג ב: משתנה במכנה, מכנה אחד</h2><small>מכפילים בביטוי שבמכנה</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>פתרו את המשוואה <span class="m">\(x+\dfrac{6}{x}=5\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>יש שבר אחד, ובמכנה שלו <span class="m">\(x\)</span>. קודם רושמים ש־<span class="m">\(x\)</span> לא יכול להיות 0, ואז מכפילים ב־<span class="m">\(x\)</span> את כל האיברים, גם את <span class="m">\(x\)</span> וגם את 5.</p></div>
+    <ol class="st">
+      <li><span class="lab">רושמים תחום הגדרה: המכנה לא יכול להתאפס</span><div class="ml"><div class="ml-m"><span class="m">\(x\neq 0\)</span></div></div></li>
+      <li><span class="lab">מכפילים כל איבר ב־x</span><div class="ml"><div class="ml-m"><span class="m">\(x\cdot x+x\cdot\dfrac{6}{x}=5\cdot x\)</span></div><div class="ml-m"><span class="m">\(x^{2}+6=5x\)</span></div></div></li>
+      <li><span class="lab">מעבירים הכול לאגף אחד</span><div class="ml"><div class="ml-m"><span class="m">\(x^{2}-5x+6=0\)</span></div></div></li>
+      <li><span class="lab">מחפשים שני מספרים שמכפלתם 6 וסכומם −5, ומפרקים</span><div class="ml"><div class="ml-m"><span class="m">\((x-2)(x-3)=0\)</span></div><div class="ml-m"><span class="m">\(x=2\quad\text{or}\quad x=3\)</span></div></div></li>
+      <li><span class="lab">בודקים את הפתרונות מול תחום ההגדרה</span><div class="ml"><div class="ml-t">אף פתרון אינו 0, ולכן שניהם מתקבלים.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(x=2\quad\text{or}\quad x=3\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(2+\dfrac{6}{2}=5\ \checkmark\)</span></div><div class="ml-m"><span class="m">\(3+\dfrac{6}{3}=5\ \checkmark\)</span></div></div></div>
+  </div>
+</section>
+
+<!-- ===== Example 3 ===== -->
+<section class="card" id="ex3">
+  <div class="q-head"><h2>סוג ג: פרופורציה</h2><small>שבר אחד בכל אגף, כופלים בהצלבה</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>פתרו את המשוואה <span class="m">\(\dfrac{x+1}{2}=\dfrac{6}{x}\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>בכל אגף יש שבר אחד בלבד. כפל בהצלבה הוא בדיוק הכפלה במכנה המשותף <span class="m">\(2x\)</span>, רק מהיר יותר.</p></div>
+    <ol class="st">
+      <li><span class="lab">רושמים תחום הגדרה</span><div class="ml"><div class="ml-m"><span class="m">\(x\neq 0\)</span></div></div></li>
+      <li><span class="lab">רושמים את כלל הפרופורציה וכופלים בהצלבה</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{a}{b}=\dfrac{c}{d} \;\Rightarrow\; a\cdot d=b\cdot c\)</span></div><div class="ml-m"><span class="m">\(x(x+1)=2\cdot 6\)</span></div><div class="ml-m"><span class="m">\(x^{2}+x=12\)</span></div></div></li>
+      <li><span class="lab">מעבירים הכול לאגף אחד</span><div class="ml"><div class="ml-m"><span class="m">\(x^{2}+x-12=0\)</span></div></div></li>
+      <li><span class="lab">מחפשים שני מספרים שמכפלתם −12 וסכומם 1, ומפרקים</span><div class="ml"><div class="ml-m"><span class="m">\((x+4)(x-3)=0\)</span></div><div class="ml-m"><span class="m">\(x=-4\quad\text{or}\quad x=3\)</span></div></div></li>
+      <li><span class="lab">בודקים את הפתרונות מול תחום ההגדרה</span><div class="ml"><div class="ml-t">שני הפתרונות שונים מ־0, ולכן מתקבלים.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(x=-4\quad\text{or}\quad x=3\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{-4+1}{2}=-\dfrac{3}{2},\qquad \dfrac{6}{-4}=-\dfrac{3}{2}\ \checkmark\)</span></div></div></div>
+  </div>
+</section>
+
+<!-- ===== Example 4 ===== -->
+<section class="card" id="ex4">
+  <div class="q-head"><h2>סוג ד: שני מכנים ליניאריים שונים</h2><small>המכנה המשותף הוא מכפלת המכנים</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>פתרו את המשוואה <span class="m">\(\dfrac{3}{x-2}+\dfrac{2}{x}=2\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>למכנים <span class="m">\(x-2\)</span> ו־<span class="m">\(x\)</span> אין גורם משותף, ולכן המכנה המשותף הוא המכפלה שלהם. אחרי ההכפלה מתקבל טרינום עם מקדם מוביל 2, ומפרקים אותו בפיצול האיבר האמצעי.</p></div>
+    <ol class="st">
+      <li><span class="lab">רושמים תחום הגדרה לכל מכנה</span><div class="ml"><div class="ml-m"><span class="m">\(x-2\neq 0 \;\Rightarrow\; x\neq 2\)</span></div><div class="ml-m"><span class="m">\(x\neq 0\)</span></div></div></li>
+      <li><span class="lab">מוצאים מכנה משותף: מכפלת המכנים</span><div class="ml"><div class="ml-m"><span class="m">\(\text{LCD}=x(x-2)\)</span></div></div></li>
+      <li><span class="lab">מכפילים כל איבר במכנה המשותף ומצמצמים</span><div class="ml"><div class="ml-t">בשבר הראשון נשאר <span class="m">\(x\)</span>, בשבר השני נשאר <span class="m">\((x-2)\)</span>, והמספר 2 מוכפל בכל המכנה:</div><div class="ml-m"><span class="m">\(3x+2(x-2)=2x(x-2)\)</span></div></div></li>
+      <li><span class="lab">פותחים סוגריים בשני האגפים</span><div class="ml"><div class="ml-m"><span class="m">\(3x+2x-4=2x^{2}-4x\)</span></div><div class="ml-m"><span class="m">\(5x-4=2x^{2}-4x\)</span></div></div></li>
+      <li><span class="lab">מעבירים הכול לאגף אחד</span><div class="ml"><div class="ml-m"><span class="m">\(2x^{2}-9x+4=0\)</span></div></div></li>
+      <li><span class="lab">מפצלים את האיבר האמצעי ומפרקים בקבוצות</span><div class="ml"><div class="ml-t">מחפשים שני מספרים שמכפלתם <span class="m">\(a\cdot c=2\cdot 4=8\)</span> וסכומם <span class="m">\(-9\)</span>: המספרים <span class="m">\(-8\)</span> ו־<span class="m">\(-1\)</span>.</div><div class="ml-m"><span class="m">\(2x^{2}-8x-x+4=0\)</span></div><div class="ml-m"><span class="m">\(2x(x-4)-(x-4)=0\)</span></div><div class="ml-m"><span class="m">\((2x-1)(x-4)=0\)</span></div><div class="ml-m"><span class="m">\(x=\tfrac{1}{2}\quad\text{or}\quad x=4\)</span></div></div></li>
+      <li><span class="lab">בודקים את הפתרונות מול תחום ההגדרה</span><div class="ml"><div class="ml-t">אף פתרון אינו 0 או 2, ולכן שניהם מתקבלים.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(x=\tfrac{1}{2}\quad\text{or}\quad x=4\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{3}{4-2}+\dfrac{2}{4}=1.5+0.5=2\ \checkmark\)</span></div></div></div>
+  </div>
+</section>
+
+<!-- ===== Example 5 ===== -->
+<section class="card" id="ex5">
+  <div class="q-head"><h2>סוג ה: מכנה שמפרקים בהפרש ריבועים</h2><small>כאן מופיע פתרון פסול</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>פתרו את המשוואה <span class="m">\(\dfrac{x}{x-3}+\dfrac{3}{x+3}=\dfrac{18}{x^{2}-9}\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>המכנה באגף ימין הוא הפרש ריבועים. אחרי הפירוק רואים שהוא מכפלת שני המכנים האחרים, ולכן הוא המכנה המשותף. בסוף חייבים לבדוק את התחום.</p></div>
+    <ol class="st">
+      <li><span class="lab">מפרקים את המכנה הריבועי בעזרת הפרש ריבועים</span><div class="ml"><div class="ml-m"><span class="m">\(a^{2}-b^{2}=(a-b)(a+b)\)</span></div><div class="ml-m"><span class="m">\(x^{2}-9=(x-3)(x+3)\)</span></div></div></li>
+      <li><span class="lab">רושמים תחום הגדרה</span><div class="ml"><div class="ml-m"><span class="m">\(x\neq 3\)</span></div><div class="ml-m"><span class="m">\(x\neq -3\)</span></div></div></li>
+      <li><span class="lab">מכפילים כל איבר במכנה המשותף ומצמצמים</span><div class="ml"><div class="ml-m"><span class="m">\(\text{LCD}=(x-3)(x+3)\)</span></div><div class="ml-m"><span class="m">\(x(x+3)+3(x-3)=18\)</span></div></div></li>
+      <li><span class="lab">פותחים סוגריים ומעבירים הכול לאגף אחד</span><div class="ml"><div class="ml-m"><span class="m">\(x^{2}+3x+3x-9=18\)</span></div><div class="ml-m"><span class="m">\(x^{2}+6x-27=0\)</span></div></div></li>
+      <li><span class="lab">מחפשים שני מספרים שמכפלתם −27 וסכומם 6, ומפרקים</span><div class="ml"><div class="ml-m"><span class="m">\((x+9)(x-3)=0\)</span></div><div class="ml-m"><span class="m">\(x=-9\quad\text{or}\quad x=3\)</span></div></div></li>
+      <li><span class="lab">פוסלים את הפתרון שמאפס מכנה</span><div class="ml"><div class="ml-t"><span class="m">\(x=3\)</span> מאפס את המכנה <span class="m">\(x-3\)</span>, ולכן נפסל.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(x=-9\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{-9}{-12}+\dfrac{3}{-6}=\dfrac{3}{4}-\dfrac{1}{2}=\dfrac{1}{4}\)</span></div><div class="ml-m"><span class="m">\(\dfrac{18}{81-9}=\dfrac{18}{72}=\dfrac{1}{4}\ \checkmark\)</span></div></div></div>
+  </div>
+</section>
+
+<!-- ===== Example 6 ===== -->
+<section class="card" id="ex6">
+  <div class="q-head"><h2>סוג ו: מכנה שהוא טרינום ריבועי</h2><small>מפרקים את הטרינום ומוצאים את המכנים האחרים</small></div>
+  <div class="given"><span class="lbl">נתון</span><p>פתרו את המשוואה <span class="m">\(\dfrac{x}{x-1}+\dfrac{2}{x-2}=\dfrac{2}{x^{2}-3x+2}\)</span>.</p></div>
+  <div class="part">
+    <div class="think"><span class="think-h">דרך החשיבה</span><p>מפרקים את הטרינום שבמכנה ומגלים שהוא מכפלת שני המכנים האחרים. זה המכנה המשותף. גם כאן אחד הפתרונות נפסל.</p></div>
+    <ol class="st">
+      <li><span class="lab">מחפשים שני מספרים שמכפלתם 2 וסכומם −3, ומפרקים את הטרינום</span><div class="ml"><div class="ml-m"><span class="m">\(x^{2}-3x+2=(x-1)(x-2)\)</span></div></div></li>
+      <li><span class="lab">רושמים תחום הגדרה</span><div class="ml"><div class="ml-m"><span class="m">\(x\neq 1\)</span></div><div class="ml-m"><span class="m">\(x\neq 2\)</span></div></div></li>
+      <li><span class="lab">מכפילים כל איבר במכנה המשותף ומצמצמים</span><div class="ml"><div class="ml-m"><span class="m">\(\text{LCD}=(x-1)(x-2)\)</span></div><div class="ml-m"><span class="m">\(x(x-2)+2(x-1)=2\)</span></div></div></li>
+      <li><span class="lab">פותחים סוגריים ומעבירים הכול לאגף אחד</span><div class="ml"><div class="ml-m"><span class="m">\(x^{2}-2x+2x-2=2\)</span></div><div class="ml-m"><span class="m">\(x^{2}-4=0\)</span></div></div></li>
+      <li><span class="lab">מפרקים בעזרת הפרש ריבועים</span><div class="ml"><div class="ml-m"><span class="m">\((x-2)(x+2)=0\)</span></div><div class="ml-m"><span class="m">\(x=2\quad\text{or}\quad x=-2\)</span></div></div></li>
+      <li><span class="lab">פוסלים את הפתרון שמאפס מכנה</span><div class="ml"><div class="ml-t"><span class="m">\(x=2\)</span> מאפס את המכנה <span class="m">\(x-2\)</span>, ולכן נפסל.</div></div></li>
+    </ol>
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml"><div class="ml-m"><span class="m">\(x=-2\)</span></div></div></div>
+    <div class="chk"><span class="lab">בדיקה:</span><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{-2}{-3}+\dfrac{2}{-4}=\dfrac{2}{3}-\dfrac{1}{2}=\dfrac{1}{6}\)</span></div><div class="ml-m"><span class="m">\(\dfrac{2}{4+6+2}=\dfrac{2}{12}=\dfrac{1}{6}\ \checkmark\)</span></div></div></div>
+  </div>
+</section>
+
+<!-- ===== Mistakes ===== -->
+<section class="card" id="mistakes">
+  <h2>טעויות נפוצות</h2>
+  <ul class="list">
+    <li><b>שוכחים להכפיל איבר שאין לו מכנה.</b> ב־<span class="m">\(x+\dfrac{6}{x}=5\)</span> מכפילים ב־<span class="m">\(x\)</span> גם את <span class="m">\(x\)</span> וגם את 5.</li>
+    <li><b>לא כותבים תחום הגדרה.</b> בלי תחום לא מזהים את הפתרון הפסול, כמו <span class="m">\(x=3\)</span> בסוג ה.</li>
+    <li><b>לוקחים מכנה משותף גדול מדי.</b> ב־<span class="m">\(\dfrac{1}{x-3}\)</span> ו־<span class="m">\(\dfrac{1}{x^{2}-9}\)</span> המכנה המשותף הוא <span class="m">\(x^{2}-9\)</span> ולא <span class="m">\((x-3)(x^{2}-9)\)</span>. לכן מפרקים קודם.</li>
+    <li><b>טעות בסימן אחרי פתיחת סוגריים.</b> <span class="m">\(-(x-4)=-x+4\)</span>: המינוס משנה את הסימן של כל איבר בסוגריים.</li>
+    <li><b>מחלקים ב־x.</b> ב־<span class="m">\(x^{2}=3x\)</span> לא מחלקים ב־<span class="m">\(x\)</span>, כי מאבדים את הפתרון <span class="m">\(x=0\)</span>. מוציאים גורם משותף: <span class="m">\(x(x-3)=0\)</span>.</li>
+  </ul>
+</section>
+
+<!-- ===== Practice ===== -->
+<section class="card" id="practice">
+  <h2>תרגול</h2>
+  <p>פתרו את המשוואות וכתבו לכל משוואה את סוג הבעיה. התשובות הסופיות מופיעות למטה: בדקו את עצמכם רק אחרי הפתרון.</p>
+  <ol class="st">
+    <li><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{x^{2}}{4}+\dfrac{x}{2}=2\)</span></div></div></li>
+    <li><div class="ml"><div class="ml-m"><span class="m">\(x-\dfrac{8}{x}=2\)</span></div></div></li>
+    <li><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{x}{x-3}-\dfrac{2}{x+2}=\dfrac{10}{x^{2}-x-6}\)</span></div></div></li>
+    <li><div class="ml"><div class="ml-m"><span class="m">\(\dfrac{x}{x-4}+\dfrac{4}{x+4}=\dfrac{32}{x^{2}-16}\)</span></div></div></li>
+  </ol>
+  <details class="chk"><summary><b>תשובות סופיות</b></summary>
+    <ol class="st">
+      <li>סוג א: <span class="m">\(x=2\)</span> או <span class="m">\(x=-4\)</span></li>
+      <li>סוג ב: <span class="m">\(x=4\)</span> או <span class="m">\(x=-2\)</span></li>
+      <li>סוג ו: <span class="m">\(x=2\)</span> (הפתרון <span class="m">\(x=-2\)</span> נפסל)</li>
+      <li>סוג ה: <span class="m">\(x=-12\)</span> (הפתרון <span class="m">\(x=4\)</span> נפסל)</li>
+    </ol>
+  </details>
+</section>
+
+<footer>משוואות · 5 יחידות · דף הסבר למשוואה ריבועית עם מכנים</footer>
+</div>
+<a class="to-top" href="#">למעלה ↑</a>
+</body>
+</html>
