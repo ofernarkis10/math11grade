@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מצגת: הנגזרת, הפולינום ושיטת הנחש · סימולציות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700&family=Assistant:wght@400;600;700&display=swap">
+<style>
+/* Class presentation at 1024x768: text sections in the right column (each "next" adds one at the bottom), simulator on the left.
+   All simulations are drawn on canvas by the script at the bottom. */
+:root{--bg:#e9edf1;--paper:#fff;--ink:#1c2633;--muted:#5b6878;--line:#d9dfe6;--accent:#1f6f8b;--accent-soft:#e3f0f5;
+  --up:#2f7a4a;--up-soft:#e5f3ea;--down:#b4561e;--down-soft:#fbeee5;--stop:#7a4fb0;--stop-soft:#f0e9f8;
+  --f-display:"Frank Ruhl Libre","David",Georgia,serif;--f-body:"Assistant","Arial Hebrew",Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#1c2633;overflow:hidden;font-family:var(--f-body);color:var(--ink)}
+#stage{position:absolute;left:50%;top:50%;width:1024px;height:768px;background:var(--bg);transform-origin:center;display:flex;flex-direction:column}
+.slide{display:none;flex:1;min-height:0;padding:14px 16px 6px;gap:14px}
+.slide.on{display:flex}
+.txt{width:370px;flex:none;display:flex;flex-direction:column;gap:9px;overflow:hidden}
+.txt h2{font-family:var(--f-display);font-size:26px;line-height:1.2;margin:2px 0 4px;color:var(--accent)}
+.txt .kicker{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.04em}
+.sec{display:none;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:9px 13px;font-size:17px;line-height:1.5;animation:pop .35s ease}
+.sec.on{display:block}
+.sec.key{background:var(--accent-soft);border-color:transparent}
+.sec.up{background:var(--up-soft);border-color:transparent}
+.sec.down{background:var(--down-soft);border-color:transparent}
+.sec.stop{background:var(--stop-soft);border-color:transparent}
+.sec b.u{color:var(--up)} .sec b.d{color:var(--down)} .sec b.s{color:var(--stop)}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.mx{direction:ltr;unicode-bidi:isolate;font-family:"Cambria Math","Times New Roman",serif;font-style:italic;white-space:nowrap}
+.sim{flex:1;min-width:0;overflow:hidden;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:6px}
+.sim canvas{display:block;border-radius:8px}
+.bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:15px}
+.bar button,.bar select{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--line);background:var(--paper);color:var(--accent);border-radius:99px;padding:3px 12px;cursor:pointer}
+.bar button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.bar button.neg.on{background:var(--down);border-color:var(--down)}
+.bar input[type=range]{flex:1;min-width:120px;accent-color:var(--accent);direction:ltr}
+.bar .lbl{color:var(--muted);font-weight:700}
+.status{font-size:15px;min-height:24px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.status .u{color:var(--up);font-weight:700}.status .d{color:var(--down);font-weight:700}.status .s{color:var(--stop);font-weight:700}
+.status bdi{font-weight:700}
+.info{font-size:15px;background:var(--accent-soft);border-radius:8px;padding:5px 10px}
+/* title slide */
+.title-box{display:flex;flex-direction:column;gap:12px;justify-content:center;height:100%}
+.title-box h1{font-family:var(--f-display);font-size:38px;line-height:1.15;margin:0;color:var(--ink)}
+.title-box p{font-size:18px;color:var(--muted);margin:0}
+/* summary table */
+.sumtab{border-collapse:collapse;width:100%;font-size:16px}
+.sumtab th,.sumtab td{border:1px solid var(--line);padding:8px 10px;text-align:right;vertical-align:middle}
+.sumtab th{background:var(--accent-soft)}
+.sumtab td:first-child{font-weight:700;color:var(--accent)}
+/* navigation */
+nav{display:flex;gap:8px;align-items:center;padding:6px 16px 10px}
+nav button{font:inherit;font-size:15px;font-weight:700;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:99px;padding:5px 16px;cursor:pointer}
+nav button.main{background:var(--accent);color:#fff;border-color:var(--accent)}
+nav .count{color:var(--muted);font-weight:700;font-size:14px;margin-inline-start:auto}
+nav a{color:var(--accent);font-weight:700;font-size:14px;text-decoration:none}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 1. Title -->
+<section class="slide" data-sim="title">
+  <div class="txt"><div class="title-box">
+    <span class="kicker">חשבון דיפרנציאלי · 5 יחידות · מצגת</span>
+    <h1>הנגזרת, הפולינום ושיטת הנחש</h1>
+    <p>איך הגרף של <span class="mx">f′</span> "מספר" לנו מתי <span class="mx">f</span> עולה, מתי היא יורדת, ואיפה היא עוצרת.</p>
+    <div class="sec on key">למעלה: גרף הנגזרת <span class="mx">f′(x)</span>. למטה: גרף הפונקציה <span class="mx">f(x)</span>. הקו המקווקו עובר באותו <span class="mx">x</span> בשניהם.</div>
+  </div></div>
+  <div class="sim"></div>
+</section>
+
+<!-- 2. Ends: even / odd degree -->
+<section class="slide" data-sim="ends">
+  <div class="txt">
+    <span class="kicker">שלב 1 · ערכי האינסוף</span>
+    <h2>הקצוות נקבעים לפי החזקה הגבוהה</h2>
+    <div class="sec">בפולינום <span class="mx">f(x) = a·xⁿ + …</span> מסתכלים רק על האיבר המוביל: המעלה <span class="mx">n</span> והסימן של <span class="mx">a</span>.</div>
+    <div class="sec up"><b>מעלה זוגית, <span class="mx">a &gt; 0</span>:</b> שני הקצוות <b class="u">למעלה</b>. בשמאל הפונקציה <b class="d">יורדת</b>, בימין <b class="u">עולה</b>.</div>
+    <div class="sec up"><b>מעלה זוגית גבוהה יותר</b> (<span class="mx">x⁴</span>): אותה התנהגות בקצוות, רק "שטוחה" יותר באמצע.</div>
+    <div class="sec key"><b>מעלה אי־זוגית, <span class="mx">a &gt; 0</span>:</b> מתחילה <b class="d">למטה</b> ונגמרת <b class="u">למעלה</b>. בשני הקצוות היא <b class="u">עולה</b>.</div>
+    <div class="sec down"><b><span class="mx">a &lt; 0</span> הופך הכול:</b> הגרף מתהפך, וכל עלייה בקצה הופכת לירידה.</div>
+    <div class="sec">נסו בעצמכם: בחרו מעלה וסימן בכפתורים.</div>
+  </div>
+  <div class="sim"></div>
+</section>
+
+<!-- 3. Zoom out: only the leading term matters -->
+<section class="slide" data-sim="zoom">
+  <div class="txt">
+    <span class="kicker">שלב 1 · למה רק האיבר המוביל?</span>
+    <h2>מתרחקים מהגרף</h2>
+    <div class="sec">הקו הכחול: <span class="mx">f(x) = x⁴ − 4x³</span>. הקו המקווקו: רק האיבר המוביל <span class="mx">x⁴</span>.</div>
+    <div class="sec">מקרוב הם שונים מאוד: ל־<span class="mx">f</span> יש מינימום ב־<span class="mx">x = 3</span> והיא יורדת מתחת לאפס.</div>
+    <div class="sec">מתרחקים פי כמה: ההבדל כבר קטן ביחס לגודל הגרף.</div>
+    <div class="sec key">ממש מרחוק אי אפשר להבחין ביניהם. <b>בקצוות, האיבר המוביל "בולע" את כל השאר.</b></div>
+  </div>
+  <div class="sim"></div>
+</section>
+
+<!-- 4. Derivative = slope -->
+<section class="slide" data-sim="slope">
+  <div class="txt">
+    <span class="kicker">הקשר בין הגרפים</span>
+    <h2>הנגזרת היא השיפוע</h2>
+    <div class="sec">למטה <span class="mx">f(x) = ½x²</span> עם קו משיק שזז. למעלה הנגזרת <span class="mx">f′(x) = x</span>.</div>
+    <div class="sec up">כש־<span class="mx">f′</span> <b class="u">מעל הציר</b> (ירוק), השיפוע חיובי: <span class="mx">f</span> <b class="u">עולה</b>.</div>
+    <div class="sec down">כש־<span class="mx">f′</span> <b class="d">מתחת לציר</b> (כתום), השיפוע שלילי: <span class="mx">f</span> <b class="d">יורדת</b>.</div>
+    <div class="sec stop">כש־<span class="mx">f′ = 0</span> המשיק <b class="s">אופקי</b>. זה המקום היחיד שבו <span class="mx">f</span> יכולה לשנות כיוון.</div>
+    <div class="sec">גררו את המחוון ובדקו: הערך של <span class="mx">f′</span> שווה לשיפוע של המשיק.</div>
+  </div>
+  <div class="sim"></div>
+</section>
+
+<!-- 5. Simple roots -->
+<section class="slide" data-sim="simple">
+  <div class="txt">
+    <span class="kicker">שלב 2 · שורש יחיד (פשוט)</span>
+    <h2>הנגזרת חוצה את הציר</h2>
+    <div class="sec"><span class="mx">f(x) = x³ − 3x</span>, ולכן <span class="mx">f′(x) = 3(x + 1)(x − 1)</span>: שני שורשים <b>פשוטים</b>.</div>
+    <div class="sec">בשורש פשוט הגרף של <span class="mx">f′</span> <b>חוצה</b> את הציר: הסימן מתחלף.</div>
+    <div class="sec up">ב־<span class="mx">x = −1</span>: מ־<b class="u">+</b> ל־<b class="d">−</b>. הפונקציה עולה ואז יורדת: <b class="d">מקסימום</b>.</div>
+    <div class="sec down">ב־<span class="mx">x = 1</span>: מ־<b class="d">−</b> ל־<b class="u">+</b>. הפונקציה יורדת ואז עולה: <b class="u">מינימום</b>.</div>
+    <div class="sec key"><b>שורש פשוט של הנגזרת = נקודת קיצון.</b></div>
+  </div>
+  <div class="sim"></div>
+</section>
+
+<!-- 6. Double root -->
+<section class="slide" data-sim="double">
+  <div class="txt">
+    <span class="kicker">שלב 2 · שורש כפול</span>
+    <h2>הנגזרת נוגעת בציר וחוזרת</h2>
+    <div class="sec"><span class="mx">f(x) = x³</span>, ולכן <span class="mx">f′(x) = 3x²</span>: השורש <span class="mx">x = 0</span> הוא <b>כפול</b>.</div>
+    <div class="sec">הגרף של <span class="mx">f′</span> רק <b>נוגע</b> בציר ב־0 וחוזר למעלה. הסימן <b>לא</b> מתחלף: <b class="u">+</b> לפני ו־<b class="u">+</b> אחרי.</div>
+    <div class="sec stop">לכן <span class="mx">f</span> עולה, <b class="s">עוצרת לרגע</b> (משיק אופקי) וממשיכה לעלות. זו <b class="s">עצירה והמשך</b>, לא קיצון.</div>
+    <div class="sec down">ואם <span class="mx">f′(x) = −3x²</span>: הנגזרת נוגעת בציר מלמטה. <span class="mx">f</span> יורדת, עוצרת וממשיכה לרדת.</div>
+    <div class="sec key"><b>שורש כפול של הנגזרת = עצירה והמשך</b> (נקודת פיתול עם משיק אופקי).</div>
+  </div>
+  <div class="sim"></div>
+</section>
+
+<!-- 7. Multiplicity 1..4 -->
+<section class="slide" data-sim="mult">
+  <div class="txt">
+    <span class="kicker">שלב 2 · הריבוי קובע</span>
+    <h2>זוגי או אי־זוגי?</h2>
+    <div class="sec up">ריבוי <b>1</b>: <span class="mx">f′ = x</span>. חוצה: <b class="u">מינימום</b>.</div>
+    <div class="sec stop">ריבוי <b>2</b>: <span class="mx">f′ = x²</span>. נוגעת: <b class="s">עצירה והמשך</b>.</div>
+    <div class="sec up">ריבוי <b>3</b>: <span class="mx">f′ = x³</span>. שוב חוצה: <b class="u">מינימום</b>, רק שטוח יותר.</div>
+    <div class="sec stop">ריבוי <b>4</b>: <span class="mx">f′ = x⁴</span>. שוב נוגעת: <b class="s">עצירה והמשך</b>.</div>
+    <div class="sec key"><b>ריבוי אי־זוגי ← הסימן מתחלף ← קיצון.<br>ריבוי זוגי ← הסימן נשאר ← עצירה והמשך.</b></div>
+  </div>
+  <div class="sim"></div>
+</section>
+
+<!-- 8. Building the snake -->
+<section class="slide" data-sim="snake">
+  <div class="txt">
+    <span class="kicker">שלב 3 · בונים את הנחש</span>
+    <h2>הנחש של <span class="mx">f′(x) = (x+2)·x²·(x−3)</span></h2>
+    <div class="sec">מסמנים על ציר את שורשי הנגזרת לפי הסדר (לא בקנה מידה), וליד כל אחד את הריבוי.</div>
+    <div class="sec up"><b>מתחילים מימין.</b> המקדם המוביל חיובי, ולכן הנחש מתחיל <b class="u">מעל</b> הציר.</div>
+    <div class="sec">ב־<span class="mx">3</span> שורש <b>פשוט</b>: הנחש <b>חוצה</b> את הציר.</div>
+    <div class="sec stop">ב־<span class="mx">0</span> שורש <b>כפול</b>: הנחש <b>נוגע</b> בציר וחוזר לאותו צד.</div>
+    <div class="sec">ב־<span class="mx">−2</span> שורש <b>פשוט</b>: שוב <b>חוצה</b>.</div>
+    <div class="sec key">מתרגמים: <b class="u">מעל = ↗ עולה</b>, <b class="d">מתחת = ↘ יורדת</b>. ומזה סוג כל נקודה.</div>
+    <div class="sec">וזה הגרף האמיתי של <span class="mx">f</span>: בדיוק לפי החצים.</div>
+  </div>
+  <div class="sim"></div>
+</section>
+
+<!-- 9. Main simulation -->
+<section class="slide" data-sim="main">
+  <div class="txt">
+    <span class="kicker">הסימולציה המרכזית</span>
+    <h2>הנגזרת למעלה, הפולינום למטה</h2>
+    <div class="sec">הנקודה זזה על שני הגרפים באותו <span class="mx">x</span>. למעלה רואים את הערך של <span class="mx">f′</span>, למטה את המשיק ל־<span class="mx">f</span>.</div>
+    <div class="sec up">השטח <b class="u">הירוק</b> (<span class="mx">f′ &gt; 0</span>) מתאים לקטע <b class="u">הירוק</b> של <span class="mx">f</span>: עלייה.</div>
+    <div class="sec down">השטח <b class="d">הכתום</b> (<span class="mx">f′ &lt; 0</span>) מתאים לקטע <b class="d">הכתום</b>: ירידה.</div>
+    <div class="sec stop">בכל מקום ש־<span class="mx">f′</span> פוגשת את הציר, המשיק של <span class="mx">f</span> אופקי. אם היא חוצה: קיצון. אם היא נוגעת: עצירה.</div>
+    <div class="sec">בחרו פולינום מהרשימה: אלה ארבע הדוגמאות מדף ההסבר, ועוד אחת.</div>
+  </div>
+  <div class="sim"></div>
+</section>
+
+<!-- 10. Sandbox -->
+<section class="slide" data-sim="sandbox">
+  <div class="txt">
+    <span class="kicker">מעבדה</span>
+    <h2>עולה, יורדת, זוגית, אי־זוגית</h2>
+    <div class="sec">בונים את הנגזרת משורשים ב־<span class="mx">−2</span>, <span class="mx">0</span>, <span class="mx">2</span>, בוחרים לכל אחד ריבוי (0 = אין שורש) ואת הסימן.</div>
+    <div class="sec key">המעלה של <span class="mx">f</span> גדולה ב־1 מסכום הריבויים. שימו לב איך הקצוות משתנים כשהמעלה מתחלפת בין זוגית לאי־זוגית.</div>
+    <div class="sec up">מעלה 3 (שני שורשים פשוטים): <b>מתחילה למטה, נגמרת למעלה</b>, מקסימום ואז מינימום.</div>
+    <div class="sec up">מוסיפים שורש פשוט, מעלה 4: <b>שני הקצוות למעלה</b>, ומספר הקיצונים אי־זוגי.</div>
+    <div class="sec stop">הופכים שורש לכפול: הקיצון שלו הופך ל<b class="s">עצירה</b>, ושני השכנים שלו מתאחדים לכיוון אחד.</div>
+    <div class="sec down">מקדם שלילי: הנחש מתחיל מתחת לציר, והגרף כולו מתהפך.</div>
+  </div>
+  <div class="sim"></div>
+</section>
+
+<!-- 11. Summary -->
+<section class="slide" data-sim="none">
+  <div class="txt">
+    <span class="kicker">סיכום</span>
+    <h2>שיטת הנחש בארבעה שלבים</h2>
+    <div class="sec">1. <b>האינסוף:</b> מעלה ומקדם מוביל ← הקצוות.</div>
+    <div class="sec">2. <b>גוזרים ומפרקים</b> את <span class="mx">f′</span> עד הסוף, בלי לחלק ב־<span class="mx">x</span>.</div>
+    <div class="sec">3. <b>הנחש:</b> מימין לפי הסימן, חוצים בפשוט, נוגעים בכפול.</div>
+    <div class="sec">4. <b>מציבים ב־<span class="mx">f</span></b> (לא ב־<span class="mx">f′</span>!) ומשרטטים משמאל לימין.</div>
+  </div>
+  <div class="sim" style="justify-content:center;padding:18px">
+    <table class="sumtab">
+      <tr><th>מה רואים</th><th>מה זה אומר על <span class="mx">f</span></th></tr>
+      <tr><td><span class="mx">f′ &gt; 0</span> (מעל הציר)</td><td style="color:var(--up);font-weight:700">↗ עולה</td></tr>
+      <tr><td><span class="mx">f′ &lt; 0</span> (מתחת לציר)</td><td style="color:var(--down);font-weight:700">↘ יורדת</td></tr>
+      <tr><td>שורש פשוט (ריבוי אי־זוגי)</td><td>הסימן מתחלף: מקסימום (+ ל־−) או מינימום (− ל־+)</td></tr>
+      <tr><td>שורש כפול (ריבוי זוגי)</td><td style="color:var(--stop);font-weight:700">עצירה והמשך: אותו כיוון משני הצדדים</td></tr>
+      <tr><td>מעלה זוגית</td><td>שני הקצוות באותו כיוון; מספר קיצונים אי־זוגי</td></tr>
+      <tr><td>מעלה אי־זוגית</td><td>הקצוות בכיוונים הפוכים; מספר קיצונים זוגי</td></tr>
+      <tr><td>מקדם מוביל שלילי</td><td>הגרף מתהפך; הנחש מתחיל מימין מתחת לציר</td></tr>
+    </table>
+  </div>
+</section>
+
+<nav>
+  <button id="prev">→ הקודם</button>
+  <button id="next" class="main">הבא ←</button>
+  <button id="fs">מסך מלא</button>
+  <a href="calculus-06-snake-method.html">דף ההסבר</a>
+  <a href="index.html#calculus">חזרה לנושא</a>
+  <span class="count" id="count"></span>
+</nav>
+</div>
+
+<script>
+(function(){
+/* ================= helpers ================= */
+const C = {ink:'#1c2633', muted:'#5b6878', grid:'#e8edf2', axis:'#8a97a6', acc:'#1f6f8b',
+  up:'#2f7a4a', down:'#b4561e', stop:'#7a4fb0', upA:'rgba(47,122,74,.20)', downA:'rgba(180,86,30,.20)'};
+const FONT = 'Assistant, Arial, sans-serif';
+const SW = 588, SH = 545;            /* canvas size inside the sim column */
+const ev = (c, x) => { let s = 0; for (let i = c.length - 1; i >= 0; i--) s = s * x + c[i]; return s; };
+const mul = (a, b) => { const r = new Array(a.length + b.length - 1).fill(0); a.forEach((x, i) => b.forEach((y, j) => r[i + j] += x * y)); return r; };
+const fromRoots = (lead, roots) => { let d = [lead]; roots.forEach(([r, m]) => { for (let k = 0; k < m; k++) d = mul(d, [-r, 1]); }); return d; };
+const integ = d => [0].concat(d.map((c, k) => c / (k + 1)));
+const fmt = v => { const r = Math.round(v * 100) / 100; return (Object.is(r, -0) ? 0 : r).toString().replace('-', '−'); };
+function niceStep(range, k = 6){ const raw = range / k, p = Math.pow(10, Math.floor(Math.log10(raw))); for (const m of [1, 2, 5, 10]) if (m * p >= raw) return m * p; return 10 * p; }
+function el(tag, cls, parent, html){ const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; if (parent) parent.appendChild(e); return e; }
+function setup(cv, w, h){ cv.width = w * 2; cv.height = h * 2; cv.style.width = w + 'px'; cv.style.height = h + 'px'; const c = cv.getContext('2d'); c.setTransform(2, 0, 0, 2, 0, 0); return c; }
+function yRange(fns, xr, pad = .14){
+  let lo = 0, hi = 0;
+  for (const fn of fns) for (let i = 0; i <= 300; i++){ const y = fn(xr[0] + (xr[1] - xr[0]) * i / 300); if (isFinite(y)){ lo = Math.min(lo, y); hi = Math.max(hi, y); } }
+  if (hi - lo < 1e-9){ lo -= 1; hi += 1; }
+  const p = (hi - lo) * pad; return [lo - p, hi + p];
+}
+function signs(lead, roots){ const s = []; s[roots.length] = Math.sign(lead); for (let i = roots.length - 1; i >= 0; i--) s[i] = roots[i][1] % 2 ? -s[i + 1] : s[i + 1]; return s; }
+const typeOf = (l, r) => l === r ? 'stop' : (l > 0 ? 'max' : 'min');
+const TYPE = {max: 'מקסימום', min: 'מינימום', stop: 'עצירה'};
+const TCOL = {max: C.down, min: C.up, stop: C.stop};
+
+/* ---------- panels ---------- */
+function mapper(box, xr, yr){
+  return {box, xr, yr,
+    X: x => box.x + (x - xr[0]) / (xr[1] - xr[0]) * box.w,
+    Y: y => box.y + box.h - (y - yr[0]) / (yr[1] - yr[0]) * box.h};
+}
+function frame(ctx, M, label){
+  const {box, xr, yr, X, Y} = M;
+  ctx.save();
+  ctx.fillStyle = '#fbfcfd'; ctx.fillRect(box.x, box.y, box.w, box.h);
+  ctx.strokeStyle = C.grid; ctx.lineWidth = 1;
+  const xs = niceStep(xr[1] - xr[0], 8), ys = niceStep(yr[1] - yr[0], 5);
+  ctx.font = '11px ' + FONT; ctx.fillStyle = C.muted;
+  for (let v = Math.ceil(xr[0] / xs) * xs; v <= xr[1] + 1e-9; v += xs){
+    ctx.beginPath(); ctx.moveTo(X(v), box.y); ctx.lineTo(X(v), box.y + box.h); ctx.stroke();
+    if (Math.abs(v) > 1e-9){ ctx.textAlign = 'center'; const ty = Math.min(Math.max(Y(0) + 14, box.y + 12), box.y + box.h - 3); ctx.fillText(fmt(v), X(v), ty); }
+  }
+  for (let v = Math.ceil(yr[0] / ys) * ys; v <= yr[1] + 1e-9; v += ys){
+    ctx.beginPath(); ctx.moveTo(box.x, Y(v)); ctx.lineTo(box.x + box.w, Y(v)); ctx.stroke();
+    if (Math.abs(v) > 1e-9){ ctx.textAlign = 'right'; const tx = Math.min(Math.max(X(0) - 4, box.x + 28), box.x + box.w - 3); ctx.fillText(fmt(v), tx, Y(v) + 4); }
+  }
+  ctx.strokeStyle = C.axis; ctx.lineWidth = 1.4;
+  if (yr[0] <= 0 && yr[1] >= 0){ ctx.beginPath(); ctx.moveTo(box.x, Y(0)); ctx.lineTo(box.x + box.w, Y(0)); ctx.stroke(); }
+  if (xr[0] <= 0 && xr[1] >= 0){ ctx.beginPath(); ctx.moveTo(X(0), box.y); ctx.lineTo(X(0), box.y + box.h); ctx.stroke(); }
+  ctx.strokeStyle = C.grid; ctx.strokeRect(box.x, box.y, box.w, box.h);
+  if (label){ ctx.font = 'italic bold 17px "Cambria Math", "Times New Roman", serif'; ctx.fillStyle = C.ink; ctx.textAlign = 'left'; ctx.fillText(label, box.x + 8, box.y + 20); }
+  ctx.restore();
+}
+function clip(ctx, box){ ctx.save(); ctx.beginPath(); ctx.rect(box.x, box.y, box.w, box.h); ctx.clip(); }
+function plotCurve(ctx, M, fn, colorAt, width = 3, dash){
+  const {xr, X, Y, box, yr} = M, N = 500, big = (yr[1] - yr[0]) * 4;
+  clip(ctx, box); ctx.lineWidth = width; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; if (dash) ctx.setLineDash(dash);
+  let cur = null, started = false;
+  for (let i = 0; i <= N; i++){
+    const x = xr[0] + (xr[1] - xr[0]) * i / N; let y = fn(x); y = Math.max(Math.min(y, yr[1] + big), yr[0] - big);
+    const col = colorAt ? colorAt(x) : C.acc;
+    if (col !== cur){ if (started){ ctx.lineTo(X(x), Y(y)); ctx.stroke(); } ctx.beginPath(); ctx.strokeStyle = col; ctx.moveTo(X(x), Y(y)); cur = col; started = true; }
+    else ctx.lineTo(X(x), Y(y));
+  }
+  ctx.stroke(); ctx.restore();
+}
+function fillSign(ctx, M, fn){
+  const {xr, X, Y, box} = M, N = 400, dx = (xr[1] - xr[0]) / N;
+  clip(ctx, box);
+  for (let i = 0; i < N; i++){
+    const x = xr[0] + dx * (i + .5), y = fn(x); if (Math.abs(y) < 1e-12) continue;
+    ctx.fillStyle = y > 0 ? C.upA : C.downA;
+    const y0 = Y(0), y1 = Y(y); ctx.fillRect(X(xr[0] + dx * i), Math.min(y0, y1), X(dx) - X(0) + .6, Math.abs(y1 - y0));
+  }
+  ctx.restore();
+}
+function dot(ctx, x, y, col, r = 6, ring){
+  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fillStyle = col; ctx.fill();
+  if (ring){ ctx.lineWidth = 2.5; ctx.strokeStyle = '#fff'; ctx.stroke(); }
+}
+function tag(ctx, text, x, y, col, align = 'center', rtl = true, size = 14){
+  ctx.save(); ctx.font = 'bold ' + size + 'px ' + FONT; ctx.direction = rtl ? 'rtl' : 'ltr'; ctx.textAlign = align;
+  ctx.lineWidth = 5; ctx.strokeStyle = 'rgba(255,255,255,.95)'; ctx.strokeText(text, x, y); ctx.fillStyle = col; ctx.fillText(text, x, y); ctx.restore();
+}
+
+/* ---------- the dual view: f' on top, f below ---------- */
+function drawDual(ctx, W, H, m, cx){
+  ctx.clearRect(0, 0, W, H);
+  const top = {x: 8, y: 6, w: W - 16, h: H / 2 - 16}, bot = {x: 8, y: H / 2 + 8, w: W - 16, h: H / 2 - 16};
+  const d = x => ev(m.d, x), f = x => ev(m.f, x);
+  const MT = mapper(top, m.xr, m.yrT || yRange([d], m.xr)), MB = mapper(bot, m.xr, m.yrB || yRange([f], m.xr));
+  m._thr = (MT.yr[1] - MT.yr[0]) * 0.004;
+  frame(ctx, MT, 'f′(x)'); frame(ctx, MB, 'f(x)');
+  fillSign(ctx, MT, d);
+  plotCurve(ctx, MT, d, null, 3);
+  plotCurve(ctx, MB, f, x => { const v = d(x); return Math.abs(v) < 1e-9 ? C.stop : v > 0 ? C.up : C.down; }, 3.6);
+  /* critical points */
+  const s = signs(m.lead, m.roots);
+  m.roots.forEach(([r, mm], i) => {
+    if (r < m.xr[0] || r > m.xr[1]) return;
+    const t = typeOf(s[i], s[i + 1]);
+    ctx.save(); ctx.setLineDash([2, 4]); ctx.strokeStyle = TCOL[t]; ctx.lineWidth = 1.3;
+    ctx.beginPath(); ctx.moveTo(MT.X(r), MT.Y(0)); ctx.lineTo(MB.X(r), MB.Y(f(r))); ctx.stroke(); ctx.restore();
+    if (MT.Y(0) >= top.y && MT.Y(0) <= top.y + top.h) dot(ctx, MT.X(r), MT.Y(0), C.ink, 4.5);
+    dot(ctx, MB.X(r), MB.Y(f(r)), TCOL[t], 6.5, true);
+    const below = t === 'min';
+    tag(ctx, TYPE[t], MB.X(r), MB.Y(f(r)) + (below ? 24 : -13), TCOL[t]);
+    if (MT.Y(0) >= top.y && MT.Y(0) <= top.y + top.h) tag(ctx, mm === 1 ? 'פשוט' : mm === 2 ? 'כפול' : 'ריבוי ' + mm, MT.X(r), MT.Y(0) + (s[i] > 0 && s[i + 1] > 0 ? 20 : s[i] < 0 && s[i + 1] < 0 ? -10 : 20), C.ink);
+  });
+  /* cursor */
+  if (cx != null){
+    const dv = d(cx), fv = f(cx);
+    ctx.save(); ctx.setLineDash([6, 5]); ctx.strokeStyle = C.ink; ctx.globalAlpha = .55; ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.moveTo(MT.X(cx), top.y); ctx.lineTo(MT.X(cx), bot.y + bot.h); ctx.stroke(); ctx.restore();
+    const col = Math.abs(dv) < m._thr ? C.stop : dv > 0 ? C.up : C.down;
+    /* tangent on f */
+    const kx = bot.w / (m.xr[1] - m.xr[0]), ky = bot.h / (MB.yr[1] - MB.yr[0]);
+    let vx = kx, vy = -dv * ky; const L = Math.hypot(vx, vy); vx = vx / L * 70; vy = vy / L * 70;
+    const px = MB.X(cx), py = MB.Y(fv);
+    clip(ctx, bot); ctx.strokeStyle = col; ctx.lineWidth = 2.6; ctx.beginPath(); ctx.moveTo(px - vx, py - vy); ctx.lineTo(px + vx, py + vy); ctx.stroke(); ctx.restore();
+    /* value bar on f' */
+    clip(ctx, top); ctx.strokeStyle = col; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(MT.X(cx), MT.Y(0)); ctx.lineTo(MT.X(cx), MT.Y(dv)); ctx.stroke(); ctx.restore();
+    dot(ctx, MT.X(cx), MT.Y(dv), col, 6.5, true);
+    dot(ctx, px, py, col, 6.5, true);
+  }
+}
+function statusHTML(m, cx){
+  const dv = ev(m.d, cx), fv = ev(m.f, cx);
+  const st = Math.abs(dv) < (m._thr || 0.01) ? '<span class="s">משיק אופקי</span>' : dv > 0 ? '<span class="u">↗ f עולה</span>' : '<span class="d">↘ f יורדת</span>';
+  return `<bdi dir="ltr">x = ${fmt(cx)}</bdi><bdi dir="ltr">f′(x) = ${fmt(dv)}</bdi><bdi dir="ltr">f(x) = ${fmt(fv)}</bdi>${st}`;
+}
+
+/* ---------- generic dual simulation with play / slider ---------- */
+function dualSim(cfg){
+  return function(sim){
+    const cv = el('canvas', null, sim), ctx = setup(cv, SW, cfg.h || SH);
+    const bar = el('div', 'bar', sim), bar2 = el('div', 'bar', sim), stat = el('div', 'status', sim);
+    const st = Object.assign({play: true, phase: 0, cx: 0}, cfg.state || {});
+    let m;
+    const rebuild = () => { m = cfg.model(st); m.f = m.f || integ(m.d); };
+    const refresh = cfg.controls ? cfg.controls(bar, st, () => { rebuild(); refresh && refresh(); }) : null;
+    const pb = el('button', null, bar2, '❚❚ עצור');
+    const sl = el('input', null, bar2); sl.type = 'range'; sl.min = 0; sl.max = 1000; sl.setAttribute('aria-label', 'מיקום x');
+    pb.onclick = () => {
+      st.play = !st.play;
+      if (st.play){ const [a, b] = m.xr; st.phase = Math.acos(Math.max(-1, Math.min(1, 1 - 2 * (st.cx - a) / (b - a)))); }
+      pb.textContent = st.play ? '❚❚ עצור' : '▶ הפעל';
+    };
+    sl.oninput = () => { st.play = false; pb.textContent = '▶ הפעל'; st.cx = m.xr[0] + (m.xr[1] - m.xr[0]) * sl.value / 1000; };
+    rebuild(); refresh && refresh();
+    return {
+      frame(dt){
+        const [a, b] = m.xr;
+        if (st.play){ st.phase += dt / (cfg.period || 9000) * Math.PI * 2; st.cx = a + (b - a) * (.5 - .5 * Math.cos(st.phase)); sl.value = Math.round((st.cx - a) / (b - a) * 1000); }
+        st.cx = Math.min(Math.max(st.cx, a), b);
+        drawDual(ctx, SW, cfg.h || SH, m, st.cx);
+        stat.innerHTML = statusHTML(m, st.cx) + (m.note ? `<span>${m.note}</span>` : '');
+      },
+      step(k){ if (cfg.steps && cfg.steps[k]) { cfg.steps[k](st); rebuild(); refresh && refresh(); } }
+    };
+  };
+}
+function btnGroup(bar, label, items, get, set){
+  if (label) el('span', 'lbl', bar, label);
+  const bs = items.map(([v, t, cls]) => { const b = el('button', cls || null, bar, t); b.onclick = () => set(v); return [v, b]; });
+  return () => bs.forEach(([v, b]) => b.classList.toggle('on', get() === v));
+}
+
+/* ================= simulations ================= */
+const SIMS = {};
+
+SIMS.title = dualSim({ period: 11000,
+  model: () => ({d: fromRoots(15, [[-1, 1], [0, 2], [1, 1]]), roots: [[-1, 1], [0, 2], [1, 1]], lead: 15, xr: [-1.55, 1.55]}) });
+
+/* ends: a*x^n */
+SIMS.ends = function(sim){
+  const cv = el('canvas', null, sim), W = SW, H = 470, ctx = setup(cv, W, H);
+  const bar = el('div', 'bar', sim), bar2 = el('div', 'bar', sim), info = el('div', 'info', sim);
+  const st = {n: 2, a: 1, shown: 0};
+  const draw = () => {
+    ctx.clearRect(0, 0, W, H);
+    const box = {x: 8, y: 6, w: W - 16, h: H - 12}, M = mapper(box, [-2.2, 2.2], [-5, 5]);
+    frame(ctx, M, 'f(x) = ' + (st.a < 0 ? '−' : '') + 'x' + '⁰¹²³⁴⁵⁶'[st.n]);
+    const fn = x => st.a * Math.pow(x, st.n), dfn = x => st.a * st.n * Math.pow(x, st.n - 1);
+    plotCurve(ctx, M, fn, x => { const v = dfn(x); return Math.abs(v) < 1e-9 ? C.stop : v > 0 ? C.up : C.down; }, 4);
+    const leftUp = st.a * Math.pow(-1, st.n) > 0, rightUp = st.a > 0;
+    const arrow = (x, up, side) => {
+      const y0 = up ? 70 : H - 70, y1 = up ? 22 : H - 22;
+      ctx.save(); ctx.strokeStyle = up ? C.up : C.down; ctx.fillStyle = ctx.strokeStyle; ctx.lineWidth = 5;
+      ctx.beginPath(); ctx.moveTo(x, y0); ctx.lineTo(x, y1); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(x - 11, y1 + (up ? 12 : -12)); ctx.lineTo(x + 11, y1 + (up ? 12 : -12)); ctx.lineTo(x, y1 - (up ? 6 : -6)); ctx.closePath(); ctx.fill();
+      ctx.restore();
+      tag(ctx, up ? '+∞' : '−∞', x + (side < 0 ? 34 : -34), up ? 44 : H - 36, up ? C.up : C.down, 'center', false);
+    };
+    arrow(40, leftUp, -1); arrow(W - 40, rightUp, 1);
+    const even = st.n % 2 === 0;
+    info.innerHTML = `<b>n = ${st.n}</b> (${even ? 'זוגית' : 'אי־זוגית'}), <b>a ${st.a > 0 ? '&gt; 0' : '&lt; 0'}</b> ← ` +
+      (even ? (st.a > 0 ? 'שני הקצוות למעלה' : 'שני הקצוות למטה') : (st.a > 0 ? 'מתחילה למטה ונגמרת למעלה' : 'מתחילה למעלה ונגמרת למטה')) +
+      ` · בשמאל <span style="color:${(even ? -st.a : st.a) > 0 ? C.up : C.down};font-weight:700">${(even ? -st.a : st.a) > 0 ? 'עולה' : 'יורדת'}</span>, בימין <span style="color:${st.a > 0 ? C.up : C.down};font-weight:700">${st.a > 0 ? 'עולה' : 'יורדת'}</span>`;
+  };
+  const r1 = btnGroup(bar, 'המעלה n:', [1, 2, 3, 4, 5, 6].map(v => [v, String(v)]), () => st.n, v => { st.n = v; refresh(); });
+  const r2 = btnGroup(bar2, 'המקדם a:', [[1, 'חיובי +'], [-1, 'שלילי −', 'neg']], () => st.a, v => { st.a = v; refresh(); });
+  const refresh = () => { r1(); r2(); draw(); };
+  refresh();
+  const steps = [{n: 2, a: 1}, {n: 2, a: 1}, {n: 4, a: 1}, {n: 3, a: 1}, {n: 3, a: -1}, {n: 6, a: -1}];
+  return { frame(){}, step(k){ if (steps[k]) Object.assign(st, steps[k]); refresh(); } };
+};
+
+/* zoom: x^4 - 4x^3 vs x^4 */
+SIMS.zoom = function(sim){
+  const cv = el('canvas', null, sim), W = SW, H = 480, ctx = setup(cv, W, H);
+  const bar = el('div', 'bar', sim), info = el('div', 'info', sim);
+  el('span', 'lbl', bar, 'מתרחקים:');
+  const sl = el('input', null, bar); sl.type = 'range'; sl.min = 0; sl.max = 1000; sl.setAttribute('aria-label', 'מרחק');
+  const st = {L: 5.5, target: 5.5};
+  const toL = v => 5.5 * Math.pow(60 / 5.5, v / 1000), fromL = L => Math.round(Math.log(L / 5.5) / Math.log(60 / 5.5) * 1000);
+  sl.oninput = () => { st.target = st.L = toL(+sl.value); };
+  const f = [0, 0, 0, -4, 1], g = [0, 0, 0, 0, 1];
+  const steps = [5.5, 5.5, 14, 60];
+  return {
+    frame(dt){
+      st.L += (st.target - st.L) * Math.min(1, dt / 350);
+      sl.value = fromL(st.L);
+      const xr = [-st.L * .55, st.L], yr = yRange([x => ev(f, x), x => ev(g, x)], xr, .06);
+      ctx.clearRect(0, 0, W, H);
+      const M = mapper({x: 8, y: 6, w: W - 16, h: H - 12}, xr, yr);
+      frame(ctx, M, null);
+      plotCurve(ctx, M, x => ev(g, x), () => C.muted, 2.5, [8, 7]);
+      plotCurve(ctx, M, x => ev(f, x), () => C.acc, 3.5);
+      tag(ctx, 'f(x) = x⁴ − 4x³', 20, 28, C.acc, 'left', false);
+      tag(ctx, '- - - x⁴', 20, 50, C.muted, 'left', false);
+      const x = xr[1], rel = Math.abs(ev(f, x) - ev(g, x)) / ev(g, x) * 100;
+      info.innerHTML = `ב־<bdi dir="ltr">x = ${fmt(x)}</bdi> ההפרש בין שני הגרפים הוא <b>${rel.toFixed(rel < 10 ? 1 : 0)}%</b> מהגובה של הגרף.`;
+    },
+    step(k){ if (steps[k] != null) st.target = steps[k]; }
+  };
+};
+
+SIMS.slope = dualSim({ period: 9000, model: () => ({d: [0, 1], f: [0, 0, .5], roots: [[0, 1]], lead: 1, xr: [-2.4, 2.4], yrT: [-2.8, 2.8], yrB: [-.5, 3.2]}) });
+
+SIMS.simple = dualSim({ period: 10000, model: () => ({d: [-3, 0, 3], f: [0, -3, 0, 1], roots: [[-1, 1], [1, 1]], lead: 3, xr: [-2.25, 2.25]}) });
+
+SIMS.double = dualSim({ period: 9000, state: {s: 1},
+  model: st => ({d: [0, 0, 3 * st.s], f: [0, 0, 0, st.s], roots: [[0, 2]], lead: st.s, xr: [-1.6, 1.6], note: st.s > 0 ? 'עולה ← עוצרת ← עולה' : 'יורדת ← עוצרת ← יורדת'}),
+  controls: (bar, st, upd) => btnGroup(bar, 'הנגזרת:', [[1, 'f′ = 3x²'], [-1, 'f′ = −3x²', 'neg']], () => st.s, v => { st.s = v; upd(); }),
+  steps: [st => st.s = 1, st => st.s = 1, st => st.s = 1, st => st.s = -1] });
+
+SIMS.mult = dualSim({ period: 9000, state: {m: 1},
+  model: st => { const d = new Array(st.m + 1).fill(0); d[st.m] = 1; return {d, roots: [[0, st.m]], lead: 1, xr: [-1.5, 1.5]}; },
+  controls: (bar, st, upd) => btnGroup(bar, 'הריבוי של השורש 0:', [1, 2, 3, 4].map(v => [v, String(v)]), () => st.m, v => { st.m = v; upd(); }),
+  steps: [st => st.m = 1, st => st.m = 2, st => st.m = 3, st => st.m = 4] });
+
+/* snake builder */
+SIMS.snake = function(sim){
+  const cv = el('canvas', null, sim), W = SW, H = SH, ctx = setup(cv, W, H);
+  const roots = [[-2, 1], [0, 2], [3, 1]], lead = 1, s = signs(lead, roots), n = roots.length;
+  const axisY = 100, amp = 56, L = 60, R = W - 30, rx = i => L + (R - L) * (i + 1) / (n + 1);
+  /* snake points from right to left, interval by interval */
+  const segs = [];
+  for (let i = n; i >= 0; i--){
+    const xa = i === 0 ? L - 30 : rx(i - 1), xb = i === n ? R : rx(i), pts = [];
+    for (let k = 0; k <= 60; k++){
+      const x = xb - (xb - xa) * k / 60; let h;
+      if (i === n) h = Math.sin(Math.PI / 2 * (x - xa) / (xb - xa));
+      else if (i === 0) h = Math.sin(Math.PI / 2 * (xb - x) / (xb - xa));
+      else h = Math.sin(Math.PI * (x - xa) / (xb - xa));
+      pts.push([x, axisY - s[i] * amp * h]);
+    }
+    segs.push({i, pts, mid: (xa + xb) / 2});
+  }
+  const d = fromRoots(lead, roots), f = integ(d);
+  const st = {target: 0, prog: 0, arrows: false, graph: false};
+  return {
+    frame(dt){
+      st.prog += Math.sign(st.target - st.prog) * Math.min(Math.abs(st.target - st.prog), dt / 900);
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = '#fbfcfd'; ctx.fillRect(8, 6, W - 16, 262);
+      ctx.strokeStyle = C.axis; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(L - 34, axisY); ctx.lineTo(R + 10, axisY); ctx.stroke();
+      ctx.font = 'italic bold 18px "Cambria Math", serif'; ctx.fillStyle = C.ink; ctx.textAlign = 'left'; ctx.fillText('f′', 14, axisY + 6);
+      roots.forEach(([r, m], i) => {
+        dot(ctx, rx(i), axisY, C.ink, 5);
+        tag(ctx, String(r).replace('-', '−'), rx(i), axisY + 86, C.ink, 'center', false, 17);
+        tag(ctx, m === 1 ? 'פשוט' : 'כפול', rx(i), axisY + 106, m === 1 ? C.muted : C.stop, 'center', true, 15);
+      });
+      /* snake */
+      ctx.save(); ctx.strokeStyle = C.acc; ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.beginPath();
+      let first = true;
+      segs.forEach((sg, j) => {
+        const part = Math.max(0, Math.min(1, st.prog - j)); if (part <= 0) return;
+        const upto = Math.round(part * 60);
+        for (let k = 0; k <= upto; k++){ const [x, y] = sg.pts[k]; if (first){ ctx.moveTo(x, y); first = false; } else ctx.lineTo(x, y); }
+        if (part > .5){ const sgn = s[sg.i]; tag(ctx, sgn > 0 ? '+' : '−', sg.mid, axisY - sgn * 22 + (sgn > 0 ? 0 : 14), sgn > 0 ? C.up : C.down, 'center', false, 24); }
+      });
+      ctx.stroke(); ctx.restore();
+      if (st.prog > 0 && st.prog < n + 1){ const j = Math.min(Math.floor(st.prog), n), sg = segs[j], k = Math.round((st.prog - j) * 60); const p = sg.pts[Math.min(k, 60)]; dot(ctx, p[0], p[1], C.acc, 7, true); }
+      if (st.arrows){
+        ctx.font = 'italic bold 18px "Cambria Math", serif'; ctx.fillStyle = C.ink; ctx.textAlign = 'left'; ctx.fillText('f', 18, 238);
+        segs.forEach(sg => { const up = s[sg.i] > 0; tag(ctx, up ? '↗' : '↘', sg.mid, 242, up ? C.up : C.down, 'center', false, 28); });
+        roots.forEach((r, i) => { const t = typeOf(s[i], s[i + 1]); tag(ctx, TYPE[t], rx(i), 268, TCOL[t], 'center', true, 16); });
+      }
+      if (st.graph){
+        const box = {x: 8, y: 280, w: W - 16, h: H - 286}, xr = [-3.2, 3.9];
+        const M = mapper(box, xr, yRange([x => ev(f, x)], xr));
+        frame(ctx, M, 'f(x)');
+        plotCurve(ctx, M, x => ev(f, x), x => { const v = ev(d, x); return Math.abs(v) < 1e-9 ? C.stop : v > 0 ? C.up : C.down; }, 3.6);
+        roots.forEach(([r], i) => { const t = typeOf(s[i], s[i + 1]); dot(ctx, M.X(r), M.Y(ev(f, r)), TCOL[t], 6.5, true); tag(ctx, TYPE[t], M.X(r), M.Y(ev(f, r)) + (t === 'min' ? 24 : -13), TCOL[t]); });
+      } else {
+        ctx.fillStyle = '#fbfcfd'; ctx.fillRect(8, 280, W - 16, H - 286);
+        ctx.font = '16px ' + FONT; ctx.fillStyle = C.muted; ctx.textAlign = 'center'; ctx.direction = 'rtl';
+        ctx.fillText('כאן יופיע הגרף של f', W / 2, 280 + (H - 286) / 2); ctx.direction = 'ltr';
+      }
+    },
+    step(k){ st.target = Math.min(k, n + 1); st.arrows = k >= n + 2; st.graph = k >= n + 3; if (k < st.prog - 1) st.prog = st.target; }
+  };
+};
+
+/* main */
+const PRESETS = [
+  {t: 'f = x³ − 3x', lead: 3, roots: [[-1, 1], [1, 1]], xr: [-2.3, 2.3]},
+  {t: 'f = x⁴ − 4x³', lead: 4, roots: [[0, 2], [3, 1]], xr: [-1.4, 4.6]},
+  {t: 'f = −x⁴ + 2x²', lead: -4, roots: [[-1, 1], [0, 1], [1, 1]], xr: [-1.75, 1.75]},
+  {t: 'f = 3x⁵ − 5x³', lead: 15, roots: [[-1, 1], [0, 2], [1, 1]], xr: [-1.45, 1.45]},
+  {t: 'f′ = (x+2)·x²·(x−3)', lead: 1, roots: [[-2, 1], [0, 2], [3, 1]], xr: [-3, 3.8]}
+];
+SIMS.main = dualSim({ period: 12000, state: {p: 0},
+  model: st => { const p = PRESETS[st.p]; return {d: fromRoots(p.lead, p.roots), roots: p.roots, lead: p.lead, xr: p.xr}; },
+  controls: (bar, st, upd) => {
+    el('span', 'lbl', bar, 'פולינום:');
+    const sel = el('select', null, bar); sel.style.direction = 'ltr';
+    PRESETS.forEach((p, i) => { const o = el('option', null, sel, p.t); o.value = i; });
+    sel.onchange = () => { st.p = +sel.value; upd(); };
+    return () => { sel.value = st.p; };
+  },
+  steps: [st => st.p = 0, st => st.p = 0, st => st.p = 0, st => st.p = 3, st => st.p = 1] });
+
+/* sandbox */
+SIMS.sandbox = dualSim({ period: 11000, state: {m: [1, 0, 1], s: 1},
+  model: st => {
+    const roots = [[-2, st.m[0]], [0, st.m[1]], [2, st.m[2]]].filter(r => r[1] > 0);
+    const lead = st.s * 3, deg = st.m.reduce((a, b) => a + b, 0) + 1, even = deg % 2 === 0;
+    const ends = even ? (st.s > 0 ? 'שני הקצוות למעלה' : 'שני הקצוות למטה') : (st.s > 0 ? 'מלמטה למעלה' : 'מלמעלה למטה');
+    return {d: fromRoots(lead, roots), roots, lead, xr: [-3.1, 3.1], note: `<b>מעלה ${deg}</b> (${even ? 'זוגית' : 'אי־זוגית'}): ${ends}`};
+  },
+  controls: (bar, st, upd) => {
+    const sels = [-2, 0, 2].map((r, i) => {
+      el('span', 'lbl', bar, `ריבוי ב־<bdi dir="ltr">${String(r).replace('-', '−')}</bdi>:`);
+      const s = el('select', null, bar); [0, 1, 2, 3].forEach(v => { const o = el('option', null, s, String(v)); o.value = v; });
+      s.onchange = () => { st.m[i] = +s.value; upd(); }; return s;
+    });
+    const rs = btnGroup(bar, 'סימן:', [[1, '+'], [-1, '−', 'neg']], () => st.s, v => { st.s = v; upd(); });
+    return () => { sels.forEach((s, i) => s.value = st.m[i]); rs(); };
+  },
+  steps: [st => { st.m = [1, 0, 1]; st.s = 1; }, st => { st.m = [1, 0, 1]; st.s = 1; }, st => { st.m = [1, 0, 1]; st.s = 1; },
+          st => { st.m = [1, 1, 1]; st.s = 1; }, st => { st.m = [1, 2, 1]; st.s = 1; }, st => { st.m = [1, 2, 1]; st.s = -1; }] });
+
+SIMS.none = () => ({frame(){}, step(){}});
+
+/* ================= presentation engine ================= */
+const stage = document.getElementById('stage');
+const slides = [...document.querySelectorAll('.slide')];
+const inst = [];
+let cur = 0;
+function fit(){ const k = Math.min(innerWidth / 1024, innerHeight / 768); stage.style.transform = `translate(-50%,-50%) scale(${k})`; }
+addEventListener('resize', fit); fit();
+function secs(i){ return [...slides[i].querySelectorAll('.sec')]; }
+function shown(i){ return secs(i).filter(s => s.classList.contains('on')).length; }
+function sim(i){
+  if (!inst[i]){ const s = slides[i]; const box = s.querySelector('.sim'); const fn = SIMS[s.dataset.sim] || SIMS.none; inst[i] = fn(box); }
+  return inst[i];
+}
+function show(i, nSecs){
+  slides.forEach((s, j) => s.classList.toggle('on', j === i));
+  secs(i).forEach((s, j) => s.classList.toggle('on', j < nSecs));
+  cur = i; sim(i).step(Math.max(0, nSecs - 1));
+  document.getElementById('count').textContent = `${i + 1} / ${slides.length}`;
+}
+function next(){
+  const all = secs(cur), k = shown(cur);
+  if (k < all.length){ all[k].classList.add('on'); sim(cur).step(k); }
+  else if (cur < slides.length - 1) show(cur + 1, 1);
+}
+function prev(){
+  const k = shown(cur);
+  if (k > 1){ secs(cur)[k - 1].classList.remove('on'); sim(cur).step(k - 2); }
+  else if (cur > 0) show(cur - 1, secs(cur - 1).length);
+}
+document.getElementById('next').onclick = next;
+document.getElementById('prev').onclick = prev;
+document.getElementById('fs').onclick = () => document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+document.addEventListener('keydown', e => {
+  if (['INPUT', 'SELECT'].includes(e.target.tagName)) return;
+  if (e.key === 'ArrowLeft' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); next(); }
+  if (e.key === 'ArrowRight' || e.key === 'PageUp'){ e.preventDefault(); prev(); }
+});
+show(0, 1);
+let last = performance.now();
+function loop(t){ const dt = Math.min(t - last, 60); last = t; sim(cur).frame(dt); requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

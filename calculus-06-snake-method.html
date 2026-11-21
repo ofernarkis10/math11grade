@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>שיטת הנחש: חקירת פולינום ושרטוט הגרף · דף הסבר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<!-- KaTeX: renders the LaTeX inside \( ... \) in every span.m (pinned version with integrity hashes) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false})"></script>
+<style>
+/* Same visual system as calculus-02 (explanation page). Extras: SVG "snake" sign diagrams and polynomial plots drawn by the script at the bottom */
+:root{
+  --bg:#f3f5f7; --paper:#ffffff; --ink:#1c2633; --muted:#5b6878; --line:#d9dfe6;
+  --accent:#1f6f8b; --accent-soft:#e3f0f5; --mark:#b4561e; --mark-soft:#fbeee5; --ok:#2f7a4a; --ok-soft:#e5f3ea; --grid:rgba(31,111,139,.06);
+  --stop:#7a4fb0; --stop-soft:#f0e9f8;
+  --f-display:"Frank Ruhl Libre", "David", Georgia, serif;
+  --f-body:"Assistant", "Arial Hebrew", Arial, sans-serif;
+  --f-math:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --ok:#7fd09a; --ok-soft:#1d3326; --grid:rgba(108,188,214,.05);
+  --stop:#c3a2ef; --stop-soft:#2c2340; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#1a2129; --ink:#e4e9ef; --muted:#9aa7b6; --line:#2c3642;
+  --accent:#6cbcd6; --accent-soft:#1b313b; --mark:#f0a46f; --mark-soft:#3a2a1f; --ok:#7fd09a; --ok-soft:#1d3326; --grid:rgba(108,188,214,.05);
+  --stop:#c3a2ef; --stop-soft:#2c2340; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;}
+.wrap{max-width:900px;margin:0 auto;padding-inline:16px;padding-block:32px 72px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:2.3rem}
+h2{font-size:1.65rem;color:var(--accent)}
+h3{font-size:1.15rem}
+p{margin:0}
+.m{direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+.m .katex{font-size:1.08em;position:relative}
+.m:has(.katex){white-space:normal}
+*:has(> .m .mfrac){line-height:2.15}
+.lead{color:var(--muted);max-width:68ch}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.95rem;width:fit-content}
+.back:hover,.back:focus-visible{text-decoration:underline}
+
+nav.qnav{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 20px;display:flex;flex-direction:column;gap:10px}
+nav.qnav ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+nav.qnav a{display:block;padding:6px 10px;border:1px solid var(--line);border-radius:8px;color:var(--accent);font-weight:700;text-decoration:none;font-size:.95rem}
+nav.qnav a small{display:block;color:var(--muted);font-weight:400;font-size:.8rem}
+nav.qnav a:hover,nav.qnav a:focus-visible{border-color:var(--accent);background:var(--accent-soft);outline:none}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 24px 28px;display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px}
+.card > h3{color:var(--ink);margin-top:4px}
+.note{background:var(--mark-soft);border-radius:8px;padding:10px 14px;font-size:.95rem}
+.note strong{color:var(--mark)}
+.key{background:var(--accent-soft);border-radius:8px;padding:12px 16px}
+.key strong{color:var(--accent)}
+
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.tool{background:var(--accent-soft);border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;gap:6px}
+.tool b{display:flex;gap:8px;align-items:baseline}
+.tool b .tag{font-family:var(--f-math);font-size:.8rem;color:var(--paper);background:var(--accent);border-radius:4px;padding:0 6px}
+.tool p{font-size:.93rem}
+.tool.stop{background:var(--stop-soft)} .tool.stop b .tag{background:var(--stop)}
+
+/* tables: Hebrew, right to left, first column on the right */
+.tablebox{position:relative;overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.93rem}
+th,td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:start;vertical-align:middle}
+th{background:var(--accent-soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:700;color:var(--accent);white-space:nowrap}
+td .m{white-space:nowrap}
+
+ul.list,ol.list{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px}
+
+/* solution format: thinking, numbered steps (heading on the right, every expression on its own line on the left), answer */
+.think{background:var(--paper);border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+.think-h{font-size:.78rem;letter-spacing:.06em;font-weight:700;color:var(--accent)}
+ol.st{margin:2px 0 0;padding-inline-start:24px;display:flex;flex-direction:column;gap:10px}
+ol.st li::marker{font-weight:700;color:var(--mark)}
+ol.st > li > .lab{display:block;font-weight:700;color:var(--mark)}
+.ml{display:flex;flex-direction:column;gap:4px;margin:2px 0 4px}
+.ml-m{direction:ltr;text-align:left;unicode-bidi:isolate;line-height:2.15}
+.ml-m .m{white-space:normal}
+.ml-t{text-align:right;line-height:2.15}
+div.ans{background:var(--ok-soft);border-radius:6px;padding:8px 12px;font-weight:600}
+div.ans .lab{display:block;font-weight:700;color:var(--ok)}
+.q-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.q-head small{font-family:var(--f-body);font-size:.92rem;color:var(--muted);font-weight:600}
+.given{background:var(--accent-soft);border-radius:8px;padding:8px 14px;width:fit-content;max-width:100%}
+
+/* SVG diagrams */
+.snake,.plot{direction:ltr;overflow-x:auto;max-width:100%}
+.snake svg{display:block;max-width:100%;height:auto;margin-inline:auto}
+.plot svg{display:block;width:100%;max-width:520px;height:auto;margin-inline:auto}
+figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px}
+figure figcaption{font-size:.85rem;color:var(--muted);text-align:center}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;align-items:start}
+.minis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.minis figure{padding:6px}
+svg .g{stroke:var(--line);stroke-width:1}
+svg .ax{stroke:var(--muted);stroke-width:1.4}
+svg .tk{fill:var(--muted);font-size:11px;font-family:var(--f-body)}
+svg .cv{stroke:var(--accent);stroke-width:2.6;fill:none;stroke-linecap:round}
+svg .snk{stroke:var(--accent);stroke-width:2.6;fill:none;stroke-linecap:round}
+svg .sg{font-size:20px;font-weight:700;font-family:var(--f-body)}
+svg .pos{fill:var(--ok)} svg .neg{fill:var(--mark)}
+svg .rl{fill:var(--ink);font-size:14px;font-weight:700;font-family:var(--f-math)}
+svg .mul{fill:var(--muted);font-size:11px;font-family:var(--f-body)}
+svg .row{fill:var(--muted);font-size:13px;font-weight:700;font-family:var(--f-math)}
+svg .arr{font-size:22px;font-weight:700}
+svg .ty{font-size:12.5px;font-weight:700;font-family:var(--f-body)}
+svg .t-max{fill:var(--mark)} svg .t-min{fill:var(--ok)} svg .t-stop{fill:var(--stop)}
+svg circle.p-max{fill:var(--mark)} svg circle.p-min{fill:var(--ok)} svg circle.p-stop{fill:var(--stop)} svg circle.p-pt{fill:var(--paper);stroke:var(--ink);stroke-width:1.5}
+svg .pl{font-size:12px;font-weight:700;font-family:var(--f-math);fill:var(--ink);paint-order:stroke;stroke:var(--paper);stroke-width:4px}
+svg .dot{stroke:var(--muted);stroke-dasharray:3 3;stroke-width:1}
+svg .rt{fill:var(--ink)}
+
+/* lab */
+.lab-form{display:flex;flex-wrap:wrap;gap:12px;align-items:end}
+.lab-form label{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:.95rem}
+.lab-form input,.lab-form select{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
+.lab-form input{direction:ltr;min-width:200px}
+.lab-form button{font:inherit;font-weight:700;padding:7px 18px;border:0;border-radius:99px;background:var(--accent);color:var(--paper);cursor:pointer}
+.lab-form button:hover,.lab-form button:focus-visible{filter:brightness(1.1)}
+.presets{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.9rem;color:var(--muted)}
+.presets button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--paper);color:var(--accent);border-radius:99px;padding:2px 12px;cursor:pointer;direction:ltr}
+.presets button:hover{border-color:var(--accent)}
+#lab-out{display:flex;flex-direction:column;gap:10px}
+#lab-err{color:var(--mark);font-weight:600}
+.lab-sum{background:var(--accent-soft);border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;gap:4px}
+
+footer{color:var(--muted);font-size:.9rem}
+@media (max-width:560px){.card{padding:18px 14px 22px}.m .katex{font-size:1em}}
+@media print{nav.qnav,#lab{display:none}body{background:#fff}.card{break-inside:avoid-page}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+<script src="font-size.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <a class="back" href="index.html#calculus">→ חזרה לנושא: חשבון דיפרנציאלי</a>
+  <span class="eyebrow">חשבון דיפרנציאלי · 5 יחידות · דף הסבר</span>
+  <h1>שיטת הנחש: איך מתארים פולינום ומשרטטים את הגרף שלו</h1>
+  <p class="lead">שיטה מהירה לתאר את הצורה של כל פולינום: בודקים לאן הוא הולך באינסוף, מוצאים איפה הנגזרת מתאפסת ובאיזה ריבוי, ו"מציירים נחש" שמראה איפה הפונקציה עולה, איפה היא יורדת, ואיזו נקודה היא מקסימום, מינימום או "עצירה והמשך". בסוף הדף: ארבע דוגמאות פתורות ומעבדה אינטראקטיבית.</p>
+</header>
+
+<nav class="qnav" aria-label="תוכן הדף">
+  <h3>תוכן הדף</h3>
+  <ol>
+    <li><a href="#idea">הרעיון<small>למה זה עובד</small></a></li>
+    <li><a href="#infinity">שלב 1: האינסוף<small>האיבר המוביל</small></a></li>
+    <li><a href="#roots">שלב 2: אפסי הנגזרת<small>ריבוי של שורש</small></a></li>
+    <li><a href="#snake">שלב 3: מציירים נחש<small>חוקי הנחש</small></a></li>
+    <li><a href="#sketch">שלב 4: שרטוט<small>ערכי y ומהלך</small></a></li>
+    <li><a href="#facts">עובדות שימושיות<small>בדיקה מהירה</small></a></li>
+    <li><a href="#ex1">דוגמה 1<small>מקסימום ומינימום</small></a></li>
+    <li><a href="#ex2">דוגמה 2<small>שורש כפול</small></a></li>
+    <li><a href="#ex3">דוגמה 3<small>מקדם שלילי</small></a></li>
+    <li><a href="#ex4">דוגמה 4<small>מעלה חמישית</small></a></li>
+    <li><a href="#lab">מעבדה<small>בנו נחש בעצמכם</small></a></li>
+    <li><a href="#mistakes">טעויות נפוצות<small>ואיך להימנע</small></a></li>
+  </ol>
+</nav>
+
+<!-- ===== Idea ===== -->
+<section class="card" id="idea">
+  <h2>הרעיון: פולינום הוא "נחש" חלק</h2>
+  <p>הגרף של פולינום הוא קו רציף וחלק, בלי קפיצות, בלי חורים ובלי שבירות. הוא יכול לשנות כיוון (מעלייה לירידה או להפך) <b>רק</b> בנקודה שבה הנגזרת מתאפסת. בין שתי נקודות כאלה הוא רק עולה או רק יורד.</p>
+  <p>לכן, כדי לתאר את הצורה שלו מספיק לדעת שני דברים:</p>
+  <ol class="list">
+    <li><b>מאיפה הוא מגיע ולאן הוא הולך:</b> הערכים באינסוף, כלומר מה קורה כש־<span class="m">\(x \to -\infty\)</span> וכש־<span class="m">\(x \to +\infty\)</span>.</li>
+    <li><b>איפה הוא עוצר:</b> הנקודות שבהן <span class="m">\(f'(x)=0\)</span>, ומה קורה לסימן של הנגזרת בכל אחת מהן.</li>
+  </ol>
+  <p>את הסימן של הנגזרת מציירים כקו גלי שעובר מעל ומתחת לציר: <b>הנחש</b>. כשהנחש מעל הציר, <span class="m">\(f'&gt;0\)</span> והפונקציה עולה. כשהוא מתחת לציר, <span class="m">\(f'&lt;0\)</span> והפונקציה יורדת.</p>
+  <div class="key"><strong>ארבעת השלבים:</strong> 1. ערכי האינסוף &nbsp;←&nbsp; 2. גזירה, פירוק ומציאת אפסי הנגזרת עם הריבוי שלהם &nbsp;←&nbsp; 3. ציור הנחש וקביעת סוג כל נקודה &nbsp;←&nbsp; 4. חישוב ערכי <span class="m">\(y\)</span> ושרטוט.</div>
+</section>
+
+<!-- ===== Step 1: infinity ===== -->
+<section class="card" id="infinity">
+  <h2>שלב 1: ערכי האינסוף נקבעים לפי האיבר המוביל</h2>
+  <p>כש־<span class="m">\(x\)</span> גדול מאוד (בערך מוחלט), האיבר עם החזקה הגבוהה ביותר "בולע" את כל השאר. בפולינום</p>
+  <div class="ml"><div class="ml-m"><span class="m">\(f(x) = a x^{n} + \ldots\)</span></div></div>
+  <p>הקצוות של הגרף נקבעים רק לפי שני דברים: האם המעלה <span class="m">\(n\)</span> זוגית או אי־זוגית, ומה הסימן של המקדם המוביל <span class="m">\(a\)</span>.</p>
+  <div class="tablebox"><table>
+    <tr><th>המעלה</th><th>המקדם המוביל</th><th>כש־<span class="m">\(x \to -\infty\)</span></th><th>כש־<span class="m">\(x \to +\infty\)</span></th><th>במילים</th></tr>
+    <tr><td>זוגית</td><td><span class="m">\(a&gt;0\)</span></td><td><span class="m">\(f \to +\infty\)</span></td><td><span class="m">\(f \to +\infty\)</span></td><td>שני הקצוות למעלה</td></tr>
+    <tr><td>זוגית</td><td><span class="m">\(a&lt;0\)</span></td><td><span class="m">\(f \to -\infty\)</span></td><td><span class="m">\(f \to -\infty\)</span></td><td>שני הקצוות למטה</td></tr>
+    <tr><td>אי־זוגית</td><td><span class="m">\(a&gt;0\)</span></td><td><span class="m">\(f \to -\infty\)</span></td><td><span class="m">\(f \to +\infty\)</span></td><td>מתחיל למטה, נגמר למעלה</td></tr>
+    <tr><td>אי־זוגית</td><td><span class="m">\(a&lt;0\)</span></td><td><span class="m">\(f \to +\infty\)</span></td><td><span class="m">\(f \to -\infty\)</span></td><td>מתחיל למעלה, נגמר למטה</td></tr>
+  </table></div>
+  <div class="minis">
+    <figure><div class="plot" data-plot='{"c":[0,0,1],"x":[-2,2],"y":[-3,3],"mini":1}'></div><figcaption>זוגית, <span class="m">\(a&gt;0\)</span>: <span class="m">\(x^{2}\)</span></figcaption></figure>
+    <figure><div class="plot" data-plot='{"c":[0,0,-1],"x":[-2,2],"y":[-3,3],"mini":1}'></div><figcaption>זוגית, <span class="m">\(a&lt;0\)</span>: <span class="m">\(-x^{2}\)</span></figcaption></figure>
+    <figure><div class="plot" data-plot='{"c":[0,0,0,1],"x":[-2,2],"y":[-3,3],"mini":1}'></div><figcaption>אי־זוגית, <span class="m">\(a&gt;0\)</span>: <span class="m">\(x^{3}\)</span></figcaption></figure>
+    <figure><div class="plot" data-plot='{"c":[0,0,0,-1],"x":[-2,2],"y":[-3,3],"mini":1}'></div><figcaption>אי־זוגית, <span class="m">\(a&lt;0\)</span>: <span class="m">\(-x^{3}\)</span></figcaption></figure>
+  </div>
+  <div class="note"><strong>דוגמה:</strong> בפונקציה <span class="m">\(f(x) = -2x^{5} + 30x^{3} + 7\)</span> האיבר המוביל הוא <span class="m">\(-2x^{5}\)</span>: מעלה אי־זוגית ומקדם שלילי, ולכן הגרף מתחיל למעלה (<span class="m">\(+\infty\)</span>) ונגמר למטה (<span class="m">\(-\infty\)</span>). האיבר <span class="m">\(30x^{3}\)</span> משפיע על מה שקורה באמצע, לא על הקצוות.</div>
+</section>
+
+<!-- ===== Step 2: roots of the derivative ===== -->
+<section class="card" id="roots">
+  <h2>שלב 2: אפסי הנגזרת והריבוי שלהם</h2>
+  <p>גוזרים, ו<b>מפרקים את הנגזרת לגורמים</b> עד הסוף. כלל הגזירה לחזקה:</p>
+  <div class="ml"><div class="ml-m"><span class="m">\((x^{n})' = n\,x^{n-1}\)</span></div></div>
+  <p>כל גורם בנגזרת המפורקת נותן נקודה שבה <span class="m">\(f'(x)=0\)</span>. החזקה של הגורם היא <b>הריבוי</b> של השורש, והיא מה שקובע את סוג הנקודה:</p>
+  <div class="tablebox"><table>
+    <tr><th>הגורם בנגזרת</th><th>הריבוי</th><th>מה קורה לסימן של <span class="m">\(f'\)</span></th><th>סוג הנקודה בגרף של <span class="m">\(f\)</span></th></tr>
+    <tr><td><span class="m">\((x-c)\)</span></td><td>1 (שורש פשוט)</td><td>מתחלף</td><td>קיצון: מקסימום או מינימום</td></tr>
+    <tr><td><span class="m">\((x-c)^{2}\)</span></td><td>2 (שורש כפול)</td><td>לא מתחלף</td><td><b>עצירה והמשך</b>: הפונקציה עוצרת לרגע (משיק אופקי) וממשיכה באותו כיוון. זו נקודת פיתול, לא קיצון</td></tr>
+    <tr><td><span class="m">\((x-c)^{3}\)</span></td><td>3</td><td>מתחלף</td><td>קיצון (שטוח יותר)</td></tr>
+    <tr><td><span class="m">\((x-c)^{k}\)</span></td><td>אי־זוגי / זוגי</td><td>אי־זוגי מחליף, זוגי לא מחליף</td><td>אי־זוגי: קיצון. זוגי: עצירה והמשך</td></tr>
+  </table></div>
+  <p>למה? הגורם <span class="m">\((x-c)^{2}\)</span> חיובי משני הצדדים של <span class="m">\(c\)</span>, ולכן הוא לא משנה את הסימן של הנגזרת כשעוברים דרך <span class="m">\(c\)</span>. הגורם <span class="m">\((x-c)\)</span> שלילי משמאל ל־<span class="m">\(c\)</span> וחיובי מימין, ולכן הוא הופך את הסימן.</p>
+  <div class="minis">
+    <figure><div class="plot" data-plot='{"c":[0,0,1],"x":[-2,2],"y":[-1,3],"mini":1,"pts":[{"x":0,"y":0,"t":"min"}]}'></div><figcaption><span class="m">\(f=x^{2}\)</span>, <span class="m">\(f'=2x\)</span>: פשוט ← מינימום</figcaption></figure>
+    <figure><div class="plot" data-plot='{"c":[0,0,0,1],"x":[-2,2],"y":[-2,2],"mini":1,"pts":[{"x":0,"y":0,"t":"stop"}]}'></div><figcaption><span class="m">\(f=x^{3}\)</span>, <span class="m">\(f'=3x^{2}\)</span>: כפול ← עצירה והמשך</figcaption></figure>
+    <figure><div class="plot" data-plot='{"c":[0,0,0,0,1],"x":[-2,2],"y":[-1,3],"mini":1,"pts":[{"x":0,"y":0,"t":"min"}]}'></div><figcaption><span class="m">\(f=x^{4}\)</span>, <span class="m">\(f'=4x^{3}\)</span>: ריבוי 3 ← מינימום</figcaption></figure>
+  </div>
+  <div class="note"><strong>חשוב:</strong> אל תחלקו את המשוואה <span class="m">\(f'(x)=0\)</span> ב־<span class="m">\(x\)</span> או ב־<span class="m">\(x^{2}\)</span>. מוציאים גורם משותף, וכך לא מאבדים את השורש ולא את הריבוי שלו: <span class="m">\(4x^{3}-12x^{2} = 4x^{2}(x-3)\)</span>.</div>
+</section>
+
+<!-- ===== Step 3: the snake ===== -->
+<section class="card" id="snake">
+  <h2>שלב 3: מציירים את הנחש</h2>
+  <p>מסמנים על ציר את אפסי הנגזרת לפי הסדר (לא צריך קנה מידה), ומציירים קו אחד רציף לפי ארבעה חוקים:</p>
+  <ol class="list">
+    <li><b>מתחילים מימין.</b> הקו מתחיל <b>מעל</b> הציר אם המקדם המוביל של <span class="m">\(f'\)</span> חיובי, ו<b>מתחת</b> לציר אם הוא שלילי. (הסימן הזה זהה לסימן של <span class="m">\(a\)</span>, המקדם המוביל של <span class="m">\(f\)</span>.)</li>
+    <li><b>זזים שמאלה.</b> בכל שורש <b>פשוט</b> (ריבוי אי־זוגי) הנחש <b>חוצה</b> את הציר.</li>
+    <li>בכל שורש <b>כפול</b> (ריבוי זוגי) הנחש <b>נוגע</b> בציר ו<b>חוזר</b> לאותו צד.</li>
+    <li><b>מתרגמים:</b> מעל הציר ↗ (עולה), מתחת לציר ↘ (יורדת). עלייה ואחריה ירידה: מקסימום. ירידה ואחריה עלייה: מינימום. אותו כיוון משני הצדדים: עצירה והמשך.</li>
+  </ol>
+  <figure>
+    <div class="snake" data-snake='{"lead":1,"roots":[{"r":"-2","m":1},{"r":"0","m":2},{"r":"3","m":1}]}'></div>
+    <figcaption>הנחש של <span class="m">\(f'(x) = (x+2)\,x^{2}\,(x-3)\)</span>: מתחיל מימין מעל הציר, חוצה ב־3, נוגע וחוזר ב־0, חוצה ב־<span class="m">\(-2\)</span>.</figcaption>
+  </figure>
+  <div class="note"><strong>בדיקה עצמית:</strong> הקצה הימני של הנחש חייב להתאים לשלב 1. אם <span class="m">\(f \to +\infty\)</span> כש־<span class="m">\(x \to +\infty\)</span>, הפונקציה עולה בסוף, והנחש מימין חייב להיות מעל הציר. אותו דבר בקצה השמאלי: אם <span class="m">\(f \to +\infty\)</span> כש־<span class="m">\(x \to -\infty\)</span>, הפונקציה יורדת בהתחלה, והנחש משמאל מתחת לציר.</div>
+</section>
+
+<!-- ===== Step 4: sketch ===== -->
+<section class="card" id="sketch">
+  <h2>שלב 4: ערכי <span class="m">\(y\)</span> ושרטוט</h2>
+  <ol class="list">
+    <li>מציבים כל שיעור <span class="m">\(x\)</span> שמצאנו בפונקציה <b>המקורית</b> <span class="m">\(f\)</span> (לא בנגזרת!) ומקבלים את שיעור ה־<span class="m">\(y\)</span> של הנקודה.</li>
+    <li>מוסיפים נקודות עזר אם קל: חיתוך עם ציר <span class="m">\(y\)</span> (מציבים <span class="m">\(x=0\)</span>), ושורשי <span class="m">\(f\)</span> אם היא מתפרקת בקלות.</li>
+    <li>משרטטים משמאל לימין: מתחילים מהקצה של <span class="m">\(-\infty\)</span>, עוברים דרך הנקודות לפי הסדר ולפי החצים של הנחש, ומסיימים בקצה של <span class="m">\(+\infty\)</span>.</li>
+  </ol>
+  <div class="tools">
+    <div class="tool"><b><span class="tag">ריבוי זוגי בשורש של f</span>אותו נחש, על f עצמה</b><p>אותו רעיון עובד גם על השורשים של <span class="m">\(f\)</span>: בשורש פשוט של <span class="m">\(f\)</span> הגרף <b>חוצה</b> את ציר <span class="m">\(x\)</span>, ובשורש כפול הוא <b>משיק</b> לציר ונשאר באותו צד. כך מקבלים איפה <span class="m">\(f\)</span> חיובית ואיפה שלילית.</p></div>
+    <div class="tool stop"><b><span class="tag">פיתול</span>איפה הגרף "מתפתל"</b><p>בין מקסימום למינימום סמוכים הגרף משנה קעירות, ויש שם נקודת פיתול. נקודת "עצירה והמשך" היא בעצמה נקודת פיתול, עם משיק אופקי. אם צריך את המיקום המדויק של נקודת פיתול, פותרים <span class="m">\(f''(x)=0\)</span>.</p></div>
+  </div>
+</section>
+
+<!-- ===== Facts ===== -->
+<section class="card" id="facts">
+  <h2>עובדות שימושיות לבדיקה מהירה</h2>
+  <ul class="list">
+    <li>לפולינום ממעלה <span class="m">\(n\)</span> יש <b>לכל היותר</b> <span class="m">\(n-1\)</span> נקודות קיצון (כי לנגזרת יש לכל היותר <span class="m">\(n-1\)</span> שורשים).</li>
+    <li><b>מעלה אי־זוגית:</b> הקצוות בכיוונים הפוכים, ולכן מספר נקודות הקיצון <b>זוגי</b> (0, 2, 4, …). למשל <span class="m">\(x^{3}\)</span>: אפס נקודות קיצון.</li>
+    <li><b>מעלה זוגית:</b> שני הקצוות באותו כיוון, ולכן מספר נקודות הקיצון <b>אי־זוגי</b> (לפחות 1). תמיד יש לפחות מינימום אחד (אם <span class="m">\(a&gt;0\)</span>) או מקסימום אחד (אם <span class="m">\(a&lt;0\)</span>).</li>
+    <li>מקסימום ומינימום תמיד <b>מתחלפים</b>: אחרי מקסימום יבוא מינימום (נקודות "עצירה" באמצע לא משנות את זה).</li>
+    <li>אם יצא לכם בטבלה מקסימום אחרי מקסימום, יש טעות בסימנים.</li>
+  </ul>
+</section>
+
+<!-- ===== Example 1 ===== -->
+<section class="card" id="ex1">
+  <div class="q-head"><h2>דוגמה 1</h2><small>מעלה שלישית, שני שורשים פשוטים</small></div>
+  <div class="given">תארו את הפונקציה ושרטטו סקיצה: <span class="m">\(f(x) = x^{3} - 3x\)</span></div>
+  <div class="think"><span class="think-h">המחשבה</span><p>מעלה שלישית עם מקדם חיובי: מתחילה למטה ונגמרת למעלה. הנגזרת ממעלה שנייה, ואם יש לה שני שורשים פשוטים נקבל מקסימום ומינימום.</p></div>
+  <ol class="st">
+    <li><span class="lab">בודקים לאן הפונקציה הולכת באינסוף לפי האיבר המוביל</span><div class="ml">
+      <div class="ml-t">האיבר המוביל <span class="m">\(x^{3}\)</span>: מעלה אי־זוגית, <span class="m">\(a=1&gt;0\)</span></div>
+      <div class="ml-m"><span class="m">\(x \to -\infty \;\Rightarrow\; f(x) \to -\infty\)</span></div>
+      <div class="ml-m"><span class="m">\(x \to +\infty \;\Rightarrow\; f(x) \to +\infty\)</span></div></div></li>
+    <li><span class="lab">גוזרים לפי כלל החזקה ומפרקים את הנגזרת לגורמים</span><div class="ml">
+      <div class="ml-m"><span class="m">\((x^{n})' = n\,x^{n-1}\)</span></div>
+      <div class="ml-m"><span class="m">\(f'(x) = 3x^{2} - 3\)</span></div>
+      <div class="ml-m"><span class="m">\(f'(x) = 3(x^{2}-1)\)</span></div>
+      <div class="ml-m"><span class="m">\(f'(x) = 3(x+1)(x-1)\)</span></div></div></li>
+    <li><span class="lab">משווים את הנגזרת לאפס וקובעים את הריבוי של כל שורש</span><div class="ml">
+      <div class="ml-m"><span class="m">\(x = -1 \quad (\text{1})\)</span></div>
+      <div class="ml-m"><span class="m">\(x = 1 \quad (\text{1})\)</span></div>
+      <div class="ml-t">שני השורשים פשוטים, ולכן בשניהם הסימן מתחלף.</div></div></li>
+    <li><span class="lab">מציירים את הנחש מימין לשמאל, מעל הציר כי המקדם המוביל של הנגזרת (3) חיובי</span>
+      <div class="snake" data-snake='{"lead":1,"roots":[{"r":"-1","m":1},{"r":"1","m":1}]}'></div></li>
+    <li><span class="lab">מציבים את שיעורי ה־x בפונקציה המקורית כדי למצוא את שיעורי ה־y</span><div class="ml">
+      <div class="ml-m"><span class="m">\(f(-1) = (-1)^{3} - 3\cdot(-1) = -1 + 3 = 2\)</span></div>
+      <div class="ml-m"><span class="m">\(f(1) = 1^{3} - 3\cdot 1 = -2\)</span></div></div></li>
+    <li><span class="lab">מוצאים את נקודות החיתוך עם הצירים בעזרת פירוק הפונקציה</span><div class="ml">
+      <div class="ml-m"><span class="m">\(x^{3} - 3x = x(x^{2}-3) = 0\)</span></div>
+      <div class="ml-m"><span class="m">\(x = 0,\quad x = \pm\sqrt{3} \approx \pm 1.73\)</span></div></div></li>
+  </ol>
+  <div class="pair">
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml">
+      <div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\((-1,\,2)\)</span></div>
+      <div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((1,\,-2)\)</span></div>
+      <div class="ml-t">עולה:</div><div class="ml-m"><span class="m">\(x &lt; -1 \quad\text{או}\quad x &gt; 1\)</span></div>
+      <div class="ml-t">יורדת:</div><div class="ml-m"><span class="m">\(-1 &lt; x &lt; 1\)</span></div></div></div>
+    <figure><div class="plot" data-plot='{"c":[0,-3,0,1],"x":[-2.5,2.5],"y":[-3.5,3.5],"pts":[{"x":-1,"y":2,"t":"max","l":"(-1, 2)"},{"x":1,"y":-2,"t":"min","l":"(1, -2)"}]}'></div><figcaption><span class="m">\(f(x)=x^{3}-3x\)</span></figcaption></figure>
+  </div>
+</section>
+
+<!-- ===== Example 2 ===== -->
+<section class="card" id="ex2">
+  <div class="q-head"><h2>דוגמה 2</h2><small>שורש כפול בנגזרת: עצירה והמשך</small></div>
+  <div class="given">תארו את הפונקציה ושרטטו סקיצה: <span class="m">\(f(x) = x^{4} - 4x^{3}\)</span></div>
+  <div class="think"><span class="think-h">המחשבה</span><p>מעלה רביעית עם מקדם חיובי: שני הקצוות למעלה, ולכן יש לפחות מינימום אחד. בנגזרת יופיע <span class="m">\(x^{2}\)</span>, שורש כפול, שייתן "עצירה והמשך".</p></div>
+  <ol class="st">
+    <li><span class="lab">בודקים לאן הפונקציה הולכת באינסוף לפי האיבר המוביל</span><div class="ml">
+      <div class="ml-t">האיבר המוביל <span class="m">\(x^{4}\)</span>: מעלה זוגית, <span class="m">\(a=1&gt;0\)</span></div>
+      <div class="ml-m"><span class="m">\(x \to \pm\infty \;\Rightarrow\; f(x) \to +\infty\)</span></div></div></li>
+    <li><span class="lab">גוזרים ומוציאים גורם משותף (בלי לחלק ב־x²)</span><div class="ml">
+      <div class="ml-m"><span class="m">\((x^{n})' = n\,x^{n-1}\)</span></div>
+      <div class="ml-m"><span class="m">\(f'(x) = 4x^{3} - 12x^{2}\)</span></div>
+      <div class="ml-m"><span class="m">\(f'(x) = 4x^{2}(x-3)\)</span></div></div></li>
+    <li><span class="lab">משווים את הנגזרת לאפס וקובעים את הריבוי של כל שורש</span><div class="ml">
+      <div class="ml-m"><span class="m">\(x = 0 \quad (\text{2})\)</span></div>
+      <div class="ml-m"><span class="m">\(x = 3 \quad (\text{1})\)</span></div>
+      <div class="ml-t">ב־<span class="m">\(x=0\)</span> שורש כפול: הסימן לא מתחלף. ב־<span class="m">\(x=3\)</span> שורש פשוט: הסימן מתחלף.</div></div></li>
+    <li><span class="lab">מציירים את הנחש: מימין מעל הציר, חוצה ב־3, נוגע וחוזר ב־0</span>
+      <div class="snake" data-snake='{"lead":1,"roots":[{"r":"0","m":2},{"r":"3","m":1}]}'></div></li>
+    <li><span class="lab">מציבים את שיעורי ה־x בפונקציה המקורית כדי למצוא את שיעורי ה־y</span><div class="ml">
+      <div class="ml-m"><span class="m">\(f(0) = 0\)</span></div>
+      <div class="ml-m"><span class="m">\(f(3) = 3^{4} - 4\cdot 3^{3} = 81 - 108 = -27\)</span></div></div></li>
+    <li><span class="lab">מוצאים את נקודות החיתוך עם ציר x בעזרת פירוק הפונקציה</span><div class="ml">
+      <div class="ml-m"><span class="m">\(x^{4} - 4x^{3} = x^{3}(x-4) = 0\)</span></div>
+      <div class="ml-m"><span class="m">\(x = 0,\quad x = 4\)</span></div></div></li>
+  </ol>
+  <div class="pair">
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml">
+      <div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((3,\,-27)\)</span></div>
+      <div class="ml-t">עצירה והמשך (ירידה, עצירה, ירידה):</div><div class="ml-m"><span class="m">\((0,\,0)\)</span></div>
+      <div class="ml-t">יורדת:</div><div class="ml-m"><span class="m">\(x &lt; 3\)</span></div>
+      <div class="ml-t">עולה:</div><div class="ml-m"><span class="m">\(x &gt; 3\)</span></div></div></div>
+    <figure><div class="plot" data-plot='{"c":[0,0,0,-4,1],"x":[-1.5,5],"y":[-32,14],"pts":[{"x":0,"y":0,"t":"stop","l":"(0, 0)"},{"x":3,"y":-27,"t":"min","l":"(3, -27)"}]}'></div><figcaption><span class="m">\(f(x)=x^{4}-4x^{3}\)</span></figcaption></figure>
+  </div>
+  <div class="note"><strong>שימו לב:</strong> ב־<span class="m">\(x=0\)</span> הנגזרת מתאפסת, אבל זו <b>לא</b> נקודת קיצון. הפונקציה יורדת לפני 0 וגם אחרי 0, ורק "עוצרת" לרגע עם משיק אופקי.</div>
+</section>
+
+<!-- ===== Example 3 ===== -->
+<section class="card" id="ex3">
+  <div class="q-head"><h2>דוגמה 3</h2><small>מקדם מוביל שלילי</small></div>
+  <div class="given">תארו את הפונקציה ושרטטו סקיצה: <span class="m">\(f(x) = -x^{4} + 2x^{2}\)</span></div>
+  <div class="think"><span class="think-h">המחשבה</span><p>מעלה זוגית עם מקדם שלילי: שני הקצוות למטה. הנחש יתחיל מימין <b>מתחת</b> לציר. מעלה 4 נותנת לכל היותר 3 נקודות קיצון, ומספרן אי־זוגי.</p></div>
+  <ol class="st">
+    <li><span class="lab">בודקים לאן הפונקציה הולכת באינסוף לפי האיבר המוביל</span><div class="ml">
+      <div class="ml-t">האיבר המוביל <span class="m">\(-x^{4}\)</span>: מעלה זוגית, <span class="m">\(a=-1&lt;0\)</span></div>
+      <div class="ml-m"><span class="m">\(x \to \pm\infty \;\Rightarrow\; f(x) \to -\infty\)</span></div></div></li>
+    <li><span class="lab">גוזרים ומפרקים את הנגזרת לגורמים</span><div class="ml">
+      <div class="ml-m"><span class="m">\((x^{n})' = n\,x^{n-1}\)</span></div>
+      <div class="ml-m"><span class="m">\(f'(x) = -4x^{3} + 4x\)</span></div>
+      <div class="ml-m"><span class="m">\(f'(x) = -4x(x^{2}-1)\)</span></div>
+      <div class="ml-m"><span class="m">\(f'(x) = -4x(x+1)(x-1)\)</span></div></div></li>
+    <li><span class="lab">משווים את הנגזרת לאפס וקובעים את הריבוי של כל שורש</span><div class="ml">
+      <div class="ml-m"><span class="m">\(x = -1,\quad x = 0,\quad x = 1 \quad (\text{1})\)</span></div>
+      <div class="ml-t">שלושה שורשים פשוטים: בכל אחד הסימן מתחלף.</div></div></li>
+    <li><span class="lab">מציירים את הנחש מימין מתחת לציר, כי המקדם המוביל של הנגזרת (−4) שלילי</span>
+      <div class="snake" data-snake='{"lead":-1,"roots":[{"r":"-1","m":1},{"r":"0","m":1},{"r":"1","m":1}]}'></div></li>
+    <li><span class="lab">מציבים את שיעורי ה־x בפונקציה המקורית כדי למצוא את שיעורי ה־y</span><div class="ml">
+      <div class="ml-m"><span class="m">\(f(-1) = -(-1)^{4} + 2(-1)^{2} = -1 + 2 = 1\)</span></div>
+      <div class="ml-m"><span class="m">\(f(0) = 0\)</span></div>
+      <div class="ml-m"><span class="m">\(f(1) = -1 + 2 = 1\)</span></div></div></li>
+    <li><span class="lab">מוצאים את החיתוך עם ציר x ובודקים בכל שורש אם הגרף חוצה או משיק</span><div class="ml">
+      <div class="ml-m"><span class="m">\(-x^{4} + 2x^{2} = -x^{2}(x^{2}-2) = 0\)</span></div>
+      <div class="ml-m"><span class="m">\(x = 0 \;(\text{2}),\quad x = \pm\sqrt{2} \approx \pm 1.41 \;(\text{1})\)</span></div>
+      <div class="ml-t">ב־<span class="m">\(x=0\)</span> שורש כפול של <span class="m">\(f\)</span>: הגרף משיק לציר (וזה גם המינימום).</div></div></li>
+  </ol>
+  <div class="pair">
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml">
+      <div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\((-1,\,1),\quad (1,\,1)\)</span></div>
+      <div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((0,\,0)\)</span></div>
+      <div class="ml-t">עולה:</div><div class="ml-m"><span class="m">\(x &lt; -1 \quad\text{או}\quad 0 &lt; x &lt; 1\)</span></div>
+      <div class="ml-t">יורדת:</div><div class="ml-m"><span class="m">\(-1 &lt; x &lt; 0 \quad\text{או}\quad x &gt; 1\)</span></div></div></div>
+    <figure><div class="plot" data-plot='{"c":[0,0,2,0,-1],"x":[-2,2],"y":[-2,1.8],"pts":[{"x":-1,"y":1,"t":"max","l":"(-1, 1)"},{"x":0,"y":0,"t":"min","l":"(0, 0)"},{"x":1,"y":1,"t":"max","l":"(1, 1)"}]}'></div><figcaption><span class="m">\(f(x)=-x^{4}+2x^{2}\)</span></figcaption></figure>
+  </div>
+</section>
+
+<!-- ===== Example 4 ===== -->
+<section class="card" id="ex4">
+  <div class="q-head"><h2>דוגמה 4</h2><small>מעלה חמישית: קיצון, עצירה וקיצון</small></div>
+  <div class="given">תארו את הפונקציה ושרטטו סקיצה: <span class="m">\(f(x) = 3x^{5} - 5x^{3}\)</span></div>
+  <div class="think"><span class="think-h">המחשבה</span><p>מעלה אי־זוגית עם מקדם חיובי: מתחילה למטה ונגמרת למעלה, ולכן מספר נקודות הקיצון זוגי. בנגזרת יהיה גורם <span class="m">\(x^{2}\)</span>, ולכן אחת הנקודות תהיה "עצירה".</p></div>
+  <ol class="st">
+    <li><span class="lab">בודקים לאן הפונקציה הולכת באינסוף לפי האיבר המוביל</span><div class="ml">
+      <div class="ml-t">האיבר המוביל <span class="m">\(3x^{5}\)</span>: מעלה אי־זוגית, <span class="m">\(a=3&gt;0\)</span></div>
+      <div class="ml-m"><span class="m">\(x \to -\infty \;\Rightarrow\; f(x) \to -\infty\)</span></div>
+      <div class="ml-m"><span class="m">\(x \to +\infty \;\Rightarrow\; f(x) \to +\infty\)</span></div></div></li>
+    <li><span class="lab">גוזרים ומפרקים את הנגזרת עד הסוף</span><div class="ml">
+      <div class="ml-m"><span class="m">\((x^{n})' = n\,x^{n-1}\)</span></div>
+      <div class="ml-m"><span class="m">\(f'(x) = 15x^{4} - 15x^{2}\)</span></div>
+      <div class="ml-m"><span class="m">\(f'(x) = 15x^{2}(x^{2}-1)\)</span></div>
+      <div class="ml-m"><span class="m">\(f'(x) = 15x^{2}(x+1)(x-1)\)</span></div></div></li>
+    <li><span class="lab">משווים את הנגזרת לאפס וקובעים את הריבוי של כל שורש</span><div class="ml">
+      <div class="ml-m"><span class="m">\(x = -1 \quad (\text{1})\)</span></div>
+      <div class="ml-m"><span class="m">\(x = 0 \quad (\text{2})\)</span></div>
+      <div class="ml-m"><span class="m">\(x = 1 \quad (\text{1})\)</span></div></div></li>
+    <li><span class="lab">מציירים את הנחש: מימין מעל הציר, חוצה ב־1, נוגע וחוזר ב־0, חוצה ב־−1</span>
+      <div class="snake" data-snake='{"lead":1,"roots":[{"r":"-1","m":1},{"r":"0","m":2},{"r":"1","m":1}]}'></div></li>
+    <li><span class="lab">מציבים את שיעורי ה־x בפונקציה המקורית כדי למצוא את שיעורי ה־y</span><div class="ml">
+      <div class="ml-m"><span class="m">\(f(-1) = 3(-1)^{5} - 5(-1)^{3} = -3 + 5 = 2\)</span></div>
+      <div class="ml-m"><span class="m">\(f(0) = 0\)</span></div>
+      <div class="ml-m"><span class="m">\(f(1) = 3 - 5 = -2\)</span></div></div></li>
+  </ol>
+  <div class="pair">
+    <div class="ans"><span class="lab">תשובה:</span><div class="ml">
+      <div class="ml-t">מקסימום:</div><div class="ml-m"><span class="m">\((-1,\,2)\)</span></div>
+      <div class="ml-t">עצירה והמשך (ירידה, עצירה, ירידה):</div><div class="ml-m"><span class="m">\((0,\,0)\)</span></div>
+      <div class="ml-t">מינימום:</div><div class="ml-m"><span class="m">\((1,\,-2)\)</span></div>
+      <div class="ml-t">עולה:</div><div class="ml-m"><span class="m">\(x &lt; -1 \quad\text{או}\quad x &gt; 1\)</span></div>
+      <div class="ml-t">יורדת:</div><div class="ml-m"><span class="m">\(-1 &lt; x &lt; 1\)</span></div></div></div>
+    <figure><div class="plot" data-plot='{"c":[0,0,0,-5,0,3],"x":[-1.7,1.7],"y":[-3.2,3.2],"pts":[{"x":-1,"y":2,"t":"max","l":"(-1, 2)"},{"x":0,"y":0,"t":"stop","l":"(0, 0)"},{"x":1,"y":-2,"t":"min","l":"(1, -2)"}]}'></div><figcaption><span class="m">\(f(x)=3x^{5}-5x^{3}\)</span></figcaption></figure>
+  </div>
+</section>
+
+<!-- ===== Lab ===== -->
+<section class="card" id="lab">
+  <h2>מעבדה: בנו נחש בעצמכם</h2>
+  <p>כתבו את השורשים של הנגזרת, מופרדים בפסיקים. שורש כפול כותבים פעמיים (למשל <span class="m">\(0, 0\)</span>), שורש משולש שלוש פעמים. בחרו את הסימן של המקדם המוביל, ותקבלו את הנחש, את סוג כל נקודה ואת צורת הגרף.</p>
+  <div class="lab-form">
+    <label>סימן המקדם המוביל
+      <select id="lab-sign"><option value="1">חיובי (+)</option><option value="-1">שלילי (−)</option></select></label>
+    <label>שורשי הנגזרת
+      <input id="lab-roots" value="-2, 0, 0, 3" aria-describedby="lab-err"></label>
+    <button type="button" id="lab-go">צייר</button>
+  </div>
+  <div class="presets">דוגמאות:
+    <button type="button" data-p="1|-1, 1">-1, 1</button>
+    <button type="button" data-p="1|0, 0, 3">0, 0, 3</button>
+    <button type="button" data-p="-1|-1, 0, 1">(−) -1, 0, 1</button>
+    <button type="button" data-p="1|-1, 0, 0, 1">-1, 0, 0, 1</button>
+    <button type="button" data-p="1|0, 0, 0">0, 0, 0</button>
+    <button type="button" data-p="-1|1, 1, 4">(−) 1, 1, 4</button>
+  </div>
+  <div id="lab-err" role="alert"></div>
+  <div id="lab-out"></div>
+</section>
+
+<!-- ===== Mistakes ===== -->
+<section class="card" id="mistakes">
+  <h2>טעויות נפוצות</h2>
+  <ul class="list">
+    <li><b>כל אפס של הנגזרת הוא קיצון.</b> לא! בשורש כפול (ריבוי זוגי) הסימן לא מתחלף, וזו נקודת עצירה והמשך.</li>
+    <li><b>מחלקים ב־<span class="m">\(x^{2}\)</span>.</b> כך מאבדים את השורש <span class="m">\(x=0\)</span>. תמיד מוציאים גורם משותף.</li>
+    <li><b>מתחילים את הנחש מעל הציר כשהמקדם שלילי.</b> מקדם מוביל שלילי בנגזרת: הנחש מתחיל מימין מתחת לציר.</li>
+    <li><b>מתחילים את הנחש משמאל.</b> הסימן ידוע בוודאות רק מימין (כש־<span class="m">\(x\)</span> גדול מאוד). משמאל הוא תלוי במעלה.</li>
+    <li><b>מציבים בנגזרת כדי למצוא את <span class="m">\(y\)</span>.</b> בנקודות האלה <span class="m">\(f'=0\)</span> תמיד. את <span class="m">\(y\)</span> מוצאים מהצבה ב־<span class="m">\(f\)</span>.</li>
+    <li><b>קובעים את הקצוות לפי איבר שאינו המוביל.</b> ב־<span class="m">\(-x^{4} + 100x^{3}\)</span> שני הקצוות למטה, למרות המקדם הגדול של <span class="m">\(x^{3}\)</span>.</li>
+    <li><b>מתבלבלים בין הנחש של <span class="m">\(f'\)</span> לנחש של <span class="m">\(f\)</span>.</b> הנחש של <span class="m">\(f'\)</span> אומר איפה הפונקציה עולה ויורדת. הנחש של <span class="m">\(f\)</span> אומר איפה היא מעל ציר <span class="m">\(x\)</span> ואיפה מתחתיו.</li>
+  </ul>
+  <p>לתרגול: שאלות הפולינומים ב<a href="calculus-01-questions-slides.html">מצגת השאלות</a> וב<a href="calculus-05-derivative-extrema-worksheet-14.html">דף העבודה עם 14 הפונקציות</a>.</p>
+</section>
+
+<footer>חשבון דיפרנציאלי · 5 יחידות · דף הסבר: שיטת הנחש לחקירת פולינום</footer>
+</div>
+
+<script>
+/* Draws the snake sign diagrams (data-snake) and the polynomial plots (data-plot), and runs the lab.
+   Polynomial coefficients are low-first: [c0, c1, c2, ...]. */
+(function(){
+const NS = 'http://www.w3.org/2000/svg';
+function E(tag, attrs, parent, text){
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text != null) e.textContent = text;
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function evalP(c, x){ let s = 0; for (let i = c.length - 1; i >= 0; i--) s = s * x + c[i]; return s; }
+function niceStep(range){
+  const raw = range / 7, p = Math.pow(10, Math.floor(Math.log10(raw)));
+  for (const m of [1, 2, 5, 10]) if (m * p >= raw) return m * p;
+  return 10 * p;
+}
+function fmt(v){ const r = Math.round(v * 100) / 100; return (Object.is(r, -0) ? 0 : r).toString(); }
+let clipId = 0;
+
+/* ---------- polynomial plot ---------- */
+function plot(box, o){
+  const mini = !!o.mini;
+  const W = mini ? 220 : 460, H = mini ? 170 : 320, pad = mini ? 10 : 34;
+  const [x0, x1] = o.x, [y0, y1] = o.y;
+  const sx = x => pad + (x - x0) / (x1 - x0) * (W - 2 * pad);
+  const sy = y => H - pad - (y - y0) / (y1 - y0) * (H - 2 * pad);
+  const svg = E('svg', {viewBox: `0 0 ${W} ${H}`, role: 'img'});
+  if (!mini){
+    const xs = niceStep(x1 - x0), ys = niceStep(y1 - y0);
+    for (let v = Math.ceil(x0 / xs) * xs; v <= x1 + 1e-9; v += xs){
+      E('line', {x1: sx(v), x2: sx(v), y1: pad, y2: H - pad, class: 'g'}, svg);
+      if (Math.abs(v) > 1e-9) E('text', {x: sx(v), y: Math.min(Math.max(sy(0) + 15, pad + 12), H - 4), class: 'tk', 'text-anchor': 'middle'}, svg, fmt(v));
+    }
+    for (let v = Math.ceil(y0 / ys) * ys; v <= y1 + 1e-9; v += ys){
+      E('line', {x1: pad, x2: W - pad, y1: sy(v), y2: sy(v), class: 'g'}, svg);
+      if (Math.abs(v) > 1e-9) E('text', {x: Math.min(Math.max(sx(0) - 5, pad + 18), W - 4), y: sy(v) + 4, class: 'tk', 'text-anchor': 'end'}, svg, fmt(v));
+    }
+  }
+  if (y0 <= 0 && y1 >= 0) E('line', {x1: pad, x2: W - pad, y1: sy(0), y2: sy(0), class: 'ax'}, svg);
+  if (x0 <= 0 && x1 >= 0) E('line', {x1: sx(0), x2: sx(0), y1: pad, y2: H - pad, class: 'ax'}, svg);
+  const id = 'clp' + (++clipId);
+  const cp = E('clipPath', {id}, E('defs', {}, svg));
+  E('rect', {x: pad, y: pad - 2, width: W - 2 * pad, height: H - 2 * pad + 4}, cp);
+  let d = '';
+  const N = 600;
+  for (let i = 0; i <= N; i++){
+    const x = x0 + (x1 - x0) * i / N;
+    let y = evalP(o.c, x);
+    y = Math.max(Math.min(y, y1 + (y1 - y0) * 3), y0 - (y1 - y0) * 3);
+    d += (i ? 'L' : 'M') + sx(x).toFixed(2) + ' ' + sy(y).toFixed(2);
+  }
+  E('path', {d, class: 'cv', 'clip-path': `url(#${id})`}, svg);
+  for (const p of (o.pts || [])){
+    if (!mini && Math.abs(p.y) > 1e-9 && y0 <= 0 && y1 >= 0) E('line', {x1: sx(p.x), x2: sx(p.x), y1: sy(0), y2: sy(p.y), class: 'dot'}, svg);
+    E('circle', {cx: sx(p.x), cy: sy(p.y), r: mini ? 4 : 5, class: 'p-' + (p.t || 'pt')}, svg);
+    if (p.l){
+      const up = p.t !== 'min';
+      E('text', {x: sx(p.x), y: sy(p.y) + (up ? -11 : 20), class: 'pl', 'text-anchor': 'middle'}, svg, p.l);
+    }
+  }
+  box.innerHTML = '';
+  box.appendChild(svg);
+}
+
+/* ---------- snake: sign diagram of f' ---------- */
+function signs(lead, roots){
+  const s = new Array(roots.length + 1);
+  s[roots.length] = lead;
+  for (let i = roots.length - 1; i >= 0; i--) s[i] = (roots[i].m % 2) ? -s[i + 1] : s[i + 1];
+  return s;
+}
+function typeOf(l, r){ return l === r ? 'stop' : (l > 0 ? 'max' : 'min'); }
+const TYPE_HE = {max: 'מקסימום', min: 'מינימום', stop: 'עצירה'};
+function snake(box, o){
+  const roots = o.roots, n = roots.length, s = signs(o.lead, roots);
+  const left = 46, gap = 110, W = left + gap * (n + 1) + 16, axis = 64, amp = 40, H = 200;
+  const rx = i => left + gap * (i + 1);
+  const svg = E('svg', {viewBox: `0 0 ${W} ${H}`, width: W, role: 'img'});
+  E('text', {x: 8, y: axis + 5, class: 'row'}, svg, "f′");
+  E('text', {x: 8, y: 160, class: 'row'}, svg, 'f');
+  E('line', {x1: left - 8, x2: W - 8, y1: axis, y2: axis, class: 'ax'}, svg);
+  let d = '';
+  if (n === 0){
+    d = `M${left} ${axis - s[0] * amp * .6} L${W - 16} ${axis - s[0] * amp * .6}`;
+  } else {
+    for (let i = 0; i <= n; i++){
+      const xa = i === 0 ? left : rx(i - 1), xb = i === n ? W - 16 : rx(i);
+      const peak = axis - s[i] * amp * 2;
+      if (i === 0) d += `M${xa} ${axis - s[i] * amp} Q${(xa + xb) / 2 + 10} ${axis - s[i] * amp} ${xb} ${axis}`;
+      else if (i === n) d += ` Q${(xa + xb) / 2 - 10} ${axis - s[i] * amp} ${xb} ${axis - s[i] * amp}`;
+      else d += ` Q${(xa + xb) / 2} ${peak} ${xb} ${axis}`;
+    }
+  }
+  E('path', {d, class: 'snk'}, svg);
+  for (let i = 0; i <= n; i++){
+    const xa = i === 0 ? left : rx(i - 1), xb = i === n ? W - 16 : rx(i), mid = (xa + xb) / 2;
+    E('text', {x: mid, y: axis - s[i] * 14 + (s[i] > 0 ? 0 : 14), class: 'sg ' + (s[i] > 0 ? 'pos' : 'neg'), 'text-anchor': 'middle'}, svg, s[i] > 0 ? '+' : '−');
+    E('text', {x: mid, y: 166, class: 'arr ' + (s[i] > 0 ? 't-min' : 't-max'), 'text-anchor': 'middle'}, svg, s[i] > 0 ? '↗' : '↘');
+  }
+  roots.forEach((r, i) => {
+    E('circle', {cx: rx(i), cy: axis, r: 3.5, class: 'rt'}, svg);
+    E('text', {x: rx(i), y: axis + 58, class: 'rl', 'text-anchor': 'middle'}, svg, String(r.r).replace('-', '−'));
+    E('text', {x: rx(i), y: axis + 74, class: 'mul', 'text-anchor': 'middle'}, svg, r.m === 1 ? 'פשוט' : r.m === 2 ? 'כפול' : 'ריבוי ' + r.m);
+    const t = typeOf(s[i], s[i + 1]);
+    E('text', {x: rx(i), y: 190, class: 'ty t-' + t, 'text-anchor': 'middle'}, svg, TYPE_HE[t]);
+  });
+  box.innerHTML = '';
+  box.appendChild(svg);
+}
+
+/* ---------- lab ---------- */
+function polyMul(a, b){
+  const r = new Array(a.length + b.length - 1).fill(0);
+  a.forEach((x, i) => b.forEach((y, j) => { r[i + j] += x * y; }));
+  return r;
+}
+function tex(el, s){ try { katex.render(s, el, {throwOnError: false}); } catch(e){ el.textContent = s; } }
+function numTex(v){ return v < 0 ? '+' + fmt(-v) : '-' + fmt(v); }
+function runLab(){
+  const err = document.getElementById('lab-err'), out = document.getElementById('lab-out');
+  err.textContent = ''; out.innerHTML = '';
+  const lead = +document.getElementById('lab-sign').value;
+  const raw = document.getElementById('lab-roots').value.replace(/[−–]/g, '-').split(/[,;\s]+/).filter(t => t !== '');
+  const vals = raw.map(Number);
+  if (vals.some(v => !isFinite(v))) { err.textContent = 'יש ערך שאינו מספר. כתבו מספרים מופרדים בפסיקים, למשל: -2, 0, 0, 3'; return; }
+  if (vals.length > 7) { err.textContent = 'עד 7 שורשים (כולל חזרות).'; return; }
+  vals.sort((a, b) => a - b);
+  const roots = [];
+  for (const v of vals){ const last = roots[roots.length - 1]; if (last && Math.abs(last.v - v) < 1e-9) last.m++; else roots.push({v, m: 1}); }
+  /* f' = lead * prod (x - r)^m ; f = integral with constant 0 */
+  let d = [lead];
+  roots.forEach(r => { for (let k = 0; k < r.m; k++) d = polyMul(d, [-r.v, 1]); });
+  const f = [0].concat(d.map((c, k) => c / (k + 1)));
+  const deg = f.length - 1, s = signs(lead, roots.map(r => ({m: r.m})));
+
+  const sum = document.createElement('div'); sum.className = 'lab-sum';
+  const l1 = document.createElement('div'), l2 = document.createElement('div'), l3 = document.createElement('div');
+  let fac = (lead < 0 ? '-' : '') + roots.map(r => {
+    const base = Math.abs(r.v) < 1e-12 ? 'x' : '(x' + numTex(r.v) + ')';
+    return base + (r.m > 1 ? '^{' + r.m + '}' : '');
+  }).join('\\,');
+  if (!roots.length) fac = lead < 0 ? '-1' : '1';
+  tex(l1, "f'(x) = " + fac);
+  const ends = deg % 2 === 0
+    ? (lead > 0 ? 'מעלה ' + deg + ' (זוגית), מקדם חיובי: שני הקצוות למעלה' : 'מעלה ' + deg + ' (זוגית), מקדם שלילי: שני הקצוות למטה')
+    : (lead > 0 ? 'מעלה ' + deg + ' (אי־זוגית), מקדם חיובי: מתחיל למטה ונגמר למעלה' : 'מעלה ' + deg + ' (אי־זוגית), מקדם שלילי: מתחיל למעלה ונגמר למטה');
+  l2.textContent = 'הפונקציה f: ' + ends + '.';
+  if (roots.length){
+    const tb = document.createElement('table'); tb.style.minWidth = '0'; tb.style.width = 'auto';
+    tb.innerHTML = '<tr><th>שיעור x</th><th>ריבוי</th><th>סוג הנקודה</th></tr>' + roots.map((r, i) =>
+      '<tr><td><span class="m">' + fmt(r.v).replace('-', '−') + '</span></td><td>' + r.m + '</td><td>' +
+      TYPE_HE[typeOf(s[i], s[i + 1])].replace('עצירה', 'עצירה והמשך') + '</td></tr>').join('');
+    l3.className = 'tablebox'; l3.style.width = 'fit-content'; l3.style.background = 'var(--paper)';
+    l3.appendChild(tb);
+  } else l3.textContent = 'לנגזרת אין שורשים: הפונקציה רק עולה או רק יורדת.';
+  sum.append(l1, l2, l3);
+  out.appendChild(sum);
+
+  const sb = document.createElement('div'); sb.className = 'snake';
+  snake(sb, {lead, roots: roots.map(r => ({r: fmt(r.v), m: r.m}))});
+  out.appendChild(sb);
+
+  const lo = roots.length ? roots[0].v : 0, hi = roots.length ? roots[roots.length - 1].v : 0;
+  let span = Math.max(hi - lo, 2), x0 = lo - span * .45, x1 = hi + span * .45;
+  if (x1 - x0 < 4){ const c = (x0 + x1) / 2; x0 = c - 2; x1 = c + 2; }
+  const ysCrit = roots.map(r => evalP(f, r.v));
+  let ymin = Infinity, ymax = -Infinity;
+  for (let i = 0; i <= 200; i++){ const y = evalP(f, x0 + (x1 - x0) * i / 200); ymin = Math.min(ymin, y); ymax = Math.max(ymax, y); }
+  const cmin = Math.min(0, ...ysCrit), cmax = Math.max(0, ...ysCrit);
+  let ylo = Math.max(ymin, cmin - (cmax - cmin + 1) * 0.6), yhi = Math.min(ymax, cmax + (cmax - cmin + 1) * 0.6);
+  const yp = (yhi - ylo) * .15 || 1; ylo -= yp; yhi += yp;
+  const fig = document.createElement('figure'), pb = document.createElement('div'), cap = document.createElement('figcaption');
+  pb.className = 'plot';
+  plot(pb, {c: f, x: [x0, x1], y: [ylo, yhi], pts: roots.map((r, i) => ({x: r.v, y: ysCrit[i], t: typeOf(s[i], s[i + 1]), l: '(' + fmt(r.v) + ', ' + fmt(ysCrit[i]) + ')'}))});
+  cap.textContent = 'צורת הגרף של f (מצויר עם קבוע 0; קבוע אחר מזיז את כל הגרף למעלה או למטה, והצורה לא משתנה).';
+  fig.append(pb, cap);
+  out.appendChild(fig);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-plot]').forEach(b => plot(b, JSON.parse(b.dataset.plot)));
+  document.querySelectorAll('[data-snake]').forEach(b => snake(b, JSON.parse(b.dataset.snake)));
+  document.getElementById('lab-go').addEventListener('click', runLab);
+  document.getElementById('lab-roots').addEventListener('keydown', e => { if (e.key === 'Enter') runLab(); });
+  document.querySelectorAll('.presets button').forEach(b => b.addEventListener('click', () => {
+    const [sg, r] = b.dataset.p.split('|');
+    document.getElementById('lab-sign').value = sg;
+    document.getElementById('lab-roots').value = r;
+    runLab();
+  }));
+  runLab();
+});
+})();
+</script>
+</body>
+</html>

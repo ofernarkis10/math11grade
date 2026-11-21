@@ -236,6 +236,7 @@ Each document is one entry in its topic's `items`, in the order of study:
 - **New page in an existing topic:** add its entry to the topic's `items` in its place, update the topic's `count`, and set the page's back link to `index.html#<topic-id>`.
 - **New homework:** as a new page, plus `homework:true`. Nothing else: the homework list, its numbering and the counts on the homework card update themselves.
 - **New topic:** add a topic block in its place in the order of study, with all six fields. The card, the topic view and the previous/next links of it and its neighbours are created automatically.
+- **Topic groups on the home page:** a topic with `group:"<id>"` is shown in that group's separate block below the main list, not in the main list. Groups are defined in `GROUPS` in `index.html` (`id`, `title`, `desc`); the block's counts are computed. Currently one group, `wheel` (תנועה על גלגל), holds `circle-motion-basics`, `wheel-motion` and `wheel-presentations`. Keep a group's topics next to each other in `TOPICS` so the previous/next links stay inside the group.
 - **Renaming or moving a file:** update its `href` and every link to it in other pages (the glossary links to many pages).
 - **Removing a page:** delete its entry and update the topic's `count`.
 - **Changing the order:** move the entries; keep `no` equal to the number in the file name.
